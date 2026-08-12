@@ -10,7 +10,6 @@ const approvedHosts = new Set([
   "youtu.be",
   "discord.com",
   "x.com",
-  "twitter.com",
   "reddit.com",
   "www.reddit.com"
 ]);

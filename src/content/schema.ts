@@ -4,6 +4,15 @@ import {isApprovedSourceUrl} from "./source-policy";
 
 const isoDate = /^\d{4}-\d{2}-\d{2}$/;
 
+function isCalendarDate(value: string): boolean {
+  if (!isoDate.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
+const dateSchema = z.string().refine(isCalendarDate, {message: "Date must be a valid ISO calendar date"});
+
 const badgeSchema = z.object({
   label: z.string().trim().min(1).max(30),
   tone: z.enum(["accent", "warning", "danger", "muted"])
@@ -18,7 +27,7 @@ const sourceSchema = z.object({
   label: z.string().trim().min(2),
   url: z.string().url().refine(isApprovedSourceUrl, {message: "Source URL is not approved"}),
   kind: z.enum(["official", "creator", "community"]),
-  checkedAt: z.string().regex(isoDate, "checkedAt must be an ISO date")
+  checkedAt: dateSchema
 });
 
 export const guideFrontmatterSchema = z.object({
@@ -28,7 +37,7 @@ export const guideFrontmatterSchema = z.object({
   category: z.enum(["access", "release", "store", "platform", "video", "community", "developer", "guide"]),
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   order: z.number().int().positive(),
-  updatedAt: z.string().regex(isoDate, "updatedAt must be an ISO date"),
+  updatedAt: dateSchema,
   badges: z.array(badgeSchema).min(1).max(4),
   faq: z.array(faqSchema).min(2),
   sources: z.array(sourceSchema).min(1)

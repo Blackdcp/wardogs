@@ -25,4 +25,9 @@ describe("validateGuideFrontmatter", () => {
     expect(() => validateGuideFrontmatter({...valid, order: 20}, entry)).toThrow(/order/i);
     expect(() => validateGuideFrontmatter({...valid, sources: [{...valid.sources[0], url: "https://wardogshub.gg/"}]}, entry)).toThrow(/source/i);
   });
+
+  it("rejects impossible calendar dates and unlisted source hosts", () => {
+    expect(() => validateGuideFrontmatter({...valid, updatedAt: "2026-02-31"}, entry)).toThrow(/date/i);
+    expect(() => validateGuideFrontmatter({...valid, sources: [{...valid.sources[0], url: "https://twitter.com/wardogs"}]}, entry)).toThrow(/source/i);
+  });
 });
