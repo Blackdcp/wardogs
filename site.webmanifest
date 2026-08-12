@@ -1,0 +1,20 @@
+{
+  "name": "WARDOGS Wiki",
+  "short_name": "WARDOGS",
+  "description": "Fan-made WARDOGS tactical FPS wiki for playtest, release date, Steam, guides, vehicles, factions, and cash economy.",
+  "icons": [
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#356f51",
+  "background_color": "#0d0f0e",
+  "display": "standalone"
+}
