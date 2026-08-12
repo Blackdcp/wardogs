@@ -1,0 +1,46 @@
+{
+  "name": "wardogs-wiki",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=20.9.0"},
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run content:validate && next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "content:validate": "vitest run tests/content",
+    "links:check": "node scripts/check-external-links.mjs",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource/inter": "5.3.0",
+    "@fontsource/oswald": "5.3.0",
+    "gray-matter": "4.0.3",
+    "lucide-react": "1.31.0",
+    "next": "16.3.0",
+    "next-intl": "4.13.6",
+    "next-mdx-remote": "6.0.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "unist-util-visit": "5.0.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/mdast": "^4.0.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "10.8.1",
+    "eslint-config-next": "16.3.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}
