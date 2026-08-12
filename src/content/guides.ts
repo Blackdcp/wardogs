@@ -68,7 +68,9 @@ export async function assertCompleteContentMatrix(
     const directory = path.join(root, locale, "guides");
     let files: string[] = [];
     try {
-      files = (await readdir(directory)).filter((file) => file.endsWith(".mdx"));
+      files = (await readdir(directory, {withFileTypes: true}))
+        .filter((entry) => entry.isFile() && entry.name.endsWith(".mdx"))
+        .map((entry) => entry.name);
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     }

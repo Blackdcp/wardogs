@@ -10,7 +10,7 @@ export function remarkWardogsMdxPolicy() {
     visit(tree, (node: MdxNode) => {
       if (node.type === "html") throw new Error("Raw HTML is not allowed in guide MDX");
       if (node.type === "mdxjsEsm") throw new Error("Import and export syntax is not allowed in guide MDX");
-      if (node.type === "image" && /^https?:\/\//i.test(node.url ?? "")) {
+      if (node.type === "image" && /^(?:https?:)?\/\//i.test(node.url ?? "")) {
         throw new Error("Remote image URLs are not allowed in guide MDX");
       }
       if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
