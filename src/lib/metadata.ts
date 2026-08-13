@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import type {GuideDocument} from "@/content/guides";
 import type {Locale} from "@/config/site";
+import {assetPath} from "@/lib/assets";
 
 const languageTags: Record<Locale, string> = {
   en: "en",
@@ -21,7 +22,8 @@ export function getSiteOrigin() {
 
 function localizedPath(locale: Locale, pathname: string) {
   const cleanPath = pathname === "/" ? "" : `/${pathname.replace(/^\/+|\/+$/g, "")}`;
-  return `/${locale}${cleanPath}`;
+  const localized = `/${locale}${cleanPath}`;
+  return process.env.GITHUB_PAGES === "true" ? `${localized}/` : localized;
 }
 
 export function buildAlternates(locale: Locale, pathname: string): NonNullable<Metadata["alternates"]> {
@@ -55,6 +57,20 @@ export function buildPageMetadata(locale: Locale, pathname: string, title: strin
       images: [{url: `${getSiteOrigin()}/images/og-wardogs.jpg`, width: 1200, height: 630, alt: "WARDOGS Wiki"}]
     },
     twitter: {card: "summary_large_image", title, description, images: [`${getSiteOrigin()}/images/og-wardogs.jpg`]}
+  };
+}
+
+export function buildSiteMetadata(): Metadata {
+  return {
+    manifest: assetPath("/site.webmanifest"),
+    icons: {
+      icon: [
+        {url: assetPath("/icons/favicon.ico"), sizes: "any"},
+        {url: assetPath("/icons/favicon-32x32.png"), sizes: "32x32", type: "image/png"},
+        {url: assetPath("/icons/favicon-16x16.png"), sizes: "16x16", type: "image/png"}
+      ],
+      apple: [{url: assetPath("/icons/apple-touch-icon.png"), sizes: "180x180", type: "image/png"}]
+    }
   };
 }
 

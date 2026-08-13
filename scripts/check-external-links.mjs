@@ -46,12 +46,18 @@ export async function collectPublicUrls(root = process.cwd()) {
 async function requestWithRetry(url, method, fetchImpl, timeout) {
   let response;
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    response = await fetchImpl(url, {
-      method,
-      redirect: "follow",
-      headers: requestHeaders,
-      signal: AbortSignal.timeout(timeout)
-    });
+    try {
+      response = await fetchImpl(url, {
+        method,
+        redirect: "follow",
+        headers: requestHeaders,
+        signal: AbortSignal.timeout(timeout)
+      });
+    } catch (error) {
+      if (attempt === 2) throw error;
+      await wait(attempt === 0 ? 500 : 1_000);
+      continue;
+    }
     if (response.status !== 429 && response.status < 500) return response;
     if (attempt < 2) await wait(attempt === 0 ? 500 : 1_000);
   }

@@ -6,11 +6,14 @@ import "@/app/globals.css";
 import {isLocale, locales} from "@/config/site";
 import {SiteFooter} from "@/components/layout/site-footer";
 import {SiteHeader} from "@/components/layout/site-header";
+import {buildSiteMetadata} from "@/lib/metadata";
 
 type LocaleLayoutProps = {
   children: ReactNode;
   params: Promise<{locale: string}>;
 };
+
+export const metadata = buildSiteMetadata();
 
 export function generateStaticParams() {
   return locales.map((locale) => ({locale}));

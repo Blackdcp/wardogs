@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {buildAlternates, buildArticleMetadata} from "../../src/lib/metadata";
+import {buildAlternates, buildArticleMetadata, buildSiteMetadata} from "../../src/lib/metadata";
 import {loadGuideDocument} from "../../src/content/guides";
 
 describe("localized metadata", () => {
@@ -11,5 +11,23 @@ describe("localized metadata", () => {
     expect(String(metadata.description).length).toBeLessThanOrEqual(160);
     const alternates = buildAlternates("en", "/guides/wardogs-gameplay");
     expect(Object.keys(alternates.languages!)).toEqual(["en", "ru", "de", "pt-BR", "x-default"]);
+  });
+
+  it("prefixes favicon and manifest metadata for a GitHub Pages deployment", () => {
+    process.env.NEXT_PUBLIC_BASE_PATH = "/wardogs";
+    process.env.NEXT_PUBLIC_SITE_URL = "https://blackdcp.github.io/wardogs";
+    process.env.GITHUB_PAGES = "true";
+    const metadata = buildSiteMetadata();
+    const alternates = buildAlternates("en", "/guides/wardogs-gameplay");
+
+    expect(metadata.manifest).toBe("/wardogs/site.webmanifest");
+    expect(metadata.icons).toMatchObject({
+      icon: expect.arrayContaining([expect.objectContaining({url: "/wardogs/icons/favicon.ico"})]),
+      apple: expect.arrayContaining([expect.objectContaining({url: "/wardogs/icons/apple-touch-icon.png"})])
+    });
+    expect(alternates.canonical).toBe("https://blackdcp.github.io/wardogs/en/guides/wardogs-gameplay/");
+    delete process.env.NEXT_PUBLIC_BASE_PATH;
+    delete process.env.NEXT_PUBLIC_SITE_URL;
+    delete process.env.GITHUB_PAGES;
   });
 });

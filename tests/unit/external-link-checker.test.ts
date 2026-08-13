@@ -16,6 +16,16 @@ describe("external link checker", () => {
     await expect(checkUrl("https://example.com/missing", fetchImpl)).rejects.toThrow(/404/);
   });
 
+  it("retries a transient network failure before declaring a link broken", async () => {
+    const {checkUrl} = await import("../../scripts/check-external-links.mjs");
+    const fetchImpl = vi.fn()
+      .mockRejectedValueOnce(new TypeError("fetch failed"))
+      .mockResolvedValueOnce(new Response(null, {status: 200}));
+
+    await expect(checkUrl("https://example.com/unstable", fetchImpl)).resolves.toMatchObject({status: 200, method: "HEAD"});
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
   it("accepts Reddit's verified anti-bot response without hiding a 404", async () => {
     const {checkUrl} = await import("../../scripts/check-external-links.mjs");
     const fetchImpl = vi.fn().mockResolvedValue(new Response("blocked", {status: 403}));
