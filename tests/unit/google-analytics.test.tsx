@@ -7,9 +7,9 @@ import {
 
 describe("Google Analytics", () => {
   it("uses the production GA4 measurement ID for the loader and config script", () => {
-    expect(GA_MEASUREMENT_ID).toBe("G-0GJ404WEYV");
+    expect(GA_MEASUREMENT_ID).toBe("G-7B37NSM6WZ");
 
-    expect(googleAnalyticsScriptSrc()).toBe("https://www.googletagmanager.com/gtag/js?id=G-0GJ404WEYV");
-    expect(googleAnalyticsConfigScript()).toContain("gtag('config', 'G-0GJ404WEYV')");
+    expect(googleAnalyticsScriptSrc()).toBe("https://www.googletagmanager.com/gtag/js?id=G-7B37NSM6WZ");
+    expect(googleAnalyticsConfigScript()).toContain("gtag('config', 'G-7B37NSM6WZ')");
   });
 });
