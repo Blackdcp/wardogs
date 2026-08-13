@@ -12,7 +12,8 @@ const languageTags: Record<Locale, string> = {
 
 export function getSiteOrigin() {
   const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
-  const value = process.env.NEXT_PUBLIC_SITE_URL ?? (vercelHost ? `https://${vercelHost}` : "http://localhost:3000");
+  const defaultOrigin = process.env.NODE_ENV === "production" ? "https://www.wardogswiki.com" : "http://localhost:3000";
+  const value = process.env.NEXT_PUBLIC_SITE_URL ?? (vercelHost ? `https://${vercelHost}` : defaultOrigin);
   const origin = value.replace(/\/$/, "");
   if (process.env.NODE_ENV === "production" && !origin.startsWith("https://")) {
     throw new Error("NEXT_PUBLIC_SITE_URL must use HTTPS in production");
