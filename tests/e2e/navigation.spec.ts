@@ -39,6 +39,19 @@ test("homepage exposes the official trailer and collected creator videos", async
   await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/hVtmnaUCpuQ"]')).toBeVisible();
 });
 
+test("homepage promotes priority guide links and confirmed status signals", async ({page}) => {
+  await page.goto("/en");
+
+  await expect(page.getByRole("heading", {name: "Top Guides"})).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Recently Updated"})).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Confirmed vs Rumor"})).toBeVisible();
+  const topGuides = page.getByRole("list", {name: "Top Guides"});
+  await expect(topGuides.getByRole("link", {name: /WARDOGS Playtest/i})).toHaveAttribute("href", "/en/guides/wardogs-playtest");
+  await expect(topGuides.getByRole("link", {name: /WARDOGS Release Date/i})).toHaveAttribute("href", "/en/guides/wardogs-release-date");
+  await expect(page.getByText("Steam PC Early Access", {exact: true})).toBeVisible();
+  await expect(page.getByText("PS5 release", {exact: true})).toBeVisible();
+});
+
 test("first-look guide embeds all three supplied YouTube reports", async ({page}) => {
   await page.goto("/en/guides/wardogs-first-look");
   await expect(page.getByRole("button", {name: /7 Things You NEED To Know About WARDOGS/})).toBeVisible();

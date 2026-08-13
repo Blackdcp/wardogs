@@ -1,5 +1,11 @@
 import {describe, expect, it} from "vitest";
-import {getHomeFacts, START_GUIDES} from "../../src/features/home/home-data";
+import {
+  CONFIRMED_RUMOR_ITEMS,
+  getHomeFacts,
+  getRecentlyUpdatedGuides,
+  TOP_GUIDE_SLUGS,
+  START_GUIDES
+} from "../../src/features/home/home-data";
 
 describe("homepage data", () => {
   it("uses four intuitive facts and four working start routes", () => {
@@ -25,5 +31,38 @@ describe("homepage data", () => {
       {number: "4", slug: "wardogs-factions", titleKey: "factions"}
     ]);
     expect(facts.every((fact) => typeof fact === "string")).toBe(true);
+  });
+
+  it("promotes core homepage SEO links and maintenance signals", () => {
+    expect(TOP_GUIDE_SLUGS).toEqual([
+      "wardogs-playtest",
+      "wardogs-release-date",
+      "wardogs-beta",
+      "wardogs-alpha",
+      "wardogs-steam",
+      "wardogs-gameplay",
+      "wardogs-factions",
+      "wardogs-price",
+      "wardogs-download",
+      "wardogs-discord",
+      "wardogs-trailer",
+      "wardogs-early-access"
+    ]);
+    expect(new Set(TOP_GUIDE_SLUGS).size).toBe(TOP_GUIDE_SLUGS.length);
+
+    const latest = getRecentlyUpdatedGuides([
+      {slug: "older", updatedAt: "2026-08-01", title: "Older"},
+      {slug: "newest", updatedAt: "2026-08-13", title: "Newest"},
+      {slug: "middle", updatedAt: "2026-08-08", title: "Middle"}
+    ], 2);
+
+    expect(latest.map((guide) => guide.slug)).toEqual(["newest", "middle"]);
+    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.status)).toEqual([
+      "confirmed",
+      "confirmed",
+      "confirmed",
+      "rumor",
+      "rumor"
+    ]);
   });
 });

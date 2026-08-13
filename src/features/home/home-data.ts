@@ -23,5 +23,45 @@ export const HOME_CATEGORY_GUIDES = [
   {key: "guide", slug: "wardogs-gameplay"}
 ] as const;
 
+export const TOP_GUIDE_SLUGS = [
+  "wardogs-playtest",
+  "wardogs-release-date",
+  "wardogs-beta",
+  "wardogs-alpha",
+  "wardogs-steam",
+  "wardogs-gameplay",
+  "wardogs-factions",
+  "wardogs-price",
+  "wardogs-download",
+  "wardogs-discord",
+  "wardogs-trailer",
+  "wardogs-early-access"
+] as const;
+
+export type RecentlyUpdatedGuideInput = {
+  slug: string;
+  updatedAt: string;
+  order?: number;
+};
+
+export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(guides: readonly T[], limit = 6): T[] {
+  return [...guides]
+    .sort((a, b) => {
+      const dateCompare = Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
+      if (dateCompare !== 0) return dateCompare;
+      if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+      return a.slug.localeCompare(b.slug);
+    })
+    .slice(0, limit);
+}
+
+export const CONFIRMED_RUMOR_ITEMS = [
+  {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
+  {status: "confirmed", titleKey: "hundredPlayers", slug: "wardogs-gameplay"},
+  {status: "confirmed", titleKey: "persistentCash", slug: "wardogs-gameplay"},
+  {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"},
+  {status: "rumor", titleKey: "freeToPlay", slug: "wardogs-price"}
+] as const;
+
 export const BEGINNER_TIP_KEYS = ["objective", "economy", "support", "mobility"] as const;
 export const HOME_FAQ_KEYS = ["game", "release", "controlZone", "official"] as const;

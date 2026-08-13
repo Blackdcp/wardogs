@@ -30,6 +30,25 @@
         "factions": {"title": "The Three Factions", "description": "Meet Valkyra, Lonestar, and Manticore without inventing unconfirmed bonuses."}
       }
     },
+    "priority": {
+      "eyebrow": "Priority Intel",
+      "title": "The WARDOGS Pages Players Need First",
+      "description": "Jump straight into the confirmed access, release, platform, community, and gameplay pages that answer the highest-intent WARDOGS searches.",
+      "top": {"title": "Top Guides", "description": "The 12 strongest internal links for new players, Steam searchers, and access questions."},
+      "recent": {"title": "Recently Updated", "description": "Freshly checked articles signal which WARDOGS pages are being maintained."},
+      "status": {
+        "title": "Confirmed vs Rumor",
+        "description": "Fast status checks for details that are official, still missing, or commonly misunderstood.",
+        "labels": {"confirmed": "Confirmed", "rumor": "Not confirmed"},
+        "items": {
+          "steamEarlyAccess": {"title": "Steam PC Early Access", "description": "Early Access is confirmed for Steam PC."},
+          "hundredPlayers": {"title": "100-player three-team warfare", "description": "WARDOGS is built around up to 100 players split across three teams."},
+          "persistentCash": {"title": "Persistent cash economy", "description": "Cash persists and affects loadout decisions between lives and matches."},
+          "ps5Release": {"title": "PS5 release", "description": "A PlayStation 5 launch has not been confirmed."},
+          "freeToPlay": {"title": "Free-to-play pricing", "description": "Free-to-play pricing is not confirmed; check Steam before buying."}
+        }
+      }
+    },
     "categories": {
       "eyebrow": "All guide areas",
       "title": "Find the Intel You Need",

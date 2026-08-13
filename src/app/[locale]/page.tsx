@@ -8,8 +8,10 @@ import {FinalCta} from "@/components/home/final-cta";
 import {HomeFaq} from "@/components/home/home-faq";
 import {HomeHero} from "@/components/home/home-hero";
 import {OfficialMedia} from "@/components/home/official-media";
+import {PriorityGuides} from "@/components/home/priority-guides";
 import {StartHere} from "@/components/home/start-here";
 import {isLocale} from "@/config/site";
+import {listGuideSummaries} from "@/content/guides";
 import {getHomeFacts} from "@/features/home/home-data";
 import {buildPageMetadata} from "@/lib/metadata";
 import {buildHomeJsonLd} from "@/lib/structured-data";
@@ -34,6 +36,7 @@ export default async function HomePage({params}: HomePageProps) {
   setRequestLocale(locale);
   const t = await getTranslations({locale});
   const facts = getHomeFacts((key) => t(`home.stats.${key}`));
+  const guides = await listGuideSummaries(locale);
 
   return (
     <main>
@@ -41,6 +44,7 @@ export default async function HomePage({params}: HomePageProps) {
       <HomeHero facts={facts} />
       <AboutGame />
       <StartHere />
+      <PriorityGuides guides={guides} />
       <CategoryGrid />
       <OfficialMedia />
       <BeginnerTips />

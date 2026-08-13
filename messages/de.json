@@ -30,6 +30,25 @@
         "factions": {"title": "Die drei Fraktionen", "description": "Lerne Valkyra, Lonestar und Manticore ohne erfundene, unbestätigte Boni kennen."}
       }
     },
+    "priority": {
+      "eyebrow": "Wichtige Infos",
+      "title": "Die WARDOGS-Seiten, die Spieler zuerst brauchen",
+      "description": "Springe direkt zu bestätigten Seiten für Zugang, Release, Plattformen, Community und Gameplay mit hoher Suchintention.",
+      "top": {"title": "Top Guides", "description": "Die 12 stärksten internen Links für neue Spieler, Steam-Suchen und Zugangsfragen."},
+      "recent": {"title": "Zuletzt aktualisiert", "description": "Frisch geprüfte Artikel zeigen, welche WARDOGS-Seiten aktiv gepflegt werden."},
+      "status": {
+        "title": "Bestätigt vs. Gerücht",
+        "description": "Schnelle Statusprüfung für offizielle, fehlende oder häufig missverstandene Details.",
+        "labels": {"confirmed": "Bestätigt", "rumor": "Nicht bestätigt"},
+        "items": {
+          "steamEarlyAccess": {"title": "Steam PC Early Access", "description": "Early Access ist für Steam PC bestätigt."},
+          "hundredPlayers": {"title": "100-Spieler-Krieg mit drei Teams", "description": "WARDOGS ist für bis zu 100 Spieler in drei Teams ausgelegt."},
+          "persistentCash": {"title": "Persistente Geldwirtschaft", "description": "Geld bleibt erhalten und beeinflusst Loadouts zwischen Leben und Matches."},
+          "ps5Release": {"title": "PS5-Release", "description": "Ein Launch für PlayStation 5 ist nicht bestätigt."},
+          "freeToPlay": {"title": "Free-to-play-Preis", "description": "Free-to-play ist nicht bestätigt; prüfe Steam vor dem Kauf."}
+        }
+      }
+    },
     "categories": {
       "eyebrow": "Alle Guide-Bereiche",
       "title": "Finde die richtigen Infos",
