@@ -1,8 +1,12 @@
-import {describe, expect, it} from "vitest";
-import {buildAlternates, buildArticleMetadata, buildSiteMetadata} from "../../src/lib/metadata";
+import {afterEach, describe, expect, it, vi} from "vitest";
+import {buildAlternates, buildArticleMetadata, buildSiteMetadata, getSiteOrigin} from "../../src/lib/metadata";
 import {loadGuideDocument} from "../../src/content/guides";
 
 describe("localized metadata", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("stays within limits and emits every language alternate", async () => {
     const guide = await loadGuideDocument("en", "wardogs-gameplay");
     const metadata = buildArticleMetadata("en", guide!);
@@ -29,5 +33,13 @@ describe("localized metadata", () => {
     delete process.env.NEXT_PUBLIC_BASE_PATH;
     delete process.env.NEXT_PUBLIC_SITE_URL;
     delete process.env.GITHUB_PAGES;
+  });
+
+  it("uses the canonical www domain in production even when Vercel exposes a project host", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("VERCEL_PROJECT_PRODUCTION_URL", "wardogswiki.com");
+    delete process.env.NEXT_PUBLIC_SITE_URL;
+
+    expect(getSiteOrigin()).toBe("https://www.wardogswiki.com");
   });
 });
