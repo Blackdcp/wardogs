@@ -1,6 +1,6 @@
 {
   "common": {"fanMade": "Фанатская энциклопедия сообщества", "language": "Язык", "openMenu": "Открыть меню", "closeMenu": "Закрыть меню", "learnMore": "Подробнее", "updated": "Обновлено", "official": "Официально", "community": "Сообщество", "skipToContent": "Перейти к содержимому", "openSteam": "Открыть WARDOGS в Steam"},
-  "nav": {"playtest": "Плейтест", "release": "Релиз", "steam": "Steam", "gameplay": "Геймплей", "factions": "Фракции", "community": "Сообщество", "videos": "Видео", "guides": "Руководства", "steamCta": "Открыть в Steam", "primaryLabel": "Основная навигация"},
+  "nav": {"playtest": "Плейтест", "release": "Релиз", "steam": "Steam", "gameplay": "Геймплей", "factions": "Фракции", "community": "Сообщество", "videos": "Видео", "news": "Новости", "guides": "Руководства", "steamCta": "Открыть в Steam", "primaryLabel": "Основная навигация"},
   "home": {
     "metaTitle": "WARDOGS Wiki — геймплей, плейтест и дата релиза",
     "metaDescription": "WARDOGS Wiki предлагает проверенные руководства по геймплею, плейтестам, дате релиза, Steam, фракциям, трейлерам, сообществу и советам новичкам.",
@@ -101,6 +101,34 @@
     "final": {"eyebrow": "Подготовьтесь к бою", "guidesCta": "Смотреть руководства", "steamCta": "Открыть Steam"}
   },
   "guides": {"title": "Руководства WARDOGS", "description": "Двадцать отдельных материалов о доступе, релизе, магазинах, платформах, видео, сообществах, разработчиках, геймплее и фракциях.", "count": "20 тем руководств", "read": "Читать руководство"},
+  "news": {
+    "metaTitle": "WARDOGS News - бета, Early Access и Steam",
+    "metaDescription": "Следите за подтвержденными новостями WARDOGS, датами беты, Steam Early Access, ценой, платформами, preload и обновленными гайдами.",
+    "eyebrow": "Последние обновления",
+    "title": "Новости WARDOGS и подтвержденная хронология",
+    "description": "Понятный центр обновлений о бете WARDOGS, Steam Early Access, цене, платформах, preload и геймплее. Каждый пункт отмечен как подтвержденный или неподтвержденный.",
+    "timeline": {
+      "title": "Подтвержденная хронология",
+      "readMore": "Читать полный гайд",
+      "status": {"Confirmed": "Подтверждено", "Not confirmed": "Не подтверждено"},
+      "items": {
+        "steamPreorder": {"title": "Предзаказ и Request Access открыты в Steam", "description": "Steam сейчас является официальным путем для списка желаемого, Request Access, предзаказа, цены и установки."},
+        "closedBeta": {"title": "Closed Beta пройдет 21-23 августа 2026", "description": "Предзаказ обещает доступ к бете; Request Access дает только шанс отбора."},
+        "earlyAccess": {"title": "Steam Early Access начнется 10 сентября 2026", "description": "WARDOGS запланирована для Early Access на Windows PC через Steam; полная версия пока без даты."},
+        "ps5": {"title": "Дата PS5 не подтверждена", "description": "Официальные страницы сейчас называют Windows PC через Steam; консоли и cross-play не подтверждены."},
+        "preload": {"title": "Время preload не подтверждено", "description": "Ждите кнопок библиотеки Steam или официальных объявлений, а не копированных файлов или сторонних установщиков."}
+      }
+    },
+    "checklist": {"title": "Чеклист перед бетой", "description": "Используйте эти страницы перед бетой или Early Access. Они покрывают доступ, цену, безопасную установку и реальный игровой цикл."},
+    "rules": {
+      "title": "Как мы помечаем обновления",
+      "items": {
+        "official": {"title": "Сначала официальное", "description": "Даты, цены, платформы и доступ проверяются по Steam, Team17, BULKHEAD или официальным каналам WARDOGS."},
+        "rumor": {"title": "Слухи остаются помеченными", "description": "PS5, preload, free-to-play и точное время разблокировки остаются неподтвержденными до первоисточника."},
+        "refresh": {"title": "Проверяйте перед репостом", "description": "WARDOGS быстро приближается к запуску, поэтому эта страница ведет к подробным гайдам, которые можно обновлять."}
+      }
+    }
+  },
   "article": {"sources": "Источники", "related": "Похожие руководства", "faq": "Частые вопросы", "back": "Все руководства", "directAnswer": "Краткий ответ", "lastChecked": "Последняя проверка", "watch": "Смотреть видео", "videoConsent": "Загрузить видео YouTube с повышенной конфиденциальностью"},
   "categories": {"access": "Доступ", "release": "Релиз", "store": "Магазин", "platform": "Платформа", "video": "Видео", "community": "Сообщество", "developer": "Разработчики", "guide": "Руководство"},
   "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki — независимое фанатское руководство для игроков. Здесь собрана подтвержденная информация о доступе, релизе, геймплее, фракциях, сообществе и медиа без связи с BULKHEAD, Team17 или Steam.", "description": "Независимые руководства по тактическому FPS WARDOGS.", "guideLinks": "Руководства", "officialLinks": "Официальные ссылки", "officialSite": "Официальный сайт WARDOGS", "revealTrailer": "Трейлер", "legal": "Правовая информация", "privacy": "Политика конфиденциальности", "terms": "Условия использования"},

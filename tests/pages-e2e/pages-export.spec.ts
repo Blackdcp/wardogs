@@ -53,7 +53,9 @@ test("serves the exported site from the production domain root", async ({page, r
 
   const sitemap = await request.get("/sitemap.xml");
   expect(sitemap.status()).toBe(200);
-  expect(await sitemap.text()).toContain("https://www.wardogswiki.com/en/guides/wardogs-gameplay/</loc>");
+  const sitemapText = await sitemap.text();
+  expect(sitemapText).toContain("https://www.wardogswiki.com/en/news/</loc>");
+  expect(sitemapText).toContain("https://www.wardogswiki.com/en/guides/wardogs-gameplay/</loc>");
   expect(failures).toEqual([]);
   expect((await page.goto("/en/guides/not-a-topic/"))?.status()).toBe(404);
 });

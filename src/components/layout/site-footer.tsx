@@ -10,6 +10,7 @@ export async function SiteFooter() {
     {href: "/guides/wardogs-playtest", label: t("nav.playtest")},
     {href: "/guides/wardogs-gameplay", label: t("nav.gameplay")},
     {href: "/guides/wardogs-factions", label: t("nav.factions")},
+    {href: "/news", label: t("nav.news")},
     {href: "/guides", label: t("nav.guides")}
   ] as const;
   const externalLinks = [

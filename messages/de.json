@@ -1,6 +1,6 @@
 {
   "common": {"fanMade": "Fan-Wiki der Community", "language": "Sprache", "openMenu": "Menü öffnen", "closeMenu": "Menü schließen", "learnMore": "Mehr erfahren", "updated": "Aktualisiert", "official": "Offiziell", "community": "Community", "skipToContent": "Zum Inhalt springen", "openSteam": "WARDOGS auf Steam öffnen"},
-  "nav": {"playtest": "Playtest", "release": "Release", "steam": "Steam", "gameplay": "Gameplay", "factions": "Fraktionen", "community": "Community", "videos": "Videos", "guides": "Guides", "steamCta": "Auf Steam ansehen", "primaryLabel": "Hauptnavigation"},
+  "nav": {"playtest": "Playtest", "release": "Release", "steam": "Steam", "gameplay": "Gameplay", "factions": "Fraktionen", "community": "Community", "videos": "Videos", "news": "News", "guides": "Guides", "steamCta": "Auf Steam ansehen", "primaryLabel": "Hauptnavigation"},
   "home": {
     "metaTitle": "WARDOGS Wiki – Gameplay, Playtest und Release",
     "metaDescription": "WARDOGS Wiki bietet geprüfte Guides zu Gameplay, Playtests, Release-Termin, Steam-Zugang, Fraktionen, Trailern, Community-Links und Einsteiger-Tipps.",
@@ -101,6 +101,34 @@
     "final": {"eyebrow": "Bereite deinen Einsatz vor", "guidesCta": "Guides entdecken", "steamCta": "Steam öffnen"}
   },
   "guides": {"title": "WARDOGS Guides", "description": "Durchsuche 20 eigenständige Guides zu Zugang, Release, Shops, Plattformen, Videos, Communities, Entwicklern, Gameplay und Fraktionen.", "count": "20 Guide-Themen", "read": "Guide lesen"},
+  "news": {
+    "metaTitle": "WARDOGS News - Beta, Early Access und Steam",
+    "metaDescription": "Verfolge bestätigte WARDOGS News, Beta-Termine, Steam Early Access, Preise, Plattformstatus, Preload-Fragen und aktualisierte Guides.",
+    "eyebrow": "Neueste Updates",
+    "title": "WARDOGS News und bestätigte Timeline",
+    "description": "Ein übersichtlicher Update-Hub für WARDOGS Beta-Zugang, Steam Early Access, Preis, Plattform, Preload und Gameplay-News. Jeder Punkt ist als bestätigt oder nicht bestätigt markiert.",
+    "timeline": {
+      "title": "Bestätigte Timeline",
+      "readMore": "Vollständigen Guide lesen",
+      "status": {"Confirmed": "Bestätigt", "Not confirmed": "Nicht bestätigt"},
+      "items": {
+        "steamPreorder": {"title": "Steam-Vorbestellung und Request Access sind live", "description": "Steam ist aktuell die offizielle Route für Wunschliste, Request Access, Vorbestellung, Preise und Installation."},
+        "closedBeta": {"title": "Closed Beta läuft vom 21. bis 23. August 2026", "description": "Vorbesteller erhalten laut Bedingungen Beta-Zugang; Request Access ist nur eine Auswahlchance."},
+        "earlyAccess": {"title": "Steam Early Access startet am 10. September 2026", "description": "WARDOGS soll auf Windows PC über Steam in Early Access starten; die Vollversion ist noch nicht datiert."},
+        "ps5": {"title": "Kein PS5-Termin bestätigt", "description": "Offizielle Produktseiten nennen derzeit Windows PC über Steam; Konsolen und Crossplay sind nicht bestätigt."},
+        "preload": {"title": "Keine Preload-Zeit bestätigt", "description": "Warte auf Steam-Bibliotheksoptionen oder offizielle Ankündigungen statt kopierte Dateien oder Drittanbieter-Installer zu nutzen."}
+      }
+    },
+    "checklist": {"title": "Pre-Beta-Checkliste", "description": "Nutze diese Seiten vor dem Beta-Wochenende oder Early Access. Sie decken Zugang, Preise, sichere Installation und den Gameplay-Loop ab."},
+    "rules": {
+      "title": "Wie wir Updates kennzeichnen",
+      "items": {
+        "official": {"title": "Offizielle Quellen zuerst", "description": "Daten, Preise, Plattformen und Zugang werden gegen Steam, Team17, BULKHEAD oder offizielle WARDOGS-Kanäle geprüft."},
+        "rumor": {"title": "Gerüchte bleiben markiert", "description": "PS5, Preload, Free-to-play und genaue Unlock-Zeiten bleiben unbestätigt, bis eine Primärquelle sie nennt."},
+        "refresh": {"title": "Vor dem Teilen prüfen", "description": "WARDOGS befindet sich in einem schnellen Pre-Launch-Fenster, daher verweist diese Seite auf aktualisierbare Detail-Guides."}
+      }
+    }
+  },
   "article": {"sources": "Quellen", "related": "Verwandte Guides", "faq": "Häufig gestellte Fragen", "back": "Alle Guides", "directAnswer": "Kurzantwort", "lastChecked": "Zuletzt geprüft", "watch": "Video ansehen", "videoConsent": "Datenschutzfreundliches YouTube-Video laden"},
   "categories": {"access": "Zugang", "release": "Release", "store": "Shop", "platform": "Plattform", "video": "Video", "community": "Community", "developer": "Entwickler", "guide": "Guide"},
   "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki ist ein unabhängiger, von Fans erstellter Guide für Spieler. Er behandelt bestätigte Angaben zu Zugang, Release, Gameplay, Fraktionen, Community und Medien ohne Verbindung zu BULKHEAD, Team17 oder Steam.", "description": "Unabhängige Tactical-FPS-Guides für WARDOGS-Spieler.", "guideLinks": "Guide-Links", "officialLinks": "Offizielle Links", "officialSite": "Offizielle WARDOGS-Website", "revealTrailer": "Reveal-Trailer", "legal": "Rechtliches", "privacy": "Datenschutz", "terms": "Nutzungsbedingungen"},

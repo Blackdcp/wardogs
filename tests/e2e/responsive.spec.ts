@@ -9,7 +9,7 @@ for (const viewport of [
 ]) {
   test(`${viewport.name} layouts load assets without overflow`, async ({page}) => {
     await page.setViewportSize(viewport);
-    for (const pathname of ["/en", "/de/guides", "/pt-br/guides/wardogs-gameplay"]) {
+    for (const pathname of ["/en", "/en/news", "/de/guides", "/pt-br/guides/wardogs-gameplay"]) {
       await page.goto(pathname);
       await expectImagesLoaded(page);
       await expectNoHorizontalOverflow(page);

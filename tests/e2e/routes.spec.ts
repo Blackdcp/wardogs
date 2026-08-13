@@ -5,7 +5,7 @@ const locales = ["en", "ru", "de", "pt-br"];
 test("root redirects and primary routes resolve", async ({page}) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/en\/?$/);
-  for (const pathname of ["/en", "/en/guides", "/en/guides/wardogs-gameplay", "/en/privacy", "/en/terms"]) {
+  for (const pathname of ["/en", "/en/guides", "/en/news", "/en/guides/wardogs-gameplay", "/en/privacy", "/en/terms"]) {
     const response = await page.goto(pathname);
     expect(response?.status(), pathname).toBe(200);
   }
@@ -16,6 +16,8 @@ test("all localized home, index, and article routes resolve", async ({page}) => 
   for (const locale of locales) {
     expect((await page.goto(`/${locale}`))?.status(), locale).toBe(200);
     expect((await page.goto(`/${locale}/guides`))?.status(), `${locale} guide index`).toBe(200);
+    expect((await page.goto(`/${locale}/news`))?.status(), `${locale} news`).toBe(200);
+    await page.goto(`/${locale}/guides`);
     const hrefs = await page.locator('main a[href*="/guides/wardogs-"]').evaluateAll((links) =>
       [...new Set(links.map((link) => (link as HTMLAnchorElement).pathname))]
     );
