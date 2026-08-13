@@ -4,8 +4,12 @@ test("serves the exported site from the production domain root", async ({page, r
   const failures: string[] = [];
   page.on("requestfailed", (failedRequest) => {
     const error = failedRequest.failure()?.errorText ?? "unknown error";
+    const url = failedRequest.url();
+    const isAnalyticsProbe = url.startsWith("https://www.googletagmanager.com/gtag/js");
     if (failedRequest.method() !== "HEAD" && !error.includes("ERR_ABORTED")) {
-      failures.push(`${failedRequest.method()} ${failedRequest.url()}: ${error}`);
+      if (!isAnalyticsProbe || !error.includes("ERR_BLOCKED_BY_ORB")) {
+        failures.push(`${failedRequest.method()} ${url}: ${error}`);
+      }
     }
   });
   page.on("response", (response) => {
