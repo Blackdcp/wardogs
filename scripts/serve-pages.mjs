@@ -3,7 +3,7 @@ import {readFile, stat} from "node:fs/promises";
 import {extname, join, resolve, sep} from "node:path";
 
 const outputRoot = resolve("out");
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/wardogs";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const port = Number(process.env.PAGES_PREVIEW_PORT ?? 3001);
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
@@ -28,7 +28,8 @@ function insideOutput(relativePath) {
 }
 
 async function findFile(pathname) {
-  const relative = decodeURIComponent(pathname.slice(basePath.length)).replace(/^\/+/, "");
+  const relativePathname = basePath ? pathname.slice(basePath.length) : pathname;
+  const relative = decodeURIComponent(relativePathname).replace(/^\/+/, "");
   const candidates = relative === ""
     ? ["index.html"]
     : pathname.endsWith("/")
@@ -52,12 +53,12 @@ async function findFile(pathname) {
 const server = createServer(async (request, response) => {
   try {
     const pathname = new URL(request.url ?? "/", "http://127.0.0.1").pathname;
-    if (pathname === basePath) {
+    if (basePath && pathname === basePath) {
       response.writeHead(308, {location: `${basePath}/`});
       response.end();
       return;
     }
-    if (!pathname.startsWith(`${basePath}/`)) {
+    if (basePath && !pathname.startsWith(`${basePath}/`)) {
       response.writeHead(404).end("Not found");
       return;
     }

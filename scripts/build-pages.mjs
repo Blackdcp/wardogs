@@ -64,8 +64,8 @@ try {
     env: {
       ...process.env,
       GITHUB_PAGES: "true",
-      NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH ?? "/wardogs",
-      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? "https://blackdcp.github.io/wardogs"
+      NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH ?? "",
+      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.wardogswiki.com"
     },
     stdio: "inherit"
   });
@@ -80,6 +80,7 @@ if (status === 0) {
   normalizeWindowsSegmentExports(resolve("out"));
   const entryHtml = "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"refresh\" content=\"0;url=./en/\"><title>WARDOGS Wiki</title><script>location.replace('./en/')</script></head><body><a href=\"./en/\">Open WARDOGS Wiki</a></body></html>";
   writeFileSync(resolve("out/index.html"), entryHtml);
+  writeFileSync(resolve("out/CNAME"), "www.wardogswiki.com\n");
   writeFileSync(resolve("out/.nojekyll"), "");
 }
 
