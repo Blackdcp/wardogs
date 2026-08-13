@@ -1,11 +1,90 @@
 {
-  "common": {"fanMade": "Wiki criada pela comunidade", "language": "Idioma", "openMenu": "Abrir menu", "closeMenu": "Fechar menu", "learnMore": "Saiba mais", "updated": "Atualizado", "official": "Oficial", "community": "Comunidade"},
-  "nav": {"playtest": "Teste público", "release": "Lançamento", "gameplay": "Jogabilidade", "factions": "Facções", "community": "Comunidade", "videos": "Vídeos", "guides": "Guias", "steam": "Página da Steam"},
-  "home": {"heroTitle": "Guia completo", "heroDescription": "Prepare sua primeira missão com guias verificados de acesso, lançamento, jogabilidade, facções, comunidade e vídeos de WARDOGS.", "primaryCta": "Ver todos os guias", "secondaryCta": "Ver acesso ao teste", "startEyebrow": "Comece aqui", "startTitle": "Sua missão em WARDOGS", "aboutTitle": "O que é WARDOGS?", "finalTitle": "Pronto para entrar na Zona de Controle?", "finalDescription": "Use nossa biblioteca independente para se preparar para acesso, funções do esquadrão, veículos, objetivos e marcos confirmados do lançamento."},
+  "common": {"fanMade": "Wiki da comunidade feita por fãs", "language": "Idioma", "openMenu": "Abrir menu", "closeMenu": "Fechar menu", "learnMore": "Saiba mais", "updated": "Atualizado", "official": "Oficial", "community": "Comunidade", "skipToContent": "Ir para o conteúdo", "openSteam": "Abrir WARDOGS na Steam"},
+  "nav": {"playtest": "Teste", "release": "Lançamento", "steam": "Steam", "gameplay": "Jogabilidade", "factions": "Facções", "community": "Comunidade", "videos": "Vídeos", "guides": "Guias", "steamCta": "Ver na Steam", "primaryLabel": "Navegação principal"},
+  "home": {
+    "metaTitle": "WARDOGS Wiki — jogabilidade, testes e lançamento",
+    "metaDescription": "A WARDOGS Wiki reúne guias verificados sobre jogabilidade, testes, lançamento, acesso pela Steam, facções, trailers, comunidade e dicas para iniciantes.",
+    "heroTitle": "Guia completo",
+    "heroDescription": "Prepare sua primeira missão com guias verificados de acesso, lançamento, jogabilidade, facções, comunidade e vídeos de WARDOGS.",
+    "primaryCta": "Ver todos os guias",
+    "secondaryCta": "Ver acesso ao teste",
+    "status": "Acesso Antecipado anunciado",
+    "statsLabel": "Fatos principais sobre WARDOGS",
+    "stats": {"earlyAccess": "Acesso Antecipado em 10 set. 2026", "players": "Até 100 jogadores", "teams": "3 equipes", "controlZone": "Zona de Controle de 2 x 2 km"},
+    "aboutTitle": "O que é WARDOGS?",
+    "about": {
+      "eyebrow": "Guerra tática em grande escala",
+      "imageAlt": "Cena oficial de WARDOGS vista da cabine de um helicóptero",
+      "bodyOne": "WARDOGS é um FPS tático de guerra em grande escala centrado na disputa entre três equipes. Até 100 jogadores combatem por uma Zona de Controle aleatória de 2 x 2 km com infantaria, veículos, fortificações e logística.",
+      "bodyTwo": "O dinheiro permanece entre as partidas e financia um novo equipamento para cada vida. Ações de combate e suporte ajudam a equipe e sustentam sua economia.",
+      "points": {"teams": "Três equipes disputam o mesmo objetivo de pontuação", "battlefield": "Veículos, construção e destruição mudam as rotas", "roles": "Funções de combate e suporte contribuem para a vitória"}
+    },
+    "startEyebrow": "Comece aqui",
+    "startTitle": "Sua missão em WARDOGS",
+    "start": {
+      "description": "Use estes quatro guias para entender o acesso, a partida principal e as forças que entram na Zona de Controle.",
+      "cards": {
+        "beginner": {"title": "Guia para iniciantes", "description": "Monte um primeiro equipamento sensato e relacione cada ação ao objetivo da equipe."},
+        "playtest": {"title": "Acesso aos testes", "description": "Confira o status atual, os canais oficiais e quais testes já terminaram."},
+        "gameplay": {"title": "Jogabilidade explicada", "description": "Entenda a pontuação da Zona de Controle, dinheiro, funções, veículos e logística."},
+        "factions": {"title": "As três facções", "description": "Conheça Valkyra, Lonestar e Manticore sem inventar bônus não confirmados."}
+      }
+    },
+    "categories": {
+      "eyebrow": "Todas as áreas",
+      "title": "Encontre a informação certa",
+      "description": "Explore oito áreas que cobrem toda a biblioteca independente de guias de WARDOGS.",
+      "allGuides": "Ver todos os 20 guias",
+      "items": {
+        "access": "Testes, histórico do beta, status do alpha e chaves",
+        "release": "Data de lançamento e detalhes do Acesso Antecipado",
+        "store": "Steam, preço e orientações de download",
+        "platform": "Status confirmado e não confirmado das plataformas",
+        "video": "Trailers oficiais, primeiras impressões e transmissões",
+        "community": "Canais oficiais e segurança da conta",
+        "developer": "Informações sobre BULKHEAD e Team17",
+        "guide": "Sistemas de jogo, funções e facções"
+      }
+    },
+    "media": {
+      "eyebrow": "Mídia oficial",
+      "title": "Veja WARDOGS em ação",
+      "description": "Assista ao trailer oficial para ver o campo de batalha, veículos, destruição e a guerra entre três equipes.",
+      "videoTitle": "Trailer oficial de revelação de WARDOGS",
+      "watch": "Assistir no YouTube",
+      "imageAlt": "Imagem oficial de WARDOGS usada como capa do trailer",
+      "fieldReports": "Relatos da comunidade"
+    },
+    "tips": {
+      "eyebrow": "Antes da primeira partida",
+      "title": "Dicas confirmadas para iniciantes",
+      "description": "Comece pelos sistemas descritos nas fontes oficiais de WARDOGS, sem atalhos de versões específicas ou conselhos de meta não verificados.",
+      "items": {
+        "objective": {"title": "Jogue pela Zona de Controle", "description": "A equipe com mais jogadores na zona ativa ganha pontos. Entre, mantenha e reconquiste a área com seus aliados."},
+        "economy": {"title": "Gaste pensando na equipe", "description": "O dinheiro persiste entre partidas e paga o equipamento de cada vida. Compre de acordo com a função necessária."},
+        "support": {"title": "Ações de suporte rendem", "description": "Reanimações, transporte, entregas de suprimentos e controle do objetivo podem gerar dinheiro além do combate."},
+        "mobility": {"title": "Planeje a aproximação", "description": "A Zona de Controle surge aleatoriamente em um campo maior. Verifique as rotas e o transporte antes de avançar."}
+      }
+    },
+    "faq": {
+      "eyebrow": "Perguntas frequentes",
+      "title": "O essencial de WARDOGS",
+      "description": "Respostas diretas às principais dúvidas antes de entrar no campo de batalha.",
+      "items": {
+        "game": {"question": "Que tipo de jogo é WARDOGS?", "answer": "WARDOGS é um jogo de tiro tático em primeira pessoa para até 100 jogadores divididos em três equipes."},
+        "release": {"question": "Quando WARDOGS entra em Acesso Antecipado?", "answer": "WARDOGS tem lançamento no Acesso Antecipado da Steam marcado para 10 de setembro de 2026."},
+        "controlZone": {"question": "Como funciona a Zona de Controle?", "answer": "Uma Zona de Controle aleatória de 2 x 2 km vira o objetivo ativo. A equipe com mais jogadores dentro dela acumula pontos para vencer."},
+        "official": {"question": "A WARDOGS Wiki é um site oficial?", "answer": "Não. Este é um guia independente feito por fãs. Faça ações do jogo e da conta somente pelas fontes oficiais vinculadas de WARDOGS, Team17, Steam e Discord."}
+      }
+    },
+    "finalTitle": "Pronto para entrar na Zona de Controle?",
+    "finalDescription": "Use nossa biblioteca independente para se preparar para acesso, funções do esquadrão, veículos, objetivos e marcos confirmados do lançamento.",
+    "final": {"eyebrow": "Prepare sua missão", "guidesCta": "Explorar os guias", "steamCta": "Abrir a Steam"}
+  },
   "guides": {"title": "Guias de WARDOGS", "description": "Explore 20 guias independentes sobre acesso, lançamento, lojas, plataformas, vídeos, comunidades, desenvolvedores, jogabilidade e facções.", "count": "20 temas de guia", "read": "Ler guia"},
   "article": {"sources": "Fontes", "related": "Guias relacionados", "faq": "Perguntas frequentes", "back": "Todos os guias", "directAnswer": "Resposta rápida", "lastChecked": "Última verificação", "watch": "Assistir ao vídeo", "videoConsent": "Carregar vídeo do YouTube com privacidade aprimorada"},
   "categories": {"access": "Acesso", "release": "Lançamento", "store": "Loja", "platform": "Plataforma", "video": "Vídeo", "community": "Comunidade", "developer": "Desenvolvimento", "guide": "Guia"},
-  "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki é um guia independente criado por fãs para jogadores. Ele reúne informações confirmadas sobre acesso, lançamento, jogabilidade, facções, comunidade e mídia sem vínculo com BULKHEAD, Team17 ou Steam.", "description": "Guias independentes do FPS tático WARDOGS.", "officialLinks": "Links oficiais", "legal": "Informações legais", "privacy": "Política de Privacidade", "terms": "Termos de Serviço"},
+  "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki é um guia independente criado por fãs para jogadores. Reúne informações confirmadas sobre acesso, lançamento, jogabilidade, facções, comunidade e mídia sem vínculo com BULKHEAD, Team17 ou Steam.", "description": "Guias independentes do FPS tático WARDOGS.", "guideLinks": "Links de guias", "officialLinks": "Links oficiais", "officialSite": "Site oficial de WARDOGS", "revealTrailer": "Trailer de revelação", "legal": "Informações legais", "privacy": "Política de Privacidade", "terms": "Termos de Serviço"},
   "privacy": {"title": "Política de Privacidade", "intro": "Este guia de fãs reduz a coleta de dados e explica como funcionam mídias e links externos.", "content": "Não operamos contas de jogadores nem coletamos credenciais do jogo. Ao abrir um serviço externo, a política de privacidade dele passa a valer."},
   "terms": {"title": "Termos de Serviço", "intro": "Use este guia independente como material informativo da comunidade.", "content": "Os detalhes do jogo podem mudar. Confirme compras, períodos de acesso, plataformas e ações da conta nas fontes oficiais de WARDOGS."},
   "notFound": {"title": "Página não encontrada", "description": "Essa rota não existe em nossa biblioteca verificada de 20 temas.", "home": "Voltar ao início", "guides": "Ver guias"}

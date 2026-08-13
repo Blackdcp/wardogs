@@ -14,4 +14,47 @@ describe("English guide library", () => {
       expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(2);
     }
   });
+
+  it("preserves verified faction lore and direct official Alpha sourcing", async () => {
+    const factions = await loadGuideDocument("en", "wardogs-factions");
+    const alpha = await loadGuideDocument("en", "wardogs-alpha");
+
+    expect(factions?.body).toContain("Western paramilitary");
+    expect(factions?.body).toContain("Soviet People's Republic");
+    expect(factions?.body).toContain("Kingdom of Persia");
+    expect(factions?.body).toContain("Kolchia");
+    expect(factions?.body).toContain("PV-1");
+    expect(
+      factions?.frontmatter.sources.some(({url}) => url.includes("1825093633182385")),
+    ).toBe(true);
+    expect(
+      alpha?.frontmatter.sources.some(({url}) => url.includes("1840310314354505")),
+    ).toBe(true);
+  });
+
+  it("keeps required headings, videos, and creator sources in their approved guides", async () => {
+    const verification = await loadGuideDocument("en", "wardogs-discord-account-verification");
+    const firstLook = await loadGuideDocument("en", "wardogs-first-look");
+    const trailer = await loadGuideDocument("en", "wardogs-trailer");
+    const summaries = await listGuideSummaries("en");
+
+    expect(verification?.body).toContain("## Steam/Discord");
+    for (const id of ["-k6IV0ITLDo", "eAE9LOV-p3s", "83AVH6FtemY"]) {
+      expect(firstLook?.body).toContain(`id="${id}"`);
+    }
+    expect(firstLook?.body).toContain('title="WARDOGS Gameplay and Impressions..."');
+    expect(firstLook?.body).toContain('title="WARDOGS Alpha - Gameplay and Impressions!"');
+    expect(firstLook?.frontmatter.sources.some(({label}) => label.includes("jackfrags"))).toBe(true);
+    expect(firstLook?.frontmatter.sources.some(({label}) => label.includes("FRANKIEonPC"))).toBe(true);
+    expect(trailer?.body).toContain('id="hVtmnaUCpuQ"');
+
+    const creatorVideoIds = ["-k6IV0ITLDo", "eAE9LOV-p3s", "83AVH6FtemY"];
+    for (const summary of summaries.filter(({slug}) => slug !== "wardogs-first-look")) {
+      const guide = await loadGuideDocument("en", summary.slug);
+      for (const id of creatorVideoIds) {
+        expect(guide?.body).not.toContain(id);
+        expect(guide?.frontmatter.sources.some(({url}) => url.includes(id))).toBe(false);
+      }
+    }
+  });
 });

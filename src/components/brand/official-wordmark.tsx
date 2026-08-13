@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {assetPath} from "@/lib/assets";
 
 type OfficialWordmarkProps = {
   variant?: "white" | "full";
@@ -9,7 +10,7 @@ type OfficialWordmarkProps = {
 
 export function OfficialWordmark({variant = "white", className, priority = false, decorative = false}: OfficialWordmarkProps) {
   return <Image
-    src={`/images/wardogs-fullmark-${variant}.png`}
+    src={assetPath(`/images/wardogs-fullmark-${variant}.png`)}
     width={2468}
     height={490}
     alt={decorative ? "" : "WARDOGS"}

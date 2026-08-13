@@ -1,11 +1,90 @@
 {
-  "common": {"fanMade": "Fan-Made Community Wiki", "language": "Language", "openMenu": "Open menu", "closeMenu": "Close menu", "learnMore": "Learn more", "updated": "Updated", "official": "Official", "community": "Community"},
-  "nav": {"playtest": "Playtest", "release": "Release", "gameplay": "Gameplay", "factions": "Factions", "community": "Community", "videos": "Videos", "guides": "Guides", "steam": "Steam Page"},
-  "home": {"heroTitle": "Complete Guide", "heroDescription": "Plan your first deployment with verified WARDOGS access, release, gameplay, faction, community, and video guides.", "primaryCta": "Explore All Guides", "secondaryCta": "Check Playtest Access", "startEyebrow": "Start Here", "startTitle": "Your WARDOGS Deployment", "aboutTitle": "What is WARDOGS?", "finalTitle": "Ready to Enter the Control Zone?", "finalDescription": "Use our independent guide library to prepare for access, squad roles, vehicles, objectives, and every confirmed release milestone."},
+  "common": {"fanMade": "Fan-Made Community Wiki", "language": "Language", "openMenu": "Open menu", "closeMenu": "Close menu", "learnMore": "Learn more", "updated": "Updated", "official": "Official", "community": "Community", "skipToContent": "Skip to content", "openSteam": "Open WARDOGS on Steam"},
+  "nav": {"playtest": "Playtest", "release": "Release", "steam": "Steam", "gameplay": "Gameplay", "factions": "Factions", "community": "Community", "videos": "Videos", "guides": "Guides", "steamCta": "View on Steam", "primaryLabel": "Primary navigation"},
+  "home": {
+    "metaTitle": "WARDOGS Wiki - Gameplay, Playtest & Release Guides",
+    "metaDescription": "WARDOGS Wiki provides verified guides to gameplay, playtests, release dates, Steam access, factions, trailers, community links, and beginner tactics.",
+    "heroTitle": "Complete Guide",
+    "heroDescription": "Plan your first deployment with verified WARDOGS access, release, gameplay, faction, community, and video guides.",
+    "primaryCta": "Explore All Guides",
+    "secondaryCta": "Check Playtest Access",
+    "status": "Early Access announced",
+    "statsLabel": "Key WARDOGS facts",
+    "stats": {"earlyAccess": "Early Access Sep 10, 2026", "players": "Up to 100 Players", "teams": "3 Teams", "controlZone": "2 x 2 km Control Zone"},
+    "aboutTitle": "What is WARDOGS?",
+    "about": {
+      "eyebrow": "Tactical all-out warfare",
+      "imageAlt": "Official WARDOGS gameplay view from a helicopter cockpit",
+      "bodyOne": "WARDOGS is a tactical all-out warfare FPS built around a three-team fight for control. Up to 100 players contest a randomized 2 x 2 km Control Zone using infantry, vehicles, fortifications, and logistics.",
+      "bodyTwo": "Cash persists between matches and funds a new loadout for each life. Combat and support actions can both help the team while sustaining your economy.",
+      "points": {"teams": "Three teams pursue the same scoring objective", "battlefield": "Vehicles, construction, and destruction reshape routes", "roles": "Combat and support roles both contribute"}
+    },
+    "startEyebrow": "Start Here",
+    "startTitle": "Your WARDOGS Deployment",
+    "start": {
+      "description": "Use these four guides to understand access, the core match, and the forces entering the Control Zone.",
+      "cards": {
+        "beginner": {"title": "Beginner Guide", "description": "Build a sensible first loadout and connect every action to the team objective."},
+        "playtest": {"title": "Playtest Access", "description": "Check the current access status, official channels, and what has already ended."},
+        "gameplay": {"title": "Gameplay Explained", "description": "Learn how Control Zone scoring, cash, roles, vehicles, and logistics fit together."},
+        "factions": {"title": "The Three Factions", "description": "Meet Valkyra, Lonestar, and Manticore without inventing unconfirmed bonuses."}
+      }
+    },
+    "categories": {
+      "eyebrow": "All guide areas",
+      "title": "Find the Intel You Need",
+      "description": "Browse eight focused areas covering every topic in the independent WARDOGS guide library.",
+      "allGuides": "View all 20 guides",
+      "items": {
+        "access": "Playtests, beta history, alpha status, and keys",
+        "release": "Release date and Early Access details",
+        "store": "Steam, pricing, and download guidance",
+        "platform": "Confirmed and unconfirmed platform status",
+        "video": "Official trailers, first looks, and streams",
+        "community": "Official channels and account safety",
+        "developer": "BULKHEAD and Team17 background",
+        "guide": "Gameplay systems, roles, and factions"
+      }
+    },
+    "media": {
+      "eyebrow": "Official Media",
+      "title": "See WARDOGS in Action",
+      "description": "Watch the official reveal trailer for a direct look at the battlefield, vehicles, destruction, and three-team warfare.",
+      "videoTitle": "WARDOGS Official Reveal Trailer",
+      "watch": "Watch on YouTube",
+      "imageAlt": "Official WARDOGS gameplay image used as the reveal trailer poster",
+      "fieldReports": "Community field reports"
+    },
+    "tips": {
+      "eyebrow": "Before your first match",
+      "title": "Confirmed Beginner Tips",
+      "description": "Start with the systems described by official WARDOGS sources, not build-specific shortcuts or unverified meta advice.",
+      "items": {
+        "objective": {"title": "Play the Control Zone", "description": "The team with the most players in the active zone earns points. Enter, hold, and retake it with teammates."},
+        "economy": {"title": "Spend for the Team", "description": "Cash persists between matches and pays for each life's loadout. Match purchases to the role the team needs."},
+        "support": {"title": "Support Actions Pay", "description": "Revives, transport, supply runs, and objective control can earn cash alongside combat."},
+        "mobility": {"title": "Plan the Approach", "description": "The Control Zone is randomized inside a much larger battlefield. Check routes and transport before a long approach."}
+      }
+    },
+    "faq": {
+      "eyebrow": "Frequently Asked Questions",
+      "title": "WARDOGS Essentials",
+      "description": "Straight answers to the questions players ask before entering the battlefield.",
+      "items": {
+        "game": {"question": "What kind of game is WARDOGS?", "answer": "WARDOGS is a tactical all-out warfare first-person shooter for up to 100 players split across three teams."},
+        "release": {"question": "When does WARDOGS enter Early Access?", "answer": "WARDOGS is scheduled to enter Steam Early Access on September 10, 2026."},
+        "controlZone": {"question": "How does the Control Zone work?", "answer": "A randomized 2 x 2 km Control Zone becomes the active objective. The team with the most players inside earns points toward victory."},
+        "official": {"question": "Is WARDOGS Wiki an official site?", "answer": "No. This is an independent, fan-made community guide. Official game and account actions should always be completed through the linked WARDOGS, Team17, Steam, and Discord sources."}
+      }
+    },
+    "finalTitle": "Ready to Enter the Control Zone?",
+    "finalDescription": "Use our independent guide library to prepare for access, squad roles, vehicles, objectives, and every confirmed release milestone.",
+    "final": {"eyebrow": "Prepare for deployment", "guidesCta": "Explore the Guides", "steamCta": "Open Steam"}
+  },
   "guides": {"title": "WARDOGS Guides", "description": "Browse 20 focused guides covering access, release, stores, platforms, videos, communities, developers, gameplay, and factions.", "count": "20 Guide Topics", "read": "Read guide"},
   "article": {"sources": "Sources", "related": "Related Guides", "faq": "Frequently Asked Questions", "back": "All Guides", "directAnswer": "Quick answer", "lastChecked": "Last checked", "watch": "Watch video", "videoConsent": "Load privacy-enhanced YouTube video"},
   "categories": {"access": "Access", "release": "Release", "store": "Store", "platform": "Platform", "video": "Video", "community": "Community", "developer": "Developer", "guide": "Guide"},
-  "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki is an independent fan-made guide created for players. It covers confirmed access, release, gameplay, faction, community, and media information without affiliation to BULKHEAD, Team17, or Steam.", "description": "Independent tactical FPS guides for WARDOGS players.", "officialLinks": "Official Links", "legal": "Legal", "privacy": "Privacy Policy", "terms": "Terms of Service"},
+  "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki is an independent fan-made guide created for players. It covers confirmed access, release, gameplay, faction, community, and media information without affiliation to BULKHEAD, Team17, or Steam.", "description": "Independent tactical FPS guides for WARDOGS players.", "guideLinks": "Guide Links", "officialLinks": "Official Links", "officialSite": "Official WARDOGS Site", "revealTrailer": "Reveal Trailer", "legal": "Legal", "privacy": "Privacy Policy", "terms": "Terms of Service"},
   "privacy": {"title": "Privacy Policy", "intro": "This fan guide minimizes data collection and explains how external media and links work.", "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them."},
   "terms": {"title": "Terms of Service", "intro": "Use this independent guide as informational community material.", "content": "Game details can change. Verify purchases, access windows, platform availability, and account actions with official WARDOGS sources."},
   "notFound": {"title": "Page Not Found", "description": "That deployment route does not exist in our verified 20-topic guide library.", "home": "Return Home", "guides": "Browse Guides"}

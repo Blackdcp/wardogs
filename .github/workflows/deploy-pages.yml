@@ -1,0 +1,59 @@
+name: Deploy WARDOGS Wiki to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+      - name: Install dependencies
+        run: npm ci
+      - name: Build static site
+        env:
+          NEXT_PUBLIC_BASE_PATH: /wardogs
+          NEXT_PUBLIC_SITE_URL: https://blackdcp.github.io/wardogs
+        run: npm run build:pages
+      - name: Add Pages entry point
+        run: |
+          touch out/.nojekyll
+          cat > out/index.html <<'HTML'
+          <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=./en/"><title>WARDOGS Wiki</title><script>location.replace('./en/')</script></head><body><a href="./en/">Open WARDOGS Wiki</a></body></html>
+          HTML
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: out
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
