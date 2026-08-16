@@ -1,6 +1,6 @@
 {
   "common": {"fanMade": "Wiki da comunidade feita por fãs", "language": "Idioma", "openMenu": "Abrir menu", "closeMenu": "Fechar menu", "learnMore": "Saiba mais", "updated": "Atualizado", "official": "Oficial", "community": "Comunidade", "skipToContent": "Ir para o conteúdo", "openSteam": "Abrir WARDOGS na Steam"},
-  "nav": {"playtest": "Teste", "release": "Lançamento", "steam": "Steam", "gameplay": "Jogabilidade", "factions": "Facções", "community": "Comunidade", "videos": "Vídeos", "news": "Notícias", "guides": "Guias", "steamCta": "Ver na Steam", "primaryLabel": "Navegação principal"},
+  "nav": {"playtest": "Teste", "release": "Lançamento", "steam": "Steam", "gameplay": "Jogabilidade", "factions": "Facções", "community": "Comunidade", "videos": "Vídeos", "items": "Itens", "news": "Notícias", "guides": "Guias", "steamCta": "Ver na Steam", "primaryLabel": "Navegação principal"},
   "home": {
     "metaTitle": "WARDOGS Wiki — jogabilidade, testes e lançamento",
     "metaDescription": "A WARDOGS Wiki reúne guias verificados sobre jogabilidade, testes, lançamento, acesso pela Steam, facções, trailers, comunidade e dicas para iniciantes.",

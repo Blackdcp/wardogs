@@ -10,4 +10,14 @@ describe("sitemap", () => {
     expect(urls).toContain("http://localhost:3000/en/videos/wardogs-mortars-indirect-fire");
     expect(urls).toContain("http://localhost:3000/en/videos/wardogs-first-look-gameplay");
   });
+
+  it("includes item hubs, item type pages, and first indexable item details", () => {
+    const urls = sitemap().map((entry) => entry.url);
+
+    expect(urls).toContain("http://localhost:3000/en/items");
+    expect(urls).toContain("http://localhost:3000/en/items/weapons");
+    expect(urls).toContain("http://localhost:3000/en/items/weapons/mortar");
+    expect(urls).toContain("http://localhost:3000/ru/items/vehicles/littlebird");
+    expect(urls).not.toContain("http://localhost:3000/de/items/weapons/mortar");
+  });
 });

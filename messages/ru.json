@@ -1,6 +1,6 @@
 {
   "common": {"fanMade": "Фанатская энциклопедия сообщества", "language": "Язык", "openMenu": "Открыть меню", "closeMenu": "Закрыть меню", "learnMore": "Подробнее", "updated": "Обновлено", "official": "Официально", "community": "Сообщество", "skipToContent": "Перейти к содержимому", "openSteam": "Открыть WARDOGS в Steam"},
-  "nav": {"playtest": "Плейтест", "release": "Релиз", "steam": "Steam", "gameplay": "Геймплей", "factions": "Фракции", "community": "Сообщество", "videos": "Видео", "news": "Новости", "guides": "Руководства", "steamCta": "Открыть в Steam", "primaryLabel": "Основная навигация"},
+  "nav": {"playtest": "Плейтест", "release": "Релиз", "steam": "Steam", "gameplay": "Геймплей", "factions": "Фракции", "community": "Сообщество", "videos": "Видео", "items": "Предметы", "news": "Новости", "guides": "Руководства", "steamCta": "Открыть в Steam", "primaryLabel": "Основная навигация"},
   "home": {
     "metaTitle": "WARDOGS Wiki — геймплей, плейтест и дата релиза",
     "metaDescription": "WARDOGS Wiki предлагает проверенные руководства по геймплею, плейтестам, дате релиза, Steam, фракциям, трейлерам, сообществу и советам новичкам.",

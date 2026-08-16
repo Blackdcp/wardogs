@@ -16,6 +16,7 @@ export async function SiteHeader() {
     {href: "/guides/wardogs-factions", label: t("nav.factions")},
     {href: "/guides/wardogs-discord", label: t("nav.community")},
     {href: "/videos", label: t("nav.videos")},
+    {href: "/items", label: t("nav.items")},
     {href: "/news", label: t("nav.news")},
     {href: "/guides", label: t("nav.guides")}
   ];

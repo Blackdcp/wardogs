@@ -25,3 +25,10 @@ test("all localized home, index, and article routes resolve", async ({page}) => 
     for (const href of hrefs) expect((await page.goto(href))?.status(), href).toBe(200);
   }
 });
+
+test("item hubs and first item detail routes resolve", async ({page}) => {
+  for (const pathname of ["/en/items", "/en/items/weapons", "/en/items/weapons/mortar", "/ru/items/vehicles/littlebird"]) {
+    const response = await page.goto(pathname);
+    expect(response?.status(), pathname).toBe(200);
+  }
+});
