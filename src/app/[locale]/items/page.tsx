@@ -2,9 +2,10 @@ import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {Archive, ShieldCheck} from "lucide-react";
 import {isLocale, locales, type Locale} from "@/config/site";
-import {itemTypes, getFeaturedItems, getItemsByType} from "@/features/items/item-library";
+import {itemTypes, getFeaturedItems} from "@/features/items/item-library";
+import {getCatalogEntryCount, getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {Link} from "@/i18n/navigation";
-import {buildPageMetadata} from "@/lib/metadata";
+import {buildItemHubMetadata} from "@/lib/item-metadata";
 import {buildItemIndexJsonLd} from "@/lib/item-structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
@@ -18,12 +19,7 @@ export function generateStaticParams() {
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
-  return buildPageMetadata(
-    locale,
-    "/items",
-    "WARDOGS Items - Weapons, Vehicles & Equipment",
-    "Browse WARDOGS item pages for weapons, vehicles, equipment, Mortar, Mobile FOB, helicopters, tanks, evidence labels, and pre-release caveats."
-  );
+  return buildItemHubMetadata(locale);
 }
 
 export default async function ItemsPage({params}: PageProps) {
@@ -56,7 +52,7 @@ export default async function ItemsPage({params}: PageProps) {
           </div>
           <StatusBadge tone="warning">No final stat claims</StatusBadge>
         </div>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {itemTypes.map((itemType) => (
             <Link
               className="group border border-[#2c3631] bg-[#151b18] p-5 transition-colors hover:border-[#4d946d]"
@@ -65,7 +61,7 @@ export default async function ItemsPage({params}: PageProps) {
             >
               <div className="flex items-center justify-between gap-3">
                 <h3 className="display-font text-2xl text-white">{itemType.label}</h3>
-                <span className="font-mono text-xs uppercase text-[#68bd8d]">{getItemsByType(itemType.id).length} items</span>
+                <span className="font-mono text-xs uppercase text-[#68bd8d]">{getCatalogGuide(itemType.id)?.countLabel ?? `${getCatalogEntryCount(itemType.id)} entries`}</span>
               </div>
               <p className="mt-3 text-sm leading-6 text-[#a8b4ae]">{itemType.description}</p>
               <p className="mt-5 text-sm font-semibold text-[#7fd0a1] group-hover:text-white">Open {itemType.label}</p>
@@ -78,7 +74,7 @@ export default async function ItemsPage({params}: PageProps) {
         <div className="site-container py-12 md:py-16">
           <div className="flex items-center gap-2">
             <ShieldCheck aria-hidden="true" className="size-5 text-[#68bd8d]" />
-            <h2 className="display-font text-3xl text-white">First Indexable Item Pages</h2>
+            <h2 className="display-font text-3xl text-white">Featured Detailed Item Guides</h2>
           </div>
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {featured.map((item) => (

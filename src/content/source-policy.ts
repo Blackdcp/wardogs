@@ -14,7 +14,14 @@ const approvedHosts = new Set([
   "www.reddit.com"
 ]);
 
-const competitorHosts = new Set(["wardogshub.gg", "www.wardogshub.gg", "gamblewithyourfriends.net", "www.gamblewithyourfriends.net"]);
+const competitorHosts = new Set([
+  "wardogshub.gg",
+  "www.wardogshub.gg",
+  "wardogs.wiki",
+  "www.wardogs.wiki",
+  "gamblewithyourfriends.net",
+  "www.gamblewithyourfriends.net"
+]);
 
 export function isApprovedSourceUrl(value: string): boolean {
   try {

@@ -1,6 +1,7 @@
 import {describe, expect, it} from "vitest";
+import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
 import {getItemBySlug} from "../../src/features/items/item-library";
-import {buildItemMetadata} from "../../src/lib/item-metadata";
+import {buildCatalogGuideMetadata, buildItemHubMetadata, buildItemMetadata} from "../../src/lib/item-metadata";
 
 describe("item metadata", () => {
   it("limits item detail alternates to indexable locales", () => {
@@ -14,5 +15,28 @@ describe("item metadata", () => {
       ru: "http://localhost:3000/ru/items/weapons/mortar",
       "x-default": "http://localhost:3000/en/items/weapons/mortar"
     });
+  });
+
+  it("canonicalizes untranslated catalogue pages to English and keeps them out of the index", () => {
+    const guide = getCatalogGuide("weapons");
+    expect(guide).toBeDefined();
+
+    const metadata = buildCatalogGuideMetadata("ru", guide!);
+
+    expect(metadata.robots).toEqual({index: false, follow: true});
+    expect(metadata.alternates).toEqual({
+      canonical: "http://localhost:3000/en/items/weapons",
+      languages: {
+        en: "http://localhost:3000/en/items/weapons",
+        "x-default": "http://localhost:3000/en/items/weapons"
+      }
+    });
+  });
+
+  it("canonicalizes the untranslated item hub to English", () => {
+    const metadata = buildItemHubMetadata("de");
+
+    expect(metadata.robots).toEqual({index: false, follow: true});
+    expect(metadata.alternates?.canonical).toBe("http://localhost:3000/en/items");
   });
 });

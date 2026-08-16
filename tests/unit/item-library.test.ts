@@ -3,7 +3,8 @@ import {
   getIndexableItemPaths,
   getItemBySlug,
   getItemsByType,
-  itemLibrary
+  itemLibrary,
+  itemTypes
 } from "../../src/features/items/item-library";
 
 describe("item library", () => {
@@ -26,5 +27,17 @@ describe("item library", () => {
     expect(paths).toContainEqual({locale: "en", type: "weapons", slug: "mortar"});
     expect(paths).toContainEqual({locale: "ru", type: "vehicles", slug: "littlebird"});
     expect(paths).not.toContainEqual({locale: "de", type: "weapons", slug: "mortar"});
+  });
+
+  it("exposes all seven catalogue guide categories", () => {
+    expect(itemTypes.map((itemType) => itemType.id)).toEqual([
+      "weapons",
+      "vehicles",
+      "ammo",
+      "attachments",
+      "gear",
+      "equipment",
+      "loadouts"
+    ]);
   });
 });

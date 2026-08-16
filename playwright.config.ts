@@ -6,7 +6,13 @@ export default defineConfig({
   workers: 1,
   retries: process.env.CI ? 2 : 0,
   reporter: [["list"], ["html", {open: "never"}]],
-  use: {baseURL: "http://127.0.0.1:3000", trace: "on-first-retry"},
+  use: {
+    baseURL: "http://127.0.0.1:3000",
+    trace: "on-first-retry",
+    launchOptions: process.env.PLAYWRIGHT_EXECUTABLE_PATH
+      ? {executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH}
+      : undefined
+  },
   projects: [{name: "chromium", use: {...devices["Desktop Chrome"]}}],
   webServer: {
     command: "npm.cmd run dev -- --hostname 127.0.0.1 --port 3000",

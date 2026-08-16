@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import {expect, test} from "@playwright/test";
 
-for (const pathname of ["/en", "/en/guides", "/en/guides/wardogs-gameplay"]) {
+for (const pathname of ["/en", "/en/guides", "/en/guides/wardogs-gameplay", "/en/items", "/en/items/weapons"]) {
   test(`has no serious accessibility violations on ${pathname}`, async ({page}) => {
     await page.goto(pathname);
     await expect(page.locator("main")).toHaveCount(1);

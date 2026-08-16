@@ -5,7 +5,7 @@ import {getIndexableItemPaths, itemTypes} from "@/features/items/item-library";
 import {videoArticles} from "@/features/videos/video-library";
 import {buildAlternates} from "@/lib/metadata";
 
-const staticPaths = ["", "/guides", "/news", "/privacy", "/terms", "/items"];
+const staticPaths = ["", "/guides", "/news", "/privacy", "/terms"];
 
 export const dynamic = "force-static";
 
@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const localizedPaths = locales.flatMap((locale) => [
     ...staticPaths,
     "/videos",
-    ...itemTypes.map(({id}) => `/items/${id}`),
+    ...(locale === "en" ? ["/items", ...itemTypes.map(({id}) => `/items/${id}`)] : []),
     ...guideManifest.map(({slug}) => `/guides/${slug}`),
     ...videoArticles.map(({slug}) => `/videos/${slug}`),
     ...indexableItemPaths
@@ -25,12 +25,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return localizedPaths.map(({locale, pathname}) => {
     const alternates = buildAlternates(locale, pathname || "/");
     const itemDetailMatch = pathname.match(/^\/items\/([^\/]+)\/([^\/]+)$/);
+    const itemCatalogMatch = pathname === "/items" || /^\/items\/[^\/]+$/.test(pathname);
     const languages = itemDetailMatch
       ? Object.fromEntries(
         indexableItemPaths
           .filter(({type, slug}) => type === itemDetailMatch[1] && slug === itemDetailMatch[2])
           .map((path) => [path.locale, String(buildAlternates(path.locale, pathname).canonical)])
       ) as Record<string, string>
+      : itemCatalogMatch
+        ? {en: String(alternates.canonical), "x-default": String(alternates.canonical)}
       : alternates.languages as Record<string, string>;
     if (itemDetailMatch && languages.en) languages["x-default"] = languages.en;
     return {

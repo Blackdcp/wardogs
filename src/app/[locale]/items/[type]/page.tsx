@@ -3,8 +3,10 @@ import {notFound} from "next/navigation";
 import {ArrowLeft, Boxes} from "lucide-react";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {getItemType, getItemsByType, itemTypes} from "@/features/items/item-library";
+import {getCatalogGuide} from "@/features/items/item-catalog-guides";
+import {ItemCatalogGuide} from "@/features/items/item-catalog-guide";
 import {Link} from "@/i18n/navigation";
-import {buildPageMetadata} from "@/lib/metadata";
+import {buildCatalogGuideMetadata} from "@/lib/item-metadata";
 import {buildItemTypeJsonLd} from "@/lib/item-structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
@@ -20,12 +22,9 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const itemType = getItemType(type);
   if (!itemType) return {};
-  return buildPageMetadata(
-    locale,
-    `/items/${itemType.id}`,
-    `WARDOGS ${itemType.label} - Evidence-Labeled Item Guide`,
-    `${itemType.description} Includes evidence labels, source notes, pre-release caveats, and related WARDOGS guides.`
-  );
+  const catalogueGuide = getCatalogGuide(itemType.id);
+  if (!catalogueGuide) return {};
+  return buildCatalogGuideMetadata(locale, catalogueGuide);
 }
 
 export default async function ItemTypePage({params}: PageProps) {
@@ -35,6 +34,8 @@ export default async function ItemTypePage({params}: PageProps) {
   const itemType = getItemType(type);
   if (!itemType) notFound();
   const items = getItemsByType(itemType.id);
+  const catalogueGuide = getCatalogGuide(itemType.id);
+  if (!catalogueGuide) notFound();
 
   return (
     <main>
@@ -48,30 +49,38 @@ export default async function ItemTypePage({params}: PageProps) {
             <Boxes aria-hidden="true" className="size-4" />
             WARDOGS Item Category
           </p>
-          <h1 className="display-font mt-4 max-w-4xl text-5xl leading-none text-white md:text-7xl">WARDOGS {itemType.label}</h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">{itemType.description}</p>
+          <h1 className="display-font mt-4 max-w-4xl text-5xl leading-none text-white md:text-7xl">{catalogueGuide.title}</h1>
+          <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">{catalogueGuide.description}</p>
         </div>
       </section>
 
-      <section className="site-container py-12 md:py-16">
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((item) => (
-            <Link
-              href={`/items/${item.type}/${item.slug}`}
-              className="border border-[#2c3631] bg-[#151b18] p-5 transition-colors hover:border-[#4d946d]"
-              key={item.slug}
-            >
-              <div className="flex flex-wrap items-center gap-2">
-                <StatusBadge tone={item.status === "official" ? "accent" : "warning"}>{item.statusLabel}</StatusBadge>
-                <span className="text-xs uppercase text-[#7f8e87]">{item.subtype}</span>
-              </div>
-              <h2 className="display-font mt-4 text-2xl text-white">WARDOGS {item.name}</h2>
-              <p className="mt-3 text-sm leading-6 text-[#a8b4ae]">{item.summary}</p>
-              <p className="mt-5 text-sm font-semibold text-[#7fd0a1]">Read item guide</p>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <ItemCatalogGuide guide={catalogueGuide} />
+
+      {items.length > 0 ? (
+        <section className="border-t border-[#2c3631] bg-[#101411]">
+          <div className="site-container py-12 md:py-16">
+            <p className="font-mono text-xs uppercase text-[#68bd8d]">Standalone articles</p>
+            <h2 className="display-font mt-2 text-3xl text-white md:text-4xl">Detailed {itemType.label} Guides</h2>
+            <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {items.map((item) => (
+                <Link
+                  href={`/items/${item.type}/${item.slug}`}
+                  className="border border-[#2c3631] bg-[#151b18] p-5 transition-colors hover:border-[#4d946d]"
+                  key={item.slug}
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <StatusBadge tone={item.status === "official" ? "accent" : "warning"}>{item.statusLabel}</StatusBadge>
+                    <span className="text-xs uppercase text-[#7f8e87]">{item.subtype}</span>
+                  </div>
+                  <h3 className="display-font mt-4 text-2xl text-white">WARDOGS {item.name}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#a8b4ae]">{item.summary}</p>
+                  <p className="mt-5 text-sm font-semibold text-[#7fd0a1]">Read item guide</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
     </main>
   );
 }

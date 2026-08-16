@@ -1,5 +1,6 @@
 import type {Locale} from "@/config/site";
 import {itemLibrary, itemTypes, type ItemTypeId, type WardogsItem} from "@/features/items/item-library";
+import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {getSiteOrigin} from "./metadata";
 
 type JsonLd = Record<string, unknown>;
@@ -39,6 +40,8 @@ export function buildItemIndexJsonLd(locale: Locale): JsonLd[] {
 
 export function buildItemTypeJsonLd(locale: Locale, type: ItemTypeId): JsonLd[] {
   const label = typeLabel(type);
+  const guide = getCatalogGuide(type);
+  const catalogueRows = guide?.sections.flatMap((section) => section.rows) ?? [];
   const items = itemLibrary.filter((item) => item.type === type);
   const url = pageUrl(locale, `/items/${type}`);
   return [
@@ -46,12 +49,19 @@ export function buildItemTypeJsonLd(locale: Locale, type: ItemTypeId): JsonLd[] 
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      itemListElement: items.map((item, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: item.name,
-        url: pageUrl(locale, `/items/${item.type}/${item.slug}`)
-      }))
+      itemListElement: catalogueRows.length > 0
+        ? catalogueRows.map((catalogueRow, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: catalogueRow.cells[0],
+          url: `${url}#catalog-${index + 1}`
+        }))
+        : items.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          url: pageUrl(locale, `/items/${item.type}/${item.slug}`)
+        }))
     },
     {
       "@context": "https://schema.org",

@@ -1,6 +1,6 @@
 import type {Locale} from "@/config/site";
 
-export type ItemTypeId = "weapons" | "vehicles" | "equipment";
+export type ItemTypeId = "weapons" | "vehicles" | "ammo" | "attachments" | "gear" | "equipment" | "loadouts";
 export type ItemStatus = "official" | "verified-in-game" | "pre-release-build" | "community-report";
 export type EvidenceLevel = "Official" | "Creator Footage" | "Pre-release Build";
 
@@ -65,10 +65,34 @@ export const itemTypes: readonly ItemType[] = [
     href: "/items/vehicles"
   },
   {
+    id: "ammo",
+    label: "Ammo",
+    description: "Calibres, load types, Alpha prices, and the weapons associated with each round.",
+    href: "/items/ammo"
+  },
+  {
+    id: "attachments",
+    label: "Attachments",
+    description: "Optics and magazines with observed magnification, weight, capacity, and price data.",
+    href: "/items/attachments"
+  },
+  {
+    id: "gear",
+    label: "Gear",
+    description: "Helmet, armor, backpack, and wearable-slot choices recorded from the Alpha build.",
+    href: "/items/gear"
+  },
+  {
     id: "equipment",
     label: "Equipment",
     description: "Deployable support tools and tactical systems that affect logistics and objectives.",
     href: "/items/equipment"
+  },
+  {
+    id: "loadouts",
+    label: "Loadouts",
+    description: "Budget-first kit planning for a persistent balance that does not simply reset after a loss.",
+    href: "/items/loadouts"
   }
 ] as const;
 
