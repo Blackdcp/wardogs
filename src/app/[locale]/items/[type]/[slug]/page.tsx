@@ -10,7 +10,7 @@ import {
   type WardogsItem
 } from "@/features/items/item-library";
 import {Link} from "@/i18n/navigation";
-import {buildPageMetadata} from "@/lib/metadata";
+import {buildItemMetadata} from "@/lib/item-metadata";
 import {buildItemArticleJsonLd} from "@/lib/item-structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
@@ -26,12 +26,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const item = getItemByTypeAndSlug(type, slug);
   if (!item || !item.indexLocales.includes(locale as Extract<Locale, "en" | "ru">)) return {};
-  return buildPageMetadata(
-    locale,
-    `/items/${item.type}/${item.slug}`,
-    `WARDOGS ${item.name} - Item Guide & Evidence`,
-    `${item.summary} Includes source notes, evidence labels, role advice, strengths, counters, and pre-release caveats.`
-  );
+  return buildItemMetadata(locale, item);
 }
 
 function statusTone(item: WardogsItem): "accent" | "warning" | "muted" {
