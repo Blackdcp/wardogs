@@ -10,25 +10,35 @@ const staticPaths = ["", "/guides", "/news", "/privacy", "/terms", "/items"];
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const indexableItemPaths = getIndexableItemPaths();
   const localizedPaths = locales.flatMap((locale) => [
     ...staticPaths,
     "/videos",
     ...itemTypes.map(({id}) => `/items/${id}`),
     ...guideManifest.map(({slug}) => `/guides/${slug}`),
     ...videoArticles.map(({slug}) => `/videos/${slug}`),
-    ...getIndexableItemPaths()
+    ...indexableItemPaths
       .filter((path) => path.locale === locale)
       .map(({type, slug}) => `/items/${type}/${slug}`)
   ].map((pathname) => ({locale, pathname})));
 
   return localizedPaths.map(({locale, pathname}) => {
     const alternates = buildAlternates(locale, pathname || "/");
+    const itemDetailMatch = pathname.match(/^\/items\/([^\/]+)\/([^\/]+)$/);
+    const languages = itemDetailMatch
+      ? Object.fromEntries(
+        indexableItemPaths
+          .filter(({type, slug}) => type === itemDetailMatch[1] && slug === itemDetailMatch[2])
+          .map((path) => [path.locale, String(buildAlternates(path.locale, pathname).canonical)])
+      ) as Record<string, string>
+      : alternates.languages as Record<string, string>;
+    if (itemDetailMatch && languages.en) languages["x-default"] = languages.en;
     return {
       url: String(alternates.canonical),
       lastModified: new Date("2026-08-16T00:00:00.000Z"),
       changeFrequency: pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? "weekly" as const : "daily" as const,
       priority: pathname === "" ? 1 : pathname === "/guides" || pathname === "/videos" || pathname === "/items" ? 0.9 : pathname === "/news" ? 0.85 : pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? 0.8 : 0.3,
-      alternates: {languages: alternates.languages as Record<string, string>}
+      alternates: {languages}
     };
   });
 }

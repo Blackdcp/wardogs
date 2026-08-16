@@ -20,4 +20,14 @@ describe("sitemap", () => {
     expect(urls).toContain("http://localhost:3000/ru/items/vehicles/littlebird");
     expect(urls).not.toContain("http://localhost:3000/de/items/weapons/mortar");
   });
+
+  it("does not add non-indexable item detail locales as hreflang alternates", () => {
+    const mortar = sitemap().find((entry) => entry.url === "http://localhost:3000/en/items/weapons/mortar");
+
+    expect(mortar?.alternates?.languages).toEqual({
+      en: "http://localhost:3000/en/items/weapons/mortar",
+      ru: "http://localhost:3000/ru/items/weapons/mortar",
+      "x-default": "http://localhost:3000/en/items/weapons/mortar"
+    });
+  });
 });
