@@ -63,4 +63,15 @@ describe("SEO priority guide pages", () => {
       expect(text, `${slug} should include "${phrase}"`).toContain(phrase);
     }
   });
+
+  it("includes the latest first-look creator footage in existing guide pages", async () => {
+    const firstLook = await loadGuideDocument("en", "wardogs-first-look");
+    const gameplay = await loadGuideDocument("en", "wardogs-gameplay");
+    const firstLookText = `${firstLook?.frontmatter.sources.map(({url}) => url).join("\n")}\n${firstLook?.body}`;
+    const gameplayText = `${gameplay?.frontmatter.sources.map(({url}) => url).join("\n")}\n${gameplay?.body}`;
+
+    expect(firstLookText).toContain("UKL0hwMRT9s");
+    expect(firstLookText).toContain("Large Squad Alpha Impressions");
+    expect(gameplayText).toContain("Emergent Squad Play");
+  });
 });
