@@ -10,6 +10,7 @@ import {HomeHero} from "@/components/home/home-hero";
 import {OfficialMedia} from "@/components/home/official-media";
 import {PriorityGuides} from "@/components/home/priority-guides";
 import {StartHere} from "@/components/home/start-here";
+import {VideoIntelligence} from "@/components/home/video-intelligence";
 import {isLocale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
 import {getHomeFacts} from "@/features/home/home-data";
@@ -45,6 +46,7 @@ export default async function HomePage({params}: HomePageProps) {
       <AboutGame />
       <StartHere />
       <PriorityGuides guides={guides} />
+      <VideoIntelligence locale={locale} />
       <CategoryGrid />
       <OfficialMedia />
       <BeginnerTips />

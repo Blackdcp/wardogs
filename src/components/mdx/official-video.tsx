@@ -5,7 +5,17 @@ import {Play} from "lucide-react";
 import {useTranslations} from "next-intl";
 import {assetPath} from "@/lib/assets";
 
-const approvedVideoIds = new Set(["hVtmnaUCpuQ", "-k6IV0ITLDo", "eAE9LOV-p3s", "83AVH6FtemY"]);
+const approvedVideoIds = new Set([
+  "hVtmnaUCpuQ",
+  "ugkuP4a3xk4",
+  "-k6IV0ITLDo",
+  "eAE9LOV-p3s",
+  "83AVH6FtemY",
+  "utnQT_Jmd5w",
+  "3EynP3GjopE",
+  "3Jwi15nA-gg",
+  "UKL0hwMRT9s"
+]);
 
 export function OfficialVideo({id, title, className = "my-8"}: {id: string; title: string; className?: string}) {
   const [active, setActive] = useState(false);

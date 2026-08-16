@@ -92,8 +92,19 @@ export async function assertCompleteContentMatrix(
 }
 
 export async function compileGuideBody(body: string, components: MDXComponents) {
+  return compileLocalizedGuideBody(body, components, "en");
+}
+
+export function localizeMdxInternalLinks(body: string, locale: Locale): string {
+  const localePattern = "(?:en|ru|de|pt-br)";
+  return body
+    .replace(new RegExp(`\\]\\(/(?!${localePattern}/)(guides|videos)([^\\)]*)\\)`, "g"), `](/${locale}/$1$2)`)
+    .replace(new RegExp(`href="/(?!${localePattern}/)(guides|videos)([^"]*)"`, "g"), `href="/${locale}/$1$2"`);
+}
+
+export async function compileLocalizedGuideBody(body: string, components: MDXComponents, locale: Locale) {
   return compileMDX({
-    source: body,
+    source: localizeMdxInternalLinks(body, locale),
     components,
     options: {blockJS: true, blockDangerousJS: true, mdxOptions: {remarkPlugins: [remarkWardogsMdxPolicy]}}
   });

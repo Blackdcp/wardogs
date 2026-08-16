@@ -1,6 +1,10 @@
 import type {Locale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
 
+export function buildRelatedGuideHref(locale: Locale, slug: string) {
+  return `/${locale}/guides/${slug}`;
+}
+
 export async function getRelatedGuides(locale: Locale, slug: string, limit = 3) {
   const guides = await listGuideSummaries(locale);
   const current = guides.find((guide) => guide.slug === slug);

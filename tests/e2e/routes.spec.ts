@@ -5,7 +5,7 @@ const locales = ["en", "ru", "de", "pt-br"];
 test("root redirects and primary routes resolve", async ({page}) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/en\/?$/);
-  for (const pathname of ["/en", "/en/guides", "/en/news", "/en/guides/wardogs-gameplay", "/en/privacy", "/en/terms"]) {
+  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/news", "/en/guides/wardogs-gameplay", "/en/videos/wardogs-mortars-indirect-fire", "/en/privacy", "/en/terms"]) {
     const response = await page.goto(pathname);
     expect(response?.status(), pathname).toBe(200);
   }

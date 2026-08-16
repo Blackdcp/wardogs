@@ -4,7 +4,7 @@ import {getTranslations, setRequestLocale} from "next-intl/server";
 import {ArrowLeft, CalendarDays} from "lucide-react";
 import {isLocale, locales, officialLinks, type Locale} from "@/config/site";
 import {guideManifest} from "@/content/manifest";
-import {compileGuideBody, loadGuideDocument} from "@/content/guides";
+import {compileLocalizedGuideBody, loadGuideDocument} from "@/content/guides";
 import {mdxComponents} from "@/components/mdx/mdx-components";
 import {SourceList} from "@/components/guides/source-list";
 import {RelatedGuides} from "@/components/guides/related-guides";
@@ -48,7 +48,7 @@ export default async function GuideArticlePage({params}: PageProps) {
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "categories"}),
     getRelatedGuides(locale, slug),
-    compileGuideBody(guide.body, mdxComponents)
+    compileLocalizedGuideBody(guide.body, mdxComponents, locale)
   ]);
 
   return (
@@ -85,7 +85,7 @@ export default async function GuideArticlePage({params}: PageProps) {
         </div>
       </article>
       <div className="border-t border-[#2c3631] bg-[#111512]">
-        <RelatedGuides guides={related} title={t("related")} />
+        <RelatedGuides guides={related} locale={locale} title={t("related")} />
       </div>
     </main>
   );
