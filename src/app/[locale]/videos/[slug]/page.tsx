@@ -6,7 +6,8 @@ import {ButtonLink} from "@/components/ui/button-link";
 import {OfficialVideo} from "@/components/mdx/official-video";
 import {JsonLd} from "@/components/seo/json-ld";
 import {getVideoArticle, videoArticles} from "@/features/videos/video-library";
-import {buildPageMetadata, getSiteOrigin} from "@/lib/metadata";
+import {buildVideoArticleJsonLd} from "@/features/videos/video-structured-data";
+import {buildPageMetadata} from "@/lib/metadata";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -21,30 +22,6 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   return article ? buildPageMetadata(locale, `/videos/${article.slug}`, article.title, article.description) : {};
 }
 
-function videoJsonLd(locale: Locale, article: NonNullable<ReturnType<typeof getVideoArticle>>) {
-  const url = `${getSiteOrigin()}/${locale}/videos/${article.slug}`;
-  return [
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: article.title,
-      description: article.description,
-      mainEntityOfPage: url,
-      author: {"@type": "Organization", name: "WARDOGS Wiki"},
-      image: `${getSiteOrigin()}/images/og-wardogs.jpg`
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "VideoObject",
-      name: article.sourceLabel,
-      description: article.description,
-      embedUrl: `https://www.youtube-nocookie.com/embed/${article.youtubeId}`,
-      url: article.sourceUrl,
-      thumbnailUrl: `https://i.ytimg.com/vi/${article.youtubeId}/hqdefault.jpg`
-    }
-  ];
-}
-
 export default async function VideoArticlePage({params}: PageProps) {
   const {locale: requestedLocale, slug} = await params;
   if (!isLocale(requestedLocale)) notFound();
@@ -54,7 +31,7 @@ export default async function VideoArticlePage({params}: PageProps) {
 
   return (
     <main>
-      <JsonLd data={videoJsonLd(locale, article)} />
+      <JsonLd data={buildVideoArticleJsonLd(locale, article)} />
       <header className="border-b border-[#2c3631] bg-[#101411] py-12 md:py-16">
         <div className="site-container max-w-4xl">
           <a className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href={`/${locale}/videos`}>

@@ -5,6 +5,8 @@ export type VideoArticle = {
   youtubeId: string;
   sourceLabel: string;
   sourceUrl: string;
+  publishedDate: string;
+  updatedDate: string;
   kind: "official" | "creator";
   priority: number;
   internalGuideSlug: string;
@@ -22,6 +24,8 @@ export const videoArticles: readonly VideoArticle[] = [
     youtubeId: "ugkuP4a3xk4",
     sourceLabel: "WARDOGS: 10 Reasons NOT to Buy",
     sourceUrl: "https://www.youtube.com/watch?v=ugkuP4a3xk4",
+    publishedDate: "2026-08-13",
+    updatedDate: "2026-08-16",
     kind: "official",
     priority: 1,
     internalGuideSlug: "wardogs-early-access",
@@ -88,6 +92,8 @@ export const videoArticles: readonly VideoArticle[] = [
     youtubeId: "-k6IV0ITLDo",
     sourceLabel: "FGS: 7 Things You Need to Know About WARDOGS",
     sourceUrl: "https://www.youtube.com/watch?v=-k6IV0ITLDo",
+    publishedDate: "2026-08-13",
+    updatedDate: "2026-08-16",
     kind: "creator",
     priority: 2,
     internalGuideSlug: "wardogs-gameplay",
@@ -154,6 +160,8 @@ export const videoArticles: readonly VideoArticle[] = [
     youtubeId: "eAE9LOV-p3s",
     sourceLabel: "jackfrags: WARDOGS Gameplay and Impressions",
     sourceUrl: "https://www.youtube.com/watch?v=eAE9LOV-p3s",
+    publishedDate: "2026-08-13",
+    updatedDate: "2026-08-16",
     kind: "creator",
     priority: 3,
     internalGuideSlug: "wardogs-gameplay",
@@ -220,6 +228,8 @@ export const videoArticles: readonly VideoArticle[] = [
     youtubeId: "83AVH6FtemY",
     sourceLabel: "FRANKIEonPC: WARDOGS Alpha Gameplay and Impressions",
     sourceUrl: "https://www.youtube.com/watch?v=83AVH6FtemY",
+    publishedDate: "2026-08-13",
+    updatedDate: "2026-08-16",
     kind: "creator",
     priority: 4,
     internalGuideSlug: "wardogs-alpha",
@@ -286,6 +296,8 @@ export const videoArticles: readonly VideoArticle[] = [
     youtubeId: "utnQT_Jmd5w",
     sourceLabel: "Are WARDOGS Mortars OP or just loads of fun?",
     sourceUrl: "https://www.youtube.com/watch?v=utnQT_Jmd5w",
+    publishedDate: "2026-08-13",
+    updatedDate: "2026-08-16",
     kind: "creator",
     priority: 5,
     internalGuideSlug: "wardogs-gameplay",
@@ -352,6 +364,8 @@ export const videoArticles: readonly VideoArticle[] = [
     youtubeId: "3EynP3GjopE",
     sourceLabel: "I Played WARDOGS for 20+ Hours",
     sourceUrl: "https://www.youtube.com/watch?v=3EynP3GjopE",
+    publishedDate: "2026-08-13",
+    updatedDate: "2026-08-16",
     kind: "creator",
     priority: 6,
     internalGuideSlug: "wardogs-gameplay",
@@ -418,6 +432,8 @@ export const videoArticles: readonly VideoArticle[] = [
     youtubeId: "3Jwi15nA-gg",
     sourceLabel: "I Tested Sniping in WARDOGS for 30+ Hours",
     sourceUrl: "https://www.youtube.com/watch?v=3Jwi15nA-gg",
+    publishedDate: "2026-08-13",
+    updatedDate: "2026-08-16",
     kind: "creator",
     priority: 7,
     internalGuideSlug: "wardogs-gameplay",
@@ -484,6 +500,8 @@ export const videoArticles: readonly VideoArticle[] = [
     youtubeId: "UKL0hwMRT9s",
     sourceLabel: "I can FINALLY show off WARDOGS Gameplay",
     sourceUrl: "https://www.youtube.com/watch?v=UKL0hwMRT9s",
+    publishedDate: "2026-08-13",
+    updatedDate: "2026-08-16",
     kind: "creator",
     priority: 8,
     internalGuideSlug: "wardogs-first-look",
