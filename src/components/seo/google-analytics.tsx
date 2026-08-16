@@ -1,6 +1,6 @@
 import Script from "next/script";
 
-export const GA_MEASUREMENT_ID = "G-0GJ404WEYV";
+export const GA_MEASUREMENT_ID = "G-7B37NSM6WZ";
 
 export function googleAnalyticsScriptSrc() {
   return `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
