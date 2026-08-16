@@ -41,4 +41,26 @@ describe("SEO priority guide pages", () => {
       expect(localizedText, `${slug} should not contain mojibake CJK text`).not.toMatch(/[\u4E00-\u9FFF]{4}/);
     }
   });
+
+  it("keeps refreshed WARDOGS source-driven guide facts visible", async () => {
+    const expectations = [
+      ["wardogs-gameplay", "one-time starting cash"],
+      ["wardogs-early-access", "37 weapons"],
+      ["wardogs-price", "$59.99"],
+      ["wardogs-first-look", "10 Reasons NOT to Buy"],
+      ["wardogs-ps5", "controller support"],
+    ] as const;
+
+    for (const [slug, phrase] of expectations) {
+      const guide = await loadGuideDocument("en", slug);
+      const text = [
+        guide?.frontmatter.title,
+        guide?.frontmatter.description,
+        guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join(" "),
+        guide?.body,
+      ].join("\n");
+
+      expect(text, `${slug} should include "${phrase}"`).toContain(phrase);
+    }
+  });
 });
