@@ -4,6 +4,10 @@ import {getSiteOrigin} from "@/lib/metadata";
 
 type JsonLdItem = Record<string, unknown>;
 
+function asUtcDateTime(date: string) {
+  return `${date}T00:00:00+00:00`;
+}
+
 export function buildVideoArticleJsonLd(locale: Locale, article: VideoArticle): JsonLdItem[] {
   const origin = getSiteOrigin();
   const url = `${origin}/${locale}/videos/${article.slug}`;
@@ -25,7 +29,7 @@ export function buildVideoArticleJsonLd(locale: Locale, article: VideoArticle): 
       "@type": "VideoObject",
       name: article.sourceLabel,
       description: article.description,
-      uploadDate: article.publishedDate,
+      uploadDate: asUtcDateTime(article.publishedDate),
       embedUrl: `https://www.youtube-nocookie.com/embed/${article.youtubeId}`,
       url: article.sourceUrl,
       thumbnailUrl: `https://i.ytimg.com/vi/${article.youtubeId}/hqdefault.jpg`
