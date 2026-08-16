@@ -25,4 +25,18 @@ describe("video article library", () => {
       "wardogs-gameplay-impressions"
     ]);
   });
+
+  it("treats each video page as a full article instead of a short summary", () => {
+    for (const article of videoArticles) {
+      const bodyText = [
+        article.quickAnswer,
+        ...article.takeaways,
+        ...article.sections.flatMap((section) => [section.heading, ...section.body])
+      ].join(" ");
+
+      expect(article.takeaways.length, article.slug).toBeGreaterThanOrEqual(5);
+      expect(article.sections.length, article.slug).toBeGreaterThanOrEqual(5);
+      expect(bodyText.length, article.slug).toBeGreaterThanOrEqual(3000);
+    }
+  });
 });
