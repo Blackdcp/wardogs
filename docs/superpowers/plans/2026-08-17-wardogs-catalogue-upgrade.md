@@ -470,7 +470,7 @@ git commit -m "feat: upgrade the wardogs catalogue hub"
 
 - [ ] **Step 1: Write failing component tests**
 
-Assert that an inline Ammo record renders facts without an anchor to a missing detail page, a Weapon record links to `/items/weapons/ak74`, and filters hide unmatched cards without removing records from the server markup.
+Assert that an inline Ammo record renders facts without an anchor to a missing detail page, a planned Weapon record exposes the stable `record-weapons-ak74` anchor without linking to `/items/weapons/ak74`, and filters hide unmatched cards without removing records from the server markup.
 
 - [ ] **Step 2: Run tests to verify failure**
 
