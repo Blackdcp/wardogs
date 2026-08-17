@@ -25,17 +25,19 @@ function hasImageExplorer(type: ItemTypeId): type is CatalogueRecordType {
 }
 
 function buildItemListEntries(locale: Locale, type: ItemTypeId, url: string) {
-  const legacyItems = getItemsByType(type);
+  const indexableItems = getItemsByType(type);
 
   if (hasImageExplorer(type)) {
-    const recordEntries = getCatalogueRecords(type).map((record) => ({
+    const records = getCatalogueRecords(type);
+    const recordSlugs = new Set(records.map((record) => record.slug));
+    const recordEntries = records.map((record) => ({
       name: record.name,
       url: record.detailStatus === "published" && record.detailHref
         ? pageUrl(locale, record.detailHref)
         : `${url}#record-${type}-${record.slug}`,
       image: absoluteImageUrl(record.image)
     }));
-    return [...recordEntries, ...legacyItems.map((item) => ({
+    return [...recordEntries, ...indexableItems.filter((item) => !recordSlugs.has(item.slug)).map((item) => ({
       name: item.name,
       url: pageUrl(locale, `/items/${item.type}/${item.slug}`)
     }))];
@@ -44,7 +46,7 @@ function buildItemListEntries(locale: Locale, type: ItemTypeId, url: string) {
   const catalogueRows = getCatalogGuide(type)?.sections.flatMap((section) => section.rows) ?? [];
   return [
     ...catalogueRows.map((catalogueRow, index) => ({name: catalogueRow.cells[0], url: `${url}#catalog-${index + 1}`})),
-    ...legacyItems.map((item) => ({name: item.name, url: pageUrl(locale, `/items/${item.type}/${item.slug}`)}))
+    ...indexableItems.map((item) => ({name: item.name, url: pageUrl(locale, `/items/${item.type}/${item.slug}`)}))
   ];
 }
 

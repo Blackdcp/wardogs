@@ -23,7 +23,7 @@ describe("ItemCatalogGuide", () => {
     expect(html).toContain("scope=\"row\"");
   });
 
-  it("links matched planned rows to stable record anchors and leaves unmatched rows plain", () => {
+  it("links matched published rows to localized details and leaves unmatched rows plain", () => {
     const guide = getCatalogGuide("weapons");
     expect(guide).toBeDefined();
     const guideWithUnknown = {
@@ -38,8 +38,10 @@ describe("ItemCatalogGuide", () => {
     const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale="en" />);
 
     expect(ak74?.recordSlug).toBe("ak74");
-    expect(html).toContain('href="#record-weapons-ak74"');
+    expect(ak74?.detailStatus).toBe("published");
+    expect(html).toContain('href="/en/items/weapons/ak74"');
     expect(html).not.toContain('href="/items/weapons/ak74"');
+    expect(html).not.toContain('href="#record-weapons-ak74"');
     expect(html).toContain("Unknown Prototype");
     expect(html).not.toContain('href="#record-weapons-unknown-prototype"');
   });

@@ -4,6 +4,22 @@ import type {CatalogueRecordType} from "../../src/features/catalogue/catalogue-t
 import {expectImagesLoaded} from "./helpers";
 
 const locales = ["en", "ru", "de", "pt-br"];
+const weaponModelSlugs = [
+  "a-91",
+  "ak74",
+  "amp-9",
+  "amr-50",
+  "bmr-308",
+  "bushmaster-m17s",
+  "compound-bow",
+  "deagle",
+  "fal",
+  "galil",
+  "ggx-17",
+  "ggx-18",
+  "judge",
+  "kh-2002"
+] as const;
 
 test("root redirects and primary routes resolve", async ({page}) => {
   await page.goto("/");
@@ -81,7 +97,7 @@ test("category routes render approved heroes, complete explorers, safe anchors, 
     await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(category.hero));
     await expect(page.locator('[data-catalogue-record]')).toHaveCount(category.count);
     await expect(page.locator('[data-catalogue-record] img')).toHaveCount(category.count);
-    await expect(page.locator('[data-catalogue-record] a')).toHaveCount(0);
+    await expect(page.locator('[data-catalogue-record] a')).toHaveCount(category.type === "weapons" ? 14 : 0);
     await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
     await expectImagesLoaded(page);
   }
@@ -111,11 +127,14 @@ test("visual category responses contain every record in raw server HTML", async 
   }
 
   const weaponsHtml = await (await request.get("/en/items/weapons")).text();
-  expect(weaponsHtml).not.toContain('href="/items/weapons/ak74"');
-  expect(weaponsHtml).not.toContain('href="/en/items/weapons/ak74"');
+  for (const slug of weaponModelSlugs) {
+    expect(weaponsHtml).toContain(`href="/en/items/weapons/${slug}"`);
+  }
+  const vehiclesHtml = await (await request.get("/en/items/vehicles")).text();
+  expect(vehiclesHtml).not.toContain('href="/en/items/vehicles/ah-6m-miniguns"');
 });
 
-test("category search and filters keep canonical URLs while table rows target stable records", async ({page}) => {
+test("category search and filters keep canonical URLs while published table rows open details", async ({page}) => {
   await page.goto("/en/items/weapons");
   const records = page.locator('[data-catalogue-record]');
 
@@ -125,17 +144,33 @@ test("category search and filters keep canonical URLs while table rows target st
   await expect(page.locator("#record-weapons-ak74")).toBeHidden();
   await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
 
-  const tableLink = page.locator('th a[href="#record-weapons-ak74"]');
+  const tableLink = page.locator('th a[href="/en/items/weapons/ak74"]');
   await expect(tableLink).toHaveCount(1);
-  await expect(page.locator('a[href="/en/items/weapons/ak74"]')).toHaveCount(0);
   await tableLink.click();
 
-  await expect(page).toHaveURL(/#record-weapons-ak74$/);
-  await expect(page.getByRole("button", {name: "All", exact: true})).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("button", {name: "SMG", exact: true})).toHaveAttribute("aria-pressed", "false");
-  await expect(page.getByLabel("Search Weapons")).toHaveValue("");
-  await expect(page.locator("#record-weapons-ak74")).toBeVisible();
-  await expect(page.locator("#record-weapons-ak74")).toBeInViewport();
+  await expect(page).toHaveURL(/\/en\/items\/weapons\/ak74\/?$/);
+  await expect(page.getByRole("heading", {level: 1, name: "WARDOGS AK74"})).toBeVisible();
+});
+
+test("every English weapon model route renders complete evidence and one native ad", async ({page}) => {
+  for (const slug of weaponModelSlugs) {
+    const response = await page.goto(`/en/items/weapons/${slug}`);
+    expect(response?.status(), slug).toBe(200);
+
+    const image = page.locator("main header figure img");
+    await expect(image, `${slug} detail image`).toHaveCount(1);
+    await expect(image).toHaveJSProperty("complete", true);
+    expect(await image.evaluate((element) => (element as HTMLImageElement).naturalWidth), `${slug} image pixels`).toBeGreaterThan(0);
+    await expect(page.getByText("Quick answer", {exact: true})).toBeVisible();
+    await expect(page.getByRole("heading", {name: "Observed in Alpha 1", exact: true})).toBeVisible();
+    await expect(page.getByRole("heading", {name: "Unconfirmed for Early Access / final release", exact: true})).toBeVisible();
+    await expect(page.getByRole("heading", {name: "Sources", exact: true})).toBeVisible();
+    await expect(page.getByRole("heading", {name: "Sources", exact: true}).locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+  }
+
+  expect((await page.goto("/ru/items/weapons/amp-9"))?.status()).toBe(404);
+  expect((await page.goto("/en/items/vehicles/ah-6m-miniguns"))?.status()).toBe(404);
 });
 
 test("homepage promotes the catalogue before video intelligence", async ({page}) => {

@@ -1,6 +1,8 @@
 import {existsSync} from "node:fs";
 import {join} from "node:path";
 import {describe, expect, it} from "vitest";
+import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
+import type {CatalogueRecordType} from "../../src/features/catalogue/catalogue-types";
 import {getItemBySlug} from "../../src/features/items/item-library";
 import {buildItemArticleJsonLd, buildItemIndexJsonLd, buildItemTypeJsonLd} from "../../src/lib/item-structured-data";
 
@@ -83,7 +85,7 @@ describe("item structured data", () => {
     expect((weapons[2].itemListElement as Array<{name: string}>)[1].name).toBe("Catalogue");
   });
 
-  it("uses record anchors and images for planned weapon models while retaining only legacy article URLs", () => {
+  it("uses published detail URLs and images for weapon models without duplicate entries", () => {
     const weapons = buildItemTypeJsonLd("en", "weapons");
     const entries = weapons[1].itemListElement as Array<{name: string; url: string; image?: string}>;
 
@@ -91,12 +93,12 @@ describe("item structured data", () => {
       "@type": "ListItem",
       position: 1,
       name: "A-91",
-      url: "http://localhost:3000/en/items/weapons#record-weapons-a-91",
+      url: "http://localhost:3000/en/items/weapons/a-91",
       image: "http://localhost:3000/images/catalogue/weapons/a-91.webp"
     });
     expect(entries[1]).toMatchObject({
       name: "AK74",
-      url: "http://localhost:3000/en/items/weapons#record-weapons-ak74",
+      url: "http://localhost:3000/en/items/weapons/ak74",
       image: "http://localhost:3000/images/catalogue/weapons/ak74.webp"
     });
     expect(entries[14]).toEqual({
@@ -106,9 +108,8 @@ describe("item structured data", () => {
       url: "http://localhost:3000/en/items/weapons/mortar"
     });
     expect(entries.slice(0, 14).every((entry) => entry.image?.startsWith("http://localhost:3000/images/catalogue/weapons/"))).toBe(true);
-    expect(entries.filter((entry) => entry.url.includes("/items/weapons/")).map((entry) => entry.url)).toEqual([
-      "http://localhost:3000/en/items/weapons/mortar"
-    ]);
+    expect(entries.filter((entry) => entry.url.includes("/items/weapons/")).map((entry) => entry.url)).toHaveLength(15);
+    expect(new Set(entries.map((entry) => entry.name)).size).toBe(15);
   });
 
   it("uses the English canonical category URL and catalogue imagery in category schema", () => {
@@ -140,7 +141,13 @@ describe("item structured data", () => {
         return {slug, name};
       });
       expect(entries.slice(0, expectedRecords.length).map(({name}) => name)).toEqual(expectedRecords.map(({name}) => name));
-      expect(entries.slice(0, expectedRecords.length).map(({url}) => url)).toEqual(expectedRecords.map(({slug}) => `http://localhost:3000/en/items/${type}#record-${type}-${slug}`));
+      const records = getCatalogueRecords(type as CatalogueRecordType);
+      expect(entries.slice(0, expectedRecords.length).map(({url}) => url)).toEqual(expectedRecords.map(({slug}) => {
+        const record = records.find((candidate) => candidate.slug === slug);
+        return record?.detailStatus === "published"
+          ? `http://localhost:3000/en${record.detailHref}`
+          : `http://localhost:3000/en/items/${type}#record-${type}-${slug}`;
+      }));
       for (const entry of entries.slice(0, expectedRecords.length)) {
         expect(entry.image).toMatch(/^http:\/\/localhost:3000\/images\/catalogue\//);
         expect(existsSync(join(process.cwd(), "public", new URL(entry.image!).pathname))).toBe(true);
@@ -154,7 +161,7 @@ describe("item structured data", () => {
     try {
       const jsonLd = buildItemTypeJsonLd("de", "weapons");
       expect(jsonLd[0].url).toBe("http://localhost:3000/en/items/weapons/");
-      expect((jsonLd[1].itemListElement as Array<{url: string}>)[0].url).toBe("http://localhost:3000/en/items/weapons/#record-weapons-a-91");
+      expect((jsonLd[1].itemListElement as Array<{url: string}>)[0].url).toBe("http://localhost:3000/en/items/weapons/a-91/");
     } finally {
       if (previous === undefined) delete process.env.GITHUB_PAGES;
       else process.env.GITHUB_PAGES = previous;

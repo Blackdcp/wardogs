@@ -9,6 +9,7 @@ import {
   sevenThingsVideo,
   type ItemSource
 } from "./item-sources";
+import {weaponItems} from "./weapon-items";
 
 export type ItemTypeId = "weapons" | "vehicles" | "ammo" | "attachments" | "gear" | "equipment" | "loadouts";
 export type ItemStatus = "official" | "verified-in-game" | "pre-release-build" | "community-report";
@@ -378,11 +379,10 @@ function createModelArticle(record: CatalogueRecord, index: number): ModelWardog
 }
 
 export const modelArticleLibrary: readonly ModelWardogsItem[] = [
-  ...getCatalogueRecords("weapons"),
   ...getCatalogueRecords("vehicles")
 ].filter((record) => record.detailStatus === "planned").map(createModelArticle);
 
-export const itemLibrary: readonly WardogsItem[] = [...legacyItemLibrary, ...modelArticleLibrary];
+export const itemLibrary: readonly WardogsItem[] = [...legacyItemLibrary, ...weaponItems, ...modelArticleLibrary];
 
 export function getItemType(type: string): ItemType | undefined {
   return itemTypes.find((itemType) => itemType.id === type);

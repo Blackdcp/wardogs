@@ -18,11 +18,15 @@ describe("catalogue records", () => {
     expect(getCatalogueRecords("gear")).toHaveLength(11);
   });
 
-  it("plans only weapons and vehicles for the new detail rollout", () => {
-    const newDetails = catalogueRecords.filter((record) => record.detailStatus === "planned");
-    expect(newDetails).toHaveLength(34);
-    expect(newDetails.every((record) => record.type === "weapons" || record.type === "vehicles")).toBe(true);
-    expect(newDetails.every((record) => record.detailHref === undefined)).toBe(true);
+  it("publishes weapon details while keeping every vehicle model planned", () => {
+    const published = catalogueRecords.filter((record) => record.detailStatus === "published");
+    const planned = catalogueRecords.filter((record) => record.detailStatus === "planned");
+
+    expect(published).toHaveLength(14);
+    expect(published.every((record) => record.type === "weapons")).toBe(true);
+    expect(published.every((record) => record.detailHref === `/items/weapons/${record.slug}`)).toBe(true);
+    expect(planned).toHaveLength(20);
+    expect(planned.every((record) => record.type === "vehicles" && record.detailHref === undefined)).toBe(true);
   });
 
   it("keeps inline records useful without fake routes", () => {
