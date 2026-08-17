@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import type {Locale} from "@/config/site";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
-import type {WardogsItem} from "@/features/items/item-library";
+import type {ItemTypeId, WardogsItem} from "@/features/items/item-library";
 import {buildPageMetadata, getSiteOrigin, languageTags} from "./metadata";
 
 function localizedItemPath(locale: Locale, item: WardogsItem) {
@@ -38,7 +38,13 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
 }
 
 export function buildCatalogGuideMetadata(locale: Locale, guide: CatalogGuide): Metadata {
-  return buildEnglishOnlyItemPageMetadata(locale, `/items/${guide.id}`, guide.title, guide.description);
+  return buildEnglishOnlyItemPageMetadata(
+    locale,
+    `/items/${guide.id}`,
+    guide.title,
+    guide.description,
+    catalogueMetadataImages[guide.id]
+  );
 }
 
 export function buildItemHubMetadata(locale: Locale): Metadata {
@@ -46,17 +52,38 @@ export function buildItemHubMetadata(locale: Locale): Metadata {
     locale,
     "/items",
     "WARDOGS Catalogue - Weapons, Vehicles & Equipment",
-    "Browse the WARDOGS Catalogue for weapons, vehicles, ammunition, attachments, gear, equipment, loadouts, evidence labels, and pre-release caveats."
+    "Browse the WARDOGS Catalogue for weapons, vehicles, ammunition, attachments, gear, equipment, loadouts, evidence labels, and pre-release caveats.",
+    catalogueMetadataImages.hub
   );
 }
 
-function buildEnglishOnlyItemPageMetadata(locale: Locale, pathname: string, title: string, description: string): Metadata {
+const catalogueMetadataImages: Record<ItemTypeId | "hub", string> = {
+  hub: "/images/catalogue/banners/thegame-1280.webp",
+  weapons: "/images/catalogue/banners/weapons-1280.webp",
+  vehicles: "/images/catalogue/banners/vehicles-1280.webp",
+  ammo: "/images/catalogue/ammo/556x45mm.webp",
+  attachments: "/images/catalogue/banners/attachments-1280.webp",
+  gear: "/images/catalogue/gear/heavy-armor.webp",
+  equipment: "/images/catalogue/banners/meta-1280.webp",
+  loadouts: "/images/catalogue/banners/loadouts-1280.webp"
+};
+
+function buildEnglishOnlyItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath: string): Metadata {
   const origin = getSiteOrigin();
   const canonical = `${origin}/en${pathname}`;
   const metadata = buildPageMetadata("en", pathname, title, description);
+  const image = `${origin}${imagePath}`;
 
   return {
     ...metadata,
+    openGraph: {
+      ...metadata.openGraph,
+      images: [{url: image, alt: title}]
+    },
+    twitter: {
+      ...metadata.twitter,
+      images: [image]
+    },
     robots: locale === "en" ? undefined : {index: false, follow: true},
     alternates: {
       canonical,

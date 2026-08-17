@@ -46,4 +46,20 @@ describe("item metadata", () => {
       }
     });
   });
+
+  it("uses catalogue artwork for hub and category social metadata", () => {
+    const guide = getCatalogGuide("weapons");
+    expect(guide).toBeDefined();
+
+    const hub = buildItemHubMetadata("en");
+    const category = buildCatalogGuideMetadata("en", guide!);
+
+    expect(hub.openGraph?.images).toEqual([
+      expect.objectContaining({url: "http://localhost:3000/images/catalogue/banners/thegame-1280.webp"})
+    ]);
+    expect(category.openGraph?.images).toEqual([
+      expect.objectContaining({url: "http://localhost:3000/images/catalogue/banners/weapons-1280.webp"})
+    ]);
+    expect(category.twitter?.images).toEqual(["http://localhost:3000/images/catalogue/banners/weapons-1280.webp"]);
+  });
 });

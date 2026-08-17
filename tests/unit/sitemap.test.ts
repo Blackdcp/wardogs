@@ -45,4 +45,15 @@ describe("sitemap", () => {
       "x-default": "http://localhost:3000/en/items/weapons"
     });
   });
+
+  it("keeps unfinished catalogue model URLs out of the index", () => {
+    const urls = sitemap().map((entry) => entry.url);
+
+    expect(urls.filter((url) => url.includes("/items/weapons/"))).toEqual([
+      "http://localhost:3000/en/items/weapons/mortar",
+      "http://localhost:3000/ru/items/weapons/mortar"
+    ]);
+    expect(urls).not.toContain("http://localhost:3000/en/items/weapons/ak74");
+    expect(urls).not.toContain("http://localhost:3000/en/items/vehicles/bobcat");
+  });
 });
