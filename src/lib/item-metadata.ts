@@ -19,6 +19,8 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
 
   const title = `WARDOGS ${item.name} - Item Guide & Evidence`;
   const description = `${item.summary} Includes source notes, evidence labels, role advice, strengths, counters, and pre-release caveats.`;
+  const image = `${origin}${item.detailImage ?? "/images/og-wardogs.jpg"}`;
+  const imageAlt = item.detailImageAlt ?? `WARDOGS ${item.name}`;
 
   return {
     title,
@@ -32,9 +34,9 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
       siteName: "WARDOGS Wiki",
       title,
       description,
-      images: [{url: `${origin}/images/og-wardogs.jpg`, width: 1200, height: 630, alt: `WARDOGS ${item.name}`}]
+      images: [{url: image, width: 1200, height: 630, alt: imageAlt}]
     },
-    twitter: {card: "summary_large_image", title, description, images: [`${origin}/images/og-wardogs.jpg`]}
+    twitter: {card: "summary_large_image", title, description, images: [image]}
   };
 }
 

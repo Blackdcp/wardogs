@@ -17,6 +17,29 @@ describe("item metadata", () => {
     });
   });
 
+  it("uses a model article's exact committed image for social metadata", () => {
+    const amp9 = getItemBySlug("amp-9");
+    expect(amp9).toBeDefined();
+
+    const metadata = buildItemMetadata("en", amp9!);
+
+    expect(metadata.openGraph?.images).toEqual([
+      expect.objectContaining({url: "http://localhost:3000/images/catalogue/weapons/amp-9.webp", alt: "AMP-9 submachine gun"})
+    ]);
+    expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/catalogue/weapons/amp-9.webp"]);
+  });
+
+  it("keeps legacy item social metadata on the generic fallback image", () => {
+    const mortar = getItemBySlug("mortar");
+    expect(mortar).toBeDefined();
+
+    const metadata = buildItemMetadata("en", mortar!);
+
+    expect(metadata.openGraph?.images).toEqual([
+      expect.objectContaining({url: "http://localhost:3000/images/og-wardogs.jpg", alt: "WARDOGS Mortar"})
+    ]);
+  });
+
   it("canonicalizes untranslated catalogue pages to English and keeps them out of the index", () => {
     const guide = getCatalogGuide("weapons");
     expect(guide).toBeDefined();

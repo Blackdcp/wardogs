@@ -21,6 +21,21 @@ describe("item library", () => {
     expect(mortar?.facts.every((fact) => fact.evidence.length > 0)).toBe(true);
   });
 
+  it("prepares planned model articles with their committed detail image and observed facts", () => {
+    const amp9 = getItemBySlug("amp-9");
+
+    expect(amp9).toMatchObject({
+      detailImage: "/images/catalogue/weapons/amp-9.webp",
+      detailImageAlt: "AMP-9 submachine gun",
+      observedPrice: "$900",
+      observedAmmoOrVehicleClass: "9x19mm",
+      detailUpdatedAt: "2026-08-07"
+    });
+    expect(amp9?.confirmedFacts).toContain("Ammunition: 9x19mm");
+    expect(amp9?.unconfirmedFacts).toEqual([]);
+    expect(amp9?.indexLocales).toEqual([]);
+  });
+
   it("indexes English and Russian item details first", () => {
     const paths = getIndexableItemPaths();
 

@@ -108,10 +108,10 @@ export function buildItemArticleJsonLd(locale: Locale, item: WardogsItem): JsonL
       "@type": "Article",
       headline: `WARDOGS ${item.name}`,
       description: item.summary,
-      dateModified: "2026-08-16",
+      dateModified: item.detailUpdatedAt ?? "2026-08-16",
       mainEntityOfPage: url,
       author: {"@type": "Organization", name: "WARDOGS Wiki"},
-      image: `${getSiteOrigin()}/images/og-wardogs.jpg`,
+      image: `${getSiteOrigin()}${item.detailImage ?? "/images/og-wardogs.jpg"}`,
       about: {
         "@type": "Thing",
         name: item.name,

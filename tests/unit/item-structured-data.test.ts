@@ -17,6 +17,29 @@ describe("item structured data", () => {
     expect((jsonLd[1].itemListElement as Array<{name: string}>)[1].name).toBe("Catalogue");
   });
 
+  it("uses a model article's exact committed image and updated date in Article schema", () => {
+    const amp9 = getItemBySlug("amp-9");
+    expect(amp9).toBeDefined();
+
+    const jsonLd = buildItemArticleJsonLd("en", amp9!);
+
+    expect(jsonLd[0]).toMatchObject({
+      "@type": "Article",
+      image: "http://localhost:3000/images/catalogue/weapons/amp-9.webp",
+      dateModified: "2026-08-07"
+    });
+    expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
+  });
+
+  it("keeps legacy Article schema on the generic fallback image", () => {
+    const mortar = getItemBySlug("mortar");
+    expect(mortar).toBeDefined();
+
+    const jsonLd = buildItemArticleJsonLd("en", mortar!);
+
+    expect(jsonLd[0]).toMatchObject({image: "http://localhost:3000/images/og-wardogs.jpg"});
+  });
+
   it("uses collection schema for item hubs", () => {
     const jsonLd = buildItemIndexJsonLd("en");
 

@@ -1,4 +1,14 @@
 import type {Locale} from "@/config/site";
+import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
+import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
+import {
+  gameplayVideo,
+  mortarsVideo,
+  officialSteam,
+  officialTeam17,
+  sevenThingsVideo,
+  type ItemSource
+} from "./item-sources";
 
 export type ItemTypeId = "weapons" | "vehicles" | "ammo" | "attachments" | "gear" | "equipment" | "loadouts";
 export type ItemStatus = "official" | "verified-in-game" | "pre-release-build" | "community-report";
@@ -9,13 +19,6 @@ export type ItemType = {
   label: string;
   description: string;
   href: `/items/${ItemTypeId}`;
-};
-
-export type ItemSource = {
-  label: string;
-  url: string;
-  kind: "official" | "creator" | "internal";
-  lastChecked: string;
 };
 
 export type ItemFact = {
@@ -48,6 +51,14 @@ export type WardogsItem = {
 export type IndexableItemPath = {
   locale: Extract<Locale, "en" | "ru">;
   type: ItemTypeId;
+  detailImage?: string;
+  detailImageAlt?: string;
+  observedPrice?: string;
+  observedUnlock?: string;
+  observedAmmoOrVehicleClass?: string;
+  confirmedFacts?: readonly string[];
+  unconfirmedFacts?: readonly string[];
+  detailUpdatedAt?: string;
   slug: string;
 };
 
@@ -96,42 +107,7 @@ export const itemTypes: readonly ItemType[] = [
   }
 ] as const;
 
-const officialSteam: ItemSource = {
-  label: "WARDOGS on Steam",
-  url: "https://store.steampowered.com/app/1867240/WARDOGS/",
-  kind: "official",
-  lastChecked: "2026-08-16"
-};
-
-const officialTeam17: ItemSource = {
-  label: "Team17 WARDOGS page",
-  url: "https://www.team17.com/games/wardogs",
-  kind: "official",
-  lastChecked: "2026-08-16"
-};
-
-const sevenThingsVideo: ItemSource = {
-  label: "FGS: 7 Things You Need to Know About WARDOGS",
-  url: "https://www.youtube.com/watch?v=-k6IV0ITLDo",
-  kind: "creator",
-  lastChecked: "2026-08-16"
-};
-
-const mortarsVideo: ItemSource = {
-  label: "Are WARDOGS Mortars OP or just loads of fun?",
-  url: "https://www.youtube.com/watch?v=utnQT_Jmd5w",
-  kind: "creator",
-  lastChecked: "2026-08-16"
-};
-
-const gameplayVideo: ItemSource = {
-  label: "WARDOGS gameplay impressions",
-  url: "https://www.youtube.com/watch?v=eAE9LOV-p3s",
-  kind: "creator",
-  lastChecked: "2026-08-16"
-};
-
-export const itemLibrary: readonly WardogsItem[] = [
+const legacyItemLibrary: readonly WardogsItem[] = [
   {
     slug: "mortar",
     name: "Mortar",
@@ -338,12 +314,80 @@ export const itemLibrary: readonly WardogsItem[] = [
   }
 ] as const;
 
+type ModelWardogsItem = WardogsItem & Required<Pick<WardogsItem,
+  "detailImage" | "detailImageAlt" | "confirmedFacts" | "unconfirmedFacts" | "detailUpdatedAt"
+>>;
+
+const modelArticleUpdatedAt = "2026-08-07";
+
+function readRecordFact(record: CatalogueRecord, label: string) {
+  return record.facts.find((fact) => fact.label === label)?.value;
+}
+
+function isUnconfirmedValue(value: string) {
+  return value === "Not captured" || value === "Gate unread";
+}
+
+function createModelArticle(record: CatalogueRecord, index: number): ModelWardogsItem {
+  const observedPrice = readRecordFact(record, "Alpha price");
+  const observedUnlock = readRecordFact(record, "Observed gate");
+  const observedAmmoOrVehicleClass = record.type === "weapons"
+    ? readRecordFact(record, "Ammunition")
+    : readRecordFact(record, "Role");
+  const confirmedFacts = record.facts
+    .filter((fact) => !isUnconfirmedValue(fact.value) && fact.value !== "-")
+    .map((fact) => `${fact.label}: ${fact.value}`);
+  const unconfirmedFacts = record.facts
+    .filter((fact) => isUnconfirmedValue(fact.value))
+    .map((fact) => `${fact.label} was ${fact.value === "Gate unread" ? "unread" : "not captured"} in Alpha 1.`);
+
+  return {
+    slug: record.slug,
+    name: record.name,
+    type: record.type,
+    subtype: record.subtype,
+    status: record.evidenceStatus,
+    statusLabel: "Pre-release build",
+    build: record.dataAsOf,
+    summary: record.summary,
+    description: `${record.summary} This article foundation preserves the observed Alpha 1 catalogue record without treating it as final launch data.`,
+    role: record.type === "weapons"
+      ? `Use the ${record.name} within the observed ${record.subtype.toLowerCase()} role and account for its ammunition and progression requirements.`
+      : `Use the ${record.name} for its observed ${record.subtype.toLowerCase()} role while accounting for price, gate, and team support.`,
+    strengths: confirmedFacts.slice(0, 3),
+    cautions: unconfirmedFacts.length > 0
+      ? unconfirmedFacts
+      : ["Alpha 1 values can change before Early Access."],
+    facts: record.facts.map((fact) => ({label: fact.label, value: fact.value, evidence: ["Pre-release Build"]})),
+    relatedGuides: record.type === "weapons" ? ["wardogs-gameplay", "wardogs-playtest"] : ["wardogs-gameplay", "wardogs-first-look"],
+    relatedItems: [],
+    sources: [officialSteam, officialTeam17],
+    detailImage: record.image,
+    detailImageAlt: record.imageAlt,
+    ...(observedPrice && !isUnconfirmedValue(observedPrice) ? {observedPrice} : {}),
+    ...(observedUnlock && !isUnconfirmedValue(observedUnlock) ? {observedUnlock} : {}),
+    ...(observedAmmoOrVehicleClass ? {observedAmmoOrVehicleClass} : {}),
+    confirmedFacts,
+    unconfirmedFacts,
+    detailUpdatedAt: modelArticleUpdatedAt,
+    priority: 100 + index,
+    indexLocales: []
+  };
+}
+
+export const modelArticleLibrary: readonly ModelWardogsItem[] = [
+  ...getCatalogueRecords("weapons"),
+  ...getCatalogueRecords("vehicles")
+].filter((record) => record.detailStatus === "planned").map(createModelArticle);
+
+export const itemLibrary: readonly WardogsItem[] = [...legacyItemLibrary, ...modelArticleLibrary];
+
 export function getItemType(type: string): ItemType | undefined {
   return itemTypes.find((itemType) => itemType.id === type);
 }
 
 export function getItemsByType(type: ItemTypeId): WardogsItem[] {
-  return itemLibrary.filter((item) => item.type === type).sort((a, b) => a.priority - b.priority);
+  return itemLibrary.filter((item) => item.type === type && item.indexLocales.length > 0).sort((a, b) => a.priority - b.priority);
 }
 
 export function getItemBySlug(slug: string): WardogsItem | undefined {
@@ -357,7 +401,7 @@ export function getItemByTypeAndSlug(type: string, slug: string): WardogsItem | 
 }
 
 export function getFeaturedItems(limit = 6): WardogsItem[] {
-  return [...itemLibrary].sort((a, b) => a.priority - b.priority).slice(0, limit);
+  return itemLibrary.filter((item) => item.indexLocales.length > 0).sort((a, b) => a.priority - b.priority).slice(0, limit);
 }
 
 export function getRelatedItems(item: WardogsItem): WardogsItem[] {

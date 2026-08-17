@@ -1,0 +1,41 @@
+export type ItemSource = {
+  label: string;
+  url: string;
+  kind: "official" | "creator" | "internal";
+  lastChecked: string;
+};
+
+export const officialSteam: ItemSource = {
+  label: "WARDOGS on Steam",
+  url: "https://store.steampowered.com/app/1867240/WARDOGS/",
+  kind: "official",
+  lastChecked: "2026-08-16"
+};
+
+export const officialTeam17: ItemSource = {
+  label: "Team17 WARDOGS page",
+  url: "https://www.team17.com/games/wardogs",
+  kind: "official",
+  lastChecked: "2026-08-16"
+};
+
+export const sevenThingsVideo: ItemSource = {
+  label: "FGS: 7 Things You Need to Know About WARDOGS",
+  url: "https://www.youtube.com/watch?v=-k6IV0ITLDo",
+  kind: "creator",
+  lastChecked: "2026-08-16"
+};
+
+export const mortarsVideo: ItemSource = {
+  label: "Are WARDOGS Mortars OP or just loads of fun?",
+  url: "https://www.youtube.com/watch?v=utnQT_Jmd5w",
+  kind: "creator",
+  lastChecked: "2026-08-16"
+};
+
+export const gameplayVideo: ItemSource = {
+  label: "WARDOGS gameplay impressions",
+  url: "https://www.youtube.com/watch?v=eAE9LOV-p3s",
+  kind: "creator",
+  lastChecked: "2026-08-16"
+};

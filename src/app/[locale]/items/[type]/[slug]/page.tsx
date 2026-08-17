@@ -1,4 +1,5 @@
 import type {Metadata} from "next";
+import Image from "next/image";
 import {notFound} from "next/navigation";
 import {ArrowLeft, CalendarDays, ExternalLink} from "lucide-react";
 import {isLocale, type Locale} from "@/config/site";
@@ -46,6 +47,19 @@ export default async function ItemDetailPage({params}: PageProps) {
   const itemType = getItemType(item.type);
   const relatedItems = getRelatedItems(item);
   const adsT = await getTranslations({locale, namespace: "ads"});
+  const quickFacts = item.detailImage
+    ? [
+      ...(item.observedPrice ? [{label: "Observed price", value: item.observedPrice}] : []),
+      ...(item.observedUnlock ? [{label: "Observed unlock", value: item.observedUnlock}] : []),
+      ...(item.observedAmmoOrVehicleClass ? [{label: item.type === "weapons" ? "Ammunition" : "Vehicle class", value: item.observedAmmoOrVehicleClass}] : [])
+    ]
+    : item.facts.map(({label, value}) => ({label, value}));
+  const confirmedFacts = item.confirmedFacts ?? item.facts
+    .filter((fact) => fact.value !== "Not confirmed")
+    .map((fact) => `${fact.label}: ${fact.value}`);
+  const unconfirmedFacts = item.unconfirmedFacts ?? item.facts
+    .filter((fact) => fact.value === "Not confirmed")
+    .map((fact) => `${fact.label} is not confirmed.`);
 
   return (
     <main>
@@ -63,6 +77,18 @@ export default async function ItemDetailPage({params}: PageProps) {
           </div>
           <h1 className="display-font mt-5 text-4xl leading-[1.05] text-white sm:text-5xl md:text-6xl">WARDOGS {item.name}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]">{item.description}</p>
+          {item.detailImage && item.detailImageAlt ? (
+            <figure className="mt-8 border border-[#2c3631] bg-[#151b18] p-2">
+              <Image
+                alt={item.detailImageAlt}
+                className="aspect-video w-full object-contain"
+                height={720}
+                priority
+                src={item.detailImage}
+                width={1280}
+              />
+            </figure>
+          ) : null}
         </div>
       </header>
 
@@ -75,22 +101,30 @@ export default async function ItemDetailPage({params}: PageProps) {
         <AdsterraNativeBanner label={adsT("label")} />
 
         <section aria-labelledby="facts-title">
-          <h2 className="display-font text-3xl text-white" id="facts-title">Item Facts</h2>
+          <h2 className="display-font text-3xl text-white" id="facts-title">Quick Facts</h2>
           <dl className="mt-5 grid gap-px bg-[#2c3631] sm:grid-cols-2">
-            {item.facts.map((fact) => (
+            {quickFacts.map((fact) => (
               <div className="bg-[#151b18] p-4" key={fact.label}>
                 <dt className="text-xs font-semibold uppercase text-[#7f8e87]">{fact.label}</dt>
                 <dd className="mt-2 text-base font-semibold text-white">{fact.value}</dd>
-                <dd className="mt-3 flex flex-wrap gap-2">
-                  {fact.evidence.map((evidence) => (
-                    <span className="rounded-[4px] border border-[#46534d] bg-[#202823] px-2 py-1 text-xs uppercase text-[#c8d2cd]" key={evidence}>
-                      {evidence}
-                    </span>
-                  ))}
-                </dd>
               </div>
             ))}
           </dl>
+        </section>
+
+        <section className="mt-12 grid gap-6 md:grid-cols-2" aria-label="Evidence summary">
+          <div>
+            <h2 className="display-font text-3xl text-white">Confirmed</h2>
+            <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
+              {confirmedFacts.map((fact) => <li className="border-l border-[#4d946d] pl-4" key={fact}>{fact}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h2 className="display-font text-3xl text-white">Unconfirmed</h2>
+            <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
+              {unconfirmedFacts.map((fact) => <li className="border-l border-[#927328] pl-4" key={fact}>{fact}</li>)}
+            </ul>
+          </div>
         </section>
 
         <section className="mt-12" aria-labelledby="role-title">
