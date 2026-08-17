@@ -54,6 +54,24 @@ test("desktop disclosure stays open after a fresh pointer entry and click", asyn
 
   await expect(catalogue).toHaveAttribute("aria-expanded", "true");
   await expect(page.getByRole("link", {name: "Weapons", exact: true})).toBeVisible();
+
+  await page.mouse.down();
+  await page.mouse.up();
+  await expect(catalogue).toHaveAttribute("aria-expanded", "false");
+
+  await catalogue.focus();
+  await page.keyboard.press("Enter");
+  await expect(catalogue).toHaveAttribute("aria-expanded", "true");
+  await page.keyboard.press("Space");
+  await expect(catalogue).toHaveAttribute("aria-expanded", "false");
+
+  const game = page.getByRole("button", {name: "Game"});
+  const guides = page.getByRole("button", {name: "Guides"});
+  await game.hover();
+  await expect(game).toHaveAttribute("aria-expanded", "true");
+  await guides.hover();
+  await expect(game).toHaveAttribute("aria-expanded", "false");
+  await expect(guides).toHaveAttribute("aria-expanded", "true");
 });
 
 test("mobile menu expands grouped catalogue links", async ({page}) => {
@@ -81,12 +99,31 @@ test("mobile focus trap includes expanded links and wraps in both directions", a
   const game = navigation.getByRole("button", {name: "Game"});
   const catalogue = navigation.getByRole("button", {name: "Catalogue"});
   const catalogueHome = navigation.getByRole("link", {name: "Catalogue Home"});
+  const videos = navigation.getByRole("link", {name: "Videos", exact: true});
   const news = navigation.getByRole("link", {name: "News", exact: true});
 
   await catalogue.click();
   await page.keyboard.press("Tab");
   await expect(catalogueHome).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(catalogue).toBeFocused();
 
+  for (const linkName of [
+    "Catalogue Home",
+    "Weapons",
+    "Vehicles",
+    "Ammo",
+    "Attachments",
+    "Gear",
+    "Equipment",
+    "Loadouts"
+  ]) {
+    await page.keyboard.press("Tab");
+    await expect(navigation.getByRole("link", {name: linkName, exact: true})).toBeFocused();
+  }
+
+  await page.keyboard.press("Tab");
+  await expect(videos).toBeFocused();
   await news.focus();
   await page.keyboard.press("Tab");
   await expect(game).toBeFocused();

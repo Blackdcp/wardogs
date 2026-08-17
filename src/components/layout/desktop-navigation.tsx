@@ -14,6 +14,7 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
   const navigationId = useId();
   const navigationRef = useRef<HTMLElement>(null);
   const triggerRefs = useRef(new Map<string, HTMLButtonElement>());
+  const pointerEntryGroupRef = useRef<string | null>(null);
   const [openGroupId, setOpenGroupId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -21,13 +22,17 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
     const groupId = openGroupId;
 
     function handlePointerDown(event: PointerEvent) {
-      if (!navigationRef.current?.contains(event.target as Node)) setOpenGroupId(null);
+      if (!navigationRef.current?.contains(event.target as Node)) {
+        pointerEntryGroupRef.current = null;
+        setOpenGroupId(null);
+      }
     }
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
       event.preventDefault();
       const trigger = triggerRefs.current.get(groupId);
+      pointerEntryGroupRef.current = null;
       setOpenGroupId(null);
       trigger?.focus();
     }
@@ -66,7 +71,14 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
           const open = openGroupId === group.id;
           const dropdownId = `${navigationId}-${group.id}`;
           return (
-            <li key={group.id} className="relative" onPointerEnter={() => setOpenGroupId(group.id)}>
+            <li
+              key={group.id}
+              className="relative"
+              onPointerEnter={() => {
+                if (!open) pointerEntryGroupRef.current = group.id;
+                setOpenGroupId(group.id);
+              }}
+            >
               <button
                 ref={(node) => {
                   if (node) triggerRefs.current.set(group.id, node);
@@ -77,12 +89,14 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
                 aria-controls={dropdownId}
                 className="inline-flex min-h-11 min-w-24 items-center justify-center gap-1.5 whitespace-nowrap px-3 text-[13px] font-semibold text-[#c2ccc7] transition-colors hover:text-[#79d19c]"
                 onClick={(event) => {
-                  const keyboardToggle = event.detail === 0;
-                  setOpenGroupId(keyboardToggle && open ? null : group.id);
+                  const openedByPointerEntry = pointerEntryGroupRef.current === group.id;
+                  pointerEntryGroupRef.current = null;
+                  setOpenGroupId(event.detail > 0 && openedByPointerEntry ? group.id : open ? null : group.id);
                 }}
                 onKeyDown={(event) => {
                   if (event.key !== "ArrowDown") return;
                   event.preventDefault();
+                  pointerEntryGroupRef.current = null;
                   setOpenGroupId(group.id);
                   focusFirstItem(group.id);
                 }}
@@ -103,7 +117,10 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
                       <Link
                         href={item.href}
                         className="flex min-h-10 items-center whitespace-nowrap rounded-[4px] px-3 py-2 text-sm font-semibold text-[#dce4df] transition-colors hover:bg-[#1e2923] hover:text-[#79d19c]"
-                        onClick={() => setOpenGroupId(null)}
+                        onClick={() => {
+                          pointerEntryGroupRef.current = null;
+                          setOpenGroupId(null);
+                        }}
                       >
                         {item.label}
                       </Link>
