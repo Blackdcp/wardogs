@@ -74,6 +74,7 @@ describe("CatalogueCard", () => {
 
   it("includes the configured base path in published English weapon and vehicle hrefs", () => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    vi.stubEnv("GITHUB_PAGES", "true");
     const ak74 = getCatalogueRecords("weapons").find((record) => record.slug === "ak74");
     const bobcat = getCatalogueRecords("vehicles").find((record) => record.slug === "bobcat");
     expect(ak74).toBeDefined();
@@ -82,9 +83,9 @@ describe("CatalogueCard", () => {
     const weaponHtml = renderToStaticMarkup(<CatalogueCard locale="ru" record={ak74!} />);
     const vehicleHtml = renderToStaticMarkup(<CatalogueCard locale="de" record={bobcat!} />);
 
-    expect(weaponHtml).toContain('href="/wardogs/en/items/weapons/ak74"');
+    expect(weaponHtml).toContain('href="/wardogs/en/items/weapons/ak74/"');
     expect(weaponHtml).not.toContain('href="/en/items/weapons/ak74"');
-    expect(vehicleHtml).toContain('href="/wardogs/en/items/vehicles/bobcat"');
+    expect(vehicleHtml).toContain('href="/wardogs/en/items/vehicles/bobcat/"');
     expect(vehicleHtml).not.toContain('href="/de/items/vehicles/bobcat"');
   });
 

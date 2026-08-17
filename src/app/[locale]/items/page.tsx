@@ -13,6 +13,7 @@ import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {getFeaturedItems, itemTypes, type ItemTypeId} from "@/features/items/item-library";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
+import {publicRoutePath} from "@/lib/public-url";
 import {buildItemHubMetadata} from "@/lib/item-metadata";
 import {buildItemIndexJsonLd} from "@/lib/item-structured-data";
 
@@ -87,7 +88,7 @@ function CataloguePreviewRow({type, title, description}: {type: "weapons" | "veh
       <ul className="mt-6 grid gap-5 sm:grid-cols-3">
         {records.map((record) => (
           <li data-catalogue-preview key={record.slug} className="min-w-0 border-t border-[#354039] pt-4">
-            <a className="group block h-full" href={assetPath(`/en${record.detailHref}`)}>
+            <a className="group block h-full" href={publicRoutePath(`/en${record.detailHref}`)}>
               <span className="relative block aspect-[4/3] overflow-hidden bg-[#090c0a]">
                 <Image src={assetPath(record.image)} alt={record.imageAlt} fill sizes={previewSizes} className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.02]" />
               </span>

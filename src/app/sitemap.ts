@@ -9,6 +9,10 @@ const staticPaths = ["", "/guides", "/news", "/privacy", "/terms"];
 
 export const dynamic = "force-static";
 
+export function resolveItemLastModified(item: {detailUpdatedAt?: string} | undefined) {
+  return new Date(item?.detailUpdatedAt ?? "2026-08-16T00:00:00.000Z");
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const indexableItemPaths = getIndexableItemPaths();
   const localizedPaths = locales.flatMap((locale) => [
@@ -39,7 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (itemDetailMatch && languages.en) languages["x-default"] = languages.en;
     return {
       url: String(alternates.canonical),
-      lastModified: item?.detailUpdatedAt ? new Date(item.detailUpdatedAt) : new Date("2026-08-16T00:00:00.000Z"),
+      lastModified: resolveItemLastModified(item),
       changeFrequency: pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? "weekly" as const : "daily" as const,
       priority: pathname === "" ? 1 : pathname === "/guides" || pathname === "/videos" || pathname === "/items" ? 0.9 : pathname === "/news" ? 0.85 : pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? 0.8 : 0.3,
       alternates: {languages}

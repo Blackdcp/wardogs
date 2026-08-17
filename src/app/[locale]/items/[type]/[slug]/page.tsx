@@ -13,6 +13,7 @@ import {
 import {Link} from "@/i18n/navigation";
 import {buildItemMetadata} from "@/lib/item-metadata";
 import {buildItemArticleJsonLd} from "@/lib/item-structured-data";
+import {assetPath} from "@/lib/assets";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {getTranslations} from "next-intl/server";
@@ -28,7 +29,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale, type, slug} = await params;
   if (!isLocale(locale)) return {};
   const item = getItemByTypeAndSlug(type, slug);
-  if (!item || !item.indexLocales.includes(locale as Extract<Locale, "en" | "ru">)) return {};
+  if (!item) return {};
   return buildItemMetadata(locale, item);
 }
 
@@ -85,7 +86,7 @@ export default async function ItemDetailPage({params}: PageProps) {
                 className="aspect-video w-full object-contain"
                 height={720}
                 priority
-                src={item.detailImage}
+                src={assetPath(item.detailImage)}
                 width={1280}
               />
             </figure>

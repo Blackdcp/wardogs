@@ -1,6 +1,5 @@
 import {describe, expect, it} from "vitest";
-import sitemap from "../../src/app/sitemap";
-import {getItemByTypeAndSlug} from "../../src/features/items/item-library";
+import sitemap, {resolveItemLastModified} from "../../src/app/sitemap";
 
 const weaponModelSlugs = [
   "a-91", "ak74", "amp-9", "amr-50", "bmr-308", "bushmaster-m17s", "compound-bow",
@@ -20,6 +19,17 @@ const newModelContracts = [
 ];
 const newModelUrls = newModelContracts.map(({type, slug}) => `http://localhost:3000/en/items/${type}/${slug}`);
 const legacyWeaponAndVehicleSlugs = new Set(["mortar", "littlebird", "tank", "attack-helicopter", "armored-transport"]);
+const legacyContracts = [
+  {type: "weapons", slug: "mortar"},
+  {type: "equipment", slug: "mobile-fob"},
+  {type: "vehicles", slug: "littlebird"},
+  {type: "vehicles", slug: "tank"},
+  {type: "vehicles", slug: "attack-helicopter"},
+  {type: "vehicles", slug: "armored-transport"}
+] as const;
+const legacyUrls = ["en", "ru"].flatMap((locale) => legacyContracts.map(({type, slug}) =>
+  `http://localhost:3000/${locale}/items/${type}/${slug}`
+));
 
 describe("sitemap", () => {
   it("includes standalone video article URLs for indexing", () => {
@@ -85,15 +95,37 @@ describe("sitemap", () => {
     }
   });
 
-  it("uses each new model article's actual detailUpdatedAt and weekly frequency", () => {
+  it("uses the exact committed model article date and weekly frequency for all 34 URLs", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const contract of newModelContracts) {
-      const item = getItemByTypeAndSlug(contract.type, contract.slug);
       const url = `http://localhost:3000/en/items/${contract.type}/${contract.slug}`;
-      expect(item?.detailUpdatedAt, `${contract.type}/${contract.slug} article date`).toBeDefined();
-      expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe(new Date(`${item!.detailUpdatedAt}T00:00:00.000Z`).toISOString());
+      expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe("2026-08-07T00:00:00.000Z");
       expect(entriesByUrl.get(url)?.changeFrequency, url).toBe("weekly");
+    }
+  });
+
+  it("resolves distinct supplied detail dates instead of a shared model constant", () => {
+    expect(resolveItemLastModified({detailUpdatedAt: "2026-01-02"}).toISOString()).toBe("2026-01-02T00:00:00.000Z");
+    expect(resolveItemLastModified({detailUpdatedAt: "2026-05-19"}).toISOString()).toBe("2026-05-19T00:00:00.000Z");
+    expect(resolveItemLastModified(undefined).toISOString()).toBe("2026-08-16T00:00:00.000Z");
+  });
+
+  it("contains the exact six legacy English and Russian pairs with matching alternates", () => {
+    const entries = sitemap().filter((entry) => legacyUrls.includes(entry.url));
+
+    expect(entries.map((entry) => entry.url)).toEqual(legacyUrls);
+    expect(entries).toHaveLength(12);
+    for (const {type, slug} of legacyContracts) {
+      const en = `http://localhost:3000/en/items/${type}/${slug}`;
+      const ru = `http://localhost:3000/ru/items/${type}/${slug}`;
+      for (const url of [en, ru]) {
+        expect(entries.find((entry) => entry.url === url)?.alternates?.languages, url).toEqual({
+          en,
+          ru,
+          "x-default": en
+        });
+      }
     }
   });
 
@@ -111,6 +143,31 @@ describe("sitemap", () => {
     } finally {
       if (previous === undefined) delete process.env.GITHUB_PAGES;
       else process.env.GITHUB_PAGES = previous;
+    }
+  });
+
+  it("uses a host-only site URL plus the configured Pages base exactly once", () => {
+    const previous = {
+      basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+      githubPages: process.env.GITHUB_PAGES,
+      siteUrl: process.env.NEXT_PUBLIC_SITE_URL
+    };
+    process.env.NEXT_PUBLIC_BASE_PATH = "/wardogs";
+    process.env.GITHUB_PAGES = "true";
+    process.env.NEXT_PUBLIC_SITE_URL = "https://blackdcp.github.io";
+    try {
+      const bobcat = sitemap().find((entry) => entry.url.includes("/items/vehicles/bobcat"));
+      expect(bobcat?.url).toBe("https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/");
+      expect(bobcat?.alternates?.languages).toEqual({
+        en: "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/",
+        "x-default": "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/"
+      });
+    } finally {
+      for (const [key, value] of Object.entries(previous)) {
+        const envKey = key === "basePath" ? "NEXT_PUBLIC_BASE_PATH" : key === "githubPages" ? "GITHUB_PAGES" : "NEXT_PUBLIC_SITE_URL";
+        if (value === undefined) delete process.env[envKey];
+        else process.env[envKey] = value;
+      }
     }
   });
 });

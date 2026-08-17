@@ -18,7 +18,7 @@
     "content:validate": "vitest run tests/content",
     "links:check": "node scripts/check-external-links.mjs",
     "test:e2e": "playwright test",
-    "test:pages": "npm run build:pages && npm run test:pages:built",
+    "test:pages": "node scripts/run-pages-smoke.mjs",
     "test:pages:built": "playwright test --config playwright.pages.config.ts"
   },
   "dependencies": {

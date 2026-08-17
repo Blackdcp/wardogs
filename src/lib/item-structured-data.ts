@@ -4,8 +4,9 @@ import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getItemsByType, itemTypes, type ItemTypeId, type WardogsItem} from "@/features/items/item-library";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
-import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
+import {buildLocalizedUrl} from "./metadata";
 import {getItemCanonicalLocale} from "./item-metadata";
+import {publicAssetUrl} from "./public-url";
 
 type JsonLd = Record<string, unknown>;
 
@@ -18,7 +19,7 @@ function typeLabel(type: ItemTypeId) {
 }
 
 function absoluteImageUrl(pathname: string) {
-  return `${getSiteOrigin()}${pathname}`;
+  return publicAssetUrl(pathname);
 }
 
 function hasImageExplorer(type: ItemTypeId): type is CatalogueRecordType {
@@ -115,7 +116,7 @@ export function buildItemArticleJsonLd(locale: Locale, item: WardogsItem): JsonL
       dateModified: item.detailUpdatedAt ?? "2026-08-16",
       mainEntityOfPage: url,
       author: {"@type": "Organization", name: "WARDOGS Wiki"},
-      image: `${getSiteOrigin()}${item.detailImage ?? "/images/og-wardogs.jpg"}`,
+      image: publicAssetUrl(item.detailImage ?? "/images/og-wardogs.jpg"),
       about: {
         "@type": "Thing",
         name: item.name,

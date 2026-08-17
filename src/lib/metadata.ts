@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import type {GuideDocument} from "@/content/guides";
 import type {Locale} from "@/config/site";
 import {assetPath} from "@/lib/assets";
+import {getPublicSiteBase, publicAssetUrl, publicRoutePath, publicRouteUrl} from "@/lib/public-url";
 
 const languageTags: Record<Locale, string> = {
   en: "en",
@@ -11,11 +12,7 @@ const languageTags: Record<Locale, string> = {
 };
 
 export function getSiteOrigin() {
-  const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
-  const defaultOrigin = process.env.NODE_ENV === "production" ? "https://www.wardogswiki.com" : "http://localhost:3000";
-  const value = process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.NODE_ENV === "production" ? defaultOrigin : vercelHost ? `https://${vercelHost}` : defaultOrigin);
-  const origin = value.replace(/\/$/, "");
+  const origin = getPublicSiteBase();
   if (process.env.NODE_ENV === "production" && !origin.startsWith("https://")) {
     throw new Error("NEXT_PUBLIC_SITE_URL must use HTTPS in production");
   }
@@ -24,12 +21,12 @@ export function getSiteOrigin() {
 
 export function localizedPath(locale: Locale, pathname: string) {
   const cleanPath = pathname === "/" ? "" : `/${pathname.replace(/^\/+|\/+$/g, "")}`;
-  const localized = `/${locale}${cleanPath}`;
-  return process.env.GITHUB_PAGES === "true" ? `${localized}/` : localized;
+  return publicRoutePath(`/${locale}${cleanPath}`);
 }
 
 export function buildLocalizedUrl(locale: Locale, pathname: string) {
-  return `${getSiteOrigin()}${localizedPath(locale, pathname)}`;
+  const cleanPath = pathname === "/" ? "" : `/${pathname.replace(/^\/+|\/+$/g, "")}`;
+  return publicRouteUrl(`/${locale}${cleanPath}`);
 }
 
 export function buildAlternates(locale: Locale, pathname: string): NonNullable<Metadata["alternates"]> {
@@ -59,9 +56,9 @@ export function buildPageMetadata(locale: Locale, pathname: string, title: strin
       siteName: "WARDOGS Wiki",
       title,
       description,
-      images: [{url: `${getSiteOrigin()}/images/og-wardogs.jpg`, width: 1200, height: 630, alt: "WARDOGS Wiki"}]
+      images: [{url: publicAssetUrl("/images/og-wardogs.jpg"), width: 1200, height: 630, alt: "WARDOGS Wiki"}]
     },
-    twitter: {card: "summary_large_image", title, description, images: [`${getSiteOrigin()}/images/og-wardogs.jpg`]}
+    twitter: {card: "summary_large_image", title, description, images: [publicAssetUrl("/images/og-wardogs.jpg")]}
   };
 }
 

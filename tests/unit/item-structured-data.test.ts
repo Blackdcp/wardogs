@@ -1,10 +1,14 @@
 import {existsSync} from "node:fs";
 import {join} from "node:path";
-import {describe, expect, it} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "../../src/features/catalogue/catalogue-types";
 import {getItemBySlug} from "../../src/features/items/item-library";
 import {buildItemArticleJsonLd, buildItemIndexJsonLd, buildItemTypeJsonLd} from "../../src/lib/item-structured-data";
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 describe("item structured data", () => {
   it("uses article schema for item detail pages", () => {
@@ -191,5 +195,22 @@ describe("item structured data", () => {
       if (previous === undefined) delete process.env.GITHUB_PAGES;
       else process.env.GITHUB_PAGES = previous;
     }
+  });
+
+  it("uses one host-only Pages deployment base throughout model JSON-LD", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://blackdcp.github.io");
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    vi.stubEnv("GITHUB_PAGES", "true");
+    const bobcat = getItemBySlug("bobcat");
+
+    const jsonLd = buildItemArticleJsonLd("ru", bobcat!);
+    const encoded = JSON.stringify(jsonLd);
+
+    expect(jsonLd[0]).toMatchObject({
+      mainEntityOfPage: "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/",
+      image: "https://blackdcp.github.io/wardogs/images/catalogue/vehicles/bobcat.webp"
+    });
+    expect(encoded).not.toContain("/wardogs/wardogs/");
+    expect(encoded).not.toContain("/ru/items/vehicles/bobcat");
   });
 });

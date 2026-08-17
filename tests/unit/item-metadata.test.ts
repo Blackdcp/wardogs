@@ -1,7 +1,11 @@
-import {describe, expect, it} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
 import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
 import {getItemBySlug} from "../../src/features/items/item-library";
 import {buildCatalogGuideMetadata, buildItemHubMetadata, buildItemMetadata} from "../../src/lib/item-metadata";
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 describe("item metadata", () => {
   it("limits item detail alternates to indexable locales", () => {
@@ -129,5 +133,26 @@ describe("item metadata", () => {
       if (previous === undefined) delete process.env.GITHUB_PAGES;
       else process.env.GITHUB_PAGES = previous;
     }
+  });
+
+  it("uses one host-only Pages deployment base for model canonical, Open Graph, and image URLs", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://blackdcp.github.io");
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    vi.stubEnv("GITHUB_PAGES", "true");
+    const bobcat = getItemBySlug("bobcat");
+
+    const metadata = buildItemMetadata("ru", bobcat!);
+
+    expect(metadata.alternates).toEqual({
+      canonical: "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/",
+      languages: {
+        en: "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/",
+        "x-default": "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/"
+      }
+    });
+    expect(metadata.openGraph?.url).toBe("https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/");
+    expect(metadata.openGraph?.images).toEqual([
+      expect.objectContaining({url: "https://blackdcp.github.io/wardogs/images/catalogue/vehicles/bobcat.webp"})
+    ]);
   });
 });

@@ -3,7 +3,8 @@ import type {Locale} from "@/config/site";
 import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import type {WardogsItem} from "@/features/items/item-library";
-import {buildLocalizedUrl, buildPageMetadata, getSiteOrigin, languageTags} from "./metadata";
+import {buildLocalizedUrl, buildPageMetadata, languageTags} from "./metadata";
+import {publicAssetUrl} from "./public-url";
 
 function itemPath(item: WardogsItem) {
   return `/items/${item.type}/${item.slug}`;
@@ -14,7 +15,6 @@ export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Extra
 }
 
 export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
-  const origin = getSiteOrigin();
   const canonicalLocale = getItemCanonicalLocale(locale, item);
   const canonical = buildLocalizedUrl(canonicalLocale, itemPath(item));
   const languages = Object.fromEntries(
@@ -24,7 +24,7 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
 
   const title = `WARDOGS ${item.name} - Item Guide & Evidence`;
   const description = `${item.summary} Includes source notes, evidence labels, role advice, strengths, counters, and pre-release caveats.`;
-  const image = `${origin}${item.detailImage ?? "/images/og-wardogs.jpg"}`;
+  const image = publicAssetUrl(item.detailImage ?? "/images/og-wardogs.jpg");
   const imageAlt = item.detailImageAlt ?? `WARDOGS ${item.name}`;
 
   return {
@@ -66,10 +66,9 @@ export function buildItemHubMetadata(locale: Locale): Metadata {
 }
 
 function buildEnglishOnlyItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath: string): Metadata {
-  const origin = getSiteOrigin();
   const canonical = buildLocalizedUrl("en", pathname);
   const metadata = buildPageMetadata("en", pathname, title, description);
-  const image = `${origin}${imagePath}`;
+  const image = publicAssetUrl(imagePath);
 
   return {
     ...metadata,

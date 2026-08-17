@@ -78,6 +78,7 @@ describe("ItemCatalogGuide", () => {
 
   it("includes the configured base path in a published English model table href", () => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    vi.stubEnv("GITHUB_PAGES", "true");
     const guide = getCatalogGuide("weapons");
     const records = getCatalogueRecords("weapons").map((record) => record.slug === "ak74"
       ? {...record, detailStatus: "planned" as const, detailHref: undefined}
@@ -86,7 +87,7 @@ describe("ItemCatalogGuide", () => {
 
     const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale="de" />);
 
-    expect(html).toContain('href="/wardogs/en/items/weapons/galil"');
+    expect(html).toContain('href="/wardogs/en/items/weapons/galil/"');
     expect(html).not.toContain('href="/en/items/weapons/galil"');
     expect(html).toContain('href="#record-weapons-ak74"');
   });

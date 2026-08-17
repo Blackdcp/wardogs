@@ -6,6 +6,7 @@ import {catalogueGroups} from "@/features/catalogue/catalogue-groups";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {assetPath} from "@/lib/assets";
+import {publicRoutePath} from "@/lib/public-url";
 
 type PromotedCatalogueKey = CatalogueRecordType | "loadouts";
 
@@ -162,7 +163,7 @@ export async function CatalogueHomeBand() {
       key: `${type}-${slug}` as const,
       title: record.name,
       subtype: record.subtype,
-      href: assetPath(`/en${record.detailHref}`),
+      href: publicRoutePath(`/en${record.detailHref}`),
       image: record.image,
       imageAlt: record.imageAlt
     };
