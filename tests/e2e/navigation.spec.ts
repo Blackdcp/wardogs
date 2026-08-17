@@ -40,6 +40,22 @@ test("desktop grouped navigation supports pointer and keyboard dismissal", async
   await expect(weapons).toBeHidden();
 });
 
+test("desktop disclosure stays open after a fresh pointer entry and click", async ({page}) => {
+  await page.goto("/en");
+  await page.mouse.move(1, 700);
+
+  const catalogue = page.getByRole("button", {name: "Catalogue"});
+  const box = await catalogue.boundingBox();
+  expect(box).not.toBeNull();
+  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await expect(catalogue).toHaveAttribute("aria-expanded", "true");
+  await page.mouse.down();
+  await page.mouse.up();
+
+  await expect(catalogue).toHaveAttribute("aria-expanded", "true");
+  await expect(page.getByRole("link", {name: "Weapons", exact: true})).toBeVisible();
+});
+
 test("mobile menu expands grouped catalogue links", async ({page}) => {
   await page.setViewportSize({width: 390, height: 844});
   await page.goto("/en");
@@ -54,6 +70,29 @@ test("mobile menu expands grouped catalogue links", async ({page}) => {
   await weapons.click();
   await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
   await expect(page.getByRole("navigation", {name: /primary/i})).toBeHidden();
+});
+
+test("mobile focus trap includes expanded links and wraps in both directions", async ({page}) => {
+  await page.setViewportSize({width: 390, height: 844});
+  await page.goto("/en");
+  await page.getByRole("button", {name: "Open menu"}).click();
+
+  const navigation = page.getByRole("navigation", {name: /primary/i});
+  const game = navigation.getByRole("button", {name: "Game"});
+  const catalogue = navigation.getByRole("button", {name: "Catalogue"});
+  const catalogueHome = navigation.getByRole("link", {name: "Catalogue Home"});
+  const news = navigation.getByRole("link", {name: "News", exact: true});
+
+  await catalogue.click();
+  await page.keyboard.press("Tab");
+  await expect(catalogueHome).toBeFocused();
+
+  await news.focus();
+  await page.keyboard.press("Tab");
+  await expect(game).toBeFocused();
+
+  await page.keyboard.press("Shift+Tab");
+  await expect(news).toBeFocused();
 });
 
 test("homepage exposes the official trailer and collected creator videos", async ({page}) => {

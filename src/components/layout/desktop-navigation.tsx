@@ -76,7 +76,10 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
                 aria-expanded={open}
                 aria-controls={dropdownId}
                 className="inline-flex min-h-11 min-w-24 items-center justify-center gap-1.5 whitespace-nowrap px-3 text-[13px] font-semibold text-[#c2ccc7] transition-colors hover:text-[#79d19c]"
-                onClick={() => setOpenGroupId(open ? null : group.id)}
+                onClick={(event) => {
+                  const keyboardToggle = event.detail === 0;
+                  setOpenGroupId(keyboardToggle && open ? null : group.id);
+                }}
                 onKeyDown={(event) => {
                   if (event.key !== "ArrowDown") return;
                   event.preventDefault();
