@@ -1,6 +1,5 @@
 import type {Locale} from "@/config/site";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
-import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {
   gameplayVideo,
   mortarsVideo,
@@ -9,6 +8,7 @@ import {
   sevenThingsVideo,
   type ItemSource
 } from "./item-sources";
+import {vehicleItems} from "./vehicle-items";
 import {weaponItems} from "./weapon-items";
 
 export type ItemTypeId = "weapons" | "vehicles" | "ammo" | "attachments" | "gear" | "equipment" | "loadouts";
@@ -315,74 +315,7 @@ const legacyItemLibrary: readonly WardogsItem[] = [
   }
 ] as const;
 
-type ModelWardogsItem = WardogsItem & Required<Pick<WardogsItem,
-  "detailImage" | "detailImageAlt" | "confirmedFacts" | "unconfirmedFacts" | "detailUpdatedAt"
->>;
-
-const modelArticleUpdatedAt = "2026-08-07";
-
-function readRecordFact(record: CatalogueRecord, label: string) {
-  return record.facts.find((fact) => fact.label === label)?.value;
-}
-
-function isUnconfirmedValue(value: string) {
-  return value === "Not captured" || value === "Gate unread";
-}
-
-function createModelArticle(record: CatalogueRecord, index: number): ModelWardogsItem {
-  const observedPrice = readRecordFact(record, "Alpha price");
-  const observedProgressionOrGate = record.type === "weapons"
-    ? readRecordFact(record, "Progression")
-    : readRecordFact(record, "Observed gate");
-  const observedAmmoOrVehicleClass = record.type === "weapons"
-    ? readRecordFact(record, "Ammunition")
-    : readRecordFact(record, "Role");
-  const confirmedFacts = record.facts
-    .filter((fact) => !isUnconfirmedValue(fact.value) && fact.value !== "-")
-    .map((fact) => `Observed in Alpha 1: ${fact.label}: ${fact.value}`);
-  const unconfirmedFacts = record.facts
-    .filter((fact) => isUnconfirmedValue(fact.value))
-    .map((fact) => `${fact.label} was ${fact.value === "Gate unread" ? "unread" : "not captured"} in Alpha 1.`);
-
-  return {
-    slug: record.slug,
-    name: record.name,
-    type: record.type,
-    subtype: record.subtype,
-    status: record.evidenceStatus,
-    statusLabel: "Pre-release build",
-    build: record.dataAsOf,
-    summary: record.summary,
-    description: `${record.summary} This article foundation preserves the observed Alpha 1 catalogue record without treating it as final launch data.`,
-    role: record.type === "weapons"
-      ? `Use the ${record.name} within the observed ${record.subtype.toLowerCase()} role and account for its ammunition and progression requirements.`
-      : `Use the ${record.name} for its observed ${record.subtype.toLowerCase()} role while accounting for price, gate, and team support.`,
-    strengths: confirmedFacts.slice(0, 3),
-    cautions: unconfirmedFacts.length > 0
-      ? unconfirmedFacts
-      : ["Alpha 1 values can change before Early Access."],
-    facts: record.facts.map((fact) => ({label: fact.label, value: fact.value, evidence: ["Pre-release Build"]})),
-    relatedGuides: record.type === "weapons" ? ["wardogs-gameplay", "wardogs-playtest"] : ["wardogs-gameplay", "wardogs-first-look"],
-    relatedItems: [],
-    sources: [officialSteam, officialTeam17],
-    detailImage: record.image,
-    detailImageAlt: record.imageAlt,
-    ...(observedPrice && !isUnconfirmedValue(observedPrice) ? {observedPrice} : {}),
-    ...(observedProgressionOrGate && !isUnconfirmedValue(observedProgressionOrGate) && observedProgressionOrGate !== "-" ? {observedProgressionOrGate} : {}),
-    ...(observedAmmoOrVehicleClass ? {observedAmmoOrVehicleClass} : {}),
-    confirmedFacts,
-    unconfirmedFacts,
-    detailUpdatedAt: modelArticleUpdatedAt,
-    priority: 100 + index,
-    indexLocales: []
-  };
-}
-
-export const modelArticleLibrary: readonly ModelWardogsItem[] = [
-  ...getCatalogueRecords("vehicles")
-].filter((record) => record.detailStatus === "planned").map(createModelArticle);
-
-export const itemLibrary: readonly WardogsItem[] = [...legacyItemLibrary, ...weaponItems, ...modelArticleLibrary];
+export const itemLibrary: readonly WardogsItem[] = [...legacyItemLibrary, ...weaponItems, ...vehicleItems];
 
 export function getItemType(type: string): ItemType | undefined {
   return itemTypes.find((itemType) => itemType.id === type);

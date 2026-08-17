@@ -20,6 +20,28 @@ const weaponModelSlugs = [
   "judge",
   "kh-2002"
 ] as const;
+const vehicleModelSlugs = [
+  "ah-6m-miniguns",
+  "ah-6r-rockets",
+  "bobcat",
+  "dune-buggy",
+  "flakpanzer-gepard",
+  "havoc",
+  "humvee-m249",
+  "humvee-minigun",
+  "humvee",
+  "kodiak-m249",
+  "kodiak-pickup",
+  "kodiak",
+  "l2a6",
+  "mh-6",
+  "sph-2",
+  "uh-1y-miniguns",
+  "uh-1y",
+  "ural-defender-m249",
+  "ural-defender",
+  "ural"
+] as const;
 
 test("root redirects and primary routes resolve", async ({page}) => {
   await page.goto("/");
@@ -97,7 +119,9 @@ test("category routes render approved heroes, complete explorers, safe anchors, 
     await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(category.hero));
     await expect(page.locator('[data-catalogue-record]')).toHaveCount(category.count);
     await expect(page.locator('[data-catalogue-record] img')).toHaveCount(category.count);
-    await expect(page.locator('[data-catalogue-record] a')).toHaveCount(category.type === "weapons" ? 14 : 0);
+    await expect(page.locator('[data-catalogue-record] a')).toHaveCount(
+      category.type === "weapons" ? 14 : category.type === "vehicles" ? 20 : 0
+    );
     await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
     await expectImagesLoaded(page);
   }
@@ -144,6 +168,45 @@ test("weapon categories use English model links and keep standalone articles uni
   }
 });
 
+test("vehicle categories use English model links and retain each legacy guide once", async ({page}) => {
+  await page.goto("/en/items/vehicles");
+  const standalone = page.getByRole("heading", {name: "Detailed Vehicles Guides"}).locator("xpath=ancestor::section");
+
+  for (const legacy of [
+    {slug: "littlebird", name: "Littlebird"},
+    {slug: "tank", name: "Tank"},
+    {slug: "attack-helicopter", name: "Attack Helicopter"},
+    {slug: "armored-transport", name: "Armored Transport"}
+  ]) {
+    await expect(standalone.locator(`a[href="/en/items/vehicles/${legacy.slug}"]`)).toHaveCount(1);
+    await expect(standalone.getByText(`WARDOGS ${legacy.name}`, {exact: true})).toHaveCount(1);
+  }
+
+  for (const slug of vehicleModelSlugs) {
+    const href = `/en/items/vehicles/${slug}`;
+    const name = getCatalogueRecords("vehicles").find((record) => record.slug === slug)?.name;
+    expect(name, `${slug} catalogue record`).toBeDefined();
+    const catalogueCard = page.locator(`[data-catalogue-record="${slug}"]`);
+    await expect(catalogueCard.locator(`a[href="${href}"]`), `${slug} catalogue card`).toHaveCount(1);
+    await expect(catalogueCard.getByText(name!, {exact: true}), `${slug} catalogue card name`).toHaveCount(1);
+    await expect(page.locator(`th a[href="${href}"]`), `${slug} catalogue table row`).toHaveCount(1);
+    await expect(standalone.locator(`a[href="${href}"]`), `${slug} standalone duplicate`).toHaveCount(0);
+    await expect(standalone.getByText(`WARDOGS ${name}`, {exact: true}), `${slug} standalone name duplicate`).toHaveCount(0);
+    await expect(page.locator(`a[href="${href}"]`), `${slug} visible links`).toHaveCount(2);
+  }
+
+  for (const locale of ["ru", "de", "pt-br"] as const) {
+    expect((await page.goto(`/${locale}/items/vehicles`))?.status(), `${locale} category`).toBe(200);
+    for (const slug of vehicleModelSlugs) {
+      const englishHref = `/en/items/vehicles/${slug}`;
+      await expect(page.locator(`[data-catalogue-record="${slug}"] a[href="${englishHref}"]`), `${locale} ${slug} card`).toHaveCount(1);
+      await expect(page.locator(`th a[href="${englishHref}"]`), `${locale} ${slug} table row`).toHaveCount(1);
+      await expect(page.locator(`a[href="/${locale}/items/vehicles/${slug}"]`), `${locale} ${slug} unsupported link`).toHaveCount(0);
+    }
+    expect((await page.request.get(`/${locale}/items/vehicles/bobcat`)).status(), `${locale} model route`).toBe(404);
+  }
+});
+
 test("visual category responses contain every record in raw server HTML", async ({request}) => {
   const visualCategories: readonly CatalogueRecordType[] = ["weapons", "vehicles", "ammo", "attachments", "gear"];
 
@@ -162,7 +225,9 @@ test("visual category responses contain every record in raw server HTML", async 
     expect(weaponsHtml).toContain(`href="/en/items/weapons/${slug}"`);
   }
   const vehiclesHtml = await (await request.get("/en/items/vehicles")).text();
-  expect(vehiclesHtml).not.toContain('href="/en/items/vehicles/ah-6m-miniguns"');
+  for (const slug of vehicleModelSlugs) {
+    expect(vehiclesHtml).toContain(`href="/en/items/vehicles/${slug}"`);
+  }
 });
 
 test("category search and filters keep canonical URLs while published table rows open details", async ({page}) => {
@@ -201,7 +266,41 @@ test("every English weapon model route renders complete evidence and one native 
   }
 
   expect((await page.goto("/ru/items/weapons/amp-9"))?.status()).toBe(404);
-  expect((await page.goto("/en/items/vehicles/ah-6m-miniguns"))?.status()).toBe(404);
+});
+
+test("every English vehicle model route renders complete evidence and one native ad", async ({page}) => {
+  for (const slug of vehicleModelSlugs) {
+    const record = getCatalogueRecords("vehicles").find((candidate) => candidate.slug === slug);
+    expect(record, `${slug} catalogue record`).toBeDefined();
+
+    const response = await page.goto(`/en/items/vehicles/${slug}`);
+    expect(response?.status(), slug).toBe(200);
+
+    await expect(page.locator("main h1"), `${slug} H1 count`).toHaveCount(1);
+    await expect(page.getByRole("heading", {level: 1, name: `WARDOGS ${record!.name}`, exact: true})).toBeVisible();
+    const image = page.locator("main header figure img");
+    await expect(image, `${slug} detail image`).toHaveCount(1);
+    await expect(image).toHaveAttribute("alt", record!.imageAlt);
+    const renderedSrc = await image.getAttribute("src");
+    expect(renderedSrc, `${slug} image src`).toBeTruthy();
+    const renderedImageUrl = new URL(renderedSrc!, page.url());
+    expect(renderedImageUrl.searchParams.get("url") ?? renderedImageUrl.pathname, `${slug} exact image`).toBe(record!.image);
+    await expect(image).toHaveJSProperty("complete", true);
+    expect(await image.evaluate((element) => (element as HTMLImageElement).naturalWidth), `${slug} image pixels`).toBeGreaterThan(0);
+    await expect(page.getByText("Quick answer", {exact: true})).toBeVisible();
+    const observed = page.getByRole("heading", {name: "Observed in Alpha 1", exact: true});
+    const uncertain = page.getByRole("heading", {name: "Unconfirmed for Early Access / final release", exact: true});
+    await expect(observed).toBeVisible();
+    await expect(observed.locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
+    await expect(uncertain).toBeVisible();
+    await expect(uncertain.locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
+    const sources = page.getByRole("heading", {name: "Sources", exact: true});
+    await expect(sources).toBeVisible();
+    await expect(sources.locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+  }
+
+  expect((await page.goto("/ru/items/vehicles/bobcat"))?.status()).toBe(404);
 });
 
 test("homepage promotes the catalogue before video intelligence", async ({page}) => {

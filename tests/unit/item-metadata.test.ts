@@ -29,6 +29,21 @@ describe("item metadata", () => {
     expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/catalogue/weapons/amp-9.webp"]);
   });
 
+  it("keeps a vehicle model English-only with its exact committed image", () => {
+    const bobcat = getItemBySlug("bobcat");
+    expect(bobcat).toBeDefined();
+
+    const metadata = buildItemMetadata("en", bobcat!);
+
+    expect(metadata.alternates?.languages).toEqual({
+      en: "http://localhost:3000/en/items/vehicles/bobcat",
+      "x-default": "http://localhost:3000/en/items/vehicles/bobcat"
+    });
+    expect(metadata.openGraph?.images).toEqual([
+      expect.objectContaining({url: "http://localhost:3000/images/catalogue/vehicles/bobcat.webp", alt: "Bobcat light transport"})
+    ]);
+  });
+
   it("keeps legacy item social metadata on the generic fallback image", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();

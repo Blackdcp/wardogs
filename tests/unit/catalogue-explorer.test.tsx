@@ -33,14 +33,15 @@ describe("CatalogueCard", () => {
     expect(html).not.toContain("href=");
   });
 
-  it("keeps planned vehicles addressable without linking to a missing detail route", () => {
+  it("links a published vehicle card to its English canonical detail route", () => {
     const bobcat = getCatalogueRecords("vehicles").find((record) => record.slug === "bobcat");
     expect(bobcat).toBeDefined();
 
-    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={bobcat!} />);
+    const html = renderToStaticMarkup(<CatalogueCard locale="ru" record={bobcat!} />);
 
     expect(html).toContain('id="record-vehicles-bobcat"');
-    expect(html).not.toContain("href=");
+    expect(html).toContain('href="/en/items/vehicles/bobcat"');
+    expect(html).not.toContain('href="/ru/items/vehicles/bobcat"');
   });
 
   it("links only published records that supply an exact detail URL", () => {
@@ -71,15 +72,20 @@ describe("CatalogueCard", () => {
     }
   });
 
-  it("includes the configured base path in a published English model href", () => {
+  it("includes the configured base path in published English weapon and vehicle hrefs", () => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
     const ak74 = getCatalogueRecords("weapons").find((record) => record.slug === "ak74");
+    const bobcat = getCatalogueRecords("vehicles").find((record) => record.slug === "bobcat");
     expect(ak74).toBeDefined();
+    expect(bobcat).toBeDefined();
 
-    const html = renderToStaticMarkup(<CatalogueCard locale="ru" record={ak74!} />);
+    const weaponHtml = renderToStaticMarkup(<CatalogueCard locale="ru" record={ak74!} />);
+    const vehicleHtml = renderToStaticMarkup(<CatalogueCard locale="de" record={bobcat!} />);
 
-    expect(html).toContain('href="/wardogs/en/items/weapons/ak74"');
-    expect(html).not.toContain('href="/en/items/weapons/ak74"');
+    expect(weaponHtml).toContain('href="/wardogs/en/items/weapons/ak74"');
+    expect(weaponHtml).not.toContain('href="/en/items/weapons/ak74"');
+    expect(vehicleHtml).toContain('href="/wardogs/en/items/vehicles/bobcat"');
+    expect(vehicleHtml).not.toContain('href="/de/items/vehicles/bobcat"');
   });
 
   it("can eagerly load a card image reused by the category hero", () => {

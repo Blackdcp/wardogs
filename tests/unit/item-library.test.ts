@@ -1,4 +1,6 @@
 import {describe, expect, it} from "vitest";
+import {guideManifest} from "../../src/content/manifest";
+import {isApprovedSourceUrl} from "../../src/content/source-policy";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import {
   getIndexableItemPaths,
@@ -10,6 +12,7 @@ import {
   itemTypes,
   type IndexableItemPath
 } from "../../src/features/items/item-library";
+import {vehicleItems} from "../../src/features/items/vehicle-items";
 
 const weaponSlugs = [
   "a-91",
@@ -27,6 +30,52 @@ const weaponSlugs = [
   "judge",
   "kh-2002"
 ] as const;
+
+const vehicleSlugs = [
+  "ah-6m-miniguns",
+  "ah-6r-rockets",
+  "bobcat",
+  "dune-buggy",
+  "flakpanzer-gepard",
+  "havoc",
+  "humvee-m249",
+  "humvee-minigun",
+  "humvee",
+  "kodiak-m249",
+  "kodiak-pickup",
+  "kodiak",
+  "l2a6",
+  "mh-6",
+  "sph-2",
+  "uh-1y-miniguns",
+  "uh-1y",
+  "ural-defender-m249",
+  "ural-defender",
+  "ural"
+] as const;
+
+const expectedVehicleRelations: Record<(typeof vehicleSlugs)[number], readonly string[]> = {
+  "ah-6m-miniguns": ["ah-6r-rockets", "mh-6"],
+  "ah-6r-rockets": ["ah-6m-miniguns", "havoc"],
+  bobcat: ["dune-buggy", "kodiak"],
+  "dune-buggy": ["bobcat", "humvee"],
+  "flakpanzer-gepard": ["l2a6", "sph-2", "havoc"],
+  havoc: ["ah-6r-rockets", "flakpanzer-gepard"],
+  "humvee-m249": ["humvee", "humvee-minigun", "kodiak-m249"],
+  "humvee-minigun": ["humvee", "humvee-m249"],
+  humvee: ["humvee-m249", "humvee-minigun", "ural-defender"],
+  "kodiak-m249": ["kodiak", "kodiak-pickup", "humvee-m249"],
+  "kodiak-pickup": ["kodiak", "ural"],
+  kodiak: ["kodiak-pickup", "kodiak-m249", "bobcat"],
+  l2a6: ["flakpanzer-gepard", "sph-2"],
+  "mh-6": ["ah-6m-miniguns", "uh-1y"],
+  "sph-2": ["l2a6", "flakpanzer-gepard", "ural-defender"],
+  "uh-1y-miniguns": ["uh-1y", "ah-6m-miniguns"],
+  "uh-1y": ["uh-1y-miniguns", "mh-6"],
+  "ural-defender-m249": ["ural-defender", "ural", "kodiak-m249"],
+  "ural-defender": ["ural", "ural-defender-m249", "humvee"],
+  ural: ["ural-defender", "ural-defender-m249", "kodiak-pickup"]
+};
 
 describe("item library", () => {
   it("keeps item pages independent from the guide keyword matrix", () => {
@@ -84,6 +133,49 @@ describe("item library", () => {
     expect(amp9?.indexLocales).toEqual(["en"]);
   });
 
+  it("publishes all 20 manually authored English vehicle model guides", () => {
+    const vehicleModels = itemLibrary.filter((item) => vehicleSlugs.includes(item.slug as (typeof vehicleSlugs)[number]));
+    const guideSlugs = new Set(guideManifest.map((guide) => guide.slug));
+
+    expect(vehicleItems).toHaveLength(20);
+    expect(vehicleModels.map((item) => item.slug)).toEqual(vehicleSlugs);
+    expect(vehicleModels).toHaveLength(20);
+    expect(vehicleModels.every((item) => item.type === "vehicles")).toBe(true);
+    expect(vehicleModels.every((item) => item.indexLocales.length === 1 && item.indexLocales[0] === "en")).toBe(true);
+    expect(vehicleModels.every((item) => item.facts.length >= 4)).toBe(true);
+    expect(vehicleModels.every((item) => item.strengths.length >= 3 && item.cautions.length >= 3)).toBe(true);
+    expect(vehicleModels.every((item) => item.confirmedFacts && item.confirmedFacts.length > 0)).toBe(true);
+    expect(vehicleModels.every((item) => item.confirmedFacts?.every((fact) => fact.startsWith("Observed in Alpha 1:")))).toBe(true);
+    expect(vehicleModels.every((item) => item.unconfirmedFacts && item.unconfirmedFacts.length > 0)).toBe(true);
+    expect(vehicleModels.every((item) => item.unconfirmedFacts?.every((fact) => /Early Access|final release/.test(fact)))).toBe(true);
+    expect(vehicleModels.every((item) => item.sources.length > 0 && item.sources.every((source) => isApprovedSourceUrl(source.url)))).toBe(true);
+    expect(vehicleModels.every((item) => item.relatedGuides.length > 0 && item.relatedGuides.every((slug) => guideSlugs.has(slug)))).toBe(true);
+    expect(vehicleModels.every((item) => item.detailImage && item.detailImageAlt && item.detailUpdatedAt)).toBe(true);
+    expect(new Set(vehicleModels.map((item) => item.summary)).size).toBe(20);
+    expect(new Set(vehicleModels.map((item) => item.description)).size).toBe(20);
+    expect(new Set(vehicleModels.map((item) => item.role)).size).toBe(20);
+    expect(new Set(vehicleModels.flatMap((item) => item.strengths)).size).toBe(vehicleModels.flatMap((item) => item.strengths).length);
+    expect(new Set(vehicleModels.flatMap((item) => item.cautions)).size).toBe(vehicleModels.flatMap((item) => item.cautions).length);
+
+    for (const record of getCatalogueRecords("vehicles")) {
+      const item = vehicleModels.find((candidate) => candidate.slug === record.slug);
+      expect(item, record.slug).toMatchObject({
+        name: record.name,
+        subtype: record.subtype,
+        status: record.evidenceStatus,
+        build: record.dataAsOf
+      });
+      expect(item?.detailImage, record.slug).toBe(record.image);
+      expect(item?.detailImageAlt, record.slug).toBe(record.imageAlt);
+      expect(item?.facts.map(({label, value}) => ({label, value})), record.slug).toEqual(record.facts);
+      expect(item?.observedPrice, record.slug).toBe(record.facts.find((fact) => fact.label === "Alpha price")?.value);
+      expect(item?.observedAmmoOrVehicleClass, record.slug).toBe(record.facts.find((fact) => fact.label === "Role")?.value);
+      expect(item?.observedProgressionOrGate, record.slug).toBe(record.facts.find((fact) => fact.label === "Observed gate")?.value);
+      expect(item?.relatedItems, record.slug).toEqual(expectedVehicleRelations[record.slug as (typeof vehicleSlugs)[number]]);
+      expect(item?.relatedItems.every((slug) => slug !== item.slug && vehicleSlugs.includes(slug as (typeof vehicleSlugs)[number])), record.slug).toBe(true);
+    }
+  });
+
   it("keeps article fields off indexable route paths", () => {
     const path: IndexableItemPath = {locale: "en", type: "weapons", slug: "mortar"};
     expect(path).toEqual({locale: "en", type: "weapons", slug: "mortar"});
@@ -125,5 +217,14 @@ describe("item library", () => {
 
   it("keeps published catalogue models out of the standalone weapon list", () => {
     expect(getStandaloneItemsByType("weapons").map((item) => item.slug)).toEqual(["mortar"]);
+  });
+
+  it("keeps published vehicle models out of the standalone legacy vehicle list", () => {
+    expect(getStandaloneItemsByType("vehicles").map((item) => item.slug)).toEqual([
+      "littlebird",
+      "tank",
+      "attack-helicopter",
+      "armored-transport"
+    ]);
   });
 });

@@ -6,6 +6,13 @@ const weaponModelSlugs = [
   "deagle", "fal", "galil", "ggx-17", "ggx-18", "judge", "kh-2002"
 ] as const;
 
+const vehicleModelSlugs = [
+  "ah-6m-miniguns", "ah-6r-rockets", "bobcat", "dune-buggy", "flakpanzer-gepard",
+  "havoc", "humvee-m249", "humvee-minigun", "humvee", "kodiak-m249",
+  "kodiak-pickup", "kodiak", "l2a6", "mh-6", "sph-2", "uh-1y-miniguns",
+  "uh-1y", "ural-defender-m249", "ural-defender", "ural"
+] as const;
+
 describe("sitemap", () => {
   it("includes standalone video article URLs for indexing", () => {
     const urls = sitemap().map((entry) => entry.url);
@@ -51,7 +58,7 @@ describe("sitemap", () => {
     });
   });
 
-  it("indexes published English weapon models while keeping vehicle drafts out", () => {
+  it("indexes published English weapon and vehicle models only in English", () => {
     const urls = sitemap().map((entry) => entry.url);
 
     expect(urls.filter((url) => url.includes("/items/weapons/"))).toEqual([
@@ -60,15 +67,16 @@ describe("sitemap", () => {
       "http://localhost:3000/ru/items/weapons/mortar"
     ]);
     expect(urls).not.toContain("http://localhost:3000/ru/items/weapons/ak74");
-    expect(urls).not.toContain("http://localhost:3000/en/items/vehicles/bobcat");
+    for (const slug of vehicleModelSlugs) {
+      expect(urls).toContain(`http://localhost:3000/en/items/vehicles/${slug}`);
+      expect(urls).not.toContain(`http://localhost:3000/ru/items/vehicles/${slug}`);
+    }
   });
 
-  it("rejects every planned vehicle detail URL, plus fragments and filter URLs", () => {
+  it("includes every published vehicle detail URL without fragments or filter URLs", () => {
     const urls = sitemap().map((entry) => entry.url);
-    const planned = [
-      "ah-6m-miniguns", "ah-6r-rockets", "bobcat", "dune-buggy", "flakpanzer-gepard", "havoc", "humvee-m249", "humvee-minigun", "humvee", "kodiak-m249", "kodiak-pickup", "kodiak", "l2a6", "mh-6", "sph-2", "uh-1y-miniguns", "uh-1y", "ural-defender-m249", "ural-defender", "ural"
-    ];
-    for (const slug of planned) expect(urls.some((url) => new RegExp(`/items/vehicles/${slug}/?$`).test(url))).toBe(false);
+
+    for (const slug of vehicleModelSlugs) expect(urls.some((url) => new RegExp(`/en/items/vehicles/${slug}/?$`).test(url))).toBe(true);
     expect(urls.some((url) => url.includes("#") || url.includes("?") || /\/(?:items\/)?(?:weapons|vehicles)\/(?:filter|search)\//.test(url))).toBe(false);
   });
 

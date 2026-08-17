@@ -33,6 +33,20 @@ describe("item structured data", () => {
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
+  it("uses Article schema and the exact image for a published vehicle model", () => {
+    const l2a6 = getItemBySlug("l2a6");
+    expect(l2a6).toBeDefined();
+
+    const jsonLd = buildItemArticleJsonLd("en", l2a6!);
+
+    expect(jsonLd[0]).toMatchObject({
+      "@type": "Article",
+      image: "http://localhost:3000/images/catalogue/vehicles/l2a6.webp",
+      dateModified: "2026-08-07"
+    });
+    expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
+  });
+
   it("keeps legacy Article schema on the generic fallback image", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();
