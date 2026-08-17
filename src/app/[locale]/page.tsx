@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
+import {CatalogueHomeBand} from "@/components/catalogue/catalogue-home-band";
 import {AboutGame} from "@/components/home/about-game";
 import {BeginnerTips} from "@/components/home/beginner-tips";
 import {CategoryGrid} from "@/components/home/category-grid";
@@ -43,11 +44,12 @@ export default async function HomePage({params}: HomePageProps) {
     <main>
       <JsonLd data={buildHomeJsonLd(locale)} />
       <HomeHero facts={facts} />
-      <AboutGame />
       <StartHere />
       <PriorityGuides guides={guides} />
+      <CatalogueHomeBand />
       <VideoIntelligence locale={locale} />
       <CategoryGrid />
+      <AboutGame />
       <OfficialMedia />
       <BeginnerTips />
       <HomeFaq />

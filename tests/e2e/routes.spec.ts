@@ -1,4 +1,5 @@
 import {expect, test} from "@playwright/test";
+import {expectImagesLoaded} from "./helpers";
 
 const locales = ["en", "ru", "de", "pt-br"];
 
@@ -30,6 +31,27 @@ test("item hubs and first item detail routes resolve", async ({page}) => {
   for (const pathname of ["/en/items", "/en/items/weapons", "/en/items/weapons/mortar", "/ru/items/vehicles/littlebird"]) {
     const response = await page.goto(pathname);
     expect(response?.status(), pathname).toBe(200);
+  }
+});
+
+test("homepage promotes the catalogue before video intelligence", async ({page}) => {
+  await page.goto("/en");
+
+  const band = page.locator('[data-catalogue-home-band]');
+  await expect(band.getByRole("heading", {name: "WARDOGS Catalogue"})).toBeVisible();
+  await expect(band.locator("a")).toHaveCount(6);
+  await expect(band.locator("img")).toHaveCount(6);
+  await expect(band.getByText("Equipment", {exact: true})).toHaveCount(0);
+  await expectImagesLoaded(page);
+
+  const catalogueTop = await band.evaluate((element) => element.getBoundingClientRect().top);
+  const videoTop = await page.getByRole("heading", {name: "YouTube Footage Turned Into Standalone WARDOGS Guides"}).evaluate((element) => element.getBoundingClientRect().top);
+  expect(catalogueTop).toBeLessThan(videoTop);
+
+  for (const pathname of ["weapons", "vehicles", "ammo", "attachments", "gear", "loadouts"]) {
+    const href = `/en/items/${pathname}`;
+    await expect(band.locator(`a[href="${href}"]`)).toHaveCount(1);
+    expect((await page.request.get(href)).status(), href).toBe(200);
   }
 });
 

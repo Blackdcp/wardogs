@@ -50,6 +50,15 @@
         }
       }
     },
+    "catalogue": {
+      "heading": "WARDOGS Catalogue",
+      "weapons": {"title": "Weapons", "count": "{count} illustrated models", "imageAlt": "WARDOGS weapons catalogue"},
+      "vehicles": {"title": "Vehicles", "count": "{count} illustrated vehicles", "imageAlt": "WARDOGS vehicles catalogue"},
+      "ammo": {"title": "Ammo", "count": "{count} calibres", "imageAlt": "5.56x45mm ammunition box"},
+      "attachments": {"title": "Attachments", "count": "{count} illustrated attachments", "imageAlt": "WARDOGS weapon attachments catalogue"},
+      "gear": {"title": "Gear", "count": "{count} gear records", "imageAlt": "WARDOGS heavy armor"},
+      "loadouts": {"title": "Loadouts", "count": "{count} budget bands", "imageAlt": "WARDOGS loadout catalogue"}
+    },
     "categories": {
       "eyebrow": "All guide areas",
       "title": "Find the Intel You Need",

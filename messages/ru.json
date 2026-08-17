@@ -50,6 +50,15 @@
         }
       }
     },
+    "catalogue": {
+      "heading": "Каталог WARDOGS",
+      "weapons": {"title": "Оружие", "count": "{count} моделей с иллюстрациями", "imageAlt": "Каталог оружия WARDOGS"},
+      "vehicles": {"title": "Техника", "count": "{count} видов техники с иллюстрациями", "imageAlt": "Каталог техники WARDOGS"},
+      "ammo": {"title": "Боеприпасы", "count": "{count} калибров", "imageAlt": "Коробка патронов 5,56 × 45 мм"},
+      "attachments": {"title": "Модули", "count": "{count} модулей с иллюстрациями", "imageAlt": "Каталог оружейных модулей WARDOGS"},
+      "gear": {"title": "Снаряжение", "count": "{count} записей о снаряжении", "imageAlt": "Тяжёлая броня WARDOGS"},
+      "loadouts": {"title": "Комплекты", "count": "{count} ценовые категории", "imageAlt": "Каталог комплектов WARDOGS"}
+    },
     "categories": {
       "eyebrow": "Все разделы",
       "title": "Найдите нужные сведения",

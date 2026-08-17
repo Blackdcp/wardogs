@@ -50,6 +50,15 @@
         }
       }
     },
+    "catalogue": {
+      "heading": "Catálogo WARDOGS",
+      "weapons": {"title": "Armas", "count": "{count} modelos ilustrados", "imageAlt": "Catálogo de armas de WARDOGS"},
+      "vehicles": {"title": "Veículos", "count": "{count} veículos ilustrados", "imageAlt": "Catálogo de veículos de WARDOGS"},
+      "ammo": {"title": "Munição", "count": "{count} calibres", "imageAlt": "Caixa de munição 5,56 × 45 mm"},
+      "attachments": {"title": "Acessórios", "count": "{count} acessórios ilustrados", "imageAlt": "Catálogo de acessórios para armas de WARDOGS"},
+      "gear": {"title": "Equipamentos", "count": "{count} registros de equipamentos", "imageAlt": "Armadura pesada de WARDOGS"},
+      "loadouts": {"title": "Loadouts", "count": "{count} faixas de orçamento", "imageAlt": "Catálogo de loadouts de WARDOGS"}
+    },
     "categories": {
       "eyebrow": "Todas as áreas",
       "title": "Encontre a informação certa",

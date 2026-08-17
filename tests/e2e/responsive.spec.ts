@@ -1,4 +1,4 @@
-import {test} from "@playwright/test";
+import {expect, test} from "@playwright/test";
 import {expectImagesLoaded, expectNoHorizontalOverflow} from "./helpers";
 
 for (const viewport of [
@@ -13,6 +13,11 @@ for (const viewport of [
       await page.goto(pathname);
       await expectImagesLoaded(page);
       await expectNoHorizontalOverflow(page);
+      if (pathname === "/en") {
+        const band = page.locator('[data-catalogue-home-band]');
+        await expect(band.locator("img")).toHaveCount(6);
+        await expect(band.locator("a")).toHaveCount(6);
+      }
     }
   });
 }

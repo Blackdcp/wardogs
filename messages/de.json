@@ -50,6 +50,15 @@
         }
       }
     },
+    "catalogue": {
+      "heading": "WARDOGS-Katalog",
+      "weapons": {"title": "Waffen", "count": "{count} bebilderte Modelle", "imageAlt": "WARDOGS-Waffenkatalog"},
+      "vehicles": {"title": "Fahrzeuge", "count": "{count} bebilderte Fahrzeuge", "imageAlt": "WARDOGS-Fahrzeugkatalog"},
+      "ammo": {"title": "Munition", "count": "{count} Kaliber", "imageAlt": "Munitionskiste im Kaliber 5,56 × 45 mm"},
+      "attachments": {"title": "Aufsätze", "count": "{count} bebilderte Aufsätze", "imageAlt": "WARDOGS-Katalog für Waffenaufsätze"},
+      "gear": {"title": "Ausrüstung", "count": "{count} Ausrüstungseinträge", "imageAlt": "Schwere WARDOGS-Rüstung"},
+      "loadouts": {"title": "Ausrüstungssets", "count": "{count} Budgetstufen", "imageAlt": "WARDOGS-Katalog für Ausrüstungssets"}
+    },
     "categories": {
       "eyebrow": "Alle Guide-Bereiche",
       "title": "Finde die richtigen Infos",
