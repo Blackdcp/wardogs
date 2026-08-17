@@ -111,11 +111,12 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
             allFilterLabel: "All",
             resultLabel: "records shown"
           }}
+          locale={locale}
           records={records}
         />
       ) : null}
 
-      <ItemCatalogGuide guide={linkedGuide} />
+      <ItemCatalogGuide guide={linkedGuide} locale={locale} />
     </>
   );
 }

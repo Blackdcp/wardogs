@@ -1,9 +1,11 @@
 import Image from "next/image";
 import {ArrowUpRight} from "lucide-react";
+import type {Locale} from "@/config/site";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {assetPath} from "@/lib/assets";
 
 type CatalogueCardProps = {
+  locale: Locale;
   record: CatalogueRecord;
   eagerImage?: boolean;
   hidden?: boolean;
@@ -49,8 +51,10 @@ function CardContent({record, linked, eagerImage}: {record: CatalogueRecord; lin
   );
 }
 
-export function CatalogueCard({record, eagerImage = false, hidden = false}: CatalogueCardProps) {
-  const detailHref = record.detailStatus === "published" ? record.detailHref : undefined;
+export function CatalogueCard({locale, record, eagerImage = false, hidden = false}: CatalogueCardProps) {
+  const detailHref = record.detailStatus === "published" && record.detailHref
+    ? `/${locale}${record.detailHref}`
+    : undefined;
   const className = "flex h-full min-h-[34rem] min-w-0 flex-col border border-[#303b35] bg-[#151b18]";
 
   return (

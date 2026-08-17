@@ -1,4 +1,6 @@
 import {expect, test} from "@playwright/test";
+import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
+import type {CatalogueRecordType} from "../../src/features/catalogue/catalogue-types";
 import {expectImagesLoaded} from "./helpers";
 
 const locales = ["en", "ru", "de", "pt-br"];
@@ -95,26 +97,45 @@ test("category routes render approved heroes, complete explorers, safe anchors, 
   }
 });
 
+test("visual category responses contain every record in raw server HTML", async ({request}) => {
+  const visualCategories: readonly CatalogueRecordType[] = ["weapons", "vehicles", "ammo", "attachments", "gear"];
+
+  for (const type of visualCategories) {
+    const response = await request.get(`/en/items/${type}`);
+    const html = await response.text();
+    const expectedIds = getCatalogueRecords(type).map((record) => `record-${type}-${record.slug}`);
+    const renderedIds = [...html.matchAll(new RegExp(`id="(record-${type}-[^"]+)"`, "g"))].map((match) => match[1]);
+
+    expect(response.status(), type).toBe(200);
+    expect(renderedIds, `${type} raw server record ids`).toEqual(expectedIds);
+  }
+
+  const weaponsHtml = await (await request.get("/en/items/weapons")).text();
+  expect(weaponsHtml).not.toContain('href="/items/weapons/ak74"');
+  expect(weaponsHtml).not.toContain('href="/en/items/weapons/ak74"');
+});
+
 test("category search and filters keep canonical URLs while table rows target stable records", async ({page}) => {
   await page.goto("/en/items/weapons");
   const records = page.locator('[data-catalogue-record]');
 
-  await page.getByRole("button", {name: "Assault rifle", exact: true}).click();
-  await expect(records.filter({visible: true})).toHaveCount(6);
-  await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
-
-  await page.getByLabel("Search Weapons").fill("AK74");
+  await page.getByRole("button", {name: "SMG", exact: true}).click();
+  await page.getByLabel("Search Weapons").fill("AMP-9");
   await expect(records.filter({visible: true})).toHaveCount(1);
-  await expect(page.locator("#record-weapons-ak74")).toBeVisible();
+  await expect(page.locator("#record-weapons-ak74")).toBeHidden();
   await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
 
-  await page.getByRole("button", {name: "All", exact: true}).click();
-  await page.getByLabel("Search Weapons").fill("");
   const tableLink = page.locator('th a[href="#record-weapons-ak74"]');
   await expect(tableLink).toHaveCount(1);
   await expect(page.locator('a[href="/en/items/weapons/ak74"]')).toHaveCount(0);
   await tableLink.click();
+
   await expect(page).toHaveURL(/#record-weapons-ak74$/);
+  await expect(page.getByRole("button", {name: "All", exact: true})).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", {name: "SMG", exact: true})).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByLabel("Search Weapons")).toHaveValue("");
+  await expect(page.locator("#record-weapons-ak74")).toBeVisible();
+  await expect(page.locator("#record-weapons-ak74")).toBeInViewport();
 });
 
 test("homepage promotes the catalogue before video intelligence", async ({page}) => {

@@ -21,7 +21,7 @@ describe("CatalogueCard", () => {
     const ammo = getCatalogueRecords("ammo").find((record) => record.slug === "5-56x45mm");
     expect(ammo).toBeDefined();
 
-    const html = renderToStaticMarkup(<CatalogueCard record={ammo!} />);
+    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={ammo!} />);
 
     expect(html).toContain('id="record-ammo-5-56x45mm"');
     expect(html).toContain("Base damage");
@@ -33,7 +33,7 @@ describe("CatalogueCard", () => {
     const ak74 = getCatalogueRecords("weapons").find((record) => record.slug === "ak74");
     expect(ak74).toBeDefined();
 
-    const html = renderToStaticMarkup(<CatalogueCard record={ak74!} />);
+    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={ak74!} />);
 
     expect(html).toContain('id="record-weapons-ak74"');
     expect(html).not.toContain('href="/items/weapons/ak74"');
@@ -49,15 +49,16 @@ describe("CatalogueCard", () => {
       detailHref: "/items/weapons/mortar" as const
     };
 
-    const html = renderToStaticMarkup(<CatalogueCard record={published} />);
+    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={published} />);
 
-    expect(html).toContain('href="/items/weapons/mortar"');
+    expect(html).toContain('href="/en/items/weapons/mortar"');
+    expect(html).not.toContain('href="/items/weapons/mortar"');
   });
 
   it("can eagerly load a card image reused by the category hero", () => {
     const ammo = getCatalogueRecords("ammo").find((record) => record.slug === "5-56x45mm");
 
-    const html = renderToStaticMarkup(<CatalogueCard eagerImage record={ammo!} />);
+    const html = renderToStaticMarkup(<CatalogueCard eagerImage locale="en" record={ammo!} />);
 
     expect(html).toContain('loading="eager"');
   });
@@ -67,7 +68,7 @@ describe("CatalogueExplorer", () => {
   it("renders every record into initial server markup", () => {
     const records = getCatalogueRecords("weapons");
     const html = renderToStaticMarkup(
-      <CatalogueExplorer records={records} filters={[{label: "Assault rifle", value: "assault-rifle"}]} labels={labels} />
+      <CatalogueExplorer locale="en" records={records} filters={[{label: "Assault rifle", value: "assault-rifle"}]} labels={labels} />
     );
 
     expect(html.match(/data-catalogue-record=/g)).toHaveLength(14);

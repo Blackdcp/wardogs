@@ -11,7 +11,7 @@ describe("ItemCatalogGuide", () => {
     const guide = getCatalogGuide("weapons");
     expect(guide).toBeDefined();
 
-    const html = renderToStaticMarkup(<ItemCatalogGuide guide={guide!} />);
+    const html = renderToStaticMarkup(<ItemCatalogGuide guide={guide!} locale="en" />);
 
     expect(html).toContain("33 weapons");
     expect(html).toContain("Alpha 1 - 7 Aug 2026");
@@ -35,7 +35,7 @@ describe("ItemCatalogGuide", () => {
 
     const matchedGuide = matchCatalogueGuideRecords(guideWithUnknown, getCatalogueRecords("weapons"));
     const ak74 = matchedGuide.sections.flatMap((section) => section.rows).find((row) => row.cells[0] === "AK74");
-    const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} />);
+    const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale="en" />);
 
     expect(ak74?.recordSlug).toBe("ak74");
     expect(html).toContain('href="#record-weapons-ak74"');
@@ -51,9 +51,10 @@ describe("ItemCatalogGuide", () => {
       : record);
     const matchedGuide = matchCatalogueGuideRecords(guide!, records);
 
-    const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} />);
+    const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale="en" />);
 
-    expect(html).toContain('href="/items/weapons/ak74"');
+    expect(html).toContain('href="/en/items/weapons/ak74"');
+    expect(html).not.toContain('href="/items/weapons/ak74"');
     expect(html).not.toContain('href="#record-weapons-ak74"');
   });
 
@@ -64,7 +65,7 @@ describe("ItemCatalogGuide", () => {
       : record);
     const matchedGuide = matchCatalogueGuideRecords(guide!, records);
 
-    const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} />);
+    const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale="en" />);
 
     expect(html).not.toContain('href="/items/weapons/ak74"');
     expect(html).not.toContain('href="#record-weapons-ak74"');

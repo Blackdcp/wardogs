@@ -1,7 +1,9 @@
 "use client";
 
 import {Search} from "lucide-react";
-import {useId, useMemo, useState} from "react";
+import {useEffect, useId, useMemo, useState} from "react";
+import {flushSync} from "react-dom";
+import type {Locale} from "@/config/site";
 import type {CatalogueFilterOption, CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {CatalogueCard} from "./catalogue-card";
 
@@ -14,6 +16,7 @@ export type CatalogueExplorerLabels = {
 };
 
 type CatalogueExplorerProps = {
+  locale: Locale;
   records: readonly CatalogueRecord[];
   filters: readonly CatalogueFilterOption[];
   labels: CatalogueExplorerLabels;
@@ -45,7 +48,7 @@ export function filterCatalogueRecords(
   });
 }
 
-export function CatalogueExplorer({records, filters, labels, featuredImage}: CatalogueExplorerProps) {
+export function CatalogueExplorer({locale, records, filters, labels, featuredImage}: CatalogueExplorerProps) {
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const searchId = useId();
@@ -54,6 +57,51 @@ export function CatalogueExplorer({records, filters, labels, featuredImage}: Cat
     [activeFilter, records, search]
   );
   const visibleSlugs = useMemo(() => new Set(visibleRecords.map((record) => record.slug)), [visibleRecords]);
+  const recordIds = useMemo(
+    () => new Set(records.map((record) => `record-${record.type}-${record.slug}`)),
+    [records]
+  );
+
+  useEffect(() => {
+    function revealRecord(recordId: string) {
+      if (!recordIds.has(recordId)) return false;
+
+      flushSync(() => {
+        setSearch("");
+        setActiveFilter("all");
+      });
+      requestAnimationFrame(() => {
+        document.getElementById(recordId)?.scrollIntoView({block: "start"});
+      });
+      return true;
+    }
+
+    function handleRecordLinkClick(event: MouseEvent) {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (!(event.target instanceof Element)) return;
+
+      const link = event.target.closest<HTMLAnchorElement>('a[href^="#record-"]');
+      if (!link) return;
+
+      const recordId = decodeURIComponent(link.hash.slice(1));
+      if (!revealRecord(recordId)) return;
+
+      event.preventDefault();
+      window.history.pushState(null, "", `#${recordId}`);
+    }
+
+    function handleHashChange() {
+      const recordId = decodeURIComponent(window.location.hash.slice(1));
+      revealRecord(recordId);
+    }
+
+    document.addEventListener("click", handleRecordLinkClick);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => {
+      document.removeEventListener("click", handleRecordLinkClick);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, [recordIds]);
 
   return (
     <section aria-labelledby="catalogue-explorer-title" className="border-b border-[#2c3631] bg-[#101411]" data-catalogue-explorer>
@@ -106,6 +154,7 @@ export function CatalogueExplorer({records, filters, labels, featuredImage}: Cat
               eagerImage={record.image === featuredImage}
               hidden={!visibleSlugs.has(record.slug)}
               key={record.slug}
+              locale={locale}
               record={record}
             />
           ))}
