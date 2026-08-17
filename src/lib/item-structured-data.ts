@@ -13,8 +13,9 @@ function typeLabel(type: ItemTypeId) {
   return itemTypes.find((itemType) => itemType.id === type)?.label ?? "Catalogue";
 }
 
-export function buildItemIndexJsonLd(locale: Locale): JsonLd[] {
-  const url = pageUrl(locale, "/items");
+export function buildItemIndexJsonLd(_locale: Locale): JsonLd[] {
+  const canonicalLocale: Locale = "en";
+  const url = pageUrl(canonicalLocale, "/items");
   return [
     {"@context": "https://schema.org", "@type": "CollectionPage", name: "WARDOGS Catalogue", url},
     {
@@ -24,14 +25,14 @@ export function buildItemIndexJsonLd(locale: Locale): JsonLd[] {
         "@type": "ListItem",
         position: index + 1,
         name: `WARDOGS ${itemType.label}`,
-        url: pageUrl(locale, itemType.href)
+        url: pageUrl(canonicalLocale, itemType.href)
       }))
     },
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
+        {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(canonicalLocale)},
         {"@type": "ListItem", position: 2, name: "Catalogue", item: url}
       ]
     }

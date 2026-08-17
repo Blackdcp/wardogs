@@ -29,6 +29,26 @@ describe("item structured data", () => {
     ]);
   });
 
+  it("uses English canonical URLs throughout non-English hub schema", () => {
+    const jsonLd = buildItemIndexJsonLd("de");
+
+    expect(jsonLd[0].url).toBe("http://localhost:3000/en/items");
+    expect(jsonLd[1].itemListElement).toEqual([
+      {"@type": "ListItem", position: 1, name: "WARDOGS Weapons", url: "http://localhost:3000/en/items/weapons"},
+      {"@type": "ListItem", position: 2, name: "WARDOGS Vehicles", url: "http://localhost:3000/en/items/vehicles"},
+      {"@type": "ListItem", position: 3, name: "WARDOGS Ammo", url: "http://localhost:3000/en/items/ammo"},
+      {"@type": "ListItem", position: 4, name: "WARDOGS Attachments", url: "http://localhost:3000/en/items/attachments"},
+      {"@type": "ListItem", position: 5, name: "WARDOGS Gear", url: "http://localhost:3000/en/items/gear"},
+      {"@type": "ListItem", position: 6, name: "WARDOGS Equipment", url: "http://localhost:3000/en/items/equipment"},
+      {"@type": "ListItem", position: 7, name: "WARDOGS Loadouts", url: "http://localhost:3000/en/items/loadouts"}
+    ]);
+    expect(jsonLd[2].itemListElement).toEqual([
+      {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: "http://localhost:3000/en"},
+      {"@type": "ListItem", position: 2, name: "Catalogue", item: "http://localhost:3000/en/items"}
+    ]);
+    expect(JSON.stringify(jsonLd)).not.toContain("http://localhost:3000/de");
+  });
+
   it("includes catalogue rows in type-page ItemList schema", () => {
     const weapons = buildItemTypeJsonLd("en", "weapons");
     const ammo = buildItemTypeJsonLd("en", "ammo");
