@@ -12,6 +12,15 @@ describe("catalogue assets", () => {
     expect(readdirSync(join(root, "attachments"))).toHaveLength(40);
     expect(readdirSync(join(root, "gear"))).toHaveLength(11);
     expect(readdirSync(join(root, "factions"))).toHaveLength(3);
+    expect(readdirSync(join(root, "banners")).sort()).toEqual([
+      "attachments-1280.webp",
+      "loadouts-1280.webp",
+      "map-1280.webp",
+      "meta-1280.webp",
+      "thegame-1280.webp",
+      "vehicles-1280.webp",
+      "weapons-1280.webp",
+    ]);
   });
 
   it("normalizes the three incorrect source names", () => {
