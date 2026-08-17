@@ -44,7 +44,7 @@ export function CatalogueCategoryCard({
             </span>
             <span className="mt-3 block text-sm leading-6 text-[#a8b4ae]">{description}</span>
           </span>
-          <ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-[#728078] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
+          <ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-[#82938a] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
         </span>
       </Link>
     </li>

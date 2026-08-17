@@ -22,28 +22,31 @@ export function getSiteOrigin() {
   return origin;
 }
 
-function localizedPath(locale: Locale, pathname: string) {
+export function localizedPath(locale: Locale, pathname: string) {
   const cleanPath = pathname === "/" ? "" : `/${pathname.replace(/^\/+|\/+$/g, "")}`;
   const localized = `/${locale}${cleanPath}`;
   return process.env.GITHUB_PAGES === "true" ? `${localized}/` : localized;
 }
 
+export function buildLocalizedUrl(locale: Locale, pathname: string) {
+  return `${getSiteOrigin()}${localizedPath(locale, pathname)}`;
+}
+
 export function buildAlternates(locale: Locale, pathname: string): NonNullable<Metadata["alternates"]> {
-  const origin = getSiteOrigin();
   return {
-    canonical: `${origin}${localizedPath(locale, pathname)}`,
+    canonical: buildLocalizedUrl(locale, pathname),
     languages: {
-      en: `${origin}${localizedPath("en", pathname)}`,
-      ru: `${origin}${localizedPath("ru", pathname)}`,
-      de: `${origin}${localizedPath("de", pathname)}`,
-      "pt-BR": `${origin}${localizedPath("pt-br", pathname)}`,
-      "x-default": `${origin}${localizedPath("en", pathname)}`
+      en: buildLocalizedUrl("en", pathname),
+      ru: buildLocalizedUrl("ru", pathname),
+      de: buildLocalizedUrl("de", pathname),
+      "pt-BR": buildLocalizedUrl("pt-br", pathname),
+      "x-default": buildLocalizedUrl("en", pathname)
     }
   };
 }
 
 export function buildPageMetadata(locale: Locale, pathname: string, title: string, description: string): Metadata {
-  const canonical = `${getSiteOrigin()}${localizedPath(locale, pathname)}`;
+  const canonical = buildLocalizedUrl(locale, pathname);
   return {
     title,
     description,

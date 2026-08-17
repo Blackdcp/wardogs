@@ -1,30 +1,20 @@
 import type {Locale} from "@/config/site";
+import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getItemsByType, itemTypes, type ItemTypeId, type WardogsItem} from "@/features/items/item-library";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
-import {getSiteOrigin} from "./metadata";
+import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
 
 type JsonLd = Record<string, unknown>;
 
 function pageUrl(locale: Locale, pathname = "") {
-  return `${getSiteOrigin()}/${locale}${pathname}`;
+  return buildLocalizedUrl(locale, pathname || "/");
 }
 
 function typeLabel(type: ItemTypeId) {
   return itemTypes.find((itemType) => itemType.id === type)?.label ?? "Catalogue";
 }
-
-const catalogueImages: Record<ItemTypeId | "hub", string> = {
-  hub: "/images/catalogue/banners/thegame-1280.webp",
-  weapons: "/images/catalogue/banners/weapons-1280.webp",
-  vehicles: "/images/catalogue/banners/vehicles-1280.webp",
-  ammo: "/images/catalogue/ammo/556x45mm.webp",
-  attachments: "/images/catalogue/banners/attachments-1280.webp",
-  gear: "/images/catalogue/gear/heavy-armor.webp",
-  equipment: "/images/catalogue/banners/meta-1280.webp",
-  loadouts: "/images/catalogue/banners/loadouts-1280.webp"
-};
 
 function absoluteImageUrl(pathname: string) {
   return `${getSiteOrigin()}${pathname}`;
@@ -62,7 +52,7 @@ export function buildItemIndexJsonLd(locale: Locale): JsonLd[] {
   const canonicalLocale: Locale = locale === "en" ? locale : "en";
   const url = pageUrl(canonicalLocale, "/items");
   return [
-    {"@context": "https://schema.org", "@type": "CollectionPage", name: "WARDOGS Catalogue", url, image: absoluteImageUrl(catalogueImages.hub)},
+    {"@context": "https://schema.org", "@type": "CollectionPage", name: "WARDOGS Catalogue", url, image: absoluteImageUrl(catalogueMetadataImages.hub)},
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
@@ -71,7 +61,7 @@ export function buildItemIndexJsonLd(locale: Locale): JsonLd[] {
         position: index + 1,
         name: `WARDOGS ${itemType.label}`,
         url: pageUrl(canonicalLocale, itemType.href),
-        image: absoluteImageUrl(catalogueImages[itemType.id])
+        image: absoluteImageUrl(catalogueMetadataImages[itemType.id])
       }))
     },
     {
@@ -91,7 +81,7 @@ export function buildItemTypeJsonLd(locale: Locale, type: ItemTypeId): JsonLd[] 
   const url = pageUrl(canonicalLocale, `/items/${type}`);
   const itemListEntries = buildItemListEntries(canonicalLocale, type, url);
   return [
-    {"@context": "https://schema.org", "@type": "CollectionPage", name: `WARDOGS ${label}`, url, image: absoluteImageUrl(catalogueImages[type])},
+    {"@context": "https://schema.org", "@type": "CollectionPage", name: `WARDOGS ${label}`, url, image: absoluteImageUrl(catalogueMetadataImages[type])},
     {
       "@context": "https://schema.org",
       "@type": "ItemList",

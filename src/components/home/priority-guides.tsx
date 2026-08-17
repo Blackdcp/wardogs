@@ -44,7 +44,7 @@ export async function PriorityGuides({guides}: PriorityGuidesProps) {
                     href={`/guides/${guide.slug}`}
                     className="group flex min-h-12 items-start gap-3 border-b border-[#26312c] pb-3 text-sm text-[#d7ded9] hover:text-[#79d19c]"
                   >
-                    <span className="display-font mt-0.5 w-6 shrink-0 text-right text-xs text-[#728078]">
+            <span className="display-font mt-0.5 w-6 shrink-0 text-right text-xs text-[#82938a]">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="min-w-0 flex-1 leading-6">{guide.title}</span>
@@ -71,7 +71,7 @@ export async function PriorityGuides({guides}: PriorityGuidesProps) {
                     <span className="block text-sm font-semibold leading-6 text-[#d7ded9] group-hover:text-[#79d19c]">
                       {guide.title}
                     </span>
-                    <span className="mt-1 block text-xs uppercase tracking-[0.14em] text-[#728078]">
+              <span className="mt-1 block text-xs uppercase tracking-[0.14em] text-[#82938a]">
                       {t("common.updated")} {guide.updatedAt}
                     </span>
                   </Link>

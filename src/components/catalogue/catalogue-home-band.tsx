@@ -59,7 +59,7 @@ function CatalogueEntry({entry, LinkComponent}: {entry: CatalogueHomeBandEntry; 
               {entry.count}
             </span>
           </span>
-          <ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-[#728078] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
+          <ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-[#82938a] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
         </span>
       </LinkComponent>
     </li>

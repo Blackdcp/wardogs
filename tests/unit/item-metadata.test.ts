@@ -62,4 +62,17 @@ describe("item metadata", () => {
     ]);
     expect(category.twitter?.images).toEqual(["http://localhost:3000/images/catalogue/banners/weapons-1280.webp"]);
   });
+
+  it("uses the Pages production URL form consistently for canonical and social URLs", () => {
+    const previous = process.env.GITHUB_PAGES;
+    process.env.GITHUB_PAGES = "true";
+    try {
+      const metadata = buildItemHubMetadata("en");
+      expect(metadata.alternates?.canonical).toBe("http://localhost:3000/en/items/");
+      expect(metadata.openGraph?.url).toBe("http://localhost:3000/en/items/");
+    } finally {
+      if (previous === undefined) delete process.env.GITHUB_PAGES;
+      else process.env.GITHUB_PAGES = previous;
+    }
+  });
 });

@@ -31,7 +31,7 @@ export async function StartHere() {
                     <span className="display-font inline-flex size-10 items-center justify-center rounded-[4px] bg-[#244332] text-lg text-[#d8f4e4]">
                       {guide.number}
                     </span>
-                    <ArrowUpRight aria-hidden="true" className="size-5 text-[#728078] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
+          <ArrowUpRight aria-hidden="true" className="size-5 text-[#82938a] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
                   </div>
                   <h3 className="display-font mt-8 text-xl leading-tight text-[#f2f5f3]">
                     {t(`home.start.cards.${guide.titleKey}.title`)}

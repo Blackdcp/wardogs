@@ -1,18 +1,19 @@
 import type {Metadata} from "next";
 import type {Locale} from "@/config/site";
+import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import type {ItemTypeId, WardogsItem} from "@/features/items/item-library";
-import {buildPageMetadata, getSiteOrigin, languageTags} from "./metadata";
+import {buildLocalizedUrl, buildPageMetadata, getSiteOrigin, languageTags} from "./metadata";
 
-function localizedItemPath(locale: Locale, item: WardogsItem) {
-  return `/${locale}/items/${item.type}/${item.slug}`;
+function itemPath(item: WardogsItem) {
+  return `/items/${item.type}/${item.slug}`;
 }
 
 export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   const origin = getSiteOrigin();
-  const canonical = `${origin}${localizedItemPath(locale, item)}`;
+  const canonical = buildLocalizedUrl(locale, itemPath(item));
   const languages = Object.fromEntries(
-    item.indexLocales.map((itemLocale) => [itemLocale, `${origin}${localizedItemPath(itemLocale, item)}`])
+    item.indexLocales.map((itemLocale) => [itemLocale, buildLocalizedUrl(itemLocale, itemPath(item))])
   ) as Record<string, string>;
   languages["x-default"] = languages.en ?? canonical;
 
@@ -57,20 +58,9 @@ export function buildItemHubMetadata(locale: Locale): Metadata {
   );
 }
 
-const catalogueMetadataImages: Record<ItemTypeId | "hub", string> = {
-  hub: "/images/catalogue/banners/thegame-1280.webp",
-  weapons: "/images/catalogue/banners/weapons-1280.webp",
-  vehicles: "/images/catalogue/banners/vehicles-1280.webp",
-  ammo: "/images/catalogue/ammo/556x45mm.webp",
-  attachments: "/images/catalogue/banners/attachments-1280.webp",
-  gear: "/images/catalogue/gear/heavy-armor.webp",
-  equipment: "/images/catalogue/banners/meta-1280.webp",
-  loadouts: "/images/catalogue/banners/loadouts-1280.webp"
-};
-
 function buildEnglishOnlyItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath: string): Metadata {
   const origin = getSiteOrigin();
-  const canonical = `${origin}/en${pathname}`;
+  const canonical = buildLocalizedUrl("en", pathname);
   const metadata = buildPageMetadata("en", pathname, title, description);
   const image = `${origin}${imagePath}`;
 

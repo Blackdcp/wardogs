@@ -45,7 +45,7 @@ function CardContent({record, linked, eagerImage}: {record: CatalogueRecord; lin
             </div>
           ))}
         </dl>
-        <span className="mt-auto block pt-5 font-mono text-[11px] uppercase leading-4 text-[#718078]">{record.dataAsOf}</span>
+        <span className="mt-auto block pt-5 font-mono text-[11px] uppercase leading-4 text-[#82938a]">{record.dataAsOf}</span>
       </div>
     </>
   );

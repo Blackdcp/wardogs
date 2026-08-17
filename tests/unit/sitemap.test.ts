@@ -56,4 +56,25 @@ describe("sitemap", () => {
     expect(urls).not.toContain("http://localhost:3000/en/items/weapons/ak74");
     expect(urls).not.toContain("http://localhost:3000/en/items/vehicles/bobcat");
   });
+
+  it("rejects every planned weapon and vehicle detail URL, plus fragments and filter URLs", () => {
+    const urls = sitemap().map((entry) => entry.url);
+    const planned = [
+      "a-91", "ak74", "amp-9", "amr-50", "bmr-308", "bushmaster-m17s", "compound-bow", "deagle", "fal", "galil", "ggx-17", "ggx-18", "judge", "kh-2002",
+      "ah-6m-miniguns", "ah-6r-rockets", "bobcat", "dune-buggy", "flakpanzer-gepard", "havoc", "humvee-m249", "humvee-minigun", "humvee", "kodiak-m249", "kodiak-pickup", "kodiak", "l2a6", "mh-6", "sph-2", "uh-1y-miniguns", "uh-1y", "ural-defender-m249", "ural-defender", "ural"
+    ];
+    for (const slug of planned) expect(urls.some((url) => new RegExp(`/items/(weapons|vehicles)/${slug}/?$`).test(url))).toBe(false);
+    expect(urls.some((url) => url.includes("#") || url.includes("?") || /\/(?:items\/)?(?:weapons|vehicles)\/(?:filter|search)\//.test(url))).toBe(false);
+  });
+
+  it("uses the same trailing-slash URL form in the production sitemap", () => {
+    const previous = process.env.GITHUB_PAGES;
+    process.env.GITHUB_PAGES = "true";
+    try {
+      expect(sitemap().map((entry) => entry.url)).toContain("http://localhost:3000/en/items/weapons/");
+    } finally {
+      if (previous === undefined) delete process.env.GITHUB_PAGES;
+      else process.env.GITHUB_PAGES = previous;
+    }
+  });
 });
