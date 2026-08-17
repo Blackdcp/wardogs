@@ -195,7 +195,7 @@ test("native banner ignores blank and late script content after terminal fallbac
   await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", async (route) => {
     await route.fulfill({
       contentType: "application/javascript",
-      body: `const container = document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e"); container.append(document.createComment("native placeholder"), document.createElement("div"));`
+      body: `(() => { const container = document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e"); const emptyAnchor = document.createElement("a"); emptyAnchor.href = "https://ad.example/empty"; container.append(document.createComment("native placeholder"), document.createElement("div"), emptyAnchor); })();`
     });
   });
 

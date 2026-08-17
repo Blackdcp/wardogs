@@ -74,9 +74,14 @@ describe("AdsterraNativeBanner", () => {
     expect(hasMeaningfulContent([comment("placeholder"), text("  "), element("div")])).toBe(false);
     expect(hasMeaningfulContent([element("div", {}, [comment("later"), text("\n")])])).toBe(false);
     expect(hasMeaningfulContent([element("script", {}, [text("bootstrap native creative")])])).toBe(false);
-    expect(hasMeaningfulContent([element("a", {href: "https://ad.example/creative"})])).toBe(true);
+    expect(hasMeaningfulContent([element("a", {href: "https://ad.example/empty"})])).toBe(false);
+    expect(hasMeaningfulContent([element("div", {}, [element("a", {href: "https://ad.example/nested-empty"})])])).toBe(false);
+    expect(hasMeaningfulContent([element("a", {href: "https://ad.example/text"}, [text("Native creative")])])).toBe(true);
+    expect(hasMeaningfulContent([element("a", {href: "https://ad.example/image"}, [element("img", {src: "https://ad.example/creative.jpg"})])])).toBe(true);
     expect(hasMeaningfulContent([element("iframe", {src: "https://ad.example/frame"})])).toBe(true);
     expect(hasMeaningfulContent([element("img", {src: "https://ad.example/creative.jpg"})])).toBe(true);
+    expect(hasMeaningfulContent([element("video", {src: "https://ad.example/creative.mp4"})])).toBe(true);
+    expect(hasMeaningfulContent([element("source", {src: "https://ad.example/creative.webm"})])).toBe(true);
     expect(hasMeaningfulContent([element("div", {}, [text("Native creative")])])).toBe(true);
   });
 

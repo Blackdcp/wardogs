@@ -37,9 +37,8 @@ export function hasMeaningfulAdsterraContent(nodes: Iterable<AdsterraNativeConte
 
     const tagName = node.tagName?.toLowerCase();
     if (tagName === "script" || tagName === "style" || tagName === "template") continue;
-    const href = node.getAttribute?.("href")?.trim();
     const src = node.getAttribute?.("src")?.trim();
-    if ((tagName === "a" && href) || ((tagName === "iframe" || tagName === "img") && src)) return true;
+    if ((tagName === "iframe" || tagName === "img" || tagName === "source" || tagName === "video") && src) return true;
     if (node.childNodes && hasMeaningfulAdsterraContent(node.childNodes)) return true;
   }
 
