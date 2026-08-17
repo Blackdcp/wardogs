@@ -34,6 +34,37 @@ test("item hubs and first item detail routes resolve", async ({page}) => {
   }
 });
 
+test("catalogue hub is a visual evidence-labelled navigation surface", async ({page}) => {
+  await page.goto("/en/items");
+
+  await expect(page.getByRole("heading", {level: 1, name: "WARDOGS Catalogue"})).toBeVisible();
+  await expect(page.locator('[data-catalogue-hero] img')).toHaveAttribute("src", /thegame-1280/);
+
+  const categories = page.locator('[data-catalogue-category]');
+  await expect(categories).toHaveCount(7);
+  await expect(categories.locator("img")).toHaveCount(7);
+  for (const count of ["33 weapons", "20 vehicles", "14 calibres", "21 optics + 34 magazines", "11 gear records", "13 equipment items", "3 budget bands"]) {
+    await expect(categories.getByText(count, {exact: true})).toBeVisible();
+  }
+  for (const pathname of ["weapons", "vehicles", "ammo", "attachments", "gear", "equipment", "loadouts"]) {
+    await expect(categories.locator(`a[href="/en/items/${pathname}"]`)).toHaveCount(1);
+  }
+
+  const legend = page.locator('[data-evidence-legend]');
+  for (const label of ["Official", "Verified in game", "Pre-release build"]) {
+    await expect(legend.getByText(label, {exact: true})).toBeVisible();
+  }
+
+  const previewRows = page.locator('[data-catalogue-preview-row]');
+  await expect(previewRows).toHaveCount(2);
+  await expect(previewRows.getByRole("heading", {name: "Featured Weapons"})).toBeVisible();
+  await expect(previewRows.getByRole("heading", {name: "Featured Vehicles"})).toBeVisible();
+  await expect(previewRows.locator('[data-catalogue-preview]')).toHaveCount(6);
+  await expect(previewRows.locator('[data-catalogue-preview] a')).toHaveCount(0);
+  await expect(previewRows.locator("a")).toHaveCount(2);
+  await expectImagesLoaded(page);
+});
+
 test("homepage promotes the catalogue before video intelligence", async ({page}) => {
   await page.goto("/en");
 

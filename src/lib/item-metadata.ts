@@ -45,8 +45,8 @@ export function buildItemHubMetadata(locale: Locale): Metadata {
   return buildEnglishOnlyItemPageMetadata(
     locale,
     "/items",
-    "WARDOGS Items - Weapons, Vehicles & Equipment",
-    "Browse WARDOGS catalogues for weapons, vehicles, ammunition, attachments, gear, equipment, loadouts, evidence labels, and pre-release caveats."
+    "WARDOGS Catalogue - Weapons, Vehicles & Equipment",
+    "Browse the WARDOGS Catalogue for weapons, vehicles, ammunition, attachments, gear, equipment, loadouts, evidence labels, and pre-release caveats."
   );
 }
 

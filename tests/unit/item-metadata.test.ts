@@ -36,7 +36,14 @@ describe("item metadata", () => {
   it("canonicalizes the untranslated item hub to English", () => {
     const metadata = buildItemHubMetadata("de");
 
+    expect(metadata.title).toMatch(/^WARDOGS Catalogue/);
     expect(metadata.robots).toEqual({index: false, follow: true});
-    expect(metadata.alternates?.canonical).toBe("http://localhost:3000/en/items");
+    expect(metadata.alternates).toEqual({
+      canonical: "http://localhost:3000/en/items",
+      languages: {
+        en: "http://localhost:3000/en/items",
+        "x-default": "http://localhost:3000/en/items"
+      }
+    });
   });
 });

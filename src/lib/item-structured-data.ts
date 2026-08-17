@@ -10,13 +10,13 @@ function pageUrl(locale: Locale, pathname = "") {
 }
 
 function typeLabel(type: ItemTypeId) {
-  return itemTypes.find((itemType) => itemType.id === type)?.label ?? "Items";
+  return itemTypes.find((itemType) => itemType.id === type)?.label ?? "Catalogue";
 }
 
 export function buildItemIndexJsonLd(locale: Locale): JsonLd[] {
   const url = pageUrl(locale, "/items");
   return [
-    {"@context": "https://schema.org", "@type": "CollectionPage", name: "WARDOGS Items", url},
+    {"@context": "https://schema.org", "@type": "CollectionPage", name: "WARDOGS Catalogue", url},
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
@@ -32,7 +32,7 @@ export function buildItemIndexJsonLd(locale: Locale): JsonLd[] {
       "@type": "BreadcrumbList",
       itemListElement: [
         {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
-        {"@type": "ListItem", position: 2, name: "Items", item: url}
+        {"@type": "ListItem", position: 2, name: "Catalogue", item: url}
       ]
     }
   ];
@@ -68,7 +68,7 @@ export function buildItemTypeJsonLd(locale: Locale, type: ItemTypeId): JsonLd[] 
       "@type": "BreadcrumbList",
       itemListElement: [
         {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
-        {"@type": "ListItem", position: 2, name: "Items", item: pageUrl(locale, "/items")},
+        {"@type": "ListItem", position: 2, name: "Catalogue", item: pageUrl(locale, "/items")},
         {"@type": "ListItem", position: 3, name: label, item: url}
       ]
     }
@@ -99,7 +99,7 @@ export function buildItemArticleJsonLd(locale: Locale, item: WardogsItem): JsonL
       "@type": "BreadcrumbList",
       itemListElement: [
         {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
-        {"@type": "ListItem", position: 2, name: "Items", item: pageUrl(locale, "/items")},
+        {"@type": "ListItem", position: 2, name: "Catalogue", item: pageUrl(locale, "/items")},
         {"@type": "ListItem", position: 3, name: label, item: pageUrl(locale, `/items/${item.type}`)},
         {"@type": "ListItem", position: 4, name: item.name, item: url}
       ]
