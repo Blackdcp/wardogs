@@ -1,5 +1,6 @@
 import {AlertTriangle, CheckCircle2, ExternalLink} from "lucide-react";
 import type {Locale} from "@/config/site";
+import {assetPath} from "@/lib/assets";
 import type {CatalogGuide, CatalogRow} from "./item-catalog-guides";
 import {getCatalogEntryCount} from "./item-catalog-guides";
 
@@ -75,7 +76,7 @@ export function ItemCatalogGuide({guide}: ItemCatalogGuideProps) {
                       const rowPosition = sectionOffsets[sectionIndex] + rowIndex + 1;
                       const linkedRow = catalogueRow as RecordLinkedCatalogRow;
                       const firstCellHref = linkedRow.detailStatus === "published"
-                        ? linkedRow.detailHref && `/en${linkedRow.detailHref}`
+                        ? linkedRow.detailHref && assetPath(`/en${linkedRow.detailHref}`)
                         : (linkedRow.detailStatus === "planned" || linkedRow.detailStatus === "inline") && linkedRow.recordSlug
                           ? `#record-${guide.id}-${linkedRow.recordSlug}`
                           : undefined;

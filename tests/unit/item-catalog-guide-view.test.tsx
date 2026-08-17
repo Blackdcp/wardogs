@@ -1,10 +1,14 @@
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
-import {describe, expect, it} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
 import {matchCatalogueGuideRecords} from "../../src/components/catalogue/catalogue-category-view";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import {ItemCatalogGuide} from "../../src/features/items/item-catalog-guide";
 import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 describe("ItemCatalogGuide", () => {
   it("renders a complete weapons catalogue with version and evidence context", () => {
@@ -70,6 +74,21 @@ describe("ItemCatalogGuide", () => {
       expect(html).toContain('href="/en/items/weapons/ak74"');
       expect(html).not.toContain(`href="/${locale}/items/weapons/ak74"`);
     }
+  });
+
+  it("includes the configured base path in a published English model table href", () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    const guide = getCatalogGuide("weapons");
+    const records = getCatalogueRecords("weapons").map((record) => record.slug === "ak74"
+      ? {...record, detailStatus: "planned" as const, detailHref: undefined}
+      : record);
+    const matchedGuide = matchCatalogueGuideRecords(guide!, records);
+
+    const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale="de" />);
+
+    expect(html).toContain('href="/wardogs/en/items/weapons/galil"');
+    expect(html).not.toContain('href="/en/items/weapons/galil"');
+    expect(html).toContain('href="#record-weapons-ak74"');
   });
 
   it("does not link a published row whose detail URL is missing", () => {

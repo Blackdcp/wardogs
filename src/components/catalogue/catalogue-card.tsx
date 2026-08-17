@@ -53,7 +53,7 @@ function CardContent({record, linked, eagerImage}: {record: CatalogueRecord; lin
 
 export function CatalogueCard({record, eagerImage = false, hidden = false}: CatalogueCardProps) {
   const detailHref = record.detailStatus === "published" && record.detailHref
-    ? `/en${record.detailHref}`
+    ? assetPath(`/en${record.detailHref}`)
     : undefined;
   const className = "flex h-full min-h-[34rem] min-w-0 flex-col border border-[#303b35] bg-[#151b18]";
 

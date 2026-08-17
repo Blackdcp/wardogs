@@ -1,6 +1,6 @@
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
-import {describe, expect, it} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
 import {CatalogueCard} from "../../src/components/catalogue/catalogue-card";
 import {
   CatalogueExplorer,
@@ -15,6 +15,10 @@ const labels = {
   allFilterLabel: "All",
   resultLabel: "records shown"
 };
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 describe("CatalogueCard", () => {
   it("renders inline ammunition facts at a stable record anchor without inventing a detail link", () => {
@@ -65,6 +69,17 @@ describe("CatalogueCard", () => {
       expect(html).toContain('href="/en/items/weapons/ak74"');
       expect(html).not.toContain(`href="/${locale}/items/weapons/ak74"`);
     }
+  });
+
+  it("includes the configured base path in a published English model href", () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    const ak74 = getCatalogueRecords("weapons").find((record) => record.slug === "ak74");
+    expect(ak74).toBeDefined();
+
+    const html = renderToStaticMarkup(<CatalogueCard locale="ru" record={ak74!} />);
+
+    expect(html).toContain('href="/wardogs/en/items/weapons/ak74"');
+    expect(html).not.toContain('href="/en/items/weapons/ak74"');
   });
 
   it("can eagerly load a card image reused by the category hero", () => {
