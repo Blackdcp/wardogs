@@ -196,7 +196,7 @@ type CatalogueRecord = {
   imageAlt: string;
   summary: string;
   facts: Array<{label: string; value: string}>;
-  detailPage: boolean;
+  detailStatus: "inline" | "planned" | "published";
   detailHref?: string;
   evidenceStatus: "official" | "verified-in-game" | "pre-release-build" | "community-report";
   dataAsOf: string;
@@ -239,7 +239,8 @@ The image grid appears before the long table so visitors can identify records vi
 
 ### 8.2 Record Behavior
 
-- Weapon and vehicle records with detail articles are crawlable links.
+- Only records with `detailStatus: "published"` and a valid `detailHref` are crawlable links.
+- Release 1 weapon and vehicle records use `detailStatus: "planned"`; they render as useful inline records until their Release 2 articles exist.
 - Ammo, attachment, and gear cards are complete inline records with stable anchors.
 - Inline records do not display fake buttons or link to nonexistent pages.
 - Table rows link to detail pages only when the target exists; otherwise they link to the matching record anchor.
