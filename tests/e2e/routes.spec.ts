@@ -32,3 +32,40 @@ test("item hubs and first item detail routes resolve", async ({page}) => {
     expect(response?.status(), pathname).toBe(200);
   }
 });
+
+test("native banner loads on content details but not on indexes", async ({page}) => {
+  await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", async (route) => {
+    await route.fulfill({
+      contentType: "application/javascript",
+      body: `document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e").textContent = "Test native ad";`
+    });
+  });
+
+  for (const pathname of [
+    "/en/guides/wardogs-gameplay",
+    "/en/videos/wardogs-mortars-indirect-fire",
+    "/en/items/weapons/mortar"
+  ]) {
+    await page.goto(pathname);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+    await expect(page.getByText("Test native ad")).toBeVisible();
+  }
+
+  await page.goto("/en/items/weapons/mortar");
+  await page.locator('a[href="/en/guides/wardogs-gameplay"]').first().click();
+  await expect(page).toHaveURL(/\/en\/guides\/wardogs-gameplay\/?$/);
+  await expect(page.getByText("Test native ad")).toBeVisible();
+
+  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/items"]) {
+    await page.goto(pathname);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+  }
+});
+
+test("localized privacy pages disclose the advertising provider", async ({page}) => {
+  for (const locale of locales) {
+    await page.goto(`/${locale}/privacy`);
+    await expect(page.getByText(/Adsterra/)).toBeVisible();
+    await expect(page.getByText(/IP/)).toBeVisible();
+  }
+});

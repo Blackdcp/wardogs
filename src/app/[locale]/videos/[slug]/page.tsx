@@ -8,6 +8,8 @@ import {JsonLd} from "@/components/seo/json-ld";
 import {getVideoArticle, videoArticles} from "@/features/videos/video-library";
 import {buildVideoArticleJsonLd} from "@/features/videos/video-structured-data";
 import {buildPageMetadata} from "@/lib/metadata";
+import {getTranslations} from "next-intl/server";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -28,6 +30,7 @@ export default async function VideoArticlePage({params}: PageProps) {
   const locale: Locale = requestedLocale;
   const article = getVideoArticle(slug);
   if (!article) notFound();
+  const adsT = await getTranslations({locale, namespace: "ads"});
 
   return (
     <main>
@@ -54,6 +57,8 @@ export default async function VideoArticlePage({params}: PageProps) {
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">Quick answer</p>
           <p className="mt-3 text-base leading-7 text-white">{article.quickAnswer}</p>
         </aside>
+
+        <AdsterraNativeBanner label={adsT("label")} />
 
         <section className="border-y border-[#2c3631] py-8" aria-labelledby="video-takeaways">
           <h2 className="display-font text-3xl text-white" id="video-takeaways">Key Takeaways</h2>

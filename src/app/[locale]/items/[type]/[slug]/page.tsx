@@ -14,6 +14,8 @@ import {buildItemMetadata} from "@/lib/item-metadata";
 import {buildItemArticleJsonLd} from "@/lib/item-structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
+import {getTranslations} from "next-intl/server";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 
 type PageProps = {params: Promise<{locale: string; type: string; slug: string}>};
 
@@ -43,6 +45,7 @@ export default async function ItemDetailPage({params}: PageProps) {
   if (!item || !item.indexLocales.includes(locale as Extract<Locale, "en" | "ru">)) notFound();
   const itemType = getItemType(item.type);
   const relatedItems = getRelatedItems(item);
+  const adsT = await getTranslations({locale, namespace: "ads"});
 
   return (
     <main>
@@ -68,6 +71,8 @@ export default async function ItemDetailPage({params}: PageProps) {
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">Quick answer</p>
           <p className="mt-3 text-base leading-7 text-white">{item.summary}</p>
         </aside>
+
+        <AdsterraNativeBanner label={adsT("label")} />
 
         <section aria-labelledby="facts-title">
           <h2 className="display-font text-3xl text-white" id="facts-title">Item Facts</h2>

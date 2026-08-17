@@ -1,5 +1,6 @@
 {
   "common": {"fanMade": "Fan-Wiki der Community", "language": "Sprache", "openMenu": "Menü öffnen", "closeMenu": "Menü schließen", "learnMore": "Mehr erfahren", "updated": "Aktualisiert", "official": "Offiziell", "community": "Community", "skipToContent": "Zum Inhalt springen", "openSteam": "WARDOGS auf Steam öffnen"},
+  "ads": {"label": "Werbung"},
   "nav": {"playtest": "Playtest", "release": "Release", "steam": "Steam", "gameplay": "Gameplay", "factions": "Fraktionen", "community": "Community", "videos": "Videos", "items": "Items", "news": "News", "guides": "Guides", "steamCta": "Auf Steam ansehen", "primaryLabel": "Hauptnavigation"},
   "home": {
     "metaTitle": "WARDOGS Wiki – Gameplay, Playtest und Release",
@@ -132,7 +133,7 @@
   "article": {"sources": "Quellen", "related": "Verwandte Guides", "faq": "Häufig gestellte Fragen", "back": "Alle Guides", "directAnswer": "Kurzantwort", "lastChecked": "Zuletzt geprüft", "watch": "Video ansehen", "videoConsent": "Datenschutzfreundliches YouTube-Video laden"},
   "categories": {"access": "Zugang", "release": "Release", "store": "Shop", "platform": "Plattform", "video": "Video", "community": "Community", "developer": "Entwickler", "guide": "Guide"},
   "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki ist ein unabhängiger, von Fans erstellter Guide für Spieler. Er behandelt bestätigte Angaben zu Zugang, Release, Gameplay, Fraktionen, Community und Medien ohne Verbindung zu BULKHEAD, Team17 oder Steam.", "description": "Unabhängige Tactical-FPS-Guides für WARDOGS-Spieler.", "guideLinks": "Guide-Links", "officialLinks": "Offizielle Links", "officialSite": "Offizielle WARDOGS-Website", "revealTrailer": "Reveal-Trailer", "legal": "Rechtliches", "privacy": "Datenschutz", "terms": "Nutzungsbedingungen"},
-  "privacy": {"title": "Datenschutzerklärung", "intro": "Dieser Fan-Guide minimiert die Datenerfassung und erklärt externe Medien und Links.", "content": "Wir verwalten keine Spielerkonten und erfassen keine Zugangsdaten. Nach dem Öffnen eines externen Dienstes gelten dessen Datenschutzbestimmungen."},
+  "privacy": {"title": "Datenschutzerklärung", "intro": "Dieser Fan-Guide minimiert die Datenerfassung und erklärt externe Medien und Links.", "content": "Wir verwalten keine Spielerkonten und erfassen keine Zugangsdaten. Nach dem Öffnen eines externen Dienstes gelten dessen Datenschutzbestimmungen.", "advertising": "Inhaltsseiten können native Anzeigen von Adsterra laden. Beim Laden einer Anzeige kann Adsterra Ihre IP-Adresse sowie Browser- und Geräteinformationen erhalten und Cookies oder ähnliche Technologien nach den eigenen Datenschutzregeln verwenden."},
   "terms": {"title": "Nutzungsbedingungen", "intro": "Nutze diesen unabhängigen Guide als Informationsangebot der Community.", "content": "Spieldetails können sich ändern. Prüfe Käufe, Zugangszeiträume, Plattformen und Kontoaktionen über offizielle WARDOGS-Quellen."},
   "notFound": {"title": "Seite nicht gefunden", "description": "Diese Einsatzroute existiert nicht in unserer geprüften Bibliothek mit 20 Themen.", "home": "Zur Startseite", "guides": "Guides ansehen"}
 }
