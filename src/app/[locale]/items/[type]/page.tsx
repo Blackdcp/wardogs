@@ -4,6 +4,7 @@ import {isLocale, locales, type Locale} from "@/config/site";
 import {CatalogueCategoryView} from "@/components/catalogue/catalogue-category-view";
 import {getItemType, getStandaloneItemsByType, itemTypes} from "@/features/items/item-library";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
+import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {Link} from "@/i18n/navigation";
 import {buildCatalogGuideMetadata} from "@/lib/item-metadata";
 import {buildItemTypeJsonLd} from "@/lib/item-structured-data";
@@ -47,21 +48,25 @@ export default async function ItemTypePage({params}: PageProps) {
             <p className="font-mono text-xs uppercase text-[#68bd8d]">Standalone articles</p>
             <h2 className="display-font mt-2 text-3xl text-white md:text-4xl">Detailed {itemType.label} Guides</h2>
             <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {items.map((item) => (
-                <Link
-                  href={`/items/${item.type}/${item.slug}`}
-                  className="border border-[#2c3631] bg-[#151b18] p-5 transition-colors hover:border-[#4d946d]"
-                  key={item.slug}
-                >
-                  <div className="flex flex-wrap items-center gap-2">
-                    <StatusBadge tone={item.status === "official" ? "accent" : "warning"}>{item.statusLabel}</StatusBadge>
-                    <span className="text-xs uppercase text-[#7f8e87]">{item.subtype}</span>
-                  </div>
-                  <h3 className="display-font mt-4 text-2xl text-white">WARDOGS {item.name}</h3>
-                  <p className="mt-3 text-sm leading-6 text-[#a8b4ae]">{item.summary}</p>
-                  <p className="mt-5 text-sm font-semibold text-[#7fd0a1]">Read item guide</p>
-                </Link>
-              ))}
+              {items.map((item) => {
+                const target = resolveItemRouteTarget(locale, `/items/${item.type}/${item.slug}`);
+                return (
+                  <Link
+                    href={target.pathname}
+                    locale={target.locale}
+                    className="border border-[#2c3631] bg-[#151b18] p-5 transition-colors hover:border-[#4d946d]"
+                    key={item.slug}
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <StatusBadge tone={item.status === "official" ? "accent" : "warning"}>{item.statusLabel}</StatusBadge>
+                      <span className="text-xs uppercase text-[#7f8e87]">{item.subtype}</span>
+                    </div>
+                    <h3 className="display-font mt-4 text-2xl text-white">WARDOGS {item.name}</h3>
+                    <p className="mt-3 text-sm leading-6 text-[#a8b4ae]">{item.summary}</p>
+                    <p className="mt-5 text-sm font-semibold text-[#7fd0a1]">Read item guide</p>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>

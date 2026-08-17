@@ -1,9 +1,15 @@
 import {existsSync} from "node:fs";
 import {resolve} from "node:path";
 import {expect, test} from "@playwright/test";
+import {getPublicSiteBase} from "../../src/lib/public-url";
 
-const basePath = "/wardogs";
-const canonicalBase = "https://blackdcp.github.io/wardogs";
+const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/wardogs";
+const basePath = configuredBasePath.replace(/^\/+|\/+$/g, "")
+  ? `/${configuredBasePath.replace(/^\/+|\/+$/g, "")}`
+  : "";
+const canonicalBase = getPublicSiteBase();
+const previewOrigin = "http://127.0.0.1:3001";
+const previewBase = `${previewOrigin}${basePath}/`;
 const weaponModels = [
   "a-91", "ak74", "amp-9", "amr-50", "bmr-308", "bushmaster-m17s", "compound-bow",
   "deagle", "fal", "galil", "ggx-17", "ggx-18", "judge", "kh-2002"
@@ -40,13 +46,13 @@ test("serves the Pages export from its deployment base", async ({page, request})
     }
   });
   page.on("response", (response) => {
-    if (response.url().startsWith("http://127.0.0.1:3001/wardogs/") && response.status() >= 400) {
+    if (response.url().startsWith(previewBase) && response.status() >= 400) {
       failures.push(`${response.status()} ${response.url()}`);
     }
   });
 
   await page.goto(deployed("/"));
-  await expect(page).toHaveURL(/\/wardogs\/en\/$/);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/en/")}`);
   await expect(page.locator("main")).toHaveCount(1);
 
   for (const pathname of [
@@ -61,7 +67,7 @@ test("serves the Pages export from its deployment base", async ({page, request})
 
   await page.goto(deployed("/en/guides/wardogs-gameplay/"));
   await page.locator("select:visible").selectOption("de");
-  await expect(page).toHaveURL(/\/wardogs\/de\/guides\/wardogs-gameplay\/$/);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/guides/wardogs-gameplay/")}`);
 
   await page.goto(deployed("/en/"));
   const localLinks = await page.locator('a[href^="/"]').evaluateAll((links) => links.map((link) => link.getAttribute("href")));
@@ -76,7 +82,7 @@ test("serves the Pages export from its deployment base", async ({page, request})
     await image.scrollIntoViewIfNeeded();
     await expect(image).toHaveJSProperty("complete", true);
     expect(await image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0);
-    expect(await image.getAttribute("src")).toMatch(/^\/wardogs\//);
+    expect(await image.getAttribute("src")).toMatch(new RegExp(`^${basePath.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")}/`));
   }
 
   const sitemap = await request.get(deployed("/sitemap.xml"));
@@ -111,8 +117,10 @@ test("exports all 34 English model articles with exact public URLs and real imag
     expect(jsonLd, pathname).toContain(`"mainEntityOfPage":"${canonical}"`);
     expect(jsonLd, pathname).not.toMatch(/Product|Offer|AggregateRating|Rating/);
     expect(html, pathname).toContain(imagePath);
-    expect(html, pathname).not.toContain(`href="/images/catalogue/${type}/${slug}.webp"`);
-    expect(html, pathname).not.toContain(`src="/images/catalogue/${type}/${slug}.webp"`);
+    if (basePath) {
+      expect(html, pathname).not.toContain(`href="/images/catalogue/${type}/${slug}.webp"`);
+      expect(html, pathname).not.toContain(`src="/images/catalogue/${type}/${slug}.webp"`);
+    }
     expect(html.match(/data-ad-slot="adsterra-native"/g), pathname).toHaveLength(1);
     expect(renderedHtml, pathname).not.toMatch(/NEXT_HTTP_ERROR_FALLBACK|<title>404|Page not found/i);
 
@@ -170,4 +178,65 @@ test("does not export unsupported localized copies of any new model", async ({re
     expect(existsSync(resolve("out", locale, "items", type, slug, "index.html")), pathname).toBe(false);
     expect((await request.get(deployed(pathname))).status(), pathname).toBe(404);
   }));
+});
+
+test("locale switching uses only exported item routes", async ({page}) => {
+  await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", (route) => route.abort("failed"));
+
+  await page.goto(deployed("/en/items/vehicles/bobcat/"));
+  await page.locator("select:visible").selectOption("ru");
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/vehicles/")}`);
+
+  await page.goto(deployed("/en/items/weapons/mortar/"));
+  await page.locator("select:visible").selectOption("ru");
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/weapons/mortar/")}`);
+  await page.locator("select:visible").selectOption("de");
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/items/weapons/")}`);
+});
+
+test("crawls every catalogue-facing internal link across all four locales", async ({page, request}) => {
+  await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", (route) => route.abort("failed"));
+  const locales = ["en", "ru", "de", "pt-br"] as const;
+  const categories = ["weapons", "vehicles", "ammo", "attachments", "gear", "equipment", "loadouts"] as const;
+  const legacyDetails = [
+    "/items/weapons/mortar/",
+    "/items/equipment/mobile-fob/",
+    "/items/vehicles/littlebird/",
+    "/items/vehicles/tank/",
+    "/items/vehicles/attack-helicopter/",
+    "/items/vehicles/armored-transport/"
+  ];
+  const sourcePaths = [
+    ...locales.flatMap((locale) => [
+      `/${locale}/`,
+      `/${locale}/items/`,
+      ...categories.map((category) => `/${locale}/items/${category}/`)
+    ]),
+    ...modelPaths.map(({type, slug}) => `/en/items/${type}/${slug}/`),
+    ...["en", "ru"].flatMap((locale) => legacyDetails.map((pathname) => `/${locale}${pathname}`))
+  ];
+  const internalTargets = new Set<string>();
+  const sourceFailures: string[] = [];
+
+  for (const pathname of sourcePaths) {
+    const response = await page.goto(deployed(pathname));
+    if (response?.status() !== 200) sourceFailures.push(`${response?.status() ?? "no response"} ${pathname}`);
+    const hrefs = await page.locator("a[href]").evaluateAll((links) =>
+      links.map((link) => (link as HTMLAnchorElement).href)
+    );
+    for (const href of hrefs) {
+      const url = new URL(href);
+      if (url.origin !== previewOrigin || !url.pathname.startsWith(`${basePath}/`)) continue;
+      internalTargets.add(`${url.pathname}${url.search}`);
+    }
+  }
+
+  const targetFailures = (await Promise.all([...internalTargets].map(async (pathname) => {
+    const response = await request.get(pathname);
+    return response.status() >= 400 ? `${response.status()} ${pathname}` : null;
+  }))).filter((failure): failure is string => failure !== null);
+
+  expect(sourceFailures).toEqual([]);
+  expect(internalTargets.size).toBeGreaterThan(80);
+  expect(targetFailures).toEqual([]);
 });

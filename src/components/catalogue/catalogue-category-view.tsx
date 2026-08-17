@@ -8,6 +8,7 @@ import {ItemCatalogGuide, type RecordLinkedCatalogGuide} from "@/features/items/
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import type {ItemTypeId} from "@/features/items/item-library";
 import {assetPath} from "@/lib/assets";
+import {publicRoutePath} from "@/lib/public-url";
 import {CatalogueExplorer} from "./catalogue-explorer";
 
 type CatalogueCategoryViewProps = {
@@ -88,7 +89,7 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
         />
         <div aria-hidden="true" className="absolute inset-0 bg-[#080b09]/60" />
         <div className="site-container relative flex min-h-[28rem] flex-col justify-end py-12 md:min-h-[34rem] md:py-16">
-          <a className="mb-auto inline-flex min-h-11 w-fit items-center gap-2 text-sm text-[#9bd1b3] hover:text-white" href={`/${locale}/items`}>
+          <a className="mb-auto inline-flex min-h-11 w-fit items-center gap-2 text-sm text-[#9bd1b3] hover:text-white" href={publicRoutePath(`/${locale}/items`)}>
             <ArrowLeft aria-hidden="true" size={16} />All Items
           </a>
           <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#e2bc61]">

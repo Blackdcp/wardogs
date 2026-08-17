@@ -54,6 +54,7 @@ export function MobileNavigationGroups({groups, onNavigate}: MobileNavigationGro
                   <li key={item.href}>
                     <Link
                       href={item.href}
+                      locale={item.locale}
                       className="flex min-h-11 items-center rounded-[4px] px-3 py-2 text-sm text-[#cbd5d0] transition-colors hover:bg-[#1e2923] hover:text-white"
                       onClick={onNavigate}
                     >

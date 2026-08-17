@@ -845,11 +845,13 @@ Run: `git diff --check origin/main...HEAD`
 
 Expected: only approved catalogue upgrade commits are ahead; unrelated untracked files remain unstaged.
 
-- [ ] **Step 2: Identify and push Release 1 through GitHub**
+- [ ] **Step 2: Push the pinned Release 1 boundary through GitHub**
 
-Run: `git log --grep="feat: complete catalogue architecture rollout" --format=%H -1`
+Release 1 is pinned to `ebb312d301347af7cac7fa4eafb414fd1ca7a5c1`, which includes every Task 8 follow-up fix. Verify it directly:
 
-Push the feature branch, then push that exact Release 1 boundary commit to `main` using the existing GitHub remote. Do not invoke Vercel CLI and do not push the Release 2 commits yet.
+Run: `git show --no-patch --format=%H ebb312d301347af7cac7fa4eafb414fd1ca7a5c1`
+
+Push the feature branch, then push exactly `ebb312d301347af7cac7fa4eafb414fd1ca7a5c1` to `main` using the existing GitHub remote. Do not derive the boundary from a commit-subject lookup, invoke Vercel CLI, or push the Release 2 commits yet.
 
 - [ ] **Step 3: Verify Release 1 production before Release 2**
 

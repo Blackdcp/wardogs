@@ -1,5 +1,18 @@
 import {expect, type Page} from "@playwright/test";
 
+const adsterraScriptPattern = "**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js";
+
+export async function installDeterministicAdFallback(page: Page) {
+  await page.route(adsterraScriptPattern, (route) => route.abort("failed"));
+}
+
+export async function expectAdSlotsTerminal(page: Page) {
+  const slots = page.locator('[data-ad-slot="adsterra-native"]');
+  for (let index = 0; index < await slots.count(); index += 1) {
+    await expect(slots.nth(index)).toHaveAttribute("data-state", /^(filled|fallback)$/);
+  }
+}
+
 export async function expectImagesLoaded(page: Page) {
   const images = page.locator("img:visible");
   for (let index = 0; index < await images.count(); index += 1) {

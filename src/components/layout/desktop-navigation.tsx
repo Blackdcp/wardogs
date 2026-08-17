@@ -116,6 +116,7 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
                     <li key={item.href}>
                       <Link
                         href={item.href}
+                        locale={item.locale}
                         className="flex min-h-10 items-center whitespace-nowrap rounded-[4px] px-3 py-2 text-sm font-semibold text-[#dce4df] transition-colors hover:bg-[#1e2923] hover:text-[#79d19c]"
                         onClick={() => {
                           pointerEntryGroupRef.current = null;

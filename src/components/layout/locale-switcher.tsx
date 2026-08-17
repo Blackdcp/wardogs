@@ -5,6 +5,7 @@ import {ChevronDown, Languages} from "lucide-react";
 import {useLocale} from "next-intl";
 import type {Locale} from "@/config/site";
 import {locales} from "@/config/site";
+import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {usePathname, useRouter} from "@/i18n/navigation";
 
 const localeLabels: Record<Locale, string> = {
@@ -28,7 +29,8 @@ export function LocaleSwitcher({label, compact = false}: LocaleSwitcherProps) {
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
     const nextLocale = event.target.value as Locale;
-    startTransition(() => router.replace(pathname, {locale: nextLocale}));
+    const target = resolveItemRouteTarget(nextLocale, pathname, "localized-category");
+    startTransition(() => router.replace(target.pathname, {locale: target.locale}));
   }
 
   return (

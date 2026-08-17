@@ -23,7 +23,7 @@ describe("item structured data", () => {
     expect((jsonLd[1].itemListElement as Array<{name: string}>)[1].name).toBe("Catalogue");
   });
 
-  it("uses a model article's exact committed image and updated date in Article schema", () => {
+  it("uses a model article's image and editorial date instead of its Alpha observation date", () => {
     const amp9 = getItemBySlug("amp-9");
     expect(amp9).toBeDefined();
 
@@ -32,7 +32,7 @@ describe("item structured data", () => {
     expect(jsonLd[0]).toMatchObject({
       "@type": "Article",
       image: "http://localhost:3000/images/catalogue/weapons/amp-9.webp",
-      dateModified: "2026-08-07"
+      dateModified: "2026-08-18"
     });
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
@@ -46,7 +46,7 @@ describe("item structured data", () => {
     expect(jsonLd[0]).toMatchObject({
       "@type": "Article",
       image: "http://localhost:3000/images/catalogue/vehicles/l2a6.webp",
-      dateModified: "2026-08-07"
+      dateModified: "2026-08-18"
     });
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });

@@ -396,11 +396,27 @@ test("native banner loads on content details but not on indexes", async ({page})
   }
 });
 
-test("native banner ignores blank and late script content after terminal fallback", async ({page}) => {
+test("native banner rejects hidden text and 1x1 media before terminal fallback", async ({page}) => {
   await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", async (route) => {
     await route.fulfill({
       contentType: "application/javascript",
-      body: `(() => { const container = document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e"); const emptyAnchor = document.createElement("a"); emptyAnchor.href = "https://ad.example/empty"; container.append(document.createComment("native placeholder"), document.createElement("div"), emptyAnchor); })();`
+      body: `(() => {
+        const container = document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e");
+        const emptyAnchor = document.createElement("a");
+        emptyAnchor.href = "https://ad.example/empty";
+        const hiddenText = document.createElement("div");
+        hiddenText.style.display = "none";
+        hiddenText.textContent = "Hidden native creative";
+        const ariaHiddenText = document.createElement("span");
+        ariaHiddenText.setAttribute("aria-hidden", "true");
+        ariaHiddenText.textContent = "ARIA-hidden creative";
+        const tracker = document.createElement("img");
+        tracker.alt = "";
+        tracker.height = 1;
+        tracker.width = 1;
+        tracker.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        container.append(document.createComment("native placeholder"), document.createElement("div"), emptyAnchor, hiddenText, ariaHiddenText, tracker);
+      })();`
     });
   });
 
@@ -408,6 +424,8 @@ test("native banner ignores blank and late script content after terminal fallbac
   const slot = page.locator('[data-ad-slot="adsterra-native"]');
   const shell = slot.locator('[data-ad-shell="native-content"]');
   await expect(slot).toHaveAttribute("data-state", "loading");
+  await expect(slot.getByText("Hidden native creative")).toBeHidden();
+  await expect(slot.locator('img[width="1"][height="1"]').first()).toBeAttached();
   const heightBeforeFallback = await shell.evaluate((element) => element.getBoundingClientRect().height);
 
   await expect(slot).toHaveAttribute("data-state", "fallback", {timeout: 9_000});

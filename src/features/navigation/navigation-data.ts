@@ -1,6 +1,10 @@
+import type {Locale} from "@/config/site";
+import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
+
 export type NavigationItem = {
   href: string;
   label: string;
+  locale?: Locale;
 };
 
 export type NavigationGroup = {
@@ -12,7 +16,12 @@ export type NavigationGroup = {
 
 type Translate = (key: string) => string;
 
-export function buildNavigation(t: Translate): NavigationGroup[] {
+function itemNavigationTarget(locale: Locale, pathname: string) {
+  const target = resolveItemRouteTarget(locale, pathname);
+  return {href: target.pathname, locale: target.locale};
+}
+
+export function buildNavigation(locale: Locale, t: Translate): NavigationGroup[] {
   return [
     {
       id: "game",
@@ -32,8 +41,8 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
       items: [
         {href: "/guides/wardogs-gameplay#beginner-guide", label: t("nav.beginnerGuide")},
         {href: "/guides/wardogs-gameplay", label: t("nav.gameplayGuide")},
-        {href: "/items/equipment/mobile-fob", label: t("nav.fobLogistics")},
-        {href: "/items/weapons/mortar", label: t("nav.mortarGuide")},
+        {...itemNavigationTarget(locale, "/items/equipment/mobile-fob"), label: t("nav.fobLogistics")},
+        {...itemNavigationTarget(locale, "/items/weapons/mortar"), label: t("nav.mortarGuide")},
         {href: "/guides", label: t("nav.allGuides")}
       ]
     },

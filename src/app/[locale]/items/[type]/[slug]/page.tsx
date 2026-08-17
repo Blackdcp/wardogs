@@ -10,6 +10,7 @@ import {
   getRelatedItems,
   type WardogsItem
 } from "@/features/items/item-library";
+import {isItemDetailRouteAvailable} from "@/features/items/item-route-availability";
 import {Link} from "@/i18n/navigation";
 import {buildItemMetadata} from "@/lib/item-metadata";
 import {buildItemArticleJsonLd} from "@/lib/item-structured-data";
@@ -44,7 +45,8 @@ export default async function ItemDetailPage({params}: PageProps) {
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
   const item = getItemByTypeAndSlug(type, slug);
-  if (!item || !item.indexLocales.includes(locale as Extract<Locale, "en" | "ru">)) notFound();
+  const pathname = `/items/${type}/${slug}`;
+  if (!item || !isItemDetailRouteAvailable(locale, pathname)) notFound();
   const itemType = getItemType(item.type);
   const relatedItems = getRelatedItems(item, locale as Extract<Locale, "en" | "ru">);
   const adsT = await getTranslations({locale, namespace: "ads"});

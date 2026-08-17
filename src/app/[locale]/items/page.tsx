@@ -11,6 +11,7 @@ import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecord, CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {getFeaturedItems, itemTypes, type ItemTypeId} from "@/features/items/item-library";
+import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
@@ -68,7 +69,7 @@ function getPreviewRecords(type: "weapons" | "vehicles"): readonly PublishedPrev
   });
 }
 
-function CataloguePreviewRow({type, title, description}: {type: "weapons" | "vehicles"; title: string; description: string}) {
+function CataloguePreviewRow({locale, type, title, description}: {locale: Locale; type: "weapons" | "vehicles"; title: string; description: string}) {
   const records = getPreviewRecords(type);
   const headingId = `featured-${type}`;
 
@@ -88,7 +89,10 @@ function CataloguePreviewRow({type, title, description}: {type: "weapons" | "veh
       <ul className="mt-6 grid gap-5 sm:grid-cols-3">
         {records.map((record) => (
           <li data-catalogue-preview key={record.slug} className="min-w-0 border-t border-[#354039] pt-4">
-            <a className="group block h-full" href={publicRoutePath(`/en${record.detailHref}`)}>
+            <a
+              className="group block h-full"
+              href={publicRoutePath(localizedItemRoutePath(resolveItemRouteTarget(locale, record.detailHref)))}
+            >
               <span className="relative block aspect-[4/3] overflow-hidden bg-[#090c0a]">
                 <Image src={assetPath(record.image)} alt={record.imageAlt} fill sizes={previewSizes} className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.02]" />
               </span>
@@ -210,11 +214,13 @@ export default async function ItemsPage({params}: PageProps) {
 
       <div className="site-container py-3 md:py-5">
         <CataloguePreviewRow
+          locale={locale}
           type="weapons"
           title="Featured Weapons"
           description="A visual cross-section of observed firearms and specialist tools, with evidence-led detail for each published model."
         />
         <CataloguePreviewRow
+          locale={locale}
           type="vehicles"
           title="Featured Vehicles"
           description="Representative transport, armor, and aircraft records from the Alpha catalogue, shown here for quick model comparison."
@@ -230,7 +236,11 @@ export default async function ItemsPage({params}: PageProps) {
           <ul className="mt-7 grid gap-x-6 md:grid-cols-2 xl:grid-cols-3">
             {featured.map((item) => (
               <li className="border-t border-[#354039]" key={item.slug}>
-                <Link href={`/items/${item.type}/${item.slug}`} className="group block min-h-48 py-5">
+                <Link
+                  className="group block min-h-48 py-5"
+                  href={resolveItemRouteTarget(locale, `/items/${item.type}/${item.slug}`).pathname}
+                  locale={resolveItemRouteTarget(locale, `/items/${item.type}/${item.slug}`).locale}
+                >
                   <div className="flex flex-wrap items-center gap-2">
                     <StatusBadge tone={item.status === "official" ? "accent" : "warning"}>{item.statusLabel}</StatusBadge>
                     <span className="text-xs uppercase text-[#7f8e87]">{item.subtype}</span>

@@ -6,6 +6,33 @@ test("locale switching preserves the current article slug", async ({page}) => {
   await expect(page).toHaveURL(/\/de\/guides\/wardogs-gameplay\/?$/);
 });
 
+test("locale switching never synthesizes unsupported item details", async ({page}) => {
+  await page.goto("/en/items/vehicles/bobcat");
+  await page.locator('select:visible').selectOption("ru");
+  await expect(page).toHaveURL(/\/ru\/items\/vehicles\/?$/);
+
+  await page.goto("/en/items/weapons/mortar");
+  await page.locator('select:visible').selectOption("ru");
+  await expect(page).toHaveURL(/\/ru\/items\/weapons\/mortar\/?$/);
+  await page.locator('select:visible').selectOption("de");
+  await expect(page).toHaveURL(/\/de\/items\/weapons\/?$/);
+});
+
+test("fixed legacy navigation links target only published locales", async ({page}) => {
+  await page.goto("/de");
+  const guides = page.getByRole("button", {name: "Anleitungen"});
+  await guides.hover();
+
+  await expect(page.getByRole("link", {name: "FOB und Logistik"})).toHaveAttribute(
+    "href",
+    "/en/items/equipment/mobile-fob"
+  );
+  await expect(page.getByRole("link", {name: "Mörser-Leitfaden"})).toHaveAttribute(
+    "href",
+    "/en/items/weapons/mortar"
+  );
+});
+
 test("mobile menu is keyboard operable and returns focus on Escape", async ({page}) => {
   await page.setViewportSize({width: 390, height: 844});
   await page.goto("/en");

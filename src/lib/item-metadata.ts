@@ -3,6 +3,7 @@ import type {Locale} from "@/config/site";
 import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import type {WardogsItem} from "@/features/items/item-library";
+import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {buildLocalizedUrl, buildPageMetadata, languageTags} from "./metadata";
 import {publicAssetUrl} from "./public-url";
 
@@ -11,7 +12,7 @@ function itemPath(item: WardogsItem) {
 }
 
 export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Extract<Locale, "en" | "ru"> {
-  return item.indexLocales.find((itemLocale) => itemLocale === locale) ?? item.indexLocales[0] ?? "en";
+  return resolveItemRouteTarget(locale, itemPath(item)).locale as Extract<Locale, "en" | "ru">;
 }
 
 export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {

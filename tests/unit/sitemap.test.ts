@@ -133,12 +133,12 @@ describe("sitemap", () => {
     }
   });
 
-  it("uses the exact committed model article date and weekly frequency for all 34 URLs", () => {
+  it("uses the editorial publication date, not the Alpha observation date, for all 34 URLs", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const contract of newModelContracts) {
       const url = `http://localhost:3000/en/items/${contract.type}/${contract.slug}`;
-      expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe("2026-08-07T00:00:00.000Z");
+      expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe("2026-08-18T00:00:00.000Z");
       expect(entriesByUrl.get(url)?.changeFrequency, url).toBe("weekly");
     }
   });

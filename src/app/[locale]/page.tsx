@@ -46,7 +46,7 @@ export default async function HomePage({params}: HomePageProps) {
       <HomeHero facts={facts} />
       <StartHere />
       <PriorityGuides guides={guides} />
-      <CatalogueHomeBand />
+      <CatalogueHomeBand locale={locale} />
       <VideoIntelligence locale={locale} />
       <CategoryGrid />
       <AboutGame />

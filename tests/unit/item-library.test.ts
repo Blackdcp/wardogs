@@ -104,7 +104,9 @@ describe("item library", () => {
     expect(weaponModels.every((item) => item.unconfirmedFacts && item.unconfirmedFacts.length > 0)).toBe(true);
     expect(weaponModels.every((item) => item.unconfirmedFacts?.every((fact) => /Early Access|final release/.test(fact)))).toBe(true);
     expect(weaponModels.every((item) => item.sources.length > 0 && item.relatedGuides.length > 0 && item.relatedItems.length > 0)).toBe(true);
-    expect(weaponModels.every((item) => item.detailImage && item.detailImageAlt && item.detailUpdatedAt)).toBe(true);
+    expect(weaponModels.every((item) => item.detailImage && item.detailImageAlt)).toBe(true);
+    expect(weaponModels.every((item) => item.detailUpdatedAt === "2026-08-18")).toBe(true);
+    expect(weaponModels.every((item) => item.build === "Alpha 1 - 7 Aug 2026")).toBe(true);
     expect(new Set(weaponModels.map((item) => item.summary)).size).toBe(14);
     expect(new Set(weaponModels.map((item) => item.description)).size).toBe(14);
 
@@ -126,7 +128,7 @@ describe("item library", () => {
       observedPrice: "$900",
       observedAmmoOrVehicleClass: "9x19mm",
       observedProgressionOrGate: "Medic XP",
-      detailUpdatedAt: "2026-08-07"
+      detailUpdatedAt: "2026-08-18"
     });
     expect(amp9?.confirmedFacts).toContain("Observed in Alpha 1: Ammunition: 9x19mm");
     expect(amp9?.unconfirmedFacts).not.toEqual([]);
@@ -150,7 +152,9 @@ describe("item library", () => {
     expect(vehicleModels.every((item) => item.unconfirmedFacts?.every((fact) => /Early Access|final release/.test(fact)))).toBe(true);
     expect(vehicleModels.every((item) => item.sources.length > 0 && item.sources.every((source) => isApprovedSourceUrl(source.url)))).toBe(true);
     expect(vehicleModels.every((item) => item.relatedGuides.length > 0 && item.relatedGuides.every((slug) => guideSlugs.has(slug)))).toBe(true);
-    expect(vehicleModels.every((item) => item.detailImage && item.detailImageAlt && item.detailUpdatedAt)).toBe(true);
+    expect(vehicleModels.every((item) => item.detailImage && item.detailImageAlt)).toBe(true);
+    expect(vehicleModels.every((item) => item.detailUpdatedAt === "2026-08-18")).toBe(true);
+    expect(vehicleModels.every((item) => item.build === "Alpha 1 - 7 Aug 2026")).toBe(true);
     expect(new Set(vehicleModels.map((item) => item.summary)).size).toBe(20);
     expect(new Set(vehicleModels.map((item) => item.description)).size).toBe(20);
     expect(new Set(vehicleModels.map((item) => item.role)).size).toBe(20);

@@ -49,7 +49,7 @@ export const weaponItems = [
       "The Alpha 1 price was not captured; Early Access and final release pricing remain unconfirmed.",
       "Damage, recoil, attachment compatibility, and balance may change for Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 100,
     indexLocales: ["en"]
   },
@@ -100,7 +100,7 @@ export const weaponItems = [
       "The Alpha 1 price was not captured; Early Access and final release pricing remain unconfirmed.",
       "The drum price, final recoil, damage, and progression tuning remain unconfirmed for Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 101,
     indexLocales: ["en"]
   },
@@ -152,7 +152,7 @@ export const weaponItems = [
       "Damage, recoil, range behavior, and Medic XP requirements may change for Early Access or final release.",
       "Alpha 1 magazine prices and compatibility are not confirmed as final release values."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 102,
     indexLocales: ["en"]
   },
@@ -204,7 +204,7 @@ export const weaponItems = [
       "Damage against infantry, armor interaction, sway, and handling may change for Early Access or final release.",
       "The $8,800 rifle price and .50 Cal ammunition costs are Alpha 1 observations, not confirmed final release economy values."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 103,
     indexLocales: ["en"]
   },
@@ -256,7 +256,7 @@ export const weaponItems = [
       "Optic compatibility, recoil, damage, and range tuning remain unconfirmed for Early Access or final release.",
       "The observed $6,000 price and magazine economy may change before Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 104,
     indexLocales: ["en"]
   },
@@ -308,7 +308,7 @@ export const weaponItems = [
       "The displayed $0 Alpha 1 price is not confirmed for Early Access or final release.",
       "Acquisition rules, damage, recoil, and attachment compatibility may change for Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 105,
     indexLocales: ["en"]
   },
@@ -360,7 +360,7 @@ export const weaponItems = [
       "Arrow damage, velocity, recovery, and capacity remain unconfirmed for Early Access or final release.",
       "The $800 price and Recon XP requirements may change before Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 106,
     indexLocales: ["en"]
   },
@@ -410,7 +410,7 @@ export const weaponItems = [
       "Weight and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
       "Damage, recoil, magazine behavior, and the $900 price may change before Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 107,
     indexLocales: ["en"]
   },
@@ -462,7 +462,7 @@ export const weaponItems = [
       "Damage, recoil, full-auto control, and Assault XP requirements may change for Early Access or final release.",
       "The $5,500 price and recorded magazine costs are Alpha 1 observations, not confirmed final release values."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 108,
     indexLocales: ["en"]
   },
@@ -514,7 +514,7 @@ export const weaponItems = [
       "Recoil, damage, attachment fit, and Assault XP tuning remain unconfirmed for Early Access or final release.",
       "The Alpha 1 rifle and magazine prices may change before Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 109,
     indexLocales: ["en"]
   },
@@ -563,7 +563,7 @@ export const weaponItems = [
       "Price, weight, and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
       "Magazine compatibility, damage, recoil, and capacity may change before Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 110,
     indexLocales: ["en"]
   },
@@ -612,7 +612,7 @@ export const weaponItems = [
       "Price, weight, and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
       "Full-auto tuning, magazine compatibility, recoil, and damage may change before Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 111,
     indexLocales: ["en"]
   },
@@ -661,7 +661,7 @@ export const weaponItems = [
       "Fire mode, weight, and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
       "Capacity, reload behavior, damage, and the $250 price may change before Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 112,
     indexLocales: ["en"]
   },
@@ -712,7 +712,7 @@ export const weaponItems = [
       "The Alpha 1 price was not captured; Early Access and final release pricing remain unconfirmed.",
       "Model-specific handling, damage, recoil, and attachment fit may change for Early Access or final release."
     ],
-    detailUpdatedAt: "2026-08-07",
+    detailUpdatedAt: "2026-08-18",
     priority: 113,
     indexLocales: ["en"]
   }

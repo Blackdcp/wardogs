@@ -5,6 +5,8 @@ import type {ComponentType, ReactNode} from "react";
 import {catalogueGroups} from "@/features/catalogue/catalogue-groups";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
+import type {Locale} from "@/config/site";
+import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
 
@@ -138,7 +140,7 @@ function observedCount(type: CatalogueRecordType) {
   return getCatalogueRecords(type).length;
 }
 
-export async function CatalogueHomeBand() {
+export async function CatalogueHomeBand({locale}: {locale: Locale}) {
   const t = await getTranslations("home.catalogue");
   const {Link} = await import("@/i18n/navigation");
   const entries: CatalogueHomeBandEntry[] = [
@@ -163,7 +165,7 @@ export async function CatalogueHomeBand() {
       key: `${type}-${slug}` as const,
       title: record.name,
       subtype: record.subtype,
-      href: publicRoutePath(`/en${record.detailHref}`),
+      href: publicRoutePath(localizedItemRoutePath(resolveItemRouteTarget(locale, record.detailHref))),
       image: record.image,
       imageAlt: record.imageAlt
     };

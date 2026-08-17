@@ -25,21 +25,96 @@ type AdsterraNativeSlotEvent = "meaningful-fill" | "timeout" | "error";
 export type AdsterraNativeContentNode = {
   childNodes?: Iterable<AdsterraNativeContentNode>;
   getAttribute?: (name: string) => string | null;
+  getBoundingClientRect?: () => {height: number; width: number};
+  hidden?: boolean | "until-found";
+  naturalHeight?: number;
+  naturalWidth?: number;
   nodeType: number;
   tagName?: string;
   textContent?: string | null;
+  videoHeight?: number;
+  videoWidth?: number;
 };
 
-export function hasMeaningfulAdsterraContent(nodes: Iterable<AdsterraNativeContentNode>) {
-  for (const node of nodes) {
-    if (node.nodeType === 3 && node.textContent?.trim()) return true;
+type AdsterraNativeRenderedStyle = {
+  display: string;
+  opacity: string;
+  visibility: string;
+};
+
+type AdsterraNativeStyleReader = (node: AdsterraNativeContentNode) => AdsterraNativeRenderedStyle;
+
+function browserStyle(node: AdsterraNativeContentNode): AdsterraNativeRenderedStyle {
+  if (typeof Element === "undefined" || !(node instanceof Element)) {
+    return {display: "block", opacity: "1", visibility: "visible"};
+  }
+  return window.getComputedStyle(node);
+}
+
+function hasUsableGeometry(node: AdsterraNativeContentNode) {
+  const bounds = node.getBoundingClientRect?.();
+  return Boolean(bounds && bounds.width > 1 && bounds.height > 1);
+}
+
+function isVisibleElement(node: AdsterraNativeContentNode, getStyle: AdsterraNativeStyleReader) {
+  const hiddenAttribute = node.getAttribute?.("hidden");
+  if (
+    node.hidden ||
+    (hiddenAttribute !== undefined && hiddenAttribute !== null) ||
+    node.getAttribute?.("aria-hidden") === "true"
+  ) {
+    return false;
+  }
+  const style = getStyle(node);
+  return style.display !== "none" &&
+    style.visibility !== "hidden" &&
+    style.visibility !== "collapse" &&
+    Number.parseFloat(style.opacity || "1") > 0;
+}
+
+function hasUsableMedia(node: AdsterraNativeContentNode, tagName: string) {
+  if (!node.getAttribute?.("src")?.trim() || !hasUsableGeometry(node)) return false;
+  if (tagName === "img" && node.naturalWidth !== undefined && node.naturalHeight !== undefined) {
+    return node.naturalWidth > 1 && node.naturalHeight > 1;
+  }
+  if (tagName === "video" && node.videoWidth !== undefined && node.videoHeight !== undefined) {
+    return node.videoWidth > 1 && node.videoHeight > 1;
+  }
+  return true;
+}
+
+function hasMeaningfulDescendant(node: AdsterraNativeContentNode, getStyle: AdsterraNativeStyleReader): boolean {
+  if (node.nodeType !== 1 || !isVisibleElement(node, getStyle)) return false;
+
+  const tagName = node.tagName?.toLowerCase() ?? "";
+  if (tagName === "script" || tagName === "style" || tagName === "template") return false;
+  if (tagName === "iframe" || tagName === "img" || tagName === "video") {
+    return hasUsableMedia(node, tagName);
+  }
+
+  const parentHasGeometry = hasUsableGeometry(node);
+  for (const child of node.childNodes ?? []) {
+    if (child.nodeType === 3 && parentHasGeometry && child.textContent?.trim()) return true;
+    if (child.nodeType === 1 && hasMeaningfulDescendant(child, getStyle)) return true;
+  }
+
+  return false;
+}
+
+export function hasMeaningfulAdsterraContent(
+  root: AdsterraNativeContentNode,
+  getStyle: AdsterraNativeStyleReader = browserStyle
+) {
+  if (root.nodeType !== 1 || !isVisibleElement(root, getStyle)) return false;
+
+  const rootHasGeometry = hasUsableGeometry(root);
+  for (const node of root.childNodes ?? []) {
+    if (node.nodeType === 3 && rootHasGeometry && node.textContent?.trim()) return true;
     if (node.nodeType !== 1) continue;
 
     const tagName = node.tagName?.toLowerCase();
     if (tagName === "script" || tagName === "style" || tagName === "template") continue;
-    const src = node.getAttribute?.("src")?.trim();
-    if ((tagName === "iframe" || tagName === "img" || tagName === "source" || tagName === "video") && src) return true;
-    if (node.childNodes && hasMeaningfulAdsterraContent(node.childNodes)) return true;
+    if (hasMeaningfulDescendant(node, getStyle)) return true;
   }
 
   return false;
@@ -64,13 +139,17 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
     const container = containerRef.current;
     if (!section || !container) return;
 
+    stateRef.current = "loading";
+    section.dataset.state = "loading";
+    container.hidden = false;
     container.replaceChildren();
     const script = document.createElement("script");
     configureAdsterraScript(script);
 
     let timeoutId = 0;
+    let pollId = 0;
     let disposed = false;
-    const hasContent = () => hasMeaningfulAdsterraContent(container.childNodes);
+    const hasContent = () => hasMeaningfulAdsterraContent(container);
     const updateState = (event: AdsterraNativeSlotEvent) => {
       const nextState = transitionAdsterraNativeState(stateRef.current, event);
       if (nextState === stateRef.current) return false;
@@ -83,26 +162,34 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
       if (disposed || !hasContent() || !updateState("meaningful-fill")) return;
       observer.disconnect();
       window.clearTimeout(timeoutId);
+      window.clearInterval(pollId);
     };
     const showFallback = (event: "timeout" | "error") => {
       if (disposed || !updateState(event)) return;
       observer.disconnect();
       window.clearTimeout(timeoutId);
+      window.clearInterval(pollId);
       container.replaceChildren();
       container.hidden = true;
     };
 
     const observer = new MutationObserver(markFilled);
-    observer.observe(container, {childList: true, subtree: true});
+    observer.observe(container, {attributes: true, characterData: true, childList: true, subtree: true});
+    container.addEventListener("load", markFilled, true);
     const handleScriptError = () => showFallback("error");
     script.addEventListener("error", handleScriptError, {once: true});
     section.insertBefore(script, container.parentElement);
-    if (stateRef.current === "loading") timeoutId = window.setTimeout(() => showFallback("timeout"), 8000);
+    if (stateRef.current === "loading") {
+      pollId = window.setInterval(markFilled, 250);
+      timeoutId = window.setTimeout(() => showFallback("timeout"), 8000);
+    }
 
     return () => {
       disposed = true;
       observer.disconnect();
       window.clearTimeout(timeoutId);
+      window.clearInterval(pollId);
+      container.removeEventListener("load", markFilled, true);
       script.removeEventListener("error", handleScriptError);
       script.remove();
       container.replaceChildren();

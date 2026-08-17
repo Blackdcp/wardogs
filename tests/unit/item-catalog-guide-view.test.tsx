@@ -1,7 +1,10 @@
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {afterEach, describe, expect, it, vi} from "vitest";
-import {matchCatalogueGuideRecords} from "../../src/components/catalogue/catalogue-category-view";
+import {
+  CatalogueCategoryView,
+  matchCatalogueGuideRecords
+} from "../../src/components/catalogue/catalogue-category-view";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import {ItemCatalogGuide} from "../../src/features/items/item-catalog-guide";
 import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
@@ -11,6 +14,17 @@ afterEach(() => {
 });
 
 describe("ItemCatalogGuide", () => {
+  it("normalizes the category hero return link for a subpath Pages export", () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    vi.stubEnv("GITHUB_PAGES", "true");
+    const guide = getCatalogGuide("weapons");
+
+    const html = renderToStaticMarkup(<CatalogueCategoryView guide={guide!} locale="de" />);
+
+    expect(html).toContain('href="/wardogs/de/items/"');
+    expect(html).not.toContain('href="/de/items"');
+  });
+
   it("renders a complete weapons catalogue with version and evidence context", () => {
     const guide = getCatalogGuide("weapons");
     expect(guide).toBeDefined();

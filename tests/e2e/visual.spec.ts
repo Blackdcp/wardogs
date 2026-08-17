@@ -1,5 +1,5 @@
 import {expect, test, type Page} from "@playwright/test";
-import {expectImagesLoaded} from "./helpers";
+import {expectAdSlotsTerminal, expectImagesLoaded, installDeterministicAdFallback} from "./helpers";
 import {calculateMobileSegmentScrollTops} from "./visual-segments";
 
 async function expectMobileCategoryScrollSegments(page: Page, name: string) {
@@ -33,14 +33,11 @@ for (const viewport of [
     {name: "catalogue-vehicle-model", pathname: "/en/items/vehicles/bobcat"}
   ]) {
     test(`${pageCase.name} ${viewport.name} visual`, async ({page}) => {
-      const modelDetail = pageCase.name === "catalogue-weapon-model" || pageCase.name === "catalogue-vehicle-model";
-      if (modelDetail) {
-        await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", (route) => route.abort("failed"));
-      }
+      await installDeterministicAdFallback(page);
       await page.setViewportSize(viewport);
       await page.goto(pageCase.pathname);
       await expectImagesLoaded(page);
-      if (modelDetail) await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveAttribute("data-state", "fallback");
+      await expectAdSlotsTerminal(page);
       await page.evaluate(() => window.scrollTo(0, 0));
       if (viewport.name === "mobile" && (pageCase.name === "catalogue-weapons" || pageCase.name === "catalogue-vehicles")) {
         await expectMobileCategoryScrollSegments(page, pageCase.name);

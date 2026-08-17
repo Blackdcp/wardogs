@@ -33,12 +33,17 @@ jobs:
         run: npm ci
       - name: Build static site
         env:
+          GITHUB_PAGES: "true"
           NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_SITE_URL: https://www.wardogswiki.com
         run: npm run build:pages
       - name: Install browser for Pages smoke test
         run: npx playwright install --with-deps chromium
       - name: Verify exported site
+        env:
+          GITHUB_PAGES: "true"
+          NEXT_PUBLIC_BASE_PATH: ""
+          NEXT_PUBLIC_SITE_URL: https://www.wardogswiki.com
         run: npm run test:pages:built
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4

@@ -5,7 +5,12 @@ import {describe, expect, it} from "vitest";
 type ContentNode = {
   childNodes?: Iterable<ContentNode>;
   getAttribute?: (name: string) => string | null;
+  getBoundingClientRect?: () => {height: number; width: number};
+  hidden?: boolean;
+  naturalHeight?: number;
+  naturalWidth?: number;
   nodeType: number;
+  renderedStyle?: {display: string; opacity: string; visibility: string};
   tagName?: string;
   textContent?: string | null;
 };
@@ -15,13 +20,24 @@ const comment = (textContent: string): ContentNode => ({nodeType: 8, textContent
 const element = (
   tagName: string,
   attributes: Record<string, string> = {},
-  childNodes: ContentNode[] = []
+  childNodes: ContentNode[] = [],
+  options: Partial<ContentNode> = {}
 ): ContentNode => ({
   childNodes,
   getAttribute: (name) => attributes[name] ?? null,
+  getBoundingClientRect: () => ({height: 90, width: 320}),
   nodeType: 1,
-  tagName
+  renderedStyle: {display: "block", opacity: "1", visibility: "visible"},
+  tagName,
+  ...options
 });
+
+const container = (childNodes: ContentNode[]) => element("div", {}, childNodes);
+const renderedStyle = (node: ContentNode) => node.renderedStyle ?? {
+  display: "block",
+  opacity: "1",
+  visibility: "visible"
+};
 
 describe("AdsterraNativeBanner", () => {
   it("renders the required container and configures the supplied native-banner script", async () => {
@@ -65,24 +81,74 @@ describe("AdsterraNativeBanner", () => {
     expect(html).not.toContain('href="/items"');
   });
 
-  it("recognizes only meaningful native creative content", async () => {
+  it("accepts only visible native creative content with usable geometry", async () => {
     const adModule = await import("../../src/components/ads/adsterra-native-banner");
     const hasMeaningfulContent = (adModule as unknown as {
-      hasMeaningfulAdsterraContent(nodes: Iterable<ContentNode>): boolean;
+      hasMeaningfulAdsterraContent(
+        root: ContentNode,
+        getStyle: (node: ContentNode) => {display: string; opacity: string; visibility: string}
+      ): boolean;
     }).hasMeaningfulAdsterraContent;
 
-    expect(hasMeaningfulContent([comment("placeholder"), text("  "), element("div")])).toBe(false);
-    expect(hasMeaningfulContent([element("div", {}, [comment("later"), text("\n")])])).toBe(false);
-    expect(hasMeaningfulContent([element("script", {}, [text("bootstrap native creative")])])).toBe(false);
-    expect(hasMeaningfulContent([element("a", {href: "https://ad.example/empty"})])).toBe(false);
-    expect(hasMeaningfulContent([element("div", {}, [element("a", {href: "https://ad.example/nested-empty"})])])).toBe(false);
-    expect(hasMeaningfulContent([element("a", {href: "https://ad.example/text"}, [text("Native creative")])])).toBe(true);
-    expect(hasMeaningfulContent([element("a", {href: "https://ad.example/image"}, [element("img", {src: "https://ad.example/creative.jpg"})])])).toBe(true);
-    expect(hasMeaningfulContent([element("iframe", {src: "https://ad.example/frame"})])).toBe(true);
-    expect(hasMeaningfulContent([element("img", {src: "https://ad.example/creative.jpg"})])).toBe(true);
-    expect(hasMeaningfulContent([element("video", {src: "https://ad.example/creative.mp4"})])).toBe(true);
-    expect(hasMeaningfulContent([element("source", {src: "https://ad.example/creative.webm"})])).toBe(true);
-    expect(hasMeaningfulContent([element("div", {}, [text("Native creative")])])).toBe(true);
+    expect(hasMeaningfulContent(container([comment("placeholder"), text("  "), element("div")]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([element("script", {}, [text("bootstrap native creative")])]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([element("a", {href: "https://ad.example/empty"})]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([element("a", {href: "https://ad.example/text"}, [text("Native creative")])]), renderedStyle)).toBe(true);
+    expect(hasMeaningfulContent(container([
+      element("img", {src: "https://ad.example/creative.jpg"}, [], {naturalHeight: 250, naturalWidth: 300})
+    ]), renderedStyle)).toBe(true);
+    expect(hasMeaningfulContent(container([element("iframe", {src: "https://ad.example/frame"})]), renderedStyle)).toBe(true);
+  });
+
+  it("rejects hidden text, hidden ancestry, and invisible computed styles", async () => {
+    const adModule = await import("../../src/components/ads/adsterra-native-banner");
+    const hasMeaningfulContent = (adModule as unknown as {
+      hasMeaningfulAdsterraContent(
+        root: ContentNode,
+        getStyle: (node: ContentNode) => {display: string; opacity: string; visibility: string}
+      ): boolean;
+    }).hasMeaningfulAdsterraContent;
+    const creative = [text("Native creative")];
+
+    expect(hasMeaningfulContent(container([element("div", {}, creative, {hidden: true})]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([element("div", {"aria-hidden": "true"}, creative)]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([
+      element("div", {}, [element("span", {}, creative)], {renderedStyle: {display: "none", opacity: "1", visibility: "visible"}})
+    ]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([
+      element("div", {}, creative, {renderedStyle: {display: "block", opacity: "1", visibility: "hidden"}})
+    ]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([
+      element("div", {}, creative, {renderedStyle: {display: "block", opacity: "0", visibility: "visible"}})
+    ]), renderedStyle)).toBe(false);
+  });
+
+  it("rejects zero-size creatives and 1x1 tracking media", async () => {
+    const adModule = await import("../../src/components/ads/adsterra-native-banner");
+    const hasMeaningfulContent = (adModule as unknown as {
+      hasMeaningfulAdsterraContent(
+        root: ContentNode,
+        getStyle: (node: ContentNode) => {display: string; opacity: string; visibility: string}
+      ): boolean;
+    }).hasMeaningfulAdsterraContent;
+
+    expect(hasMeaningfulContent(container([
+      element("div", {}, [text("Zero-size text")], {getBoundingClientRect: () => ({height: 0, width: 0})})
+    ]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([
+      element("img", {src: "https://ad.example/tracker.gif"}, [], {
+        getBoundingClientRect: () => ({height: 1, width: 1}),
+        naturalHeight: 1,
+        naturalWidth: 1
+      })
+    ]), renderedStyle)).toBe(false);
+    expect(hasMeaningfulContent(container([
+      element("img", {src: "https://ad.example/zero.gif"}, [], {
+        getBoundingClientRect: () => ({height: 0, width: 0}),
+        naturalHeight: 0,
+        naturalWidth: 0
+      })
+    ]), renderedStyle)).toBe(false);
   });
 
   it("keeps a fallback terminal after timeout, error, or late fill", async () => {
