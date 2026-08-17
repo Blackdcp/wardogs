@@ -1,7 +1,7 @@
 {
   "common": {"fanMade": "Fan-Wiki der Community", "language": "Sprache", "openMenu": "Menü öffnen", "closeMenu": "Menü schließen", "learnMore": "Mehr erfahren", "updated": "Aktualisiert", "official": "Offiziell", "community": "Community", "skipToContent": "Zum Inhalt springen", "openSteam": "WARDOGS auf Steam öffnen"},
   "ads": {"label": "Werbung"},
-  "nav": {"playtest": "Playtest", "release": "Release", "steam": "Steam", "gameplay": "Gameplay", "factions": "Fraktionen", "community": "Community", "videos": "Videos", "items": "Items", "news": "News", "guides": "Guides", "steamCta": "Auf Steam ansehen", "primaryLabel": "Hauptnavigation"},
+  "nav": {"game": "Spiel", "guides": "Anleitungen", "catalogue": "Katalog", "playtest": "Spieltest", "release": "Veröffentlichung", "releaseDate": "Erscheinungsdatum", "steam": "Steam", "steamEarlyAccess": "Steam und Vorabzugang", "gameplay": "Spielablauf", "factions": "Fraktionen", "community": "Gemeinschaft", "beginnerGuide": "Einsteigerleitfaden", "gameplayGuide": "Spielanleitung", "fobLogistics": "FOB und Logistik", "mortarGuide": "Mörser-Leitfaden", "allGuides": "Alle Anleitungen", "catalogueHome": "Katalogübersicht", "weapons": "Waffen", "vehicles": "Fahrzeuge", "ammo": "Munition", "attachments": "Aufsätze", "gear": "Ausrüstung", "equipment": "Geräte", "loadouts": "Zusammenstellungen", "videos": "Videos", "items": "Gegenstände", "news": "Neuigkeiten", "steamCta": "Auf Steam ansehen", "primaryLabel": "Hauptnavigation"},
   "home": {
     "metaTitle": "WARDOGS Wiki – Gameplay, Playtest und Release",
     "metaDescription": "WARDOGS Wiki bietet geprüfte Guides zu Gameplay, Playtests, Release-Termin, Steam-Zugang, Fraktionen, Trailern, Community-Links und Einsteiger-Tipps.",

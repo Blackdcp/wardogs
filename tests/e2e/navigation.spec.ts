@@ -18,6 +18,44 @@ test("mobile menu is keyboard operable and returns focus on Escape", async ({pag
   await expect(trigger).toBeFocused();
 });
 
+test("desktop grouped navigation supports pointer and keyboard dismissal", async ({page}) => {
+  await page.goto("/en");
+  const catalogue = page.getByRole("button", {name: "Catalogue"});
+
+  await catalogue.hover();
+  const weapons = page.getByRole("link", {name: "Weapons", exact: true});
+  await expect(weapons).toBeVisible();
+  await expect(weapons).toHaveAttribute("href", "/en/items/weapons");
+  await expect(catalogue).toHaveAttribute("aria-expanded", "true");
+
+  await catalogue.focus();
+  await page.keyboard.press("Escape");
+  await expect(weapons).toBeHidden();
+  await expect(catalogue).toHaveAttribute("aria-expanded", "false");
+  await expect(catalogue).toBeFocused();
+
+  await catalogue.click();
+  await expect(weapons).toBeVisible();
+  await page.getByRole("main").click({position: {x: 10, y: 10}});
+  await expect(weapons).toBeHidden();
+});
+
+test("mobile menu expands grouped catalogue links", async ({page}) => {
+  await page.setViewportSize({width: 390, height: 844});
+  await page.goto("/en");
+  await page.getByRole("button", {name: "Open menu"}).click();
+
+  const catalogue = page.getByRole("button", {name: "Catalogue"});
+  await expect(catalogue).toHaveAttribute("aria-expanded", "false");
+  await catalogue.click();
+  await expect(catalogue).toHaveAttribute("aria-expanded", "true");
+  const weapons = page.getByRole("link", {name: "Weapons", exact: true});
+  await expect(weapons).toHaveAttribute("href", "/en/items/weapons");
+  await weapons.click();
+  await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
+  await expect(page.getByRole("navigation", {name: /primary/i})).toBeHidden();
+});
+
 test("homepage exposes the official trailer and collected creator videos", async ({page}) => {
   await page.goto("/en");
 

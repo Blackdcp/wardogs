@@ -2,21 +2,18 @@
 
 import {useCallback, useEffect, useRef, useState} from "react";
 import {Menu, X} from "lucide-react";
-import {Link, usePathname} from "@/i18n/navigation";
-
-export type MobileNavItem = {
-  href: string;
-  label: string;
-};
+import type {NavigationGroup} from "@/features/navigation/navigation-data";
+import {usePathname} from "@/i18n/navigation";
+import {MobileNavigationGroups} from "./mobile-navigation-groups";
 
 type MobileNavProps = {
-  items: readonly MobileNavItem[];
+  groups: readonly NavigationGroup[];
   openLabel: string;
   closeLabel: string;
   navigationLabel: string;
 };
 
-export function MobileNav({items, openLabel, closeLabel, navigationLabel}: MobileNavProps) {
+export function MobileNav({groups, openLabel, closeLabel, navigationLabel}: MobileNavProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
@@ -31,10 +28,10 @@ export function MobileNav({items, openLabel, closeLabel, navigationLabel}: Mobil
     if (!open) return;
 
     const panel = panelRef.current;
-    const focusable = panel?.querySelectorAll<HTMLElement>(
+    const getFocusable = () => panel?.querySelectorAll<HTMLElement>(
       'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
     );
-    focusable?.[0]?.focus();
+    getFocusable()?.[0]?.focus();
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -44,6 +41,7 @@ export function MobileNav({items, openLabel, closeLabel, navigationLabel}: Mobil
         return;
       }
 
+      const focusable = getFocusable();
       if (event.key !== "Tab" || !focusable?.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -88,19 +86,7 @@ export function MobileNav({items, openLabel, closeLabel, navigationLabel}: Mobil
             aria-label={navigationLabel}
             className="fixed inset-x-0 top-16 z-50 max-h-[calc(100svh-4rem)] overflow-y-auto border-b border-[#35413b] bg-[#101512] px-4 py-5 shadow-2xl min-[1180px]:hidden"
           >
-            <ul className="mx-auto grid w-full max-w-[720px] gap-2 sm:grid-cols-2">
-              {items.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="flex min-h-12 items-center rounded-[6px] border border-[#2f3934] bg-[#171d1a] px-4 py-3 text-sm font-semibold text-[#edf2ef] transition-colors hover:border-[#4d946d] hover:bg-[#1e2923] hover:text-white"
-                    onClick={closeMenu}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <MobileNavigationGroups groups={groups} onNavigate={closeMenu} />
           </nav>
         </>
       )}

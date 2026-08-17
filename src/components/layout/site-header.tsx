@@ -1,25 +1,16 @@
 import {ExternalLink, Gamepad2} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {officialLinks} from "@/config/site";
+import {buildNavigation} from "@/features/navigation/navigation-data";
 import {Link} from "@/i18n/navigation";
+import {DesktopNavigation} from "./desktop-navigation";
 import {LocaleSwitcher} from "./locale-switcher";
-import {MobileNav, type MobileNavItem} from "./mobile-nav";
+import {MobileNav} from "./mobile-nav";
 import {SiteBrand} from "./site-brand";
 
 export async function SiteHeader() {
   const t = await getTranslations();
-  const navigation: readonly MobileNavItem[] = [
-    {href: "/guides/wardogs-playtest", label: t("nav.playtest")},
-    {href: "/guides/wardogs-release-date", label: t("nav.release")},
-    {href: "/guides/wardogs-steam", label: t("nav.steam")},
-    {href: "/guides/wardogs-gameplay", label: t("nav.gameplay")},
-    {href: "/guides/wardogs-factions", label: t("nav.factions")},
-    {href: "/guides/wardogs-discord", label: t("nav.community")},
-    {href: "/videos", label: t("nav.videos")},
-    {href: "/items", label: t("nav.items")},
-    {href: "/news", label: t("nav.news")},
-    {href: "/guides", label: t("nav.guides")}
-  ];
+  const navigation = buildNavigation(t);
 
   return (
     <header className="sticky top-0 z-50 h-16 border-b border-[#2b3530] bg-[#0d0f0e]/95 backdrop-blur-sm">
@@ -41,7 +32,7 @@ export async function SiteHeader() {
             </a>
             <LocaleSwitcher label={t("common.language")} compact />
             <MobileNav
-              items={navigation}
+              groups={navigation}
               openLabel={t("common.openMenu")}
               closeLabel={t("common.closeMenu")}
               navigationLabel={t("nav.primaryLabel")}
@@ -53,20 +44,7 @@ export async function SiteHeader() {
           <Link href="/" aria-label={t("footer.aboutTitle")} className="shrink-0">
             <SiteBrand markClassName="w-[136px] min-[1360px]:w-[150px]" />
           </Link>
-          <nav aria-label={t("nav.primaryLabel")} className="min-w-0 flex-1">
-            <ul className="flex items-center justify-center gap-0.5 min-[1360px]:gap-1.5">
-              {navigation.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="inline-flex min-h-11 items-center whitespace-nowrap px-2 text-[12px] font-semibold text-[#c2ccc7] transition-colors hover:text-[#79d19c] min-[1360px]:px-2.5 min-[1360px]:text-[13px]"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <DesktopNavigation groups={navigation} label={t("nav.primaryLabel")} />
           <LocaleSwitcher label={t("common.language")} />
           <a
             href={officialLinks.steam}

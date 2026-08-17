@@ -1,7 +1,7 @@
 {
   "common": {"fanMade": "Фанатская энциклопедия сообщества", "language": "Язык", "openMenu": "Открыть меню", "closeMenu": "Закрыть меню", "learnMore": "Подробнее", "updated": "Обновлено", "official": "Официально", "community": "Сообщество", "skipToContent": "Перейти к содержимому", "openSteam": "Открыть WARDOGS в Steam"},
   "ads": {"label": "Реклама"},
-  "nav": {"playtest": "Плейтест", "release": "Релиз", "steam": "Steam", "gameplay": "Геймплей", "factions": "Фракции", "community": "Сообщество", "videos": "Видео", "items": "Предметы", "news": "Новости", "guides": "Руководства", "steamCta": "Открыть в Steam", "primaryLabel": "Основная навигация"},
+  "nav": {"game": "Игра", "guides": "Руководства", "catalogue": "Каталог", "playtest": "Плейтест", "release": "Релиз", "releaseDate": "Дата выхода", "steam": "Steam", "steamEarlyAccess": "Steam и ранний доступ", "gameplay": "Игровой процесс", "factions": "Фракции", "community": "Сообщество", "beginnerGuide": "Руководство для новичков", "gameplayGuide": "Руководство по игре", "fobLogistics": "FOB и логистика", "mortarGuide": "Руководство по миномёту", "allGuides": "Все руководства", "catalogueHome": "Главная каталога", "weapons": "Оружие", "vehicles": "Техника", "ammo": "Боеприпасы", "attachments": "Модули", "gear": "Снаряжение", "equipment": "Оборудование", "loadouts": "Комплекты", "videos": "Видео", "items": "Предметы", "news": "Новости", "steamCta": "Открыть в Steam", "primaryLabel": "Основная навигация"},
   "home": {
     "metaTitle": "WARDOGS Wiki — геймплей, плейтест и дата релиза",
     "metaDescription": "WARDOGS Wiki предлагает проверенные руководства по геймплею, плейтестам, дате релиза, Steam, фракциям, трейлерам, сообществу и советам новичкам.",

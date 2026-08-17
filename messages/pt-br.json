@@ -1,7 +1,7 @@
 {
   "common": {"fanMade": "Wiki da comunidade feita por fãs", "language": "Idioma", "openMenu": "Abrir menu", "closeMenu": "Fechar menu", "learnMore": "Saiba mais", "updated": "Atualizado", "official": "Oficial", "community": "Comunidade", "skipToContent": "Ir para o conteúdo", "openSteam": "Abrir WARDOGS na Steam"},
   "ads": {"label": "Publicidade"},
-  "nav": {"playtest": "Teste", "release": "Lançamento", "steam": "Steam", "gameplay": "Jogabilidade", "factions": "Facções", "community": "Comunidade", "videos": "Vídeos", "items": "Itens", "news": "Notícias", "guides": "Guias", "steamCta": "Ver na Steam", "primaryLabel": "Navegação principal"},
+  "nav": {"game": "Jogo", "guides": "Guias", "catalogue": "Catálogo", "playtest": "Teste de jogo", "release": "Lançamento", "releaseDate": "Data de lançamento", "steam": "Steam", "steamEarlyAccess": "Steam e Acesso Antecipado", "gameplay": "Jogabilidade", "factions": "Facções", "community": "Comunidade", "beginnerGuide": "Guia para iniciantes", "gameplayGuide": "Guia de jogabilidade", "fobLogistics": "FOB e logística", "mortarGuide": "Guia de morteiro", "allGuides": "Todos os guias", "catalogueHome": "Página inicial do catálogo", "weapons": "Armas", "vehicles": "Veículos", "ammo": "Munição", "attachments": "Acessórios", "gear": "Equipamento", "equipment": "Dispositivos", "loadouts": "Configurações de equipamento", "videos": "Vídeos", "items": "Itens", "news": "Notícias", "steamCta": "Ver na Steam", "primaryLabel": "Navegação principal"},
   "home": {
     "metaTitle": "WARDOGS Wiki — jogabilidade, testes e lançamento",
     "metaDescription": "A WARDOGS Wiki reúne guias verificados sobre jogabilidade, testes, lançamento, acesso pela Steam, facções, trailers, comunidade e dicas para iniciantes.",
