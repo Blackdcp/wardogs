@@ -188,6 +188,42 @@ test("native banner loads on content details but not on indexes", async ({page})
   }
 });
 
+test("native banner keeps its shell stable and falls back after a no-fill timeout", async ({page}) => {
+  await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", async (route) => {
+    await route.fulfill({contentType: "application/javascript", body: ""});
+  });
+
+  await page.goto("/en/guides/wardogs-gameplay");
+  const slot = page.locator('[data-ad-slot="adsterra-native"]');
+  const shell = slot.locator('[data-ad-shell="native-content"]');
+  await expect(slot).toHaveAttribute("data-state", "loading");
+  const heightBeforeFallback = await shell.evaluate((element) => element.getBoundingClientRect().height);
+
+  await expect(slot).toHaveAttribute("data-state", "fallback", {timeout: 9_000});
+  const heightAfterFallback = await shell.evaluate((element) => element.getBoundingClientRect().height);
+  expect(Math.abs(heightAfterFallback - heightBeforeFallback)).toBeLessThanOrEqual(1);
+  await expect(slot.getByText("WARDOGS Wiki recommendation", {exact: true})).toBeVisible();
+  await expect(slot.getByRole("link", {name: "Explore the WARDOGS Catalogue"})).toHaveAttribute("href", "/en/items");
+  await expect(slot.locator('#container-481d6501bcd0c27b98bc3c4776a26f6e')).toBeEmpty();
+});
+
+test("native banner falls back without shifting its shell when the external script errors", async ({page}) => {
+  await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", async (route) => {
+    await route.abort("failed");
+  });
+
+  await page.goto("/en/videos/wardogs-mortars-indirect-fire");
+  const slot = page.locator('[data-ad-slot="adsterra-native"]');
+  const shell = slot.locator('[data-ad-shell="native-content"]');
+  const heightBeforeFallback = await shell.evaluate((element) => element.getBoundingClientRect().height);
+
+  await expect(slot).toHaveAttribute("data-state", "fallback");
+  const heightAfterFallback = await shell.evaluate((element) => element.getBoundingClientRect().height);
+  expect(Math.abs(heightAfterFallback - heightBeforeFallback)).toBeLessThanOrEqual(1);
+  await expect(slot.getByRole("link", {name: "Explore the WARDOGS Catalogue"})).toHaveAttribute("href", "/en/items");
+  await expect(slot.locator('#container-481d6501bcd0c27b98bc3c4776a26f6e')).toBeEmpty();
+});
+
 test("localized privacy pages disclose the advertising provider", async ({page}) => {
   for (const locale of locales) {
     await page.goto(`/${locale}/privacy`);

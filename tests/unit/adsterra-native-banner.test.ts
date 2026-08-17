@@ -32,5 +32,15 @@ describe("AdsterraNativeBanner", () => {
 
     expect(html).toContain("Advertisement");
     expect(html).toContain('id="container-481d6501bcd0c27b98bc3c4776a26f6e"');
+    expect(html).toContain('data-state="loading"');
+    expect(html).toContain('data-ad-shell="native-content"');
+    expect(html).toContain("aspect-[4/1]");
+    expect(html).toContain("WARDOGS Wiki recommendation");
+    expect(html).toContain("Explore the WARDOGS Catalogue");
+    expect(html).toContain(
+      "Compare weapons, vehicles, ammo, attachments, gear, and loadout planning."
+    );
+    expect(html).toContain('href="/en/items"');
+    expect(html).not.toContain('href="/items"');
   });
 });
