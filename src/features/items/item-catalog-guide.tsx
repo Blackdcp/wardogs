@@ -18,7 +18,7 @@ type ItemCatalogGuideProps = {
   locale: Locale;
 };
 
-export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
+export function ItemCatalogGuide({guide}: ItemCatalogGuideProps) {
   const sectionOffsets = guide.sections.map((_, sectionIndex) =>
     guide.sections.slice(0, sectionIndex).reduce((total, section) => total + section.rows.length, 0)
   );
@@ -75,7 +75,7 @@ export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
                       const rowPosition = sectionOffsets[sectionIndex] + rowIndex + 1;
                       const linkedRow = catalogueRow as RecordLinkedCatalogRow;
                       const firstCellHref = linkedRow.detailStatus === "published"
-                        ? linkedRow.detailHref && `/${locale}${linkedRow.detailHref}`
+                        ? linkedRow.detailHref && `/en${linkedRow.detailHref}`
                         : (linkedRow.detailStatus === "planned" || linkedRow.detailStatus === "inline") && linkedRow.recordSlug
                           ? `#record-${guide.id}-${linkedRow.recordSlug}`
                           : undefined;

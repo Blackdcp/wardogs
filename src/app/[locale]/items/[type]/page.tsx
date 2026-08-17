@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {CatalogueCategoryView} from "@/components/catalogue/catalogue-category-view";
-import {getItemType, getItemsByType, itemTypes} from "@/features/items/item-library";
+import {getItemType, getStandaloneItemsByType, itemTypes} from "@/features/items/item-library";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {Link} from "@/i18n/navigation";
 import {buildCatalogGuideMetadata} from "@/lib/item-metadata";
@@ -32,7 +32,7 @@ export default async function ItemTypePage({params}: PageProps) {
   const locale: Locale = requestedLocale;
   const itemType = getItemType(type);
   if (!itemType) notFound();
-  const items = getItemsByType(itemType.id);
+  const items = getStandaloneItemsByType(itemType.id);
   const catalogueGuide = getCatalogGuide(itemType.id);
   if (!catalogueGuide) notFound();
 

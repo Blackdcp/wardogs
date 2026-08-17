@@ -5,6 +5,7 @@ import {
   getItemBySlug,
   getItemsByType,
   getRelatedItems,
+  getStandaloneItemsByType,
   itemLibrary,
   itemTypes,
   type IndexableItemPath
@@ -120,5 +121,9 @@ describe("item library", () => {
       "equipment",
       "loadouts"
     ]);
+  });
+
+  it("keeps published catalogue models out of the standalone weapon list", () => {
+    expect(getStandaloneItemsByType("weapons").map((item) => item.slug)).toEqual(["mortar"]);
   });
 });

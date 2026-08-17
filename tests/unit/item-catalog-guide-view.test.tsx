@@ -60,6 +60,18 @@ describe("ItemCatalogGuide", () => {
     expect(html).not.toContain('href="#record-weapons-ak74"');
   });
 
+  it("uses the English model route from every non-English category table", () => {
+    const guide = getCatalogGuide("weapons");
+    const matchedGuide = matchCatalogueGuideRecords(guide!, getCatalogueRecords("weapons"));
+
+    for (const locale of ["ru", "de", "pt-br"] as const) {
+      const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale={locale} />);
+
+      expect(html).toContain('href="/en/items/weapons/ak74"');
+      expect(html).not.toContain(`href="/${locale}/items/weapons/ak74"`);
+    }
+  });
+
   it("does not link a published row whose detail URL is missing", () => {
     const guide = getCatalogGuide("weapons");
     const records = getCatalogueRecords("weapons").map((record) => record.slug === "ak74"

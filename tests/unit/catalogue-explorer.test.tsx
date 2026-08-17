@@ -29,14 +29,14 @@ describe("CatalogueCard", () => {
     expect(html).not.toContain("href=");
   });
 
-  it("keeps planned weapons addressable without linking to a missing detail route", () => {
-    const ak74 = getCatalogueRecords("weapons").find((record) => record.slug === "ak74");
-    expect(ak74).toBeDefined();
+  it("keeps planned vehicles addressable without linking to a missing detail route", () => {
+    const bobcat = getCatalogueRecords("vehicles").find((record) => record.slug === "bobcat");
+    expect(bobcat).toBeDefined();
 
-    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={ak74!} />);
+    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={bobcat!} />);
 
-    expect(html).toContain('id="record-weapons-ak74"');
-    expect(html).not.toContain('href="/items/weapons/ak74"');
+    expect(html).toContain('id="record-vehicles-bobcat"');
+    expect(html).not.toContain("href=");
   });
 
   it("links only published records that supply an exact detail URL", () => {
@@ -53,6 +53,18 @@ describe("CatalogueCard", () => {
 
     expect(html).toContain('href="/en/items/weapons/mortar"');
     expect(html).not.toContain('href="/items/weapons/mortar"');
+  });
+
+  it("uses the English model route from every non-English category card", () => {
+    const ak74 = getCatalogueRecords("weapons").find((record) => record.slug === "ak74");
+    expect(ak74).toBeDefined();
+
+    for (const locale of ["ru", "de", "pt-br"] as const) {
+      const html = renderToStaticMarkup(<CatalogueCard locale={locale} record={ak74!} />);
+
+      expect(html).toContain('href="/en/items/weapons/ak74"');
+      expect(html).not.toContain(`href="/${locale}/items/weapons/ak74"`);
+    }
   });
 
   it("can eagerly load a card image reused by the category hero", () => {

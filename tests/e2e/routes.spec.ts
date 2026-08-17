@@ -113,6 +113,37 @@ test("category routes render approved heroes, complete explorers, safe anchors, 
   }
 });
 
+test("weapon categories use English model links and keep standalone articles unique", async ({page}) => {
+  await page.goto("/en/items/weapons");
+  const standalone = page.getByRole("heading", {name: "Detailed Weapons Guides"}).locator("xpath=ancestor::section");
+
+  await expect(standalone.locator('a[href="/en/items/weapons/mortar"]')).toHaveCount(1);
+  await expect(standalone.getByText("WARDOGS Mortar", {exact: true})).toHaveCount(1);
+  for (const slug of weaponModelSlugs) {
+    const href = `/en/items/weapons/${slug}`;
+    const name = getCatalogueRecords("weapons").find((record) => record.slug === slug)?.name;
+    expect(name, `${slug} catalogue record`).toBeDefined();
+    const catalogueCard = page.locator(`[data-catalogue-record="${slug}"]`);
+    await expect(catalogueCard.locator(`a[href="${href}"]`), `${slug} catalogue card`).toHaveCount(1);
+    await expect(catalogueCard.getByText(name!, {exact: true}), `${slug} catalogue card name`).toHaveCount(1);
+    await expect(page.locator(`th a[href="${href}"]`), `${slug} catalogue table row`).toHaveCount(1);
+    await expect(standalone.locator(`a[href="${href}"]`), `${slug} standalone duplicate`).toHaveCount(0);
+    await expect(standalone.getByText(`WARDOGS ${name}`, {exact: true}), `${slug} standalone name duplicate`).toHaveCount(0);
+    await expect(page.locator(`a[href="${href}"]`), `${slug} visible links`).toHaveCount(2);
+  }
+
+  for (const locale of ["ru", "de", "pt-br"] as const) {
+    expect((await page.goto(`/${locale}/items/weapons`))?.status(), `${locale} category`).toBe(200);
+    for (const slug of weaponModelSlugs) {
+      const englishHref = `/en/items/weapons/${slug}`;
+      await expect(page.locator(`[data-catalogue-record="${slug}"] a[href="${englishHref}"]`), `${locale} ${slug} card`).toHaveCount(1);
+      await expect(page.locator(`th a[href="${englishHref}"]`), `${locale} ${slug} table row`).toHaveCount(1);
+      await expect(page.locator(`a[href="/${locale}/items/weapons/${slug}"]`), `${locale} ${slug} unsupported link`).toHaveCount(0);
+    }
+    expect((await page.request.get(`/${locale}/items/weapons/amp-9`)).status(), `${locale} model route`).toBe(404);
+  }
+});
+
 test("visual category responses contain every record in raw server HTML", async ({request}) => {
   const visualCategories: readonly CatalogueRecordType[] = ["weapons", "vehicles", "ammo", "attachments", "gear"];
 

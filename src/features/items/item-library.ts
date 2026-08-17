@@ -392,6 +392,18 @@ export function getItemsByType(type: ItemTypeId): WardogsItem[] {
   return itemLibrary.filter((item) => item.type === type && item.indexLocales.length > 0).sort((a, b) => a.priority - b.priority);
 }
 
+export function getStandaloneItemsByType(type: ItemTypeId): WardogsItem[] {
+  if (type === "equipment" || type === "loadouts") return getItemsByType(type);
+
+  const publishedSlugs = new Set(
+    getCatalogueRecords(type)
+      .filter((record) => record.detailStatus === "published")
+      .map((record) => record.slug)
+  );
+
+  return getItemsByType(type).filter((item) => !publishedSlugs.has(item.slug));
+}
+
 export function getItemBySlug(slug: string): WardogsItem | undefined {
   return itemLibrary.find((item) => item.slug === slug);
 }
