@@ -5,6 +5,14 @@ type PublicReference = {
   suffix: string;
 };
 
+function hasUriScheme(reference: string) {
+  return /^[a-z][a-z\d+.-]*:/i.test(reference);
+}
+
+function isProtocolRelative(reference: string) {
+  return reference.startsWith("//");
+}
+
 function splitReference(reference: string): PublicReference {
   const suffixIndex = reference.search(/[?#]/);
   if (suffixIndex < 0) return {pathname: reference, suffix: ""};
@@ -37,7 +45,7 @@ function removeBasePath(pathname: string, basePath: string) {
 }
 
 function publicPath(reference: string, kind: PublicReferenceKind) {
-  if (/^(?:[a-z][a-z\d+.-]*:)?\/\//i.test(reference)) return reference;
+  if (hasUriScheme(reference) || isProtocolRelative(reference)) return reference;
 
   const {pathname, suffix} = splitReference(reference);
   if (!pathname) return suffix;
@@ -68,7 +76,8 @@ export function getPublicSiteBase() {
 }
 
 function publicUrl(reference: string, kind: PublicReferenceKind) {
-  if (/^[a-z][a-z\d+.-]*:\/\//i.test(reference)) return reference;
+  if (hasUriScheme(reference)) return reference;
+  if (isProtocolRelative(reference)) return new URL(reference, configuredSiteUrl()).toString();
 
   const publicReference = publicPath(reference, kind);
   const {pathname, suffix} = splitReference(publicReference);

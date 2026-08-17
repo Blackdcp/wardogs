@@ -19,6 +19,16 @@ const newModelContracts = [
 ];
 const newModelUrls = newModelContracts.map(({type, slug}) => `http://localhost:3000/en/items/${type}/${slug}`);
 const legacyWeaponAndVehicleSlugs = new Set(["mortar", "littlebird", "tank", "attack-helicopter", "armored-transport"]);
+const cataloguePageUrls = [
+  "http://localhost:3000/en/items",
+  "http://localhost:3000/en/items/weapons",
+  "http://localhost:3000/en/items/vehicles",
+  "http://localhost:3000/en/items/ammo",
+  "http://localhost:3000/en/items/attachments",
+  "http://localhost:3000/en/items/gear",
+  "http://localhost:3000/en/items/equipment",
+  "http://localhost:3000/en/items/loadouts"
+] as const;
 const legacyContracts = [
   {type: "weapons", slug: "mortar"},
   {type: "equipment", slug: "mobile-fob"},
@@ -27,9 +37,37 @@ const legacyContracts = [
   {type: "vehicles", slug: "attack-helicopter"},
   {type: "vehicles", slug: "armored-transport"}
 ] as const;
-const legacyUrls = ["en", "ru"].flatMap((locale) => legacyContracts.map(({type, slug}) =>
-  `http://localhost:3000/${locale}/items/${type}/${slug}`
-));
+const legacyUrls = [
+  "http://localhost:3000/en/items/weapons/mortar",
+  "http://localhost:3000/en/items/equipment/mobile-fob",
+  "http://localhost:3000/en/items/vehicles/littlebird",
+  "http://localhost:3000/en/items/vehicles/tank",
+  "http://localhost:3000/en/items/vehicles/attack-helicopter",
+  "http://localhost:3000/en/items/vehicles/armored-transport",
+  "http://localhost:3000/ru/items/weapons/mortar",
+  "http://localhost:3000/ru/items/equipment/mobile-fob",
+  "http://localhost:3000/ru/items/vehicles/littlebird",
+  "http://localhost:3000/ru/items/vehicles/tank",
+  "http://localhost:3000/ru/items/vehicles/attack-helicopter",
+  "http://localhost:3000/ru/items/vehicles/armored-transport"
+] as const;
+
+type SitemapEntry = ReturnType<typeof sitemap>[number];
+const cataloguePageUrlSet = new Set<string>(cataloguePageUrls);
+const newModelUrlSet = new Set<string>(newModelUrls);
+
+function collectLegacyItemEntries(entries: SitemapEntry[]) {
+  const itemDetailEntries = entries.filter((entry) => {
+    const pathname = new URL(entry.url).pathname;
+    return /^\/[^/]+\/items(?:\/|$)/.test(pathname) && !cataloguePageUrlSet.has(entry.url);
+  });
+
+  return itemDetailEntries.filter((entry) => !newModelUrlSet.has(entry.url));
+}
+
+function expectExactLegacyItemInventory(entries: SitemapEntry[]) {
+  expect(collectLegacyItemEntries(entries).map((entry) => entry.url)).toEqual(legacyUrls);
+}
 
 describe("sitemap", () => {
   it("includes standalone video article URLs for indexing", () => {
@@ -112,9 +150,9 @@ describe("sitemap", () => {
   });
 
   it("contains the exact six legacy English and Russian pairs with matching alternates", () => {
-    const entries = sitemap().filter((entry) => legacyUrls.includes(entry.url));
+    const entries = collectLegacyItemEntries(sitemap());
 
-    expect(entries.map((entry) => entry.url)).toEqual(legacyUrls);
+    expectExactLegacyItemInventory(sitemap());
     expect(entries).toHaveLength(12);
     for (const {type, slug} of legacyContracts) {
       const en = `http://localhost:3000/en/items/${type}/${slug}`;
@@ -127,6 +165,16 @@ describe("sitemap", () => {
         });
       }
     }
+  });
+
+  it("makes an unexpected seventh legacy detail fail the exact inventory contract", () => {
+    const entries = sitemap();
+    const unexpectedLegacyEntry = {
+      ...entries[0],
+      url: "http://localhost:3000/en/items/equipment/unexpected-legacy-item"
+    };
+
+    expect(() => expectExactLegacyItemInventory([...entries, unexpectedLegacyEntry])).toThrow();
   });
 
   it("contains no fragments, queries, or filter routes", () => {
