@@ -3,8 +3,10 @@ import {
   getIndexableItemPaths,
   getItemBySlug,
   getItemsByType,
+  getRelatedItems,
   itemLibrary,
-  itemTypes
+  itemTypes,
+  type IndexableItemPath
 } from "../../src/features/items/item-library";
 
 describe("item library", () => {
@@ -29,11 +31,30 @@ describe("item library", () => {
       detailImageAlt: "AMP-9 submachine gun",
       observedPrice: "$900",
       observedAmmoOrVehicleClass: "9x19mm",
+      observedProgressionOrGate: "Medic XP",
       detailUpdatedAt: "2026-08-07"
     });
-    expect(amp9?.confirmedFacts).toContain("Ammunition: 9x19mm");
+    expect(amp9?.confirmedFacts).toContain("Observed in Alpha 1: Ammunition: 9x19mm");
     expect(amp9?.unconfirmedFacts).toEqual([]);
     expect(amp9?.indexLocales).toEqual([]);
+  });
+
+  it("keeps article fields off indexable route paths", () => {
+    const path: IndexableItemPath = {locale: "en", type: "weapons", slug: "mortar"};
+    expect(path).toEqual({locale: "en", type: "weapons", slug: "mortar"});
+
+    // @ts-expect-error Article images do not belong to indexable paths.
+    const invalidPath: IndexableItemPath = {locale: "en", type: "weapons", slug: "mortar", detailImage: "/images/catalogue/weapons/amp-9.webp"};
+    expect(invalidPath).toBeDefined();
+  });
+
+  it("excludes unpublished related models while retaining published locale routes", () => {
+    const mortar = getItemBySlug("mortar");
+    expect(mortar).toBeDefined();
+
+    const related = getRelatedItems({...mortar!, relatedItems: ["mobile-fob", "amp-9"]}, "en");
+
+    expect(related.map((item) => item.slug)).toEqual(["mobile-fob"]);
   });
 
   it("indexes English and Russian item details first", () => {

@@ -45,15 +45,16 @@ export default async function ItemDetailPage({params}: PageProps) {
   const item = getItemByTypeAndSlug(type, slug);
   if (!item || !item.indexLocales.includes(locale as Extract<Locale, "en" | "ru">)) notFound();
   const itemType = getItemType(item.type);
-  const relatedItems = getRelatedItems(item);
+  const relatedItems = getRelatedItems(item, locale as Extract<Locale, "en" | "ru">);
   const adsT = await getTranslations({locale, namespace: "ads"});
   const quickFacts = item.detailImage
     ? [
-      ...(item.observedPrice ? [{label: "Observed price", value: item.observedPrice}] : []),
-      ...(item.observedUnlock ? [{label: "Observed unlock", value: item.observedUnlock}] : []),
-      ...(item.observedAmmoOrVehicleClass ? [{label: item.type === "weapons" ? "Ammunition" : "Vehicle class", value: item.observedAmmoOrVehicleClass}] : [])
+      ...(item.observedPrice ? [{label: "Observed Alpha 1 price", value: item.observedPrice}] : []),
+      ...(item.observedProgressionOrGate ? [{label: item.type === "weapons" ? "Observed Alpha 1 progression" : "Observed Alpha 1 gate", value: item.observedProgressionOrGate}] : []),
+      ...(item.observedAmmoOrVehicleClass ? [{label: item.type === "weapons" ? "Observed Alpha 1 ammunition" : "Observed Alpha 1 vehicle class", value: item.observedAmmoOrVehicleClass}] : [])
     ]
     : item.facts.map(({label, value}) => ({label, value}));
+  const observedHeading = item.detailImage ? "Observed in Alpha 1" : "Observed in pre-release footage";
   const confirmedFacts = item.confirmedFacts ?? item.facts
     .filter((fact) => fact.value !== "Not confirmed")
     .map((fact) => `${fact.label}: ${fact.value}`);
@@ -114,13 +115,13 @@ export default async function ItemDetailPage({params}: PageProps) {
 
         <section className="mt-12 grid gap-6 md:grid-cols-2" aria-label="Evidence summary">
           <div>
-            <h2 className="display-font text-3xl text-white">Confirmed</h2>
+            <h2 className="display-font text-3xl text-white">{observedHeading}</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
               {confirmedFacts.map((fact) => <li className="border-l border-[#4d946d] pl-4" key={fact}>{fact}</li>)}
             </ul>
           </div>
           <div>
-            <h2 className="display-font text-3xl text-white">Unconfirmed</h2>
+            <h2 className="display-font text-3xl text-white">Unconfirmed for Early Access / final release</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
               {unconfirmedFacts.map((fact) => <li className="border-l border-[#927328] pl-4" key={fact}>{fact}</li>)}
             </ul>

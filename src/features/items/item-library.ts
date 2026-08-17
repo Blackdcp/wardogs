@@ -44,6 +44,14 @@ export type WardogsItem = {
   relatedGuides: string[];
   relatedItems: string[];
   sources: ItemSource[];
+  detailImage?: string;
+  detailImageAlt?: string;
+  observedPrice?: string;
+  observedProgressionOrGate?: string;
+  observedAmmoOrVehicleClass?: string;
+  confirmedFacts?: readonly string[];
+  unconfirmedFacts?: readonly string[];
+  detailUpdatedAt?: string;
   priority: number;
   indexLocales: readonly Extract<Locale, "en" | "ru">[];
 };
@@ -51,14 +59,6 @@ export type WardogsItem = {
 export type IndexableItemPath = {
   locale: Extract<Locale, "en" | "ru">;
   type: ItemTypeId;
-  detailImage?: string;
-  detailImageAlt?: string;
-  observedPrice?: string;
-  observedUnlock?: string;
-  observedAmmoOrVehicleClass?: string;
-  confirmedFacts?: readonly string[];
-  unconfirmedFacts?: readonly string[];
-  detailUpdatedAt?: string;
   slug: string;
 };
 
@@ -330,13 +330,15 @@ function isUnconfirmedValue(value: string) {
 
 function createModelArticle(record: CatalogueRecord, index: number): ModelWardogsItem {
   const observedPrice = readRecordFact(record, "Alpha price");
-  const observedUnlock = readRecordFact(record, "Observed gate");
+  const observedProgressionOrGate = record.type === "weapons"
+    ? readRecordFact(record, "Progression")
+    : readRecordFact(record, "Observed gate");
   const observedAmmoOrVehicleClass = record.type === "weapons"
     ? readRecordFact(record, "Ammunition")
     : readRecordFact(record, "Role");
   const confirmedFacts = record.facts
     .filter((fact) => !isUnconfirmedValue(fact.value) && fact.value !== "-")
-    .map((fact) => `${fact.label}: ${fact.value}`);
+    .map((fact) => `Observed in Alpha 1: ${fact.label}: ${fact.value}`);
   const unconfirmedFacts = record.facts
     .filter((fact) => isUnconfirmedValue(fact.value))
     .map((fact) => `${fact.label} was ${fact.value === "Gate unread" ? "unread" : "not captured"} in Alpha 1.`);
@@ -365,7 +367,7 @@ function createModelArticle(record: CatalogueRecord, index: number): ModelWardog
     detailImage: record.image,
     detailImageAlt: record.imageAlt,
     ...(observedPrice && !isUnconfirmedValue(observedPrice) ? {observedPrice} : {}),
-    ...(observedUnlock && !isUnconfirmedValue(observedUnlock) ? {observedUnlock} : {}),
+    ...(observedProgressionOrGate && !isUnconfirmedValue(observedProgressionOrGate) && observedProgressionOrGate !== "-" ? {observedProgressionOrGate} : {}),
     ...(observedAmmoOrVehicleClass ? {observedAmmoOrVehicleClass} : {}),
     confirmedFacts,
     unconfirmedFacts,
@@ -404,8 +406,10 @@ export function getFeaturedItems(limit = 6): WardogsItem[] {
   return itemLibrary.filter((item) => item.indexLocales.length > 0).sort((a, b) => a.priority - b.priority).slice(0, limit);
 }
 
-export function getRelatedItems(item: WardogsItem): WardogsItem[] {
-  return item.relatedItems.map((slug) => getItemBySlug(slug)).filter((related): related is WardogsItem => related !== undefined);
+export function getRelatedItems(item: WardogsItem, locale: Extract<Locale, "en" | "ru">): WardogsItem[] {
+  return item.relatedItems
+    .map((slug) => getItemBySlug(slug))
+    .filter((related): related is WardogsItem => related !== undefined && related.indexLocales.includes(locale));
 }
 
 export function getIndexableItemPaths(): IndexableItemPath[] {
