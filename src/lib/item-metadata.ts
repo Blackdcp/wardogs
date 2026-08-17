@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import type {Locale} from "@/config/site";
 import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
-import type {ItemTypeId, WardogsItem} from "@/features/items/item-library";
+import type {WardogsItem} from "@/features/items/item-library";
 import {buildLocalizedUrl, buildPageMetadata, getSiteOrigin, languageTags} from "./metadata";
 
 function itemPath(item: WardogsItem) {

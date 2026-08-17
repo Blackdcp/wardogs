@@ -1,16 +1,20 @@
 import {expect, test, type Page} from "@playwright/test";
 import {expectImagesLoaded} from "./helpers";
+import {calculateMobileSegmentScrollTops} from "./visual-segments";
 
 async function expectMobileCategoryScrollSegments(page: Page, name: string) {
   const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
   const viewportHeight = await page.evaluate(() => window.innerHeight);
-  const segmentHeight = viewportHeight - 44;
-  const segmentCount = Math.ceil((pageHeight - viewportHeight) / segmentHeight) + 1;
+  const scrollTops = calculateMobileSegmentScrollTops(pageHeight, viewportHeight);
 
-  for (let segment = 0; segment < segmentCount; segment += 1) {
-    const top = Math.min(segment * segmentHeight, pageHeight - viewportHeight);
+  await page.evaluate((padding) => {
+    document.body.style.setProperty("padding-bottom", `${padding}px`, "important");
+  }, viewportHeight);
+
+  for (const [index, top] of scrollTops.entries()) {
     await page.evaluate((scrollTop) => window.scrollTo(0, scrollTop), top);
-    await expect(page).toHaveScreenshot(`${name}-mobile-segment-${segment + 1}.png`, {animations: "disabled"});
+    await page.waitForTimeout(100);
+    await expect(page).toHaveScreenshot(`${name}-mobile-segment-${index + 1}.png`, {animations: "disabled"});
   }
 }
 
@@ -20,6 +24,8 @@ for (const viewport of [
 ]) {
   for (const pageCase of [
     {name: "home", pathname: "/en"},
+    {name: "guides", pathname: "/en/guides"},
+    {name: "article", pathname: "/en/guides/wardogs-gameplay"},
     {name: "catalogue-hub", pathname: "/en/items"},
     {name: "catalogue-weapons", pathname: "/en/items/weapons"},
     {name: "catalogue-vehicles", pathname: "/en/items/vehicles"}
