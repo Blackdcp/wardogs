@@ -19,10 +19,46 @@ type AdsterraNativeBannerProps = {
   label: string;
 };
 
+export type AdsterraNativeSlotState = "loading" | "filled" | "fallback";
+type AdsterraNativeSlotEvent = "meaningful-fill" | "timeout" | "error";
+
+export type AdsterraNativeContentNode = {
+  childNodes?: Iterable<AdsterraNativeContentNode>;
+  getAttribute?: (name: string) => string | null;
+  nodeType: number;
+  tagName?: string;
+  textContent?: string | null;
+};
+
+export function hasMeaningfulAdsterraContent(nodes: Iterable<AdsterraNativeContentNode>) {
+  for (const node of nodes) {
+    if (node.nodeType === 3 && node.textContent?.trim()) return true;
+    if (node.nodeType !== 1) continue;
+
+    const tagName = node.tagName?.toLowerCase();
+    if (tagName === "script" || tagName === "style" || tagName === "template") continue;
+    const href = node.getAttribute?.("href")?.trim();
+    const src = node.getAttribute?.("src")?.trim();
+    if ((tagName === "a" && href) || ((tagName === "iframe" || tagName === "img") && src)) return true;
+    if (node.childNodes && hasMeaningfulAdsterraContent(node.childNodes)) return true;
+  }
+
+  return false;
+}
+
+export function transitionAdsterraNativeState(
+  state: AdsterraNativeSlotState,
+  event: AdsterraNativeSlotEvent
+): AdsterraNativeSlotState {
+  if (state !== "loading") return state;
+  return event === "meaningful-fill" ? "filled" : "fallback";
+}
+
 export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [state, setState] = useState<"loading" | "filled" | "fallback">("loading");
+  const stateRef = useRef<AdsterraNativeSlotState>("loading");
+  const [state, setState] = useState<AdsterraNativeSlotState>("loading");
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -34,30 +70,41 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
     configureAdsterraScript(script);
 
     let timeoutId = 0;
-    const hasContent = () => container.childNodes.length > 0;
+    let disposed = false;
+    const hasContent = () => hasMeaningfulAdsterraContent(container.childNodes);
+    const updateState = (event: AdsterraNativeSlotEvent) => {
+      const nextState = transitionAdsterraNativeState(stateRef.current, event);
+      if (nextState === stateRef.current) return false;
+      stateRef.current = nextState;
+      section.dataset.state = nextState;
+      setState(nextState);
+      return true;
+    };
     const markFilled = () => {
-      if (!hasContent()) return;
-      section.dataset.state = "filled";
-      setState("filled");
+      if (disposed || !hasContent() || !updateState("meaningful-fill")) return;
+      observer.disconnect();
       window.clearTimeout(timeoutId);
     };
-    const showFallback = () => {
-      if (hasContent()) return;
+    const showFallback = (event: "timeout" | "error") => {
+      if (disposed || !updateState(event)) return;
+      observer.disconnect();
+      window.clearTimeout(timeoutId);
       container.replaceChildren();
-      section.dataset.state = "fallback";
-      setState("fallback");
+      container.hidden = true;
     };
 
     const observer = new MutationObserver(markFilled);
     observer.observe(container, {childList: true, subtree: true});
-    script.addEventListener("error", showFallback, {once: true});
+    const handleScriptError = () => showFallback("error");
+    script.addEventListener("error", handleScriptError, {once: true});
     section.insertBefore(script, container.parentElement);
-    timeoutId = window.setTimeout(showFallback, 8000);
+    if (stateRef.current === "loading") timeoutId = window.setTimeout(() => showFallback("timeout"), 8000);
 
     return () => {
+      disposed = true;
       observer.disconnect();
       window.clearTimeout(timeoutId);
-      script.removeEventListener("error", showFallback);
+      script.removeEventListener("error", handleScriptError);
       script.remove();
       container.replaceChildren();
     };
@@ -66,12 +113,12 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
   return (
     <section
       ref={sectionRef}
-      aria-label={label}
+      aria-label={state === "fallback" ? "WARDOGS Wiki recommendation" : label}
       className="my-10 border-y border-[#2c3631] py-5"
       data-ad-slot="adsterra-native"
       data-state={state}
     >
-      <p className="mb-3 text-center text-[10px] font-semibold uppercase text-[#718079]">
+      <p aria-hidden={state === "fallback"} className="mb-3 text-center text-[10px] font-semibold uppercase text-[#718079]">
         {label}
       </p>
       <div className="relative aspect-[4/1] w-full overflow-hidden" data-ad-shell="native-content">
@@ -79,6 +126,7 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
           ref={containerRef}
           id={ADSTERRA_NATIVE_CONTAINER_ID}
           className="absolute inset-0"
+          hidden={state === "fallback"}
         />
         <Link
           aria-hidden={state !== "fallback"}

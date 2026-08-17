@@ -163,7 +163,7 @@ test("native banner loads on content details but not on indexes", async ({page})
   await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", async (route) => {
     await route.fulfill({
       contentType: "application/javascript",
-      body: `document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e").textContent = "Test native ad";`
+      body: `(() => { const container = document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e"); const creative = document.createElement("a"); creative.href = "https://ad.example/creative"; creative.textContent = "Test native ad"; container.append(creative); })();`
     });
   });
 
@@ -173,14 +173,17 @@ test("native banner loads on content details but not on indexes", async ({page})
     "/en/items/weapons/mortar"
   ]) {
     await page.goto(pathname);
-    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
-    await expect(page.getByText("Test native ad")).toBeVisible();
+    const slot = page.locator('[data-ad-slot="adsterra-native"]');
+    await expect(slot).toHaveCount(1);
+    await expect(slot).toHaveAttribute("data-state", "filled");
+    await expect(slot.getByRole("link", {name: "Test native ad"}).first()).toBeVisible();
+    await expect(slot.locator('a[href="/en/items"]')).toBeHidden();
   }
 
   await page.goto("/en/items/weapons/mortar");
   await page.locator('a[href="/en/guides/wardogs-gameplay"]').first().click();
   await expect(page).toHaveURL(/\/en\/guides\/wardogs-gameplay\/?$/);
-  await expect(page.getByText("Test native ad")).toBeVisible();
+  await expect(page.locator('[data-ad-slot="adsterra-native"]').getByRole("link", {name: "Test native ad"}).first()).toBeVisible();
 
   for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/items", "/en/items/weapons", "/en/items/vehicles", "/en/items/ammo", "/en/items/attachments", "/en/items/gear", "/en/items/equipment", "/en/items/loadouts"]) {
     await page.goto(pathname);
@@ -188,9 +191,12 @@ test("native banner loads on content details but not on indexes", async ({page})
   }
 });
 
-test("native banner keeps its shell stable and falls back after a no-fill timeout", async ({page}) => {
+test("native banner ignores blank and late script content after terminal fallback", async ({page}) => {
   await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", async (route) => {
-    await route.fulfill({contentType: "application/javascript", body: ""});
+    await route.fulfill({
+      contentType: "application/javascript",
+      body: `const container = document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e"); container.append(document.createComment("native placeholder"), document.createElement("div"));`
+    });
   });
 
   await page.goto("/en/guides/wardogs-gameplay");
@@ -202,9 +208,21 @@ test("native banner keeps its shell stable and falls back after a no-fill timeou
   await expect(slot).toHaveAttribute("data-state", "fallback", {timeout: 9_000});
   const heightAfterFallback = await shell.evaluate((element) => element.getBoundingClientRect().height);
   expect(Math.abs(heightAfterFallback - heightBeforeFallback)).toBeLessThanOrEqual(1);
+  await expect(slot).toHaveAccessibleName("WARDOGS Wiki recommendation");
+  await expect(slot.locator("p")).toHaveAttribute("aria-hidden", "true");
+  await expect(page.getByRole("region", {name: "Advertisement"})).toHaveCount(0);
   await expect(slot.getByText("WARDOGS Wiki recommendation", {exact: true})).toBeVisible();
   await expect(slot.getByRole("link", {name: "Explore the WARDOGS Catalogue"})).toHaveAttribute("href", "/en/items");
-  await expect(slot.locator('#container-481d6501bcd0c27b98bc3c4776a26f6e')).toBeEmpty();
+  const externalContainer = slot.locator('#container-481d6501bcd0c27b98bc3c4776a26f6e');
+  await expect(externalContainer).toBeEmpty();
+  await externalContainer.evaluate((container) => {
+    const creative = document.createElement("a");
+    creative.href = "https://ad.example/late";
+    creative.textContent = "Late native ad";
+    container.append(creative);
+  });
+  await expect(slot).toHaveAttribute("data-state", "fallback");
+  await expect(externalContainer).toBeHidden();
 });
 
 test("native banner falls back without shifting its shell when the external script errors", async ({page}) => {
@@ -220,6 +238,8 @@ test("native banner falls back without shifting its shell when the external scri
   await expect(slot).toHaveAttribute("data-state", "fallback");
   const heightAfterFallback = await shell.evaluate((element) => element.getBoundingClientRect().height);
   expect(Math.abs(heightAfterFallback - heightBeforeFallback)).toBeLessThanOrEqual(1);
+  await expect(slot).toHaveAccessibleName("WARDOGS Wiki recommendation");
+  await expect(slot.locator("p")).toHaveAttribute("aria-hidden", "true");
   await expect(slot.getByRole("link", {name: "Explore the WARDOGS Catalogue"})).toHaveAttribute("href", "/en/items");
   await expect(slot.locator('#container-481d6501bcd0c27b98bc3c4776a26f6e')).toBeEmpty();
 });

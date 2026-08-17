@@ -2,6 +2,27 @@ import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
 
+type ContentNode = {
+  childNodes?: Iterable<ContentNode>;
+  getAttribute?: (name: string) => string | null;
+  nodeType: number;
+  tagName?: string;
+  textContent?: string | null;
+};
+
+const text = (textContent: string): ContentNode => ({nodeType: 3, textContent});
+const comment = (textContent: string): ContentNode => ({nodeType: 8, textContent});
+const element = (
+  tagName: string,
+  attributes: Record<string, string> = {},
+  childNodes: ContentNode[] = []
+): ContentNode => ({
+  childNodes,
+  getAttribute: (name) => attributes[name] ?? null,
+  nodeType: 1,
+  tagName
+});
+
 describe("AdsterraNativeBanner", () => {
   it("renders the required container and configures the supplied native-banner script", async () => {
     const adModule = await import("../../src/components/ads/adsterra-native-banner").catch(() => null);
@@ -42,5 +63,35 @@ describe("AdsterraNativeBanner", () => {
     );
     expect(html).toContain('href="/en/items"');
     expect(html).not.toContain('href="/items"');
+  });
+
+  it("recognizes only meaningful native creative content", async () => {
+    const adModule = await import("../../src/components/ads/adsterra-native-banner");
+    const hasMeaningfulContent = (adModule as unknown as {
+      hasMeaningfulAdsterraContent(nodes: Iterable<ContentNode>): boolean;
+    }).hasMeaningfulAdsterraContent;
+
+    expect(hasMeaningfulContent([comment("placeholder"), text("  "), element("div")])).toBe(false);
+    expect(hasMeaningfulContent([element("div", {}, [comment("later"), text("\n")])])).toBe(false);
+    expect(hasMeaningfulContent([element("script", {}, [text("bootstrap native creative")])])).toBe(false);
+    expect(hasMeaningfulContent([element("a", {href: "https://ad.example/creative"})])).toBe(true);
+    expect(hasMeaningfulContent([element("iframe", {src: "https://ad.example/frame"})])).toBe(true);
+    expect(hasMeaningfulContent([element("img", {src: "https://ad.example/creative.jpg"})])).toBe(true);
+    expect(hasMeaningfulContent([element("div", {}, [text("Native creative")])])).toBe(true);
+  });
+
+  it("keeps a fallback terminal after timeout, error, or late fill", async () => {
+    const adModule = await import("../../src/components/ads/adsterra-native-banner");
+    const transition = (adModule as unknown as {
+      transitionAdsterraNativeState(
+        state: "loading" | "filled" | "fallback",
+        event: "meaningful-fill" | "timeout" | "error"
+      ): "loading" | "filled" | "fallback";
+    }).transitionAdsterraNativeState;
+
+    expect(transition("loading", "meaningful-fill")).toBe("filled");
+    expect(transition("loading", "timeout")).toBe("fallback");
+    expect(transition("loading", "error")).toBe("fallback");
+    expect(transition("fallback", "meaningful-fill")).toBe("fallback");
   });
 });
