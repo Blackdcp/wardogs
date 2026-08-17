@@ -65,6 +65,58 @@ test("catalogue hub is a visual evidence-labelled navigation surface", async ({p
   await expectImagesLoaded(page);
 });
 
+test("category routes render approved heroes, complete explorers, safe anchors, and no ads", async ({page}) => {
+  const visualCategories = [
+    {type: "weapons", count: 14, hero: "weapons-1280"},
+    {type: "vehicles", count: 20, hero: "vehicles-1280"},
+    {type: "ammo", count: 14, hero: "556x45mm"},
+    {type: "attachments", count: 40, hero: "attachments-1280"},
+    {type: "gear", count: 11, hero: "heavy-armor"}
+  ];
+
+  for (const category of visualCategories) {
+    await page.goto(`/en/items/${category.type}`);
+    await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(category.hero));
+    await expect(page.locator('[data-catalogue-record]')).toHaveCount(category.count);
+    await expect(page.locator('[data-catalogue-record] img')).toHaveCount(category.count);
+    await expect(page.locator('[data-catalogue-record] a')).toHaveCount(0);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+    await expectImagesLoaded(page);
+  }
+
+  for (const category of [
+    {type: "equipment", hero: "meta-1280"},
+    {type: "loadouts", hero: "loadouts-1280"}
+  ]) {
+    await page.goto(`/en/items/${category.type}`);
+    await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(category.hero));
+    await expect(page.locator('[data-catalogue-explorer]')).toHaveCount(0);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+  }
+});
+
+test("category search and filters keep canonical URLs while table rows target stable records", async ({page}) => {
+  await page.goto("/en/items/weapons");
+  const records = page.locator('[data-catalogue-record]');
+
+  await page.getByRole("button", {name: "Assault rifle", exact: true}).click();
+  await expect(records.filter({visible: true})).toHaveCount(6);
+  await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
+
+  await page.getByLabel("Search Weapons").fill("AK74");
+  await expect(records.filter({visible: true})).toHaveCount(1);
+  await expect(page.locator("#record-weapons-ak74")).toBeVisible();
+  await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
+
+  await page.getByRole("button", {name: "All", exact: true}).click();
+  await page.getByLabel("Search Weapons").fill("");
+  const tableLink = page.locator('th a[href="#record-weapons-ak74"]');
+  await expect(tableLink).toHaveCount(1);
+  await expect(page.locator('a[href="/en/items/weapons/ak74"]')).toHaveCount(0);
+  await tableLink.click();
+  await expect(page).toHaveURL(/#record-weapons-ak74$/);
+});
+
 test("homepage promotes the catalogue before video intelligence", async ({page}) => {
   await page.goto("/en");
 
@@ -109,7 +161,7 @@ test("native banner loads on content details but not on indexes", async ({page})
   await expect(page).toHaveURL(/\/en\/guides\/wardogs-gameplay\/?$/);
   await expect(page.getByText("Test native ad")).toBeVisible();
 
-  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/items"]) {
+  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/items", "/en/items/weapons", "/en/items/vehicles", "/en/items/ammo", "/en/items/attachments", "/en/items/gear", "/en/items/equipment", "/en/items/loadouts"]) {
     await page.goto(pathname);
     await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
   }

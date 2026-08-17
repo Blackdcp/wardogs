@@ -1,6 +1,16 @@
 import {AlertTriangle, CheckCircle2, ExternalLink} from "lucide-react";
-import type {CatalogGuide} from "./item-catalog-guides";
+import type {CatalogGuide, CatalogRow} from "./item-catalog-guides";
 import {getCatalogEntryCount} from "./item-catalog-guides";
+
+export type RecordLinkedCatalogRow = CatalogRow & {
+  recordSlug?: string;
+  detailStatus?: "inline" | "planned" | "published";
+  detailHref?: `/items/${"weapons" | "vehicles"}/${string}`;
+};
+
+export type RecordLinkedCatalogGuide = Omit<CatalogGuide, "sections"> & {
+  sections: Array<Omit<CatalogGuide["sections"][number], "rows"> & {rows: RecordLinkedCatalogRow[]}>;
+};
 
 type ItemCatalogGuideProps = {
   guide: CatalogGuide;
@@ -61,11 +71,21 @@ export function ItemCatalogGuide({guide}: ItemCatalogGuideProps) {
                   <tbody className="divide-y divide-[#2c3631] bg-[#131815]">
                     {section.rows.map((catalogueRow, rowIndex) => {
                       const rowPosition = sectionOffsets[sectionIndex] + rowIndex + 1;
+                      const linkedRow = catalogueRow as RecordLinkedCatalogRow;
+                      const firstCellHref = linkedRow.detailStatus === "published"
+                        ? linkedRow.detailHref
+                        : (linkedRow.detailStatus === "planned" || linkedRow.detailStatus === "inline") && linkedRow.recordSlug
+                          ? `#record-${guide.id}-${linkedRow.recordSlug}`
+                          : undefined;
                       return (
                         <tr className="transition-colors hover:bg-[#19211d]" id={`catalog-${rowPosition}`} key={`${section.title}-${catalogueRow.cells[0]}`}>
                           {catalogueRow.cells.map((cell, cellIndex) => (
                             cellIndex === 0 ? (
-                              <th className="px-4 py-3 font-semibold text-white" key={`${cell}-${cellIndex}`} scope="row">{cell}</th>
+                              <th className="px-4 py-3 font-semibold text-white" key={`${cell}-${cellIndex}`} scope="row">
+                                {firstCellHref ? (
+                                  <a className="underline decoration-[#397b59] underline-offset-4 hover:text-[#7fd0a1]" href={firstCellHref}>{cell}</a>
+                                ) : cell}
+                              </th>
                             ) : (
                               <td className="px-4 py-3 text-[#b6c1bb]" key={`${cell}-${cellIndex}`}>{cell}</td>
                             )

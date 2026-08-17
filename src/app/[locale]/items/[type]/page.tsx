@@ -1,10 +1,9 @@
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
-import {ArrowLeft, Boxes} from "lucide-react";
 import {isLocale, locales, type Locale} from "@/config/site";
+import {CatalogueCategoryView} from "@/components/catalogue/catalogue-category-view";
 import {getItemType, getItemsByType, itemTypes} from "@/features/items/item-library";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
-import {ItemCatalogGuide} from "@/features/items/item-catalog-guide";
 import {Link} from "@/i18n/navigation";
 import {buildCatalogGuideMetadata} from "@/lib/item-metadata";
 import {buildItemTypeJsonLd} from "@/lib/item-structured-data";
@@ -40,21 +39,7 @@ export default async function ItemTypePage({params}: PageProps) {
   return (
     <main>
       <JsonLd data={buildItemTypeJsonLd(locale, itemType.id)} />
-      <section className="border-b border-[#2c3631] bg-[#111512] py-14 md:py-20">
-        <div className="site-container">
-          <Link className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href="/items">
-            <ArrowLeft aria-hidden="true" size={16} />All Items
-          </Link>
-          <p className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#d9a93a]">
-            <Boxes aria-hidden="true" className="size-4" />
-            WARDOGS Item Category
-          </p>
-          <h1 className="display-font mt-4 max-w-4xl text-5xl leading-none text-white md:text-7xl">{catalogueGuide.title}</h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">{catalogueGuide.description}</p>
-        </div>
-      </section>
-
-      <ItemCatalogGuide guide={catalogueGuide} />
+      <CatalogueCategoryView guide={catalogueGuide} locale={locale} />
 
       {items.length > 0 ? (
         <section className="border-t border-[#2c3631] bg-[#101411]">
