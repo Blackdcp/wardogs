@@ -9,9 +9,14 @@ function itemPath(item: WardogsItem) {
   return `/items/${item.type}/${item.slug}`;
 }
 
+export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Extract<Locale, "en" | "ru"> {
+  return item.indexLocales.find((itemLocale) => itemLocale === locale) ?? item.indexLocales[0] ?? "en";
+}
+
 export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   const origin = getSiteOrigin();
-  const canonical = buildLocalizedUrl(locale, itemPath(item));
+  const canonicalLocale = getItemCanonicalLocale(locale, item);
+  const canonical = buildLocalizedUrl(canonicalLocale, itemPath(item));
   const languages = Object.fromEntries(
     item.indexLocales.map((itemLocale) => [itemLocale, buildLocalizedUrl(itemLocale, itemPath(item))])
   ) as Record<string, string>;
@@ -29,7 +34,7 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
     keywords: `WARDOGS ${item.name}, WARDOGS items, WARDOGS ${item.type}, WARDOGS guide`,
     openGraph: {
       type: "article",
-      locale: languageTags[locale],
+      locale: languageTags[canonicalLocale],
       url: canonical,
       siteName: "WARDOGS Wiki",
       title,

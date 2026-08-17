@@ -44,6 +44,22 @@ describe("item metadata", () => {
     ]);
   });
 
+  it("canonicalizes model metadata to its only published locale", () => {
+    const bobcat = getItemBySlug("bobcat");
+    expect(bobcat).toBeDefined();
+
+    const metadata = buildItemMetadata("ru", bobcat!);
+
+    expect(metadata.alternates).toEqual({
+      canonical: "http://localhost:3000/en/items/vehicles/bobcat",
+      languages: {
+        en: "http://localhost:3000/en/items/vehicles/bobcat",
+        "x-default": "http://localhost:3000/en/items/vehicles/bobcat"
+      }
+    });
+    expect(metadata.openGraph?.url).toBe("http://localhost:3000/en/items/vehicles/bobcat");
+  });
+
   it("keeps legacy item social metadata on the generic fallback image", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();
@@ -53,6 +69,7 @@ describe("item metadata", () => {
     expect(metadata.openGraph?.images).toEqual([
       expect.objectContaining({url: "http://localhost:3000/images/og-wardogs.jpg", alt: "WARDOGS Mortar"})
     ]);
+    expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/og-wardogs.jpg"]);
   });
 
   it("canonicalizes untranslated catalogue pages to English and keeps them out of the index", () => {

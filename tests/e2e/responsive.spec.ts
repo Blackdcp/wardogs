@@ -15,8 +15,10 @@ for (const viewport of [
       await expectNoHorizontalOverflow(page);
       if (pathname === "/en") {
         const band = page.locator('[data-catalogue-home-band]');
-        await expect(band.locator("img")).toHaveCount(6);
-        await expect(band.locator("a")).toHaveCount(6);
+        await expect(band.locator('[data-catalogue-entry]')).toHaveCount(6);
+        await expect(band.locator('[data-catalogue-entry] img')).toHaveCount(6);
+        await expect(band.locator('[data-catalogue-model-entry]')).toHaveCount(4);
+        await expect(band.locator('[data-catalogue-model-entry] img')).toHaveCount(4);
       }
     }
   });

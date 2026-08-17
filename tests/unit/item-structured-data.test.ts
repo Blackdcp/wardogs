@@ -47,6 +47,17 @@ describe("item structured data", () => {
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
+  it("uses the English canonical throughout model schema for an unsupported locale", () => {
+    const bobcat = getItemBySlug("bobcat");
+    expect(bobcat).toBeDefined();
+
+    const jsonLd = buildItemArticleJsonLd("ru", bobcat!);
+
+    expect(jsonLd[0].mainEntityOfPage).toBe("http://localhost:3000/en/items/vehicles/bobcat");
+    expect(JSON.stringify(jsonLd)).not.toContain("http://localhost:3000/ru/items/vehicles/bobcat");
+    expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
+  });
+
   it("keeps legacy Article schema on the generic fallback image", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();

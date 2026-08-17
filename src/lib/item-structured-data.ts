@@ -5,6 +5,7 @@ import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getItemsByType, itemTypes, type ItemTypeId, type WardogsItem} from "@/features/items/item-library";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
+import {getItemCanonicalLocale} from "./item-metadata";
 
 type JsonLd = Record<string, unknown>;
 
@@ -102,7 +103,8 @@ export function buildItemTypeJsonLd(locale: Locale, type: ItemTypeId): JsonLd[] 
 }
 
 export function buildItemArticleJsonLd(locale: Locale, item: WardogsItem): JsonLd[] {
-  const url = pageUrl(locale, `/items/${item.type}/${item.slug}`);
+  const canonicalLocale = getItemCanonicalLocale(locale, item);
+  const url = pageUrl(canonicalLocale, `/items/${item.type}/${item.slug}`);
   const label = typeLabel(item.type);
   return [
     {
@@ -124,9 +126,9 @@ export function buildItemArticleJsonLd(locale: Locale, item: WardogsItem): JsonL
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
-        {"@type": "ListItem", position: 2, name: "Catalogue", item: pageUrl(locale, "/items")},
-        {"@type": "ListItem", position: 3, name: label, item: pageUrl(locale, `/items/${item.type}`)},
+        {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(canonicalLocale)},
+        {"@type": "ListItem", position: 2, name: "Catalogue", item: pageUrl(canonicalLocale, "/items")},
+        {"@type": "ListItem", position: 3, name: label, item: pageUrl(canonicalLocale, `/items/${item.type}`)},
         {"@type": "ListItem", position: 4, name: item.name, item: url}
       ]
     }

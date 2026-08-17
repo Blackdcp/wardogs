@@ -1,7 +1,7 @@
 import type {MetadataRoute} from "next";
 import {guideManifest} from "@/content/manifest";
 import {locales} from "@/config/site";
-import {getIndexableItemPaths, itemTypes} from "@/features/items/item-library";
+import {getIndexableItemPaths, getItemByTypeAndSlug, itemTypes} from "@/features/items/item-library";
 import {videoArticles} from "@/features/videos/video-library";
 import {buildAlternates} from "@/lib/metadata";
 
@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const alternates = buildAlternates(locale, pathname || "/");
     const itemDetailMatch = pathname.match(/^\/items\/([^\/]+)\/([^\/]+)$/);
     const itemCatalogMatch = pathname === "/items" || /^\/items\/[^\/]+$/.test(pathname);
+    const item = itemDetailMatch ? getItemByTypeAndSlug(itemDetailMatch[1], itemDetailMatch[2]) : undefined;
     const languages = itemDetailMatch
       ? Object.fromEntries(
         indexableItemPaths
@@ -38,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     if (itemDetailMatch && languages.en) languages["x-default"] = languages.en;
     return {
       url: String(alternates.canonical),
-      lastModified: new Date("2026-08-16T00:00:00.000Z"),
+      lastModified: item?.detailUpdatedAt ? new Date(item.detailUpdatedAt) : new Date("2026-08-16T00:00:00.000Z"),
       changeFrequency: pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? "weekly" as const : "daily" as const,
       priority: pathname === "" ? 1 : pathname === "/guides" || pathname === "/videos" || pathname === "/items" ? 0.9 : pathname === "/news" ? 0.85 : pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? 0.8 : 0.3,
       alternates: {languages}

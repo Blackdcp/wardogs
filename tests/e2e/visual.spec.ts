@@ -28,12 +28,19 @@ for (const viewport of [
     {name: "article", pathname: "/en/guides/wardogs-gameplay"},
     {name: "catalogue-hub", pathname: "/en/items"},
     {name: "catalogue-weapons", pathname: "/en/items/weapons"},
-    {name: "catalogue-vehicles", pathname: "/en/items/vehicles"}
+    {name: "catalogue-vehicles", pathname: "/en/items/vehicles"},
+    {name: "catalogue-weapon-model", pathname: "/en/items/weapons/amp-9"},
+    {name: "catalogue-vehicle-model", pathname: "/en/items/vehicles/bobcat"}
   ]) {
     test(`${pageCase.name} ${viewport.name} visual`, async ({page}) => {
+      const modelDetail = pageCase.name === "catalogue-weapon-model" || pageCase.name === "catalogue-vehicle-model";
+      if (modelDetail) {
+        await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", (route) => route.abort("failed"));
+      }
       await page.setViewportSize(viewport);
       await page.goto(pageCase.pathname);
       await expectImagesLoaded(page);
+      if (modelDetail) await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveAttribute("data-state", "fallback");
       await page.evaluate(() => window.scrollTo(0, 0));
       if (viewport.name === "mobile" && (pageCase.name === "catalogue-weapons" || pageCase.name === "catalogue-vehicles")) {
         await expectMobileCategoryScrollSegments(page, pageCase.name);

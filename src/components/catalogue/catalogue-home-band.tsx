@@ -20,9 +20,19 @@ export type CatalogueHomeBandEntry = {
   imageFit: "cover" | "contain";
 };
 
+export type CatalogueHomeModelEntry = {
+  key: `${"weapons" | "vehicles"}-${string}`;
+  title: string;
+  subtype: string;
+  href: string;
+  image: string;
+  imageAlt: string;
+};
+
 type CatalogueHomeBandViewProps = {
   heading: string;
   entries: readonly CatalogueHomeBandEntry[];
+  modelEntries?: readonly CatalogueHomeModelEntry[];
   LinkComponent?: CatalogueLinkComponent;
 };
 
@@ -66,7 +76,32 @@ function CatalogueEntry({entry, LinkComponent}: {entry: CatalogueHomeBandEntry; 
   );
 }
 
-export function CatalogueHomeBandView({heading, entries, LinkComponent = NativeLink}: CatalogueHomeBandViewProps) {
+function CatalogueModelEntry({entry}: {entry: CatalogueHomeModelEntry}) {
+  return (
+    <li className="min-w-0 border-t border-[#3a473f]" data-catalogue-model-entry={entry.key}>
+      <a className="group block h-full pt-4" href={entry.href}>
+        <span className="relative block aspect-[4/3] overflow-hidden bg-[#090b0a]">
+          <Image
+            src={assetPath(entry.image)}
+            alt={entry.imageAlt}
+            fill
+            sizes="(min-width: 1280px) 277px, (min-width: 640px) calc(50vw - 36px), calc(100vw - 32px)"
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        </span>
+        <span className="flex min-h-24 items-start justify-between gap-3 py-4">
+          <span className="min-w-0">
+            <span className="block text-xs uppercase leading-5 text-[#9fada6]">{entry.subtype}</span>
+            <h3 className="display-font mt-1 [overflow-wrap:anywhere] text-xl leading-tight text-[#f2f5f3] group-hover:text-[#79d19c]">{entry.title}</h3>
+          </span>
+          <ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-[#82938a] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
+        </span>
+      </a>
+    </li>
+  );
+}
+
+export function CatalogueHomeBandView({heading, entries, modelEntries = [], LinkComponent = NativeLink}: CatalogueHomeBandViewProps) {
   const features = entries.filter((entry) => entry.layout === "feature");
   const compact = entries.filter((entry) => entry.layout === "compact");
 
@@ -82,6 +117,14 @@ export function CatalogueHomeBandView({heading, entries, LinkComponent = NativeL
         <ul className="mt-3 grid grid-cols-2 gap-x-4 md:grid-cols-4 md:gap-x-5">
           {compact.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
         </ul>
+        {modelEntries.length > 0 ? (
+          <div className="mt-10 border-t border-[#526159] pt-7">
+            <p className="font-mono text-xs uppercase text-[#d9a93a]">Published model guides</p>
+            <ul className="mt-5 grid gap-x-5 sm:grid-cols-2 lg:grid-cols-4">
+              {modelEntries.map((entry) => <CatalogueModelEntry entry={entry} key={entry.key} />)}
+            </ul>
+          </div>
+        ) : null}
       </div>
     </section>
   );
@@ -105,10 +148,29 @@ export async function CatalogueHomeBand() {
     {key: "gear", title: t("gear.title"), count: t("gear.count", {count: observedCount("gear")}), href: "/items/gear", image: "/images/catalogue/gear/heavy-armor.webp", imageAlt: t("gear.imageAlt"), layout: "compact", imageFit: "contain"},
     {key: "loadouts", title: t("loadouts.title"), count: t("loadouts.count", {count: 3}), href: "/items/loadouts", image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: t("loadouts.imageAlt"), layout: "compact", imageFit: "cover"}
   ];
+  const modelEntries: CatalogueHomeModelEntry[] = [
+    {type: "weapons" as const, slug: "a-91"},
+    {type: "weapons" as const, slug: "amp-9"},
+    {type: "vehicles" as const, slug: "bobcat"},
+    {type: "vehicles" as const, slug: "l2a6"}
+  ].map(({type, slug}) => {
+    const record = getCatalogueRecords(type).find((candidate) => candidate.slug === slug);
+    if (!record || record.detailStatus !== "published" || !record.detailHref) {
+      throw new Error(`Missing published homepage model: ${type}/${slug}`);
+    }
+    return {
+      key: `${type}-${slug}` as const,
+      title: record.name,
+      subtype: record.subtype,
+      href: assetPath(`/en${record.detailHref}`),
+      image: record.image,
+      imageAlt: record.imageAlt
+    };
+  });
 
   const LocalizedLink: CatalogueLinkComponent = ({children, href, className}) => (
     <Link className={className} href={href}>{children}</Link>
   );
 
-  return <CatalogueHomeBandView heading={t("heading")} entries={entries} LinkComponent={LocalizedLink} />;
+  return <CatalogueHomeBandView heading={t("heading")} entries={entries} modelEntries={modelEntries} LinkComponent={LocalizedLink} />;
 }

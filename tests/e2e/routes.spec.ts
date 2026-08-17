@@ -100,9 +100,30 @@ test("catalogue hub is a visual evidence-labelled navigation surface", async ({p
   await expect(previewRows.getByRole("heading", {name: "Featured Weapons"})).toBeVisible();
   await expect(previewRows.getByRole("heading", {name: "Featured Vehicles"})).toBeVisible();
   await expect(previewRows.locator('[data-catalogue-preview]')).toHaveCount(6);
-  await expect(previewRows.locator('[data-catalogue-preview] a')).toHaveCount(0);
-  await expect(previewRows.locator("a")).toHaveCount(2);
+  for (const href of [
+    "/en/items/weapons/a-91",
+    "/en/items/weapons/amp-9",
+    "/en/items/weapons/compound-bow",
+    "/en/items/vehicles/bobcat",
+    "/en/items/vehicles/l2a6",
+    "/en/items/vehicles/uh-1y"
+  ]) {
+    await expect(previewRows.locator(`[data-catalogue-preview] a[href="${href}"]`), href).toHaveCount(1);
+    expect((await page.request.get(href)).status(), href).toBe(200);
+  }
+  await expect(previewRows.locator('[data-catalogue-preview] > a')).toHaveCount(6);
+  await expect(previewRows.locator("a")).toHaveCount(8);
   await expectImagesLoaded(page);
+});
+
+test("localized catalogue hubs keep model previews on English canonical routes", async ({page}) => {
+  await page.goto("/ru/items");
+
+  for (const href of ["/en/items/weapons/amp-9", "/en/items/vehicles/bobcat"]) {
+    await expect(page.locator(`[data-catalogue-preview] a[href="${href}"]`)).toHaveCount(1);
+  }
+  await expect(page.locator('[data-catalogue-preview] a[href^="/ru/items/weapons/"]')).toHaveCount(0);
+  await expect(page.locator('[data-catalogue-preview] a[href^="/ru/items/vehicles/"]')).toHaveCount(0);
 });
 
 test("category routes render approved heroes, complete explorers, safe anchors, and no ads", async ({page}) => {
@@ -308,8 +329,8 @@ test("homepage promotes the catalogue before video intelligence", async ({page})
 
   const band = page.locator('[data-catalogue-home-band]');
   await expect(band.getByRole("heading", {name: "WARDOGS Catalogue"})).toBeVisible();
-  await expect(band.locator("a")).toHaveCount(6);
-  await expect(band.locator("img")).toHaveCount(6);
+  await expect(band.locator('[data-catalogue-entry]')).toHaveCount(6);
+  await expect(band.locator("img")).toHaveCount(10);
   await expect(band.getByText("Equipment", {exact: true})).toHaveCount(0);
   await expectImagesLoaded(page);
 
@@ -321,6 +342,25 @@ test("homepage promotes the catalogue before video intelligence", async ({page})
     const href = `/en/items/${pathname}`;
     await expect(band.locator(`a[href="${href}"]`)).toHaveCount(1);
     expect((await page.request.get(href)).status(), href).toBe(200);
+  }
+});
+
+test("localized homepages feature unique weapon and vehicle model links on English canonicals", async ({page}) => {
+  const expected = [
+    "/en/items/weapons/a-91",
+    "/en/items/weapons/amp-9",
+    "/en/items/vehicles/bobcat",
+    "/en/items/vehicles/l2a6"
+  ];
+
+  for (const locale of ["en", "ru"]) {
+    await page.goto(`/${locale}`);
+    const models = page.locator('[data-catalogue-home-band] [data-catalogue-model-entry]');
+    await expect(models).toHaveCount(4);
+    for (const href of expected) await expect(models.locator(`a[href="${href}"]`), `${locale} ${href}`).toHaveCount(1);
+    await expect(models.locator(`a[href^="/${locale === "en" ? "ru" : locale}/items/"]`)).toHaveCount(0);
+    expect(new Set(await models.locator("h3").allTextContents()).size).toBe(4);
+    await expectImagesLoaded(page);
   }
 });
 

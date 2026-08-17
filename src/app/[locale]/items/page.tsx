@@ -24,6 +24,11 @@ type CategoryMedia = {
   imageFit?: "cover" | "contain";
 };
 
+type PublishedPreviewRecord = CatalogueRecord & {
+  detailStatus: "published";
+  detailHref: NonNullable<CatalogueRecord["detailHref"]>;
+};
+
 const categoryMedia: Record<ItemTypeId, CategoryMedia> = {
   weapons: {image: "/images/catalogue/banners/weapons-1280.webp", imageAlt: "WARDOGS weapons catalogue banner"},
   vehicles: {image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: "WARDOGS vehicles catalogue banner"},
@@ -51,12 +56,14 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   return buildItemHubMetadata(locale);
 }
 
-function getPreviewRecords(type: "weapons" | "vehicles"): readonly CatalogueRecord[] {
+function getPreviewRecords(type: "weapons" | "vehicles"): readonly PublishedPreviewRecord[] {
   const records = getCatalogueRecords(type);
   return previewSlugs[type].map((slug) => {
     const record = records.find((candidate) => candidate.slug === slug);
-    if (!record) throw new Error(`Missing ${type} catalogue preview: ${slug}`);
-    return record;
+    if (!record || record.detailStatus !== "published" || !record.detailHref) {
+      throw new Error(`Missing published ${type} catalogue preview: ${slug}`);
+    }
+    return record as PublishedPreviewRecord;
   });
 }
 
@@ -80,17 +87,19 @@ function CataloguePreviewRow({type, title, description}: {type: "weapons" | "veh
       <ul className="mt-6 grid gap-5 sm:grid-cols-3">
         {records.map((record) => (
           <li data-catalogue-preview key={record.slug} className="min-w-0 border-t border-[#354039] pt-4">
-            <span className="relative block aspect-[4/3] overflow-hidden bg-[#090c0a]">
-              <Image src={assetPath(record.image)} alt={record.imageAlt} fill sizes={previewSizes} className="object-contain p-4" />
-            </span>
-            <div className="pt-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <StatusBadge tone="warning">Pre-release build</StatusBadge>
-                <span className="text-xs uppercase text-[#829087]">{record.subtype}</span>
+            <a className="group block h-full" href={assetPath(`/en${record.detailHref}`)}>
+              <span className="relative block aspect-[4/3] overflow-hidden bg-[#090c0a]">
+                <Image src={assetPath(record.image)} alt={record.imageAlt} fill sizes={previewSizes} className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.02]" />
+              </span>
+              <div className="pt-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <StatusBadge tone="warning">Pre-release build</StatusBadge>
+                  <span className="text-xs uppercase text-[#829087]">{record.subtype}</span>
+                </div>
+                <h3 className="display-font mt-3 text-2xl leading-tight text-white group-hover:text-[#79d19c]">{record.name}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#a8b4ae]">{record.summary}</p>
               </div>
-              <h3 className="display-font mt-3 text-2xl leading-tight text-white">{record.name}</h3>
-              <p className="mt-2 text-sm leading-6 text-[#a8b4ae]">{record.summary}</p>
-            </div>
+            </a>
           </li>
         ))}
       </ul>
@@ -202,7 +211,7 @@ export default async function ItemsPage({params}: PageProps) {
         <CataloguePreviewRow
           type="weapons"
           title="Featured Weapons"
-          description="A visual cross-section of observed firearms and specialist tools. Model previews stay inline until their detailed articles are published."
+          description="A visual cross-section of observed firearms and specialist tools, with evidence-led detail for each published model."
         />
         <CataloguePreviewRow
           type="vehicles"

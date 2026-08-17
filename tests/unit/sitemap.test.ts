@@ -1,5 +1,6 @@
 import {describe, expect, it} from "vitest";
 import sitemap from "../../src/app/sitemap";
+import {getItemByTypeAndSlug} from "../../src/features/items/item-library";
 
 const weaponModelSlugs = [
   "a-91", "ak74", "amp-9", "amr-50", "bmr-308", "bushmaster-m17s", "compound-bow",
@@ -12,6 +13,13 @@ const vehicleModelSlugs = [
   "kodiak-pickup", "kodiak", "l2a6", "mh-6", "sph-2", "uh-1y-miniguns",
   "uh-1y", "ural-defender-m249", "ural-defender", "ural"
 ] as const;
+
+const newModelContracts = [
+  ...weaponModelSlugs.map((slug) => ({type: "weapons" as const, slug})),
+  ...vehicleModelSlugs.map((slug) => ({type: "vehicles" as const, slug}))
+];
+const newModelUrls = newModelContracts.map(({type, slug}) => `http://localhost:3000/en/items/${type}/${slug}`);
+const legacyWeaponAndVehicleSlugs = new Set(["mortar", "littlebird", "tank", "attack-helicopter", "armored-transport"]);
 
 describe("sitemap", () => {
   it("includes standalone video article URLs for indexing", () => {
@@ -58,25 +66,40 @@ describe("sitemap", () => {
     });
   });
 
-  it("indexes published English weapon and vehicle models only in English", () => {
-    const urls = sitemap().map((entry) => entry.url);
+  it("contains the exact 34 English model URLs once and no localized copies", () => {
+    const modelEntries = sitemap().filter((entry) => {
+      const match = new URL(entry.url).pathname.match(/^\/(?:en|ru|de|pt-br)\/items\/(weapons|vehicles)\/([^/]+)\/?$/);
+      return match && !legacyWeaponAndVehicleSlugs.has(match[2]);
+    });
 
-    expect(urls.filter((url) => url.includes("/items/weapons/"))).toEqual([
-      "http://localhost:3000/en/items/weapons/mortar",
-      ...weaponModelSlugs.map((slug) => `http://localhost:3000/en/items/weapons/${slug}`),
-      "http://localhost:3000/ru/items/weapons/mortar"
-    ]);
-    expect(urls).not.toContain("http://localhost:3000/ru/items/weapons/ak74");
-    for (const slug of vehicleModelSlugs) {
-      expect(urls).toContain(`http://localhost:3000/en/items/vehicles/${slug}`);
-      expect(urls).not.toContain(`http://localhost:3000/ru/items/vehicles/${slug}`);
+    expect(modelEntries.map((entry) => entry.url)).toEqual(newModelUrls);
+    expect(new Set(modelEntries.map((entry) => entry.url)).size).toBe(34);
+  });
+
+  it("gives every new model only English and x-default sitemap alternates", () => {
+    const modelEntries = sitemap().filter((entry) => newModelUrls.includes(entry.url));
+
+    expect(modelEntries).toHaveLength(34);
+    for (const entry of modelEntries) {
+      expect(entry.alternates?.languages, entry.url).toEqual({en: entry.url, "x-default": entry.url});
     }
   });
 
-  it("includes every published vehicle detail URL without fragments or filter URLs", () => {
+  it("uses each new model article's actual detailUpdatedAt and weekly frequency", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+
+    for (const contract of newModelContracts) {
+      const item = getItemByTypeAndSlug(contract.type, contract.slug);
+      const url = `http://localhost:3000/en/items/${contract.type}/${contract.slug}`;
+      expect(item?.detailUpdatedAt, `${contract.type}/${contract.slug} article date`).toBeDefined();
+      expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe(new Date(`${item!.detailUpdatedAt}T00:00:00.000Z`).toISOString());
+      expect(entriesByUrl.get(url)?.changeFrequency, url).toBe("weekly");
+    }
+  });
+
+  it("contains no fragments, queries, or filter routes", () => {
     const urls = sitemap().map((entry) => entry.url);
 
-    for (const slug of vehicleModelSlugs) expect(urls.some((url) => new RegExp(`/en/items/vehicles/${slug}/?$`).test(url))).toBe(true);
     expect(urls.some((url) => url.includes("#") || url.includes("?") || /\/(?:items\/)?(?:weapons|vehicles)\/(?:filter|search)\//.test(url))).toBe(false);
   });
 
