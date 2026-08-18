@@ -17,6 +17,7 @@ import {buildArticleMetadata} from "@/lib/metadata";
 import {buildArticleJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -76,6 +77,7 @@ export default async function GuideArticlePage({params}: PageProps) {
           <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
         </aside>
         <AdsterraNativeBanner label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         <div className="guide-prose">{compiled.content}</div>
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">

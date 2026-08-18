@@ -19,6 +19,7 @@ import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {getTranslations} from "next-intl/server";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; type: string; slug: string}>};
 
@@ -103,6 +104,7 @@ export default async function ItemDetailPage({params}: PageProps) {
         </aside>
 
         <AdsterraNativeBanner label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
 
         <section aria-labelledby="facts-title">
           <h2 className="display-font text-3xl text-white" id="facts-title">Quick Facts</h2>
