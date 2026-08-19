@@ -3,6 +3,7 @@ import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {GuideGrid} from "@/components/guides/guide-grid";
+import {PriorityGuides} from "@/components/home/priority-guides";
 import {VideoGuideStrip} from "@/components/guides/video-guide-strip";
 import {buildGuideIndex} from "@/features/guides/guide-index";
 import type {GuideCategory} from "@/content/manifest";
@@ -47,6 +48,9 @@ export default async function GuidesPage({params}: PageProps) {
           <h1 className="display-font mt-4 max-w-4xl text-5xl leading-none text-white md:text-7xl">{t("title")}</h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">{t("description")}</p>
         </div>
+      </section>
+      <section className="site-container py-10 md:py-12">
+        <PriorityGuides guides={guides} />
       </section>
       <VideoGuideStrip locale={locale} />
       <section className="site-container py-12 md:py-16">
