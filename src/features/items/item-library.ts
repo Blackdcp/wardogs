@@ -20,6 +20,8 @@ export type ItemType = {
   label: string;
   description: string;
   href: `/items/${ItemTypeId}`;
+  image?: string;
+  imageAlt?: string;
 };
 
 export type ItemFact = {
@@ -53,6 +55,8 @@ export type WardogsItem = {
   confirmedFacts?: readonly string[];
   unconfirmedFacts?: readonly string[];
   detailUpdatedAt?: string;
+  image?: string;
+  imageAlt?: string;
   priority: number;
   indexLocales: readonly Extract<Locale, "en" | "ru">[];
 };
@@ -68,43 +72,57 @@ export const itemTypes: readonly ItemType[] = [
     id: "weapons",
     label: "Weapons",
     description: "Firearms and indirect-fire tools observed in official or creator WARDOGS material.",
-    href: "/items/weapons"
+    href: "/items/weapons",
+    image: "/images/items/catalog-weapons.jpg",
+    imageAlt: "WARDOGS weapons"
   },
   {
     id: "vehicles",
     label: "Vehicles",
     description: "Transport, armor, and air assets that shape movement and battlefield pressure.",
-    href: "/items/vehicles"
+    href: "/items/vehicles",
+    image: "/images/items/catalog-vehicles.jpg",
+    imageAlt: "WARDOGS vehicles"
   },
   {
     id: "ammo",
     label: "Ammo",
     description: "Calibres, load types, Alpha prices, and the weapons associated with each round.",
-    href: "/items/ammo"
+    href: "/items/ammo",
+    image: "/images/items/catalog-ammo.jpg",
+    imageAlt: "WARDOGS ammo"
   },
   {
     id: "attachments",
     label: "Attachments",
     description: "Optics and magazines with observed magnification, weight, capacity, and price data.",
-    href: "/items/attachments"
+    href: "/items/attachments",
+    image: "/images/items/catalog-attachments.jpg",
+    imageAlt: "WARDOGS optics and magazines"
   },
   {
     id: "gear",
     label: "Gear",
     description: "Helmet, armor, backpack, and wearable-slot choices recorded from the Alpha build.",
-    href: "/items/gear"
+    href: "/items/gear",
+    image: "/images/items/catalog-gear.jpg",
+    imageAlt: "WARDOGS gear"
   },
   {
     id: "equipment",
     label: "Equipment",
     description: "Deployable support tools and tactical systems that affect logistics and objectives.",
-    href: "/items/equipment"
+    href: "/items/equipment",
+    image: "/images/items/catalog-equipment.jpg",
+    imageAlt: "WARDOGS support equipment"
   },
   {
     id: "loadouts",
     label: "Loadouts",
     description: "Budget-first kit planning for a persistent balance that does not simply reset after a loss.",
-    href: "/items/loadouts"
+    href: "/items/loadouts",
+    image: "/images/items/catalog-loadouts.jpg",
+    imageAlt: "WARDOGS loadout planning"
   }
 ] as const;
 

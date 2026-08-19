@@ -16,6 +16,8 @@ export type CatalogGuide = {
   description: string;
   countLabel: string;
   dataAsOf: string;
+  heroImage?: string;
+  heroImageAlt?: string;
   disclaimer: string;
   columns: string[];
   sections: CatalogSection[];
@@ -39,6 +41,8 @@ export const catalogGuides: readonly CatalogGuide[] = [
     description: "A practical Alpha 1 roster grouped by battlefield role, with observed vendor prices, ammunition, fire modes, weight, and progression track.",
     countLabel: "33 weapons",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
+    heroImage: "/images/items/catalog-weapons.jpg",
+    heroImageAlt: "WARDOGS weapons from a large battlefield match",
     disclaimer: "Community-observed pre-release data. Prices, unlocks, balance, and availability may change before Early Access.",
     columns: ["Weapon", "Alpha price", "Ammunition", "Fire modes", "Weight", "Progression"],
     sections: [
@@ -124,6 +128,8 @@ export const catalogGuides: readonly CatalogGuide[] = [
     description: "The observed Alpha 1 vehicle vendor, separated into transport, armor, artillery, and aircraft with price and unlock context.",
     countLabel: "20 vehicles",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
+    heroImage: "/images/items/catalog-vehicles.jpg",
+    heroImageAlt: "WARDOGS armored and air vehicles in intense combat",
     disclaimer: "Community-observed pre-release vendor data. Prices and progression gates are not final launch specifications.",
     columns: ["Vehicle", "Role", "Alpha price", "Observed gate", "Track"],
     sections: [
@@ -184,6 +190,8 @@ export const catalogGuides: readonly CatalogGuide[] = [
     description: "Every observed calibre, its available load families, Alpha pricing, and the weapon count associated with it.",
     countLabel: "14 calibres",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
+    heroImage: "/images/items/catalog-ammo.jpg",
+    heroImageAlt: "WARDOGS ammunition details with battlefield context",
     disclaimer: "Community-observed pre-release ammunition data. Damage is a base input, not guaranteed player damage after range, armor, and hit location.",
     columns: ["Calibre", "Base damage", "Loads", "Standard per round", "Box price", "Weapons"],
     sections: [
@@ -226,6 +234,8 @@ export const catalogGuides: readonly CatalogGuide[] = [
     description: "An Alpha 1 reference for 21 optics and 34 magazines, including magnification, zeroing, weight, capacity, and observed price.",
     countLabel: "21 optics + 34 magazines",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
+    heroImage: "/images/items/catalog-attachments.jpg",
+    heroImageAlt: "WARDOGS weapon optics and magazine details in a close-up",
     disclaimer: "Community-observed pre-release attachment data. A listed attachment is not guaranteed to fit every weapon or retain the same tuning at launch.",
     columns: ["Attachment", "Kind", "Alpha price", "Zoom or capacity", "Weight or calibre"],
     sections: [
@@ -327,6 +337,8 @@ export const catalogGuides: readonly CatalogGuide[] = [
     description: "The observed wearable progression ladder for helmets, armor, and the first recorded backpack.",
     countLabel: "11 gear records",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
+    heroImage: "/images/items/catalog-gear.jpg",
+    heroImageAlt: "WARDOGS helmets and armor options in an action setting",
     disclaimer: "Community-observed pre-release gear data. Protection values and movement penalties were not published as final numbers.",
     columns: ["Gear", "Slot", "Tier", "Alpha price"],
     sections: [
@@ -376,6 +388,8 @@ export const catalogGuides: readonly CatalogGuide[] = [
     description: "Observed offensive, medical, recon, vehicle, building, and utility equipment from the Alpha build.",
     countLabel: "13 equipment items",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
+    heroImage: "/images/items/catalog-equipment.jpg",
+    heroImageAlt: "WARDOGS tactical equipment and support tools",
     disclaimer: "Community-observed pre-release equipment data. Reconstructed names and vendor prices are clearly identified and may change.",
     columns: ["Equipment", "Role", "Alpha price", "Recorded identifier"],
     sections: [
@@ -435,6 +449,8 @@ export const catalogGuides: readonly CatalogGuide[] = [
     description: "A budget-first way to plan kits when weapons, ammunition, protection, tools, and vehicles all compete for persistent cash.",
     countLabel: "3 budget bands",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
+    heroImage: "/images/items/catalog-loadouts.jpg",
+    heroImageAlt: "WARDOGS squad loadout planning and role balance",
     disclaimer: "Community-observed pre-release planning framework, not a final meta tier list. Build prices and balance can change before Early Access.",
     columns: ["Band", "Spending rule", "Best use", "Main risk"],
     sections: [
