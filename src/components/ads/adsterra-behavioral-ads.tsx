@@ -5,6 +5,7 @@ import {useEffect} from "react";
 import {
   ADSTERRA_POPUNDER_SCRIPT_SRC,
   ADSTERRA_SOCIAL_BAR_SCRIPT_SRC,
+  BEHAVIORAL_POPUNDER_ENABLED,
   canLoadPopunder,
   isBehavioralAdPath,
   POPUNDER_STORAGE_KEY
@@ -29,6 +30,8 @@ export function AdsterraBehavioralAds() {
     let popunderScript: HTMLScriptElement | null = null;
 
     const loadPopunder = () => {
+      if (!BEHAVIORAL_POPUNDER_ENABLED) return;
+
       let lastLoadedAt: string | null = null;
       try {
         lastLoadedAt = window.localStorage.getItem(POPUNDER_STORAGE_KEY);

@@ -6,6 +6,7 @@ export const ADSTERRA_SMARTLINK_URL =
   "https://arkgleamfox.com/sfg4tmdn?key=88f0d659df423718bd107ca16b5284cd";
 export const POPUNDER_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 export const POPUNDER_STORAGE_KEY = "wardogs-adsterra-popunder-loaded-at";
+export const BEHAVIORAL_POPUNDER_ENABLED = process.env.NEXT_PUBLIC_WARDOGS_ENABLE_POPUNDER === "true";
 
 const CONTENT_DETAIL_PATH = /^\/(?:en|de|pt-br|ru)\/(?:guides|videos)\/[^/]+\/?$/;
 const ITEM_DETAIL_PATH = /^\/(?:en|de|pt-br|ru)\/items\/[^/]+\/[^/]+\/?$/;
