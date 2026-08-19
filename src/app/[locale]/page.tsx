@@ -12,7 +12,6 @@ import {OfficialMedia} from "@/components/home/official-media";
 import {PriorityGuides} from "@/components/home/priority-guides";
 import {StartHere} from "@/components/home/start-here";
 import {VideoIntelligence} from "@/components/home/video-intelligence";
-import {PromotionOutreach} from "@/components/home/promotion-outreach";
 import {isLocale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
 import {getHomeFacts} from "@/features/home/home-data";
@@ -47,7 +46,6 @@ export default async function HomePage({params}: HomePageProps) {
       <HomeHero facts={facts} />
       <PriorityGuides guides={guides} />
       <StartHere />
-      <PromotionOutreach />
       <CatalogueHomeBand locale={locale} />
       <VideoIntelligence locale={locale} />
       <CategoryGrid />
