@@ -75,6 +75,7 @@ describe("sitemap", () => {
 
     expect(urls).toContain("http://localhost:3000/en/videos");
     expect(urls).toContain("http://localhost:3000/en/videos/wardogs-10-reasons-not-to-buy");
+    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-loadout-gear-guide");
     expect(urls).toContain("http://localhost:3000/en/videos/wardogs-mortars-indirect-fire");
     expect(urls).toContain("http://localhost:3000/en/videos/wardogs-first-look-gameplay");
   });

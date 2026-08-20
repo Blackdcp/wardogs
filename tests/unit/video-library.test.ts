@@ -3,10 +3,11 @@ import {getFeaturedVideoArticles, videoArticles} from "../../src/features/videos
 
 describe("video article library", () => {
   it("keeps every collected YouTube source as its own indexable article", () => {
-    expect(videoArticles).toHaveLength(8);
+    expect(videoArticles).toHaveLength(9);
     expect(videoArticles.map(({youtubeId}) => youtubeId)).toEqual([
       "ugkuP4a3xk4",
       "-k6IV0ITLDo",
+      "J5QZXLENLgQ",
       "eAE9LOV-p3s",
       "83AVH6FtemY",
       "utnQT_Jmd5w",
@@ -14,7 +15,7 @@ describe("video article library", () => {
       "3Jwi15nA-gg",
       "UKL0hwMRT9s"
     ]);
-    expect(new Set(videoArticles.map(({slug}) => slug)).size).toBe(8);
+    expect(new Set(videoArticles.map(({slug}) => slug)).size).toBe(9);
     expect(videoArticles.every((article) => article.internalGuideSlug.length > 0)).toBe(true);
   });
 
@@ -22,7 +23,7 @@ describe("video article library", () => {
     expect(getFeaturedVideoArticles(3).map(({slug}) => slug)).toEqual([
       "wardogs-10-reasons-not-to-buy",
       "wardogs-7-things-you-need-to-know",
-      "wardogs-gameplay-impressions"
+      "wardogs-loadout-gear-guide"
     ]);
   });
 

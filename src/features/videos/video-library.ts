@@ -153,6 +153,96 @@ export const videoArticles: readonly VideoArticle[] = [
     ]
   },
   {
+    slug: "wardogs-loadout-gear-guide",
+    title: "WARDOGS Loadout and Gear Guide: Weapons, Armor, Backpacks, and FOBs",
+    description:
+      "A complete WARDOGS loadout guide based on creator footage, covering starter gear, medical tools, armor tiers, tactical vests, backpacks, launchers, FOB kits, and spawn vehicles.",
+    youtubeId: "J5QZXLENLgQ",
+    sourceLabel: "WARDOGS All You Need To Know",
+    sourceUrl: "https://www.youtube.com/watch?v=J5QZXLENLgQ",
+    publishedDate: "2026-08-20",
+    updatedDate: "2026-08-20",
+    kind: "creator",
+    priority: 2,
+    internalGuideSlug: "wardogs-gameplay",
+    quickAnswer:
+      "This creator walkthrough is a practical tour of the WARDOGS pre-match catalogue. It shows how free starter options, paid consumables, medical equipment, armor, storage, specialist launchers, FOB construction kits, and mobile spawn vehicles fit together. Prices, unlock levels, and capacities shown here come from the recorded test build and may change before Early Access.",
+    takeaways: [
+      "A basic rifle and limited resources can get a new player into the match without requiring an expensive first loadout.",
+      "Consumables, explosives, medical tools, armor, storage, and specialist weapons compete for both cash and inventory space.",
+      "Tactical vests primarily improve quick-slot access and handling, while backpacks determine the shapes and quantity of equipment a player can carry.",
+      "Revive tools range from a limited starter option to defibrillators that require batteries, making medical preparation a real loadout decision.",
+      "Anti-armor and anti-air launchers can create strong earning opportunities, but their unlock cost and ammunition model differ.",
+      "The FOB starter kit and upgraded construction hammer connect inventory choices directly to team spawning, defenses, and logistics.",
+      "Every price, level, stack size, and slot layout in the footage should be treated as build-specific rather than final launch documentation."
+    ],
+    sections: [
+      {
+        heading: "What the catalogue walkthrough actually shows",
+        body: [
+          "The video opens inside the pre-match catalogue, which makes it more useful than a normal combat montage for anyone trying to understand WARDOGS progression. Instead of only showing what a weapon looks like in a firefight, it follows the decisions that happen before deployment: what can be taken for free, which consumables cost cash, what must be unlocked, and how much space each tool occupies.",
+          "The most important lesson is that a loadout is a budget and logistics plan, not simply a favorite gun. A player has to balance protection, healing, explosives, ammunition, carrying capacity, and specialist equipment. The footage comes from a test build, so the exact prices and level gates may change, but the relationships between those systems explain how WARDOGS wants players to prepare."
+        ]
+      },
+      {
+        heading: "Starter weapons, ammunition, and tactical consumables",
+        body: [
+          "The recorded build shows a zero-cost assault-rifle option, while magazines and ammunition add smaller expenses. It also shows a limited free resource selection and bandages that can be stacked. This gives a new or cash-poor player a way back into the match without forcing an all-or-nothing purchase, but a bare-minimum kit still has less staying power than a carefully supplied one.",
+          "The tactical category includes colored smoke, fragmentation grenades, C4, an expensive remote detonator, breaching equipment, improvised explosives, anti-tank mines, and Claymore-style mines. The creator notes that players may sometimes bypass a formal breach with movement or parkour, so explosives are partly a question of speed and certainty. Smoke is the more universal tool because it can protect a revive, crossing, supply action, or retreat without requiring a kill."
+        ]
+      },
+      {
+        heading: "Medical gear and the cost of keeping a squad alive",
+        body: [
+          "The medical catalogue begins with bandages and a limited single-use revive resource. The walkthrough then shows a paid resuscitation unlock, personal medical supplies, defibrillators, batteries, adrenaline tools, and a larger medical kit. That progression suggests a medic loadout is built in layers: immediate self-care, the ability to recover another player, and enough supporting resources to keep doing the job through a longer fight.",
+          "Defibrillators are especially important because the footage says they need batteries. Carrying the tool without its power supply can waste both money and inventory space. The creator also describes a teammate earning substantial cash through medical play, which reinforces the wider WARDOGS idea that useful support actions can fund future equipment. Exact payouts are not final, but the role clearly has an economic purpose as well as a tactical one."
+        ]
+      },
+      {
+        heading: "Armor tiers, helmets, and tactical vests",
+        body: [
+          "The video moves through several helmet and armor tiers, with stronger protection tied to progression and larger unlock costs. The visible sequence is useful for understanding direction rather than publishing a permanent price table: early protection is accessible, while later tiers ask for more playtime and investment. Players should therefore buy armor according to the job they expect to perform instead of assuming the most expensive set is always affordable or necessary.",
+          "Tactical vests solve a different problem. In the footage, moving from small to medium and large vests opens more quick-access slots and improves actions such as reloading, equipping, and holstering. A vest does not replace backpack storage. Its value is access and handling under pressure, which means a support player carrying several tools may value a larger vest even when the raw armor increase is not the main reason for the purchase."
+        ]
+      },
+      {
+        heading: "Backpacks, grid shapes, and weapon storage",
+        body: [
+          "Backpacks use a grid-based inventory, and the walkthrough makes clear that total capacity is only half the problem. A divided bag can have enough empty squares overall but still reject a large item because the available spaces do not form the required shape. Players planning to carry FOB equipment, medical kits, explosives, or recovered weapons need to look at the layout as well as the advertised size.",
+          "The creator compares starter and scout bags with larger options, then highlights high-level packs that include external weapon slots. Those weapon straps could be valuable for bringing an alternate gun into battle or extracting equipment without consuming the central grid. The practical beginner rule is simple: choose the smallest bag that safely carries the mission equipment, because paying for capacity that remains empty adds risk without improving the squad."
+        ]
+      },
+      {
+        heading: "Parachutes and specialist anti-vehicle weapons",
+        body: [
+          "Two parachute styles appear in the catalogue. The basic option is described as less controllable, while the sport version costs more to unlock and gives the player greater steering control. That difference can matter when deploying near an objective, rooftop, or friendly position: a cheaper entry tool gets a player down, while better control may reduce the risk of landing exposed or separated from the squad.",
+          "The specialist section includes anti-tank equipment, a grenade launcher, an RPG, and a single-use anti-air missile. The anti-air option is presented as self-contained, while the RPG can be reloaded with separate ammunition. That distinction changes both inventory planning and cash exposure. A disposable launcher is easy to understand and carry for one decisive shot; a reloadable system can support repeated pressure but needs ammunition and a player willing to protect the investment."
+        ]
+      },
+      {
+        heading: "FOB kits, construction hammers, and team infrastructure",
+        body: [
+          "The FOB starter item is one of the largest pieces of equipment shown. The creator describes placing it directly from a quick slot without needing a hammer or construction material for the initial deployment. Once the base exists, construction tools become more important. An upgraded hammer can open access to stronger structures and defenses, including platforms and anti-air options shown in the build.",
+          "This is where the catalogue connects to the larger match. Spending cash and backpack space on a FOB kit may reduce an individual player's combat load, but it can create a spawn and supply position for the entire team. The correct location still matters: a base that cannot be supplied or defended becomes an expensive target, while a well-placed one can shorten travel, support a Hot Zone push, and give a team somewhere to recover."
+        ]
+      },
+      {
+        heading: "Mobile spawn vehicles and the best beginner buying order",
+        body: [
+          "The final part of the transcript shows a deployable spawn vehicle. In the recorded rules, players need enough match score before using its spawn function, someone must drive the vehicle into position, and deaths around the active fight can trigger a respawn cooldown. That makes the vehicle more than transportation: it is mobile team infrastructure whose value depends on placement and survival.",
+          "For a new player, the footage supports a conservative buying order. Start with the free or low-cost primary weapon, enough ammunition, bandages, and one role-defining tool. Add armor and storage only when the mission requires them, then invest in specialist launchers, advanced medical equipment, or FOB construction after learning how the team uses those systems. This preserves cash while giving every purchased slot a clear purpose."
+        ]
+      },
+      {
+        heading: "Build-specific numbers and what may change",
+        body: [
+          "The video mentions many exact values, including item prices, unlock costs, stack sizes, armor levels, bag dimensions, and progression requirements. Those numbers are valuable evidence of how the tested build was tuned, but they should not be treated as a final database. Economy and unlock pacing are among the easiest systems for a developer to adjust during testing and Early Access.",
+          "Use this page to understand categories, tradeoffs, and preparation logic. Before making an expensive purchase in a live build, check the current in-game catalogue. That keeps the guide useful even after balance changes: free recovery options, role-based inventory planning, storage geometry, supply requirements, and the difference between personal gear and team infrastructure remain the durable lessons from the footage."
+        ]
+      }
+    ]
+  },
+  {
     slug: "wardogs-gameplay-impressions",
     title: "WARDOGS Gameplay Impressions: What the First Creator Footage Shows",
     description:
