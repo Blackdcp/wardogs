@@ -46,6 +46,9 @@ export default async function VideoArticlePage({params}: PageProps) {
             <PlayCircle aria-hidden="true" className="size-4" />
             {article.kind === "official" ? "Official video breakdown" : "Creator footage breakdown"}
           </p>
+          <p className="mt-3 text-xs uppercase text-[#8b9992]">
+            Last updated <time dateTime={article.updatedDate}>{article.updatedDate}</time>
+          </p>
           <h1 className="display-font mt-5 text-4xl leading-[1.05] text-white sm:text-5xl md:text-6xl">{article.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]">{article.description}</p>
         </div>

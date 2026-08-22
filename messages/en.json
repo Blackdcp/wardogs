@@ -1,7 +1,7 @@
 {
   "common": {"fanMade": "Fan-Made Community Wiki", "language": "Language", "openMenu": "Open menu", "closeMenu": "Close menu", "learnMore": "Learn more", "updated": "Updated", "official": "Official", "community": "Community", "skipToContent": "Skip to content", "openSteam": "Open WARDOGS on Steam"},
   "ads": {"label": "Advertisement", "sponsored": "Sponsored", "smartlinkCta": "Explore sponsored recommendations", "smartlinkDescription": "Open an external sponsored destination in a new tab."},
-  "nav": {"game": "Game", "guides": "Guides", "catalogue": "Catalogue", "playtest": "Playtest", "release": "Release", "releaseDate": "Release Date", "steam": "Steam", "steamEarlyAccess": "Steam and Early Access", "gameplay": "Gameplay", "factions": "Factions", "community": "Community", "beginnerGuide": "Beginner Guide", "gameplayGuide": "Gameplay Guide", "fobLogistics": "FOB and Logistics", "mortarGuide": "Mortar Guide", "allGuides": "All Guides", "catalogueHome": "Catalogue Home", "weapons": "Weapons", "vehicles": "Vehicles", "ammo": "Ammo", "attachments": "Attachments", "gear": "Gear", "equipment": "Equipment", "loadouts": "Loadouts", "videos": "Videos", "items": "Items", "news": "News", "steamCta": "View on Steam", "primaryLabel": "Primary navigation"},
+  "nav": {"game": "Game", "guides": "Guides", "catalogue": "Catalogue", "playtest": "Playtest", "release": "Release", "releaseDate": "Release Date", "steam": "Steam", "steamEarlyAccess": "Steam and Early Access", "gameplay": "Gameplay", "factions": "Factions", "community": "Community", "beginnerGuide": "Beginner Guide", "crashFix": "Crash Fix", "helicopterGuide": "Helicopter Guide", "gameplayGuide": "Gameplay Guide", "fobLogistics": "FOB and Logistics", "mortarGuide": "Mortar Guide", "allGuides": "All Guides", "catalogueHome": "Catalogue Home", "weapons": "Weapons", "vehicles": "Vehicles", "ammo": "Ammo", "attachments": "Attachments", "gear": "Gear", "equipment": "Equipment", "loadouts": "Loadouts", "videos": "Videos", "items": "Items", "news": "News", "steamCta": "View on Steam", "primaryLabel": "Primary navigation"},
   "home": {
     "metaTitle": "WARDOGS Wiki - Gameplay, Playtest & Release Guides",
     "metaDescription": "WARDOGS Wiki provides verified guides to gameplay, playtests, release dates, Steam access, factions, trailers, community links, and beginner tactics.",
@@ -66,7 +66,7 @@
       "eyebrow": "All guide areas",
       "title": "Find the Intel You Need",
       "description": "Browse eight focused areas covering every topic in the independent WARDOGS guide library.",
-      "allGuides": "View all 23 guides",
+      "allGuides": "View all 28 guides",
       "items": {
         "access": "Playtests, beta history, alpha status, and keys",
         "release": "Release date and Early Access details",
@@ -113,7 +113,7 @@
     "finalDescription": "Use our independent guide library to prepare for access, squad roles, vehicles, objectives, and every confirmed release milestone.",
     "final": {"eyebrow": "Prepare for deployment", "guidesCta": "Explore the Guides", "steamCta": "Open Steam"}
   },
-  "guides": {"title": "WARDOGS Guides", "description": "Browse 23 focused guides covering live beta access, Twitch Drops, beginner tactics, FOB logistics, release, Steam, gameplay, and community.", "count": "23 Guide Topics", "read": "Read guide"},
+  "guides": {"title": "WARDOGS Guides", "description": "Browse 28 focused guides covering beta access, troubleshooting, money, towers, helicopters, mortars, FOB logistics, release, and gameplay.", "count": "28 Guide Topics", "read": "Read guide"},
   "news": {
     "metaTitle": "WARDOGS News - Beta, Early Access & Steam Updates",
     "metaDescription": "Track confirmed WARDOGS news, beta dates, Steam Early Access timing, pricing notes, platform status, preload questions, and updated guide links.",
@@ -130,7 +130,8 @@
         "earlyAccess": {"title": "Steam Early Access starts September 10, 2026", "description": "WARDOGS is scheduled to launch in Early Access for Windows PC through Steam, with the full version still undated."},
         "ps5": {"title": "No PS5 release date is confirmed", "description": "Official product pages currently announce Windows PC through Steam; console timing and cross-play are not confirmed."},
         "preload": {"title": "WARDOGS Playtest preload is available", "description": "Invited Closed Beta accounts can install the separate WARDOGS Playtest entry through their Steam library."},
-        "twitchDrops": {"title": "WARDOGS Twitch Drops are live", "description": "Link Steam and Twitch, watch an eligible beta stream and claim rewards; Drops do not provide game access."}
+        "twitchDrops": {"title": "WARDOGS Twitch Drops are live", "description": "Link Steam and Twitch, watch an eligible beta stream and claim rewards; Drops do not provide game access."},
+        "fpsGameShow": {"title": "FPS Games Show airs September 3", "description": "BULKHEAD's showcase starts at 7pm BST with a major WARDOGS reveal announced; the reveal itself remains unknown until the show."}
       }
     },
     "checklist": {"title": "Pre-Beta Checklist", "description": "Use these pages before the beta weekend or Early Access launch. They cover access, pricing, install safety, and the actual gameplay loop."},
@@ -148,5 +149,5 @@
   "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki is an independent fan-made guide created for players. It covers confirmed access, release, gameplay, faction, community, and media information without affiliation to BULKHEAD, Team17, or Steam.", "description": "Independent tactical FPS guides for WARDOGS players.", "guideLinks": "Guide Links", "officialLinks": "Official Links", "officialSite": "Official WARDOGS Site", "revealTrailer": "Reveal Trailer", "legal": "Legal", "privacy": "Privacy Policy", "terms": "Terms of Service"},
   "privacy": {"title": "Privacy Policy", "intro": "This fan guide minimizes data collection and explains how external media and links work.", "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.", "advertising": "Content pages may load native ads, a social bar, a frequency-limited popunder, and clearly labeled sponsored links from Adsterra. Adsterra may receive your IP address, browser and device information, and use cookies or similar technologies under its own privacy controls."},
   "terms": {"title": "Terms of Service", "intro": "Use this independent guide as informational community material.", "content": "Game details can change. Verify purchases, access windows, platform availability, and account actions with official WARDOGS sources."},
-  "notFound": {"title": "Page Not Found", "description": "That deployment route does not exist in our verified 23-topic guide library.", "home": "Return Home", "guides": "Browse Guides"}
+  "notFound": {"title": "Page Not Found", "description": "That deployment route does not exist in our verified 28-topic guide library.", "home": "Return Home", "guides": "Browse Guides"}
 }

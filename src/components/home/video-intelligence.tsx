@@ -19,7 +19,7 @@ export function VideoIntelligence({locale}: {locale: Locale}) {
               YouTube Footage Turned Into Standalone WARDOGS Guides
             </h2>
             <p className="mt-4 text-sm leading-7 text-[#a8b4ae] sm:text-base">
-              Each collected WARDOGS video now has its own indexable breakdown page, so first-look footage, mortars, sniping, alpha impressions, and buyer-intent videos are easy to find.
+              Start with the most useful current videos on first matches, money, settings, helicopters, FOB logistics, and objectives. Every source opens as a full article with test-build caveats and a related core guide.
             </p>
           </div>
           <a href={`/${locale}/videos`} className="inline-flex min-h-11 items-center gap-2 self-start rounded-[6px] border border-[#46534d] px-5 py-2.5 text-sm font-semibold text-[#f2f5f3] hover:border-[#5e7168] hover:bg-[#202723] md:self-auto">

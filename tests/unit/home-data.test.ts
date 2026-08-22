@@ -36,16 +36,16 @@ describe("homepage data", () => {
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
       "wardogs-beta",
-      "wardogs-playtest",
-      "wardogs-twitch-drops",
+      "wardogs-crash-fix",
+      "wardogs-towers-guide",
       "wardogs-beginner-guide",
-      "wardogs-download",
+      "wardogs-money-guide",
+      "wardogs-helicopter-guide",
       "wardogs-fob-guide",
-      "wardogs-release-date",
-      "wardogs-steam",
-      "wardogs-price",
+      "wardogs-mortar-guide",
+      "wardogs-twitch-drops",
       "wardogs-gameplay",
-      "wardogs-factions",
+      "wardogs-price",
       "wardogs-early-access"
     ]);
     expect(new Set(TOP_GUIDE_SLUGS).size).toBe(TOP_GUIDE_SLUGS.length);

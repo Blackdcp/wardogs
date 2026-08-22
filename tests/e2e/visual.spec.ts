@@ -26,6 +26,8 @@ for (const viewport of [
     {name: "home", pathname: "/en"},
     {name: "guides", pathname: "/en/guides"},
     {name: "article", pathname: "/en/guides/wardogs-gameplay"},
+    {name: "video-hub", pathname: "/en/videos"},
+    {name: "video-article", pathname: "/en/videos/wardogs-everything-before-playing"},
     {name: "catalogue-hub", pathname: "/en/items"},
     {name: "catalogue-weapons", pathname: "/en/items/weapons"},
     {name: "catalogue-vehicles", pathname: "/en/items/vehicles"},

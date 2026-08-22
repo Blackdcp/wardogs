@@ -1,0 +1,114 @@
+---
+title: "WARDOGS travando: correções seguras no PC"
+description: "Resolva travamentos, reinícios e falhas ao abrir WARDOGS com uma ordem segura de diagnóstico, ajustes de desempenho e alertas sobre soluções da comunidade."
+keyword: "wardogs crash fix"
+category: "guide"
+slug: "wardogs-crash-fix"
+order: 24
+updatedAt: "2026-08-22"
+badges:
+  - label: "Solução de problemas"
+    tone: "accent"
+  - label: "Depende do sistema"
+    tone: "warning"
+faq:
+  - question: "O que devo fazer primeiro se WARDOGS fechar ao iniciar?"
+    answer: "Reinicie o PC, verifique os arquivos na Steam, remova overclocks temporariamente e teste sem overlays ou utilitários de RGB antes de alterar o Windows."
+  - question: "A atualização KB5121003 confirma um problema específico de WARDOGS?"
+    answer: "Não. A Microsoft descreve falhas gerais ligadas a certos componentes de RGB, mas não cita WARDOGS; qualquer relação com o jogo continua sendo uma correlação relatada pela comunidade."
+  - question: "Fila de servidor é a mesma coisa que travamento?"
+    answer: "Não. Uma fila que continua atualizando é um estado de servidor; um processo congelado, encerramento para a área de trabalho ou reinício do PC exige diagnóstico local."
+  - question: "Devo desinstalar uma atualização de segurança para jogar?"
+    answer: "Não como primeiro passo. Use as correções reversíveis deste guia e mantenha o Windows atualizado; mudanças em atualizações de segurança devem seguir orientação oficial."
+sources:
+  - label: "WARDOGS na Steam"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-08-22"
+  - label: "Microsoft KB5121003 para Windows 11"
+    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/08/kb5121003-windows-11-24h2-25h2-security-update"
+    kind: "official"
+    checkedAt: "2026-08-22"
+  - label: "Guia em vídeo de configurações de WARDOGS"
+    url: "https://www.youtube.com/watch?v=fupZGU7LJaU"
+    kind: "creator"
+    checkedAt: "2026-08-22"
+---
+
+## Quick Answer
+
+Se WARDOGS não abre, fecha para a área de trabalho, engasga ou reinicia o PC, comece pelas mudanças reversíveis: reinicie, confirme espaço livre, verifique os arquivos na Steam, atualize o driver gráfico e teste sem overlays, overclock ou utilitários de RGB. Mude uma variável por vez e anote o resultado. Não trate uma fila de servidor como crash e não remova uma atualização de segurança com base apenas em um comentário.
+
+## Confirmed Facts
+
+- A página da Steam lista Windows 10 como mínimo, 16 GB de RAM, 50 GB livres e uma GPU equivalente a GTX 1660 ou RX 590.
+- A recomendação publicada sobe para Windows 11 e hardware mais forte; a meta anunciada depende de resolução, qualidade e upscaling.
+- O boletim Microsoft KB5121003 documenta que certos jogos podem travar ou reiniciar o sistema quando componentes específicos ligados a RGB usam um driver vulnerável.
+- A Microsoft **não cita WARDOGS** nesse boletim. Aplicar o diagnóstico ao jogo é uma correlação da comunidade, não uma causa oficial confirmada.
+- Configurações, compilação de shaders, drivers e estabilidade podem mudar entre Closed Beta, patches e Acesso Antecipado.
+
+## What Players Search For
+
+As buscas mais comuns misturam problemas diferentes: WARDOGS preso na inicialização, tela preta, crash durante a partida, stutter, reinício completo do computador e fila que parece não avançar. Separar o sintoma evita aplicar uma solução perigosa ao problema errado.
+
+## How to Use This Guide
+
+Comece em **Diagnóstico rápido**, siga a **Ordem segura de correção** e só então use a seção específica para reinício ou desempenho. Depois de cada mudança, execute o mesmo teste curto. Se o computador reiniciar em outros jogos, trate isso como problema de sistema ou hardware, não apenas de WARDOGS.
+
+## Diagnóstico rápido
+
+Abra o Gerenciador de Tarefas e observe se o processo continua respondendo. Uma tela de fila com posição ou mensagem atualizada indica conexão e capacidade do servidor. Um encerramento instantâneo, erro do Easy Anti-Cheat, congelamento sem resposta ou reinício físico são categorias distintas.
+
+Registre horário, fase da falha e configuração usada. Confira também temperaturas, espaço na unidade, uso de memória e eventos críticos do Windows. Essa evidência é mais útil para suporte do que uma lista longa de ajustes feitos ao mesmo tempo.
+
+## Ordem segura de correção
+
+1. Reinicie o Windows e feche aplicativos dispensáveis.
+2. Na Steam, use a verificação de integridade dos arquivos instalados.
+3. Instale um driver gráfico estável e reinicie novamente.
+4. Desative temporariamente overlays de Steam, Discord, captura e monitoramento.
+5. Volte CPU, GPU e RAM para frequências padrão se houver overclock ou undervolt.
+6. Teste qualidade menor, limite de FPS e upscaling adequado antes de reduzir tudo sem critério.
+7. Reative cada recurso separadamente para identificar o conflito real.
+
+Não apague pastas aleatórias, não baixe DLLs de sites desconhecidos e não desative permanentemente proteção do sistema. Uma community workaround pode ajudar uma configuração específica, mas precisa ser reversível e não deve ser apresentada como correção oficial.
+
+## Reinícios e KB5121003
+
+Se o PC reinicia por completo, remova da inicialização utilitários de iluminação, placas-mãe ou monitoramento que não sejam necessários e teste novamente. O KB5121003 é relevante porque a Microsoft descreve incompatibilidade com certos componentes de RGB e o driver `inpoutx64`; ainda assim, o documento não nomeia WARDOGS.
+
+Não desinstale a atualização de segurança como primeira tentativa. Prefira atualizar ou remover o software responsável pelo componente, acompanhar a orientação oficial e procurar suporte se o Windows registrar falhas críticas. Fonte de alimentação, temperatura, memória instável e drivers também podem causar o mesmo sintoma.
+
+## Stutter e configurações
+
+Primeiras partidas podem incluir compilação de shaders e carregamento de ativos. Espere o processo terminar, evite alternar muitas opções durante o teste e compare uma rota repetível. Reduza primeiro sombras, efeitos e opções de alto custo; mantenha textura dentro da VRAM disponível e use um limite de FPS que o PC consiga sustentar.
+
+Vídeos de criadores ajudam a localizar menus e comparar opções, mas um preset perfeito para uma GPU pode piorar outra. Controles, nomes e impacto das opções são build-sensitive.
+
+## Quando procurar suporte
+
+Envie especificações, versão do driver, edição do Windows, etapa exata da falha e o que já foi testado. Inclua logs somente pelos canais oficiais e remova dados pessoais. Se houver superaquecimento, cheiro incomum, tela apagando ou reinícios fora do jogo, interrompa os testes e verifique o hardware.
+
+## FAQ
+
+**Reinstalar WARDOGS deve ser o primeiro passo?**
+Não. Verificar arquivos é mais rápido e preserva dados; reinstale apenas depois de descartar causas simples.
+
+**Uma posição parada na fila significa crash?**
+Não necessariamente. Confira mensagens e status do servidor antes de alterar o PC.
+
+**KB5121003 prova que WARDOGS causa reinícios?**
+Não. A Microsoft não nomeia o jogo e descreve uma condição geral envolvendo certos componentes de RGB.
+
+**Qual ajuste melhora FPS em todos os PCs?**
+Nenhum. Limite estável, VRAM, CPU e resolução mudam o melhor equilíbrio para cada máquina.
+
+## Sources and Last Checked
+
+Requisitos e estado de Acesso Antecipado foram verificados na Steam em 2026-08-22. O risco geral de componentes RGB foi conferido no KB5121003 da Microsoft na mesma data. O vídeo de configurações é usado como demonstração da build, não como garantia universal.
+
+## Related Guides
+
+- [Gameplay de WARDOGS](/guides/wardogs-gameplay)
+- [Guia para iniciantes](/guides/wardogs-beginner-guide)
+- [WARDOGS na Steam](/guides/wardogs-steam)

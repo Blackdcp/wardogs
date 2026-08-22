@@ -33,7 +33,12 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
 }
 
 function plainDirectAnswer(body: string) {
-  return body.split(/\r?\n\r?\n/, 1)[0]
+  const firstParagraph = body
+    .split(/\r?\n\r?\n/)
+    .map((block) => block.trim())
+    .find((block) => block && !/^#{1,6}\s/.test(block));
+
+  return (firstParagraph ?? "")
     .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
     .replace(/[*_`#]/g, "")
     .trim();

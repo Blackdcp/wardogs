@@ -1,7 +1,6 @@
 import {ExternalLink, Gamepad2} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {officialLinks} from "@/config/site";
-import type {Locale} from "@/config/site";
 import {buildNavigation} from "@/features/navigation/navigation-data";
 import {Link} from "@/i18n/navigation";
 import {DesktopNavigation} from "./desktop-navigation";
@@ -9,9 +8,9 @@ import {LocaleSwitcher} from "./locale-switcher";
 import {MobileNav} from "./mobile-nav";
 import {SiteBrand} from "./site-brand";
 
-export async function SiteHeader({locale}: {locale: Locale}) {
+export async function SiteHeader() {
   const t = await getTranslations();
-  const navigation = buildNavigation(locale, t);
+  const navigation = buildNavigation(t);
 
   return (
     <header className="sticky top-0 z-50 h-16 border-b border-[#2b3530] bg-[#0d0f0e]/95 backdrop-blur-sm">

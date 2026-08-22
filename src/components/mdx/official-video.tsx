@@ -14,7 +14,17 @@ const approvedVideoIds = new Set([
   "utnQT_Jmd5w",
   "3EynP3GjopE",
   "3Jwi15nA-gg",
-  "UKL0hwMRT9s"
+  "UKL0hwMRT9s",
+  "tF4-GnGlo4I",
+  "Msg78ysR_hQ",
+  "F5YU7eaQHBU",
+  "fupZGU7LJaU",
+  "2E-KNIugA2M",
+  "wcsY2EeIlyc",
+  "ZFRrDSru7Kg",
+  "9mSvZyAk62E",
+  "cSn5IGknapM",
+  "Em9HAhrZFeI"
 ]);
 
 export function OfficialVideo({id, title, className = "my-8"}: {id: string; title: string; className?: string}) {

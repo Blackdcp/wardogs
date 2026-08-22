@@ -34,6 +34,12 @@ export const NEWS_UPDATES = [
     status: "Confirmed",
     titleKey: "twitchDrops",
     guideSlug: "wardogs-twitch-drops"
+  },
+  {
+    date: "2026-09-03",
+    status: "Confirmed",
+    titleKey: "fpsGameShow",
+    guideSlug: "wardogs-livestream"
   }
 ] as const;
 
@@ -44,6 +50,7 @@ export const NEWS_CHECKLIST_SLUGS = [
   "wardogs-price",
   "wardogs-download",
   "wardogs-twitch-drops",
+  "wardogs-livestream",
   "wardogs-beginner-guide",
   "wardogs-fob-guide",
   "wardogs-gameplay"

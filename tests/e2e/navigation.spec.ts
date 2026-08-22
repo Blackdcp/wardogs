@@ -29,7 +29,7 @@ test("fixed legacy navigation links target only published locales", async ({page
   );
   await expect(page.getByRole("link", {name: "Mörser-Leitfaden"})).toHaveAttribute(
     "href",
-    "/en/items/weapons/mortar"
+    "/de/guides/wardogs-mortar-guide"
   );
 });
 
@@ -180,6 +180,15 @@ test("homepage exposes the official trailer and collected creator videos", async
   await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/hVtmnaUCpuQ"]')).toBeVisible();
 });
 
+test("new standalone video articles expose their privacy-enhanced source player", async ({page}) => {
+  await page.goto("/en/videos/wardogs-everything-before-playing");
+  const player = page.getByRole("button", {name: /WARDOGS - Everything You Need to Know/});
+
+  await expect(player).toBeVisible();
+  await player.click();
+  await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/tF4-GnGlo4I"]')).toBeVisible();
+});
+
 test("homepage promotes priority guide links and confirmed status signals", async ({page}) => {
   await page.goto("/en");
 
@@ -187,11 +196,16 @@ test("homepage promotes priority guide links and confirmed status signals", asyn
   await expect(page.getByRole("heading", {name: "Recently Updated"})).toBeVisible();
   await expect(page.getByRole("heading", {name: "Confirmed vs Rumor"})).toBeVisible();
   const topGuides = page.getByRole("list", {name: "Top Guides"});
-  await expect(topGuides.getByRole("link", {name: /WARDOGS Playtest/i})).toHaveAttribute("href", "/en/guides/wardogs-playtest");
-  await expect(topGuides.getByRole("link", {name: /WARDOGS Release Date/i})).toHaveAttribute("href", "/en/guides/wardogs-release-date");
-  await expect(topGuides.getByRole("link", {name: /WARDOGS Twitch Drops/i})).toHaveAttribute("href", "/en/guides/wardogs-twitch-drops");
-  await expect(topGuides.getByRole("link", {name: /WARDOGS Beginner Guide/i})).toHaveAttribute("href", "/en/guides/wardogs-beginner-guide");
-  await expect(topGuides.getByRole("link", {name: /WARDOGS FOB Guide/i})).toHaveAttribute("href", "/en/guides/wardogs-fob-guide");
+  for (const slug of [
+    "wardogs-beta",
+    "wardogs-crash-fix",
+    "wardogs-beginner-guide",
+    "wardogs-twitch-drops",
+    "wardogs-fob-guide",
+    "wardogs-mortar-guide"
+  ]) {
+    await expect(topGuides.locator(`a[href="/en/guides/${slug}"]`)).toBeVisible();
+  }
   await expect(page.getByText("WARDOGS Playtest preload", {exact: true})).toBeVisible();
   await expect(page.getByText("Twitch Drops campaign", {exact: true})).toBeVisible();
   await expect(page.getByText("Steam PC Early Access", {exact: true})).toBeVisible();

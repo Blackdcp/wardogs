@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
   output: isGitHubPages ? "export" : undefined,
   basePath,
   trailingSlash: isGitHubPages,
-  images: {formats: ["image/avif", "image/webp"], unoptimized: isGitHubPages}
+  images: {
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [{protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**"}],
+    unoptimized: isGitHubPages
+  }
 };
 
 export default withNextIntl(nextConfig);

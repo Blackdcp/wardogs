@@ -98,6 +98,26 @@ describe("sitemap", () => {
     expect(urls).toContain("http://localhost:3000/en/videos/wardogs-loadout-gear-guide");
     expect(urls).toContain("http://localhost:3000/en/videos/wardogs-mortars-indirect-fire");
     expect(urls).toContain("http://localhost:3000/en/videos/wardogs-first-look-gameplay");
+    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-everything-before-playing");
+    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-best-settings");
+    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-helicopter-flight-guide");
+  });
+
+  it("publishes the five new player-demand guide clusters in every locale", () => {
+    const urls = new Set(sitemap().map((entry) => entry.url));
+    const slugs = [
+      "wardogs-crash-fix",
+      "wardogs-towers-guide",
+      "wardogs-money-guide",
+      "wardogs-helicopter-guide",
+      "wardogs-mortar-guide"
+    ];
+
+    for (const locale of ["en", "de", "ru", "pt-br"]) {
+      for (const slug of slugs) {
+        expect(urls.has(`http://localhost:3000/${locale}/guides/${slug}`), `${locale}/${slug}`).toBe(true);
+      }
+    }
   });
 
   it("includes item hubs, item type pages, and first indexable item details", () => {

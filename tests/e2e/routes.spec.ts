@@ -46,11 +46,19 @@ const vehicleModelSlugs = [
 test("root redirects and primary routes resolve", async ({page}) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/en\/?$/);
-  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/news", "/en/guides/wardogs-gameplay", "/en/guides/wardogs-twitch-drops", "/en/guides/wardogs-beginner-guide", "/en/guides/wardogs-fob-guide", "/en/videos/wardogs-mortars-indirect-fire", "/en/privacy", "/en/terms"]) {
+  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/news", "/en/guides/wardogs-gameplay", "/en/guides/wardogs-twitch-drops", "/en/guides/wardogs-beginner-guide", "/en/guides/wardogs-fob-guide", "/en/guides/wardogs-crash-fix", "/en/guides/wardogs-towers-guide", "/en/guides/wardogs-money-guide", "/en/guides/wardogs-helicopter-guide", "/en/guides/wardogs-mortar-guide", "/en/videos/wardogs-mortars-indirect-fire", "/en/videos/wardogs-everything-before-playing", "/en/videos/wardogs-best-settings", "/en/privacy", "/en/terms"]) {
     const response = await page.goto(pathname);
     expect(response?.status(), pathname).toBe(200);
   }
   expect((await page.goto("/en/guides/not-a-topic"))?.status()).toBe(404);
+});
+
+test("guide direct answer uses the first explanatory paragraph instead of a markdown heading", async ({page}) => {
+  await page.goto("/en/guides/wardogs-gameplay");
+  const answer = page.locator("article > aside").first().locator("p").nth(1);
+
+  await expect(answer).toContainText("WARDOGS is a tactical all-out warfare FPS");
+  await expect(answer).not.toHaveText("Quick Answer");
 });
 
 test("all localized home, index, and article routes resolve", async ({page}) => {
@@ -62,7 +70,7 @@ test("all localized home, index, and article routes resolve", async ({page}) => 
     const hrefs = await page.locator('main a[href*="/guides/wardogs-"]').evaluateAll((links) =>
       [...new Set(links.map((link) => (link as HTMLAnchorElement).pathname))]
     );
-    expect(hrefs, `${locale} guide links`).toHaveLength(23);
+    expect(hrefs, `${locale} guide links`).toHaveLength(28);
     for (const href of hrefs) expect((await page.goto(href))?.status(), href).toBe(200);
   }
 });

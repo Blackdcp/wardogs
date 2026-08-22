@@ -25,16 +25,16 @@ export const HOME_CATEGORY_GUIDES = [
 
 export const TOP_GUIDE_SLUGS = [
   "wardogs-beta",
-  "wardogs-playtest",
-  "wardogs-twitch-drops",
+  "wardogs-crash-fix",
+  "wardogs-towers-guide",
   "wardogs-beginner-guide",
-  "wardogs-download",
+  "wardogs-money-guide",
+  "wardogs-helicopter-guide",
   "wardogs-fob-guide",
-  "wardogs-release-date",
-  "wardogs-steam",
-  "wardogs-price",
+  "wardogs-mortar-guide",
+  "wardogs-twitch-drops",
   "wardogs-gameplay",
-  "wardogs-factions",
+  "wardogs-price",
   "wardogs-early-access"
 ] as const;
 

@@ -44,7 +44,7 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
             {t("skipToContent")}
           </a>
           <div className="flex min-h-screen flex-col">
-            <SiteHeader locale={locale} />
+            <SiteHeader />
             <div id="main-content" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
               {children}
             </div>
