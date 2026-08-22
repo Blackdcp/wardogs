@@ -7,6 +7,7 @@ import type {Locale} from "@/config/site";
 import {locales} from "@/config/site";
 import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {usePathname, useRouter} from "@/i18n/navigation";
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 const localeLabels: Record<Locale, string> = {
   en: "EN",
@@ -29,7 +30,13 @@ export function LocaleSwitcher({label, compact = false}: LocaleSwitcherProps) {
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
     const nextLocale = event.target.value as Locale;
+    if (nextLocale === locale) return;
     const target = resolveItemRouteTarget(nextLocale, pathname, "localized-category");
+    trackAnalyticsEvent(ANALYTICS_EVENTS.languageSwitch, {
+      from_locale: locale,
+      to_locale: nextLocale,
+      page_path: pathname
+    });
     startTransition(() => router.replace(target.pathname, {locale: target.locale}));
   }
 

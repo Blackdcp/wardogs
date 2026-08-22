@@ -37,8 +37,8 @@ const row = (...cells: string[]): CatalogRow => ({cells});
 export const catalogGuides: readonly CatalogGuide[] = [
   {
     id: "weapons",
-    title: "WARDOGS Weapons Catalogue",
-    description: "A practical Alpha 1 roster grouped by battlefield role, with observed vendor prices, ammunition, fire modes, weight, and progression track.",
+      title: "WARDOGS Weapons List: All 33 Weapons",
+      description: "Browse all 33 WARDOGS Alpha 1 weapons, including rifles, SMGs, shotguns, launchers and the Compound Bow, with roles, evidence notes and item guides.",
     countLabel: "33 weapons",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
     heroImage: "/images/items/catalog-weapons.jpg",

@@ -6,8 +6,9 @@ describe("llms.txt", () => {
     const body = await GET().text();
     const guideUrls = body.match(/\/en\/guides\/wardogs-[a-z0-9-]+/g) ?? [];
 
-    expect(guideUrls).toHaveLength(28);
-    expect(new Set(guideUrls).size).toBe(28);
+    expect(guideUrls).toHaveLength(29);
+    expect(new Set(guideUrls).size).toBe(29);
+    expect(body).toContain("/en/guides/wardogs-preload");
     expect(body).toContain("/en/guides/wardogs-twitch-drops");
     expect(body).toContain("/en/guides/wardogs-beginner-guide");
     expect(body).toContain("/en/guides/wardogs-fob-guide");

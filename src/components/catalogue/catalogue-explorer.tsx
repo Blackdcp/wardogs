@@ -6,6 +6,7 @@ import {flushSync} from "react-dom";
 import type {Locale} from "@/config/site";
 import type {CatalogueFilterOption, CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {CatalogueCard} from "./catalogue-card";
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 export type CatalogueExplorerLabels = {
   heading: string;
@@ -61,6 +62,17 @@ export function CatalogueExplorer({locale, records, filters, labels, featuredIma
     () => new Set(records.map((record) => `record-${record.type}-${record.slug}`)),
     [records]
   );
+
+  function selectFilter(filterValue: string) {
+    if (filterValue === activeFilter) return;
+    const resultCount = filterCatalogueRecords(records, search, filterValue).length;
+    trackAnalyticsEvent(ANALYTICS_EVENTS.catalogueFilter, {
+      filter_value: filterValue,
+      locale,
+      result_count: resultCount
+    });
+    setActiveFilter(filterValue);
+  }
 
   useEffect(() => {
     function revealRecord(recordId: string) {
@@ -138,7 +150,7 @@ export function CatalogueExplorer({locale, records, filters, labels, featuredIma
                   aria-pressed={selected}
                   className={`min-h-11 border px-4 py-2 text-sm font-semibold transition-colors ${selected ? "border-[#68bd8d] bg-[#204632] text-white" : "border-[#3b463f] bg-[#151b18] text-[#b6c1bb] hover:border-[#68bd8d] hover:text-white"}`}
                   key={filter.value}
-                  onClick={() => setActiveFilter(filter.value)}
+                  onClick={() => selectFilter(filter.value)}
                   type="button"
                 >
                   {filter.label}

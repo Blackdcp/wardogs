@@ -1,5 +1,12 @@
 import Script from "next/script";
 
+export {
+  createAnalyticsEventCommand,
+  getTrackedLinkEvent,
+  hasReachedScrollDepth,
+  trackAnalyticsEvent
+} from "@/lib/analytics-events";
+
 export const GOOGLE_TAG_ID = "G-0GJ404WEYV";
 
 export function googleAnalyticsScriptSrc() {

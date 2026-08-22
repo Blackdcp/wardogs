@@ -36,16 +36,16 @@ describe("homepage data", () => {
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
       "wardogs-beta",
+      "wardogs-playtest",
+      "wardogs-preload",
+      "wardogs-ps5",
       "wardogs-crash-fix",
-      "wardogs-towers-guide",
       "wardogs-beginner-guide",
       "wardogs-money-guide",
       "wardogs-helicopter-guide",
       "wardogs-fob-guide",
-      "wardogs-mortar-guide",
       "wardogs-twitch-drops",
       "wardogs-gameplay",
-      "wardogs-price",
       "wardogs-early-access"
     ]);
     expect(new Set(TOP_GUIDE_SLUGS).size).toBe(TOP_GUIDE_SLUGS.length);
@@ -64,5 +64,10 @@ describe("homepage data", () => {
       "confirmed",
       "rumor"
     ]);
+    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
+      status: "confirmed",
+      titleKey: "betaPreload",
+      slug: "wardogs-preload"
+    }));
   });
 });

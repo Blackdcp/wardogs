@@ -66,7 +66,7 @@
       "eyebrow": "All guide areas",
       "title": "Find the Intel You Need",
       "description": "Browse eight focused areas covering every topic in the independent WARDOGS guide library.",
-      "allGuides": "View all 28 guides",
+    "allGuides": "View all 29 guides",
       "items": {
         "access": "Playtests, beta history, alpha status, and keys",
         "release": "Release date and Early Access details",
@@ -113,7 +113,7 @@
     "finalDescription": "Use our independent guide library to prepare for access, squad roles, vehicles, objectives, and every confirmed release milestone.",
     "final": {"eyebrow": "Prepare for deployment", "guidesCta": "Explore the Guides", "steamCta": "Open Steam"}
   },
-  "guides": {"title": "WARDOGS Guides", "description": "Browse 28 focused guides covering beta access, troubleshooting, money, towers, helicopters, mortars, FOB logistics, release, and gameplay.", "count": "28 Guide Topics", "read": "Read guide"},
+  "guides": {"title": "WARDOGS Guides", "description": "Browse 29 focused guides covering beta access, troubleshooting, money, towers, helicopters, mortars, FOB logistics, release, and gameplay.", "count": "29 Guide Topics", "read": "Read guide"},
   "news": {
     "metaTitle": "WARDOGS News - Beta, Early Access & Steam Updates",
     "metaDescription": "Track confirmed WARDOGS news, beta dates, Steam Early Access timing, pricing notes, platform status, preload questions, and updated guide links.",
@@ -150,5 +150,5 @@
   "editorial": {"metaTitle": "WARDOGS Wiki Editorial Policy and Research Standards", "metaDescription": "See how WARDOGS Wiki verifies official claims, analyzes creator footage, labels build-sensitive details, corrects errors, and keeps every player guide current.", "eyebrow": "Editorial Standards", "title": "How We Research WARDOGS", "intro": "WARDOGS Wiki is an independent fan publication. Every guide is built to answer a player question clearly while separating official facts, observed footage, community reports, and unresolved claims.", "teamTitle": "Independent, player-first research", "teamBody": "The WARDOGS Wiki Editorial Team maintains this focused game guide without affiliation to BULKHEAD, Team17, Steam, creators, or advertisers. Commercial relationships do not determine our conclusions or source labels.", "methodTitle": "Our verification method", "officialTitle": "Official sources first", "officialBody": "Release dates, prices, platforms, access rules, and feature claims are checked against Steam, Team17, BULKHEAD, or official WARDOGS channels before publication.", "footageTitle": "Footage is evidence, not final documentation", "footageBody": "Creator videos help explain controls, match flow, loadouts, vehicles, and tactics. Alpha and beta numbers remain labeled build-sensitive unless a current official source confirms them.", "statusTitle": "Confirmed and uncertain claims stay separate", "statusBody": "We mark rumors, community observations, and unknown details plainly. A missing answer is never converted into a confident release promise or final balance claim.", "updatesTitle": "Material updates earn a new date", "updatesBody": "Last-checked dates change when sources or guidance are meaningfully reviewed. Pages are not redated merely to appear fresh in search results.", "correctionsTitle": "Corrections remain part of the record", "correctionsBody": "When a source changes or an error is found, we update the affected guide, revise its status language, and preserve links that let readers verify the current conclusion."},
   "privacy": {"title": "Privacy Policy", "intro": "This fan guide minimizes data collection and explains how external media and links work.", "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.", "advertising": "Content pages may load native ads, a social bar, a frequency-limited popunder, and clearly labeled sponsored links from Adsterra. Adsterra may receive your IP address, browser and device information, and use cookies or similar technologies under its own privacy controls."},
   "terms": {"title": "Terms of Service", "intro": "Use this independent guide as informational community material.", "content": "Game details can change. Verify purchases, access windows, platform availability, and account actions with official WARDOGS sources."},
-  "notFound": {"title": "Page Not Found", "description": "That deployment route does not exist in our verified 28-topic guide library.", "home": "Return Home", "guides": "Browse Guides"}
+  "notFound": {"title": "Page Not Found", "description": "That deployment route does not exist in our verified 29-topic guide library.", "home": "Return Home", "guides": "Browse Guides"}
 }

@@ -138,7 +138,13 @@ export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
         <ul className="mt-5 grid gap-px bg-[#2c3631] md:grid-cols-3">
           {guide.officialSources.map((source) => (
             <li className="bg-[#151b18] p-4" key={source.url}>
-              <a className="inline-flex min-h-11 items-center gap-2 font-semibold text-[#7fd0a1] hover:text-white" href={source.url} rel="noreferrer" target="_blank">
+              <a
+                className="inline-flex min-h-11 items-center gap-2 font-semibold text-[#7fd0a1] hover:text-white"
+                data-analytics-destination="official_source"
+                href={source.url}
+                rel="noreferrer"
+                target="_blank"
+              >
                 {source.label}<ExternalLink aria-hidden="true" size={15} />
               </a>
             </li>

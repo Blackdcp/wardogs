@@ -198,11 +198,17 @@ test("homepage promotes priority guide links and confirmed status signals", asyn
   const topGuides = page.getByRole("list", {name: "Top Guides"});
   for (const slug of [
     "wardogs-beta",
+    "wardogs-playtest",
+    "wardogs-preload",
+    "wardogs-ps5",
     "wardogs-crash-fix",
     "wardogs-beginner-guide",
-    "wardogs-twitch-drops",
+    "wardogs-money-guide",
+    "wardogs-helicopter-guide",
     "wardogs-fob-guide",
-    "wardogs-mortar-guide"
+    "wardogs-twitch-drops",
+    "wardogs-gameplay",
+    "wardogs-early-access"
   ]) {
     await expect(topGuides.locator(`a[href="/en/guides/${slug}"]`)).toBeVisible();
   }

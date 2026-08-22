@@ -43,7 +43,7 @@ describe("WARDOGS Closed Beta weekend content", () => {
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",
       titleKey: "betaPreload",
-      slug: "wardogs-download",
+      slug: "wardogs-preload",
     }));
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",

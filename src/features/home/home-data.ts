@@ -25,16 +25,16 @@ export const HOME_CATEGORY_GUIDES = [
 
 export const TOP_GUIDE_SLUGS = [
   "wardogs-beta",
+  "wardogs-playtest",
+  "wardogs-preload",
+  "wardogs-ps5",
   "wardogs-crash-fix",
-  "wardogs-towers-guide",
   "wardogs-beginner-guide",
   "wardogs-money-guide",
   "wardogs-helicopter-guide",
   "wardogs-fob-guide",
-  "wardogs-mortar-guide",
   "wardogs-twitch-drops",
   "wardogs-gameplay",
-  "wardogs-price",
   "wardogs-early-access"
 ] as const;
 
@@ -57,7 +57,7 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 
 export const CONFIRMED_RUMOR_ITEMS = [
   {status: "confirmed", titleKey: "closedBeta", slug: "wardogs-beta"},
-  {status: "confirmed", titleKey: "betaPreload", slug: "wardogs-download"},
+  {status: "confirmed", titleKey: "betaPreload", slug: "wardogs-preload"},
   {status: "confirmed", titleKey: "twitchDrops", slug: "wardogs-twitch-drops"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}

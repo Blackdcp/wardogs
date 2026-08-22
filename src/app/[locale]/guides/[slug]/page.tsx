@@ -18,6 +18,7 @@ import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 import {buildArticleMetadata} from "@/lib/metadata";
 import {buildArticleJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
+import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
@@ -65,6 +66,7 @@ export default async function GuideArticlePage({params}: PageProps) {
   return (
     <main>
       <JsonLd data={buildArticleJsonLd(locale, guide)} />
+      <GuideEngagementTracker category={guide.frontmatter.category} locale={locale} slug={slug} />
       <header className="border-b border-[#2c3631] bg-[#101411] py-12 md:py-16">
         <div className="site-container max-w-4xl">
           <Link className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href="/guides">
