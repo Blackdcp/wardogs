@@ -6,7 +6,7 @@ export function getHomeFacts(translate: (key: HomeFactKey) => string): string[] 
 }
 
 export const START_GUIDES = [
-  {number: "1", slug: "wardogs-gameplay", anchor: "beginner-guide", titleKey: "beginner"},
+  {number: "1", slug: "wardogs-beginner-guide", titleKey: "beginner"},
   {number: "2", slug: "wardogs-playtest", titleKey: "playtest"},
   {number: "3", slug: "wardogs-gameplay", titleKey: "gameplay"},
   {number: "4", slug: "wardogs-factions", titleKey: "factions"}
@@ -24,17 +24,17 @@ export const HOME_CATEGORY_GUIDES = [
 ] as const;
 
 export const TOP_GUIDE_SLUGS = [
-  "wardogs-playtest",
-  "wardogs-release-date",
   "wardogs-beta",
-  "wardogs-alpha",
+  "wardogs-playtest",
+  "wardogs-twitch-drops",
+  "wardogs-beginner-guide",
+  "wardogs-download",
+  "wardogs-fob-guide",
+  "wardogs-release-date",
   "wardogs-steam",
+  "wardogs-price",
   "wardogs-gameplay",
   "wardogs-factions",
-  "wardogs-price",
-  "wardogs-download",
-  "wardogs-discord",
-  "wardogs-trailer",
   "wardogs-early-access"
 ] as const;
 
@@ -56,11 +56,11 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 }
 
 export const CONFIRMED_RUMOR_ITEMS = [
+  {status: "confirmed", titleKey: "closedBeta", slug: "wardogs-beta"},
+  {status: "confirmed", titleKey: "betaPreload", slug: "wardogs-download"},
+  {status: "confirmed", titleKey: "twitchDrops", slug: "wardogs-twitch-drops"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
-  {status: "confirmed", titleKey: "hundredPlayers", slug: "wardogs-gameplay"},
-  {status: "confirmed", titleKey: "persistentCash", slug: "wardogs-gameplay"},
-  {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"},
-  {status: "rumor", titleKey: "freeToPlay", slug: "wardogs-price"}
+  {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
 ] as const;
 
 export const BEGINNER_TIP_KEYS = ["objective", "economy", "support", "mobility"] as const;

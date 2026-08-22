@@ -2,12 +2,12 @@ import {describe, expect, it} from "vitest";
 import {assertCompleteContentMatrix, listGuideSummaries, loadGuideDocument} from "../../src/content/guides";
 
 describe("English guide library", () => {
-  it("contains 20 substantial, unique, manifest-matched guides", async () => {
+  it("contains 23 substantial, unique, manifest-matched guides", async () => {
     await expect(assertCompleteContentMatrix(["en"])).resolves.toBeUndefined();
     const summaries = await listGuideSummaries("en");
-    expect(summaries).toHaveLength(20);
-    expect(new Set(summaries.map(({title}) => title)).size).toBe(20);
-    expect(new Set(summaries.map(({description}) => description)).size).toBe(20);
+    expect(summaries).toHaveLength(23);
+    expect(new Set(summaries.map(({title}) => title)).size).toBe(23);
+    expect(new Set(summaries.map(({description}) => description)).size).toBe(23);
     for (const summary of summaries) {
       const guide = await loadGuideDocument("en", summary.slug);
       expect(guide?.body.length).toBeGreaterThanOrEqual(1_200);
@@ -49,9 +49,15 @@ describe("English guide library", () => {
     expect(trailer?.body).toContain('id="hVtmnaUCpuQ"');
 
     const creatorVideoIds = ["-k6IV0ITLDo", "eAE9LOV-p3s", "83AVH6FtemY"];
-    for (const summary of summaries.filter(({slug}) => slug !== "wardogs-first-look")) {
+    const approvedGuideSources = new Map([
+      ["-k6IV0ITLDo", new Set(["wardogs-first-look", "wardogs-fob-guide"])],
+      ["eAE9LOV-p3s", new Set(["wardogs-first-look"])],
+      ["83AVH6FtemY", new Set(["wardogs-first-look"])],
+    ]);
+    for (const summary of summaries) {
       const guide = await loadGuideDocument("en", summary.slug);
       for (const id of creatorVideoIds) {
+        if (approvedGuideSources.get(id)?.has(summary.slug)) continue;
         expect(guide?.body).not.toContain(id);
         expect(guide?.frontmatter.sources.some(({url}) => url.includes(id))).toBe(false);
       }

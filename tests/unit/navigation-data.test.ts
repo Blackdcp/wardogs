@@ -15,24 +15,22 @@ describe("grouped navigation", () => {
       "/items/equipment",
       "/items/loadouts"
     ]);
+    expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.beginnerGuide")?.href)
+      .toBe("/guides/wardogs-beginner-guide");
+    expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.fobLogistics")?.href)
+      .toBe("/guides/wardogs-fob-guide");
   });
 
   it("keeps legacy detail links on supported locales and falls back to English elsewhere", () => {
     const russian = buildNavigation("ru", (key) => key).find((group) => group.id === "guides")?.items;
     const german = buildNavigation("de", (key) => key).find((group) => group.id === "guides")?.items;
 
-    expect(russian?.find(({label}) => label === "nav.fobLogistics")).toMatchObject({
-      href: "/items/equipment/mobile-fob",
-      locale: "ru"
-    });
+    expect(russian?.find(({label}) => label === "nav.fobLogistics")).toMatchObject({href: "/guides/wardogs-fob-guide"});
     expect(russian?.find(({label}) => label === "nav.mortarGuide")).toMatchObject({
       href: "/items/weapons/mortar",
       locale: "ru"
     });
-    expect(german?.find(({label}) => label === "nav.fobLogistics")).toMatchObject({
-      href: "/items/equipment/mobile-fob",
-      locale: "en"
-    });
+    expect(german?.find(({label}) => label === "nav.fobLogistics")).toMatchObject({href: "/guides/wardogs-fob-guide"});
     expect(german?.find(({label}) => label === "nav.mortarGuide")).toMatchObject({
       href: "/items/weapons/mortar",
       locale: "en"

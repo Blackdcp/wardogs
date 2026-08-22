@@ -70,6 +70,26 @@ function expectExactLegacyItemInventory(entries: SitemapEntry[]) {
 }
 
 describe("sitemap", () => {
+  it("publishes all localized beta-weekend guides with their current editorial date", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+
+    for (const locale of ["en", "de", "ru", "pt-br"]) {
+      for (const slug of ["wardogs-twitch-drops", "wardogs-beginner-guide", "wardogs-fob-guide"]) {
+        const url = `http://localhost:3000/${locale}/guides/${slug}`;
+        const entry = entriesByUrl.get(url);
+        expect(entry, url).toBeDefined();
+        expect(new Date(entry!.lastModified!).toISOString(), url).toBe("2026-08-22T00:00:00.000Z");
+        expect(entry?.alternates?.languages, url).toEqual({
+          en: `http://localhost:3000/en/guides/${slug}`,
+          ru: `http://localhost:3000/ru/guides/${slug}`,
+          de: `http://localhost:3000/de/guides/${slug}`,
+          "pt-BR": `http://localhost:3000/pt-br/guides/${slug}`,
+          "x-default": `http://localhost:3000/en/guides/${slug}`,
+        });
+      }
+    }
+  });
+
   it("includes standalone video article URLs for indexing", () => {
     const urls = sitemap().map((entry) => entry.url);
 

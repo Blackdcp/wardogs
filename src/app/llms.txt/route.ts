@@ -5,7 +5,7 @@ export const dynamic = "force-static";
 
 export function GET() {
   const origin = getSiteOrigin();
-  const topGuides = guideManifest.slice(0, 20).map((guide) => `- ${guide.keyword}: ${origin}/en/guides/${guide.slug}`);
+  const topGuides = guideManifest.map((guide) => `- ${guide.keyword}: ${origin}/en/guides/${guide.slug}`);
   const body = [
     "# WARDOGS Wiki",
     "",

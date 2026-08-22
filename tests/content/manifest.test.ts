@@ -19,15 +19,18 @@ const expected = [
   ["community", "wardogs reddit", "wardogs-reddit"],
   ["community", "wardogs twitter", "wardogs-twitter"],
   ["community", "wardogs discord account verification", "wardogs-discord-account-verification"],
+  ["community", "wardogs twitch drops", "wardogs-twitch-drops"],
   ["developer", "wardogs game developers", "wardogs-game-developers"],
   ["guide", "wardogs gameplay", "wardogs-gameplay"],
-  ["guide", "wardogs factions", "wardogs-factions"]
+  ["guide", "wardogs factions", "wardogs-factions"],
+  ["guide", "wardogs beginner guide", "wardogs-beginner-guide"],
+  ["guide", "wardogs fob guide", "wardogs-fob-guide"]
 ] as const;
 
 describe("guideManifest", () => {
   it("maps every approved keyword exactly once and in traffic order", () => {
     expect(guideManifest.map(({category, keyword, slug}) => [category, keyword, slug])).toEqual(expected);
-    expect(new Set(guideManifest.map(({slug}) => slug)).size).toBe(20);
-    expect(guideManifest.map(({order}) => order)).toEqual(Array.from({length: 20}, (_, index) => index + 1));
+    expect(new Set(guideManifest.map(({slug}) => slug)).size).toBe(23);
+    expect(guideManifest.map(({order}) => order)).toEqual(Array.from({length: 23}, (_, index) => index + 1));
   });
 });

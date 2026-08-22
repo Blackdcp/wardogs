@@ -39,9 +39,9 @@ export function buildNavigation(locale: Locale, t: Translate): NavigationGroup[]
       id: "guides",
       label: t("nav.guides"),
       items: [
-        {href: "/guides/wardogs-gameplay#beginner-guide", label: t("nav.beginnerGuide")},
+        {href: "/guides/wardogs-beginner-guide", label: t("nav.beginnerGuide")},
         {href: "/guides/wardogs-gameplay", label: t("nav.gameplayGuide")},
-        {...itemNavigationTarget(locale, "/items/equipment/mobile-fob"), label: t("nav.fobLogistics")},
+        {href: "/guides/wardogs-fob-guide", label: t("nav.fobLogistics")},
         {...itemNavigationTarget(locale, "/items/weapons/mortar"), label: t("nav.mortarGuide")},
         {href: "/guides", label: t("nav.allGuides")}
       ]

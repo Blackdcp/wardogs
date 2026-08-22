@@ -2,14 +2,14 @@ import {describe, expect, it} from "vitest";
 import {guideManifest} from "../../src/content/manifest";
 import {validateGuideFrontmatter} from "../../src/content/schema";
 
-const entry = guideManifest[18];
+const entry = guideManifest.find(({slug}) => slug === "wardogs-gameplay")!;
 const valid = {
   title: "WARDOGS Gameplay Explained",
   description: "Learn how WARDOGS matches work, from Control Zone scoring and persistent cash to vehicles, building, team roles, objectives, and match-winning tactics.",
   keyword: "wardogs gameplay",
   category: "guide",
   slug: "wardogs-gameplay",
-  order: 19,
+  order: 20,
   updatedAt: "2026-08-13",
   badges: [{label: "Guide", tone: "accent"}],
   faq: [
@@ -22,7 +22,7 @@ const valid = {
 describe("validateGuideFrontmatter", () => {
   it("accepts a matching record and rejects mismatches or competitor URLs", () => {
     expect(validateGuideFrontmatter(valid, entry).slug).toBe(entry.slug);
-    expect(() => validateGuideFrontmatter({...valid, order: 20}, entry)).toThrow(/order/i);
+    expect(() => validateGuideFrontmatter({...valid, order: 21}, entry)).toThrow(/order/i);
     expect(() => validateGuideFrontmatter({...valid, sources: [{...valid.sources[0], url: "https://wardogshub.gg/"}]}, entry)).toThrow(/source/i);
   });
 

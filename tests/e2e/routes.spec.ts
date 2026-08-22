@@ -46,7 +46,7 @@ const vehicleModelSlugs = [
 test("root redirects and primary routes resolve", async ({page}) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/en\/?$/);
-  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/news", "/en/guides/wardogs-gameplay", "/en/videos/wardogs-mortars-indirect-fire", "/en/privacy", "/en/terms"]) {
+  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/news", "/en/guides/wardogs-gameplay", "/en/guides/wardogs-twitch-drops", "/en/guides/wardogs-beginner-guide", "/en/guides/wardogs-fob-guide", "/en/videos/wardogs-mortars-indirect-fire", "/en/privacy", "/en/terms"]) {
     const response = await page.goto(pathname);
     expect(response?.status(), pathname).toBe(200);
   }
@@ -62,7 +62,7 @@ test("all localized home, index, and article routes resolve", async ({page}) => 
     const hrefs = await page.locator('main a[href*="/guides/wardogs-"]').evaluateAll((links) =>
       [...new Set(links.map((link) => (link as HTMLAnchorElement).pathname))]
     );
-    expect(hrefs, `${locale} guide links`).toHaveLength(20);
+    expect(hrefs, `${locale} guide links`).toHaveLength(23);
     for (const href of hrefs) expect((await page.goto(href))?.status(), href).toBe(200);
   }
 });

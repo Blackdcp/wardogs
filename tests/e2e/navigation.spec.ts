@@ -25,7 +25,7 @@ test("fixed legacy navigation links target only published locales", async ({page
 
   await expect(page.getByRole("link", {name: "FOB und Logistik"})).toHaveAttribute(
     "href",
-    "/en/items/equipment/mobile-fob"
+    "/de/guides/wardogs-fob-guide"
   );
   await expect(page.getByRole("link", {name: "Mörser-Leitfaden"})).toHaveAttribute(
     "href",
@@ -189,6 +189,11 @@ test("homepage promotes priority guide links and confirmed status signals", asyn
   const topGuides = page.getByRole("list", {name: "Top Guides"});
   await expect(topGuides.getByRole("link", {name: /WARDOGS Playtest/i})).toHaveAttribute("href", "/en/guides/wardogs-playtest");
   await expect(topGuides.getByRole("link", {name: /WARDOGS Release Date/i})).toHaveAttribute("href", "/en/guides/wardogs-release-date");
+  await expect(topGuides.getByRole("link", {name: /WARDOGS Twitch Drops/i})).toHaveAttribute("href", "/en/guides/wardogs-twitch-drops");
+  await expect(topGuides.getByRole("link", {name: /WARDOGS Beginner Guide/i})).toHaveAttribute("href", "/en/guides/wardogs-beginner-guide");
+  await expect(topGuides.getByRole("link", {name: /WARDOGS FOB Guide/i})).toHaveAttribute("href", "/en/guides/wardogs-fob-guide");
+  await expect(page.getByText("WARDOGS Playtest preload", {exact: true})).toBeVisible();
+  await expect(page.getByText("Twitch Drops campaign", {exact: true})).toBeVisible();
   await expect(page.getByText("Steam PC Early Access", {exact: true})).toBeVisible();
   await expect(page.getByText("PS5 release", {exact: true})).toBeVisible();
 });

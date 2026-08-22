@@ -25,7 +25,7 @@ describe("homepage data", () => {
       "2 x 2 km Control Zone"
     ]);
     expect(START_GUIDES).toEqual([
-      {number: "1", slug: "wardogs-gameplay", anchor: "beginner-guide", titleKey: "beginner"},
+      {number: "1", slug: "wardogs-beginner-guide", titleKey: "beginner"},
       {number: "2", slug: "wardogs-playtest", titleKey: "playtest"},
       {number: "3", slug: "wardogs-gameplay", titleKey: "gameplay"},
       {number: "4", slug: "wardogs-factions", titleKey: "factions"}
@@ -35,17 +35,17 @@ describe("homepage data", () => {
 
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
-      "wardogs-playtest",
-      "wardogs-release-date",
       "wardogs-beta",
-      "wardogs-alpha",
+      "wardogs-playtest",
+      "wardogs-twitch-drops",
+      "wardogs-beginner-guide",
+      "wardogs-download",
+      "wardogs-fob-guide",
+      "wardogs-release-date",
       "wardogs-steam",
+      "wardogs-price",
       "wardogs-gameplay",
       "wardogs-factions",
-      "wardogs-price",
-      "wardogs-download",
-      "wardogs-discord",
-      "wardogs-trailer",
       "wardogs-early-access"
     ]);
     expect(new Set(TOP_GUIDE_SLUGS).size).toBe(TOP_GUIDE_SLUGS.length);
@@ -61,7 +61,7 @@ describe("homepage data", () => {
       "confirmed",
       "confirmed",
       "confirmed",
-      "rumor",
+      "confirmed",
       "rumor"
     ]);
   });
