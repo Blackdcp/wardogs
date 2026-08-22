@@ -7,7 +7,8 @@ import {OfficialVideo} from "@/components/mdx/official-video";
 import {JsonLd} from "@/components/seo/json-ld";
 import {getVideoArticle, videoArticles} from "@/features/videos/video-library";
 import {buildVideoArticleJsonLd} from "@/features/videos/video-structured-data";
-import {buildPageMetadata} from "@/lib/metadata";
+import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
+import {buildPageMetadataWithImage} from "@/lib/metadata";
 import {getTranslations} from "next-intl/server";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
@@ -22,7 +23,12 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale, slug} = await params;
   if (!isLocale(locale)) return {};
   const article = getVideoArticle(slug);
-  return article ? buildPageMetadata(locale, `/videos/${article.slug}`, article.title, article.description) : {};
+  return article ? buildPageMetadataWithImage(locale, `/videos/${article.slug}`, article.title, article.description, {
+    url: videoThumbnailUrl(article.youtubeId),
+    width: 1280,
+    height: 720,
+    alt: `${article.sourceLabel} thumbnail`
+  }) : {};
 }
 
 export default async function VideoArticlePage({params}: PageProps) {
@@ -31,7 +37,10 @@ export default async function VideoArticlePage({params}: PageProps) {
   const locale: Locale = requestedLocale;
   const article = getVideoArticle(slug);
   if (!article) notFound();
-  const adsT = await getTranslations({locale, namespace: "ads"});
+  const [adsT, articleT] = await Promise.all([
+    getTranslations({locale, namespace: "ads"}),
+    getTranslations({locale, namespace: "article"})
+  ]);
 
   return (
     <main>
@@ -48,6 +57,9 @@ export default async function VideoArticlePage({params}: PageProps) {
           </p>
           <p className="mt-3 text-xs uppercase text-[#8b9992]">
             Last updated <time dateTime={article.updatedDate}>{article.updatedDate}</time>
+          </p>
+          <p className="mt-3 text-xs text-[#8b9992]">
+            {articleT("byline")} <a className="font-semibold text-[#8bb59d] hover:text-white" href={`/${locale}/editorial-policy`}>{articleT("teamName")}</a>
           </p>
           <h1 className="display-font mt-5 text-4xl leading-[1.05] text-white sm:text-5xl md:text-6xl">{article.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]">{article.description}</p>

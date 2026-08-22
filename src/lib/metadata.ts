@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import type {GuideDocument} from "@/content/guides";
 import type {Locale} from "@/config/site";
 import {assetPath} from "@/lib/assets";
+import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 import {getPublicSiteBase, publicAssetUrl, publicRoutePath, publicRouteUrl} from "@/lib/public-url";
 
 const languageTags: Record<Locale, string> = {
@@ -43,7 +44,25 @@ export function buildAlternates(locale: Locale, pathname: string): NonNullable<M
 }
 
 export function buildPageMetadata(locale: Locale, pathname: string, title: string, description: string): Metadata {
+  return buildPageMetadataWithImage(locale, pathname, title, description);
+}
+
+type SocialImage = {url: string; width: number; height: number; alt: string};
+
+export function buildPageMetadataWithImage(
+  locale: Locale,
+  pathname: string,
+  title: string,
+  description: string,
+  image?: SocialImage
+): Metadata {
   const canonical = buildLocalizedUrl(locale, pathname);
+  const socialImage = image ?? {
+    url: publicAssetUrl("/images/og-wardogs.jpg"),
+    width: 1200,
+    height: 630,
+    alt: "WARDOGS Wiki"
+  };
   return {
     title,
     description,
@@ -56,9 +75,9 @@ export function buildPageMetadata(locale: Locale, pathname: string, title: strin
       siteName: "WARDOGS Wiki",
       title,
       description,
-      images: [{url: publicAssetUrl("/images/og-wardogs.jpg"), width: 1200, height: 630, alt: "WARDOGS Wiki"}]
+      images: [socialImage]
     },
-    twitter: {card: "summary_large_image", title, description, images: [publicAssetUrl("/images/og-wardogs.jpg")]}
+    twitter: {card: "summary_large_image", title, description, images: [socialImage.url]}
   };
 }
 
@@ -72,16 +91,28 @@ export function buildSiteMetadata(): Metadata {
         {url: assetPath("/icons/favicon-16x16.png"), sizes: "16x16", type: "image/png"}
       ],
       apple: [{url: assetPath("/icons/apple-touch-icon.png"), sizes: "180x180", type: "image/png"}]
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-video-preview": -1,
+        "max-snippet": -1
+      }
     }
   };
 }
 
 export function buildArticleMetadata(locale: Locale, guide: GuideDocument): Metadata {
-  return buildPageMetadata(
+  return buildPageMetadataWithImage(
     locale,
     `/guides/${guide.frontmatter.slug}`,
     guide.frontmatter.title,
-    guide.frontmatter.description
+    guide.frontmatter.description,
+    getGuideDiscoveryImage(guide.frontmatter.slug)
   );
 }
 

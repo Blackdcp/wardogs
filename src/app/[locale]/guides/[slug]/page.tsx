@@ -1,7 +1,8 @@
 import type {Metadata} from "next";
+import Image from "next/image";
 import {notFound} from "next/navigation";
 import {getTranslations, setRequestLocale} from "next-intl/server";
-import {ArrowLeft, CalendarDays} from "lucide-react";
+import {ArrowLeft, CalendarDays, ExternalLink} from "lucide-react";
 import {isLocale, locales, officialLinks, type Locale} from "@/config/site";
 import {guideManifest} from "@/content/manifest";
 import {compileLocalizedGuideBody, loadGuideDocument} from "@/content/guides";
@@ -13,6 +14,7 @@ import {ButtonLink} from "@/components/ui/button-link";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {Link} from "@/i18n/navigation";
 import {getRelatedGuides} from "@/features/guides/related";
+import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 import {buildArticleMetadata} from "@/lib/metadata";
 import {buildArticleJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
@@ -50,6 +52,7 @@ export default async function GuideArticlePage({params}: PageProps) {
   const locale: Locale = requestedLocale;
   const guide = await loadGuideDocument(locale, slug);
   if (!guide) notFound();
+  const discoveryImage = getGuideDiscoveryImage(slug);
   setRequestLocale(locale);
   const [t, categoryT, adsT, related, compiled] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
@@ -71,12 +74,32 @@ export default async function GuideArticlePage({params}: PageProps) {
             <StatusBadge>{categoryT(guide.frontmatter.category)}</StatusBadge>
             <span className="inline-flex items-center gap-2 text-xs text-[#8b9992]"><CalendarDays aria-hidden="true" size={14} />{t("lastChecked")} {guide.frontmatter.updatedAt}</span>
           </div>
+          <p className="mt-3 text-xs text-[#8b9992]">
+            {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy">{t("teamName")}</Link>
+          </p>
           <h1 className="display-font mt-5 text-4xl leading-[1.05] text-white sm:text-5xl md:text-6xl">{guide.frontmatter.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]">{guide.frontmatter.description}</p>
         </div>
       </header>
 
       <article className="site-container max-w-4xl py-10 md:py-14">
+        {discoveryImage ? (
+          <figure className="mb-10 overflow-hidden border border-[#2c3631] bg-[#101411]">
+            <Image
+              alt={discoveryImage.alt}
+              className="aspect-video w-full object-cover"
+              height={discoveryImage.height}
+              loading="eager"
+              sizes="(min-width: 896px) 896px, 100vw"
+              src={discoveryImage.url}
+              unoptimized
+              width={discoveryImage.width}
+            />
+            <figcaption className="border-t border-[#2c3631] px-4 py-3 text-xs text-[#8b9992]">
+              {t("imageSource")}: <a className="inline-flex items-center gap-1 text-[#8bb59d] hover:text-white" href={discoveryImage.creditUrl} rel="noreferrer" target="_blank">{discoveryImage.creditLabel}<ExternalLink aria-hidden="true" className="size-3" /></a>
+            </figcaption>
+          </figure>
+        ) : null}
         <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
           <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>

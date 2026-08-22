@@ -2,6 +2,8 @@ import {afterEach, describe, expect, it, vi} from "vitest";
 import {buildAlternates, buildArticleMetadata, buildSiteMetadata, getSiteOrigin} from "../../src/lib/metadata";
 import {loadGuideDocument} from "../../src/content/guides";
 
+type TestSocialImage = {url: string | URL; width?: number; height?: number};
+
 describe("localized metadata", () => {
   afterEach(() => {
     vi.unstubAllEnvs();
@@ -41,5 +43,24 @@ describe("localized metadata", () => {
     delete process.env.NEXT_PUBLIC_SITE_URL;
 
     expect(getSiteOrigin()).toBe("https://www.wardogswiki.com");
+  });
+
+  it("allows large image previews and gives priority guides distinct 1280px discovery images", async () => {
+    const siteMetadata = buildSiteMetadata();
+    const googleBot = (siteMetadata.robots as {googleBot: Record<string, unknown>}).googleBot;
+    expect(googleBot["max-image-preview"]).toBe("large");
+
+    const crashGuide = await loadGuideDocument("en", "wardogs-crash-fix");
+    const helicopterGuide = await loadGuideDocument("en", "wardogs-helicopter-guide");
+    const crashMetadata = buildArticleMetadata("en", crashGuide!);
+    const helicopterMetadata = buildArticleMetadata("en", helicopterGuide!);
+    const crashImage = (crashMetadata.openGraph?.images as TestSocialImage[])[0];
+    const helicopterImage = (helicopterMetadata.openGraph?.images as TestSocialImage[])[0];
+
+    expect(crashImage).toMatchObject({width: 1280, height: 720});
+    expect(helicopterImage).toMatchObject({width: 1280, height: 720});
+    expect(String(crashImage.url)).toContain("fupZGU7LJaU/maxresdefault.jpg");
+    expect(String(helicopterImage.url)).toContain("wcsY2EeIlyc/maxresdefault.jpg");
+    expect(String(crashImage.url)).not.toBe(String(helicopterImage.url));
   });
 });

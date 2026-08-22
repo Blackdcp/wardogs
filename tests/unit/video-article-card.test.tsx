@@ -10,7 +10,7 @@ describe("VideoArticleCard", () => {
     const html = renderToStaticMarkup(<VideoArticleCard article={article} locale="en" />);
 
     expect(videoThumbnailUrl(article.youtubeId)).toBe(
-      "https://i.ytimg.com/vi/tF4-GnGlo4I/hqdefault.jpg"
+      "https://i.ytimg.com/vi/tF4-GnGlo4I/maxresdefault.jpg"
     );
     expect(html).toContain("tF4-GnGlo4I");
     expect(html).not.toContain("/_next/image");

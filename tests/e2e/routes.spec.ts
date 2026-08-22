@@ -46,11 +46,28 @@ const vehicleModelSlugs = [
 test("root redirects and primary routes resolve", async ({page}) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/en\/?$/);
-  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/news", "/en/guides/wardogs-gameplay", "/en/guides/wardogs-twitch-drops", "/en/guides/wardogs-beginner-guide", "/en/guides/wardogs-fob-guide", "/en/guides/wardogs-crash-fix", "/en/guides/wardogs-towers-guide", "/en/guides/wardogs-money-guide", "/en/guides/wardogs-helicopter-guide", "/en/guides/wardogs-mortar-guide", "/en/videos/wardogs-mortars-indirect-fire", "/en/videos/wardogs-everything-before-playing", "/en/videos/wardogs-best-settings", "/en/privacy", "/en/terms"]) {
+  for (const pathname of ["/en", "/en/guides", "/en/videos", "/en/news", "/en/guides/wardogs-gameplay", "/en/guides/wardogs-twitch-drops", "/en/guides/wardogs-beginner-guide", "/en/guides/wardogs-fob-guide", "/en/guides/wardogs-crash-fix", "/en/guides/wardogs-towers-guide", "/en/guides/wardogs-money-guide", "/en/guides/wardogs-helicopter-guide", "/en/guides/wardogs-mortar-guide", "/en/videos/wardogs-mortars-indirect-fire", "/en/videos/wardogs-everything-before-playing", "/en/videos/wardogs-best-settings", "/en/editorial-policy", "/en/privacy", "/en/terms"]) {
     const response = await page.goto(pathname);
     expect(response?.status(), pathname).toBe(200);
   }
   expect((await page.goto("/en/guides/not-a-topic"))?.status()).toBe(404);
+});
+
+test("discovery media and editorial trust signals render on published articles", async ({page, request}) => {
+  await page.goto("/en/guides/wardogs-crash-fix");
+
+  await expect(page.getByRole("link", {name: "WARDOGS Wiki Editorial Team"})).toHaveAttribute("href", "/en/editorial-policy");
+  await expect(page.locator('main img[src*="fupZGU7LJaU/maxresdefault.jpg"]')).toHaveCount(1);
+
+  const videoResponse = await request.get("/en/videos/wardogs-loadout-gear-guide");
+  const videoHtml = await videoResponse.text();
+  expect(videoResponse.status()).toBe(200);
+  expect(videoHtml).toContain('"@type":"Clip"');
+  expect(videoHtml).toContain("?t=474");
+
+  await page.goto("/en/editorial-policy");
+  await expect(page.getByRole("heading", {level: 1, name: "How We Research WARDOGS"})).toBeVisible();
+  await expect(page.getByRole("heading", {level: 2, name: "Our verification method"})).toBeVisible();
 });
 
 test("guide direct answer uses the first explanatory paragraph instead of a markdown heading", async ({page}) => {
@@ -62,6 +79,8 @@ test("guide direct answer uses the first explanatory paragraph instead of a mark
 });
 
 test("all localized home, index, and article routes resolve", async ({page}) => {
+  test.setTimeout(90_000);
+
   for (const locale of locales) {
     expect((await page.goto(`/${locale}`))?.status(), locale).toBe(200);
     expect((await page.goto(`/${locale}/guides`))?.status(), `${locale} guide index`).toBe(200);

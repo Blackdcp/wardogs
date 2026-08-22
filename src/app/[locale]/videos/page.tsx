@@ -4,7 +4,8 @@ import {Clapperboard} from "lucide-react";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {VideoArticleCard} from "@/components/videos/video-article-card";
 import {getFeaturedVideoArticles, videoArticles} from "@/features/videos/video-library";
-import {buildPageMetadata} from "@/lib/metadata";
+import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
+import {buildPageMetadataWithImage} from "@/lib/metadata";
 
 type PageProps = {params: Promise<{locale: string}>};
 
@@ -15,11 +16,18 @@ export function generateStaticParams() {
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
-  return buildPageMetadata(
+  const featured = getFeaturedVideoArticles(1)[0];
+  return buildPageMetadataWithImage(
     locale,
     "/videos",
     "WARDOGS Videos - YouTube Gameplay Breakdowns",
-    "Standalone WARDOGS video guides for beginner tips, settings, money, helicopters, FOBs, weapons, vehicles, objectives, gameplay, and Early Access context."
+    "Standalone WARDOGS video guides for beginner tips, settings, money, helicopters, FOBs, weapons, vehicles, objectives, gameplay, and Early Access context.",
+    {
+      url: videoThumbnailUrl(featured.youtubeId),
+      width: 1280,
+      height: 720,
+      alt: `${featured.sourceLabel} thumbnail`
+    }
   );
 }
 

@@ -1,11 +1,12 @@
 import type {GuideDocument, GuideSummary} from "@/content/guides";
 import type {Locale} from "@/config/site";
-import {getSiteOrigin} from "./metadata";
+import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
+import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 
 type JsonLd = Record<string, unknown>;
 
 function pageUrl(locale: Locale, pathname = "") {
-  return `${getSiteOrigin()}/${locale}${pathname}`;
+  return buildLocalizedUrl(locale, pathname || "/");
 }
 
 function faqSchema(faq: GuideDocument["frontmatter"]["faq"]): JsonLd {
@@ -79,6 +80,7 @@ export function buildGuideIndexJsonLd(locale: Locale, guides: GuideSummary[]): J
 
 export function buildArticleJsonLd(locale: Locale, guide: GuideDocument): JsonLd[] {
   const url = pageUrl(locale, `/guides/${guide.frontmatter.slug}`);
+  const discoveryImage = getGuideDiscoveryImage(guide.frontmatter.slug);
   return [
     {
       "@context": "https://schema.org",
@@ -87,8 +89,8 @@ export function buildArticleJsonLd(locale: Locale, guide: GuideDocument): JsonLd
       description: guide.frontmatter.description,
       dateModified: guide.frontmatter.updatedAt,
       mainEntityOfPage: url,
-      author: {"@type": "Organization", name: "WARDOGS Wiki"},
-      image: `${getSiteOrigin()}/images/og-wardogs.jpg`
+      author: {"@type": "Organization", name: "WARDOGS Wiki Editorial Team", url: pageUrl(locale, "/editorial-policy")},
+      image: discoveryImage?.url ?? `${getSiteOrigin()}/images/og-wardogs.jpg`
     },
     {
       "@context": "https://schema.org",

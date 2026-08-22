@@ -3,7 +3,7 @@
 import {useState} from "react";
 import {Play} from "lucide-react";
 import {useTranslations} from "next-intl";
-import {assetPath} from "@/lib/assets";
+import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 
 const approvedVideoIds = new Set([
   "hVtmnaUCpuQ",
@@ -47,7 +47,7 @@ export function OfficialVideo({id, title, className = "my-8"}: {id: string; titl
           <button
             type="button"
             className="group flex size-full flex-col items-center justify-center gap-5 bg-cover bg-center px-6 text-center"
-            style={{backgroundImage: `linear-gradient(rgba(10,13,11,.45), rgba(10,13,11,.88)), url('${assetPath("/images/wardogs-hero.jpg")}')`}}
+            style={{backgroundImage: `linear-gradient(rgba(10,13,11,.45), rgba(10,13,11,.88)), url('${videoThumbnailUrl(id)}')`}}
             onClick={() => setActive(true)}
             aria-label={`${t("videoConsent")}: ${title}`}
           >

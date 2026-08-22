@@ -2,14 +2,13 @@ import {ArrowRight, PlayCircle} from "lucide-react";
 import Image from "next/image";
 import type {Locale} from "@/config/site";
 import type {VideoArticle} from "@/features/videos/video-library";
+import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 
 export function videoArticleHref(locale: Locale, slug: string) {
   return `/${locale}/videos/${slug}`;
 }
 
-export function videoThumbnailUrl(youtubeId: string) {
-  return `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
-}
+export {videoThumbnailUrl};
 
 export function VideoArticleCard({article, locale, eager = false}: {article: VideoArticle; locale: Locale; eager?: boolean}) {
   return (

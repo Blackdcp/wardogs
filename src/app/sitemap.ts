@@ -8,7 +8,7 @@ import {getIndexableItemPaths, getItemByTypeAndSlug, itemTypes} from "@/features
 import {videoArticles} from "@/features/videos/video-library";
 import {buildAlternates} from "@/lib/metadata";
 
-const staticPaths = ["", "/guides", "/news", "/privacy", "/terms"];
+const staticPaths = ["", "/guides", "/news", "/editorial-policy", "/privacy", "/terms"];
 
 export const dynamic = "force-static";
 

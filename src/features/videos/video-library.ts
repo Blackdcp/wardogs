@@ -10,6 +10,7 @@ export type VideoArticle = {
   kind: "official" | "creator";
   priority: number;
   internalGuideSlug: string;
+  clips?: readonly {name: string; startOffset: number; endOffset?: number}[];
   quickAnswer: string;
   takeaways: string[];
   sections: {heading: string; body: string[]}[];
@@ -97,6 +98,15 @@ export const videoArticles: readonly VideoArticle[] = [
     kind: "creator",
     priority: 2,
     internalGuideSlug: "wardogs-gameplay",
+    clips: [
+      {name: "100-player three-team warfare", startOffset: 0, endOffset: 66},
+      {name: "Why the third team changes every fight", startOffset: 66, endOffset: 132},
+      {name: "Persistent cash and loadout loss", startOffset: 132, endOffset: 199},
+      {name: "Mobile FOBs and Hot Zones", startOffset: 199, endOffset: 262},
+      {name: "Support roles and supply work", startOffset: 262, endOffset: 334},
+      {name: "Potato Mode and Overkill Mode", startOffset: 334, endOffset: 408},
+      {name: "Early Access timing", startOffset: 408}
+    ],
     quickAnswer:
       "The FGS video is the broadest WARDOGS primer we have: it explains why the game is being searched so heavily, from 100-player three-team warfare to persistent cash, mobile FOBs, support roles, performance modes, and the current Early Access window.",
     takeaways: [
@@ -165,6 +175,16 @@ export const videoArticles: readonly VideoArticle[] = [
     kind: "creator",
     priority: 2,
     internalGuideSlug: "wardogs-gameplay",
+    clips: [
+      {name: "Starter weapons and free resources", startOffset: 0, endOffset: 63},
+      {name: "Explosives and breaching tools", startOffset: 63, endOffset: 136},
+      {name: "Medical equipment and armor", startOffset: 136, endOffset: 203},
+      {name: "Tactical vests and quick slots", startOffset: 203, endOffset: 267},
+      {name: "Backpacks and weapon storage", startOffset: 267, endOffset: 343},
+      {name: "Parachutes and specialist launchers", startOffset: 343, endOffset: 408},
+      {name: "FOB kits and construction hammers", startOffset: 408, endOffset: 474},
+      {name: "Mobile spawn vehicles", startOffset: 474}
+    ],
     quickAnswer:
       "This creator walkthrough is a practical tour of the WARDOGS pre-match catalogue. It shows how free starter options, paid consumables, medical equipment, armor, storage, specialist launchers, FOB construction kits, and mobile spawn vehicles fit together. Prices, unlock levels, and capacities shown here come from the recorded test build and may change before Early Access.",
     takeaways: [
@@ -255,6 +275,16 @@ export const videoArticles: readonly VideoArticle[] = [
     kind: "creator",
     priority: 3,
     internalGuideSlug: "wardogs-gameplay",
+    clips: [
+      {name: "Capturing a tower and reading the zone", startOffset: 0, endOffset: 68},
+      {name: "Hot Zones and healing", startOffset: 68, endOffset: 133},
+      {name: "Building a first paid loadout", startOffset: 133, endOffset: 200},
+      {name: "Dragging and reviving teammates", startOffset: 200, endOffset: 330},
+      {name: "Helicopter pressure and squad recovery", startOffset: 330, endOffset: 724},
+      {name: "FOB construction and defenses", startOffset: 724, endOffset: 927},
+      {name: "Anti-air emplacements", startOffset: 927, endOffset: 1192},
+      {name: "Finding enemy artillery", startOffset: 1192}
+    ],
     quickAnswer:
       "The first gameplay impressions footage is useful because it shows WARDOGS as a communication-heavy battlefield: players mark pushes, fight over towers, react to vehicle pressure, regroup after chaos, and learn that staying with the team matters more than chasing isolated highlights.",
     takeaways: [
@@ -323,6 +353,15 @@ export const videoArticles: readonly VideoArticle[] = [
     kind: "creator",
     priority: 4,
     internalGuideSlug: "wardogs-alpha",
+    clips: [
+      {name: "Alpha firefight opening", startOffset: 0, endOffset: 67},
+      {name: "Heavy fire and battlefield pressure", startOffset: 67, endOffset: 135},
+      {name: "Squad movement and recovery", startOffset: 135, endOffset: 199},
+      {name: "Vehicles changing the fight", startOffset: 199, endOffset: 264},
+      {name: "Revives and team spacing", startOffset: 264, endOffset: 331},
+      {name: "Early-build combat flow", startOffset: 331, endOffset: 401},
+      {name: "What the alpha does not prove", startOffset: 401}
+    ],
     quickAnswer:
       "The alpha gameplay footage is valuable because it shows WARDOGS at its messiest and most useful stage for analysis: explosions interrupt movement, players drag and recover teammates, vehicles reshape fights, and the build shows promise without proving final polish.",
     takeaways: [
@@ -391,6 +430,16 @@ export const videoArticles: readonly VideoArticle[] = [
     kind: "creator",
     priority: 5,
     internalGuideSlug: "wardogs-gameplay",
+    clips: [
+      {name: "Finding an enemy mortar position", startOffset: 0, endOffset: 78},
+      {name: "Capturing the mortar and learning the controls", startOffset: 78, endOffset: 151},
+      {name: "Calling range to Tower 4", startOffset: 151, endOffset: 226},
+      {name: "Using spotters for indirect fire", startOffset: 226, endOffset: 299},
+      {name: "Helicopters, towers, and target priorities", startOffset: 299, endOffset: 440},
+      {name: "Reading the mortar trajectory", startOffset: 440, endOffset: 583},
+      {name: "Base pressure and direct hits", startOffset: 583, endOffset: 735},
+      {name: "Mortar earnings and balance verdict", startOffset: 735}
+    ],
     quickAnswer:
       "Mortars look dangerous in WARDOGS footage because they punish clustered fights, rooftops, towers, and predictable objective pressure. That does not prove they are overpowered; it proves indirect fire will depend heavily on spotting, distance reading, supply, and whether enemies can locate the firing position.",
     takeaways: [
@@ -595,6 +644,16 @@ export const videoArticles: readonly VideoArticle[] = [
     kind: "creator",
     priority: 8,
     internalGuideSlug: "wardogs-first-look",
+    clips: [
+      {name: "Large-scale firefight opening", startOffset: 0, endOffset: 78},
+      {name: "Movement and weapon feel", startOffset: 78, endOffset: 154},
+      {name: "Progression and distinct weapons", startOffset: 154, endOffset: 321},
+      {name: "Map scale and loadout flow", startOffset: 321, endOffset: 390},
+      {name: "Medic progression and class unlocks", startOffset: 390, endOffset: 463},
+      {name: "Objective flow and team contribution", startOffset: 463, endOffset: 547},
+      {name: "Three-team scoring and persistent cash", startOffset: 547, endOffset: 715},
+      {name: "FOB building and logistics", startOffset: 715}
+    ],
     quickAnswer:
       "This first-look gameplay page is useful because it shows how WARDOGS feels when a larger group moves together: players chase the Hot Zone, recover from chaotic fights, use support actions, and expose both the promise and roughness of an alpha-scale tactical shooter.",
     takeaways: [
