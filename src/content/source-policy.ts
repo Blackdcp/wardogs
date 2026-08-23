@@ -24,10 +24,18 @@ const competitorHosts = new Set([
   "www.gamblewithyourfriends.net"
 ]);
 
+const approvedExactUrls = new Set([
+  "https://www.linkedin.com/posts/bulkhead_new-devlog-level-design-performance-activity-7483535791831478273-9DOJ"
+]);
+
 export function isApprovedSourceUrl(value: string): boolean {
   try {
     const url = new URL(value);
-    return url.protocol === "https:" && !competitorHosts.has(url.hostname) && approvedHosts.has(url.hostname);
+    if (url.protocol !== "https:" || competitorHosts.has(url.hostname)) {
+      return false;
+    }
+
+    return approvedHosts.has(url.hostname) || approvedExactUrls.has(url.href.replace(/\/$/, ""));
   } catch {
     return false;
   }

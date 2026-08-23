@@ -2,10 +2,10 @@ import {describe, expect, it} from "vitest";
 import {assertCompleteContentMatrix, listGuideSummaries, loadGuideDocument} from "../../src/content/guides";
 
 describe("Russian guide library", () => {
-  it("contains localized Cyrillic content for all 29 slugs", async () => {
+  it("contains localized Cyrillic content for all 33 slugs", async () => {
     await expect(assertCompleteContentMatrix(["en", "ru"])).resolves.toBeUndefined();
     const summaries = await listGuideSummaries("ru");
-    expect(summaries).toHaveLength(29);
+    expect(summaries).toHaveLength(33);
     for (const summary of summaries) {
       expect(summary.title).toMatch(/[А-Яа-яЁё]/);
       const guide = await loadGuideDocument("ru", summary.slug);

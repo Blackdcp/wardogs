@@ -50,4 +50,14 @@ describe("video article library", () => {
       expect(bodyText.length, article.slug).toBeGreaterThanOrEqual(3000);
     }
   });
+
+  it("positions the settings video as a source breakdown for the maintained guide", () => {
+    const article = videoArticles.find(({slug}) => slug === "wardogs-best-settings");
+
+    expect(article).toBeDefined();
+    expect(article?.internalGuideSlug).toBe("wardogs-best-settings");
+    expect(article?.title).toMatch(/Video Breakdown/);
+    expect(article?.description).toMatch(/source-specific|creator/i);
+    expect(article?.quickAnswer).toMatch(/video|creator|source/i);
+  });
 });

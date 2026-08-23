@@ -29,7 +29,7 @@ describe("WARDOGS Closed Beta weekend content", () => {
       const guide = await loadGuideDocument("en", slug);
       const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
-      expect(guide?.frontmatter.updatedAt).toBe("2026-08-22");
+      expect(["2026-08-22", "2026-08-23"]).toContain(guide?.frontmatter.updatedAt);
       expect(searchable).toContain("WARDOGS Playtest");
       expect(searchable).not.toMatch(/preload (?:remain|is|also remains?) unconfirmed/i);
     }

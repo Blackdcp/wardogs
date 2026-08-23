@@ -41,12 +41,12 @@ describe("homepage data", () => {
       "wardogs-ps5",
       "wardogs-crash-fix",
       "wardogs-beginner-guide",
-      "wardogs-money-guide",
-      "wardogs-helicopter-guide",
       "wardogs-fob-guide",
       "wardogs-twitch-drops",
       "wardogs-gameplay",
-      "wardogs-early-access"
+      "wardogs-release-date",
+      "wardogs-steam",
+      "wardogs-best-settings"
     ]);
     expect(new Set(TOP_GUIDE_SLUGS).size).toBe(TOP_GUIDE_SLUGS.length);
 

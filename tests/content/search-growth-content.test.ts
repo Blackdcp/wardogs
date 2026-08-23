@@ -25,10 +25,10 @@ describe("Search Console growth pages", () => {
     const ps5 = await loadGuideDocument("en", "wardogs-ps5");
     const weapons = getCatalogGuide("weapons");
 
-    expect(beta?.frontmatter.title).toBe("WARDOGS Beta: Live Dates, Access & Preload Guide");
-    expect(beta?.frontmatter.description).toBe("WARDOGS Closed Beta runs August 21-23, 2026. See who gets access, where to find WARDOGS Playtest, how preload works, and how to fix missing invites.");
-    expect(ps5?.frontmatter.title).toBe("WARDOGS PS5 Release: Is a Console Version Confirmed?");
-    expect(ps5?.frontmatter.description).toBe("Is WARDOGS coming to PS5? Check the confirmed PC-only Early Access plan, what BULKHEAD has and has not announced, and how to follow console news.");
+    expect(beta?.frontmatter.title).toBe("WARDOGS Beta: Next Test Date, Access & Signup");
+    expect(beta?.frontmatter.description).toBe("Find the next WARDOGS beta date, signup and access options, Steam Playtest status, test duration, preload steps, and confirmed Early Access timing.");
+    expect(ps5?.frontmatter.title).toBe("WARDOGS PS5 & Xbox Release: Console Status");
+    expect(ps5?.frontmatter.description).toBe("Check whether WARDOGS is coming to PS5 or Xbox, what BULKHEAD has confirmed for PC Early Access, and where to follow reliable console release news.");
     expect(weapons).toEqual(expect.objectContaining({
         title: "WARDOGS Weapons List: All 33 Weapons",
         description: "Browse all 33 WARDOGS Alpha 1 weapons, including rifles, SMGs, shotguns, launchers and the Compound Bow, with roles, evidence notes and item guides."

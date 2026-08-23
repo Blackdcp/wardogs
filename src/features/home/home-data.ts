@@ -30,12 +30,12 @@ export const TOP_GUIDE_SLUGS = [
   "wardogs-ps5",
   "wardogs-crash-fix",
   "wardogs-beginner-guide",
-  "wardogs-money-guide",
-  "wardogs-helicopter-guide",
   "wardogs-fob-guide",
   "wardogs-twitch-drops",
   "wardogs-gameplay",
-  "wardogs-early-access"
+  "wardogs-release-date",
+  "wardogs-steam",
+  "wardogs-best-settings"
 ] as const;
 
 export type RecentlyUpdatedGuideInput = {

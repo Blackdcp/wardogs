@@ -1,30 +1,41 @@
 import {describe, expect, it} from "vitest";
 import {GET} from "../../src/app/llms.txt/route";
+import {guideManifest} from "../../src/content/manifest";
+import {locales} from "../../src/config/site";
+import {videoArticles} from "../../src/features/videos/video-library";
 
 describe("llms.txt", () => {
-  it("exposes every English guide including the beta-weekend pages", async () => {
+  it("exposes every guide in every supported locale", async () => {
     const body = await GET().text();
-    const guideUrls = body.match(/\/en\/guides\/wardogs-[a-z0-9-]+/g) ?? [];
 
-    expect(guideUrls).toHaveLength(29);
-    expect(new Set(guideUrls).size).toBe(29);
-    expect(body).toContain("/en/guides/wardogs-preload");
-    expect(body).toContain("/en/guides/wardogs-twitch-drops");
-    expect(body).toContain("/en/guides/wardogs-beginner-guide");
-    expect(body).toContain("/en/guides/wardogs-fob-guide");
-    expect(body).toContain("/en/guides/wardogs-crash-fix");
-    expect(body).toContain("/en/guides/wardogs-helicopter-guide");
+    for (const locale of locales) {
+      const guideUrls = body.match(new RegExp(`/${locale}/guides/wardogs-[a-z0-9-]+`, "g")) ?? [];
+
+      expect(guideUrls).toHaveLength(guideManifest.length);
+      expect(new Set(guideUrls).size).toBe(guideManifest.length);
+      expect(body).toContain(`/${locale}/guides/wardogs-preload`);
+      expect(body).toContain(`/${locale}/guides/wardogs-twitch-drops`);
+      expect(body).toContain(`/${locale}/guides/wardogs-map`);
+      expect(body).toContain(`/${locale}/guides/wardogs-best-settings`);
+      expect(body).toContain(`/${locale}/guides/wardogs-system-requirements`);
+      expect(body).toContain(`/${locale}/guides/wardogs-controls`);
+    }
   });
 
-  it("exposes the YouTube hub and every standalone video article", async () => {
+  it("exposes every localized core page and standalone video article", async () => {
     const body = await GET().text();
-    const videoUrls = body.match(/\/en\/videos\/wardogs-[a-z0-9-]+/g) ?? [];
 
-    expect(body).toContain("/en/videos");
-    expect(videoUrls).toHaveLength(19);
-    expect(new Set(videoUrls).size).toBe(19);
-    expect(body).toContain("/en/videos/wardogs-everything-before-playing");
-    expect(body).toContain("/en/videos/wardogs-best-settings");
-    expect(body).toContain("/en/videos/wardogs-helicopter-flight-guide");
+    for (const locale of locales) {
+      const videoUrls = body.match(new RegExp(`/${locale}/videos/wardogs-[a-z0-9-]+`, "g")) ?? [];
+
+      expect(body).toContain(`/${locale}`);
+      expect(body).toContain(`/${locale}/guides`);
+      expect(body).toContain(`/${locale}/videos`);
+      expect(videoUrls).toHaveLength(videoArticles.length);
+      expect(new Set(videoUrls).size).toBe(videoArticles.length);
+      expect(body).toContain(`/${locale}/videos/wardogs-everything-before-playing`);
+      expect(body).toContain(`/${locale}/videos/wardogs-best-settings`);
+      expect(body).toContain(`/${locale}/videos/wardogs-helicopter-flight-guide`);
+    }
   });
 });

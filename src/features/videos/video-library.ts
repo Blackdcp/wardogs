@@ -915,9 +915,9 @@ export const videoArticles: readonly VideoArticle[] = [
   },
   {
     slug: "wardogs-best-settings",
-    title: "Best WARDOGS Settings for FPS and Visibility",
+    title: "WARDOGS Settings Video Breakdown: Test-Build FPS Tips",
     description:
-      "A practical WARDOGS settings guide for smoother FPS, clearer visibility, useful audio, sensible keybinds, stutter diagnosis, and safer troubleshooting before a match.",
+      "A source-specific creator-video breakdown of WARDOGS test-build settings, covering FPS, visibility, audio, keybinds, stutter diagnosis, and safe comparisons.",
     youtubeId: "fupZGU7LJaU",
     sourceLabel: "WARDOGS Best Settings Guide",
     sourceUrl: "https://www.youtube.com/watch?v=fupZGU7LJaU",
@@ -925,9 +925,9 @@ export const videoArticles: readonly VideoArticle[] = [
     updatedDate: "2026-08-22",
     kind: "creator",
     priority: -6,
-    internalGuideSlug: "wardogs-crash-fix",
+    internalGuideSlug: "wardogs-best-settings",
     quickAnswer:
-      "The best WARDOGS settings are the ones that hold a stable frame rate during the busiest vehicle and objective fights while preserving enough distance, contrast, and audio information to read the battlefield. Change settings in small groups, measure the same repeatable scene, and treat hard crashes separately from ordinary low FPS.",
+      "This page breaks down one creator settings video as source material rather than replacing the maintained WARDOGS settings guide. Its useful method is to target stable frame times in busy vehicle and objective fights, preserve battlefield readability, change settings in small groups, and treat hard crashes separately from ordinary low FPS.",
     takeaways: [
       "Choose a stable frame-time target before maximizing visual quality.",
       "Test settings in a busy match area, not only in an empty menu or base.",
@@ -938,9 +938,9 @@ export const videoArticles: readonly VideoArticle[] = [
     ],
     sections: [
       {
-        heading: "Set a performance goal first",
+        heading: "How to use this creator video",
         body: [
-          "A settings guide should begin with a measurable target. Decide whether the system is trying to hold 60, 90, 120, or another realistic frame rate during active combat, then cap or tune around that target. An uncapped high number in an empty area says little about stability when vehicles, destruction, smoke, construction, and many players arrive.",
+          "Treat this creator video as a test-build demonstration, then use the linked maintained guide for current official requirements and source checks. Decide whether the system is trying to hold 60, 90, 120, or another realistic frame rate during active combat, then cap or tune around that target. An uncapped high number in an empty area says little about stability when vehicles, destruction, smoke, construction, and many players arrive.",
           "Use the same repeatable scenario after each change and watch frame-time consistency, not only the average counter. A slightly lower stable output usually feels better for aiming and vehicle control than a higher number that repeatedly drops during the moments that decide a fight."
         ]
       },

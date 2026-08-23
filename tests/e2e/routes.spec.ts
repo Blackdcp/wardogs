@@ -89,7 +89,7 @@ test("all localized home, index, and article routes resolve", async ({page}) => 
     const hrefs = await page.locator('main a[href*="/guides/wardogs-"]').evaluateAll((links) =>
       [...new Set(links.map((link) => (link as HTMLAnchorElement).pathname))]
     );
-    expect(hrefs, `${locale} guide links`).toHaveLength(29);
+    expect(hrefs, `${locale} guide links`).toHaveLength(33);
     for (const href of hrefs) expect((await page.goto(href))?.status(), href).toBe(200);
   }
 });
