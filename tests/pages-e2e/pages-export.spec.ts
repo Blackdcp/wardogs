@@ -24,6 +24,7 @@ const modelPaths = [
   ...weaponModels.map((slug) => ({type: "weapons" as const, slug})),
   ...vehicleModels.map((slug) => ({type: "vehicles" as const, slug}))
 ];
+const locales = ["en", "ru", "de", "pt-br", "ja"] as const;
 
 function deployed(pathname: string) {
   return `${basePath}${pathname}`;
@@ -97,40 +98,42 @@ test("serves the Pages export from its deployment base", async ({page, request})
   expect((await page.goto(deployed("/en/guides/not-a-topic/")))?.status()).toBe(404);
 });
 
-test("exports all 34 English model articles with exact public URLs and real images", async ({request}) => {
+test("exports all 34 model articles in every locale with exact public URLs and real images", async ({request}) => {
   expect(modelPaths).toHaveLength(34);
 
-  for (const {type, slug} of modelPaths) {
-    const pathname = `/en/items/${type}/${slug}/`;
-    const canonical = `${canonicalBase}${pathname}`;
-    const imagePath = `${basePath}/images/catalogue/${type}/${slug}.webp`;
-    const response = await request.get(deployed(pathname));
-    const html = await response.text();
-    const renderedHtml = html.split("<script>self.__next_f.push")[0];
-    const canonicalTags = html.match(/<link\b[^>]*\brel="canonical"[^>]*>/g) ?? [];
-    const openGraphTags = html.match(/<meta\b[^>]*\bproperty="og:url"[^>]*>/g) ?? [];
-    const jsonLd = (html.match(/<script\b[^>]*\btype="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/g) ?? []).join("\n");
+  for (const locale of locales) {
+    for (const {type, slug} of modelPaths) {
+      const pathname = `/${locale}/items/${type}/${slug}/`;
+      const canonical = `${canonicalBase}${pathname}`;
+      const imagePath = `${basePath}/images/catalogue/${type}/${slug}.webp`;
+      const response = await request.get(deployed(pathname));
+      const html = await response.text();
+      const renderedHtml = html.split("<script>self.__next_f.push")[0];
+      const canonicalTags = html.match(/<link\b[^>]*\brel="canonical"[^>]*>/g) ?? [];
+      const openGraphTags = html.match(/<meta\b[^>]*\bproperty="og:url"[^>]*>/g) ?? [];
+      const jsonLd = (html.match(/<script\b[^>]*\btype="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/g) ?? []).join("\n");
 
-    expect(response.status(), pathname).toBe(200);
-    expect(existsSync(resolve("out", "en", "items", type, slug, "index.html")), pathname).toBe(true);
-    expect(canonicalTags, pathname).toHaveLength(1);
-    expect(getAttribute(canonicalTags[0] ?? "", "href"), pathname).toBe(canonical);
-    expect(openGraphTags, pathname).toHaveLength(1);
-    expect(getAttribute(openGraphTags[0] ?? "", "content"), pathname).toBe(canonical);
-    expect(jsonLd, pathname).toContain(`"mainEntityOfPage":"${canonical}"`);
-    expect(jsonLd, pathname).not.toMatch(/Product|Offer|AggregateRating|Rating/);
-    expect(html, pathname).toContain(imagePath);
-    if (basePath) {
-      expect(html, pathname).not.toContain(`href="/images/catalogue/${type}/${slug}.webp"`);
-      expect(html, pathname).not.toContain(`src="/images/catalogue/${type}/${slug}.webp"`);
+      expect(response.status(), pathname).toBe(200);
+      expect(existsSync(resolve("out", locale, "items", type, slug, "index.html")), pathname).toBe(true);
+      expect(canonicalTags, pathname).toHaveLength(1);
+      expect(getAttribute(canonicalTags[0] ?? "", "href"), pathname).toBe(canonical);
+      expect(openGraphTags, pathname).toHaveLength(1);
+      expect(getAttribute(openGraphTags[0] ?? "", "content"), pathname).toBe(canonical);
+      expect(jsonLd, pathname).toContain(`"mainEntityOfPage":"${canonical}"`);
+      expect(jsonLd, pathname).not.toMatch(/Product|Offer|AggregateRating|Rating/);
+      expect(html, pathname).toContain(imagePath);
+      if (basePath) {
+        expect(html, pathname).not.toContain(`href="/images/catalogue/${type}/${slug}.webp"`);
+        expect(html, pathname).not.toContain(`src="/images/catalogue/${type}/${slug}.webp"`);
+      }
+      expect(html.match(/data-ad-slot="adsterra-native"/g), pathname).toHaveLength(1);
+      expect(renderedHtml, pathname).not.toMatch(/NEXT_HTTP_ERROR_FALLBACK|<title>404|Page not found/i);
+
+      const image = await request.get(imagePath);
+      expect(image.status(), imagePath).toBe(200);
+      expect(image.headers()["content-type"], imagePath).toBe("image/webp");
+      expect((await image.body()).byteLength, imagePath).toBeGreaterThan(0);
     }
-    expect(html.match(/data-ad-slot="adsterra-native"/g), pathname).toHaveLength(1);
-    expect(renderedHtml, pathname).not.toMatch(/NEXT_HTTP_ERROR_FALLBACK|<title>404|Page not found/i);
-
-    const image = await request.get(imagePath);
-    expect(image.status(), imagePath).toBe(200);
-    expect(image.headers()["content-type"], imagePath).toBe("image/webp");
-    expect((await image.body()).byteLength, imagePath).toBeGreaterThan(0);
   }
 });
 
@@ -170,16 +173,16 @@ test("uses exact Pages model hrefs on home, hub, cards, and catalogue tables", a
   }
 });
 
-test("does not export unsupported localized copies of any new model", async ({request}) => {
-  const probes = ["ru", "de", "pt-br"].flatMap((locale) =>
+test("exports localized copies of every new model", async ({request}) => {
+  const probes = locales.flatMap((locale) =>
     modelPaths.map(({type, slug}) => ({locale, type, slug}))
   );
 
-  expect(probes).toHaveLength(102);
+  expect(probes).toHaveLength(170);
   await Promise.all(probes.map(async ({locale, type, slug}) => {
     const pathname = `/${locale}/items/${type}/${slug}/`;
-    expect(existsSync(resolve("out", locale, "items", type, slug, "index.html")), pathname).toBe(false);
-    expect((await request.get(deployed(pathname))).status(), pathname).toBe(404);
+    expect(existsSync(resolve("out", locale, "items", type, slug, "index.html")), pathname).toBe(true);
+    expect((await request.get(deployed(pathname))).status(), pathname).toBe(200);
   }));
 });
 
@@ -188,18 +191,18 @@ test("locale switching uses only exported item routes", async ({page}) => {
 
   await page.goto(deployed("/en/items/vehicles/bobcat/"));
   await page.locator("select:visible").selectOption("ru");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/vehicles/")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/vehicles/bobcat/")}`);
 
   await page.goto(deployed("/en/items/weapons/mortar/"));
   await page.locator("select:visible").selectOption("ru");
   await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/weapons/mortar/")}`);
   await page.locator("select:visible").selectOption("de");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/items/weapons/")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/items/weapons/mortar/")}`);
 });
 
-test("crawls every catalogue-facing internal link across all four locales", async ({page, request}) => {
+test("crawls every catalogue-facing internal link across all five locales", async ({page, request}) => {
+  test.setTimeout(180_000);
   await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", (route) => route.abort("failed"));
-  const locales = ["en", "ru", "de", "pt-br"] as const;
   const categories = ["weapons", "vehicles", "ammo", "attachments", "gear", "equipment", "loadouts"] as const;
   const legacyDetails = [
     "/items/weapons/mortar/",
@@ -215,8 +218,8 @@ test("crawls every catalogue-facing internal link across all four locales", asyn
       `/${locale}/items/`,
       ...categories.map((category) => `/${locale}/items/${category}/`)
     ]),
-    ...modelPaths.map(({type, slug}) => `/en/items/${type}/${slug}/`),
-    ...["en", "ru"].flatMap((locale) => legacyDetails.map((pathname) => `/${locale}${pathname}`))
+    ...locales.flatMap((locale) => modelPaths.map(({type, slug}) => `/${locale}/items/${type}/${slug}/`)),
+    ...locales.flatMap((locale) => legacyDetails.map((pathname) => `/${locale}${pathname}`))
   ];
   const internalTargets = new Set<string>();
   const sourceFailures: string[] = [];

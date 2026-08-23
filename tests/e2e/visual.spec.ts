@@ -38,6 +38,7 @@ for (const viewport of [
       await installDeterministicAdFallback(page);
       await page.setViewportSize(viewport);
       await page.goto(pageCase.pathname);
+      await page.addStyleTag({content: "nextjs-portal { display: none !important; }"});
       await expectImagesLoaded(page);
       await expectAdSlotsTerminal(page);
       await page.evaluate(() => window.scrollTo(0, 0));

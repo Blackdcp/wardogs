@@ -9,7 +9,7 @@ describe("project handoff", () => {
       "npm.cmd run content:validate",
       "npm.cmd run links:check",
       "npm.cmd run test:e2e",
-      "20 topics x 4 locales",
+      "33 topics x 5 locales",
       "WARDOGS is a fan-made guide"
     ]) expect(readme).toContain(phrase);
   });

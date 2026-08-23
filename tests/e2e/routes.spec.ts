@@ -3,7 +3,7 @@ import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-record
 import type {CatalogueRecordType} from "../../src/features/catalogue/catalogue-types";
 import {expectImagesLoaded} from "./helpers";
 
-const locales = ["en", "ru", "de", "pt-br"];
+const locales = ["en", "ru", "de", "pt-br", "ja"] as const;
 const weaponModelSlugs = [
   "a-91",
   "ak74",
@@ -143,14 +143,14 @@ test("catalogue hub is a visual evidence-labelled navigation surface", async ({p
   await expectImagesLoaded(page);
 });
 
-test("localized catalogue hubs keep model previews on English canonical routes", async ({page}) => {
-  await page.goto("/ru/items");
-
-  for (const href of ["/en/items/weapons/amp-9", "/en/items/vehicles/bobcat"]) {
-    await expect(page.locator(`[data-catalogue-preview] a[href="${href}"]`)).toHaveCount(1);
+test("localized catalogue hubs keep model previews in the active locale", async ({page}) => {
+  for (const locale of locales) {
+    await page.goto(`/${locale}/items`);
+    for (const href of [`/${locale}/items/weapons/amp-9`, `/${locale}/items/vehicles/bobcat`]) {
+      await expect(page.locator(`[data-catalogue-preview] a[href="${href}"]`), href).toHaveCount(1);
+      expect((await page.request.get(href)).status(), href).toBe(200);
+    }
   }
-  await expect(page.locator('[data-catalogue-preview] a[href^="/ru/items/weapons/"]')).toHaveCount(0);
-  await expect(page.locator('[data-catalogue-preview] a[href^="/ru/items/vehicles/"]')).toHaveCount(0);
 });
 
 test("category routes render approved heroes, complete explorers, safe anchors, and no ads", async ({page}) => {
@@ -185,9 +185,9 @@ test("category routes render approved heroes, complete explorers, safe anchors, 
   }
 });
 
-test("weapon categories use English model links and keep standalone articles unique", async ({page}) => {
+test("weapon categories use locale-specific model links and keep standalone articles unique", async ({page}) => {
   await page.goto("/en/items/weapons");
-  const standalone = page.getByRole("heading", {name: "Detailed Weapons Guides"}).locator("xpath=ancestor::section");
+  const standalone = page.getByRole("heading", {name: "Weapons: Detailed Guides"}).locator("xpath=ancestor::section");
 
   await expect(standalone.locator('a[href="/en/items/weapons/mortar"]')).toHaveCount(1);
   await expect(standalone.getByText("WARDOGS Mortar", {exact: true})).toHaveCount(1);
@@ -204,21 +204,20 @@ test("weapon categories use English model links and keep standalone articles uni
     await expect(page.locator(`a[href="${href}"]`), `${slug} visible links`).toHaveCount(2);
   }
 
-  for (const locale of ["ru", "de", "pt-br"] as const) {
+  for (const locale of locales.filter((candidate) => candidate !== "en")) {
     expect((await page.goto(`/${locale}/items/weapons`))?.status(), `${locale} category`).toBe(200);
     for (const slug of weaponModelSlugs) {
-      const englishHref = `/en/items/weapons/${slug}`;
-      await expect(page.locator(`[data-catalogue-record="${slug}"] a[href="${englishHref}"]`), `${locale} ${slug} card`).toHaveCount(1);
-      await expect(page.locator(`th a[href="${englishHref}"]`), `${locale} ${slug} table row`).toHaveCount(1);
-      await expect(page.locator(`a[href="/${locale}/items/weapons/${slug}"]`), `${locale} ${slug} unsupported link`).toHaveCount(0);
+      const localizedHref = `/${locale}/items/weapons/${slug}`;
+      await expect(page.locator(`[data-catalogue-record="${slug}"] a[href="${localizedHref}"]`), `${locale} ${slug} card`).toHaveCount(1);
+      await expect(page.locator(`th a[href="${localizedHref}"]`), `${locale} ${slug} table row`).toHaveCount(1);
     }
-    expect((await page.request.get(`/${locale}/items/weapons/amp-9`)).status(), `${locale} model route`).toBe(404);
+    expect((await page.request.get(`/${locale}/items/weapons/amp-9`)).status(), `${locale} model route`).toBe(200);
   }
 });
 
-test("vehicle categories use English model links and retain each legacy guide once", async ({page}) => {
+test("vehicle categories use locale-specific model links and retain each legacy guide once", async ({page}) => {
   await page.goto("/en/items/vehicles");
-  const standalone = page.getByRole("heading", {name: "Detailed Vehicles Guides"}).locator("xpath=ancestor::section");
+  const standalone = page.getByRole("heading", {name: "Vehicles: Detailed Guides"}).locator("xpath=ancestor::section");
 
   for (const legacy of [
     {slug: "littlebird", name: "Littlebird"},
@@ -243,15 +242,14 @@ test("vehicle categories use English model links and retain each legacy guide on
     await expect(page.locator(`a[href="${href}"]`), `${slug} visible links`).toHaveCount(2);
   }
 
-  for (const locale of ["ru", "de", "pt-br"] as const) {
+  for (const locale of locales.filter((candidate) => candidate !== "en")) {
     expect((await page.goto(`/${locale}/items/vehicles`))?.status(), `${locale} category`).toBe(200);
     for (const slug of vehicleModelSlugs) {
-      const englishHref = `/en/items/vehicles/${slug}`;
-      await expect(page.locator(`[data-catalogue-record="${slug}"] a[href="${englishHref}"]`), `${locale} ${slug} card`).toHaveCount(1);
-      await expect(page.locator(`th a[href="${englishHref}"]`), `${locale} ${slug} table row`).toHaveCount(1);
-      await expect(page.locator(`a[href="/${locale}/items/vehicles/${slug}"]`), `${locale} ${slug} unsupported link`).toHaveCount(0);
+      const localizedHref = `/${locale}/items/vehicles/${slug}`;
+      await expect(page.locator(`[data-catalogue-record="${slug}"] a[href="${localizedHref}"]`), `${locale} ${slug} card`).toHaveCount(1);
+      await expect(page.locator(`th a[href="${localizedHref}"]`), `${locale} ${slug} table row`).toHaveCount(1);
     }
-    expect((await page.request.get(`/${locale}/items/vehicles/bobcat`)).status(), `${locale} model route`).toBe(404);
+    expect((await page.request.get(`/${locale}/items/vehicles/bobcat`)).status(), `${locale} model route`).toBe(200);
   }
 });
 
@@ -283,7 +281,7 @@ test("category search and filters keep canonical URLs while published table rows
   const records = page.locator('[data-catalogue-record]');
 
   await page.getByRole("button", {name: "SMG", exact: true}).click();
-  await page.getByLabel("Search Weapons").fill("AMP-9");
+  await page.getByLabel("Search: Weapons").fill("AMP-9");
   await expect(records.filter({visible: true})).toHaveCount(1);
   await expect(page.locator("#record-weapons-ak74")).toBeHidden();
   await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
@@ -313,7 +311,7 @@ test("every English weapon model route renders complete evidence and one native 
     await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
   }
 
-  expect((await page.goto("/ru/items/weapons/amp-9"))?.status()).toBe(404);
+  expect((await page.goto("/ru/items/weapons/amp-9"))?.status()).toBe(200);
 });
 
 test("every English vehicle model route renders complete evidence and one native ad", async ({page}) => {
@@ -348,7 +346,7 @@ test("every English vehicle model route renders complete evidence and one native
     await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
   }
 
-  expect((await page.goto("/ru/items/vehicles/bobcat"))?.status()).toBe(404);
+  expect((await page.goto("/ru/items/vehicles/bobcat"))?.status()).toBe(200);
 });
 
 test("homepage promotes the catalogue before video intelligence", async ({page}) => {
@@ -372,20 +370,18 @@ test("homepage promotes the catalogue before video intelligence", async ({page})
   }
 });
 
-test("localized homepages feature unique weapon and vehicle model links on English canonicals", async ({page}) => {
-  const expected = [
-    "/en/items/weapons/a-91",
-    "/en/items/weapons/amp-9",
-    "/en/items/vehicles/bobcat",
-    "/en/items/vehicles/l2a6"
-  ];
-
-  for (const locale of ["en", "ru"]) {
+test("localized homepages feature unique weapon and vehicle model links in the active locale", async ({page}) => {
+  for (const locale of locales) {
+    const expected = [
+      `/${locale}/items/weapons/a-91`,
+      `/${locale}/items/weapons/amp-9`,
+      `/${locale}/items/vehicles/bobcat`,
+      `/${locale}/items/vehicles/l2a6`
+    ];
     await page.goto(`/${locale}`);
     const models = page.locator('[data-catalogue-home-band] [data-catalogue-model-entry]');
     await expect(models).toHaveCount(4);
     for (const href of expected) await expect(models.locator(`a[href="${href}"]`), `${locale} ${href}`).toHaveCount(1);
-    await expect(models.locator(`a[href^="/${locale === "en" ? "ru" : locale}/items/"]`)).toHaveCount(0);
     expect(new Set(await models.locator("h3").allTextContents()).size).toBe(4);
     await expectImagesLoaded(page);
   }

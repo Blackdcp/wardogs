@@ -78,15 +78,15 @@ describe("ItemCatalogGuide", () => {
     expect(html).not.toContain('href="#record-weapons-ak74"');
   });
 
-  it("uses the English model route from every non-English category table", () => {
+  it("uses the matching locale route from every localized category table", () => {
     const guide = getCatalogGuide("weapons");
     const matchedGuide = matchCatalogueGuideRecords(guide!, getCatalogueRecords("weapons"));
 
-    for (const locale of ["ru", "de", "pt-br"] as const) {
+    for (const locale of ["ru", "de", "pt-br", "ja"] as const) {
       const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale={locale} />);
 
-      expect(html).toContain('href="/en/items/weapons/ak74"');
-      expect(html).not.toContain(`href="/${locale}/items/weapons/ak74"`);
+      expect(html).toContain(`href="/${locale}/items/weapons/ak74"`);
+      expect(html).not.toContain('href="/en/items/weapons/ak74"');
     }
   });
 
@@ -101,7 +101,7 @@ describe("ItemCatalogGuide", () => {
 
     const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale="de" />);
 
-    expect(html).toContain('href="/wardogs/en/items/weapons/galil/"');
+    expect(html).toContain('href="/wardogs/de/items/weapons/galil/"');
     expect(html).not.toContain('href="/en/items/weapons/galil"');
     expect(html).toContain('href="#record-weapons-ak74"');
   });

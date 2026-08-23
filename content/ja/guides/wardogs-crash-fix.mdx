@@ -1,0 +1,71 @@
+---
+title: "WARDOGS クラッシュ対策：起動、再起動、カクつき"
+description: "WARDOGSの起動クラッシュ、ブラックスクリーン、シェーダー待ち、フリーズ、強制再起動、カクつきを症状別に切り分けます。Steamファイル確認、GPUドライバー、Overlay、RGBソフト、OC、温度、Windowsログを安全な順番で試し、サーバー待機列をクラッシュと誤認しない日本語対処ガイドです。"
+keyword: "wardogs crash fix"
+category: "guide"
+slug: "wardogs-crash-fix"
+order: 25
+updatedAt: "2026-08-23"
+badges:
+  - label: "トラブル対策"
+    tone: "accent"
+  - label: "ビルド依存"
+    tone: "warning"
+faq:
+  - question: "WARDOGSのログイン待機列はクラッシュですか？"
+    answer: "いいえ。更新するキューや容量メッセージはアクセス待ちで、プロセス終了、永続フリーズ、エラー、PC再起動とは別です。"
+  - question: "初回起動はどのくらい待つべきですか？"
+    answer: "応答がありシェーダーやファイル準備中なら、一度完了させます。時間はハードウェアとビルドで異なります。"
+  - question: "最初に試すクラッシュ対策は何ですか？"
+    answer: "Windows再起動、Steam整合性確認、安定GPUドライバー、Overlay停止、定格設定、軽いプリセットを一項目ずつ試します。"
+  - question: "Windows KB5121003はWARDOGSの不具合を証明しますか？"
+    answer: "いいえ。一部ゲームとRGB関連部品の一般的問題を説明しますが、記事はWARDOGSを名指ししていません。"
+sources:
+  - label: "WARDOGS Steam公式ページ"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-08-23"
+  - label: "Microsoft Windows KB5121003"
+    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/08/kb5121003-windows-11-24h2-25h2-security-update"
+    kind: "official"
+    checkedAt: "2026-08-23"
+---
+
+## 最初に症状を分類する
+
+サーバー待機列が動き、入力できるならクライアントは動作しています。再インストールしても空きサーバー枠は増えません。ゲームプロセスが閉じる、エラーが出る、永続的に応答しない状態がアプリクラッシュです。Windowsごと再起動または電源断する場合は、通常のゲーム設定より深い問題として扱います。
+
+初回起動や大型更新後はシェーダー準備に時間がかかることがあります。CPU・ディスク活動が続きアプリが応答するなら、一度完了させます。毎回強制終了すると準備を繰り返す場合があります。
+
+## 安全な確認順
+
+1. WARDOGSとSteamを正常終了し、Windowsを再起動して不要アプリを閉じます。
+2. Steamのプロパティからインストール済みファイルの整合性を確認します。
+3. GPUメーカーの安定ドライバーへ更新します。更新直後から悪化した場合は公式のロールバック手順を使います。
+4. Steam、Discord、GPU録画、性能監視などのOverlayを一度止めます。
+5. CPU、GPU、メモリのOCやUndervoltを定格へ戻します。
+6. 軽いプリセット、持続できるfps上限、低い重い効果から試します。
+7. 空き容量、使用GPU、セキュリティソフトの隔離を確認します。
+
+一度に全部を恒久変更せず、一項目を変えて同じ場面を再テストします。どの変更が効いたか分かり、サポートへ再現情報を渡せます。
+
+## PCが再起動する場合
+
+画面が暗くなりWindowsごと再起動するなら、繰り返し起動を止めます。Reliability MonitorとEvent Viewerで時刻を見て、CPU・GPU温度、電源、冷却、メモリ、定格クロックを確認します。軽いゲームで安定しても、大規模戦が不安定な設定を露出することがあります。
+
+Microsoft KB5121003は、一部RGB関連コンポーネントがある環境でゲームの停止、クラッシュ、再起動が起こる一般的カテゴリを説明します。ただしWARDOGS名はありません。RGBソフトを更新または終了して試すのは候補ですが、診断確定ではなく、セキュリティ更新削除を最初の手段にしません。
+
+## カクつきと低fps
+
+ゲームが閉じないなら再現場所を決め、シェーダー準備後、安定するfps上限、重い設定低下を試します。100人、車両、破壊、混雑サーバーは空の場所と違うCPU・GPU・メモリ負荷を作ります。動画制作者の設定は出発点で、別ハードウェアの保証ではありません。
+
+## 報告に必要な情報
+
+ビルド日、Windows、GPUとドライバー、CPU、RAM、設定、Overlay、RGBソフト、発生段階を記録します。待機列、シェーダー待ち、CTD、フリーズ、PC再起動を正確に分け、短い再現手順を添えます。
+
+## 関連ガイド
+
+- [WARDOGSベスト設定](/guides/wardogs-best-settings)
+- [WARDOGSシステム要件](/guides/wardogs-system-requirements)
+- [WARDOGS Steam](/guides/wardogs-steam)
+- [WARDOGS Beta](/guides/wardogs-beta)

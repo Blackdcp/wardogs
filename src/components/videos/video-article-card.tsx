@@ -3,6 +3,7 @@ import Image from "next/image";
 import type {Locale} from "@/config/site";
 import type {VideoArticle} from "@/features/videos/video-library";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
+import {getVideoUi} from "@/features/videos/video-ui";
 
 export function videoArticleHref(locale: Locale, slug: string) {
   return `/${locale}/videos/${slug}`;
@@ -11,6 +12,7 @@ export function videoArticleHref(locale: Locale, slug: string) {
 export {videoThumbnailUrl};
 
 export function VideoArticleCard({article, locale, eager = false}: {article: VideoArticle; locale: Locale; eager?: boolean}) {
+  const ui = getVideoUi(locale);
   return (
     <a
       href={videoArticleHref(locale, article.slug)}
@@ -18,7 +20,7 @@ export function VideoArticleCard({article, locale, eager = false}: {article: Vid
     >
       <span className="relative block aspect-video overflow-hidden border-b border-[#2c3631] bg-[#0d100e]">
         <Image
-          alt={`${article.sourceLabel} thumbnail`}
+          alt={`${article.sourceLabel} ${ui.thumbnail}`}
           className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           fill
           loading={eager ? "eager" : "lazy"}
@@ -35,13 +37,13 @@ export function VideoArticleCard({article, locale, eager = false}: {article: Vid
         <span>
           <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#d9a93a]">
             <PlayCircle aria-hidden="true" className="size-4" />
-            {article.kind === "official" ? "Official video" : "Creator footage"}
+            {article.kind === "official" ? ui.officialVideo : ui.creatorFootage}
           </span>
           <span className="display-font mt-4 block text-2xl leading-tight text-white">{article.title}</span>
           <span className="mt-4 block text-sm leading-6 text-[#a8b4ae]">{article.quickAnswer}</span>
         </span>
         <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">
-          Read video breakdown
+          {ui.readBreakdown}
           <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-1" />
         </span>
       </span>

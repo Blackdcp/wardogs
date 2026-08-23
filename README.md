@@ -17,7 +17,7 @@ Local routes start at `http://127.0.0.1:3000/en`. The root path redirects to Eng
 
 ## Content Contract
 
-The library contains **20 topics x 4 locales**, stored as MDX under `content/{locale}/guides`. Every locale must include every slug listed in `keywords.json`; changing that manifest requires synchronized content and tests rather than automatic route expansion.
+The library contains **33 topics x 5 locales**, stored as MDX under `content/{locale}/guides`. Every locale must include every slug listed in `keywords.json`; changing that manifest requires synchronized content and tests rather than automatic route expansion.
 
 Frontmatter keeps `keyword`, `category`, `slug`, and `order` synchronized with the manifest. Titles are at most 60 characters, descriptions are 140-160 characters, and every source must use HTTPS, be dated, and belong to the approved official, creator, or community host set. Competitor URLs and copied competitor prose are forbidden. Local visual assets originate from official WARDOGS media and are used for identification and commentary on this independent guide.
 

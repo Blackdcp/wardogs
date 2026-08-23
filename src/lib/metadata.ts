@@ -9,7 +9,8 @@ const languageTags: Record<Locale, string> = {
   en: "en",
   ru: "ru",
   de: "de",
-  "pt-br": "pt-BR"
+  "pt-br": "pt-BR",
+  ja: "ja"
 };
 
 export function getSiteOrigin() {
@@ -38,6 +39,7 @@ export function buildAlternates(locale: Locale, pathname: string): NonNullable<M
       ru: buildLocalizedUrl("ru", pathname),
       de: buildLocalizedUrl("de", pathname),
       "pt-BR": buildLocalizedUrl("pt-br", pathname),
+      ja: buildLocalizedUrl("ja", pathname),
       "x-default": buildLocalizedUrl("en", pathname)
     }
   };

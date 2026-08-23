@@ -58,11 +58,11 @@ export type WardogsItem = {
   image?: string;
   imageAlt?: string;
   priority: number;
-  indexLocales: readonly Extract<Locale, "en" | "ru">[];
+  indexLocales: readonly Locale[];
 };
 
 export type IndexableItemPath = {
-  locale: Extract<Locale, "en" | "ru">;
+  locale: Locale;
   type: ItemTypeId;
   slug: string;
 };
@@ -333,7 +333,10 @@ const legacyItemLibrary: readonly WardogsItem[] = [
   }
 ] as const;
 
-export const itemLibrary: readonly WardogsItem[] = [...legacyItemLibrary, ...weaponItems, ...vehicleItems];
+export const itemLibrary: readonly WardogsItem[] = [...legacyItemLibrary, ...weaponItems, ...vehicleItems].map((item) => ({
+  ...item,
+  indexLocales: ["en", "ru", "de", "pt-br", "ja"] as const
+}));
 
 export function getItemType(type: string): ItemType | undefined {
   return itemTypes.find((itemType) => itemType.id === type);
@@ -369,7 +372,7 @@ export function getFeaturedItems(limit = 6): WardogsItem[] {
   return itemLibrary.filter((item) => item.indexLocales.length > 0).sort((a, b) => a.priority - b.priority).slice(0, limit);
 }
 
-export function getRelatedItems(item: WardogsItem, locale: Extract<Locale, "en" | "ru">): WardogsItem[] {
+export function getRelatedItems(item: WardogsItem, locale: Locale): WardogsItem[] {
   return item.relatedItems
     .map((slug) => getItemBySlug(slug))
     .filter((related): related is WardogsItem => related !== undefined && related.indexLocales.includes(locale));

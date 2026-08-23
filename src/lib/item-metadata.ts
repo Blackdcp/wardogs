@@ -3,6 +3,7 @@ import type {Locale} from "@/config/site";
 import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import type {WardogsItem} from "@/features/items/item-library";
+import {getItemUi} from "@/features/items/item-ui";
 import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {buildLocalizedUrl, buildPageMetadata, languageTags} from "./metadata";
 import {publicAssetUrl} from "./public-url";
@@ -11,8 +12,8 @@ function itemPath(item: WardogsItem) {
   return `/items/${item.type}/${item.slug}`;
 }
 
-export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Extract<Locale, "en" | "ru"> {
-  return resolveItemRouteTarget(locale, itemPath(item)).locale as Extract<Locale, "en" | "ru">;
+export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Locale {
+  return resolveItemRouteTarget(locale, itemPath(item)).locale;
 }
 
 export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
@@ -23,8 +24,8 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   ) as Record<string, string>;
   languages["x-default"] = languages.en ?? canonical;
 
-  const title = `WARDOGS ${item.name} - Item Guide & Evidence`;
-  const description = `${item.summary} Includes source notes, evidence labels, role advice, strengths, counters, and pre-release caveats.`;
+  const title = `WARDOGS ${item.name} - ${item.subtype}`;
+  const description = item.summary;
   const image = publicAssetUrl(item.detailImage ?? "/images/og-wardogs.jpg");
   const imageAlt = item.detailImageAlt ?? `WARDOGS ${item.name}`;
 
@@ -47,7 +48,7 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
 }
 
 export function buildCatalogGuideMetadata(locale: Locale, guide: CatalogGuide): Metadata {
-  return buildEnglishOnlyItemPageMetadata(
+  return buildLocalizedItemPageMetadata(
     locale,
     `/items/${guide.id}`,
     guide.title,
@@ -57,18 +58,18 @@ export function buildCatalogGuideMetadata(locale: Locale, guide: CatalogGuide): 
 }
 
 export function buildItemHubMetadata(locale: Locale): Metadata {
-  return buildEnglishOnlyItemPageMetadata(
+  const ui = getItemUi(locale);
+  return buildLocalizedItemPageMetadata(
     locale,
     "/items",
-    "WARDOGS Catalogue - Weapons, Vehicles & Equipment",
-    "Browse the WARDOGS Catalogue for weapons, vehicles, ammunition, attachments, gear, equipment, loadouts, evidence labels, and pre-release caveats.",
+    ui.hubMetaTitle,
+    ui.hubMetaDescription,
     catalogueMetadataImages.hub
   );
 }
 
-function buildEnglishOnlyItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath: string): Metadata {
-  const canonical = buildLocalizedUrl("en", pathname);
-  const metadata = buildPageMetadata("en", pathname, title, description);
+function buildLocalizedItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath: string): Metadata {
+  const metadata = buildPageMetadata(locale, pathname, title, description);
   const image = publicAssetUrl(imagePath);
 
   return {
@@ -81,10 +82,6 @@ function buildEnglishOnlyItemPageMetadata(locale: Locale, pathname: string, titl
       ...metadata.twitter,
       images: [image]
     },
-    robots: locale === "en" ? undefined : {index: false, follow: true},
-    alternates: {
-      canonical,
-      languages: {en: canonical, "x-default": canonical}
-    }
+    robots: undefined
   };
 }

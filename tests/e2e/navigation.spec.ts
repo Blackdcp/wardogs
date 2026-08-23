@@ -6,16 +6,16 @@ test("locale switching preserves the current article slug", async ({page}) => {
   await expect(page).toHaveURL(/\/de\/guides\/wardogs-gameplay\/?$/);
 });
 
-test("locale switching never synthesizes unsupported item details", async ({page}) => {
+test("locale switching preserves supported item details", async ({page}) => {
   await page.goto("/en/items/vehicles/bobcat");
   await page.locator('select:visible').selectOption("ru");
-  await expect(page).toHaveURL(/\/ru\/items\/vehicles\/?$/);
+  await expect(page).toHaveURL(/\/ru\/items\/vehicles\/bobcat\/?$/);
 
   await page.goto("/en/items/weapons/mortar");
   await page.locator('select:visible').selectOption("ru");
   await expect(page).toHaveURL(/\/ru\/items\/weapons\/mortar\/?$/);
   await page.locator('select:visible').selectOption("de");
-  await expect(page).toHaveURL(/\/de\/items\/weapons\/?$/);
+  await expect(page).toHaveURL(/\/de\/items\/weapons\/mortar\/?$/);
 });
 
 test("fixed legacy navigation links target only published locales", async ({page}) => {
@@ -203,12 +203,12 @@ test("homepage promotes priority guide links and confirmed status signals", asyn
     "wardogs-ps5",
     "wardogs-crash-fix",
     "wardogs-beginner-guide",
-    "wardogs-money-guide",
-    "wardogs-helicopter-guide",
     "wardogs-fob-guide",
     "wardogs-twitch-drops",
     "wardogs-gameplay",
-    "wardogs-early-access"
+    "wardogs-release-date",
+    "wardogs-steam",
+    "wardogs-best-settings"
   ]) {
     await expect(topGuides.locator(`a[href="/en/guides/${slug}"]`)).toBeVisible();
   }

@@ -1,0 +1,91 @@
+---
+title: "WARDOGS システム要件：最低・推奨PCスペック"
+description: "WARDOGSのSteam公式システム要件を、Windows、CPU、GPU、16GB RAM、50GB空き容量、ネットワーク、最低1080p Low 60fps、推奨1440pまたは4Kの性能目標まで日本語で整理します。自分のPCとの比較方法、ノートPC、実戦負荷、容量表示の注意点も確認できる購入前ガイドです。"
+keyword: "wardogs system requirements"
+category: "guide"
+slug: "wardogs-system-requirements"
+order: 32
+updatedAt: "2026-08-23"
+badges:
+  - label: "公式スペック"
+    tone: "accent"
+  - label: "PC版"
+    tone: "muted"
+faq:
+  - question: "GTX 1660でWARDOGSを動かせますか？"
+    answer: "公式最低GPUに一致します。ほかの部品も最低要件を満たす場合、Steamはアップスケール使用の1080p Low 60fpsを目標にしています。"
+  - question: "WARDOGSに必要なRAMは？"
+    answer: "Steamの最低構成と推奨構成は、どちらも16GB RAMを掲載しています。"
+  - question: "WARDOGSに必要な容量は？"
+    answer: "Steamは50GBの空き容量を掲載しています。更新、シェーダーキャッシュ、一時ファイル用に追加の余白を残してください。"
+  - question: "Windows 11は必須ですか？"
+    answer: "必須ではありません。最低構成は64bit Windows 10、推奨構成は64bit Windows 11です。"
+sources:
+  - label: "WARDOGS Steam公式ページ"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-08-23"
+  - label: "BULKHEAD WARDOGS公式ページ"
+    url: "https://bulkhead.com/games/wardogs/"
+    kind: "official"
+    checkedAt: "2026-08-23"
+---
+
+## 公式要件の要点
+
+WARDOGSの最低要件は、64bit Windows 10、Intel Core i5-8600またはAMD Ryzen 5 3500、16GB RAM、Nvidia GTX 1660またはAMD Radeon RX 590、ブロードバンド回線、50GBの空き容量です。この構成の公式目標は、アップスケールを使った1080p Low、60fpsです。
+
+推奨要件はWindows 11、Core i7-12700KまたはRyzen 7 5700X、RTX 3070またはRX 6700 XTへ上がります。目標は1440p Mediumネイティブ70fps以上、または4K Mediumアップスケール60fps以上です。
+
+## 最低システム要件
+
+| 項目 | 公式最低要件 |
+| --- | --- |
+| OS | Windows 10、64bit |
+| CPU | Intel Core i5-8600 / AMD Ryzen 5 3500 |
+| メモリ | 16GB RAM |
+| GPU | Nvidia GTX 1660 / AMD Radeon RX 590 |
+| ネットワーク | ブロードバンド接続 |
+| ストレージ | 50GBの空き容量 |
+| 性能目標 | 1080p Low、60fps、アップスケール使用 |
+
+最低要件を満たすことは、記載条件で目標を狙えるという意味です。ネイティブ解像度、高いプリセット、すべてのテストビルドで同じ結果を保証するものではありません。ドライバ、温度、背景アプリ、メモリ構成も実際の性能へ影響します。
+
+## 推奨システム要件
+
+| 項目 | 公式推奨要件 |
+| --- | --- |
+| OS | Windows 11、64bit |
+| CPU | Intel Core i7-12700K / AMD Ryzen 7 5700X |
+| メモリ | 16GB RAM |
+| GPU | Nvidia RTX 3070 / AMD Radeon RX 6700 XT |
+| ネットワーク | ブロードバンド接続 |
+| ストレージ | 50GBの空き容量 |
+| 性能目標 | 1440p Medium 70fps以上ネイティブ、または4K Medium 60fps以上アップスケール |
+
+推奨表はOverkillや最高画質の仕様ではありません。Mediumの目標です。高リフレッシュレート、最大エフェクト、高解像度を同時に狙う場合は追加の余裕が必要です。
+
+## 自分のPCを確認する
+
+Windowsの**設定 > システム > バージョン情報**でCPU、RAM、Windows版を確認します。**タスクマネージャー > パフォーマンス > GPU**またはGPUドライバ画面でグラフィックス名を調べます。Steamを入れるドライブはエクスプローラーで空き容量を確認します。
+
+GPUだけを比較しないでください。WARDOGSは最大100人、車両、破壊、建築を同時に扱うため、CPUとフレーム時間も重要です。GTX 1660より速いGPUでも、CPU、メモリ、温度が不足すれば混雑したControl Zoneで低下します。
+
+ノートPCはデスクトップと似た部品名でも電力上限が違います。電源へ接続し、専用GPUで起動していることを確認し、適切な性能モードと温度を使います。型番が同じという理由だけでデスクトップ結果をそのまま期待しないでください。
+
+## 容量とダウンロード
+
+50GBは必要な空き容量であり、通信で必ず50GBを受信するという表示ではありません。インストール、一時展開、アップデート、シェーダーキャッシュ、Windowsの動作に追加余白が必要になる場合があります。容量ぎりぎりのドライブより、更新後も余る場所を選びます。
+
+## 実戦で性能を確かめる
+
+静かなスポーンや空のサーバーでは、大規模戦を再現できません。プレイヤー、車両、爆発、煙、破壊、建築が重なる同じ場所で比較し、最高FPSではなく低い持続値と入力の引っ掛かりを見ます。
+
+解像度を下げて大きく改善する場合はGPU制約の可能性があります。ほとんど変わらず大規模戦だけ落ちる場合はCPUまたは現在ビルドが制約かもしれません。設定は一項目ずつ変え、ネットワーク遅延とローカル描画低下も分けて判断します。
+
+## 関連ガイド
+
+- [WARDOGSおすすめ設定](/guides/wardogs-best-settings)
+- [WARDOGSクラッシュ修正](/guides/wardogs-crash-fix)
+- [WARDOGS Steamガイド](/guides/wardogs-steam)
+- [WARDOGSダウンロードガイド](/guides/wardogs-download)

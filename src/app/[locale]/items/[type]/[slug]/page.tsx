@@ -20,6 +20,9 @@ import {StatusBadge} from "@/components/ui/status-badge";
 import {getTranslations} from "next-intl/server";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
+import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
+import {getItemUi} from "@/features/items/item-ui";
+import {loadGuideDocument} from "@/content/guides";
 
 type PageProps = {params: Promise<{locale: string; type: string; slug: string}>};
 
@@ -32,7 +35,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const item = getItemByTypeAndSlug(type, slug);
   if (!item) return {};
-  return buildItemMetadata(locale, item);
+  return buildItemMetadata(locale, getLocalizedItem(item, locale));
 }
 
 function statusTone(item: WardogsItem): "accent" | "warning" | "muted" {
@@ -45,20 +48,26 @@ export default async function ItemDetailPage({params}: PageProps) {
   const {locale: requestedLocale, type, slug} = await params;
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
-  const item = getItemByTypeAndSlug(type, slug);
+  const baseItem = getItemByTypeAndSlug(type, slug);
   const pathname = `/items/${type}/${slug}`;
-  if (!item || !isItemDetailRouteAvailable(locale, pathname)) notFound();
-  const itemType = getItemType(item.type);
-  const relatedItems = getRelatedItems(item, locale as Extract<Locale, "en" | "ru">);
-  const adsT = await getTranslations({locale, namespace: "ads"});
+  if (!baseItem || !isItemDetailRouteAvailable(locale, pathname)) notFound();
+  const item = getLocalizedItem(baseItem, locale);
+  const baseItemType = getItemType(item.type);
+  const itemType = baseItemType ? getLocalizedItemType(baseItemType, locale) : undefined;
+  const relatedItems = getRelatedItems(baseItem, locale).map((related) => getLocalizedItem(related, locale));
+  const [adsT, relatedGuideDocuments] = await Promise.all([
+    getTranslations({locale, namespace: "ads"}),
+    Promise.all(item.relatedGuides.map((guideSlug) => loadGuideDocument(locale, guideSlug)))
+  ]);
+  const ui = getItemUi(locale);
   const quickFacts = item.detailImage
     ? [
-      ...(item.observedPrice ? [{label: "Observed Alpha 1 price", value: item.observedPrice}] : []),
-      ...(item.observedProgressionOrGate ? [{label: item.type === "weapons" ? "Observed Alpha 1 progression" : "Observed Alpha 1 gate", value: item.observedProgressionOrGate}] : []),
-      ...(item.observedAmmoOrVehicleClass ? [{label: item.type === "weapons" ? "Observed Alpha 1 ammunition" : "Observed Alpha 1 vehicle class", value: item.observedAmmoOrVehicleClass}] : [])
+      ...(item.observedPrice ? [{label: ui.observedPrice, value: item.observedPrice}] : []),
+      ...(item.observedProgressionOrGate ? [{label: item.type === "weapons" ? ui.observedProgression : ui.observedGate, value: item.observedProgressionOrGate}] : []),
+      ...(item.observedAmmoOrVehicleClass ? [{label: item.type === "weapons" ? ui.observedAmmo : ui.observedVehicleClass, value: item.observedAmmoOrVehicleClass}] : [])
     ]
     : item.facts.map(({label, value}) => ({label, value}));
-  const observedHeading = item.detailImage ? "Observed in Alpha 1" : "Observed in pre-release footage";
+  const observedHeading = item.detailImage ? ui.observedAlpha : ui.observedPreRelease;
   const confirmedFacts = item.confirmedFacts ?? item.facts
     .filter((fact) => fact.value !== "Not confirmed")
     .map((fact) => `${fact.label}: ${fact.value}`);
@@ -72,7 +81,7 @@ export default async function ItemDetailPage({params}: PageProps) {
       <header className="border-b border-[#2c3631] bg-[#101411] py-12 md:py-16">
         <div className="site-container max-w-4xl">
           <Link className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href={`/items/${item.type}`}>
-            <ArrowLeft aria-hidden="true" size={16} />WARDOGS {itemType?.label ?? "Items"}
+            <ArrowLeft aria-hidden="true" size={16} />WARDOGS {itemType?.label ?? ui.itemsFallback}
           </Link>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <StatusBadge tone={statusTone(item)}>{item.statusLabel}</StatusBadge>
@@ -99,7 +108,7 @@ export default async function ItemDetailPage({params}: PageProps) {
 
       <article className="site-container max-w-4xl py-10 md:py-14">
         <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
-          <p className="text-xs font-semibold uppercase text-[#68bd8d]">Quick answer</p>
+          <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>
           <p className="mt-3 text-base leading-7 text-white">{item.summary}</p>
         </aside>
 
@@ -107,7 +116,7 @@ export default async function ItemDetailPage({params}: PageProps) {
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
 
         <section aria-labelledby="facts-title">
-          <h2 className="display-font text-3xl text-white" id="facts-title">Quick Facts</h2>
+          <h2 className="display-font text-3xl text-white" id="facts-title">{ui.quickFacts}</h2>
           <dl className="mt-5 grid gap-px bg-[#2c3631] sm:grid-cols-2">
             {quickFacts.map((fact) => (
               <div className="bg-[#151b18] p-4" key={fact.label}>
@@ -126,7 +135,7 @@ export default async function ItemDetailPage({params}: PageProps) {
             </ul>
           </div>
           <div>
-            <h2 className="display-font text-3xl text-white">Unconfirmed for Early Access / final release</h2>
+            <h2 className="display-font text-3xl text-white">{ui.unconfirmedRelease}</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
               {unconfirmedFacts.map((fact) => <li className="border-l border-[#927328] pl-4" key={fact}>{fact}</li>)}
             </ul>
@@ -134,19 +143,19 @@ export default async function ItemDetailPage({params}: PageProps) {
         </section>
 
         <section className="mt-12" aria-labelledby="role-title">
-          <h2 className="display-font text-3xl text-white" id="role-title">How to Use It</h2>
+          <h2 className="display-font text-3xl text-white" id="role-title">{ui.howToUse}</h2>
           <p className="mt-4 text-base leading-7 text-[#c5d0ca]">{item.role}</p>
         </section>
 
         <section className="mt-12 grid gap-6 md:grid-cols-2">
           <div>
-            <h2 className="display-font text-3xl text-white">Strengths</h2>
+            <h2 className="display-font text-3xl text-white">{ui.strengths}</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
               {item.strengths.map((strength) => <li className="border-l border-[#4d946d] pl-4" key={strength}>{strength}</li>)}
             </ul>
           </div>
           <div>
-            <h2 className="display-font text-3xl text-white">Cautions</h2>
+            <h2 className="display-font text-3xl text-white">{ui.cautions}</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
               {item.cautions.map((caution) => <li className="border-l border-[#927328] pl-4" key={caution}>{caution}</li>)}
             </ul>
@@ -154,7 +163,7 @@ export default async function ItemDetailPage({params}: PageProps) {
         </section>
 
         <section className="mt-14 border-t border-[#2c3631] pt-9" aria-labelledby="sources-title">
-          <h2 className="display-font text-3xl text-white" id="sources-title">Sources</h2>
+          <h2 className="display-font text-3xl text-white" id="sources-title">{ui.sources}</h2>
           <ul className="mt-5 grid gap-px bg-[#2c3631] sm:grid-cols-2">
             {item.sources.map((source) => (
               <li className="bg-[#151b18] p-4" key={`${source.url}-${source.label}`}>
@@ -167,7 +176,7 @@ export default async function ItemDetailPage({params}: PageProps) {
                 >
                   {source.label}<ExternalLink aria-hidden="true" size={15} />
                 </a>
-                <p className="mt-1 text-xs uppercase text-[#7f8e87]">{source.kind} - Last checked {source.lastChecked}</p>
+                <p className="mt-1 text-xs uppercase text-[#7f8e87]">{source.kind} - {ui.lastChecked} {source.lastChecked}</p>
               </li>
             ))}
           </ul>
@@ -175,19 +184,19 @@ export default async function ItemDetailPage({params}: PageProps) {
 
         <section className="mt-14 grid gap-6 border-t border-[#2c3631] pt-9 md:grid-cols-2">
           <div>
-            <h2 className="display-font text-3xl text-white">Related Guides</h2>
+            <h2 className="display-font text-3xl text-white">{ui.relatedGuides}</h2>
             <ul className="mt-4 space-y-2">
-              {item.relatedGuides.map((guideSlug) => (
+              {item.relatedGuides.map((guideSlug, index) => (
                 <li key={guideSlug}>
                   <Link className="inline-flex min-h-11 items-center text-[#7fd0a1] hover:text-white" href={`/guides/${guideSlug}`}>
-                    {guideSlug.replace(/-/g, " ")}
+                    {relatedGuideDocuments[index]?.frontmatter.title ?? guideSlug.replace(/-/g, " ")}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h2 className="display-font text-3xl text-white">Related Items</h2>
+            <h2 className="display-font text-3xl text-white">{ui.relatedItems}</h2>
             <ul className="mt-4 space-y-2">
               {relatedItems.map((related) => (
                 <li key={related.slug}>

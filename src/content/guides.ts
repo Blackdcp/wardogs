@@ -96,7 +96,7 @@ export async function compileGuideBody(body: string, components: MDXComponents) 
 }
 
 export function localizeMdxInternalLinks(body: string, locale: Locale): string {
-  const localePattern = "(?:en|ru|de|pt-br)";
+  const localePattern = "(?:en|ru|de|pt-br|ja)";
   return body
     .replace(new RegExp(`\\]\\(/(?!${localePattern}/)(guides|videos)([^\\)]*)\\)`, "g"), `](/${locale}/$1$2)`)
     .replace(new RegExp(`href="/(?!${localePattern}/)(guides|videos)([^"]*)"`, "g"), `href="/${locale}/$1$2"`);

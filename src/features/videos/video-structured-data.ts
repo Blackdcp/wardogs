@@ -1,5 +1,6 @@
 import {locales, type Locale} from "@/config/site";
-import {videoArticles, type VideoArticle} from "@/features/videos/video-library";
+import type {VideoArticle} from "@/features/videos/video-library";
+import {getLocalizedVideoArticles} from "@/features/videos/video-localization";
 import {buildLocalizedUrl} from "@/lib/metadata";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 
@@ -56,7 +57,7 @@ function escapeXml(value: string) {
 }
 
 export function buildVideoSitemapXml() {
-  const entries = locales.flatMap((locale) => videoArticles.map((article) => {
+  const entries = locales.flatMap((locale) => getLocalizedVideoArticles(locale).map((article) => {
     const pageUrl = buildLocalizedUrl(locale, `/videos/${article.slug}`);
     return [
       "  <url>",

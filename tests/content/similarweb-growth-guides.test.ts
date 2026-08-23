@@ -4,7 +4,7 @@ import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 import {videoArticles} from "../../src/features/videos/video-library";
 import sitemap from "../../src/app/sitemap";
 
-const locales = ["en", "de", "ru", "pt-br"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
 const newGuideSlugs = [
   "wardogs-map",
   "wardogs-best-settings",
@@ -32,10 +32,14 @@ describe("Similarweb growth guide cluster", () => {
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources.length).toBeGreaterThan(0);
-        expect(guide?.body.length).toBeGreaterThanOrEqual(1_800);
+        expect(guide?.body.length).toBeGreaterThanOrEqual(locale === "ja" ? 1_200 : 1_800);
 
-        for (const heading of requiredHeadings) {
-          expect(guide?.body, `${locale}/${slug} missing ${heading}`).toContain(heading);
+        if (locale === "ja") {
+          expect(guide?.body.match(/^## /gm)?.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(6);
+        } else {
+          for (const heading of requiredHeadings) {
+            expect(guide?.body, `${locale}/${slug} missing ${heading}`).toContain(heading);
+          }
         }
       }
     }
@@ -112,7 +116,8 @@ describe("Similarweb growth guide cluster", () => {
       en: /official[^.]*gamepad support|gamepad support[^.]*official/i,
       de: /offiziell[^.]*Gamepad|Gamepad[^.]*offiziell/i,
       ru: /официальн[^.]*геймпад|геймпад[^.]*официальн/i,
-      "pt-br": /oficial[^.]*gamepad|gamepad[^.]*oficial/i
+      "pt-br": /oficial[^.]*gamepad|gamepad[^.]*oficial/i,
+      ja: /公式[^。]*ゲームパッド|ゲームパッド[^。]*公式/i
     } as const;
 
     for (const locale of locales) {

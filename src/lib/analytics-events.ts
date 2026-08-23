@@ -124,7 +124,7 @@ export function getTrackedLinkEvent(href: string, currentOrigin: string, options
     targetUrl.pathname,
     options.basePath ?? process.env.NEXT_PUBLIC_BASE_PATH ?? ""
   );
-  const itemMatch = routePathname.match(/^\/(?:en|ru|de|pt-br)\/items\/([^/]+)\/([^/]+)\/?$/);
+  const itemMatch = routePathname.match(/^\/(?:en|ru|de|pt-br|ja)\/items\/([^/]+)\/([^/]+)\/?$/);
   if (!itemMatch) return null;
 
   return {

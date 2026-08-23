@@ -1,6 +1,6 @@
 import {guideManifest} from "@/content/manifest";
 import {locales, type Locale} from "@/config/site";
-import {videoArticles} from "@/features/videos/video-library";
+import {getLocalizedVideoArticles} from "@/features/videos/video-localization";
 import {getSiteOrigin} from "@/lib/metadata";
 
 export const dynamic = "force-static";
@@ -9,14 +9,15 @@ const localeNames: Record<Locale, string> = {
   en: "English",
   ru: "Russian",
   de: "German",
-  "pt-br": "Brazilian Portuguese"
+  "pt-br": "Brazilian Portuguese",
+  ja: "Japanese"
 };
 
 export function GET() {
   const origin = getSiteOrigin();
   const localizedSections = locales.flatMap((locale) => {
     const guideUrls = guideManifest.map((guide) => `- ${guide.keyword}: ${origin}/${locale}/guides/${guide.slug}`);
-    const videoUrls = videoArticles.map((article) => `- ${article.title}: ${origin}/${locale}/videos/${article.slug}`);
+    const videoUrls = getLocalizedVideoArticles(locale).map((article) => `- ${article.title}: ${origin}/${locale}/videos/${article.slug}`);
 
     return [
       `## ${localeNames[locale]} Core Pages`,

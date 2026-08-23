@@ -8,17 +8,22 @@ afterEach(() => {
 });
 
 describe("item metadata", () => {
-  it("limits item detail alternates to indexable locales", () => {
+  const allItemAlternates = (pathname: string) => ({
+    en: `http://localhost:3000/en${pathname}`,
+    ru: `http://localhost:3000/ru${pathname}`,
+    de: `http://localhost:3000/de${pathname}`,
+    "pt-br": `http://localhost:3000/pt-br${pathname}`,
+    ja: `http://localhost:3000/ja${pathname}`,
+    "x-default": `http://localhost:3000/en${pathname}`
+  });
+
+  it("publishes item detail alternates for all supported locales", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();
 
     const metadata = buildItemMetadata("en", mortar!);
 
-    expect(metadata.alternates?.languages).toEqual({
-      en: "http://localhost:3000/en/items/weapons/mortar",
-      ru: "http://localhost:3000/ru/items/weapons/mortar",
-      "x-default": "http://localhost:3000/en/items/weapons/mortar"
-    });
+    expect(metadata.alternates?.languages).toEqual(allItemAlternates("/items/weapons/mortar"));
   });
 
   it("uses a model article's exact committed image for social metadata", () => {
@@ -33,35 +38,29 @@ describe("item metadata", () => {
     expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/catalogue/weapons/amp-9.webp"]);
   });
 
-  it("keeps a vehicle model English-only with its exact committed image", () => {
+  it("publishes a vehicle model in every locale with its exact committed image", () => {
     const bobcat = getItemBySlug("bobcat");
     expect(bobcat).toBeDefined();
 
     const metadata = buildItemMetadata("en", bobcat!);
 
-    expect(metadata.alternates?.languages).toEqual({
-      en: "http://localhost:3000/en/items/vehicles/bobcat",
-      "x-default": "http://localhost:3000/en/items/vehicles/bobcat"
-    });
+    expect(metadata.alternates?.languages).toEqual(allItemAlternates("/items/vehicles/bobcat"));
     expect(metadata.openGraph?.images).toEqual([
       expect.objectContaining({url: "http://localhost:3000/images/catalogue/vehicles/bobcat.webp", alt: "Bobcat light transport"})
     ]);
   });
 
-  it("canonicalizes model metadata to its only published locale", () => {
+  it("keeps model metadata canonical on the requested locale", () => {
     const bobcat = getItemBySlug("bobcat");
     expect(bobcat).toBeDefined();
 
     const metadata = buildItemMetadata("ru", bobcat!);
 
     expect(metadata.alternates).toEqual({
-      canonical: "http://localhost:3000/en/items/vehicles/bobcat",
-      languages: {
-        en: "http://localhost:3000/en/items/vehicles/bobcat",
-        "x-default": "http://localhost:3000/en/items/vehicles/bobcat"
-      }
+      canonical: "http://localhost:3000/ru/items/vehicles/bobcat",
+      languages: allItemAlternates("/items/vehicles/bobcat")
     });
-    expect(metadata.openGraph?.url).toBe("http://localhost:3000/en/items/vehicles/bobcat");
+    expect(metadata.openGraph?.url).toBe("http://localhost:3000/ru/items/vehicles/bobcat");
   });
 
   it("keeps legacy item social metadata on the generic fallback image", () => {
@@ -76,31 +75,39 @@ describe("item metadata", () => {
     expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/og-wardogs.jpg"]);
   });
 
-  it("canonicalizes untranslated catalogue pages to English and keeps them out of the index", () => {
+  it("keeps localized catalogue pages indexable with five-language alternates", () => {
     const guide = getCatalogGuide("weapons");
     expect(guide).toBeDefined();
 
     const metadata = buildCatalogGuideMetadata("ru", guide!);
 
-    expect(metadata.robots).toEqual({index: false, follow: true});
+    expect(metadata.robots).toBeUndefined();
     expect(metadata.alternates).toEqual({
-      canonical: "http://localhost:3000/en/items/weapons",
+      canonical: "http://localhost:3000/ru/items/weapons",
       languages: {
         en: "http://localhost:3000/en/items/weapons",
+        ru: "http://localhost:3000/ru/items/weapons",
+        de: "http://localhost:3000/de/items/weapons",
+        "pt-BR": "http://localhost:3000/pt-br/items/weapons",
+        ja: "http://localhost:3000/ja/items/weapons",
         "x-default": "http://localhost:3000/en/items/weapons"
       }
     });
   });
 
-  it("canonicalizes the untranslated item hub to English", () => {
+  it("keeps the localized item hub indexable", () => {
     const metadata = buildItemHubMetadata("de");
 
-    expect(metadata.title).toMatch(/^WARDOGS Catalogue/);
-    expect(metadata.robots).toEqual({index: false, follow: true});
+    expect(metadata.title).toMatch(/^WARDOGS Katalog/);
+    expect(metadata.robots).toBeUndefined();
     expect(metadata.alternates).toEqual({
-      canonical: "http://localhost:3000/en/items",
+      canonical: "http://localhost:3000/de/items",
       languages: {
         en: "http://localhost:3000/en/items",
+        ru: "http://localhost:3000/ru/items",
+        de: "http://localhost:3000/de/items",
+        "pt-BR": "http://localhost:3000/pt-br/items",
+        ja: "http://localhost:3000/ja/items",
         "x-default": "http://localhost:3000/en/items"
       }
     });
@@ -144,13 +151,17 @@ describe("item metadata", () => {
     const metadata = buildItemMetadata("ru", bobcat!);
 
     expect(metadata.alternates).toEqual({
-      canonical: "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/",
+      canonical: "https://blackdcp.github.io/wardogs/ru/items/vehicles/bobcat/",
       languages: {
         en: "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/",
+        ru: "https://blackdcp.github.io/wardogs/ru/items/vehicles/bobcat/",
+        de: "https://blackdcp.github.io/wardogs/de/items/vehicles/bobcat/",
+        "pt-br": "https://blackdcp.github.io/wardogs/pt-br/items/vehicles/bobcat/",
+        ja: "https://blackdcp.github.io/wardogs/ja/items/vehicles/bobcat/",
         "x-default": "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/"
       }
     });
-    expect(metadata.openGraph?.url).toBe("https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/");
+    expect(metadata.openGraph?.url).toBe("https://blackdcp.github.io/wardogs/ru/items/vehicles/bobcat/");
     expect(metadata.openGraph?.images).toEqual([
       expect.objectContaining({url: "https://blackdcp.github.io/wardogs/images/catalogue/vehicles/bobcat.webp"})
     ]);

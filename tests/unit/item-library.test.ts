@@ -91,12 +91,12 @@ describe("item library", () => {
     expect(mortar?.facts.every((fact) => fact.evidence.length > 0)).toBe(true);
   });
 
-  it("publishes all 14 manually authored English weapon model guides", () => {
+  it("publishes all 14 weapon model guides in every supported locale", () => {
     const weaponModels = itemLibrary.filter((item) => item.type === "weapons" && item.slug !== "mortar");
 
     expect(weaponModels.map((item) => item.slug)).toEqual(weaponSlugs);
     expect(weaponModels).toHaveLength(14);
-    expect(weaponModels.every((item) => item.indexLocales.length === 1 && item.indexLocales[0] === "en")).toBe(true);
+    expect(weaponModels.every((item) => JSON.stringify(item.indexLocales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja"]))).toBe(true);
     expect(weaponModels.every((item) => item.facts.length >= 4)).toBe(true);
     expect(weaponModels.every((item) => item.strengths.length >= 3 && item.cautions.length >= 3)).toBe(true);
     expect(weaponModels.every((item) => item.confirmedFacts && item.confirmedFacts.length > 0)).toBe(true);
@@ -132,10 +132,10 @@ describe("item library", () => {
     });
     expect(amp9?.confirmedFacts).toContain("Observed in Alpha 1: Ammunition: 9x19mm");
     expect(amp9?.unconfirmedFacts).not.toEqual([]);
-    expect(amp9?.indexLocales).toEqual(["en"]);
+    expect(amp9?.indexLocales).toEqual(["en", "ru", "de", "pt-br", "ja"]);
   });
 
-  it("publishes all 20 manually authored English vehicle model guides", () => {
+  it("publishes all 20 vehicle model guides in every supported locale", () => {
     const vehicleModels = itemLibrary.filter((item) => vehicleSlugs.includes(item.slug as (typeof vehicleSlugs)[number]));
     const guideSlugs = new Set(guideManifest.map((guide) => guide.slug));
 
@@ -143,7 +143,7 @@ describe("item library", () => {
     expect(vehicleModels.map((item) => item.slug)).toEqual(vehicleSlugs);
     expect(vehicleModels).toHaveLength(20);
     expect(vehicleModels.every((item) => item.type === "vehicles")).toBe(true);
-    expect(vehicleModels.every((item) => item.indexLocales.length === 1 && item.indexLocales[0] === "en")).toBe(true);
+    expect(vehicleModels.every((item) => JSON.stringify(item.indexLocales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja"]))).toBe(true);
     expect(vehicleModels.every((item) => item.facts.length >= 4)).toBe(true);
     expect(vehicleModels.every((item) => item.strengths.length >= 3 && item.cautions.length >= 3)).toBe(true);
     expect(vehicleModels.every((item) => item.confirmedFacts && item.confirmedFacts.length > 0)).toBe(true);
@@ -189,22 +189,26 @@ describe("item library", () => {
     expect(invalidPath).toBeDefined();
   });
 
-  it("includes published related models only in their indexed locales", () => {
+  it("includes published related models in every indexed locale", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();
 
     const itemWithRelatedModels = {...mortar!, relatedItems: ["mobile-fob", "amp-9"]};
 
     expect(getRelatedItems(itemWithRelatedModels, "en").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
-    expect(getRelatedItems(itemWithRelatedModels, "ru").map((item) => item.slug)).toEqual(["mobile-fob"]);
+    expect(getRelatedItems(itemWithRelatedModels, "ru").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
+    expect(getRelatedItems(itemWithRelatedModels, "ja").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
   });
 
-  it("indexes English and Russian item details first", () => {
+  it("indexes all 40 item details in all five locales", () => {
     const paths = getIndexableItemPaths();
 
+    expect(paths).toHaveLength(200);
     expect(paths).toContainEqual({locale: "en", type: "weapons", slug: "mortar"});
     expect(paths).toContainEqual({locale: "ru", type: "vehicles", slug: "littlebird"});
-    expect(paths).not.toContainEqual({locale: "de", type: "weapons", slug: "mortar"});
+    expect(paths).toContainEqual({locale: "de", type: "weapons", slug: "mortar"});
+    expect(paths).toContainEqual({locale: "pt-br", type: "vehicles", slug: "bobcat"});
+    expect(paths).toContainEqual({locale: "ja", type: "weapons", slug: "ak74"});
   });
 
   it("exposes all seven catalogue guide categories", () => {

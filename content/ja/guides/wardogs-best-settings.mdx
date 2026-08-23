@@ -1,0 +1,90 @@
+---
+title: "WARDOGS おすすめ設定：FPS、画質、パフォーマンス"
+description: "WARDOGSで安定したFPSと視認性を両立するため、公式PC性能目標、実戦ベンチマーク、解像度、アップスケール、影、エフェクト、フレーム時間の調整順を解説します。公式のPotato ModeとOverkill Modeを万能設定と誤解せず、100人戦、車両、破壊、建築が重なる場面で検証する日本語設定ガイドです。"
+keyword: "wardogs best settings"
+category: "guide"
+slug: "wardogs-best-settings"
+order: 31
+updatedAt: "2026-08-23"
+badges:
+  - label: "性能ガイド"
+    tone: "accent"
+  - label: "ビルド依存"
+    tone: "warning"
+faq:
+  - question: "WARDOGSでFPSを上げるおすすめ設定は？"
+    answer: "公式要件で自分のPCに近いプリセットから始め、混雑した実戦で影、エフェクト、ポスト処理、解像度関連を一群ずつ下げます。"
+  - question: "Potato Modeとは何ですか？"
+    answer: "BULKHEADが低性能PC向けの経路として公式に紹介したモードです。60fps以上という開発目標は、すべてのPCへの保証ではありません。"
+  - question: "Overkill Modeとは何ですか？"
+    answer: "高性能環境向けに最高の画質を狙う公式モードで、すべてのプレイヤーに推奨される競技設定ではありません。"
+  - question: "高性能PCでもLowにすべきですか？"
+    answer: "必ずしも必要ありません。大規模戦でフレーム時間と視認性を安定させられる範囲で、最も高い実用設定を選びます。"
+sources:
+  - label: "WARDOGS Steam公式ページ"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-08-23"
+  - label: "WARDOGSを知る七つの要点"
+    url: "https://www.youtube.com/watch?v=-k6IV0ITLDo"
+    kind: "creator"
+    checkedAt: "2026-08-23"
+  - label: "BULKHEAD公式パフォーマンス開発ログ"
+    url: "https://www.linkedin.com/posts/bulkhead_new-devlog-level-design-performance-activity-7483535791831478273-9DOJ"
+    kind: "official"
+    checkedAt: "2026-08-23"
+  - label: "BULKHEAD WARDOGS公式ページ"
+    url: "https://bulkhead.com/games/wardogs/"
+    kind: "official"
+    checkedAt: "2026-08-23"
+---
+
+## まず覚えること
+
+最良設定は、最高平均FPSではなく、100人戦、車両、破壊、建築が重なる場面でも操作感とフレーム時間を安定させる設定です。公式要件で自分のPCに近い開始点を選び、実際の混雑したControl Zoneで測り、一度に一群だけ変更します。空のスポーン地点やメニューで得た数字だけでは判断しません。
+
+## 公式に確認できる性能目標
+
+- 最低構成はGTX 1660またはRX 590級で、1080p Low、アップスケール使用、60fpsを目標とします。
+- 推奨構成はRTX 3070またはRX 6700 XT級で、1440p Mediumネイティブ70fps以上、または4K Mediumアップスケール60fps以上が示されています。
+- 両構成とも16GB RAMと50GBの空き容量を掲載しています。
+- BULKHEADの公式開発ログは、低性能PC向けPotato Mode、高性能環境向けOverkill Mode、60 FPS以上の開発目標を紹介しています。
+- モードの結果と個別オプションは、ハードウェア、ドライバ、場面、現在ビルドで変わります。
+
+## 基準テスト
+
+1. GPUドライバを更新し、Windowsを再起動します。
+2. 明らかなスタッターを起こすオーバーレイや不要アプリを閉じます。
+3. フルスクリーン、モニターのネイティブ解像度、自分の公式性能帯に近いプリセットから始めます。
+4. プレイヤー、煙、爆発、車両、建築が見える混雑したControl Zoneで測ります。
+5. 平均FPSだけでなく、繰り返す引っ掛かり、入力遅延、最も低い持続区間を記録します。
+6. 一つの設定群だけを変え、同じ種類の戦闘で比較します。
+
+他人のスクリーンショットは基準になりません。同じGPUでもCPU、解像度、メモリ、温度、ドライバ、背景処理、ゲームビルドが違えば結果は変わります。
+
+## 調整する順番
+
+GPU使用率が高く、解像度を下げると大きく改善する場合は、アップスケール品質または解像度関連を慎重に調整します。次に影、エフェクト、ポストプロセスを一群ずつ下げます。テクスチャはVRAM量の影響が大きいため、画質をすべて最低へ落とす前に、メモリ不足の兆候を確認します。
+
+モーションブラーや映画的効果が照準を妨げる場合、現在のメニューに項目があれば無効化します。視野角は周辺認識を広げますが、遠方目標を小さく見せ、負荷にも影響し得ます。最大値をコピーせず、自分が安定して追跡できる値を選びます。
+
+非常に強いアップスケールで高いFPSを得ても、遠方の歩兵、車両、目標表示がぼやければ実戦価値を失います。安定性と視認性を同じ試験で評価してください。
+
+## Potato ModeとOverkill Mode
+
+Potato Modeは低性能環境へ向けた公式の性能経路です。現在ビルドに表示されるなら有効な開始点ですが、すべての場面で60fpsを保証する契約ではありません。読みやすさ、入力応答、大規模戦の最低値を別に確認します。
+
+Overkill Modeは最高画質を狙う高性能環境向けです。Steamの推奨RTX 3070級目標はMedium設定であり、Overkillを標準推奨しているわけではありません。スクリーンショットや画質を優先するときに使い、対戦では十分な余裕がある場合だけ選びます。
+
+## CPU、GPU、ネットワークを分ける
+
+解像度を下げて大きく改善するならGPUが主な制約の可能性があります。解像度を変えても大規模戦だけ低下する場合、CPU、シミュレーション、現在ビルドが制約かもしれません。温度とクロックも見て、サーマルスロットリングを除外します。
+
+ラバーバンド、遅いヒット反映、サーバー待ちは描画スタッターと別です。ローカルFPSが安定していても通信問題は起こります。可能なら有線接続を使い、テスト期間の公式サービス情報も確認します。
+
+## 関連ガイド
+
+- [WARDOGSシステム要件](/guides/wardogs-system-requirements)
+- [WARDOGSクラッシュ修正](/guides/wardogs-crash-fix)
+- [WARDOGS Steamガイド](/guides/wardogs-steam)
+- [WARDOGSゲームプレイ解説](/guides/wardogs-gameplay)

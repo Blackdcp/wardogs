@@ -3,7 +3,7 @@ import {officialLinks, siteConfig} from "../../src/config/site";
 
 describe("siteConfig", () => {
   it("locks the approved locales, theme, and official identity", () => {
-    expect(siteConfig.locales).toEqual(["en", "ru", "de", "pt-br"]);
+    expect(siteConfig.locales).toEqual(["en", "ru", "de", "pt-br", "ja"]);
     expect(siteConfig.defaultLocale).toBe("en");
     expect(siteConfig.gameName).toBe("WARDOGS");
     expect(siteConfig.steamAppId).toBe("1867240");

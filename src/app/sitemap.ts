@@ -27,7 +27,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const localizedPaths = locales.flatMap((locale) => [
     ...staticPaths,
     "/videos",
-    ...(locale === "en" ? ["/items", ...itemTypes.map(({id}) => `/items/${id}`)] : []),
+    "/items",
+    ...itemTypes.map(({id}) => `/items/${id}`),
     ...guideManifest.map(({slug}) => `/guides/${slug}`),
     ...videoArticles.map(({slug}) => `/videos/${slug}`),
     ...indexableItemPaths
@@ -39,7 +40,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const alternates = buildAlternates(locale, pathname || "/");
     const itemDetailMatch = pathname.match(/^\/items\/([^\/]+)\/([^\/]+)$/);
     const guideDetailMatch = pathname.match(/^\/guides\/([^\/]+)$/);
-    const itemCatalogMatch = pathname === "/items" || /^\/items\/[^\/]+$/.test(pathname);
     const item = itemDetailMatch ? getItemByTypeAndSlug(itemDetailMatch[1], itemDetailMatch[2]) : undefined;
     const languages = itemDetailMatch
       ? Object.fromEntries(
@@ -47,8 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
           .filter(({type, slug}) => type === itemDetailMatch[1] && slug === itemDetailMatch[2])
           .map((path) => [path.locale, String(buildAlternates(path.locale, pathname).canonical)])
       ) as Record<string, string>
-      : itemCatalogMatch
-        ? {en: String(alternates.canonical), "x-default": String(alternates.canonical)}
       : alternates.languages as Record<string, string>;
     if (itemDetailMatch && languages.en) languages["x-default"] = languages.en;
     return {

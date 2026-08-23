@@ -10,7 +10,10 @@ import {catalogueGroups} from "@/features/catalogue/catalogue-groups";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecord, CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
+import {getLocalizedCatalogGuide, getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getFeaturedItems, itemTypes, type ItemTypeId} from "@/features/items/item-library";
+import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
+import {getItemUi} from "@/features/items/item-ui";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
@@ -58,8 +61,8 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   return buildItemHubMetadata(locale);
 }
 
-function getPreviewRecords(type: "weapons" | "vehicles"): readonly PublishedPreviewRecord[] {
-  const records = getCatalogueRecords(type);
+function getPreviewRecords(type: "weapons" | "vehicles", locale: Locale): readonly PublishedPreviewRecord[] {
+  const records = getLocalizedCatalogueRecords(getCatalogueRecords(type), locale);
   return previewSlugs[type].map((slug) => {
     const record = records.find((candidate) => candidate.slug === slug);
     if (!record || record.detailStatus !== "published" || !record.detailHref) {
@@ -70,19 +73,20 @@ function getPreviewRecords(type: "weapons" | "vehicles"): readonly PublishedPrev
 }
 
 function CataloguePreviewRow({locale, type, title, description}: {locale: Locale; type: "weapons" | "vehicles"; title: string; description: string}) {
-  const records = getPreviewRecords(type);
+  const records = getPreviewRecords(type, locale);
+  const ui = getItemUi(locale);
   const headingId = `featured-${type}`;
 
   return (
     <section data-catalogue-preview-row aria-labelledby={headingId} className="border-t border-[#354039] py-9 first:border-t-0 md:py-11">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="max-w-2xl">
-          <p className="font-mono text-xs uppercase text-[#d9a93a]">Model preview</p>
+          <p className="font-mono text-xs uppercase text-[#d9a93a]">{ui.modelPreview}</p>
           <h2 id={headingId} className="display-font mt-2 text-3xl leading-tight text-[#f2f5f3] md:text-4xl">{title}</h2>
           <p className="mt-3 text-sm leading-6 text-[#a8b4ae]">{description}</p>
         </div>
         <Link className="inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c] hover:text-white" href={`/items/${type}`}>
-          View all {type}
+          {ui.viewAll}: {getLocalizedItemType(itemTypes.find((itemType) => itemType.id === type)!, locale).label}
           <ArrowRight aria-hidden="true" className="size-4" />
         </Link>
       </div>
@@ -98,7 +102,7 @@ function CataloguePreviewRow({locale, type, title, description}: {locale: Locale
               </span>
               <div className="pt-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <StatusBadge tone="warning">Pre-release build</StatusBadge>
+                  <StatusBadge tone="warning">{ui.preRelease}</StatusBadge>
                   <span className="text-xs uppercase text-[#829087]">{record.subtype}</span>
                 </div>
                 <h3 className="display-font mt-3 text-2xl leading-tight text-white group-hover:text-[#79d19c]">{record.name}</h3>
@@ -112,7 +116,7 @@ function CataloguePreviewRow({locale, type, title, description}: {locale: Locale
   );
 }
 
-function catalogueCategories() {
+function catalogueCategories(locale: Locale) {
   const groupedTypes = new Set<CatalogueRecordType>(catalogueGroups.map((group) => group.type));
 
   return itemTypes.map((itemType) => {
@@ -121,7 +125,9 @@ function catalogueCategories() {
     }
     const guide = getCatalogGuide(itemType.id);
     if (!guide) throw new Error(`Missing catalogue guide for ${itemType.id}`);
-    return {...itemType, ...categoryMedia[itemType.id], count: guide.countLabel};
+    const localizedType = getLocalizedItemType(itemType, locale);
+    const localizedGuide = getLocalizedCatalogGuide(guide, locale);
+    return {...localizedType, ...categoryMedia[itemType.id], imageAlt: localizedType.imageAlt ?? categoryMedia[itemType.id].imageAlt, count: localizedGuide.countLabel};
   });
 }
 
@@ -129,8 +135,9 @@ export default async function ItemsPage({params}: PageProps) {
   const {locale: requestedLocale} = await params;
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
-  const categories = catalogueCategories();
-  const featured = getFeaturedItems(6);
+  const categories = catalogueCategories(locale);
+  const featured = getFeaturedItems(6).map((item) => getLocalizedItem(item, locale));
+  const ui = getItemUi(locale);
 
   return (
     <main>
@@ -141,7 +148,7 @@ export default async function ItemsPage({params}: PageProps) {
           <div className="relative aspect-[4/5] min-h-[420px] overflow-hidden border-y border-[#354039] sm:aspect-[16/7] sm:min-h-[360px] lg:aspect-[18/5]">
             <Image
               src={assetPath("/images/catalogue/banners/thegame-1280.webp")}
-              alt="WARDOGS battlefield overview"
+              alt={ui.hubDescription}
               fill
               priority
               sizes="(min-width: 1280px) 1216px, calc(100vw - 32px)"
@@ -152,14 +159,14 @@ export default async function ItemsPage({params}: PageProps) {
               <div className="max-w-3xl">
                 <p className="inline-flex items-center gap-2 font-mono text-xs uppercase text-[#d9a93a]">
                   <Archive aria-hidden="true" className="size-4" />
-                  Evidence-labelled field index
+                  {ui.hubEyebrow}
                 </p>
-                <h1 className="display-font mt-4 text-4xl leading-none text-white sm:text-5xl lg:text-6xl">WARDOGS Catalogue</h1>
+                <h1 className="display-font mt-4 text-4xl leading-none text-white sm:text-5xl lg:text-6xl">{ui.hubTitle}</h1>
                 <p className="mt-5 max-w-2xl text-sm leading-6 text-[#d4ddd8] sm:text-base sm:leading-7">
-                  Compare the observed weapon, vehicle, ammunition, attachment, gear, equipment, and loadout records without treating Alpha values as final.
+                  {ui.hubDescription}
                 </p>
                 <div className="mt-5">
-                  <StatusBadge tone="warning">Alpha 1 snapshot</StatusBadge>
+                  <StatusBadge tone="warning">{ui.alphaSnapshot}</StatusBadge>
                 </div>
               </div>
             </div>
@@ -169,9 +176,9 @@ export default async function ItemsPage({params}: PageProps) {
 
       <section className="site-container py-12 md:py-16" aria-labelledby="catalogue-categories-title">
         <div className="max-w-3xl">
-          <p className="font-mono text-xs uppercase text-[#68bd8d]">Seven field indexes</p>
-          <h2 className="display-font mt-2 text-3xl leading-tight text-white md:text-4xl" id="catalogue-categories-title">Browse the Catalogue</h2>
-          <p className="mt-4 text-sm leading-6 text-[#a8b4ae] md:text-base">Counts reflect the complete observed guide tables, while imagery covers the approved Release 1 catalogue set.</p>
+          <p className="font-mono text-xs uppercase text-[#68bd8d]">{ui.indexesEyebrow}</p>
+          <h2 className="display-font mt-2 text-3xl leading-tight text-white md:text-4xl" id="catalogue-categories-title">{ui.browseTitle}</h2>
+          <p className="mt-4 text-sm leading-6 text-[#a8b4ae] md:text-base">{ui.browseDescription}</p>
         </div>
         <ul className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {categories.map((category) => (
@@ -193,20 +200,20 @@ export default async function ItemsPage({params}: PageProps) {
         <div className="site-container py-9 md:py-11">
           <div className="flex items-center gap-2">
             <ShieldCheck aria-hidden="true" className="size-5 text-[#68bd8d]" />
-            <h2 id="evidence-legend-title" className="display-font text-2xl text-white md:text-3xl">Evidence legend</h2>
+            <h2 id="evidence-legend-title" className="display-font text-2xl text-white md:text-3xl">{ui.evidenceTitle}</h2>
           </div>
           <dl className="mt-6 grid gap-6 md:grid-cols-3 md:gap-0">
             <div className="border-t border-[#354039] pt-4 md:border-r md:pr-6">
-              <dt className="font-semibold text-[#f2f5f3]">Official</dt>
-              <dd className="mt-2 text-sm leading-6 text-[#a8b4ae]">Published by BULKHEAD, Team17, or an official WARDOGS channel.</dd>
+              <dt className="font-semibold text-[#f2f5f3]">{ui.official}</dt>
+              <dd className="mt-2 text-sm leading-6 text-[#a8b4ae]">{ui.officialDescription}</dd>
             </div>
             <div className="border-t border-[#354039] pt-4 md:border-r md:px-6">
-              <dt className="font-semibold text-[#f2f5f3]">Verified in game</dt>
-              <dd className="mt-2 text-sm leading-6 text-[#a8b4ae]">Captured consistently in available gameplay or catalogue evidence.</dd>
+              <dt className="font-semibold text-[#f2f5f3]">{ui.verified}</dt>
+              <dd className="mt-2 text-sm leading-6 text-[#a8b4ae]">{ui.verifiedDescription}</dd>
             </div>
             <div className="border-t border-[#354039] pt-4 md:pl-6">
-              <dt className="font-semibold text-[#f2f5f3]">Pre-release build</dt>
-              <dd className="mt-2 text-sm leading-6 text-[#a8b4ae]">Observed during Alpha; values, unlocks, and balance may change.</dd>
+              <dt className="font-semibold text-[#f2f5f3]">{ui.preRelease}</dt>
+              <dd className="mt-2 text-sm leading-6 text-[#a8b4ae]">{ui.preReleaseDescription}</dd>
             </div>
           </dl>
         </div>
@@ -216,22 +223,22 @@ export default async function ItemsPage({params}: PageProps) {
         <CataloguePreviewRow
           locale={locale}
           type="weapons"
-          title="Featured Weapons"
-          description="A visual cross-section of observed firearms and specialist tools, with evidence-led detail for each published model."
+          title={ui.featuredWeapons}
+          description={ui.featuredWeaponsDescription}
         />
         <CataloguePreviewRow
           locale={locale}
           type="vehicles"
-          title="Featured Vehicles"
-          description="Representative transport, armor, and aircraft records from the Alpha catalogue, shown here for quick model comparison."
+          title={ui.featuredVehicles}
+          description={ui.featuredVehiclesDescription}
         />
       </div>
 
       <section className="border-t border-[#2c3631] bg-[#111512]" aria-labelledby="published-guides-title">
         <div className="site-container py-12 md:py-16">
           <div className="max-w-3xl">
-            <p className="font-mono text-xs uppercase text-[#68bd8d]">Published analysis</p>
-            <h2 id="published-guides-title" className="display-font mt-2 text-3xl text-white md:text-4xl">Detailed Field Guides</h2>
+            <p className="font-mono text-xs uppercase text-[#68bd8d]">{ui.publishedAnalysis}</p>
+            <h2 id="published-guides-title" className="display-font mt-2 text-3xl text-white md:text-4xl">{ui.detailedFieldGuides}</h2>
           </div>
           <ul className="mt-7 grid gap-x-6 md:grid-cols-2 xl:grid-cols-3">
             {featured.map((item) => (

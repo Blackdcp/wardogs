@@ -1,7 +1,7 @@
 import {readFile} from "node:fs/promises";
 import {describe, expect, it} from "vitest";
 
-const localeNames = ["en", "ru", "de", "pt-br"] as const;
+const localeNames = ["en", "ru", "de", "pt-br", "ja"] as const;
 const keys = (value: unknown, prefix = ""): string[] =>
   Object.entries(value as Record<string, unknown>).flatMap(([key, child]) => {
     const path = prefix ? `${prefix}.${key}` : key;
@@ -9,7 +9,7 @@ const keys = (value: unknown, prefix = ""): string[] =>
   });
 
 describe("localized messages", () => {
-  it("has four complete files with identical key paths", async () => {
+  it("has five complete files with identical key paths", async () => {
     const messages = await Promise.all(localeNames.map(async (locale) =>
       JSON.parse(await readFile(`messages/${locale}.json`, "utf8"))
     ));

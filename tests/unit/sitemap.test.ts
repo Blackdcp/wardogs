@@ -1,241 +1,144 @@
 import {describe, expect, it} from "vitest";
 import sitemap, {resolveItemLastModified} from "../../src/app/sitemap";
+import {guideManifest} from "../../src/content/manifest";
+import {locales} from "../../src/config/site";
+import {itemLibrary, itemTypes} from "../../src/features/items/item-library";
+import {videoArticles} from "../../src/features/videos/video-library";
 
-const weaponModelSlugs = [
-  "a-91", "ak74", "amp-9", "amr-50", "bmr-308", "bushmaster-m17s", "compound-bow",
-  "deagle", "fal", "galil", "ggx-17", "ggx-18", "judge", "kh-2002"
-] as const;
+const origin = "http://localhost:3000";
 
-const vehicleModelSlugs = [
-  "ah-6m-miniguns", "ah-6r-rockets", "bobcat", "dune-buggy", "flakpanzer-gepard",
-  "havoc", "humvee-m249", "humvee-minigun", "humvee", "kodiak-m249",
-  "kodiak-pickup", "kodiak", "l2a6", "mh-6", "sph-2", "uh-1y-miniguns",
-  "uh-1y", "ural-defender-m249", "ural-defender", "ural"
-] as const;
-
-const newModelContracts = [
-  ...weaponModelSlugs.map((slug) => ({type: "weapons" as const, slug})),
-  ...vehicleModelSlugs.map((slug) => ({type: "vehicles" as const, slug}))
-];
-const newModelUrls = newModelContracts.map(({type, slug}) => `http://localhost:3000/en/items/${type}/${slug}`);
-const legacyWeaponAndVehicleSlugs = new Set(["mortar", "littlebird", "tank", "attack-helicopter", "armored-transport"]);
-const cataloguePageUrls = [
-  "http://localhost:3000/en/items",
-  "http://localhost:3000/en/items/weapons",
-  "http://localhost:3000/en/items/vehicles",
-  "http://localhost:3000/en/items/ammo",
-  "http://localhost:3000/en/items/attachments",
-  "http://localhost:3000/en/items/gear",
-  "http://localhost:3000/en/items/equipment",
-  "http://localhost:3000/en/items/loadouts"
-] as const;
-const legacyContracts = [
-  {type: "weapons", slug: "mortar"},
-  {type: "equipment", slug: "mobile-fob"},
-  {type: "vehicles", slug: "littlebird"},
-  {type: "vehicles", slug: "tank"},
-  {type: "vehicles", slug: "attack-helicopter"},
-  {type: "vehicles", slug: "armored-transport"}
-] as const;
-const legacyUrls = [
-  "http://localhost:3000/en/items/weapons/mortar",
-  "http://localhost:3000/en/items/equipment/mobile-fob",
-  "http://localhost:3000/en/items/vehicles/littlebird",
-  "http://localhost:3000/en/items/vehicles/tank",
-  "http://localhost:3000/en/items/vehicles/attack-helicopter",
-  "http://localhost:3000/en/items/vehicles/armored-transport",
-  "http://localhost:3000/ru/items/weapons/mortar",
-  "http://localhost:3000/ru/items/equipment/mobile-fob",
-  "http://localhost:3000/ru/items/vehicles/littlebird",
-  "http://localhost:3000/ru/items/vehicles/tank",
-  "http://localhost:3000/ru/items/vehicles/attack-helicopter",
-  "http://localhost:3000/ru/items/vehicles/armored-transport"
-] as const;
-
-type SitemapEntry = ReturnType<typeof sitemap>[number];
-const cataloguePageUrlSet = new Set<string>(cataloguePageUrls);
-const newModelUrlSet = new Set<string>(newModelUrls);
-
-function collectLegacyItemEntries(entries: SitemapEntry[]) {
-  const itemDetailEntries = entries.filter((entry) => {
-    const pathname = new URL(entry.url).pathname;
-    return /^\/[^/]+\/items(?:\/|$)/.test(pathname) && !cataloguePageUrlSet.has(entry.url);
-  });
-
-  return itemDetailEntries.filter((entry) => !newModelUrlSet.has(entry.url));
+function itemAlternates(pathname: string) {
+  return {
+    en: `${origin}/en${pathname}`,
+    ru: `${origin}/ru${pathname}`,
+    de: `${origin}/de${pathname}`,
+    "pt-br": `${origin}/pt-br${pathname}`,
+    ja: `${origin}/ja${pathname}`,
+    "x-default": `${origin}/en${pathname}`
+  };
 }
 
-function expectExactLegacyItemInventory(entries: SitemapEntry[]) {
-  expect(collectLegacyItemEntries(entries).map((entry) => entry.url)).toEqual(legacyUrls);
+function pageAlternates(pathname: string) {
+  return {
+    en: `${origin}/en${pathname}`,
+    ru: `${origin}/ru${pathname}`,
+    de: `${origin}/de${pathname}`,
+    "pt-BR": `${origin}/pt-br${pathname}`,
+    ja: `${origin}/ja${pathname}`,
+    "x-default": `${origin}/en${pathname}`
+  };
 }
 
 describe("sitemap", () => {
-  it("publishes all localized beta-weekend guides with their current editorial date", () => {
+  it("publishes every guide in all five locales with reciprocal hreflang", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
-    for (const locale of ["en", "de", "ru", "pt-br"]) {
-      for (const slug of ["wardogs-twitch-drops", "wardogs-beginner-guide", "wardogs-fob-guide"]) {
-        const url = `http://localhost:3000/${locale}/guides/${slug}`;
+    for (const locale of locales) {
+      for (const {slug} of guideManifest) {
+        const pathname = `/guides/${slug}`;
+        const url = `${origin}/${locale}${pathname}`;
         const entry = entriesByUrl.get(url);
         expect(entry, url).toBeDefined();
-        expect(new Date(entry!.lastModified!).toISOString(), url).toBe("2026-08-22T00:00:00.000Z");
-        expect(entry?.alternates?.languages, url).toEqual({
-          en: `http://localhost:3000/en/guides/${slug}`,
-          ru: `http://localhost:3000/ru/guides/${slug}`,
-          de: `http://localhost:3000/de/guides/${slug}`,
-          "pt-BR": `http://localhost:3000/pt-br/guides/${slug}`,
-          "x-default": `http://localhost:3000/en/guides/${slug}`,
-        });
+        expect(entry?.alternates?.languages, url).toEqual(pageAlternates(pathname));
+        expect(entry?.changeFrequency, url).toBe("weekly");
       }
     }
   });
 
-  it("includes standalone video article URLs for indexing", () => {
-    const urls = sitemap().map((entry) => entry.url);
-
-    expect(urls).toContain("http://localhost:3000/en/videos");
-    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-10-reasons-not-to-buy");
-    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-loadout-gear-guide");
-    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-mortars-indirect-fire");
-    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-first-look-gameplay");
-    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-everything-before-playing");
-    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-best-settings");
-    expect(urls).toContain("http://localhost:3000/en/videos/wardogs-helicopter-flight-guide");
-  });
-
-  it("publishes the five new player-demand guide clusters in every locale", () => {
-    const urls = new Set(sitemap().map((entry) => entry.url));
-    const slugs = [
-      "wardogs-crash-fix",
-      "wardogs-towers-guide",
-      "wardogs-money-guide",
-      "wardogs-helicopter-guide",
-      "wardogs-mortar-guide"
-    ];
-
-    for (const locale of ["en", "de", "ru", "pt-br"]) {
-      for (const slug of slugs) {
-        expect(urls.has(`http://localhost:3000/${locale}/guides/${slug}`), `${locale}/${slug}`).toBe(true);
-      }
-    }
-  });
-
-  it("includes item hubs, item type pages, and first indexable item details", () => {
-    const urls = sitemap().map((entry) => entry.url);
-
-    expect(urls).toContain("http://localhost:3000/en/items");
-    expect(urls).toContain("http://localhost:3000/en/items/weapons");
-    expect(urls).toContain("http://localhost:3000/en/items/ammo");
-    expect(urls).toContain("http://localhost:3000/en/items/attachments");
-    expect(urls).toContain("http://localhost:3000/en/items/gear");
-    expect(urls).toContain("http://localhost:3000/en/items/loadouts");
-    expect(urls).not.toContain("http://localhost:3000/ru/items/weapons");
-    expect(urls).not.toContain("http://localhost:3000/de/items/ammo");
-    expect(urls).toContain("http://localhost:3000/en/items/weapons/mortar");
-    expect(urls).toContain("http://localhost:3000/ru/items/vehicles/littlebird");
-    expect(urls).not.toContain("http://localhost:3000/de/items/weapons/mortar");
-  });
-
-  it("does not add non-indexable item detail locales as hreflang alternates", () => {
-    const mortar = sitemap().find((entry) => entry.url === "http://localhost:3000/en/items/weapons/mortar");
-
-    expect(mortar?.alternates?.languages).toEqual({
-      en: "http://localhost:3000/en/items/weapons/mortar",
-      ru: "http://localhost:3000/ru/items/weapons/mortar",
-      "x-default": "http://localhost:3000/en/items/weapons/mortar"
-    });
-  });
-
-  it("does not advertise untranslated catalogue locales as hreflang alternates", () => {
-    const weapons = sitemap().find((entry) => entry.url === "http://localhost:3000/en/items/weapons");
-
-    expect(weapons?.alternates?.languages).toEqual({
-      en: "http://localhost:3000/en/items/weapons",
-      "x-default": "http://localhost:3000/en/items/weapons"
-    });
-  });
-
-  it("contains the exact 34 English model URLs once and no localized copies", () => {
-    const modelEntries = sitemap().filter((entry) => {
-      const match = new URL(entry.url).pathname.match(/^\/(?:en|ru|de|pt-br)\/items\/(weapons|vehicles)\/([^/]+)\/?$/);
-      return match && !legacyWeaponAndVehicleSlugs.has(match[2]);
-    });
-
-    expect(modelEntries.map((entry) => entry.url)).toEqual(newModelUrls);
-    expect(new Set(modelEntries.map((entry) => entry.url)).size).toBe(34);
-  });
-
-  it("gives every new model only English and x-default sitemap alternates", () => {
-    const modelEntries = sitemap().filter((entry) => newModelUrls.includes(entry.url));
-
-    expect(modelEntries).toHaveLength(34);
-    for (const entry of modelEntries) {
-      expect(entry.alternates?.languages, entry.url).toEqual({en: entry.url, "x-default": entry.url});
-    }
-  });
-
-  it("uses the editorial publication date, not the Alpha observation date, for all 34 URLs", () => {
+  it("uses each localized guide's editorial date", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
-    for (const contract of newModelContracts) {
-      const url = `http://localhost:3000/en/items/${contract.type}/${contract.slug}`;
-      expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe("2026-08-18T00:00:00.000Z");
-      expect(entriesByUrl.get(url)?.changeFrequency, url).toBe("weekly");
+    expect(new Date(entriesByUrl.get(`${origin}/en/guides/wardogs-fob-guide`)!.lastModified!).toISOString())
+      .toBe("2026-08-22T00:00:00.000Z");
+    expect(new Date(entriesByUrl.get(`${origin}/ja/guides/wardogs-money-guide`)!.lastModified!).toISOString())
+      .toBe("2026-08-23T00:00:00.000Z");
+  });
+
+  it("includes the video hub and every standalone video article in all five locales", () => {
+    const urls = new Set(sitemap().map((entry) => entry.url));
+
+    for (const locale of locales) {
+      expect(urls.has(`${origin}/${locale}/videos`)).toBe(true);
+      for (const {slug} of videoArticles) {
+        expect(urls.has(`${origin}/${locale}/videos/${slug}`), `${locale}/${slug}`).toBe(true);
+      }
     }
   });
 
-  it("resolves distinct supplied detail dates instead of a shared model constant", () => {
+  it("includes item hubs, all seven categories, and all 40 details in every locale", () => {
+    const urls = new Set(sitemap().map((entry) => entry.url));
+
+    for (const locale of locales) {
+      expect(urls.has(`${origin}/${locale}/items`)).toBe(true);
+      for (const {id} of itemTypes) {
+        expect(urls.has(`${origin}/${locale}/items/${id}`), `${locale}/${id}`).toBe(true);
+      }
+      for (const item of itemLibrary) {
+        expect(urls.has(`${origin}/${locale}/items/${item.type}/${item.slug}`), `${locale}/${item.slug}`).toBe(true);
+      }
+    }
+  });
+
+  it("gives every item detail five localized alternates plus English x-default", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+
+    for (const locale of locales) {
+      for (const item of itemLibrary) {
+        const pathname = `/items/${item.type}/${item.slug}`;
+        const url = `${origin}/${locale}${pathname}`;
+        expect(entriesByUrl.get(url)?.alternates?.languages, url).toEqual(itemAlternates(pathname));
+      }
+    }
+  });
+
+  it("gives catalogue hubs and categories all five language alternates", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+
+    for (const pathname of ["/items", ...itemTypes.map(({id}) => `/items/${id}`)]) {
+      for (const locale of locales) {
+        expect(entriesByUrl.get(`${origin}/${locale}${pathname}`)?.alternates?.languages).toEqual(pageAlternates(pathname));
+      }
+    }
+  });
+
+  it("uses each item's editorial publication date instead of the Alpha observation date", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+
+    for (const locale of locales) {
+      for (const item of itemLibrary) {
+        const url = `${origin}/${locale}/items/${item.type}/${item.slug}`;
+        expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url)
+          .toBe(new Date(`${item.detailUpdatedAt ?? "2026-08-16"}T00:00:00.000Z`).toISOString());
+        expect(entriesByUrl.get(url)?.changeFrequency, url).toBe("weekly");
+      }
+    }
+  });
+
+  it("resolves distinct supplied detail dates", () => {
     expect(resolveItemLastModified({detailUpdatedAt: "2026-01-02"}).toISOString()).toBe("2026-01-02T00:00:00.000Z");
     expect(resolveItemLastModified({detailUpdatedAt: "2026-05-19"}).toISOString()).toBe("2026-05-19T00:00:00.000Z");
     expect(resolveItemLastModified(undefined).toISOString()).toBe("2026-08-16T00:00:00.000Z");
   });
 
-  it("contains the exact six legacy English and Russian pairs with matching alternates", () => {
-    const entries = collectLegacyItemEntries(sitemap());
-
-    expectExactLegacyItemInventory(sitemap());
-    expect(entries).toHaveLength(12);
-    for (const {type, slug} of legacyContracts) {
-      const en = `http://localhost:3000/en/items/${type}/${slug}`;
-      const ru = `http://localhost:3000/ru/items/${type}/${slug}`;
-      for (const url of [en, ru]) {
-        expect(entries.find((entry) => entry.url === url)?.alternates?.languages, url).toEqual({
-          en,
-          ru,
-          "x-default": en
-        });
-      }
-    }
-  });
-
-  it("makes an unexpected seventh legacy detail fail the exact inventory contract", () => {
-    const entries = sitemap();
-    const unexpectedLegacyEntry = {
-      ...entries[0],
-      url: "http://localhost:3000/en/items/equipment/unexpected-legacy-item"
-    };
-
-    expect(() => expectExactLegacyItemInventory([...entries, unexpectedLegacyEntry])).toThrow();
-  });
-
-  it("contains no fragments, queries, or filter routes", () => {
+  it("contains no fragments, queries, filter routes, or duplicate URLs", () => {
     const urls = sitemap().map((entry) => entry.url);
 
     expect(urls.some((url) => url.includes("#") || url.includes("?") || /\/(?:items\/)?(?:weapons|vehicles)\/(?:filter|search)\//.test(url))).toBe(false);
+    expect(new Set(urls).size).toBe(urls.length);
   });
 
-  it("uses the same trailing-slash URL form in the production sitemap", () => {
+  it("uses the same trailing-slash form in a Pages export", () => {
     const previous = process.env.GITHUB_PAGES;
     process.env.GITHUB_PAGES = "true";
     try {
-      expect(sitemap().map((entry) => entry.url)).toContain("http://localhost:3000/en/items/weapons/");
+      expect(sitemap().map((entry) => entry.url)).toContain(`${origin}/ja/items/weapons/ak74/`);
     } finally {
       if (previous === undefined) delete process.env.GITHUB_PAGES;
       else process.env.GITHUB_PAGES = previous;
     }
   });
 
-  it("uses a host-only site URL plus the configured Pages base exactly once", () => {
+  it("uses a host-only Pages URL plus the configured base exactly once", () => {
     const previous = {
       basePath: process.env.NEXT_PUBLIC_BASE_PATH,
       githubPages: process.env.GITHUB_PAGES,
@@ -245,11 +148,16 @@ describe("sitemap", () => {
     process.env.GITHUB_PAGES = "true";
     process.env.NEXT_PUBLIC_SITE_URL = "https://blackdcp.github.io";
     try {
-      const bobcat = sitemap().find((entry) => entry.url.includes("/items/vehicles/bobcat"));
-      expect(bobcat?.url).toBe("https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/");
+      const pathname = "/items/vehicles/bobcat";
+      const bobcat = sitemap().find((entry) => entry.url.includes(`/ja${pathname}`));
+      expect(bobcat?.url).toBe(`https://blackdcp.github.io/wardogs/ja${pathname}/`);
       expect(bobcat?.alternates?.languages).toEqual({
-        en: "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/",
-        "x-default": "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/"
+        en: `https://blackdcp.github.io/wardogs/en${pathname}/`,
+        ru: `https://blackdcp.github.io/wardogs/ru${pathname}/`,
+        de: `https://blackdcp.github.io/wardogs/de${pathname}/`,
+        "pt-br": `https://blackdcp.github.io/wardogs/pt-br${pathname}/`,
+        ja: `https://blackdcp.github.io/wardogs/ja${pathname}/`,
+        "x-default": `https://blackdcp.github.io/wardogs/en${pathname}/`
       });
     } finally {
       for (const [key, value] of Object.entries(previous)) {

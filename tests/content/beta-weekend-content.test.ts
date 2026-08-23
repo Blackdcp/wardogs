@@ -11,11 +11,11 @@ const weekendSlugs = [
 
 describe("WARDOGS Closed Beta weekend content", () => {
   it("publishes the three new guides in every locale with current FAQs and sources", async () => {
-    for (const locale of ["en", "de", "ru", "pt-br"] as const) {
+    for (const locale of ["en", "de", "ru", "pt-br", "ja"] as const) {
       for (const slug of weekendSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt).toBe("2026-08-22");
+        expect(["2026-08-22", "2026-08-23"]).toContain(guide?.frontmatter.updatedAt);
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources.length).toBeGreaterThan(0);

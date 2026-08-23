@@ -10,6 +10,8 @@ import type {ItemTypeId} from "@/features/items/item-library";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
 import {CatalogueExplorer} from "./catalogue-explorer";
+import {getLocalizedCatalogueGroup, getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
+import {getItemUi} from "@/features/items/item-ui";
 
 type CatalogueCategoryViewProps = {
   guide: CatalogGuide;
@@ -72,15 +74,17 @@ function hasImageExplorer(type: ItemTypeId): type is CatalogueRecordType {
 
 export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProps) {
   const hero = categoryHeroes[guide.id];
-  const records = hasImageExplorer(guide.id) ? getCatalogueRecords(guide.id) : [];
-  const group = hasImageExplorer(guide.id) ? getCatalogueGroup(guide.id) : undefined;
+  const records = hasImageExplorer(guide.id) ? getLocalizedCatalogueRecords(getCatalogueRecords(guide.id), locale) : [];
+  const baseGroup = hasImageExplorer(guide.id) ? getCatalogueGroup(guide.id) : undefined;
+  const group = baseGroup ? getLocalizedCatalogueGroup(baseGroup, locale) : undefined;
   const linkedGuide = records.length > 0 ? matchCatalogueGuideRecords(guide, records) : guide;
+  const ui = getItemUi(locale);
 
   return (
     <>
       <section className="relative min-h-[28rem] overflow-hidden border-b border-[#2c3631] bg-[#090c0a] md:min-h-[34rem]" data-catalogue-category-hero>
         <Image
-          alt={hero.imageAlt}
+          alt={guide.heroImageAlt ?? hero.imageAlt}
           className={hero.imageFit === "contain" ? "object-contain p-8 opacity-65 md:p-14" : "object-cover opacity-60"}
           fill
           priority
@@ -90,11 +94,11 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
         <div aria-hidden="true" className="absolute inset-0 bg-[#080b09]/60" />
         <div className="site-container relative flex min-h-[28rem] flex-col justify-end py-12 md:min-h-[34rem] md:py-16">
           <a className="mb-auto inline-flex min-h-11 w-fit items-center gap-2 text-sm text-[#9bd1b3] hover:text-white" href={publicRoutePath(`/${locale}/items`)}>
-            <ArrowLeft aria-hidden="true" size={16} />All Items
+            <ArrowLeft aria-hidden="true" size={16} />{ui.allItems}
           </a>
           <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#e2bc61]">
             <Boxes aria-hidden="true" className="size-4" />
-            WARDOGS Item Category
+            {ui.itemCategory}
           </p>
           <h1 className="display-font mt-4 max-w-4xl text-5xl leading-none text-white md:text-7xl">{guide.title}</h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#d0dad5] md:text-lg">{guide.description}</p>
@@ -106,11 +110,11 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
           featuredImage={hero.image}
           filters={group.filters}
           labels={{
-            heading: `Explore ${group.label}`,
-            searchLabel: `Search ${group.label}`,
-            searchPlaceholder: "Search by name or fact",
-            allFilterLabel: "All",
-            resultLabel: "records shown"
+            heading: `${ui.explore}: ${group.label}`,
+            searchLabel: `${ui.search}: ${group.label}`,
+            searchPlaceholder: ui.searchPlaceholder,
+            allFilterLabel: ui.all,
+            resultLabel: ui.recordsShown
           }}
           locale={locale}
           records={records}

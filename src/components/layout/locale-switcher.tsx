@@ -13,7 +13,8 @@ const localeLabels: Record<Locale, string> = {
   en: "EN",
   ru: "RU",
   de: "DE",
-  "pt-br": "PT-BR"
+  "pt-br": "PT-BR",
+  ja: "JA"
 };
 
 type LocaleSwitcherProps = {

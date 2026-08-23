@@ -20,7 +20,7 @@ describe("item structured data", () => {
     expect(jsonLd[0]["@type"]).toBe("Article");
     expect(jsonLd[0]).not.toHaveProperty("offers");
     expect(jsonLd[1]["@type"]).toBe("BreadcrumbList");
-    expect((jsonLd[1].itemListElement as Array<{name: string}>)[1].name).toBe("Catalogue");
+    expect((jsonLd[1].itemListElement as Array<{name: string}>)[1].name).toBe("WARDOGS Catalogue");
   });
 
   it("uses a model article's image and editorial date instead of its Alpha observation date", () => {
@@ -51,14 +51,14 @@ describe("item structured data", () => {
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
-  it("uses the English canonical throughout model schema for an unsupported locale", () => {
+  it("uses the localized canonical throughout model schema", () => {
     const bobcat = getItemBySlug("bobcat");
     expect(bobcat).toBeDefined();
 
     const jsonLd = buildItemArticleJsonLd("ru", bobcat!);
 
-    expect(jsonLd[0].mainEntityOfPage).toBe("http://localhost:3000/en/items/vehicles/bobcat");
-    expect(JSON.stringify(jsonLd)).not.toContain("http://localhost:3000/ru/items/vehicles/bobcat");
+    expect(jsonLd[0].mainEntityOfPage).toBe("http://localhost:3000/ru/items/vehicles/bobcat");
+    expect(JSON.stringify(jsonLd)).toContain("http://localhost:3000/ru/items/vehicles/bobcat");
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
@@ -81,28 +81,28 @@ describe("item structured data", () => {
     expect(jsonLd[1].itemListElement).toHaveLength(7);
     expect(jsonLd[2].itemListElement).toEqual([
       {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: "http://localhost:3000/en"},
-      {"@type": "ListItem", position: 2, name: "Catalogue", item: "http://localhost:3000/en/items"}
+      {"@type": "ListItem", position: 2, name: "WARDOGS Catalogue", item: "http://localhost:3000/en/items"}
     ]);
   });
 
-  it("uses English canonical URLs throughout non-English hub schema", () => {
+  it("uses localized URLs throughout non-English hub schema", () => {
     const jsonLd = buildItemIndexJsonLd("de");
 
-    expect(jsonLd[0].url).toBe("http://localhost:3000/en/items");
+    expect(jsonLd[0].url).toBe("http://localhost:3000/de/items");
     expect(jsonLd[1].itemListElement).toEqual([
-      {"@type": "ListItem", position: 1, name: "WARDOGS Weapons", url: "http://localhost:3000/en/items/weapons", image: "http://localhost:3000/images/catalogue/banners/weapons-1280.webp"},
-      {"@type": "ListItem", position: 2, name: "WARDOGS Vehicles", url: "http://localhost:3000/en/items/vehicles", image: "http://localhost:3000/images/catalogue/banners/vehicles-1280.webp"},
-      {"@type": "ListItem", position: 3, name: "WARDOGS Ammo", url: "http://localhost:3000/en/items/ammo", image: "http://localhost:3000/images/catalogue/ammo/556x45mm.webp"},
-      {"@type": "ListItem", position: 4, name: "WARDOGS Attachments", url: "http://localhost:3000/en/items/attachments", image: "http://localhost:3000/images/catalogue/banners/attachments-1280.webp"},
-      {"@type": "ListItem", position: 5, name: "WARDOGS Gear", url: "http://localhost:3000/en/items/gear", image: "http://localhost:3000/images/catalogue/gear/heavy-armor.webp"},
-      {"@type": "ListItem", position: 6, name: "WARDOGS Equipment", url: "http://localhost:3000/en/items/equipment", image: "http://localhost:3000/images/catalogue/banners/meta-1280.webp"},
-      {"@type": "ListItem", position: 7, name: "WARDOGS Loadouts", url: "http://localhost:3000/en/items/loadouts", image: "http://localhost:3000/images/catalogue/banners/loadouts-1280.webp"}
+      {"@type": "ListItem", position: 1, name: "WARDOGS Waffe", url: "http://localhost:3000/de/items/weapons", image: "http://localhost:3000/images/catalogue/banners/weapons-1280.webp"},
+      {"@type": "ListItem", position: 2, name: "WARDOGS Fahrzeug", url: "http://localhost:3000/de/items/vehicles", image: "http://localhost:3000/images/catalogue/banners/vehicles-1280.webp"},
+      {"@type": "ListItem", position: 3, name: "WARDOGS Munition", url: "http://localhost:3000/de/items/ammo", image: "http://localhost:3000/images/catalogue/ammo/556x45mm.webp"},
+      {"@type": "ListItem", position: 4, name: "WARDOGS Aufsatz", url: "http://localhost:3000/de/items/attachments", image: "http://localhost:3000/images/catalogue/banners/attachments-1280.webp"},
+      {"@type": "ListItem", position: 5, name: "WARDOGS Ausrüstung", url: "http://localhost:3000/de/items/gear", image: "http://localhost:3000/images/catalogue/gear/heavy-armor.webp"},
+      {"@type": "ListItem", position: 6, name: "WARDOGS taktisches Gerät", url: "http://localhost:3000/de/items/equipment", image: "http://localhost:3000/images/catalogue/banners/meta-1280.webp"},
+      {"@type": "ListItem", position: 7, name: "WARDOGS Loadout", url: "http://localhost:3000/de/items/loadouts", image: "http://localhost:3000/images/catalogue/banners/loadouts-1280.webp"}
     ]);
     expect(jsonLd[2].itemListElement).toEqual([
-      {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: "http://localhost:3000/en"},
-      {"@type": "ListItem", position: 2, name: "Catalogue", item: "http://localhost:3000/en/items"}
+      {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: "http://localhost:3000/de"},
+      {"@type": "ListItem", position: 2, name: "WARDOGS Katalog", item: "http://localhost:3000/de/items"}
     ]);
-    expect(JSON.stringify(jsonLd)).not.toContain("http://localhost:3000/de");
+    expect(JSON.stringify(jsonLd)).not.toContain("http://localhost:3000/en/items");
   });
 
   it("includes catalogue rows in type-page ItemList schema", () => {
@@ -111,7 +111,7 @@ describe("item structured data", () => {
 
     expect(weapons[1].itemListElement).toHaveLength(15);
     expect(ammo[1].itemListElement).toHaveLength(14);
-    expect((weapons[2].itemListElement as Array<{name: string}>)[1].name).toBe("Catalogue");
+    expect((weapons[2].itemListElement as Array<{name: string}>)[1].name).toBe("WARDOGS Catalogue");
   });
 
   it("uses published detail URLs and images for weapon models without duplicate entries", () => {
@@ -141,15 +141,15 @@ describe("item structured data", () => {
     expect(new Set(entries.map((entry) => entry.name)).size).toBe(15);
   });
 
-  it("uses the English canonical category URL and catalogue imagery in category schema", () => {
+  it("uses the localized category URL and catalogue imagery in category schema", () => {
     const weapons = buildItemTypeJsonLd("de", "weapons");
 
     expect(weapons[0]).toMatchObject({
       "@type": "CollectionPage",
-      url: "http://localhost:3000/en/items/weapons",
+      url: "http://localhost:3000/de/items/weapons",
       image: "http://localhost:3000/images/catalogue/banners/weapons-1280.webp"
     });
-    expect(JSON.stringify(weapons)).not.toContain("http://localhost:3000/de");
+    expect(JSON.stringify(weapons)).toContain("http://localhost:3000/de/items/weapons");
     expect(JSON.stringify(weapons)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
@@ -189,8 +189,8 @@ describe("item structured data", () => {
     process.env.GITHUB_PAGES = "true";
     try {
       const jsonLd = buildItemTypeJsonLd("de", "weapons");
-      expect(jsonLd[0].url).toBe("http://localhost:3000/en/items/weapons/");
-      expect((jsonLd[1].itemListElement as Array<{url: string}>)[0].url).toBe("http://localhost:3000/en/items/weapons/a-91/");
+      expect(jsonLd[0].url).toBe("http://localhost:3000/de/items/weapons/");
+      expect((jsonLd[1].itemListElement as Array<{url: string}>)[0].url).toBe("http://localhost:3000/de/items/weapons/a-91/");
     } finally {
       if (previous === undefined) delete process.env.GITHUB_PAGES;
       else process.env.GITHUB_PAGES = previous;
@@ -207,10 +207,10 @@ describe("item structured data", () => {
     const encoded = JSON.stringify(jsonLd);
 
     expect(jsonLd[0]).toMatchObject({
-      mainEntityOfPage: "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/",
+      mainEntityOfPage: "https://blackdcp.github.io/wardogs/ru/items/vehicles/bobcat/",
       image: "https://blackdcp.github.io/wardogs/images/catalogue/vehicles/bobcat.webp"
     });
     expect(encoded).not.toContain("/wardogs/wardogs/");
-    expect(encoded).not.toContain("/ru/items/vehicles/bobcat");
+    expect(encoded).toContain("/ru/items/vehicles/bobcat");
   });
 });
