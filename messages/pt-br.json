@@ -113,7 +113,7 @@
     "finalDescription": "Use nossa biblioteca independente para se preparar para acesso, funções do esquadrão, veículos, objetivos e marcos confirmados do lançamento.",
     "final": {"eyebrow": "Prepare sua missão", "guidesCta": "Explorar os guias", "steamCta": "Abrir a Steam"}
   },
-  "guides": {"title": "Guias de WARDOGS", "description": "Explore 29 guias sobre beta, travamentos, dinheiro, torres, helicópteros, morteiros, FOB, lançamento e jogabilidade.", "count": "29 temas de guia", "read": "Ler guia"},
+  "guides": {"metaTitle": "Guias de WARDOGS - Beta, Gameplay, Armas e Soluções", "title": "Guias de WARDOGS", "description": "Explore 29 guias sobre beta, travamentos, dinheiro, torres, helicópteros, morteiros, FOB, lançamento e jogabilidade.", "count": "29 temas de guia", "read": "Ler guia"},
   "news": {
     "metaTitle": "WARDOGS News - beta, Early Access e Steam",
     "metaDescription": "Acompanhe notícias confirmadas de WARDOGS, datas do beta, Steam Early Access, preços, plataformas, preload e links de guias atualizados.",

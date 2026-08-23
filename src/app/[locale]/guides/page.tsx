@@ -21,7 +21,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({locale, namespace: "guides"});
-  return buildPageMetadata(locale, "/guides", t("title"), t("description"));
+  return buildPageMetadata(locale, "/guides", t("metaTitle"), t("description"));
 }
 
 export default async function GuidesPage({params}: PageProps) {

@@ -30,4 +30,16 @@ describe("localized messages", () => {
       expect(home.metaDescription.length, `${locale} description`).toBeLessThanOrEqual(160);
     }
   });
+
+  it("provides descriptive guide-index titles for search engines", () => {
+    for (const locale of locales) {
+      const guides = loadMessages(locale).guides as {metaTitle?: unknown};
+
+      expect(guides.metaTitle, `${locale} guide title`).toBeTypeOf("string");
+      if (typeof guides.metaTitle !== "string") continue;
+      expect(guides.metaTitle.length, `${locale} guide title`).toBeGreaterThanOrEqual(30);
+      expect(guides.metaTitle.length, `${locale} guide title`).toBeLessThanOrEqual(60);
+      expect(guides.metaTitle, `${locale} guide title`).toContain("WARDOGS");
+    }
+  });
 });

@@ -113,7 +113,7 @@
     "finalDescription": "Use our independent guide library to prepare for access, squad roles, vehicles, objectives, and every confirmed release milestone.",
     "final": {"eyebrow": "Prepare for deployment", "guidesCta": "Explore the Guides", "steamCta": "Open Steam"}
   },
-  "guides": {"title": "WARDOGS Guides", "description": "Browse 29 focused guides covering beta access, troubleshooting, money, towers, helicopters, mortars, FOB logistics, release, and gameplay.", "count": "29 Guide Topics", "read": "Read guide"},
+  "guides": {"metaTitle": "WARDOGS Guides - Beta, Gameplay, Weapons & Fixes", "title": "WARDOGS Guides", "description": "Browse 29 focused guides covering beta access, troubleshooting, money, towers, helicopters, mortars, FOB logistics, release, and gameplay.", "count": "29 Guide Topics", "read": "Read guide"},
   "news": {
     "metaTitle": "WARDOGS News - Beta, Early Access & Steam Updates",
     "metaDescription": "Track confirmed WARDOGS news, beta dates, Steam Early Access timing, pricing notes, platform status, preload questions, and updated guide links.",

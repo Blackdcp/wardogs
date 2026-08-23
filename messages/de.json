@@ -113,7 +113,7 @@
     "finalDescription": "Nutze unsere unabhängige Bibliothek für Zugang, Trupprollen, Fahrzeuge, Ziele und alle bestätigten Release-Meilensteine.",
     "final": {"eyebrow": "Bereite deinen Einsatz vor", "guidesCta": "Guides entdecken", "steamCta": "Steam öffnen"}
   },
-  "guides": {"title": "WARDOGS Guides", "description": "Durchsuche 29 Guides zu Beta, Abstürzen, Geld, Türmen, Helikoptern, Mörsern, FOB-Logistik, Release und Gameplay.", "count": "29 Guide-Themen", "read": "Guide lesen"},
+  "guides": {"metaTitle": "WARDOGS Guides - Beta, Gameplay, Waffen & Lösungen", "title": "WARDOGS Guides", "description": "Durchsuche 29 Guides zu Beta, Abstürzen, Geld, Türmen, Helikoptern, Mörsern, FOB-Logistik, Release und Gameplay.", "count": "29 Guide-Themen", "read": "Guide lesen"},
   "news": {
     "metaTitle": "WARDOGS News - Beta, Early Access und Steam",
     "metaDescription": "Verfolge bestätigte WARDOGS News, Beta-Termine, Steam Early Access, Preise, Plattformstatus, Preload-Fragen und aktualisierte Guides.",
