@@ -3,10 +3,14 @@ import {NextRequest, NextResponse} from "next/server";
 import {isLocale} from "@/config/site";
 import {getLegacyEnglishRedirectPath} from "@/i18n/legacy-paths";
 import {routing} from "@/i18n/routing";
+import {getCanonicalHostRedirect} from "@/lib/public-url";
 
 const handleI18n = createMiddleware(routing);
 
 export default function proxy(request: NextRequest) {
+  const canonicalHostRedirect = getCanonicalHostRedirect(request.nextUrl);
+  if (canonicalHostRedirect) return NextResponse.redirect(canonicalHostRedirect, 308);
+
   const {pathname} = request.nextUrl;
   if (pathname === "/") return NextResponse.redirect(new URL("/en", request.url), 308);
   const legacyRedirectPath = getLegacyEnglishRedirectPath(pathname);

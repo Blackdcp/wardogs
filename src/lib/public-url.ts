@@ -1,5 +1,8 @@
 type PublicReferenceKind = "asset" | "route";
 
+const apexProductionHost = "wardogswiki.com";
+const canonicalProductionHost = "www.wardogswiki.com";
+
 type PublicReference = {
   pathname: string;
   suffix: string;
@@ -101,4 +104,14 @@ export function publicRouteUrl(reference: string) {
 
 export function publicAssetUrl(reference: string) {
   return publicUrl(reference, "asset");
+}
+
+export function getCanonicalHostRedirect(requestUrl: URL) {
+  if (requestUrl.hostname !== apexProductionHost) return undefined;
+
+  const redirectUrl = new URL(requestUrl);
+  redirectUrl.protocol = "https:";
+  redirectUrl.hostname = canonicalProductionHost;
+  redirectUrl.port = "";
+  return redirectUrl;
 }
