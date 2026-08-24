@@ -42,9 +42,9 @@
         "description": "Schnelle Statusprüfung für offizielle, fehlende oder häufig missverstandene Details.",
         "labels": {"confirmed": "Bestätigt", "rumor": "Nicht bestätigt"},
         "items": {
-          "closedBeta": {"title": "Closed Beta läuft dieses Wochenende", "description": "Das bestätigte Testfenster läuft vom 21. bis 23. August 2026 über Steam."},
-          "betaPreload": {"title": "WARDOGS-Playtest-Preload", "description": "Eingeladene Konten können den separaten WARDOGS Playtest in Steam vorladen."},
-          "twitchDrops": {"title": "Twitch-Drops-Kampagne", "description": "WARDOGS Twitch Drops sind aktiv, gewähren aber keinen Beta-Zugang."},
+          "betaEnded": {"title": "August-Closed-Beta ist beendet", "description": "Die Server schlossen am 24. August; kein späterer Beta- oder Playtest-Termin ist bestätigt."},
+          "oneMillionWishlists": {"title": "1,000,000 Steam-Wunschlisteneinträge", "description": "BULKHEAD bestätigte den Meilenstein am 14. August; er ist keine Live-Spielerzahl."},
+          "fpsGameShow": {"title": "FPS Games Show am 3. September", "description": "BULKHEAD kündigte für 19 Uhr BST eine große WARDOGS-Enthüllung an; der Inhalt ist noch unbestätigt."},
           "steamEarlyAccess": {"title": "Steam PC Early Access", "description": "Early Access ist für Steam PC bestätigt."},
           "hundredPlayers": {"title": "100-Spieler-Krieg mit drei Teams", "description": "WARDOGS ist für bis zu 100 Spieler in drei Teams ausgelegt."},
           "persistentCash": {"title": "Persistente Geldwirtschaft", "description": "Geld bleibt erhalten und beeinflusst Loadouts zwischen Leben und Matches."},
@@ -126,11 +126,11 @@
       "status": {"Confirmed": "Bestätigt", "Not confirmed": "Nicht bestätigt"},
       "items": {
         "steamPreorder": {"title": "Steam-Vorbestellung und Request Access sind live", "description": "Steam ist aktuell die offizielle Route für Wunschliste, Request Access, Vorbestellung, Preise und Installation."},
-        "closedBeta": {"title": "Closed Beta läuft vom 21. bis 23. August 2026", "description": "Vorbesteller erhalten laut Bedingungen Beta-Zugang; Request Access ist nur eine Auswahlchance."},
+        "closedBeta": {"title": "Closed Beta endete am 24. August 2026", "description": "Das Serverfenster ist abgeschlossen; ein weiterer Beta- oder Playtest-Termin wurde nicht angekündigt."},
         "earlyAccess": {"title": "Steam Early Access startet am 10. September 2026", "description": "WARDOGS soll auf Windows PC über Steam in Early Access starten; die Vollversion ist noch nicht datiert."},
         "ps5": {"title": "Kein PS5-Termin bestätigt", "description": "Offizielle Produktseiten nennen derzeit Windows PC über Steam; Konsolen und Crossplay sind nicht bestätigt."},
-        "preload": {"title": "WARDOGS Playtest kann vorgeladen werden", "description": "Eingeladene Closed-Beta-Konten installieren den separaten WARDOGS Playtest über ihre Steam-Bibliothek."},
-        "twitchDrops": {"title": "WARDOGS Twitch Drops sind aktiv", "description": "Steam und Twitch verknüpfen, berechtigten Beta-Stream ansehen und Belohnung einlösen; Drops geben keinen Zugang."},
+        "preload": {"title": "Closed-Beta-Preload ist beendet", "description": "Der alte WARDOGS-Playtest-Eintrag gehörte zur abgeschlossenen Beta; ein Early-Access-Preload ist nicht bestätigt."},
+        "twitchDrops": {"title": "Closed-Beta-Twitch-Drops sind beendet", "description": "Keine aktive neue Kampagne ist bestätigt; eingelöste Belohnungen geben weiterhin keinen Spielzugang."},
         "fpsGameShow": {"title": "FPS Games Show am 3. September", "description": "BULKHEADs Showcase beginnt um 19 Uhr BST und kündigt eine große WARDOGS-Enthüllung an; deren Inhalt bleibt bis zur Show unbekannt."}
       }
     },

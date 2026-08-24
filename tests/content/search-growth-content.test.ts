@@ -10,7 +10,7 @@ describe("Search Console growth pages", () => {
       const guide = await loadGuideDocument(locale, "wardogs-preload");
 
       expect(guide, `${locale}/wardogs-preload should exist`).not.toBeNull();
-      expect(["2026-08-22", "2026-08-23"]).toContain(guide?.frontmatter.updatedAt);
+      expect(guide?.frontmatter.updatedAt).toBe("2026-08-24");
       expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
       expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
       expect(guide?.frontmatter.sources.every(({kind}) => kind === "official")).toBe(true);
@@ -26,7 +26,7 @@ describe("Search Console growth pages", () => {
     const weapons = getCatalogGuide("weapons");
 
     expect(beta?.frontmatter.title).toBe("WARDOGS Beta: Next Test Date, Access & Signup");
-    expect(beta?.frontmatter.description).toBe("Find the next WARDOGS beta date, signup and access options, Steam Playtest status, test duration, preload steps, and confirmed Early Access timing.");
+    expect(beta?.frontmatter.description).toBe("The August WARDOGS Closed Beta has ended. Check its final schedule, what happens to Playtest access, the next confirmed milestone, and future test status.");
     expect(ps5?.frontmatter.title).toBe("WARDOGS PS5 & Xbox Release: Console Status");
     expect(ps5?.frontmatter.description).toBe("Check whether WARDOGS is coming to PS5 or Xbox, what BULKHEAD has confirmed for PC Early Access, and where to follow reliable console release news.");
     expect(weapons).toEqual(expect.objectContaining({

@@ -42,9 +42,9 @@
         "description": "Быстрая проверка статуса для официальных, отсутствующих или часто неверно понятых деталей.",
         "labels": {"confirmed": "Подтверждено", "rumor": "Не подтверждено"},
         "items": {
-          "closedBeta": {"title": "Closed Beta идёт в эти выходные", "description": "Подтверждённое тестовое окно проходит 21-23 августа 2026 года через Steam."},
-          "betaPreload": {"title": "Предзагрузка WARDOGS Playtest", "description": "Приглашённые аккаунты могут заранее установить отдельный WARDOGS Playtest в Steam."},
-          "twitchDrops": {"title": "Кампания Twitch Drops", "description": "WARDOGS Twitch Drops активны, но награды не дают доступ к бете."},
+          "betaEnded": {"title": "Августовская Closed Beta завершена", "description": "Серверы закрылись 24 августа; следующая дата беты или плейтеста не подтверждена."},
+          "oneMillionWishlists": {"title": "1,000,000 добавлений в желаемое Steam", "description": "BULKHEAD подтвердила рубеж 14 августа; это не число игроков онлайн."},
+          "fpsGameShow": {"title": "FPS Games Show 3 сентября", "description": "BULKHEAD анонсировала крупное раскрытие WARDOGS на 19:00 BST; содержание пока не подтверждено."},
           "steamEarlyAccess": {"title": "Steam PC Early Access", "description": "Ранний доступ подтверждён для Steam PC."},
           "hundredPlayers": {"title": "Война на 100 игроков и три команды", "description": "WARDOGS рассчитана на матчи до 100 игроков, разделённых на три команды."},
           "persistentCash": {"title": "Постоянная денежная экономика", "description": "Деньги сохраняются и влияют на выбор снаряжения между жизнями и матчами."},
@@ -126,11 +126,11 @@
       "status": {"Confirmed": "Подтверждено", "Not confirmed": "Не подтверждено"},
       "items": {
         "steamPreorder": {"title": "Предзаказ и Request Access открыты в Steam", "description": "Steam сейчас является официальным путем для списка желаемого, Request Access, предзаказа, цены и установки."},
-        "closedBeta": {"title": "Closed Beta пройдет 21-23 августа 2026", "description": "Предзаказ обещает доступ к бете; Request Access дает только шанс отбора."},
+        "closedBeta": {"title": "Closed Beta завершилась 24 августа 2026", "description": "Серверное окно закрыто; следующая дата беты или плейтеста не объявлена."},
         "earlyAccess": {"title": "Steam Early Access начнется 10 сентября 2026", "description": "WARDOGS запланирована для Early Access на Windows PC через Steam; полная версия пока без даты."},
         "ps5": {"title": "Дата PS5 не подтверждена", "description": "Официальные страницы сейчас называют Windows PC через Steam; консоли и cross-play не подтверждены."},
-        "preload": {"title": "WARDOGS Playtest доступен для предзагрузки", "description": "Приглашённые аккаунты Closed Beta устанавливают отдельный WARDOGS Playtest через библиотеку Steam."},
-        "twitchDrops": {"title": "WARDOGS Twitch Drops активны", "description": "Свяжите Steam и Twitch, смотрите подходящий эфир и заберите награду; Drops не открывают игру."},
+        "preload": {"title": "Предзагрузка Closed Beta завершена", "description": "Старый WARDOGS Playtest относился к завершённой бете; дата предзагрузки Early Access не подтверждена."},
+        "twitchDrops": {"title": "Twitch Drops закрытой беты завершены", "description": "Новая активная кампания не подтверждена; полученные награды всё равно не открывают игру."},
         "fpsGameShow": {"title": "FPS Games Show пройдет 3 сентября", "description": "Шоу BULKHEAD начнется в 19:00 BST; заявлен крупный анонс WARDOGS, но его содержание станет известно только в эфире."}
       }
     },

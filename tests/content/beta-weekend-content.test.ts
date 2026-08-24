@@ -9,8 +9,8 @@ const weekendSlugs = [
   "wardogs-fob-guide",
 ] as const;
 
-describe("WARDOGS Closed Beta weekend content", () => {
-  it("publishes the three new guides in every locale with current FAQs and sources", async () => {
+describe("WARDOGS Closed Beta reference content", () => {
+  it("keeps the three beta guides in every locale with current FAQs and sources", async () => {
     for (const locale of ["en", "de", "ru", "pt-br", "ja"] as const) {
       for (const slug of weekendSlugs) {
         const guide = await loadGuideDocument(locale, slug);
@@ -24,7 +24,7 @@ describe("WARDOGS Closed Beta weekend content", () => {
     }
   });
 
-  it("replaces stale preload guidance with the confirmed WARDOGS Playtest preload", async () => {
+  it("preserves the official WARDOGS Playtest identity after the preload window", async () => {
     for (const slug of ["wardogs-beta", "wardogs-playtest", "wardogs-download", "wardogs-steam"] as const) {
       const guide = await loadGuideDocument("en", slug);
       const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
@@ -35,20 +35,25 @@ describe("WARDOGS Closed Beta weekend content", () => {
     }
   });
 
-  it("promotes live weekend intent through homepage and news links", () => {
+  it("keeps historical beta links while the homepage promotes current milestones", () => {
     for (const slug of weekendSlugs) {
       expect(TOP_GUIDE_SLUGS).toContain(slug);
     }
     expect(START_GUIDES[0].slug).toBe("wardogs-beginner-guide");
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",
-      titleKey: "betaPreload",
-      slug: "wardogs-preload",
+      titleKey: "betaEnded",
+      slug: "wardogs-beta",
     }));
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",
-      titleKey: "twitchDrops",
-      slug: "wardogs-twitch-drops",
+      titleKey: "oneMillionWishlists",
+      slug: "wardogs-steam",
+    }));
+    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
+      status: "confirmed",
+      titleKey: "fpsGameShow",
+      slug: "wardogs-livestream",
     }));
     expect(NEWS_CHECKLIST_SLUGS).toContain("wardogs-twitch-drops");
     expect(NEWS_UPDATES).toContainEqual(expect.objectContaining({

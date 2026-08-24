@@ -56,9 +56,9 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 }
 
 export const CONFIRMED_RUMOR_ITEMS = [
-  {status: "confirmed", titleKey: "closedBeta", slug: "wardogs-beta"},
-  {status: "confirmed", titleKey: "betaPreload", slug: "wardogs-preload"},
-  {status: "confirmed", titleKey: "twitchDrops", slug: "wardogs-twitch-drops"},
+  {status: "confirmed", titleKey: "betaEnded", slug: "wardogs-beta"},
+  {status: "confirmed", titleKey: "oneMillionWishlists", slug: "wardogs-steam"},
+  {status: "confirmed", titleKey: "fpsGameShow", slug: "wardogs-livestream"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
 ] as const;

@@ -42,9 +42,9 @@
         "description": "公式に確認された内容、未発表の内容、誤解されやすい情報を素早く判別できます。",
         "labels": {"confirmed": "確認済み", "rumor": "未確認"},
         "items": {
-          "closedBeta": {"title": "クローズドベータは今週末開催", "description": "確認済みのテスト期間は2026年8月21日から23日まで、Steam経由で行われます。"},
-          "betaPreload": {"title": "WARDOGS Playtestの事前ダウンロード", "description": "招待されたアカウントは、Steamの別エントリーから事前ダウンロードできます。"},
-          "twitchDrops": {"title": "Twitch Dropsキャンペーン", "description": "Dropsは実施中ですが、ベータ参加権を付与するものではありません。"},
+          "betaEnded": {"title": "8月のClosed Betaは終了", "description": "サーバーは8月24日に終了し、次回BetaまたはPlaytestの日程は未発表です。"},
+          "oneMillionWishlists": {"title": "Steamウィッシュリスト100万件", "description": "BULKHEADが8月14日に確認した関心度の節目で、同時接続数ではありません。"},
+          "fpsGameShow": {"title": "FPS Games Showは9月3日", "description": "BULKHEADは英国夏時間19時の大型WARDOGS発表を予告していますが、内容は未確認です。"},
           "steamEarlyAccess": {"title": "Steam PC早期アクセス", "description": "SteamのWindows PC版早期アクセスが公式に確認されています。"},
           "hundredPlayers": {"title": "100人・3チームの戦争", "description": "WARDOGSは最大100人を3チームに分けて戦う設計です。"},
           "persistentCash": {"title": "持ち越される資金経済", "description": "資金は保持され、ライフや試合をまたぐロードアウト判断に影響します。"},
@@ -126,11 +126,11 @@
       "status": {"Confirmed": "確認済み", "Not confirmed": "未確認"},
       "items": {
         "steamPreorder": {"title": "Steamの予約購入とアクセス申請が開始", "description": "ウィッシュリスト、アクセス申請、予約、価格、インストール権限はSteamが公式窓口です。"},
-        "closedBeta": {"title": "クローズドベータは2026年8月21日から23日", "description": "予約購入者には参加権が約束されていますが、アクセス申請は選考であり招待保証ではありません。"},
+        "closedBeta": {"title": "Closed Betaは2026年8月24日に終了", "description": "サーバー期間は終了し、次回BetaまたはPlaytestの日程は発表されていません。"},
         "earlyAccess": {"title": "Steam早期アクセスは2026年9月10日開始", "description": "Windows PC向けSteam早期アクセスが予定されています。正式版の日程は未発表です。"},
         "ps5": {"title": "PS5版の発売日は未確認", "description": "公式製品ページはSteamのWindows PC版のみを発表しており、家庭用機とクロスプレイは未確認です。"},
-        "preload": {"title": "WARDOGS Playtestを事前ダウンロード可能", "description": "招待済みアカウントはSteamライブラリの別エントリーからインストールできます。"},
-        "twitchDrops": {"title": "WARDOGS Twitch Drops実施中", "description": "SteamとTwitchを連携して対象配信を視聴し報酬を受け取れますが、ゲーム参加権ではありません。"},
+        "preload": {"title": "Closed Betaのプリロードは終了", "description": "旧WARDOGS Playtestは終了済みBeta用です。Early Accessプリロード日は未確認です。"},
+        "twitchDrops": {"title": "Closed BetaのTwitch Dropsは終了", "description": "現在、有効な新規キャンペーンは未確認です。受取済み報酬もゲーム参加権ではありません。"},
         "fpsGameShow": {"title": "FPS Games Showは9月3日開催", "description": "BULKHEADの番組は英国夏時間19時開始で大型発表が予告されていますが、内容は放送まで未確認です。"}
       }
     },
