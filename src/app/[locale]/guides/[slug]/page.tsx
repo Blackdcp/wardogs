@@ -21,6 +21,7 @@ import {JsonLd} from "@/components/seo/json-ld";
 import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
+import {formatLocalizedDate} from "@/lib/localized-date";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -74,7 +75,7 @@ export default async function GuideArticlePage({params}: PageProps) {
           </Link>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <StatusBadge>{categoryT(guide.frontmatter.category)}</StatusBadge>
-            <span className="inline-flex items-center gap-2 text-xs text-[#8b9992]"><CalendarDays aria-hidden="true" size={14} />{t("lastChecked")} {guide.frontmatter.updatedAt}</span>
+            <span className="inline-flex items-center gap-2 text-xs text-[#8b9992]"><CalendarDays aria-hidden="true" size={14} />{t("lastChecked")} {formatLocalizedDate(guide.frontmatter.updatedAt, locale)}</span>
           </div>
           <p className="mt-3 text-xs text-[#8b9992]">
             {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy">{t("teamName")}</Link>

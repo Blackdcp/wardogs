@@ -10,6 +10,16 @@ const languageSignals = {
   ja: /[\u3040-\u30ff\u3400-\u9fff]/
 } as const;
 
+const forbiddenEnglishStructureHeadings = [
+  "Quick Answer",
+  "Confirmed Facts",
+  "What Players Search For",
+  "How to Use This Guide",
+  "FAQ",
+  "Sources and Last Checked",
+  "Related Guides"
+] as const;
+
 describe("complete localized guide library", () => {
   it("publishes every guide as substantial localized content in all four translated languages", async () => {
     await expect(assertCompleteContentMatrix(["en", ...localizedLocales])).resolves.toBeUndefined();
@@ -29,6 +39,15 @@ describe("complete localized guide library", () => {
 
         expect(localizedText, `${locale}/${summary.slug}`).toMatch(languageSignals[locale]);
         expect(guide?.body.length, `${locale}/${summary.slug}`).toBeGreaterThanOrEqual(1_200);
+
+        const headings = guide?.body
+          .split(/\r?\n/)
+          .filter((line) => /^##\s+/.test(line))
+          .map((line) => line.replace(/^##\s+/, "")) ?? [];
+
+        for (const heading of forbiddenEnglishStructureHeadings) {
+          expect(headings, `${locale}/${summary.slug} contains English heading: ${heading}`).not.toContain(heading);
+        }
       }
     }
   });

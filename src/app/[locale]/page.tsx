@@ -44,7 +44,7 @@ export default async function HomePage({params}: HomePageProps) {
     <main>
       <JsonLd data={buildHomeJsonLd(locale)} />
       <HomeHero facts={facts} />
-      <PriorityGuides guides={guides} />
+      <PriorityGuides guides={guides} locale={locale} />
       <StartHere />
       <CatalogueHomeBand locale={locale} />
       <VideoIntelligence locale={locale} />

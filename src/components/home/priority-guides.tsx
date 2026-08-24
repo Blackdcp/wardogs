@@ -3,9 +3,12 @@ import {getTranslations} from "next-intl/server";
 import {Link} from "@/i18n/navigation";
 import type {GuideSummary} from "@/content/guides";
 import {CONFIRMED_RUMOR_ITEMS, getRecentlyUpdatedGuides, TOP_GUIDE_SLUGS} from "@/features/home/home-data";
+import type {Locale} from "@/config/site";
+import {formatLocalizedDate} from "@/lib/localized-date";
 
 type PriorityGuidesProps = {
   guides: GuideSummary[];
+  locale: Locale;
 };
 
 const statusStyles = {
@@ -13,7 +16,7 @@ const statusStyles = {
   rumor: "border-[#8e4545] bg-[#3e2424] text-[#ffd4d4]"
 } as const;
 
-export async function PriorityGuides({guides}: PriorityGuidesProps) {
+export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
   const t = await getTranslations();
   const bySlug = new Map(guides.map((guide) => [guide.slug, guide]));
   const topGuides = TOP_GUIDE_SLUGS.map((slug) => bySlug.get(slug)).filter((guide): guide is GuideSummary => Boolean(guide));
@@ -72,7 +75,7 @@ export async function PriorityGuides({guides}: PriorityGuidesProps) {
                       {guide.title}
                     </span>
               <span className="mt-1 block text-xs uppercase tracking-[0.14em] text-[#82938a]">
-                      {t("common.updated")} {guide.updatedAt}
+                      {t("common.updated")} {formatLocalizedDate(guide.updatedAt, locale)}
                     </span>
                   </Link>
                 </li>

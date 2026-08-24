@@ -50,7 +50,7 @@ export default async function GuidesPage({params}: PageProps) {
         </div>
       </section>
       <section className="site-container py-10 md:py-12">
-        <PriorityGuides guides={guides} />
+        <PriorityGuides guides={guides} locale={locale} />
       </section>
       <VideoGuideStrip locale={locale} />
       <section className="site-container py-12 md:py-16">

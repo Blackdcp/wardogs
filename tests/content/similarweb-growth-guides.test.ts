@@ -11,15 +11,12 @@ const newGuideSlugs = [
   "wardogs-system-requirements",
   "wardogs-controls"
 ] as const;
-const requiredHeadings = [
-  "## Quick Answer",
-  "## Confirmed Facts",
-  "## What Players Search For",
-  "## How to Use This Guide",
-  "## FAQ",
-  "## Sources and Last Checked",
-  "## Related Guides"
-] as const;
+const requiredHeadings = {
+  en: ["Quick Answer", "Confirmed Facts", "What Players Search For", "How to Use This Guide", "FAQ", "Sources and Last Checked", "Related Guides"],
+  ru: ["Краткий ответ", "Подтверждённые факты", "Что ищут игроки", "Как пользоваться этим руководством", "Частые вопросы", "Источники и последняя проверка", "Связанные руководства"],
+  de: ["Kurzantwort", "Bestätigte Fakten", "Wonach Spieler suchen", "So nutzt du diesen Guide", "Häufige Fragen", "Quellen und letzte Prüfung", "Verwandte Guides"],
+  "pt-br": ["Resposta rápida", "Fatos confirmados", "O que os jogadores pesquisam", "Como usar este guia", "Perguntas frequentes", "Fontes e última verificação", "Guias relacionados"]
+} as const;
 
 describe("Similarweb growth guide cluster", () => {
   it("publishes four substantial, sourced guides in every supported locale", async () => {
@@ -37,8 +34,8 @@ describe("Similarweb growth guide cluster", () => {
         if (locale === "ja") {
           expect(guide?.body.match(/^## /gm)?.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(6);
         } else {
-          for (const heading of requiredHeadings) {
-            expect(guide?.body, `${locale}/${slug} missing ${heading}`).toContain(heading);
+          for (const heading of requiredHeadings[locale]) {
+            expect(guide?.body, `${locale}/${slug} missing ${heading}`).toContain(`## ${heading}`);
           }
         }
       }

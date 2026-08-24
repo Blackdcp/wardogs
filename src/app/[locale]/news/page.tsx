@@ -7,6 +7,7 @@ import {listGuideSummaries} from "@/content/guides";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "@/features/news/news-data";
 import {Link} from "@/i18n/navigation";
 import {buildPageMetadata} from "@/lib/metadata";
+import {formatLocalizedDate} from "@/lib/localized-date";
 
 type PageProps = {params: Promise<{locale: string}>};
 
@@ -63,7 +64,7 @@ export default async function NewsPage({params}: PageProps) {
                 <li key={`${item.date}-${item.titleKey}`} className="relative pb-8 pl-6 last:pb-0">
                   <span className="absolute -left-1.5 top-1.5 size-3 rounded-full bg-[#69c78f]" />
                   <div className="flex flex-wrap items-center gap-3">
-                    <time className="font-mono text-xs uppercase text-[#9fa9a4]">{item.date}</time>
+                    <time className="font-mono text-xs uppercase text-[#9fa9a4]">{formatLocalizedDate(item.date, locale)}</time>
                     <span className={`inline-flex rounded-[4px] border px-2 py-1 text-[11px] font-semibold uppercase ${statusTone[item.status]}`}>
                       {t(`timeline.status.${item.status}`)}
                     </span>
@@ -89,7 +90,7 @@ export default async function NewsPage({params}: PageProps) {
                 <li key={guide.slug}>
                   <Link href={`/guides/${guide.slug}`} className="group block border-b border-[#2c3631] pb-3">
                     <span className="block text-sm font-semibold leading-6 text-[#d7ded9] group-hover:text-[#79d19c]">{guide.title}</span>
-                    <span className="mt-1 block text-xs uppercase tracking-[0.14em] text-[#728078]">{guide.updatedAt}</span>
+                    <span className="mt-1 block text-xs uppercase tracking-[0.14em] text-[#728078]">{formatLocalizedDate(guide.updatedAt, locale)}</span>
                   </Link>
                 </li>
               ))}
