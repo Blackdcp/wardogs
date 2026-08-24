@@ -15,6 +15,7 @@ import {loadGuideDocument} from "@/content/guides";
 import {getTranslations} from "next-intl/server";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -82,6 +83,7 @@ export default async function VideoArticlePage({params}: PageProps) {
 
         <AdsterraNativeBanner label={adsT("label")} />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
 
         <section className="border-y border-[#2c3631] py-8" aria-labelledby="video-takeaways">
           <h2 className="display-font text-3xl text-white" id="video-takeaways">{ui.takeaways}</h2>

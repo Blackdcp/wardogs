@@ -9,6 +9,7 @@ import {SiteHeader} from "@/components/layout/site-header";
 import {GoogleAnalytics} from "@/components/seo/google-analytics";
 import {SiteAnalytics} from "@/components/seo/site-analytics";
 import {AdsterraBehavioralAds} from "@/components/ads/adsterra-behavioral-ads";
+import {AdsterraGlobalInventory} from "@/components/ads/adsterra-display-banner";
 import {buildSiteMetadata} from "@/lib/metadata";
 
 type LocaleLayoutProps = {
@@ -38,6 +39,7 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
         <GoogleAnalytics />
         <SiteAnalytics locale={locale} />
         <AdsterraBehavioralAds />
+        <AdsterraGlobalInventory label="Advertisement" />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <a
             href="#main-content"

@@ -10,6 +10,9 @@ import type {GuideCategory} from "@/content/manifest";
 import {buildPageMetadata} from "@/lib/metadata";
 import {buildGuideIndexJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string}>};
 
@@ -29,9 +32,10 @@ export default async function GuidesPage({params}: PageProps) {
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
   setRequestLocale(locale);
-  const [t, categories, guides] = await Promise.all([
+  const [t, categories, adsT, guides] = await Promise.all([
     getTranslations({locale, namespace: "guides"}),
     getTranslations({locale, namespace: "categories"}),
+    getTranslations({locale, namespace: "ads"}),
     buildGuideIndex(locale)
   ]);
   const categoryLabels = Object.fromEntries(
@@ -51,6 +55,9 @@ export default async function GuidesPage({params}: PageProps) {
       </section>
       <section className="site-container py-10 md:py-12">
         <PriorityGuides guides={guides} locale={locale} />
+        <AdsterraDisplayBanner label={adsT("label")} placement="horizontal" />
+        <AdsterraNativeBanner label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
       <VideoGuideStrip locale={locale} />
       <section className="site-container py-12 md:py-16">

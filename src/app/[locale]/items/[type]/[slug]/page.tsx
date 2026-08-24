@@ -23,6 +23,7 @@ import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
 import {getItemUi} from "@/features/items/item-ui";
 import {loadGuideDocument} from "@/content/guides";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
 
 type PageProps = {params: Promise<{locale: string; type: string; slug: string}>};
 
@@ -114,6 +115,7 @@ export default async function ItemDetailPage({params}: PageProps) {
 
         <AdsterraNativeBanner label={adsT("label")} />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
 
         <section aria-labelledby="facts-title">
           <h2 className="display-font text-3xl text-white" id="facts-title">{ui.quickFacts}</h2>

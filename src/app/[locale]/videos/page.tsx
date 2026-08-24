@@ -8,6 +8,10 @@ import {getLocalizedFeaturedVideoArticles} from "@/features/videos/video-localiz
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 import {getVideoUi} from "@/features/videos/video-ui";
 import {buildPageMetadataWithImage} from "@/lib/metadata";
+import {getTranslations} from "next-intl/server";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string}>};
 
@@ -40,6 +44,7 @@ export default async function VideosPage({params}: PageProps) {
   const locale: Locale = requestedLocale;
   const sortedArticles = getLocalizedFeaturedVideoArticles(locale, videoArticles.length);
   const ui = getVideoUi(locale);
+  const adsT = await getTranslations({locale, namespace: "ads"});
 
   return (
     <main>
@@ -54,6 +59,11 @@ export default async function VideosPage({params}: PageProps) {
             {ui.hubDescription(videoArticles.length)}
           </p>
         </div>
+      </section>
+      <section className="site-container py-2">
+        <AdsterraDisplayBanner label={adsT("label")} placement="horizontal" />
+        <AdsterraNativeBanner label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
       <section className="site-container py-12 md:py-16">
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

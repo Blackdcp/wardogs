@@ -22,6 +22,7 @@ import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker"
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {formatLocalizedDate} from "@/lib/localized-date";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -109,6 +110,7 @@ export default async function GuideArticlePage({params}: PageProps) {
         </aside>
         <AdsterraNativeBanner label={adsT("label")} />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
         <div className="guide-prose">{compiled.content}</div>
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">

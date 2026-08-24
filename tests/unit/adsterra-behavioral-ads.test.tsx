@@ -3,23 +3,24 @@ import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
 
 describe("Adsterra behavioral ads", () => {
-  it("limits behavioral ads to guide, video, and item detail pages", async () => {
+  it("runs behavioral ads across every localized public page", async () => {
     const {isBehavioralAdPath} = await import("../../src/features/ads/ad-policy");
 
     expect(isBehavioralAdPath("/en/guides/wardogs-gameplay")).toBe(true);
     expect(isBehavioralAdPath("/de/videos/wardogs-first-look")).toBe(true);
     expect(isBehavioralAdPath("/pt-br/items/weapons/amp-9")).toBe(true);
-    expect(isBehavioralAdPath("/en")).toBe(false);
-    expect(isBehavioralAdPath("/en/guides")).toBe(false);
-    expect(isBehavioralAdPath("/en/items/weapons")).toBe(false);
-    expect(isBehavioralAdPath("/en/privacy")).toBe(false);
+    expect(isBehavioralAdPath("/en")).toBe(true);
+    expect(isBehavioralAdPath("/en/guides")).toBe(true);
+    expect(isBehavioralAdPath("/en/items/weapons")).toBe(true);
+    expect(isBehavioralAdPath("/ja/videos")).toBe(true);
+    expect(isBehavioralAdPath("/privacy")).toBe(false);
   });
 
-  it("enforces a 24-hour popunder cooldown", async () => {
+  it("enforces a six-hour popunder cooldown", async () => {
     const {POPUNDER_COOLDOWN_MS, canLoadPopunder} = await import("../../src/features/ads/ad-policy");
     const now = Date.UTC(2026, 7, 18, 12);
 
-    expect(POPUNDER_COOLDOWN_MS).toBe(24 * 60 * 60 * 1000);
+    expect(POPUNDER_COOLDOWN_MS).toBe(6 * 60 * 60 * 1000);
     expect(canLoadPopunder(null, now)).toBe(true);
     expect(canLoadPopunder(String(now - POPUNDER_COOLDOWN_MS + 1), now)).toBe(false);
     expect(canLoadPopunder(String(now - POPUNDER_COOLDOWN_MS), now)).toBe(true);
