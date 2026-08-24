@@ -15,7 +15,7 @@ describe("WARDOGS Closed Beta weekend content", () => {
       for (const slug of weekendSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(["2026-08-22", "2026-08-23"]).toContain(guide?.frontmatter.updatedAt);
+        expect(["2026-08-22", "2026-08-23", "2026-08-24"]).toContain(guide?.frontmatter.updatedAt);
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources.length).toBeGreaterThan(0);
@@ -29,7 +29,7 @@ describe("WARDOGS Closed Beta weekend content", () => {
       const guide = await loadGuideDocument("en", slug);
       const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
-      expect(["2026-08-22", "2026-08-23"]).toContain(guide?.frontmatter.updatedAt);
+      expect(["2026-08-22", "2026-08-23", "2026-08-24"]).toContain(guide?.frontmatter.updatedAt);
       expect(searchable).toContain("WARDOGS Playtest");
       expect(searchable).not.toMatch(/preload (?:remain|is|also remains?) unconfirmed/i);
     }

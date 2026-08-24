@@ -138,7 +138,7 @@ describe("Similarweb growth guide cluster", () => {
 
     for (const [slug, phrases] of expectations) {
       const guide = await loadGuideDocument("en", slug);
-      expect(guide?.frontmatter.updatedAt).toBe("2026-08-23");
+      expect(["2026-08-23", "2026-08-24"]).toContain(guide?.frontmatter.updatedAt);
       for (const phrase of phrases) expect(guide?.body).toContain(phrase);
     }
 

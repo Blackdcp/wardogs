@@ -74,7 +74,8 @@ test("guide direct answer uses the first explanatory paragraph instead of a mark
   await page.goto("/en/guides/wardogs-gameplay");
   const answer = page.locator("article > aside").first().locator("p").nth(1);
 
-  await expect(answer).toContainText("WARDOGS is a tactical all-out warfare FPS");
+  await expect(answer).toContainText("BULKHEAD's upcoming tactical all-out warfare FPS");
+  await expect(answer).toContainText("2016 War Dogs movie");
   await expect(answer).not.toHaveText("Quick Answer");
 });
 

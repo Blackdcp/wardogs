@@ -1,5 +1,5 @@
 import type {GuideDocument, GuideSummary} from "@/content/guides";
-import type {Locale} from "@/config/site";
+import {officialLinks, type Locale} from "@/config/site";
 import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
 import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 
@@ -37,9 +37,18 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
       "@context": "https://schema.org",
       "@type": "VideoGame",
       name: "WARDOGS",
+      url: officialLinks.steam,
+      sameAs: [
+        officialLinks.steam,
+        officialLinks.team17,
+        officialLinks.trailer,
+        officialLinks.discord,
+        officialLinks.reddit,
+        officialLinks.twitter
+      ],
       gamePlatform: "Windows PC",
       applicationCategory: "Tactical all-out warfare FPS",
-      publisher: {"@type": "Organization", name: "Team17"},
+      publisher: {"@type": "Organization", name: "Team17", url: officialLinks.team17},
       author: {"@type": "Organization", name: "BULKHEAD"}
     },
     {
