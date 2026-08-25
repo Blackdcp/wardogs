@@ -66,8 +66,8 @@ describe("homepage data", () => {
     ]);
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",
-      titleKey: "betaPreload",
-      slug: "wardogs-preload"
+      titleKey: "betaEnded",
+      slug: "wardogs-beta"
     }));
   });
 });

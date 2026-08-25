@@ -71,7 +71,10 @@ describe("WARDOGS post-beta status refresh", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt).toBe("2026-08-24");
+        const expectedDate = ["wardogs-beta", "wardogs-playtest"].includes(slug)
+          ? "2026-08-25"
+          : "2026-08-24";
+        expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
         expect(searchable, `${locale}/${slug} should say the beta ended`).toMatch(endedPhrases[locale]);
         expect(searchable, `${locale}/${slug} should avoid inventing a next test`).toMatch(noNextTestPhrases[locale]);
         expect(searchable).toMatch(releaseDatePhrases[locale]);

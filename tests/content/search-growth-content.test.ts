@@ -25,8 +25,8 @@ describe("Search Console growth pages", () => {
     const ps5 = await loadGuideDocument("en", "wardogs-ps5");
     const weapons = getCatalogGuide("weapons");
 
-    expect(beta?.frontmatter.title).toBe("WARDOGS Beta: Next Test Date, Access & Signup");
-    expect(beta?.frontmatter.description).toBe("The August WARDOGS Closed Beta has ended. Check its final schedule, what happens to Playtest access, the next confirmed milestone, and future test status.");
+    expect(beta?.frontmatter.title).toBe("WARDOGS Beta Status: Next Test Date & Access");
+    expect(beta?.frontmatter.description).toBe("Check whether the WARDOGS beta is live, the next confirmed test date, past access rules, Steam Playtest status, and the September Early Access launch.");
     expect(ps5?.frontmatter.title).toBe("WARDOGS PS5 & Xbox Release: Console Status");
     expect(ps5?.frontmatter.description).toBe("Check whether WARDOGS is coming to PS5 or Xbox, what BULKHEAD has confirmed for PC Early Access, and where to follow reliable console release news.");
     expect(weapons).toEqual(expect.objectContaining({

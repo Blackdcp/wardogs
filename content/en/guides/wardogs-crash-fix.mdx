@@ -1,11 +1,11 @@
 ---
-title: "WARDOGS Crash Fix: Startup, Reboots, and Stutter"
-description: "Fix WARDOGS startup crashes, hard reboots, shader waits, and stutter with a safe troubleshooting order covering files, drivers, overlays, and Windows."
+title: "WARDOGS Crash Fix: Startup, Reboots & Stutter"
+description: "Fix WARDOGS startup crashes, PC reboots, freezes and stutter with a safe diagnostic order for Steam files, drivers, overlays, shaders and Windows."
 keyword: "wardogs crash fix"
 category: "guide"
 slug: "wardogs-crash-fix"
 order: 25
-updatedAt: "2026-08-24"
+updatedAt: "2026-08-25"
 badges:
   - label: "Troubleshooting"
     tone: "accent"
@@ -24,11 +24,11 @@ sources:
   - label: "WARDOGS on Steam"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-08-22"
+    checkedAt: "2026-08-25"
   - label: "Microsoft Windows update KB5121003"
     url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/08/kb5121003-windows-11-24h2-25h2-security-update"
     kind: "official"
-    checkedAt: "2026-08-22"
+    checkedAt: "2026-08-25"
   - label: "WARDOGS best settings and performance guide"
     url: "https://www.youtube.com/watch?v=fupZGU7LJaU"
     kind: "creator"
@@ -38,6 +38,18 @@ sources:
 ## How do you fix WARDOGS crashes and freezes?
 
 First separate a server queue or login failure from a real client crash. For a repeatable crash, verify Steam files, update the GPU driver, disable overlays and unstable overclocks, allow the first shader compilation to finish, restart Windows, and test one change at a time before reporting the exact reproduction steps.
+
+## WARDOGS crashes on startup
+
+If WARDOGS closes before the menu, first let one responsive shader-preparation pass finish. Then restart Steam, verify the game files, update the graphics driver, disable Discord, Steam, recording and monitoring overlays, and launch at stock CPU, GPU and memory settings. Do not combine these changes with an immediate reinstall because that hides which reversible step fixed the startup crash.
+
+## WARDOGS keeps rebooting my PC
+
+A full PC restart is more serious than a crash to desktop. Stop repeated launches, return overclocks and undervolts to stock, check CPU and GPU temperatures, Windows Reliability Monitor and Event Viewer, and update or temporarily close low-level RGB and hardware-monitoring tools. Microsoft KB5121003 documents a related general Windows failure category, but it does not name WARDOGS and must not be presented as a confirmed game-specific cause.
+
+## WARDOGS stuttering
+
+Let shader work settle, cap the frame rate to a level the machine can sustain, close recording overlays, and test the performance preset in the same busy location. Compare frame-time consistency rather than only average FPS; large battles, vehicles and destruction can expose CPU or storage pressure that an empty area does not show.
 
 ## Quick Answer
 
@@ -111,10 +123,11 @@ Stop repeated launches when the whole PC reboots, overheats, loses power, or sho
 
 ## Sources and Last Checked
 
-Platform status and system requirements were checked on the official Steam listing on 2026-08-22. Microsoft KB5121003 was checked for its general Windows guidance on the same date. Performance suggestions were compared with current creator testing, while all WARDOGS-specific driver or RGB correlations remain labeled as build-sensitive community observations.
+Platform status and system requirements were rechecked on the official Steam listing on 2026-08-25. Microsoft KB5121003 was retained only for its general Windows guidance. Performance suggestions were compared with current creator testing, while all WARDOGS-specific driver or RGB correlations remain labeled as build-sensitive community observations.
 
 ## Related Guides
 
-- [WARDOGS Beta Guide](/guides/wardogs-beta)
+- [WARDOGS System Requirements](/guides/wardogs-system-requirements)
+- [WARDOGS Best Settings](/guides/wardogs-best-settings)
+- [WARDOGS Controls](/guides/wardogs-controls)
 - [WARDOGS Download Guide](/guides/wardogs-download)
-- [WARDOGS Gameplay Explained](/guides/wardogs-gameplay)

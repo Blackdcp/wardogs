@@ -89,7 +89,7 @@ describe("AI citation query coverage", () => {
         const guide = await loadGuideDocument(locale, slug);
         const query = localizedQueries[locale][intent as keyof typeof localizedQueries.en];
 
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-08-24");
+        expect(["2026-08-24", "2026-08-25"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
         expect(guide?.body, `${locale}/${slug} missing ${query}`).toContain(`## ${query}`);
       }
     }

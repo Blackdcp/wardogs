@@ -165,6 +165,12 @@ function localizeBuild(build: string, locale: TranslatedLocale, prefix: string):
       : locale === "pt-br" ? "Vídeo do criador verificado em 16 de agosto de 2026"
       : "クリエイター映像を2026年8月16日に確認";
   }
+  if (build === "Creator footage checked 2026-08-25") {
+    return locale === "ru" ? "Видео автора проверено 25 августа 2026"
+      : locale === "de" ? "Creator-Aufnahme geprüft am 25. August 2026"
+      : locale === "pt-br" ? "Vídeo do criador verificado em 25 de agosto de 2026"
+      : "クリエイター映像を2026年8月25日に確認";
+  }
   return `${prefix}: ${build}`;
 }
 

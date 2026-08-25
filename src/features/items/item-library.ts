@@ -168,7 +168,8 @@ const legacyItemLibrary: readonly WardogsItem[] = [
     subtype: "Deployable base",
     status: "pre-release-build",
     statusLabel: "Pre-release build",
-    build: "Creator footage checked 2026-08-16",
+    build: "Creator footage checked 2026-08-25",
+    detailUpdatedAt: "2026-08-25",
     summary: "Deployable Forward Operating Base that anchors supplies, spawn pressure, defenses, and Hot Zone control.",
     description:
       "Mobile FOBs are WARDOGS' clearest strategy-layer item. They connect logistics, terrain, supply runs, defenses, and objective pressure, which makes them stronger content than a thin equipment stub.",
@@ -189,7 +190,7 @@ const legacyItemLibrary: readonly WardogsItem[] = [
       {label: "Team dependency", value: "Requires supplies and defense", evidence: ["Creator Footage"]},
       {label: "Final upgrade list", value: "Not confirmed", evidence: ["Pre-release Build"]}
     ],
-    relatedGuides: ["wardogs-gameplay", "wardogs-first-look", "wardogs-playtest"],
+    relatedGuides: ["wardogs-fob-guide", "wardogs-mortar-guide", "wardogs-helicopter-guide"],
     relatedItems: ["mortar", "armored-transport"],
     sources: [sevenThingsVideo, officialSteam, officialTeam17],
     priority: 2,
