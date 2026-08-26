@@ -72,7 +72,7 @@ describe("WARDOGS post-beta status refresh", () => {
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
         const expectedDate = ["wardogs-beta", "wardogs-playtest"].includes(slug)
-          ? "2026-08-25"
+          ? "2026-08-26"
           : "2026-08-24";
         expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
         expect(searchable, `${locale}/${slug} should say the beta ended`).toMatch(endedPhrases[locale]);

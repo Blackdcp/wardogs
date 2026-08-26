@@ -25,7 +25,7 @@ describe("Similarweb growth guide cluster", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt).toBe("2026-08-23");
+        expect(guide?.frontmatter.updatedAt).toBe(slug === "wardogs-controls" ? "2026-08-26" : "2026-08-23");
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources.length).toBeGreaterThan(0);
@@ -138,7 +138,7 @@ describe("Similarweb growth guide cluster", () => {
 
     for (const [slug, phrases] of expectations) {
       const guide = await loadGuideDocument("en", slug);
-      expect(["2026-08-23", "2026-08-24", "2026-08-25"]).toContain(guide?.frontmatter.updatedAt);
+      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26"]).toContain(guide?.frontmatter.updatedAt);
       for (const phrase of phrases) expect(guide?.body).toContain(phrase);
     }
 

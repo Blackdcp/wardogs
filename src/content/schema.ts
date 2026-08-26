@@ -26,7 +26,7 @@ const faqSchema = z.object({
 const sourceSchema = z.object({
   label: z.string().trim().min(2),
   url: z.string().url().refine(isApprovedSourceUrl, {message: "Source URL is not approved"}),
-  kind: z.enum(["official", "creator", "community"]),
+  kind: z.enum(["official", "press", "creator", "community"]),
   checkedAt: dateSchema
 });
 

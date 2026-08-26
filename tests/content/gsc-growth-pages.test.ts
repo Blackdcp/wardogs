@@ -24,9 +24,12 @@ describe("GSC growth page reinforcement", () => {
     for (const locale of locales) {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
+        const expectedCheckDate = slug === "wardogs-crash-fix" ? "2026-08-25" : "2026-08-26";
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-08-25");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
+          slug === "wardogs-crash-fix" ? "2026-08-25" : "2026-08-26"
+        );
         expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(24);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeGreaterThanOrEqual(100);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug} FAQ`).toBeGreaterThanOrEqual(3);
@@ -34,10 +37,10 @@ describe("GSC growth page reinforcement", () => {
         expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({
           url: "https://store.steampowered.com/app/1867240/WARDOGS/",
           kind: "official",
-          checkedAt: "2026-08-25"
+          checkedAt: expectedCheckDate
         }));
         expect(
-          guide?.frontmatter.sources.filter(({kind}) => kind === "official").every(({checkedAt}) => checkedAt === "2026-08-25"),
+          guide?.frontmatter.sources.filter(({kind}) => kind === "official").every(({checkedAt}) => checkedAt === expectedCheckDate),
           `${locale}/${slug} has a stale official source check`
         ).toBe(true);
 
