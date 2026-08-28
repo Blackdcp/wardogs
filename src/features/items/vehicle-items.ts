@@ -1,5 +1,12 @@
 import type {WardogsItem} from "./item-library";
-import {gameplayVideo, officialSteam, officialTeam17, sevenThingsVideo} from "./item-sources";
+import {
+  artilleryGuideVideo,
+  gameplayVideo,
+  officialSteam,
+  officialTeam17,
+  sevenThingsVideo,
+  vehiclesExplainedVideo
+} from "./item-sources";
 
 export const vehicleItems: readonly WardogsItem[] = [
   {
@@ -697,30 +704,33 @@ export const vehicleItems: readonly WardogsItem[] = [
     subtype: "Self-propelled artillery",
     status: "pre-release-build",
     statusLabel: "Pre-release build",
-    build: "Alpha 1 - 7 Aug 2026",
-    summary: "The SPH-2 appeared as $10,000 self-propelled artillery at Wardog Level 55 in Alpha 1.",
+    build: "Alpha 1 and Closed Beta footage checked 2026-08-28",
+    summary: "The SPH-2 is late-track self-propelled artillery whose crew, stabilization, aiming and reload flow were observed across Alpha and Closed Beta footage.",
     description:
-      "The SPH-2 was the only self-propelled-artillery model in the captured vendor and carried the highest readable Wardog gate. Its $10,000 Alpha 1 price fell between the Gepard and L2A6, but range, shell types, aiming, spotting, blast, ammunition supply, and defensive armament were not captured.",
+      "The SPH-2 was the only self-propelled-artillery model in the captured vendor and carried a Wardog Level 55 gate. Later Closed Beta footage showed a three-position crew, a stabilization step, indirect range setting, 155 mm ammunition and a manual reload sequence. The Alpha capture listed a $10,000 purchase, while a later creator guide showed an $8,000 repeat purchase after a separate $400,000 unlock; that conflict is preserved as build evidence rather than flattened into a final price.",
     role: "Use the SPH-2 as a coordinated indirect-fire asset that depends on target information, protected firing positions, and logistics, then relocate when its position becomes predictable.",
     strengths: [
-      "Self-propelled artillery was a unique observed role in the vehicle roster.",
-      "Its $10,000 Alpha 1 price was lower than the L2A6 while retaining a heavy battlefield role.",
-      "Wardog Level 55 gave the captured roster a clear late-track artillery gate."
+      "Stabilization keeps the sight picture usable for repeated indirect-fire corrections.",
+      "Observed crew positions separate driving, the main 155 mm gun and top-cover defense.",
+      "The manual reload input sequence can shorten the delay when completed correctly."
     ],
     cautions: [
-      "Range, trajectory, blast, shell selection, ammunition capacity, and reload behavior were not captured.",
-      "The role does not establish direct-fire effectiveness or close-range protection.",
-      "Wardog Level 55 and the $10,000 price may be rebalanced after Alpha 1."
+      "The driver cannot fire while driving; a solo operator must stop and change seats.",
+      "A predictable firing position is vulnerable to drones, aircraft, counter-battery fire and infantry hunters.",
+      "Alpha and Beta footage disagree on purchase economics, so every price, gate, range and shell value must be checked in the current build."
     ],
     facts: [
       {label: "Role", value: "Self-propelled artillery", evidence: ["Pre-release Build"]},
       {label: "Alpha price", value: "$10,000", evidence: ["Pre-release Build"]},
       {label: "Observed gate", value: "Wardog Level 55", evidence: ["Pre-release Build"]},
-      {label: "Track", value: "Wardog", evidence: ["Pre-release Build"]}
+      {label: "Track", value: "Wardog", evidence: ["Pre-release Build"]},
+      {label: "Observed crew", value: "Driver / gunner / top gunner", evidence: ["Creator Footage"]},
+      {label: "Observed shell", value: "155 mm high explosive", evidence: ["Creator Footage"]},
+      {label: "Observed setup", value: "Stabilize before firing", evidence: ["Creator Footage"]}
     ],
-    relatedGuides: ["wardogs-gameplay", "wardogs-factions", "wardogs-playtest"],
+    relatedGuides: ["wardogs-artillery-guide", "wardogs-gameplay", "wardogs-factions"],
     relatedItems: ["l2a6", "flakpanzer-gepard", "ural-defender"],
-    sources: [officialSteam, officialTeam17, sevenThingsVideo],
+    sources: [officialSteam, officialTeam17, artilleryGuideVideo, vehiclesExplainedVideo],
     detailImage: "/images/catalogue/vehicles/sph-2.webp",
     detailImageAlt: "SPH-2 self-propelled artillery",
     observedPrice: "$10,000",
@@ -730,13 +740,14 @@ export const vehicleItems: readonly WardogsItem[] = [
       "Observed in Alpha 1: Role: Self-propelled artillery",
       "Observed in Alpha 1: Alpha price: $10,000",
       "Observed in Alpha 1: Observed gate: Wardog Level 55",
-      "Observed in Alpha 1: Track: Wardog"
+      "Observed across creator footage: stabilize the platform before firing and use a manual reload sequence",
+      "Observed across creator footage: driver, main-gun and top-gunner positions"
     ],
     unconfirmedFacts: [
-      "Wardog Level 55 and the $10,000 price remain unconfirmed for Early Access or final release.",
-      "Range, shells, aiming, blast, reload, ammunition supply, armor, and crew behavior may change before Early Access or final release."
+      "The Alpha $10,000 purchase and later Beta $8,000 repeat purchase conflict; neither is confirmed for Early Access.",
+      "The reported $400,000 unlock, Wardog Level 55 gate, effective range, blast, armor and ammunition economy may change before or during Early Access."
     ],
-    detailUpdatedAt: "2026-08-18",
+    detailUpdatedAt: "2026-08-28",
     priority: 214,
     indexLocales: ["en"]
   },

@@ -141,7 +141,7 @@ describe("WARDOGS post-beta status refresh", () => {
 
       expect(steam?.frontmatter.updatedAt).toBe("2026-08-24");
       expect(steam?.body).toContain("1,000,000");
-      expect(price?.frontmatter.updatedAt).toBe("2026-08-24");
+      expect(price?.frontmatter.updatedAt).toBe("2026-08-28");
       expect(earlyAccess?.frontmatter.updatedAt).toBe("2026-08-24");
       expect(commercialText).toContain("$39.99");
       expect(commercialText).toContain("$49.99");

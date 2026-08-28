@@ -137,6 +137,8 @@ describe("item library", () => {
 
   it("publishes all 20 vehicle model guides in every supported locale", () => {
     const vehicleModels = itemLibrary.filter((item) => vehicleSlugs.includes(item.slug as (typeof vehicleSlugs)[number]));
+    const alphaOnlyVehicleModels = vehicleModels.filter((item) => item.slug !== "sph-2");
+    const sph2 = vehicleModels.find((item) => item.slug === "sph-2");
     const guideSlugs = new Set(guideManifest.map((guide) => guide.slug));
 
     expect(vehicleItems).toHaveLength(20);
@@ -147,14 +149,18 @@ describe("item library", () => {
     expect(vehicleModels.every((item) => item.facts.length >= 4)).toBe(true);
     expect(vehicleModels.every((item) => item.strengths.length >= 3 && item.cautions.length >= 3)).toBe(true);
     expect(vehicleModels.every((item) => item.confirmedFacts && item.confirmedFacts.length > 0)).toBe(true);
-    expect(vehicleModels.every((item) => item.confirmedFacts?.every((fact) => fact.startsWith("Observed in Alpha 1:")))).toBe(true);
+    expect(vehicleModels.every((item) => item.confirmedFacts?.every((fact) => fact.startsWith("Observed in Alpha 1:") || fact.startsWith("Observed across creator footage:")))).toBe(true);
     expect(vehicleModels.every((item) => item.unconfirmedFacts && item.unconfirmedFacts.length > 0)).toBe(true);
     expect(vehicleModels.every((item) => item.unconfirmedFacts?.every((fact) => /Early Access|final release/.test(fact)))).toBe(true);
     expect(vehicleModels.every((item) => item.sources.length > 0 && item.sources.every((source) => isApprovedSourceUrl(source.url)))).toBe(true);
     expect(vehicleModels.every((item) => item.relatedGuides.length > 0 && item.relatedGuides.every((slug) => guideSlugs.has(slug)))).toBe(true);
     expect(vehicleModels.every((item) => item.detailImage && item.detailImageAlt)).toBe(true);
-    expect(vehicleModels.every((item) => item.detailUpdatedAt === "2026-08-18")).toBe(true);
-    expect(vehicleModels.every((item) => item.build === "Alpha 1 - 7 Aug 2026")).toBe(true);
+    expect(alphaOnlyVehicleModels.every((item) => item.detailUpdatedAt === "2026-08-18")).toBe(true);
+    expect(alphaOnlyVehicleModels.every((item) => item.build === "Alpha 1 - 7 Aug 2026")).toBe(true);
+    expect(sph2).toMatchObject({
+      detailUpdatedAt: "2026-08-28",
+      build: "Alpha 1 and Closed Beta footage checked 2026-08-28"
+    });
     expect(new Set(vehicleModels.map((item) => item.summary)).size).toBe(20);
     expect(new Set(vehicleModels.map((item) => item.description)).size).toBe(20);
     expect(new Set(vehicleModels.map((item) => item.role)).size).toBe(20);
@@ -166,12 +172,17 @@ describe("item library", () => {
       expect(item, record.slug).toMatchObject({
         name: record.name,
         subtype: record.subtype,
-        status: record.evidenceStatus,
-        build: record.dataAsOf
+        status: record.evidenceStatus
       });
+      expect(item?.build, record.slug).toBe(record.slug === "sph-2" ? "Alpha 1 and Closed Beta footage checked 2026-08-28" : record.dataAsOf);
       expect(item?.detailImage, record.slug).toBe(record.image);
       expect(item?.detailImageAlt, record.slug).toBe(record.imageAlt);
-      expect(item?.facts.map(({label, value}) => ({label, value})), record.slug).toEqual(record.facts);
+      const observedFacts = item?.facts.map(({label, value}) => ({label, value}));
+      if (record.slug === "sph-2") {
+        expect(observedFacts, record.slug).toEqual(expect.arrayContaining([...record.facts]));
+      } else {
+        expect(observedFacts, record.slug).toEqual(record.facts);
+      }
       expect(item?.observedPrice, record.slug).toBe(record.facts.find((fact) => fact.label === "Alpha price")?.value);
       expect(item?.observedAmmoOrVehicleClass, record.slug).toBe(record.facts.find((fact) => fact.label === "Role")?.value);
       expect(item?.observedProgressionOrGate, record.slug).toBe(record.facts.find((fact) => fact.label === "Observed gate")?.value);

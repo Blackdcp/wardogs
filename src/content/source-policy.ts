@@ -8,6 +8,8 @@ const approvedHosts = new Set([
   "youtube.com",
   "www.youtube.com",
   "youtu.be",
+  "twitch.tv",
+  "www.twitch.tv",
   "discord.com",
   "x.com",
   "reddit.com",

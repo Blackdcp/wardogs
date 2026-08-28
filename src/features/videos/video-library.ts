@@ -1388,6 +1388,254 @@ export const videoArticles: readonly VideoArticle[] = [
         ]
       }
     ]
+  },
+  {
+    slug: "wardogs-artillery-tank-guide",
+    title: "WARDOGS SPH-2 Artillery Guide: Aim, Stabilize and Reload",
+    description:
+      "A source-specific SPH-2 artillery guide covering crew seats, stabilization, map ranging, 155 mm shells, manual reloads, firing positions, resupply and counters.",
+    youtubeId: "oP9RelmWk6A",
+    sourceLabel: "How To Use Artillery Tanks in WARDOGS",
+    sourceUrl: "https://www.youtube.com/watch?v=oP9RelmWk6A",
+    publishedDate: "2026-08-27",
+    updatedDate: "2026-08-28",
+    kind: "creator",
+    priority: -13,
+    internalGuideSlug: "wardogs-artillery-guide",
+    quickAnswer:
+      "The video shows a repeatable SPH-2 workflow: move to protected ground, stabilize the gun, estimate range from the map, fire a correction round, complete the directional reload sequence and relocate before counterattack. Its exact unlock, price and range are Beta observations rather than permanent Early Access values.",
+    takeaways: [
+      "The SPH-2 separates driving, main-gun and top-gunner jobs.",
+      "Stabilization is a required setup step before useful corrections.",
+      "Map scale, coordinates and a spotter turn indirect fire into repeatable shots.",
+      "The manual direction sequence can shorten the reload when completed correctly.",
+      "Correct 155 mm ammunition, fuel and local security belong in the firing plan.",
+      "Alpha and Beta economics conflict, so the current vendor is authoritative."
+    ],
+    sections: [
+      {
+        heading: "What is directly visible in the video",
+        body: [
+          "The creator demonstrates the SPH-2 vendor entry, crew positions, stabilization interaction, indirect range interface, map-coordinate method and manual reload prompt. Those visible steps are stronger evidence than commentary about future balance.",
+          "A second vehicle overview independently shows the separate driver and gunner seats, stabilization and reload mini-game. The maintained artillery guide keeps the shared workflow and labels every disputed number by build."
+        ]
+      },
+      {
+        heading: "Set up the platform before aiming",
+        body: [
+          "The vehicle must stop and stabilize before repeated correction fire. Parking on a slope, blocking the gun arc or leaving no exit creates a problem before the first shell leaves the barrel.",
+          "The driver should orient the hull for departure, the gunner should confirm the stabilized state, and a third player should watch nearby approaches while the gunner uses the map and follows impacts."
+        ]
+      },
+      {
+        heading: "Map ranging and correction",
+        body: [
+          "The video uses map scale and cursor coordinates to estimate the distance between the vehicle and target. Straight-axis shots can use one coordinate difference; diagonal shots need both axes or a calculator.",
+          "The first shot is still a measurement. A spotter should report short, long, left or right, and the gunner should change one variable at a time instead of sending repeated shells with no observed result.",
+          "For a repeatable crew drill, record the map square, estimated range, first elevation, correction and final hit. That short log lets a new gunner understand why the second shell changed instead of copying an unexplained number that may fail from a different position."
+        ]
+      },
+      {
+        heading: "Reload, resupply and security",
+        body: [
+          "After firing, the gunner can complete a directional input sequence. Correct inputs reduce the wait; mistakes may reset progress. Reload time should also be used to inspect the map, kill feed and nearby engine noise.",
+          "The video distinguishes 155 mm artillery ammunition from main-battle-tank shells. The crew also needs fuel, top-gun ammunition if used and a resupply route that does not lead every enemy directly to the position."
+        ]
+      },
+      {
+        heading: "Numbers that must remain build-sensitive",
+        body: [
+          "The creator reports a Level 55 gate, a separate unlock and a repeat purchase price in the Closed Beta. An older Alpha capture displays a different purchase price. This is useful evidence that WARDOGS economics were already changing between tests.",
+          "Do not turn those values, the demonstrated range or one payout into a permanent table. Use the current vendor after Early Access begins, while preserving the operating method and counterplay shown across sources."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-ammo-types-tested",
+    title: "WARDOGS Ammo Types Tested: FMJ, AP and Flesh Rounds",
+    description:
+      "A careful breakdown of a WARDOGS firing-range ammo test, explaining FMJ, armor-piercing and flesh rounds without treating one MP5 damage table as permanent balance.",
+    youtubeId: "trlcyJgeZOo",
+    sourceLabel: "Does Ammo Type in WARDOGS Actually Matter?",
+    sourceUrl: "https://www.youtube.com/watch?v=trlcyJgeZOo",
+    publishedDate: "2026-08-23",
+    updatedDate: "2026-08-28",
+    kind: "creator",
+    priority: -11,
+    internalGuideSlug: "wardogs-beginner-guide",
+    quickAnswer:
+      "Ammo type matters when armor changes the target. The test video shows FMJ as the flexible baseline, armor-piercing as the safer answer to heavier protection and flesh rounds as highly specialized against unarmored areas. The exact MP5 damage values belong to that Beta build, calibre and target setup.",
+    takeaways: [
+      "Match the load to expected armor instead of buying the most expensive label automatically.",
+      "FMJ is the practical baseline when enemy protection is unknown.",
+      "Armor-piercing gains value as higher-tier armor becomes common.",
+      "Flesh ammunition loses value when shots land on protected zones.",
+      "Calibre and weapon choice change the result, so one MP5 table is not universal.",
+      "Use the firing range after updates before committing a full loadout budget."
+    ],
+    sections: [
+      {
+        heading: "What the firing-range test proves",
+        body: [
+          "The creator fires one MP5 and three ammunition families at targets with increasing armor. The visible trend is more useful than each temporary number: armor reduces ordinary and flesh-focused damage, while armor-piercing retains more value against protected zones.",
+          "The same result cannot be copied to every rifle or calibre. Weapon base damage, ammunition availability, target armor, hit location and patch balance all affect the outcome."
+        ]
+      },
+      {
+        heading: "A practical selection rule",
+        body: [
+          "Take FMJ when the lobby is new or mixed and the player needs one affordable general-purpose load. Take armor-piercing when heavy armor is common or the squad expects protected defenders. Take flesh rounds only with a deliberate plan for exposed areas or unarmored targets.",
+          "The wrong ammunition is not rescued by a strong weapon name. Confirm that the magazines and calibre match, then include the full replacement cost in the loadout decision."
+        ]
+      },
+      {
+        heading: "Armor changes across a progression cycle",
+        body: [
+          "The creator notes that early test days had fewer heavily armored players. That makes ammunition choice a moving metagame rather than a permanent tier list. A general load may work early and struggle after more accounts unlock stronger protection.",
+          "Because future reset and season rules are not fully confirmed, the maintained guides should describe this decision pattern without promising exactly when the lobby changes."
+        ]
+      },
+      {
+        heading: "Use the range, not a copied spreadsheet",
+        body: [
+          "Recreate the comparison after a major patch: same weapon, same distance, same hit location and one variable changed at a time. Record the build date and armor state with the result.",
+          "A copied damage chart loses value when even one of those inputs changes. The video is useful because it demonstrates a method that players can repeat on the live client.",
+          "Run at least one unarmored control and one protected target for every ammunition family, reload between groups and avoid mixing limb, torso and head impacts. If the range does not expose armor tier clearly, publish the visible setup and uncertainty instead of inventing a clean breakpoint."
+        ]
+      },
+      {
+        heading: "Evidence limits",
+        body: [
+          "This is one controlled creator test, cross-supported only at the strategic level by other footage emphasizing armor and leg or exposed-area choices. It is not official final damage documentation.",
+          "The article therefore keeps roles and testing method, omits a permanent numerical table and sends players to the current catalogue and range for build-specific values."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-stingray-anti-vehicle-drone",
+    title: "WARDOGS Stingray Drone Guide: Anti-Vehicle Targeting",
+    description:
+      "A WARDOGS Stingray anti-vehicle drone breakdown covering target value, launch protection, flight discipline, stationary artillery hunting and build-sensitive costs.",
+    youtubeId: "OBjq7kVgtnQ",
+    sourceLabel: "Anti-Vehicle Drone is a Money Printer in WARDOGS",
+    sourceUrl: "https://www.youtube.com/watch?v=OBjq7kVgtnQ",
+    publishedDate: "2026-08-23",
+    updatedDate: "2026-08-28",
+    kind: "creator",
+    priority: -10,
+    internalGuideSlug: "wardogs-fob-guide",
+    quickAnswer:
+      "The Stingray is a costly one-way anti-vehicle tool whose value depends on target selection. Use it against a known stationary high-value asset, launch from protected cover, follow map direction and automatic vehicle highlighting, slow before the final correction and avoid wasting the drone on moving low-value targets.",
+    takeaways: [
+      "A known stationary artillery or spawn asset is a better target than random transport.",
+      "The launch operator is vulnerable while controlling the drone.",
+      "Compass direction and highlighted vehicles help the search, but do not replace a confirmed mark.",
+      "Boost is best saved for approach and terminal attack rather than the entire flight.",
+      "A protected launch pit reduces risk from mortars, infantry and counter-raids.",
+      "Cost, mechanical-part requirement and vehicle damage are Beta observations."
+    ],
+    sections: [
+      {
+        heading: "Target value comes before launch",
+        body: [
+          "The video recommends the Stingray for known stationary high-value vehicles, especially artillery or deployed spawn support. Its handling and one-way nature make opportunistic attacks on fast or cheap targets poor economics.",
+          "Watch the kill feed, use a teammate's mark and compare the target's battlefield effect with the drone's current cost. If the target moved, hold the shot rather than launching on hope."
+        ]
+      },
+      {
+        heading: "Flight method shown in the video",
+        body: [
+          "The operator follows compass direction toward the expected area and uses free look while the system highlights vehicles. The final approach needs restraint: boosting the entire time can leave too little control to correct the impact.",
+          "Slow before the terminal phase, align, then use the remaining boost to close. This is a Beta observation and should be retested if flight handling changes.",
+          "A useful practice run starts with a friendly stationary landmark, not a paid combat launch. Measure how quickly the camera turns, how much distance boost consumes and how late a correction remains possible, then repeat after any handling or battery patch."
+        ]
+      },
+      {
+        heading: "Protect the operator",
+        body: [
+          "Drone control pulls attention away from the local fight. The creator builds a small protected pit so the operator is less exposed to random fire, mortars and a base raid while searching deep behind enemy lines.",
+          "The better team version adds a guard and avoids placing the launch point beside every other valuable FOB asset. One successful enemy push should not remove the FOB, artillery, supplies and drone operator together."
+        ]
+      },
+      {
+        heading: "Counterplay for vehicle crews",
+        body: [
+          "Artillery and spawn vehicles should avoid staying in the most predictable line from enemy territory. Move after repeated use, keep local observation and do not assume distance protects a stationary asset.",
+          "FOB defenders should watch for exposed launch structures, disrupt mechanical supply and force operators to cancel control. A moving valuable vehicle is harder to hit than one parked for convenience."
+        ]
+      },
+      {
+        heading: "What remains unconfirmed",
+        body: [
+          "The video's shot cost, mechanical-part requirement and one-hit claims describe one Beta build. Armor, target class, damage, payout, battery and handling may change.",
+          "This article keeps the target-selection and protection logic while treating every number as a dated observation that must be rechecked in Early Access."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-fast-money-routes",
+    title: "WARDOGS Fast Money Routes: Piloting, Logistics and Medic Play",
+    description:
+      "A WARDOGS money-video breakdown comparing transport piloting, logistics pallets, mobile spawn support, medic work, objectives and high-risk combat income.",
+    youtubeId: "Jm7ogJLKIJo",
+    sourceLabel: "How to Make Money FAST in WARDOGS Beta",
+    sourceUrl: "https://www.youtube.com/watch?v=Jm7ogJLKIJo",
+    publishedDate: "2026-08-23",
+    updatedDate: "2026-08-28",
+    kind: "creator",
+    priority: -12,
+    internalGuideSlug: "wardogs-money-guide",
+    quickAnswer:
+      "The video shows why repeatable service beats gambling on one expensive kill streak. Transport pilots can move several players and supplies, logistics runners can feed FOBs, medics can revive and heal near the objective, and spawn-support drivers can create value every time teammates use the route. Exact payouts are Beta-specific.",
+    takeaways: [
+      "Practice aircraft controls before using passengers as the lesson.",
+      "Transport income grows when the same aircraft completes repeated safe cycles.",
+      "Logistics pallets need the correct destination, low drop and an available unloading team.",
+      "Mobile spawn support creates value only after safe deployment near useful pressure.",
+      "Medic income depends on safe revives and staying with organized players.",
+      "Payouts, unlocks and the creator's best route can change by build."
+    ],
+    sections: [
+      {
+        heading: "Why service routes are more reliable",
+        body: [
+          "A kill may pay once and expose the player's kit. Transport, supply and medical work can repeat around the same team push. The video uses piloting as its main example because one successful trip can move several players and lead into another pickup or delivery.",
+          "The maintained money guide compares the routes without promising the video's recorded payouts. The durable metric is net cash after vehicle, ammunition, fuel and replacement risk."
+        ]
+      },
+      {
+        heading: "Passenger and supply cycles",
+        body: [
+          "A pilot should leave with a mission, choose a safe drop near useful pressure and return before fuel or threats trap the aircraft. A supply pallet should match what the FOB needs and be released low and slow enough to survive the drop.",
+          "A delivery creates more value when teammates can unload and use it. Dropping cargo into an abandoned or collapsing FOB creates activity but not a reliable income loop."
+        ]
+      },
+      {
+        heading: "Spawn support and logistics",
+        body: [
+          "The video highlights the team spawn vehicle as another repeatable support asset. Driving it into useful range, deploying it safely and protecting the route can produce more ongoing value than abandoning it at the first visible fight.",
+          "Logistics work also advances support play in observed builds, but exact progression links and thresholds need live verification. Pick the route for the team's situation, not only the recorded reward."
+        ]
+      },
+      {
+        heading: "Medic and infantry income",
+        body: [
+          "Medical tools earn value when the player stays near teammates and revives after creating safety. Carrying a bag of medical items far from the objective does not automatically create profit.",
+          "Infantry should combine objective presence, survival, spotting and selective combat. A modest kit that completes several paid actions is healthier for the account than an expensive kit lost before reaching the group."
+        ]
+      },
+      {
+        heading: "Payout evidence and limits",
+        body: [
+          "The creator states several per-action rewards from the Closed Beta. Those are useful for understanding what the game rewarded at the time, but they can be tuned independently before or during Early Access.",
+          "Track the live cost and cash after each route. When a route stops covering fuel, vehicle loss or kit replacement, change the plan instead of relying on a dated headline amount.",
+          "For a fair comparison, log three completed cycles per role and separate gross rewards from replacement costs. A route that earns less per action can still win if it survives, serves the active objective and starts the next cycle without buying another vehicle or full kit."
+        ]
+      }
+    ]
   }
 ] as const;
 

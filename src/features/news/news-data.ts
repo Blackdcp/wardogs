@@ -12,6 +12,12 @@ export const NEWS_UPDATES = [
     guideSlug: "wardogs-beta"
   },
   {
+    date: "2026-08-24",
+    status: "Confirmed",
+    titleKey: "betaRecap",
+    guideSlug: "wardogs-beta"
+  },
+  {
     date: "2026-09-10",
     status: "Confirmed",
     titleKey: "earlyAccess",

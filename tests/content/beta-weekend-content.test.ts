@@ -15,7 +15,7 @@ describe("WARDOGS Closed Beta reference content", () => {
       for (const slug of weekendSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(["2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26"]).toContain(guide?.frontmatter.updatedAt);
+        expect(["2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28"]).toContain(guide?.frontmatter.updatedAt);
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources.length).toBeGreaterThan(0);

@@ -10,7 +10,7 @@ describe("weekly source-gap refresh", () => {
       const guide = await loadGuideDocument(locale, "wardogs-livestream");
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-      expect(["2026-08-22", "2026-08-23"], locale).toContain(guide?.frontmatter.updatedAt);
+      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-08-28");
       expect(guide?.body, locale).toContain("FPS Games Show");
       expect(guide?.body, locale).toContain("3 September 2026");
       expect(guide?.body, locale).toContain("7pm BST");

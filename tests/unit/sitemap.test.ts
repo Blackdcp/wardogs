@@ -49,9 +49,9 @@ describe("sitemap", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     expect(new Date(entriesByUrl.get(`${origin}/en/guides/wardogs-fob-guide`)!.lastModified!).toISOString())
-      .toBe("2026-08-26T00:00:00.000Z");
+      .toBe("2026-08-28T00:00:00.000Z");
     expect(new Date(entriesByUrl.get(`${origin}/ja/guides/wardogs-money-guide`)!.lastModified!).toISOString())
-      .toBe("2026-08-23T00:00:00.000Z");
+      .toBe("2026-08-28T00:00:00.000Z");
   });
 
   it("includes the video hub and every standalone video article in all five locales", () => {

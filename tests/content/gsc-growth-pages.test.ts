@@ -24,11 +24,15 @@ describe("GSC growth page reinforcement", () => {
     for (const locale of locales) {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedCheckDate = slug === "wardogs-crash-fix" ? "2026-08-25" : "2026-08-26";
+        const expectedCheckDate = slug === "wardogs-crash-fix"
+          ? "2026-08-25"
+          : slug === "wardogs-fob-guide"
+            ? "2026-08-28"
+            : "2026-08-26";
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          slug === "wardogs-crash-fix" ? "2026-08-25" : "2026-08-26"
+          expectedCheckDate
         );
         expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(24);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeGreaterThanOrEqual(100);

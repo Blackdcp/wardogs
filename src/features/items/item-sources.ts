@@ -39,3 +39,17 @@ export const gameplayVideo: ItemSource = {
   kind: "creator",
   lastChecked: "2026-08-16"
 };
+
+export const artilleryGuideVideo: ItemSource = {
+  label: "How to Use Artillery Tanks in WARDOGS",
+  url: "https://www.youtube.com/watch?v=oP9RelmWk6A",
+  kind: "creator",
+  lastChecked: "2026-08-28"
+};
+
+export const vehiclesExplainedVideo: ItemSource = {
+  label: "WARDOGS Vehicles Explained",
+  url: "https://www.youtube.com/watch?v=ZFRrDSru7Kg",
+  kind: "creator",
+  lastChecked: "2026-08-28"
+};

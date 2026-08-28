@@ -66,7 +66,7 @@
       "eyebrow": "攻略カテゴリー",
       "title": "必要な情報を探す",
       "description": "独立系WARDOGS攻略ライブラリを8つの分野から閲覧できます。",
-      "allGuides": "全33攻略を見る",
+      "allGuides": "全34攻略を見る",
       "items": {
         "access": "プレイテスト、ベータ、アルファ、キー",
         "release": "発売日と早期アクセス",
@@ -113,7 +113,7 @@
     "finalDescription": "独立系攻略ライブラリで、参加方法、分隊の役割、車両、目標、確認済みの発売予定を準備できます。",
     "final": {"eyebrow": "出撃準備", "guidesCta": "攻略を見る", "steamCta": "Steamを開く"}
   },
-  "guides": {"metaTitle": "WARDOGS 攻略ガイド - ベータ、ゲームプレイ、武器、クラッシュ対策", "title": "WARDOGS攻略", "description": "ベータ参加、トラブル対策、資金、タワー、ヘリコプター、迫撃砲、FOB兵站、発売、ゲームプレイを扱う33の攻略です。", "count": "33攻略トピック", "read": "攻略を読む"},
+  "guides": {"metaTitle": "WARDOGS 攻略ガイド - ベータ、ゲームプレイ、武器、クラッシュ対策", "title": "WARDOGS攻略", "description": "ベータ参加、トラブル対策、資金、タワー、ヘリコプター、砲兵、FOB兵站、発売、ゲームプレイを扱う34の攻略です。", "count": "34攻略トピック", "read": "攻略を読む"},
   "news": {
     "metaTitle": "WARDOGSニュース - ベータ、早期アクセス、Steam更新",
     "metaDescription": "WARDOGSのベータ日程、Steam早期アクセス、価格、対応機種、事前ダウンロード、ゲーム更新を確認済み情報に基づいて追跡します。",
@@ -127,6 +127,7 @@
       "items": {
         "steamPreorder": {"title": "Steamの予約購入とアクセス申請が開始", "description": "ウィッシュリスト、アクセス申請、予約、価格、インストール権限はSteamが公式窓口です。"},
         "closedBeta": {"title": "Closed Betaは2026年8月24日に終了", "description": "サーバー期間は終了し、次回BetaまたはPlaytestの日程は発表されていません。"},
+        "betaRecap": {"title": "BULKHEADがBeta振り返りと今後を公開", "description": "ユニーク参加者は約50万人、同時接続ピークは10万人超となり、Early Accessに向けた進行とメタゲームの改善が示されました。"},
         "earlyAccess": {"title": "Steam早期アクセスは2026年9月10日開始", "description": "Windows PC向けSteam早期アクセスが予定されています。正式版の日程は未発表です。"},
         "ps5": {"title": "PS5版の発売日は未確認", "description": "公式製品ページはSteamのWindows PC版のみを発表しており、家庭用機とクロスプレイは未確認です。"},
         "preload": {"title": "Closed Betaのプリロードは終了", "description": "旧WARDOGS Playtestは終了済みBeta用です。Early Accessプリロード日は未確認です。"},
@@ -134,7 +135,7 @@
         "fpsGameShow": {"title": "FPS Games Showは9月3日開催", "description": "BULKHEADの番組は英国夏時間19時開始で大型発表が予告されていますが、内容は放送まで未確認です。"}
       }
     },
-    "checklist": {"title": "ベータ前チェックリスト", "description": "ベータ週末や早期アクセス前に、参加、価格、インストール安全性、基本ループを確認します。"},
+    "checklist": {"title": "発売前チェックリスト", "description": "9月3日の発表とEarly Access前に、参加、価格、インストール安全性、基本ループを確認します。"},
     "rules": {
       "title": "更新情報の分類方法",
       "items": {
@@ -150,5 +151,5 @@
   "editorial": {"metaTitle": "WARDOGS Wiki 編集方針と調査基準", "metaDescription": "WARDOGS Wikiが公式情報、クリエイター映像、ビルド依存情報をどう検証し、誤りを訂正して攻略を更新するかを説明します。", "eyebrow": "編集基準", "title": "WARDOGSの調査方法", "intro": "WARDOGS Wikiは独立したファンメディアです。公式情報、確認映像、コミュニティ報告、未解決情報を区別しながら、プレイヤーの疑問に答えます。", "teamTitle": "独立したプレイヤー優先の調査", "teamBody": "編集チームはBULKHEAD、Team17、Steam、クリエイター、広告主と提携せず、このゲームに特化した攻略を維持しています。商業関係で結論や情報源の表示を変えません。", "methodTitle": "検証方法", "officialTitle": "公式情報を最優先", "officialBody": "発売日、価格、対応機種、参加条件、機能は、公開前にSteam、Team17、BULKHEAD、WARDOGS公式チャンネルで確認します。", "footageTitle": "映像は証拠であり最終仕様書ではない", "footageBody": "クリエイター動画は操作、試合進行、装備、車両、戦術の説明に使います。アルファやベータの数値は、現行の公式情報が確認するまでビルド依存として表示します。", "statusTitle": "確認済みと不確定情報を分離", "statusBody": "噂、コミュニティ観察、未判明事項を明示します。答えがない内容を確定した発売約束や最終バランスとして書きません。", "updatesTitle": "実質的な更新だけ日付を変更", "updatesBody": "情報源や案内を意味のある形で再確認した場合のみ最終確認日を更新します。検索上新しく見せるだけの再日付は行いません。", "correctionsTitle": "訂正も記録の一部", "correctionsBody": "情報源の変更や誤りが見つかった場合、対象攻略と状態表示を修正し、読者が現在の結論を検証できるリンクを残します。"},
   "privacy": {"title": "プライバシーポリシー", "intro": "このファン攻略はデータ収集を最小限にし、外部メディアとリンクの動作を説明します。", "content": "当サイトはプレイヤーアカウントを運営せず、ゲームの認証情報を収集しません。外部サービスを開いた後は各社のプライバシーポリシーが適用されます。", "advertising": "コンテンツページではAdsterraのネイティブ広告、ソーシャルバー、頻度制限付きポップアンダー、明示されたスポンサーリンクを表示する場合があります。Adsterraは独自の管理方針に基づき、IPアドレス、ブラウザ、端末情報、Cookie等を利用する場合があります。"},
   "terms": {"title": "利用規約", "intro": "この独立系攻略をコミュニティ向け情報として利用してください。", "content": "ゲーム情報は変更される場合があります。購入、参加期間、対応機種、アカウント操作はWARDOGS公式情報で確認してください。"},
-  "notFound": {"title": "ページが見つかりません", "description": "指定されたページは、確認済みの33トピック攻略ライブラリに存在しません。", "home": "トップへ戻る", "guides": "攻略を見る"}
+  "notFound": {"title": "ページが見つかりません", "description": "指定されたページは、確認済みの34トピック攻略ライブラリに存在しません。", "home": "トップへ戻る", "guides": "攻略を見る"}
 }
