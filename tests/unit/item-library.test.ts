@@ -205,6 +205,9 @@ describe("item library", () => {
           ? "Alpha 1 and Closed Beta footage checked 2026-08-28"
           : record.dataAsOf);
         expect(item?.indexLocales, `${type}/${record.slug}`).toEqual(["en", "ru", "de", "pt-br", "ja"]);
+        expect(item?.relatedGuides, `${type}/${record.slug}`).toContain(
+          type === "weapons" ? "wardogs-best-weapons-loadouts" : "wardogs-equipment-tools-guide"
+        );
 
         if (record.mediaState === "pending") {
           expect(item?.detailImage, `${type}/${record.slug}`).toBeUndefined();

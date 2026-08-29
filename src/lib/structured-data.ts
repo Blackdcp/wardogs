@@ -2,6 +2,7 @@ import type {GuideDocument, GuideSummary} from "@/content/guides";
 import {officialLinks, type Locale} from "@/config/site";
 import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
 import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
+import {publicAssetUrl} from "@/lib/public-url";
 
 type JsonLd = Record<string, unknown>;
 
@@ -99,7 +100,7 @@ export function buildArticleJsonLd(locale: Locale, guide: GuideDocument): JsonLd
       dateModified: guide.frontmatter.updatedAt,
       mainEntityOfPage: url,
       author: {"@type": "Organization", name: "WARDOGS Wiki Editorial Team", url: pageUrl(locale, "/editorial-policy")},
-      image: discoveryImage?.url ?? `${getSiteOrigin()}/images/og-wardogs.jpg`
+      image: publicAssetUrl(discoveryImage?.url ?? "/images/og-wardogs.jpg")
     },
     {
       "@context": "https://schema.org",

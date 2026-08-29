@@ -28,4 +28,11 @@ describe("structured data", () => {
     });
     expect(game?.publisher).toMatchObject({name: "Team17", url: officialLinks.team17});
   });
+
+  it("uses an absolute source-audited image URL for new catalogue guides", async () => {
+    const guide = await loadGuideDocument("en", "wardogs-medic-revive-guide");
+    const article = buildArticleJsonLd("en", guide!)[0];
+
+    expect(article.image).toBe("http://localhost:3000/images/guide-discovery/medic-revive.webp");
+  });
 });

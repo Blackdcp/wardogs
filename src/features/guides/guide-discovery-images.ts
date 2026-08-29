@@ -10,6 +10,38 @@ export type GuideDiscoveryImage = {
 const youtubeImage = (youtubeId: string) => `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`;
 
 export const guideDiscoveryImages: Readonly<Record<string, GuideDiscoveryImage>> = {
+  "wardogs-best-weapons-loadouts": {
+    url: "/images/guide-discovery/best-weapons-loadouts.webp",
+    width: 1280,
+    height: 720,
+    alt: "Official WARDOGS street combat used by the weapons and loadouts guide",
+    creditLabel: "Team17 WARDOGS Press Kit",
+    creditUrl: "https://www.team17.com/press-and-creator-hub"
+  },
+  "wardogs-armor-damage-ttk-guide": {
+    url: "/images/guide-discovery/armor-damage-ttk.webp",
+    width: 1280,
+    height: 720,
+    alt: "Official WARDOGS combined-arms gameplay used by the armor and damage guide",
+    creditLabel: "Team17 WARDOGS Press Kit",
+    creditUrl: "https://www.team17.com/press-and-creator-hub"
+  },
+  "wardogs-medic-revive-guide": {
+    url: "/images/guide-discovery/medic-revive.webp",
+    width: 1280,
+    height: 720,
+    alt: "Official WARDOGS downed-player interaction used by the medic and revive guide",
+    creditLabel: "Team17 WARDOGS Press Kit",
+    creditUrl: "https://www.team17.com/press-and-creator-hub"
+  },
+  "wardogs-equipment-tools-guide": {
+    url: "/images/guide-discovery/equipment-tools.webp",
+    width: 1280,
+    height: 720,
+    alt: "Official WARDOGS indoor combat used by the equipment and tools guide",
+    creditLabel: "Team17 WARDOGS Press Kit",
+    creditUrl: "https://www.team17.com/press-and-creator-hub"
+  },
   "wardogs-crash-fix": {
     url: youtubeImage("fupZGU7LJaU"),
     width: 1280,

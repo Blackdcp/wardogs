@@ -109,12 +109,13 @@ export function buildSiteMetadata(): Metadata {
 }
 
 export function buildArticleMetadata(locale: Locale, guide: GuideDocument): Metadata {
+  const discoveryImage = getGuideDiscoveryImage(guide.frontmatter.slug);
   return buildPageMetadataWithImage(
     locale,
     `/guides/${guide.frontmatter.slug}`,
     guide.frontmatter.title,
     guide.frontmatter.description,
-    getGuideDiscoveryImage(guide.frontmatter.slug)
+    discoveryImage ? {...discoveryImage, url: publicAssetUrl(discoveryImage.url)} : undefined
   );
 }
 

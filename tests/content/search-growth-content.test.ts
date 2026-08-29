@@ -30,8 +30,8 @@ describe("Search Console growth pages", () => {
     expect(ps5?.frontmatter.title).toBe("WARDOGS PS5 & Xbox Release: Console Status");
     expect(ps5?.frontmatter.description).toBe("Check whether WARDOGS is coming to PS5 or Xbox, what BULKHEAD has confirmed for PC Early Access, and where to follow reliable console release news.");
     expect(weapons).toEqual(expect.objectContaining({
-        title: "WARDOGS Weapons List: All 33 Weapons",
-        description: "Browse all 33 WARDOGS Alpha 1 weapons, including rifles, SMGs, shotguns, launchers and the Compound Bow, with roles, evidence notes and item guides."
+        title: "WARDOGS Weapons List: All 38 Documented Weapons",
+        description: "Browse all 38 documented WARDOGS pre-release weapon records, including rifles, SMGs, shotguns, launchers, sidearms, and incomplete identifiers with explicit evidence notes."
     }));
   });
 

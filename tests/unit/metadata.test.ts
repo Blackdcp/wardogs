@@ -63,4 +63,13 @@ describe("localized metadata", () => {
     expect(String(helicopterImage.url)).toContain("wcsY2EeIlyc/maxresdefault.jpg");
     expect(String(crashImage.url)).not.toBe(String(helicopterImage.url));
   });
+
+  it("publishes local Team17 discovery assets as absolute social URLs", async () => {
+    const guide = await loadGuideDocument("ja", "wardogs-best-weapons-loadouts");
+    const metadata = buildArticleMetadata("ja", guide!);
+    const image = (metadata.openGraph?.images as TestSocialImage[])[0];
+
+    expect(String(image.url)).toBe("http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp");
+    expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp"]);
+  });
 });

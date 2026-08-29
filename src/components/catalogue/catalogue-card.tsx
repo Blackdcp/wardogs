@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {ArrowUpRight} from "lucide-react";
+import {ArrowUpRight, ImageOff} from "lucide-react";
 import type {Locale} from "@/config/site";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
@@ -15,19 +15,37 @@ type CatalogueCardProps = {
 
 const cardImageSizes = "(min-width: 1280px) 370px, (min-width: 640px) calc(50vw - 44px), calc(100vw - 32px)";
 
-function CardContent({record, linked, eagerImage}: {record: CatalogueRecord; linked: boolean; eagerImage: boolean}) {
+const pendingMediaCopy: Record<Locale, {label: string; description: string}> = {
+  en: {label: "Media verification pending", description: "Identifier recorded; item-specific art is not yet verified."},
+  de: {label: "Bildprüfung ausstehend", description: "Kennung erfasst; das genaue Gegenstandsbild ist noch nicht bestätigt."},
+  ru: {label: "Изображение проверяется", description: "Название записано; точное изображение предмета пока не подтверждено."},
+  "pt-br": {label: "Mídia em verificação", description: "Identificador registrado; a imagem exata do item ainda não foi confirmada."},
+  ja: {label: "画像を検証中", description: "名称は確認済みですが、対象固有の画像はまだ確認できていません。"},
+};
+
+function CardContent({locale, record, linked, eagerImage}: {locale: Locale; record: CatalogueRecord; linked: boolean; eagerImage: boolean}) {
+  const pendingMedia = record.mediaState === "pending";
+
   return (
     <>
-      <span className="relative block h-56 shrink-0 overflow-hidden border-b border-[#303b35] bg-[#090c0a] sm:h-64">
-        <Image
-          alt={record.imageAlt}
-          className={`object-contain p-4 ${linked ? "transition-transform duration-300 group-hover:scale-[1.025]" : ""}`}
-          fill
-          loading={eagerImage ? "eager" : "lazy"}
-          sizes={cardImageSizes}
-          src={assetPath(record.image)}
-        />
-      </span>
+      <div className="relative flex h-56 shrink-0 overflow-hidden border-b border-[#303b35] bg-[#090c0a] sm:h-64" data-media-state={record.mediaState}>
+        {pendingMedia ? (
+          <div className="m-auto flex max-w-[18rem] flex-col items-center px-6 text-center">
+            <ImageOff aria-hidden="true" className="size-8 text-[#8b9a92]" strokeWidth={1.5} />
+            <span className="mt-4 text-sm font-semibold text-[#d7ded9]">{pendingMediaCopy[locale].label}</span>
+            <span className="mt-2 text-xs leading-5 text-[#849189]">{pendingMediaCopy[locale].description}</span>
+          </div>
+        ) : (
+          <Image
+            alt={record.imageAlt}
+            className={`object-contain p-4 ${linked ? "transition-transform duration-300 group-hover:scale-[1.025]" : ""}`}
+            fill
+            loading={eagerImage ? "eager" : "lazy"}
+            sizes={cardImageSizes}
+            src={assetPath(record.image)}
+          />
+        )}
+      </div>
       <div className="flex min-w-0 flex-1 flex-col p-5">
         <div className="flex min-w-0 items-start justify-between gap-3">
           <span className="min-w-0">
@@ -68,11 +86,11 @@ export function CatalogueCard({locale, record, eagerImage = false, hidden = fals
     >
       {detailHref ? (
         <a className={`group ${className}`} href={detailHref}>
-          <CardContent eagerImage={eagerImage} linked record={record} />
+          <CardContent eagerImage={eagerImage} linked locale={locale} record={record} />
         </a>
       ) : (
         <div className={className}>
-          <CardContent eagerImage={eagerImage} linked={false} record={record} />
+          <CardContent eagerImage={eagerImage} linked={false} locale={locale} record={record} />
         </div>
       )}
     </li>

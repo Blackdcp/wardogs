@@ -134,7 +134,8 @@ describe("item structured data", () => {
       "@type": "ListItem",
       position: 15,
       name: "M4",
-      url: "http://localhost:3000/en/items/weapons/m4"
+      url: "http://localhost:3000/en/items/weapons/m4",
+      image: "http://localhost:3000/images/catalogue/weapons/m4.webp"
     });
     expect(entries.at(-1)).toEqual({
       "@type": "ListItem",
