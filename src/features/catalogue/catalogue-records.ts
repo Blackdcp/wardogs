@@ -3,9 +3,12 @@ import type {CatalogueFact, CatalogueRecord, CatalogueRecordType} from "./catalo
 const dataAsOf = "Alpha 1 - 7 Aug 2026";
 const evidenceStatus = "pre-release-build" as const;
 
+type CatalogueRecordInput = Omit<CatalogueRecord, "evidenceTier" | "mediaState" | "sourceNotes"> &
+  Partial<Pick<CatalogueRecord, "evidenceTier" | "mediaState" | "sourceNotes">>;
+
 const fact = (label: string, value: string): CatalogueFact => ({label, value});
 
-const weaponRecords: readonly CatalogueRecord[] = [
+const weaponRecords: readonly CatalogueRecordInput[] = [
   {slug: "a-91", name: "A-91", type: "weapons", subtype: "Assault rifle", image: "/images/catalogue/weapons/a-91.webp", imageAlt: "A-91 assault rifle", summary: "Assault XP rifle using 5.56x45mm with semi and burst fire.", facts: [fact("Alpha price", "Not captured"), fact("Ammunition", "5.56x45mm"), fact("Fire modes", "Semi / Burst"), fact("Weight", "3.17 kg"), fact("Progression", "Assault XP")], filterValues: ["assault-rifle", "assault-xp", "5-56x45mm"], detailStatus: "published", detailHref: "/items/weapons/a-91", evidenceStatus, dataAsOf},
   {slug: "ak74", name: "AK74", type: "weapons", subtype: "Assault rifle", image: "/images/catalogue/weapons/ak74.webp", imageAlt: "AK74 assault rifle", summary: "Assault XP rifle using 5.45x39mm with semi and full-auto fire.", facts: [fact("Alpha price", "Not captured"), fact("Ammunition", "5.45x39mm"), fact("Fire modes", "Semi / Full Auto"), fact("Weight", "3 kg"), fact("Progression", "Assault XP")], filterValues: ["assault-rifle", "assault-xp", "5-45x39mm"], detailStatus: "published", detailHref: "/items/weapons/ak74", evidenceStatus, dataAsOf},
   {slug: "amp-9", name: "AMP-9", type: "weapons", subtype: "SMG", image: "/images/catalogue/weapons/amp-9.webp", imageAlt: "AMP-9 submachine gun", summary: "Medic XP SMG using 9x19mm with semi and full-auto fire.", facts: [fact("Alpha price", "$900"), fact("Ammunition", "9x19mm"), fact("Fire modes", "Semi / Full Auto"), fact("Weight", "1.4 kg"), fact("Progression", "Medic XP")], filterValues: ["smg", "medic-xp", "9x19mm"], detailStatus: "published", detailHref: "/items/weapons/amp-9", evidenceStatus, dataAsOf},
@@ -22,7 +25,7 @@ const weaponRecords: readonly CatalogueRecord[] = [
   {slug: "kh-2002", name: "KH-2002", type: "weapons", subtype: "Assault rifle", image: "/images/catalogue/weapons/kh-2002.webp", imageAlt: "KH-2002 assault rifle", summary: "Assault XP rifle using 5.56x45mm with semi and burst fire.", facts: [fact("Alpha price", "Not captured"), fact("Ammunition", "5.56x45mm"), fact("Fire modes", "Semi / Burst"), fact("Weight", "3.17 kg"), fact("Progression", "Assault XP")], filterValues: ["assault-rifle", "assault-xp", "5-56x45mm"], detailStatus: "published", detailHref: "/items/weapons/kh-2002", evidenceStatus, dataAsOf}
 ];
 
-const vehicleRecords: readonly CatalogueRecord[] = [
+const vehicleRecords: readonly CatalogueRecordInput[] = [
   {slug: "ah-6m-miniguns", name: "AH-6M Miniguns", type: "vehicles", subtype: "Combat helicopter", image: "/images/catalogue/vehicles/ah-6m-miniguns.webp", imageAlt: "AH-6M Miniguns combat helicopter", summary: "Combat helicopter listed at $7,000; its Alpha gate was unreadable.", facts: [fact("Role", "Combat helicopter"), fact("Alpha price", "$7,000"), fact("Observed gate", "Gate unread"), fact("Track", "-")], filterValues: ["aircraft", "combat-helicopter", "gate-unread"], detailStatus: "published", detailHref: "/items/vehicles/ah-6m-miniguns", evidenceStatus, dataAsOf},
   {slug: "ah-6r-rockets", name: "AH-6R Rockets", type: "vehicles", subtype: "Rocket helicopter", image: "/images/catalogue/vehicles/ah-6r-rockets.webp", imageAlt: "AH-6R Rockets helicopter", summary: "Rocket helicopter listed at $12,500; its Alpha gate was unreadable.", facts: [fact("Role", "Rocket helicopter"), fact("Alpha price", "$12,500"), fact("Observed gate", "Gate unread"), fact("Track", "-")], filterValues: ["aircraft", "rocket-helicopter", "gate-unread"], detailStatus: "published", detailHref: "/items/vehicles/ah-6r-rockets", evidenceStatus, dataAsOf},
   {slug: "bobcat", name: "Bobcat", type: "vehicles", subtype: "Light transport", image: "/images/catalogue/vehicles/bobcat.webp", imageAlt: "Bobcat light transport", summary: "Light transport listed at $500 with open purchase observed in Alpha 1.", facts: [fact("Role", "Light transport"), fact("Alpha price", "$500"), fact("Observed gate", "Open purchase"), fact("Track", "-")], filterValues: ["land-transport", "light-transport", "open-purchase"], detailStatus: "published", detailHref: "/items/vehicles/bobcat", evidenceStatus, dataAsOf},
@@ -45,7 +48,7 @@ const vehicleRecords: readonly CatalogueRecord[] = [
   {slug: "ural", name: "Ural", type: "vehicles", subtype: "Logistics truck", image: "/images/catalogue/vehicles/ural.webp", imageAlt: "Ural logistics truck", summary: "Logistics truck listed at $5,000 with a $60,000 unlock observed.", facts: [fact("Role", "Logistics truck"), fact("Alpha price", "$5,000"), fact("Observed gate", "$60,000 unlock"), fact("Track", "-")], filterValues: ["land-transport", "logistics-truck", "60-000-unlock"], detailStatus: "published", detailHref: "/items/vehicles/ural", evidenceStatus, dataAsOf}
 ];
 
-const ammoRecords: readonly CatalogueRecord[] = [
+const ammoRecords: readonly CatalogueRecordInput[] = [
   {slug: "45-acp", name: ".45 ACP", type: "ammo", subtype: "Calibre", image: "/images/catalogue/ammo/45-acp.webp", imageAlt: ".45 ACP ammunition", summary: "Observed .45 ACP calibre with base damage 30 and three load families.", facts: [fact("Base damage", "30"), fact("Loads", "3"), fact("Standard per round", "$1"), fact("Box price", "$10"), fact("Weapons", "2")], filterValues: ["three-loads", "base-damage-observed", "45-acp"], detailStatus: "inline", evidenceStatus, dataAsOf},
   {slug: "9x19mm", name: "9x19mm", type: "ammo", subtype: "Calibre", image: "/images/catalogue/ammo/9mm-fmj.webp", imageAlt: "9x19mm ammunition", summary: "Observed 9x19mm calibre with base damage 22 and three load families.", facts: [fact("Base damage", "22"), fact("Loads", "3"), fact("Standard per round", "$1"), fact("Box price", "$10"), fact("Weapons", "5")], filterValues: ["three-loads", "base-damage-observed", "9x19mm"], detailStatus: "inline", evidenceStatus, dataAsOf},
   {slug: "5-45x39mm", name: "5.45x39mm", type: "ammo", subtype: "Calibre", image: "/images/catalogue/ammo/5-45x39mm-fmj.webp", imageAlt: "5.45x39mm ammunition", summary: "Observed 5.45x39mm calibre with base damage 26 and three load families.", facts: [fact("Base damage", "26"), fact("Loads", "3"), fact("Standard per round", "Not captured"), fact("Box price", "$15"), fact("Weapons", "1")], filterValues: ["three-loads", "base-damage-observed", "5-45x39mm"], detailStatus: "inline", evidenceStatus, dataAsOf},
@@ -62,7 +65,7 @@ const ammoRecords: readonly CatalogueRecord[] = [
   {slug: "9x39mm", name: "9x39mm", type: "ammo", subtype: "Calibre", image: "/images/catalogue/ammo/9x39mm.webp", imageAlt: "9x39mm ammunition", summary: "Observed 9x39mm calibre; load, price, damage, and weapon-count values were not captured.", facts: [fact("Base damage", "Not captured"), fact("Loads", "Not captured"), fact("Standard per round", "Not captured"), fact("Box price", "Not captured"), fact("Weapons", "Not captured")], filterValues: ["load-count-not-captured", "base-damage-not-captured", "9x39mm"], detailStatus: "inline", evidenceStatus, dataAsOf}
 ];
 
-const attachmentRecords: readonly CatalogueRecord[] = [
+const attachmentRecords: readonly CatalogueRecordInput[] = [
   {slug: "vektor-frenix-x-micro-reflex-sight", name: "Vektor Frenix-X Micro Reflex Sight", type: "attachments", subtype: "Optic", image: "/images/catalogue/attachments/vektor-frenix-x-micro-reflex-sight.webp", imageAlt: "Vektor Frenix-X Micro Reflex Sight optic", summary: "Optic with 1.2x fixed zeroing and 0.03 kg observed weight.", facts: [fact("Alpha price", "$820"), fact("Zoom or capacity", "1.2x / fixed"), fact("Weight or calibre", "0.03 kg")], filterValues: ["optic", "1-2x"], detailStatus: "inline", evidenceStatus, dataAsOf},
   {slug: "four-reticle-reflex", name: "Four Reticle Reflex", type: "attachments", subtype: "Optic", image: "/images/catalogue/attachments/four-reticle-reflex.webp", imageAlt: "Four Reticle Reflex optic", summary: "Optic with 1.2x fixed zeroing and 0.12 kg observed weight.", facts: [fact("Alpha price", "$580"), fact("Zoom or capacity", "1.2x / fixed"), fact("Weight or calibre", "0.12 kg")], filterValues: ["optic", "1-2x"], detailStatus: "inline", evidenceStatus, dataAsOf},
   {slug: "compact-t-2-red-dot", name: "Compact T-2 Red Dot", type: "attachments", subtype: "Optic", image: "/images/catalogue/attachments/compact-t-2-red-dot.webp", imageAlt: "Compact T-2 Red Dot optic", summary: "Optic with 1.2x fixed zeroing and 0.13 kg observed weight.", facts: [fact("Alpha price", "$340"), fact("Zoom or capacity", "1.2x / fixed"), fact("Weight or calibre", "0.13 kg")], filterValues: ["optic", "1-2x"], detailStatus: "inline", evidenceStatus, dataAsOf},
@@ -105,7 +108,7 @@ const attachmentRecords: readonly CatalogueRecord[] = [
   {slug: "svd-5-rnd-magazine", name: "SVD 5 Round Magazine", type: "attachments", subtype: "Magazine", image: "/images/catalogue/attachments/svd-5-rnd-magazine.webp", imageAlt: "SVD 5 Round Magazine", summary: "SVD magazine with 5 rounds for 7.62x54mmR.", facts: [fact("Alpha price", "$20"), fact("Zoom or capacity", "5 rounds"), fact("Weight or calibre", "7.62x54mmR")], filterValues: ["magazine", "7-62x54mmr", "5-rounds"], detailStatus: "inline", evidenceStatus, dataAsOf}
 ];
 
-const gearRecords: readonly CatalogueRecord[] = [
+const gearRecords: readonly CatalogueRecordInput[] = [
   {slug: "light-helmet", name: "Light Helmet", type: "gear", subtype: "Helmet", image: "/images/catalogue/gear/light-helmet.webp", imageAlt: "Light Helmet", summary: "L1 helmet listed at $200 in the observed Alpha gear vendor.", facts: [fact("Slot", "Helmet"), fact("Tier", "L1"), fact("Alpha price", "$200")], filterValues: ["helmet", "l1"], detailStatus: "inline", evidenceStatus, dataAsOf},
   {slug: "medium-helmet", name: "Medium Helmet", type: "gear", subtype: "Helmet", image: "/images/catalogue/gear/medium-helmet.webp", imageAlt: "Medium Helmet", summary: "L2 helmet listed at $500 in the observed Alpha gear vendor.", facts: [fact("Slot", "Helmet"), fact("Tier", "L2"), fact("Alpha price", "$500")], filterValues: ["helmet", "l2"], detailStatus: "inline", evidenceStatus, dataAsOf},
   {slug: "heavy-helmet", name: "Heavy Helmet", type: "gear", subtype: "Helmet", image: "/images/catalogue/gear/heavy-helmet.webp", imageAlt: "Heavy Helmet", summary: "L3 helmet listed at $1,500 in the observed Alpha gear vendor.", facts: [fact("Slot", "Helmet"), fact("Tier", "L3"), fact("Alpha price", "$1,500")], filterValues: ["helmet", "l3"], detailStatus: "inline", evidenceStatus, dataAsOf},
@@ -119,13 +122,20 @@ const gearRecords: readonly CatalogueRecord[] = [
   {slug: "scout-backpack", name: "Scout Backpack", type: "gear", subtype: "Backpack", image: "/images/catalogue/gear/scout-backpack.webp", imageAlt: "Scout Backpack", summary: "Lightest backpack listed at $350 in the observed Alpha gear vendor.", facts: [fact("Slot", "Backpack"), fact("Tier", "Lightest"), fact("Alpha price", "$350")], filterValues: ["backpack", "lightest"], detailStatus: "inline", evidenceStatus, dataAsOf}
 ];
 
-export const catalogueRecords: readonly CatalogueRecord[] = [
+const recordInputs: readonly CatalogueRecordInput[] = [
   ...weaponRecords,
   ...vehicleRecords,
   ...ammoRecords,
   ...attachmentRecords,
   ...gearRecords
 ];
+
+export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((record) => ({
+  ...record,
+  evidenceTier: record.evidenceTier ?? "build-capture",
+  mediaState: record.mediaState ?? "verified",
+  sourceNotes: record.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
+}));
 
 export function getCatalogueRecords(type: CatalogueRecordType): readonly CatalogueRecord[] {
   return catalogueRecords.filter((record) => record.type === type);

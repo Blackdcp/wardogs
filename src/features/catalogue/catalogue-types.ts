@@ -5,6 +5,14 @@ export type CatalogueFact = {
   value: string;
 };
 
+export type CatalogueEvidenceTier =
+  | "official"
+  | "build-capture"
+  | "corroborated-community"
+  | "identifier-only";
+
+export type CatalogueMediaState = "verified" | "context-only" | "pending";
+
 export type CatalogueRecord = {
   slug: string;
   name: string;
@@ -18,6 +26,9 @@ export type CatalogueRecord = {
   detailStatus: "inline" | "planned" | "published";
   detailHref?: `/items/${"weapons" | "vehicles"}/${string}`;
   evidenceStatus: "official" | "verified-in-game" | "pre-release-build" | "community-report";
+  evidenceTier: CatalogueEvidenceTier;
+  mediaState: CatalogueMediaState;
+  sourceNotes: readonly string[];
   dataAsOf: string;
 };
 
