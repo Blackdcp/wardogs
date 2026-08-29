@@ -3,12 +3,12 @@
   "ads": {"label": "広告", "sponsored": "スポンサー", "smartlinkCta": "スポンサー提供のおすすめを見る", "smartlinkDescription": "外部のスポンサーリンクを新しいタブで開きます。"},
   "nav": {"game": "ゲーム", "guides": "攻略", "catalogue": "カタログ", "playtest": "プレイテスト", "release": "リリース", "releaseDate": "発売日", "steam": "Steam", "steamEarlyAccess": "Steamと早期アクセス", "gameplay": "ゲームプレイ", "factions": "勢力", "community": "コミュニティ", "beginnerGuide": "初心者ガイド", "crashFix": "クラッシュ対策", "helicopterGuide": "ヘリコプターガイド", "gameplayGuide": "ゲームプレイガイド", "fobLogistics": "FOBと兵站", "mortarGuide": "迫撃砲ガイド", "allGuides": "すべての攻略", "catalogueHome": "カタログトップ", "weapons": "武器", "vehicles": "車両", "ammo": "弾薬", "attachments": "アタッチメント", "gear": "装備", "equipment": "特殊装備", "loadouts": "ロードアウト", "videos": "動画", "items": "アイテム", "news": "ニュース", "steamCta": "Steamで見る", "primaryLabel": "メインナビゲーション"},
   "home": {
-    "metaTitle": "WARDOGS Wiki - 攻略、プレイテスト、発売情報",
+    "metaTitle": "WARDOGS Wiki - 発売準備、攻略、早期アクセス情報",
     "metaDescription": "WARDOGS Wikiは、ゲームプレイ、プレイテスト、発売日、Steamでのアクセス、勢力、トレーラー、コミュニティ、初心者向け戦術を、公式情報と確認済み映像に基づいて整理する非公式攻略サイトです。装備、車両、FOB、設定、トラブル対策まで、出撃前に必要な最新情報を分かりやすく確認できます。",
     "heroTitle": "完全攻略ガイド",
     "heroDescription": "確認済みのアクセス情報、発売予定、ゲームシステム、勢力、コミュニティ、動画攻略を使って最初の出撃を準備しましょう。",
     "primaryCta": "攻略をすべて見る",
-    "secondaryCta": "プレイテスト参加状況",
+    "secondaryCta": "発売前チェックリスト",
     "status": "早期アクセス発表済み",
     "statsLabel": "WARDOGSの重要情報",
     "stats": {"earlyAccess": "早期アクセス 2026年9月10日", "players": "最大100人", "teams": "3チーム", "controlZone": "2 x 2 kmのコントロールゾーン"},
@@ -26,7 +26,8 @@
       "description": "4つのガイドで参加方法、基本ルール、コントロールゾーンに入る3勢力を理解できます。",
       "cards": {
         "beginner": {"title": "初心者ガイド", "description": "無理のない初期ロードアウトを組み、すべての行動をチーム目標につなげます。"},
-        "playtest": {"title": "プレイテスト参加方法", "description": "現在の参加状況、公式窓口、すでに終了したテストを確認します。"},
+        "playtest": {"title": "テスト履歴", "description": "終了済みテストと新たに確認された参加期間を確認します。"},
+        "launch": {"title": "発売前チェックリスト", "description": "9月3日の発表と9月10日の早期アクセス開始に備えます。"},
         "gameplay": {"title": "ゲームプレイ解説", "description": "ゾーン得点、資金、役割、車両、兵站がどう結び付くかを学びます。"},
         "factions": {"title": "3つの勢力", "description": "未確認の能力を作り上げず、Valkyra、Lonestar、Manticoreを整理します。"}
       }
@@ -113,7 +114,7 @@
     "finalDescription": "独立系攻略ライブラリで、参加方法、分隊の役割、車両、目標、確認済みの発売予定を準備できます。",
     "final": {"eyebrow": "出撃準備", "guidesCta": "攻略を見る", "steamCta": "Steamを開く"}
   },
-  "guides": {"metaTitle": "WARDOGS 攻略ガイド - ベータ、ゲームプレイ、武器、クラッシュ対策", "title": "WARDOGS攻略", "description": "ベータ参加、トラブル対策、資金、タワー、ヘリコプター、砲兵、FOB兵站、発売、ゲームプレイを扱う34の攻略です。", "count": "34攻略トピック", "read": "攻略を読む"},
+  "guides": {"metaTitle": "WARDOGS 攻略ガイド - 発売準備、ゲームプレイ、武器、トラブル対策", "title": "WARDOGS攻略", "description": "発売、貨物輸送、弾薬、分隊、車両、FOB兵站、ゲームプレイを扱う39の攻略です。", "count": "39攻略トピック", "read": "攻略を読む"},
   "news": {
     "metaTitle": "WARDOGSニュース - ベータ、早期アクセス、Steam更新",
     "metaDescription": "WARDOGSのベータ日程、Steam早期アクセス、価格、対応機種、事前ダウンロード、ゲーム更新を確認済み情報に基づいて追跡します。",

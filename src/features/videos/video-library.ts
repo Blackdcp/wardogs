@@ -1636,6 +1636,250 @@ export const videoArticles: readonly VideoArticle[] = [
         ]
       }
     ]
+  },
+  {
+    slug: "wardogs-vehicle-cargo-logistics",
+    title: "WARDOGS Vehicle Cargo Guide: Ural, Pallets and FOB Supply",
+    description:
+      "A transcript-backed WARDOGS cargo guide covering vehicle logistics controls, crates, Ural pallets, unloading, resource types, FOB delivery and build-sensitive limits.",
+    youtubeId: "2aU4OB0duYg",
+    sourceLabel: "WARDOGS Vehicle Cargo and Logistics Guide",
+    sourceUrl: "https://www.youtube.com/watch?v=2aU4OB0duYg",
+    publishedDate: "2026-08-28",
+    updatedDate: "2026-08-29",
+    kind: "creator",
+    priority: -16,
+    internalGuideSlug: "wardogs-cargo-guide",
+    quickAnswer:
+      "The recorded beta build uses a vehicle logistics screen to manage crates and pallets. B opens the cargo view, G drops a selected load, and F unloads it in a valid receiving area. The Ural carries heavy pallets, including building, ammunition, fuel and mechanical resources. Keys, slot counts and capacities must be rechecked in Early Access.",
+    takeaways: [
+      "Use the cargo screen to confirm the resource before leaving main base.",
+      "Small and large crates serve lighter loads; the Ural is shown carrying heavy pallets.",
+      "Building, ammunition, fuel and mechanical pallets have different destinations and jobs.",
+      "Approach the FOB slowly, keep roads and spawn assets clear, and verify the unload was accepted.",
+      "Yellow build marks and valid previews help identify where construction can snap into place.",
+      "B, G, F, capacity and reward values come from a test build and can change."
+    ],
+    sections: [
+      {
+        heading: "What the transcript adds",
+        body: [
+          "This is not a generic vehicle montage. The narration walks through the logistics interface, distinguishes cargo sizes and resource categories, and shows what the driver does before and after reaching a construction area. That makes it useful for a player who understands that supplies exist but cannot get them out of the truck.",
+          "The reliable evidence is the recorded sequence. The permanent lesson is to inspect cargo, match it to a request, position the vehicle carefully, and confirm delivery. The displayed keys and capacities describe the beta build rather than a guaranteed launch layout."
+        ]
+      },
+      {
+        heading: "Cargo screen, drop and unload",
+        body: [
+          "In the recorded build, B opens the vehicle logistics screen, where the crew can inspect slots and selected cargo. G drops the selected load, while F is used to unload when the vehicle is correctly positioned near a valid destination. Repeating an input without checking the prompt can leave a pallet on the wrong side of a truck or outside the receiving area.",
+          "Before leaving, name the cargo and destination over voice. At the FOB, slow down, point the cargo area toward the receiver, avoid blocking spawn or the only road, unload one item if the interface is unclear, and verify that both vehicle inventory and base resources changed."
+        ]
+      },
+      {
+        heading: "Crates, Ural pallets and resource types",
+        body: [
+          "The footage separates smaller and larger crates from heavy pallets. The Ural is the important pallet carrier in this walkthrough; smaller logistics vehicles can handle quicker crate tasks. A team should choose the vehicle after deciding whether the job is a light resupply, a major building delivery or a fuel operation.",
+          "The transcript identifies building, ammunition, fuel and mechanical pallets. Their similar delivery method does not make them interchangeable. Builders need construction stock, weapon systems need ammunition support, and an Oil Rig fuel cycle needs the correct fuel load."
+        ]
+      },
+      {
+        heading: "FOB construction and placement",
+        body: [
+          "The building portion shows valid previews, snapping behavior and yellow construction marks. A legal placement still needs operational space: trucks must enter and leave, defenders need cover, and one destroyed vehicle should not block every useful structure.",
+          "Divide the work among requester, driver, escort, unloader and builder. The driver should not decide the entire base layout from the cab, and the builder should not request an unspecified truck of supplies. A short exact request prevents the most expensive mistakes."
+        ]
+      },
+      {
+        heading: "Build-sensitive limits",
+        body: [
+          "Vehicle slots, pallet capacity, keyboard bindings, unload radius, construction cost and logistics rewards can all change. The article therefore avoids publishing one fixed Ural capacity or declaring B, G and F permanent.",
+          "Use the maintained cargo and FOB guides after every update. They preserve the delivery logic while allowing current controls and resource behavior to be corrected without rewriting the video evidence."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-havoc-helicopter-guide",
+    title: "WARDOGS MI-28 Havoc Guide: Max-Level Attack Helicopter Test",
+    description:
+      "A transcript-backed MI-28 Havoc breakdown covering max-level combat footage, backpack countermeasures, target selection, anti-air response and expected balance changes.",
+    youtubeId: "Hq6OZqPDoAc",
+    sourceLabel: "WARDOGS Max-Level MI-28 Havoc Test",
+    sourceUrl: "https://www.youtube.com/watch?v=Hq6OZqPDoAc",
+    publishedDate: "2026-08-27",
+    updatedDate: "2026-08-29",
+    kind: "creator",
+    priority: -15,
+    internalGuideSlug: "wardogs-helicopter-guide",
+    quickAnswer:
+      "The video shows a max-level MI-28 Havoc in a beta build using a high-end attack loadout and backpack-carried countermeasures. It can punish exposed ground targets, but organized anti-air eventually counters it. Treat damage, durability, unlocks, flare count, rewards and kill totals as test-build evidence rather than launch values.",
+    takeaways: [
+      "The footage is a max-level beta test, not a beginner unlock or launch balance promise.",
+      "Backpack countermeasures or flares add an escape option but do not make the Havoc immune.",
+      "Target selection and ammunition discipline matter more than chasing every visible infantry player.",
+      "Repeated approaches expose the aircraft to organized anti-air and predictable ambushes.",
+      "The same session demonstrates that ground coordination can eventually stop a dominant aircraft.",
+      "The creator expects balance changes, so exact performance must be dated by build."
+    ],
+    sections: [
+      {
+        heading: "What max level means in this footage",
+        body: [
+          "The recording presents an MI-28 Havoc with high progression and an advanced test-build setup. It is valuable because it shows the upper end of one beta session, but it cannot tell a launch player how quickly the aircraft unlocks or what the final economy charges for the platform and its support equipment.",
+          "Read the footage as a stress test of attack-helicopter behavior: strong weapons can control exposed routes, yet the aircraft still depends on information, positioning and a route home."
+        ]
+      },
+      {
+        heading: "Countermeasures and survival",
+        body: [
+          "The creator carries defensive countermeasures or flares through the backpack/loadout system. Their presence changes the escape plan, not the basic rule. The pilot still needs terrain, changing approach angles, threat cues and enough distance to leave before every response is consumed.",
+          "A pilot should confirm whether the current aircraft, seat and equipped item expose the same countermeasure action. Backpack capacity, flare behavior and key prompts are all capable of changing between the recorded beta and Early Access."
+        ]
+      },
+      {
+        heading: "Target priority and ammunition",
+        body: [
+          "An attack helicopter produces the most team value by removing threats that block movement: exposed vehicles, anti-air positions, concentrated infantry and assets affecting the objective. Firing at every isolated target can leave the aircraft empty when a decisive threat appears.",
+          "Plan an attack run, break line of sight, reassess damage and ammunition, then either make a different approach or return. Hovering to confirm one extra elimination gives defenders time to coordinate."
+        ]
+      },
+      {
+        heading: "How anti-air eventually answered",
+        body: [
+          "The session does not end with an invincible Havoc. Ground players organize anti-air pressure and eventually counter the aircraft. That is important evidence against reading a strong montage as proof that the platform has no answer.",
+          "For the ground team, early spotting and repeated callouts matter. For the pilot, the appearance of coordinated anti-air is a reason to change route or withdraw, not a challenge to repeat the same straight attack."
+        ]
+      },
+      {
+        heading: "Why the numbers may be nerfed",
+        body: [
+          "The creator discusses the likelihood of balance changes after this performance. Durability, weapon damage, splash, countermeasure count, unlock requirements and rewards can be tuned independently. A recorded kill count or payout is not a durable stat table.",
+          "The maintained helicopter guide keeps the safe flight and survival method. This video page preserves the specific max-level observation and labels the uncertainty instead of hiding it."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-deadliest-sniper-guide",
+    title: "WARDOGS Deadliest Sniper Guide: Rangefinder, Position and Survival",
+    description:
+      "A transcript-backed WARDOGS sniper breakdown covering long-range setup, rangefinder information, patient target selection, repositioning, ammunition and beta limits.",
+    youtubeId: "DT1_i8m8cMA",
+    sourceLabel: "WARDOGS Deadliest Sniper Build and Gameplay",
+    sourceUrl: "https://www.youtube.com/watch?v=DT1_i8m8cMA",
+    publishedDate: "2026-08-27",
+    updatedDate: "2026-08-29",
+    kind: "creator",
+    priority: -14,
+    internalGuideSlug: "wardogs-gameplay",
+    quickAnswer:
+      "The video's strongest sniper lesson is not a permanent best-gun claim. Use the rangefinder and squad information to solve distance, select targets that affect the objective, fire from cover, and move after revealing the position. Weapon values, optic behavior, ammunition performance and recorded kills belong to the beta build.",
+    takeaways: [
+      "Treat the title as a creator test, not a permanent sniper tier list.",
+      "Range information and clear squad callouts are part of the loadout's value.",
+      "Choose targets that threaten medics, crews, logistics or objective movement.",
+      "Use cover and a withdrawal path before taking the first shot.",
+      "Reposition after repeated shots instead of defending one memorable angle forever.",
+      "Optics, damage, ammunition, unlocks and payout evidence are build-sensitive."
+    ],
+    sections: [
+      {
+        heading: "What the sniper footage proves",
+        body: [
+          "The recording proves that a prepared long-range player can create pressure across open routes in the tested build. It does not prove that one rifle, optic or ammunition type will remain the strongest after Early Access balancing.",
+          "The useful part is the process: establish distance, choose a covered lane, watch movement long enough to recognize valuable targets, and keep a route for changing position."
+        ]
+      },
+      {
+        heading: "Rangefinder and information value",
+        body: [
+          "A rangefinder is not only a personal aiming tool. Distance and target information can help the squad decide whether to move, suppress, mark a vehicle or avoid an exposed crossing. Short clear callouts turn observation into team value even before a shot lands.",
+          "If the current build attaches cash or progression to spotting, verify the live reward instead of copying the video's amount. Information remains useful even when a payout changes."
+        ]
+      },
+      {
+        heading: "Target selection and shot discipline",
+        body: [
+          "Prioritize players whose removal changes the fight: exposed medics, stationary weapon crews, logistics operators, pilots outside an aircraft, or infantry controlling the squad's route. A low-value distant target can reveal the position without helping the objective.",
+          "Carry compatible ammunition and enough ready magazines for the planned observation period. Do not overload the kit with expensive gear that cannot be recovered if the firing point is flanked."
+        ]
+      },
+      {
+        heading: "Position, cover and relocation",
+        body: [
+          "Choose a position with concealment, hard cover and more than one exit. The tallest visible ridge may offer a broad view but also makes the silhouette easy to locate. A slightly lower offset angle can be more survivable.",
+          "After repeated shots or an enemy reaction, move. Reusing the exact peek allows infantry, vehicles, mortars or another sniper to solve the position. Relocation is part of the firing cycle, not an admission that the original spot failed."
+        ]
+      },
+      {
+        heading: "Beta evidence and launch limits",
+        body: [
+          "The video's rifle handling, optic picture, damage, ammunition effect, unlocks and final results come from one beta environment. Server conditions, armor, distance and target state also affect each visible outcome.",
+          "Use the article to build a repeatable observation-and-movement routine. Recheck every exact value in the live catalogue and current patch before calling any rifle the deadliest."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-medic-mp9-loadout",
+    title: "WARDOGS Medic MP9 Loadout: Revives, Mobility and Cash Risk",
+    description:
+      "A transcript-backed WARDOGS Medic and MP9 guide covering compact weapon choice, medical tools, safe revives, movement, squad positioning, income and beta limits.",
+    youtubeId: "SwlEyNdgw1o",
+    sourceLabel: "WARDOGS Medic MP9 Loadout Guide",
+    sourceUrl: "https://www.youtube.com/watch?v=SwlEyNdgw1o",
+    publishedDate: "2026-08-25",
+    updatedDate: "2026-08-29",
+    kind: "creator",
+    priority: -13,
+    internalGuideSlug: "wardogs-money-guide",
+    quickAnswer:
+      "The MP9 Medic setup is built for mobility and close support, not for winning every long-range duel. Carry compatible magazines, the medical tools and required consumables you can actually use, stay one layer behind the first contact, create safety before reviving, and preserve enough cash for a replacement kit. Prices and payouts shown in the beta can change.",
+    takeaways: [
+      "The MP9 supports a mobile close-range Medic but does not replace rifle-range coverage.",
+      "Medical tools need their compatible supplies, batteries or consumables in the current build.",
+      "A safe revive begins by controlling the threat, not by immediately interacting with every downed player.",
+      "Stay close enough to support the squad without standing on the same exposed line as the first entry player.",
+      "Medic income is strongest when revives, healing, survival and objective presence repeat in one life.",
+      "Weapon price, medical payout, capacity and unlock values remain beta-specific."
+    ],
+    sections: [
+      {
+        heading: "Why the MP9 fits this role",
+        body: [
+          "The compact weapon supports quick movement and close-range defense while the Medic follows a squad through buildings, cover and revive positions. It is not a reason to lead every open-field push or challenge rifles at distances where the setup loses its handling advantage.",
+          "The loadout should therefore be read as a role package. Weapon, magazines, loose ammunition, healing, revival equipment and storage all compete for cash and inventory space."
+        ]
+      },
+      {
+        heading: "Medical tools and compatible supplies",
+        body: [
+          "A medical item is only valuable when the player has the required consumable, battery or supporting resource and knows the current interaction. Buying every visible medical tool can create an expensive backpack that still cannot complete the needed action.",
+          "Build the kit in layers: personal survival, one reliable revive route, then extra capacity for an organized group. Verify the live catalogue because medical item names, unlocks and capacities can change."
+        ]
+      },
+      {
+        heading: "Safe revive sequence",
+        body: [
+          "A downed teammate is often watched. Identify or suppress the threat, use cover or smoke when available, communicate the attempt, revive, restore enough health for movement, and leave the original line. Starting the interaction immediately can turn one casualty into two lost kits.",
+          "If the area cannot be made safe, say so. A Medic preserves more team value by staying alive for several recoverable players than by dying for an impossible revive."
+        ]
+      },
+      {
+        heading: "Positioning and squad rhythm",
+        body: [
+          "Stay one layer behind the first player entering danger. That distance keeps the MP9 useful and lets the Medic reach cover after a casualty. Standing on the same corner makes both players vulnerable to the same burst or explosive.",
+          "Use short callouts about treatment, unavailable revives and movement. After recovery, reconnect with the objective instead of remaining in a safe area with unused medical capacity."
+        ]
+      },
+      {
+        heading: "Income, spending and beta limits",
+        body: [
+          "Medic play can combine revives, healing, survival and objective presence into a repeatable support route. The durable metric is net cash after replacing the MP9, magazines, medical supplies and any lost storage, not one large recorded payout.",
+          "Prices, revive rewards, weapon handling, magazine capacity and medical interactions shown in the video belong to the beta. Keep a reserve for another functional life and recheck the live build before copying the complete kit."
+        ]
+      }
+    ]
   }
 ] as const;
 

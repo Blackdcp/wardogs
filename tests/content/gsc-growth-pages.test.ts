@@ -26,8 +26,8 @@ describe("GSC growth page reinforcement", () => {
         const guide = await loadGuideDocument(locale, slug);
         const expectedCheckDate = slug === "wardogs-crash-fix"
           ? "2026-08-25"
-          : slug === "wardogs-fob-guide"
-            ? "2026-08-28"
+          : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
+            ? "2026-08-29"
             : "2026-08-26";
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();

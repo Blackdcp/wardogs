@@ -3,12 +3,12 @@
   "ads": {"label": "Werbung", "sponsored": "Gesponsert", "smartlinkCta": "Gesponserte Empfehlungen ansehen", "smartlinkDescription": "Öffnet ein externes gesponsertes Ziel in einem neuen Tab."},
   "nav": {"game": "Spiel", "guides": "Anleitungen", "catalogue": "Katalog", "playtest": "Spieltest", "release": "Veröffentlichung", "releaseDate": "Erscheinungsdatum", "steam": "Steam", "steamEarlyAccess": "Steam und Vorabzugang", "gameplay": "Spielablauf", "factions": "Fraktionen", "community": "Gemeinschaft", "beginnerGuide": "Einsteigerleitfaden", "crashFix": "Absturz beheben", "helicopterGuide": "Helikopter-Leitfaden", "gameplayGuide": "Spielanleitung", "fobLogistics": "FOB und Logistik", "mortarGuide": "Mörser-Leitfaden", "allGuides": "Alle Anleitungen", "catalogueHome": "Katalogübersicht", "weapons": "Waffen", "vehicles": "Fahrzeuge", "ammo": "Munition", "attachments": "Aufsätze", "gear": "Ausrüstung", "equipment": "Geräte", "loadouts": "Zusammenstellungen", "videos": "Videos", "items": "Gegenstände", "news": "Neuigkeiten", "steamCta": "Auf Steam ansehen", "primaryLabel": "Hauptnavigation"},
   "home": {
-    "metaTitle": "WARDOGS Wiki – Gameplay, Playtest und Release",
+    "metaTitle": "WARDOGS Wiki – Launch, Gameplay und Early Access",
     "metaDescription": "WARDOGS Wiki bietet geprüfte Guides zu Gameplay, Playtests, Release-Termin, Steam-Zugang, Fraktionen, Trailern, Community-Links und Einsteiger-Tipps.",
     "heroTitle": "Der komplette Guide",
     "heroDescription": "Plane deinen ersten Einsatz mit geprüften WARDOGS-Guides zu Zugang, Release, Gameplay, Fraktionen, Community und Videos.",
     "primaryCta": "Alle Guides ansehen",
-    "secondaryCta": "Playtest-Zugang prüfen",
+    "secondaryCta": "Launch-Checkliste öffnen",
     "status": "Early Access angekündigt",
     "statsLabel": "Wichtige Fakten zu WARDOGS",
     "stats": {"earlyAccess": "Early Access am 10. Sept. 2026", "players": "Bis zu 100 Spieler", "teams": "3 Teams", "controlZone": "2 x 2 km Control Zone"},
@@ -26,7 +26,8 @@
       "description": "Diese vier Guides erklären Zugang, Match-Grundlagen und die Kräfte in der Control Zone.",
       "cards": {
         "beginner": {"title": "Einsteiger-Guide", "description": "Stelle ein sinnvolles erstes Loadout zusammen und richte jede Aktion am Teamziel aus."},
-        "playtest": {"title": "Playtest-Zugang", "description": "Prüfe den aktuellen Zugangsstatus, offizielle Kanäle und bereits beendete Tests."},
+        "playtest": {"title": "Playtest-Verlauf", "description": "Prüfe abgeschlossene Tests und neu bestätigte Zugangsfenster."},
+        "launch": {"title": "Launch-Checkliste", "description": "Bereite dich auf die Ankündigung am 3. September und den Early Access am 10. September vor."},
         "gameplay": {"title": "Gameplay erklärt", "description": "Verstehe Control-Zone-Wertung, Geld, Rollen, Fahrzeuge und Logistik."},
         "factions": {"title": "Die drei Fraktionen", "description": "Lerne Valkyra, Lonestar und Manticore ohne erfundene, unbestätigte Boni kennen."}
       }
@@ -113,7 +114,7 @@
     "finalDescription": "Nutze unsere unabhängige Bibliothek für Zugang, Trupprollen, Fahrzeuge, Ziele und alle bestätigten Release-Meilensteine.",
     "final": {"eyebrow": "Bereite deinen Einsatz vor", "guidesCta": "Guides entdecken", "steamCta": "Steam öffnen"}
   },
-  "guides": {"metaTitle": "WARDOGS Guides - Beta, Gameplay, Waffen & Lösungen", "title": "WARDOGS Guides", "description": "Durchsuche 34 Guides zu Beta, Abstürzen, Geld, Türmen, Helikoptern, Artillerie, FOB-Logistik, Release und Gameplay.", "count": "34 Guide-Themen", "read": "Guide lesen"},
+  "guides": {"metaTitle": "WARDOGS Guides - Launch, Gameplay, Waffen & Lösungen", "title": "WARDOGS Guides", "description": "Durchsuche 39 Guides zu Launch, Fracht, Munition, Squads, Abstürzen, Fahrzeugen, FOB-Logistik und Gameplay.", "count": "39 Guide-Themen", "read": "Guide lesen"},
   "news": {
     "metaTitle": "WARDOGS News - Beta, Early Access und Steam",
     "metaDescription": "Verfolge bestätigte WARDOGS News, Beta-Termine, Steam Early Access, Preise, Plattformstatus, Preload-Fragen und aktualisierte Guides.",

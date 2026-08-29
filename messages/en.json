@@ -3,12 +3,12 @@
   "ads": {"label": "Advertisement", "sponsored": "Sponsored", "smartlinkCta": "Explore sponsored recommendations", "smartlinkDescription": "Open an external sponsored destination in a new tab."},
   "nav": {"game": "Game", "guides": "Guides", "catalogue": "Catalogue", "playtest": "Playtest", "release": "Release", "releaseDate": "Release Date", "steam": "Steam", "steamEarlyAccess": "Steam and Early Access", "gameplay": "Gameplay", "factions": "Factions", "community": "Community", "beginnerGuide": "Beginner Guide", "crashFix": "Crash Fix", "helicopterGuide": "Helicopter Guide", "gameplayGuide": "Gameplay Guide", "fobLogistics": "FOB and Logistics", "mortarGuide": "Mortar Guide", "allGuides": "All Guides", "catalogueHome": "Catalogue Home", "weapons": "Weapons", "vehicles": "Vehicles", "ammo": "Ammo", "attachments": "Attachments", "gear": "Gear", "equipment": "Equipment", "loadouts": "Loadouts", "videos": "Videos", "items": "Items", "news": "News", "steamCta": "View on Steam", "primaryLabel": "Primary navigation"},
   "home": {
-    "metaTitle": "WARDOGS Wiki - Gameplay, Playtest & Release Guides",
-    "metaDescription": "WARDOGS Wiki provides verified guides to gameplay, playtests, release dates, Steam access, factions, trailers, community links, and beginner tactics.",
+    "metaTitle": "WARDOGS Wiki - Launch, Gameplay & Early Access Guides",
+    "metaDescription": "Prepare for WARDOGS Early Access with verified launch, gameplay, cargo, ammo, squad, vehicles, Steam, PC settings, and beginner guides for September 10.",
     "heroTitle": "Complete Guide",
     "heroDescription": "Plan your first deployment with verified WARDOGS access, release, gameplay, faction, community, and video guides.",
     "primaryCta": "Explore All Guides",
-    "secondaryCta": "Check Playtest Access",
+    "secondaryCta": "Open Launch Checklist",
     "status": "Early Access announced",
     "statsLabel": "Key WARDOGS facts",
     "stats": {"earlyAccess": "Early Access Sep 10, 2026", "players": "Up to 100 Players", "teams": "3 Teams", "controlZone": "2 x 2 km Control Zone"},
@@ -26,7 +26,8 @@
       "description": "Use these four guides to understand access, the core match, and the forces entering the Control Zone.",
       "cards": {
         "beginner": {"title": "Beginner Guide", "description": "Build a sensible first loadout and connect every action to the team objective."},
-        "playtest": {"title": "Playtest Access", "description": "Check the current access status, official channels, and what has already ended."},
+        "playtest": {"title": "Playtest History", "description": "Check the completed test timeline and any newly confirmed access window."},
+        "launch": {"title": "Launch Checklist", "description": "Prepare for the September 3 announcement and September 10 Early Access launch."},
         "gameplay": {"title": "Gameplay Explained", "description": "Learn how Control Zone scoring, cash, roles, vehicles, and logistics fit together."},
         "factions": {"title": "The Three Factions", "description": "Meet Valkyra, Lonestar, and Manticore without inventing unconfirmed bonuses."}
       }
@@ -113,7 +114,7 @@
     "finalDescription": "Use our independent guide library to prepare for access, squad roles, vehicles, objectives, and every confirmed release milestone.",
     "final": {"eyebrow": "Prepare for deployment", "guidesCta": "Explore the Guides", "steamCta": "Open Steam"}
   },
-  "guides": {"metaTitle": "WARDOGS Guides - Beta, Gameplay, Weapons & Fixes", "title": "WARDOGS Guides", "description": "Browse 34 focused guides covering beta access, troubleshooting, money, towers, helicopters, artillery, FOB logistics, release, and gameplay.", "count": "34 Guide Topics", "read": "Read guide"},
+  "guides": {"metaTitle": "WARDOGS Guides - Launch, Gameplay, Weapons & Fixes", "title": "WARDOGS Guides", "description": "Browse 39 focused guides covering launch, cargo, ammunition, squads, troubleshooting, vehicles, FOB logistics, release, and gameplay.", "count": "39 Guide Topics", "read": "Read guide"},
   "news": {
     "metaTitle": "WARDOGS News - Beta, Early Access & Steam Updates",
     "metaDescription": "Track confirmed WARDOGS news, beta dates, Steam Early Access timing, pricing notes, platform status, preload questions, and updated guide links.",

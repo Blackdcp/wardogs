@@ -51,8 +51,9 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const fob = await loadGuideDocument(locale, "wardogs-fob-guide");
       const money = await loadGuideDocument(locale, "wardogs-money-guide");
 
-      for (const guide of [beginner, fob, money]) {
-        expect(guide?.frontmatter.updatedAt, locale).toBe("2026-08-28");
+      expect(beginner?.frontmatter.updatedAt, locale).toBe("2026-08-28");
+      for (const guide of [fob, money]) {
+        expect(guide?.frontmatter.updatedAt, locale).toBe("2026-08-29");
       }
 
       expect(beginner?.frontmatter.sources.some(({url}) => url.includes("Msg78ysR_hQ"))).toBe(true);

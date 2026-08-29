@@ -138,12 +138,12 @@ describe("Similarweb growth guide cluster", () => {
 
     for (const [slug, phrases] of expectations) {
       const guide = await loadGuideDocument("en", slug);
-      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28"]).toContain(guide?.frontmatter.updatedAt);
+      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29"]).toContain(guide?.frontmatter.updatedAt);
       for (const phrase of phrases) expect(guide?.body).toContain(phrase);
     }
 
     const ps5 = await loadGuideDocument("en", "wardogs-ps5");
-    expect(ps5?.frontmatter.updatedAt).toBe("2026-08-23");
+    expect(ps5?.frontmatter.updatedAt).toBe("2026-08-29");
     expect(ps5?.frontmatter.title).toBe("WARDOGS PS5 & Xbox Release: Console Status");
     expect(ps5?.body).toContain("not confirmed");
   });

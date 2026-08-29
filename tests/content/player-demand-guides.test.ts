@@ -17,7 +17,7 @@ describe("player-demand guide cluster", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).toBeDefined();
-        expect(["2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
+        expect(["2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThan(0);

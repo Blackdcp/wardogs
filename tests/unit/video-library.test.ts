@@ -3,7 +3,7 @@ import {getFeaturedVideoArticles, videoArticles} from "../../src/features/videos
 
 describe("video article library", () => {
   it("keeps every collected YouTube source as its own indexable article", () => {
-    expect(videoArticles).toHaveLength(23);
+    expect(videoArticles).toHaveLength(27);
     expect(videoArticles.map(({youtubeId}) => youtubeId)).toEqual([
       "ugkuP4a3xk4",
       "-k6IV0ITLDo",
@@ -27,17 +27,21 @@ describe("video article library", () => {
       "oP9RelmWk6A",
       "trlcyJgeZOo",
       "OBjq7kVgtnQ",
-      "Jm7ogJLKIJo"
+      "Jm7ogJLKIJo",
+      "2aU4OB0duYg",
+      "Hq6OZqPDoAc",
+      "DT1_i8m8cMA",
+      "SwlEyNdgw1o"
     ]);
-    expect(new Set(videoArticles.map(({slug}) => slug)).size).toBe(23);
+    expect(new Set(videoArticles.map(({slug}) => slug)).size).toBe(27);
     expect(videoArticles.every((article) => article.internalGuideSlug.length > 0)).toBe(true);
   });
 
   it("promotes the strongest video articles first", () => {
     expect(getFeaturedVideoArticles(3).map(({slug}) => slug)).toEqual([
-      "wardogs-artillery-tank-guide",
-      "wardogs-fast-money-routes",
-      "wardogs-ammo-types-tested"
+      "wardogs-vehicle-cargo-logistics",
+      "wardogs-havoc-helicopter-guide",
+      "wardogs-deadliest-sniper-guide"
     ]);
   });
 

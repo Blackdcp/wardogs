@@ -7,13 +7,13 @@ export function getHomeFacts(translate: (key: HomeFactKey) => string): string[] 
 
 export const START_GUIDES = [
   {number: "1", slug: "wardogs-beginner-guide", titleKey: "beginner"},
-  {number: "2", slug: "wardogs-playtest", titleKey: "playtest"},
+  {number: "2", slug: "wardogs-launch-checklist", titleKey: "launch"},
   {number: "3", slug: "wardogs-gameplay", titleKey: "gameplay"},
   {number: "4", slug: "wardogs-factions", titleKey: "factions"}
 ] as const;
 
 export const HOME_CATEGORY_GUIDES = [
-  {key: "access", slug: "wardogs-playtest"},
+  {key: "access", slug: "wardogs-launch-checklist"},
   {key: "release", slug: "wardogs-release-date"},
   {key: "store", slug: "wardogs-steam"},
   {key: "platform", slug: "wardogs-ps5"},
@@ -24,18 +24,18 @@ export const HOME_CATEGORY_GUIDES = [
 ] as const;
 
 export const TOP_GUIDE_SLUGS = [
-  "wardogs-beta",
-  "wardogs-playtest",
-  "wardogs-preload",
+  "wardogs-launch-checklist",
+  "wardogs-cargo-guide",
+  "wardogs-ammo-reload-guide",
+  "wardogs-squad-guide",
+  "wardogs-oil-rig-guide",
   "wardogs-ps5",
   "wardogs-crash-fix",
   "wardogs-beginner-guide",
   "wardogs-fob-guide",
-  "wardogs-twitch-drops",
-  "wardogs-gameplay",
+  "wardogs-best-settings",
   "wardogs-release-date",
-  "wardogs-steam",
-  "wardogs-best-settings"
+  "wardogs-steam"
 ] as const;
 
 export type RecentlyUpdatedGuideInput = {

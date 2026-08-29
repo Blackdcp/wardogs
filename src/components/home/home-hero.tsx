@@ -57,7 +57,7 @@ export async function HomeHero({facts}: HomeHeroProps) {
               {t("home.primaryCta")}
               <ArrowRight aria-hidden="true" className="size-4" />
             </ButtonLink>
-            <ButtonLink href="/guides/wardogs-playtest" variant="secondary" className="w-full sm:w-auto">
+            <ButtonLink href="/guides/wardogs-launch-checklist" variant="secondary" className="w-full sm:w-auto">
               {t("home.secondaryCta")}
             </ButtonLink>
           </div>

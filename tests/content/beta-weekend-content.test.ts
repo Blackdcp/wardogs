@@ -15,7 +15,7 @@ describe("WARDOGS Closed Beta reference content", () => {
       for (const slug of weekendSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(["2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28"]).toContain(guide?.frontmatter.updatedAt);
+        expect(["2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29"]).toContain(guide?.frontmatter.updatedAt);
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources.length).toBeGreaterThan(0);
@@ -36,9 +36,11 @@ describe("WARDOGS Closed Beta reference content", () => {
   });
 
   it("keeps historical beta links while the homepage promotes current milestones", () => {
-    for (const slug of weekendSlugs) {
+    for (const slug of ["wardogs-beginner-guide", "wardogs-fob-guide"] as const) {
       expect(TOP_GUIDE_SLUGS).toContain(slug);
     }
+    expect(TOP_GUIDE_SLUGS).not.toContain("wardogs-twitch-drops");
+    expect(TOP_GUIDE_SLUGS).toContain("wardogs-launch-checklist");
     expect(START_GUIDES[0].slug).toBe("wardogs-beginner-guide");
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",

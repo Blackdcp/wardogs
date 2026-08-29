@@ -26,7 +26,7 @@ describe("homepage data", () => {
     ]);
     expect(START_GUIDES).toEqual([
       {number: "1", slug: "wardogs-beginner-guide", titleKey: "beginner"},
-      {number: "2", slug: "wardogs-playtest", titleKey: "playtest"},
+      {number: "2", slug: "wardogs-launch-checklist", titleKey: "launch"},
       {number: "3", slug: "wardogs-gameplay", titleKey: "gameplay"},
       {number: "4", slug: "wardogs-factions", titleKey: "factions"}
     ]);
@@ -35,18 +35,18 @@ describe("homepage data", () => {
 
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
-      "wardogs-beta",
-      "wardogs-playtest",
-      "wardogs-preload",
+      "wardogs-launch-checklist",
+      "wardogs-cargo-guide",
+      "wardogs-ammo-reload-guide",
+      "wardogs-squad-guide",
+      "wardogs-oil-rig-guide",
       "wardogs-ps5",
       "wardogs-crash-fix",
       "wardogs-beginner-guide",
       "wardogs-fob-guide",
-      "wardogs-twitch-drops",
-      "wardogs-gameplay",
+      "wardogs-best-settings",
       "wardogs-release-date",
-      "wardogs-steam",
-      "wardogs-best-settings"
+      "wardogs-steam"
     ]);
     expect(new Set(TOP_GUIDE_SLUGS).size).toBe(TOP_GUIDE_SLUGS.length);
 
