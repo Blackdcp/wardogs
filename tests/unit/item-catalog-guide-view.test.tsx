@@ -31,8 +31,8 @@ describe("ItemCatalogGuide", () => {
 
     const html = renderToStaticMarkup(<ItemCatalogGuide guide={guide!} locale="en" />);
 
-    expect(html).toContain("33 weapons");
-    expect(html).toContain("Alpha 1 - 7 Aug 2026");
+    expect(html).toContain("38 weapons");
+    expect(html).toContain("Alpha 1 and Closed Beta - 7-23 Aug 2026");
     expect(html).toContain("Bushmaster M17S");
     expect(html).toContain("What the catalogue means");
     expect(html).toContain("What is not confirmed");

@@ -18,14 +18,24 @@ describe("WARDOGS item catalog guides", () => {
     ]);
   });
 
-  it("publishes the observed Alpha 1 catalogue counts", () => {
-    expect(getCatalogEntryCount("weapons")).toBe(33);
-    expect(getCatalogEntryCount("vehicles")).toBe(20);
+  it("publishes record-backed weapon and vehicle counts", () => {
+    expect(getCatalogEntryCount("weapons")).toBe(38);
+    expect(getCatalogEntryCount("vehicles")).toBe(28);
     expect(getCatalogEntryCount("ammo")).toBe(14);
     expect(getCatalogEntryCount("attachments")).toBe(55);
     expect(getCatalogEntryCount("gear")).toBe(11);
     expect(getCatalogEntryCount("equipment")).toBe(13);
     expect(getCatalogEntryCount("loadouts")).toBe(3);
+  });
+
+  it("keeps record-backed titles and count labels aligned", () => {
+    const weapons = catalogGuides.find((guide) => guide.id === "weapons");
+    const vehicles = catalogGuides.find((guide) => guide.id === "vehicles");
+
+    expect(weapons?.title).toContain("38");
+    expect(weapons?.countLabel).toBe("38 weapons");
+    expect(vehicles?.title).toContain("28");
+    expect(vehicles?.countLabel).toBe("28 vehicles");
   });
 
   it("keeps every row aligned with its guide columns and labels pre-release evidence", () => {

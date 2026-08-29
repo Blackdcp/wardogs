@@ -109,7 +109,7 @@ describe("item structured data", () => {
     const weapons = buildItemTypeJsonLd("en", "weapons");
     const ammo = buildItemTypeJsonLd("en", "ammo");
 
-    expect(weapons[1].itemListElement).toHaveLength(15);
+    expect(weapons[1].itemListElement).toHaveLength(39);
     expect(ammo[1].itemListElement).toHaveLength(14);
     expect((weapons[2].itemListElement as Array<{name: string}>)[1].name).toBe("WARDOGS Catalogue");
   });
@@ -130,15 +130,21 @@ describe("item structured data", () => {
       url: "http://localhost:3000/en/items/weapons/ak74",
       image: "http://localhost:3000/images/catalogue/weapons/ak74.webp"
     });
-    expect(entries[14]).toEqual({
+    expect(entries.find((entry) => entry.name === "M4")).toEqual({
       "@type": "ListItem",
       position: 15,
+      name: "M4",
+      url: "http://localhost:3000/en/items/weapons/m4"
+    });
+    expect(entries.at(-1)).toEqual({
+      "@type": "ListItem",
+      position: 39,
       name: "Mortar",
       url: "http://localhost:3000/en/items/weapons/mortar"
     });
     expect(entries.slice(0, 14).every((entry) => entry.image?.startsWith("http://localhost:3000/images/catalogue/weapons/"))).toBe(true);
-    expect(entries.filter((entry) => entry.url.includes("/items/weapons/")).map((entry) => entry.url)).toHaveLength(15);
-    expect(new Set(entries.map((entry) => entry.name)).size).toBe(15);
+    expect(entries.filter((entry) => entry.url.includes("/items/weapons/")).map((entry) => entry.url)).toHaveLength(35);
+    expect(new Set(entries.map((entry) => entry.name)).size).toBe(39);
   });
 
   it("uses the localized category URL and catalogue imagery in category schema", () => {

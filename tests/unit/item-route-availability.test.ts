@@ -28,13 +28,13 @@ async function loadRouteAvailability() {
 }
 
 describe("item detail route availability", () => {
-  it("publishes one five-locale manifest for all 40 item articles", async () => {
+  it("publishes one five-locale manifest for every item article", async () => {
     const routeAvailability = await loadRouteAvailability();
 
     expect(routeAvailability).not.toBeNull();
     if (!routeAvailability) return;
 
-    expect(routeAvailability.itemDetailRouteManifest).toHaveLength(40);
+    expect(routeAvailability.itemDetailRouteManifest).toHaveLength(itemLibrary.length);
     expect(routeAvailability.itemDetailRouteManifest.every(({locales}) =>
       JSON.stringify(locales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja"])
     )).toBe(true);

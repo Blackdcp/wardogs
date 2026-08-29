@@ -19,6 +19,100 @@ const localeText = {
   ja: {count:(n:number,l:string)=>`${l} ${n}件`, description:(l:string)=>`WARDOGSで確認できた${l}の完全カタログです。最終バランスを推測せず、モデル、役割、テストビルドの価格、証拠を比較できます。`, disclaimer:"コミュニティが発売前ビルドで確認したデータです。価格、解除条件、バランス、入手可否は早期アクセス前に変更される可能性があります。", section:(s:string,l:string)=>`${s}として確認できた${l}のモデルと数値です。すべての数値は記載されたテストビルド時点の情報です。`, insight:(l:string)=>[`${l}は、明確な役割、予算、補給計画に合わせて選びます。`,"観察済みの数値は候補の比較に使えますが、最終バランス表ではありません。", "高価な選択は、分隊が実戦で運用・補給できる場合にだけ価値を持ちます。"], unknown:(l:string)=>[`${l}の早期アクセス版における最終性能は確認されていません。`,"価格、進行条件、入手可否、バランスは新しいビルドで変わる可能性があります。", "未記載の数値を1本の動画や画像から推測してはいけません。"], asOf:"Alpha 1 — 2026年8月7日", sources:["Steam版WARDOGS","Team17のWARDOGSページ","BULKHEADのWARDOGSページ"]}
 } as const;
 
+const expandedLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  ru: {
+    LMG: "Ручной пулемет",
+    Shotgun: "Дробовик",
+    Launcher: "Пусковая установка",
+    "Identifier only": "Только идентификатор",
+    "Stationary system": "Стационарная система",
+    "Closed Beta price": "Цена в закрытой бете",
+    Build: "Сборка",
+    Verification: "Проверка",
+    "Anti-air launcher": "Зенитная пусковая установка",
+    "Anti-vehicle launcher": "Противотранспортная пусковая установка",
+    "Grenade launcher": "Гранатомет",
+    "Stationary support": "Стационарная поддержка",
+    "Stationary anti-air": "Стационарная ПВО",
+    "Stationary artillery": "Стационарная артиллерия",
+    "Stationary defense": "Стационарная оборона",
+    "Stationary weapon": "Стационарное оружие",
+  },
+  de: {
+    LMG: "Leichtes Maschinengewehr",
+    Shotgun: "Schrotflinte",
+    Launcher: "Werfer",
+    "Identifier only": "Nur Bezeichnung",
+    "Stationary system": "Stationäres System",
+    "Closed Beta price": "Closed-Beta-Preis",
+    Build: "Build",
+    Verification: "Verifizierung",
+    "Anti-air launcher": "Flugabwehrwerfer",
+    "Anti-vehicle launcher": "Panzerabwehrwerfer",
+    "Grenade launcher": "Granatwerfer",
+    "Stationary support": "Stationäre Unterstützung",
+    "Stationary anti-air": "Stationäre Flugabwehr",
+    "Stationary artillery": "Stationäre Artillerie",
+    "Stationary defense": "Stationäre Verteidigung",
+    "Stationary weapon": "Stationäre Waffe",
+  },
+  "pt-br": {
+    LMG: "Metralhadora leve",
+    Shotgun: "Escopeta",
+    Launcher: "Lançador",
+    "Identifier only": "Somente identificador",
+    "Stationary system": "Sistema estacionário",
+    "Closed Beta price": "Preço no Beta Fechado",
+    Build: "Build",
+    Verification: "Verificação",
+    "Anti-air launcher": "Lançador antiaéreo",
+    "Anti-vehicle launcher": "Lançador antiveículo",
+    "Grenade launcher": "Lança-granadas",
+    "Stationary support": "Suporte estacionário",
+    "Stationary anti-air": "Defesa antiaérea estacionária",
+    "Stationary artillery": "Artilharia estacionária",
+    "Stationary defense": "Defesa estacionária",
+    "Stationary weapon": "Arma estacionária",
+  },
+  ja: {
+    LMG: "軽機関銃",
+    Shotgun: "ショットガン",
+    Launcher: "ランチャー",
+    "Identifier only": "名称のみ確認",
+    "Stationary system": "固定式システム",
+    "Closed Beta price": "クローズドベータ価格",
+    Build: "ビルド",
+    Verification: "確認状態",
+    "Anti-air launcher": "対空ランチャー",
+    "Anti-vehicle launcher": "対車両ランチャー",
+    "Grenade launcher": "グレネードランチャー",
+    "Stationary support": "固定式支援装備",
+    "Stationary anti-air": "固定式対空装備",
+    "Stationary artillery": "固定式砲兵装備",
+    "Stationary defense": "固定式防衛装備",
+    "Stationary weapon": "固定式兵器",
+  },
+};
+
+const expandedSectionNames: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  ru: {
+    "Closed Beta Identifiers": "Идентификаторы закрытой беты",
+    "Closed Beta Systems and Identifiers": "Системы и идентификаторы закрытой беты",
+  },
+  de: {
+    "Closed Beta Identifiers": "Bezeichnungen aus der Closed Beta",
+    "Closed Beta Systems and Identifiers": "Systeme und Bezeichnungen aus der Closed Beta",
+  },
+  "pt-br": {
+    "Closed Beta Identifiers": "Identificadores do Beta Fechado",
+    "Closed Beta Systems and Identifiers": "Sistemas e identificadores do Beta Fechado",
+  },
+  ja: {
+    "Closed Beta Identifiers": "クローズドベータで確認した名称",
+    "Closed Beta Systems and Identifiers": "クローズドベータのシステムと名称",
+  },
+};
+
 const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
   ru: {
     Weapon:"Оружие", Vehicle:"Транспорт", Calibre:"Калибр", Attachment:"Модификация", Gear:"Экипировка", Equipment:"Оборудование", Band:"Бюджет",
@@ -83,7 +177,7 @@ const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
 };
 
 function translateValue(value: string, locale: Exclude<Locale, "en">): string {
-  const direct = valueMaps[locale][value];
+  const direct = valueMaps[locale][value] ?? expandedLabels[locale][value];
   if (direct) return direct;
 
   const rounds = value.match(/^(\d+) rounds$/);
@@ -130,7 +224,7 @@ export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): C
     disclaimer: text.disclaimer,
     columns: guide.columns.map((column) => translateValue(column, locale)),
     sections: guide.sections.map((section) => {
-      const title = sectionNames[locale][section.title] ?? section.title;
+      const title = sectionNames[locale][section.title] ?? expandedSectionNames[locale][section.title] ?? section.title;
       return {...section, title, description: text.section(title, type.label), rows: section.rows.map((row) => ({cells: row.cells.map((cell, index) => index === 0 ? cell : translateValue(cell, locale))}))};
     }),
     insights: text.insight(type.label),

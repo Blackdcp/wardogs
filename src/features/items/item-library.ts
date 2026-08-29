@@ -1,5 +1,6 @@
 import type {Locale} from "@/config/site";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
+import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {
   gameplayVideo,
   mortarsVideo,
@@ -334,7 +335,70 @@ const legacyItemLibrary: readonly WardogsItem[] = [
   }
 ] as const;
 
-export const itemLibrary: readonly WardogsItem[] = [...legacyItemLibrary, ...weaponItems, ...vehicleItems].map((item) => ({
+const detailedCatalogueItems: readonly WardogsItem[] = [...weaponItems, ...vehicleItems];
+const detailedCatalogueSlugs = new Set(detailedCatalogueItems.map((item) => `${item.type}/${item.slug}`));
+
+function catalogueRecordToItem(record: CatalogueRecord, priority: number): WardogsItem {
+  const facts = record.facts.map((fact) => ({...fact, evidence: ["Pre-release Build"] as EvidenceLevel[]}));
+  const knownFacts = record.facts.filter((fact) => !/Not captured|Identifier only/.test(fact.value));
+  const relatedItems = getCatalogueRecords(record.type)
+    .filter((candidate) => candidate.slug !== record.slug && candidate.subtype === record.subtype && candidate.detailStatus === "published")
+    .slice(0, 3)
+    .map((candidate) => candidate.slug);
+
+  return {
+    slug: record.slug,
+    name: record.name,
+    type: record.type,
+    subtype: record.subtype,
+    status: record.evidenceStatus,
+    statusLabel: "Pre-release build",
+    build: record.dataAsOf,
+    summary: record.summary,
+    description: `${record.summary} This record separates observed pre-release facts from unknown Early Access balance and will be updated when a newer first-party or directly visible build confirms changes.`,
+    role: `Use the ${record.name} for its observed ${record.subtype.toLowerCase()} role only when the squad can support its ammunition, replacement cost, and current objective.`,
+    strengths: [
+      `${record.name} has a documented place in the pre-release catalogue rather than an inferred real-world role.`,
+      `Its visible ${record.subtype.toLowerCase()} classification makes it comparable with records in the same catalogue filter.`,
+      "Unknown fields remain visible, which prevents an old test-build value from becoming a permanent recommendation.",
+    ],
+    cautions: [
+      "Pre-release price, handling, damage, availability, and unlock conditions can change before or during Early Access.",
+      "A catalogue identifier does not prove final attachment, ammunition, or progression compatibility.",
+      "Use the Build label on every fact before comparing this record with newer footage.",
+    ],
+    facts,
+    relatedGuides: record.type === "weapons"
+      ? ["wardogs-gameplay", "wardogs-money-guide", "wardogs-ammo-reload-guide"]
+      : ["wardogs-gameplay", "wardogs-cargo-guide", "wardogs-beginner-guide"],
+    relatedItems,
+    sources: [officialSteam, officialTeam17, gameplayVideo],
+    detailImage: record.mediaState === "pending" ? undefined : record.image,
+    detailImageAlt: record.mediaState === "pending" ? undefined : record.imageAlt,
+    observedPrice: record.facts.find((fact) => /price/.test(fact.label.toLowerCase()))?.value,
+    observedProgressionOrGate: record.facts.find((fact) => fact.label === "Progression" || fact.label === "Observed gate")?.value,
+    observedAmmoOrVehicleClass: record.facts.find((fact) => fact.label === "Ammunition" || fact.label === "Role")?.value,
+    confirmedFacts: knownFacts.map((fact) => `Observed in ${record.dataAsOf}: ${fact.label}: ${fact.value}`),
+    unconfirmedFacts: [
+      `Final Early Access and release values for ${record.name} remain unconfirmed.`,
+      "Damage, handling, price, availability, and compatibility can change with a new Build.",
+    ],
+    detailUpdatedAt: "2026-08-30",
+    priority,
+    indexLocales: ["en", "ru", "de", "pt-br", "ja"],
+  };
+}
+
+const generatedCatalogueItems = (["weapons", "vehicles"] as const)
+  .flatMap((type) => getCatalogueRecords(type))
+  .filter((record) => record.detailStatus === "published" && !detailedCatalogueSlugs.has(`${record.type}/${record.slug}`))
+  .map((record, index) => catalogueRecordToItem(record, 500 + index));
+
+export const itemLibrary: readonly WardogsItem[] = [
+  ...legacyItemLibrary,
+  ...detailedCatalogueItems,
+  ...generatedCatalogueItems,
+].map((item) => ({
   ...item,
   indexLocales: ["en", "ru", "de", "pt-br", "ja"] as const
 }));

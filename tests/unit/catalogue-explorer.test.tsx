@@ -105,7 +105,7 @@ describe("CatalogueExplorer", () => {
       <CatalogueExplorer locale="en" records={records} filters={[{label: "Assault rifle", value: "assault-rifle"}]} labels={labels} />
     );
 
-    expect(html.match(/data-catalogue-record=/g)).toHaveLength(14);
+    expect(html.match(/data-catalogue-record=/g)).toHaveLength(38);
     expect(html).toContain('id="record-weapons-ak74"');
     expect(html).toContain('aria-label="Search Weapons"');
     expect(html).toContain(">All</button>");
@@ -116,9 +116,9 @@ describe("CatalogueExplorer", () => {
   it("filters by approved category value and accessible text without mutating the supplied records", () => {
     const records = getCatalogueRecords("weapons");
 
-    expect(filterCatalogueRecords(records, "", "assault-rifle")).toHaveLength(6);
+    expect(filterCatalogueRecords(records, "", "assault-rifle")).toHaveLength(8);
     expect(filterCatalogueRecords(records, "AK74", "all").map((record) => record.slug)).toEqual(["ak74"]);
     expect(filterCatalogueRecords(records, "5.45x39mm", "assault-rifle").map((record) => record.slug)).toEqual(["ak74"]);
-    expect(records).toHaveLength(14);
+    expect(records).toHaveLength(38);
   });
 });

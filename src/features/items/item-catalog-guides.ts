@@ -1,4 +1,5 @@
 import type {ItemTypeId} from "./item-library";
+import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 
 export type CatalogRow = {
   cells: string[];
@@ -33,14 +34,16 @@ const officialSources = [
 ];
 
 const row = (...cells: string[]): CatalogRow => ({cells});
+const weaponCount = getCatalogueRecords("weapons").length;
+const vehicleCount = getCatalogueRecords("vehicles").length;
 
 export const catalogGuides: readonly CatalogGuide[] = [
   {
     id: "weapons",
-      title: "WARDOGS Weapons List: All 33 Weapons",
-      description: "Browse all 33 WARDOGS Alpha 1 weapons, including rifles, SMGs, shotguns, launchers and the Compound Bow, with roles, evidence notes and item guides.",
-    countLabel: "33 weapons",
-    dataAsOf: "Alpha 1 - 7 Aug 2026",
+      title: `WARDOGS Weapons List: All ${weaponCount} Documented Weapons`,
+      description: `Browse all ${weaponCount} documented WARDOGS pre-release weapon records, including rifles, SMGs, shotguns, launchers, sidearms, and incomplete identifiers with explicit evidence notes.`,
+    countLabel: `${weaponCount} weapons`,
+    dataAsOf: "Alpha 1 and Closed Beta - 7-23 Aug 2026",
     heroImage: "/images/items/catalog-weapons.jpg",
     heroImageAlt: "WARDOGS weapons from a large battlefield match",
     disclaimer: "Community-observed pre-release data. Prices, unlocks, balance, and availability may change before Early Access.",
@@ -108,6 +111,17 @@ export const catalogGuides: readonly CatalogGuide[] = [
           row("MAWS", "Not captured", "84mm", "Not captured", "Not captured", "Not captured"),
           row("MGL40", "Not captured", "40mm", "Not captured", "Not captured", "Not captured")
         ]
+      },
+      {
+        title: "Closed Beta Identifiers",
+        description: "Names visible in later pre-release catalogue coverage whose numeric fields remain incomplete.",
+        rows: [
+          row("9K333 Verba", "Not captured", "Not captured", "Not captured", "Not captured", "Not captured"),
+          row("M12G", "Not captured", "Not captured", "Not captured", "Not captured", "Identifier only"),
+          row("AT4", "Not captured", "Not captured", "Not captured", "Not captured", "Identifier only"),
+          row("Browning MG", "Not captured", "Not captured", "Not captured", "Not captured", "Identifier only"),
+          row("G60", "Not captured", "Not captured", "Not captured", "Not captured", "Identifier only")
+        ]
       }
     ],
     insights: [
@@ -124,10 +138,10 @@ export const catalogGuides: readonly CatalogGuide[] = [
   },
   {
     id: "vehicles",
-    title: "WARDOGS Vehicles Catalogue",
-    description: "The observed Alpha 1 vehicle vendor, separated into transport, armor, artillery, and aircraft with price and unlock context.",
-    countLabel: "20 vehicles",
-    dataAsOf: "Alpha 1 - 7 Aug 2026",
+    title: `WARDOGS Vehicles Catalogue: ${vehicleCount} Documented Records`,
+    description: `The ${vehicleCount} documented WARDOGS pre-release vehicle and stationary-system records, separated into transport, armor, artillery, aircraft, and incomplete Closed Beta identifiers.`,
+    countLabel: `${vehicleCount} vehicles`,
+    dataAsOf: "Alpha 1 and Closed Beta - 7-23 Aug 2026",
     heroImage: "/images/items/catalog-vehicles.jpg",
     heroImageAlt: "WARDOGS armored and air vehicles in intense combat",
     disclaimer: "Community-observed pre-release vendor data. Prices and progression gates are not final launch specifications.",
@@ -169,6 +183,20 @@ export const catalogGuides: readonly CatalogGuide[] = [
           row("Havoc", "Attack helicopter", "$18,000", "Gate unread", "-"),
           row("MH-6", "Light air transport", "$6,250", "Open purchase", "-"),
           row("UH-1Y", "Air transport", "$7,400", "Pilot Level 10", "Pilot")
+        ]
+      },
+      {
+        title: "Closed Beta Systems and Identifiers",
+        description: "Later pre-release identifiers separated from the complete Alpha vendor rows so unknown values remain visible.",
+        rows: [
+          row("M113 APC SV - Variant 1", "Identifier only", "Not captured", "Not captured", "Not captured"),
+          row("M113 APC SV - Variant 2", "Identifier only", "Not captured", "Not captured", "Not captured"),
+          row("M113 APC SV - Variant 3", "Identifier only", "Not captured", "Not captured", "Not captured"),
+          row("Loudspeaker", "Stationary support", "Not captured", "Not captured", "Not captured"),
+          row("Talon 9K-SAM", "Stationary anti-air", "Not captured", "Not captured", "Not captured"),
+          row("L81 Mortar", "Stationary artillery", "Not captured", "Not captured", "Not captured"),
+          row("Vanguard CIWS", "Stationary defense", "Not captured", "Not captured", "Not captured"),
+          row("Stingray", "Stationary weapon", "Not captured", "Not captured", "Not captured")
         ]
       }
     ],
@@ -483,6 +511,9 @@ export function getCatalogGuide(id: string): CatalogGuide | undefined {
 }
 
 export function getCatalogEntryCount(id: string): number {
+  if (id === "weapons" || id === "vehicles") {
+    return getCatalogueRecords(id).length;
+  }
   const guide = getCatalogGuide(id);
   return guide ? guide.sections.reduce((total, section) => total + section.rows.length, 0) : 0;
 }

@@ -9,10 +9,10 @@ import {
 import {getCatalogueGroup} from "../../src/features/catalogue/catalogue-groups";
 
 describe("catalogue records", () => {
-  it("exposes exactly 99 image-backed records", () => {
-    expect(catalogueRecords).toHaveLength(99);
-    expect(getCatalogueRecords("weapons")).toHaveLength(14);
-    expect(getCatalogueRecords("vehicles")).toHaveLength(20);
+  it("exposes the expanded record inventory", () => {
+    expect(catalogueRecords).toHaveLength(131);
+    expect(getCatalogueRecords("weapons")).toHaveLength(38);
+    expect(getCatalogueRecords("vehicles")).toHaveLength(28);
     expect(getCatalogueRecords("ammo")).toHaveLength(14);
     expect(getCatalogueRecords("attachments")).toHaveLength(40);
     expect(getCatalogueRecords("gear")).toHaveLength(11);
@@ -22,7 +22,7 @@ describe("catalogue records", () => {
     const published = catalogueRecords.filter((record) => record.detailStatus === "published");
     const planned = catalogueRecords.filter((record) => record.detailStatus === "planned");
 
-    expect(published).toHaveLength(34);
+    expect(published).toHaveLength(59);
     expect(published.every((record) => record.type === "weapons" || record.type === "vehicles")).toBe(true);
     expect(published.every((record) => record.detailHref === `/items/${record.type}/${record.slug}`)).toBe(true);
     expect(planned).toHaveLength(0);
@@ -42,7 +42,8 @@ describe("catalogue records", () => {
       expect(record.facts.length).toBeGreaterThanOrEqual(2);
       expect(record.filterValues.length).toBeGreaterThan(0);
       expect(record.evidenceStatus).toBe("pre-release-build");
-      expect(record.dataAsOf).toBe("Alpha 1 - 7 Aug 2026");
+      expect(record.dataAsOf).toMatch(/Alpha|Beta/);
+      expect(record.sourceNotes.length).toBeGreaterThan(0);
     }
   });
 

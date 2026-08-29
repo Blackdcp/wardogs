@@ -41,7 +41,7 @@ function buildItemListEntries(locale: Locale, type: ItemTypeId, url: string) {
       url: record.detailStatus === "published" && record.detailHref
         ? pageUrl(locale, record.detailHref)
         : `${url}#record-${type}-${record.slug}`,
-      image: absoluteImageUrl(record.image)
+      ...(record.mediaState === "pending" ? {} : {image: absoluteImageUrl(record.image)})
     }));
     return [...recordEntries, ...indexableItems.filter((item) => !recordSlugs.has(item.slug)).map((item) => ({
       name: item.name,

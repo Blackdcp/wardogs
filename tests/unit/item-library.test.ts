@@ -91,8 +91,8 @@ describe("item library", () => {
     expect(mortar?.facts.every((fact) => fact.evidence.length > 0)).toBe(true);
   });
 
-  it("publishes all 14 weapon model guides in every supported locale", () => {
-    const weaponModels = itemLibrary.filter((item) => item.type === "weapons" && item.slug !== "mortar");
+  it("retains all 14 deep weapon model guides in every supported locale", () => {
+    const weaponModels = itemLibrary.filter((item) => item.type === "weapons" && weaponSlugs.includes(item.slug as (typeof weaponSlugs)[number]));
 
     expect(weaponModels.map((item) => item.slug)).toEqual(weaponSlugs);
     expect(weaponModels).toHaveLength(14);
@@ -110,7 +110,7 @@ describe("item library", () => {
     expect(new Set(weaponModels.map((item) => item.summary)).size).toBe(14);
     expect(new Set(weaponModels.map((item) => item.description)).size).toBe(14);
 
-    for (const record of getCatalogueRecords("weapons")) {
+    for (const record of getCatalogueRecords("weapons").filter((candidate) => weaponSlugs.includes(candidate.slug as (typeof weaponSlugs)[number]))) {
       const item = weaponModels.find((candidate) => candidate.slug === record.slug);
       expect(item?.detailImage, record.slug).toBe(record.image);
       expect(item?.detailImageAlt, record.slug).toBe(record.imageAlt);
@@ -167,7 +167,7 @@ describe("item library", () => {
     expect(new Set(vehicleModels.flatMap((item) => item.strengths)).size).toBe(vehicleModels.flatMap((item) => item.strengths).length);
     expect(new Set(vehicleModels.flatMap((item) => item.cautions)).size).toBe(vehicleModels.flatMap((item) => item.cautions).length);
 
-    for (const record of getCatalogueRecords("vehicles")) {
+    for (const record of getCatalogueRecords("vehicles").filter((candidate) => vehicleSlugs.includes(candidate.slug as (typeof vehicleSlugs)[number]))) {
       const item = vehicleModels.find((candidate) => candidate.slug === record.slug);
       expect(item, record.slug).toMatchObject({
         name: record.name,
@@ -191,6 +191,28 @@ describe("item library", () => {
     }
   });
 
+  it("generates conservative detail pages for every newly published catalogue record", () => {
+    for (const type of ["weapons", "vehicles"] as const) {
+      const publishedRecords = getCatalogueRecords(type).filter((record) => record.detailStatus === "published");
+      const publishedItems = itemLibrary.filter((item) => item.type === type && publishedRecords.some((record) => record.slug === item.slug));
+
+      expect(publishedItems).toHaveLength(publishedRecords.length);
+
+      for (const record of publishedRecords) {
+        const item = publishedItems.find((candidate) => candidate.slug === record.slug);
+        expect(item, `${type}/${record.slug}`).toBeDefined();
+        expect(item?.build, `${type}/${record.slug}`).toBe(record.slug === "sph-2"
+          ? "Alpha 1 and Closed Beta footage checked 2026-08-28"
+          : record.dataAsOf);
+        expect(item?.indexLocales, `${type}/${record.slug}`).toEqual(["en", "ru", "de", "pt-br", "ja"]);
+
+        if (record.mediaState === "pending") {
+          expect(item?.detailImage, `${type}/${record.slug}`).toBeUndefined();
+        }
+      }
+    }
+  });
+
   it("keeps article fields off indexable route paths", () => {
     const path: IndexableItemPath = {locale: "en", type: "weapons", slug: "mortar"};
     expect(path).toEqual({locale: "en", type: "weapons", slug: "mortar"});
@@ -211,10 +233,10 @@ describe("item library", () => {
     expect(getRelatedItems(itemWithRelatedModels, "ja").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
   });
 
-  it("indexes all 40 item details in all five locales", () => {
+  it("indexes every item detail in all five locales", () => {
     const paths = getIndexableItemPaths();
 
-    expect(paths).toHaveLength(200);
+    expect(paths).toHaveLength(itemLibrary.length * 5);
     expect(paths).toContainEqual({locale: "en", type: "weapons", slug: "mortar"});
     expect(paths).toContainEqual({locale: "ru", type: "vehicles", slug: "littlebird"});
     expect(paths).toContainEqual({locale: "de", type: "weapons", slug: "mortar"});
