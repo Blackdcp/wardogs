@@ -216,6 +216,24 @@ describe("item library", () => {
     }
   });
 
+  it("keeps established item links while adding the new catalogue guides and exact evidence sources", () => {
+    const a91 = getItemBySlug("a-91");
+    const t21 = getItemBySlug("t-21");
+    const talon = getItemBySlug("talon-9k-sam");
+
+    expect(a91?.relatedGuides).toEqual([
+      "wardogs-best-weapons-loadouts",
+      "wardogs-armor-damage-ttk-guide",
+      "wardogs-gameplay",
+      "wardogs-playtest",
+      "wardogs-early-access",
+    ]);
+    expect(t21?.sources.some((source) => source.url === "https://www.youtube.com/watch?v=9mSvZyAk62E")).toBe(true);
+    expect(talon?.sources.some((source) => source.url === "https://www.youtube.com/watch?v=ZFRrDSru7Kg")).toBe(true);
+    expect(t21?.status).toBe("community-report");
+    expect(getItemBySlug("m4")?.status).toBe("verified-in-game");
+  });
+
   it("keeps article fields off indexable route paths", () => {
     const path: IndexableItemPath = {locale: "en", type: "weapons", slug: "mortar"};
     expect(path).toEqual({locale: "en", type: "weapons", slug: "mortar"});

@@ -19,6 +19,33 @@ const localeText = {
   ja: {count:(n:number,l:string)=>`${l} ${n}件`, description:(l:string)=>`WARDOGSで確認できた${l}の完全カタログです。最終バランスを推測せず、モデル、役割、テストビルドの価格、証拠を比較できます。`, disclaimer:"コミュニティが発売前ビルドで確認したデータです。価格、解除条件、バランス、入手可否は早期アクセス前に変更される可能性があります。", section:(s:string,l:string)=>`${s}として確認できた${l}のモデルと数値です。すべての数値は記載されたテストビルド時点の情報です。`, insight:(l:string)=>[`${l}は、明確な役割、予算、補給計画に合わせて選びます。`,"観察済みの数値は候補の比較に使えますが、最終バランス表ではありません。", "高価な選択は、分隊が実戦で運用・補給できる場合にだけ価値を持ちます。"], unknown:(l:string)=>[`${l}の早期アクセス版における最終性能は確認されていません。`,"価格、進行条件、入手可否、バランスは新しいビルドで変わる可能性があります。", "未記載の数値を1本の動画や画像から推測してはいけません。"], asOf:"Alpha 1 — 2026年8月7日", sources:["Steam版WARDOGS","Team17のWARDOGSページ","BULKHEADのWARDOGSページ"]}
 } as const;
 
+const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  ru: {
+    "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 августа 2026",
+    "Closed Beta - 21-23 Aug 2026": "Закрытая бета — 21–23 августа 2026",
+    "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 и закрытая бета — 7–23 августа 2026",
+  },
+  de: {
+    "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7. August 2026",
+    "Closed Beta - 21-23 Aug 2026": "Closed Beta — 21.–23. August 2026",
+    "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 und Closed Beta — 7.–23. August 2026",
+  },
+  "pt-br": {
+    "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 de agosto de 2026",
+    "Closed Beta - 21-23 Aug 2026": "Beta Fechado — 21–23 de agosto de 2026",
+    "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 e Beta Fechado — 7–23 de agosto de 2026",
+  },
+  ja: {
+    "Alpha 1 - 7 Aug 2026": "Alpha 1 — 2026年8月7日",
+    "Closed Beta - 21-23 Aug 2026": "クローズドベータ — 2026年8月21日～23日",
+    "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1・クローズドベータ — 2026年8月7日～23日",
+  },
+};
+
+function localizeDataAsOf(value: string, locale: Exclude<Locale, "en">): string {
+  return localizedDataAsOf[locale][value] ?? value;
+}
+
 const expandedLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
   ru: {
     LMG: "Ручной пулемет",
@@ -219,7 +246,7 @@ export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): C
     title: `WARDOGS ${type.label}`,
     description: text.description(type.label),
     countLabel: text.count(count, type.label),
-    dataAsOf: text.asOf,
+    dataAsOf: localizeDataAsOf(guide.dataAsOf, locale),
     heroImageAlt: type.imageAlt,
     disclaimer: text.disclaimer,
     columns: guide.columns.map((column) => translateValue(column, locale)),
@@ -241,7 +268,7 @@ export function getLocalizedCatalogueRecords(records: readonly CatalogueRecord[]
     const label = type ? getLocalizedItemType(type, locale).label : record.type;
     const facts = record.facts.map((fact) => ({label: translateValue(fact.label, locale), value: translateValue(fact.value, locale)}));
     const factText = facts.map((fact) => `${fact.label}: ${fact.value}`).join("; ");
-    return {...record, subtype: translateValue(record.subtype, locale), imageAlt: `${record.name} — WARDOGS ${label}`, summary: `${record.name} — ${label} WARDOGS. ${factText}. ${text.disclaimer}`, facts, dataAsOf: text.asOf};
+    return {...record, subtype: translateValue(record.subtype, locale), imageAlt: `${record.name} — WARDOGS ${label}`, summary: `${record.name} — ${label} WARDOGS. ${factText}. ${text.disclaimer}`, facts, dataAsOf: localizeDataAsOf(record.dataAsOf, locale)};
   });
 }
 

@@ -14,7 +14,7 @@ import {ButtonLink} from "@/components/ui/button-link";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {Link} from "@/i18n/navigation";
 import {getRelatedGuides} from "@/features/guides/related";
-import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
+import {getGuideDiscoveryImage, getGuideDiscoveryImageSrc} from "@/features/guides/guide-discovery-images";
 import {buildArticleMetadata} from "@/lib/metadata";
 import {buildArticleJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
@@ -95,7 +95,7 @@ export default async function GuideArticlePage({params}: PageProps) {
               height={discoveryImage.height}
               loading="eager"
               sizes="(min-width: 896px) 896px, 100vw"
-              src={discoveryImage.url}
+              src={getGuideDiscoveryImageSrc(discoveryImage)}
               unoptimized
               width={discoveryImage.width}
             />

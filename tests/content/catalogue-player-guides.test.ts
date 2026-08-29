@@ -48,4 +48,15 @@ describe("source-backed catalogue player guides", () => {
       expect(combined).not.toMatch(/(?:exact|exakt|точн|exato|正確).{0,30}(?:ttk|shots? to kill|treffer|выстрел|tiros|キル)/i);
     }
   });
+
+  it("only names catalogue-backed rifle examples in the loadout guide", async () => {
+    const unsupportedNames = ["AK12", "HK433", "G3A3", "HK416", "Mk 14 EBR"];
+
+    for (const locale of locales) {
+      const weapons = await loadGuideDocument(locale, "wardogs-best-weapons-loadouts");
+      for (const name of unsupportedNames) {
+        expect(weapons?.body, `${locale}/${name}`).not.toContain(name);
+      }
+    }
+  });
 });

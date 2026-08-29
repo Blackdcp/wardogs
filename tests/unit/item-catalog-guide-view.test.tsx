@@ -78,6 +78,17 @@ describe("ItemCatalogGuide", () => {
     expect(html).not.toContain('href="#record-weapons-ak74"');
   });
 
+  it("matches launcher aliases to their canonical catalogue records", () => {
+    const guide = getCatalogGuide("weapons");
+    const matchedGuide = matchCatalogueGuideRecords(guide!, getCatalogueRecords("weapons"));
+    const launchers = matchedGuide.sections
+      .flatMap((section) => section.rows)
+      .filter((row) => ["RPG7", "MAWS", "MGL40"].includes(row.cells[0]));
+
+    expect(launchers.map((row) => row.recordSlug)).toEqual(["rpg-7", "maaws", "mgl-40"]);
+    expect(launchers.every((row) => row.detailStatus === "published" && row.detailHref)).toBe(true);
+  });
+
   it("uses the matching locale route from every localized category table", () => {
     const guide = getCatalogGuide("weapons");
     const matchedGuide = matchCatalogueGuideRecords(guide!, getCatalogueRecords("weapons"));

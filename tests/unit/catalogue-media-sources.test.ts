@@ -46,4 +46,18 @@ describe("catalogue media provenance", () => {
       expect(catalogueMediaSources[asset]?.sourceUrl, asset).toContain("team17.com");
     }
   });
+
+  it("reserves verified media state for first-party assets and labels creator captures as context", () => {
+    const verifiedRecordImages = catalogueRecords
+      .filter((record) => record.mediaState === "verified")
+      .map((record) => record.image);
+    const creatorContext = catalogueRecords.filter((record) => record.mediaState === "context-only");
+
+    expect(verifiedRecordImages).toEqual([
+      "/images/catalogue/weapons/m4.webp",
+      "/images/catalogue/weapons/super-45.webp",
+    ]);
+    expect(creatorContext.length).toBeGreaterThan(0);
+    expect(creatorContext.every((record) => catalogueMediaSources[record.image]?.sourceUrl.includes("youtube.com"))).toBe(true);
+  });
 });

@@ -74,6 +74,24 @@ const profiles: Record<TranslatedLocale, ItemLocaleProfile> = {
 
 const localizedTerms: Record<string, Record<TranslatedLocale, string>> = {
   "Alpha price": {ru:"Цена в Alpha", de:"Alpha-Preis", "pt-br":"Preço no Alpha", ja:"アルファ価格"},
+  "Closed Beta price": {ru:"Цена в закрытой бете", de:"Closed-Beta-Preis", "pt-br":"Preço no Beta Fechado", ja:"クローズドベータ価格"},
+  "Assault rifle": {ru:"Штурмовая винтовка", de:"Sturmgewehr", "pt-br":"Fuzil de assalto", ja:"アサルトライフル"},
+  SMG: {ru:"Пистолет-пулемёт", de:"Maschinenpistole", "pt-br":"Submetralhadora", ja:"サブマシンガン"},
+  "Marksman rifle": {ru:"Марксманская винтовка", de:"Präzisionsgewehr", "pt-br":"Fuzil de precisão", ja:"マークスマンライフル"},
+  Bow: {ru:"Лук", de:"Bogen", "pt-br":"Arco", ja:"弓"},
+  Sidearm: {ru:"Пистолет", de:"Seitenwaffe", "pt-br":"Arma secundária", ja:"サイドアーム"},
+  Shotgun: {ru:"Дробовик", de:"Schrotflinte", "pt-br":"Escopeta", ja:"ショットガン"},
+  LMG: {ru:"Ручной пулемёт", de:"Leichtes Maschinengewehr", "pt-br":"Metralhadora leve", ja:"軽機関銃"},
+  "Sniper rifle": {ru:"Снайперская винтовка", de:"Scharfschützengewehr", "pt-br":"Fuzil de precisão de longo alcance", ja:"スナイパーライフル"},
+  Launcher: {ru:"Пусковая установка", de:"Werfer", "pt-br":"Lançador", ja:"ランチャー"},
+  "Stationary support": {ru:"Стационарная поддержка", de:"Stationäre Unterstützung", "pt-br":"Suporte estacionário", ja:"固定式支援装備"},
+  "Stationary anti-air": {ru:"Стационарная ПВО", de:"Stationäre Flugabwehr", "pt-br":"Defesa antiaérea estacionária", ja:"固定式対空装備"},
+  "Stationary artillery": {ru:"Стационарная артиллерия", de:"Stationäre Artillerie", "pt-br":"Artilharia estacionária", ja:"固定式砲兵装備"},
+  "Stationary defense": {ru:"Стационарная оборона", de:"Stationäre Verteidigung", "pt-br":"Defesa estacionária", ja:"固定式防衛装備"},
+  "Stationary weapon": {ru:"Стационарное оружие", de:"Stationäre Waffe", "pt-br":"Arma estacionária", ja:"固定式兵器"},
+  "Anti-air launcher": {ru:"Зенитная пусковая установка", de:"Flugabwehrwerfer", "pt-br":"Lançador antiaéreo", ja:"対空ランチャー"},
+  "Anti-vehicle launcher": {ru:"Противотранспортная пусковая установка", de:"Panzerabwehrwerfer", "pt-br":"Lançador antiveículo", ja:"対車両ランチャー"},
+  "Grenade launcher": {ru:"Гранатомёт", de:"Granatwerfer", "pt-br":"Lança-granadas", ja:"グレネードランチャー"},
   Ammunition: {ru:"Боеприпасы", de:"Munition", "pt-br":"Munição", ja:"弾薬"},
   "Fire modes": {ru:"Режимы огня", de:"Feuermodi", "pt-br":"Modos de disparo", ja:"射撃モード"},
   Weight: {ru:"Вес", de:"Gewicht", "pt-br":"Peso", ja:"重量"},
@@ -165,6 +183,12 @@ function localizeBuild(build: string, locale: TranslatedLocale, prefix: string):
       : locale === "de" ? "Alpha 1 — 7. August 2026"
       : locale === "pt-br" ? "Alpha 1 — 7 de agosto de 2026"
       : "Alpha 1 — 2026年8月7日";
+  }
+  if (build === "Closed Beta - 21-23 Aug 2026") {
+    return locale === "ru" ? "Закрытая бета — 21–23 августа 2026"
+      : locale === "de" ? "Closed Beta — 21.–23. August 2026"
+      : locale === "pt-br" ? "Beta Fechado — 21–23 de agosto de 2026"
+      : "クローズドベータ — 2026年8月21日～23日";
   }
   if (build === "Creator footage checked 2026-08-16") {
     return locale === "ru" ? "Видео автора проверено 16 августа 2026"

@@ -7,6 +7,8 @@ import {
   officialSteam,
   officialTeam17,
   sevenThingsVideo,
+  vehiclesCatalogueVideo,
+  weaponsCatalogueVideo,
   type ItemSource
 } from "./item-sources";
 import {vehicleItems} from "./vehicle-items";
@@ -338,8 +340,22 @@ const legacyItemLibrary: readonly WardogsItem[] = [
 const detailedCatalogueItems: readonly WardogsItem[] = [...weaponItems, ...vehicleItems];
 const detailedCatalogueSlugs = new Set(detailedCatalogueItems.map((item) => `${item.type}/${item.slug}`));
 
+const statusByEvidenceTier: Record<CatalogueRecord["evidenceTier"], ItemStatus> = {
+  official: "official",
+  "build-capture": "verified-in-game",
+  "corroborated-community": "community-report",
+  "identifier-only": "community-report",
+};
+
+const evidenceByTier: Record<CatalogueRecord["evidenceTier"], EvidenceLevel[]> = {
+  official: ["Official"],
+  "build-capture": ["Pre-release Build"],
+  "corroborated-community": ["Creator Footage", "Pre-release Build"],
+  "identifier-only": ["Pre-release Build"],
+};
+
 function catalogueRecordToItem(record: CatalogueRecord, priority: number): WardogsItem {
-  const facts = record.facts.map((fact) => ({...fact, evidence: ["Pre-release Build"] as EvidenceLevel[]}));
+  const facts = record.facts.map((fact) => ({...fact, evidence: evidenceByTier[record.evidenceTier]}));
   const knownFacts = record.facts.filter((fact) => !/Not captured|Identifier only/.test(fact.value));
   const relatedItems = getCatalogueRecords(record.type)
     .filter((candidate) => candidate.slug !== record.slug && candidate.subtype === record.subtype && candidate.detailStatus === "published")
@@ -351,8 +367,8 @@ function catalogueRecordToItem(record: CatalogueRecord, priority: number): Wardo
     name: record.name,
     type: record.type,
     subtype: record.subtype,
-    status: record.evidenceStatus,
-    statusLabel: "Pre-release build",
+    status: statusByEvidenceTier[record.evidenceTier],
+    statusLabel: record.evidenceTier.split("-").map((part) => `${part[0].toUpperCase()}${part.slice(1)}`).join(" "),
     build: record.dataAsOf,
     summary: record.summary,
     description: `${record.summary} This record separates observed pre-release facts from unknown Early Access balance and will be updated when a newer first-party or directly visible build confirms changes.`,
@@ -372,13 +388,21 @@ function catalogueRecordToItem(record: CatalogueRecord, priority: number): Wardo
       ? ["wardogs-gameplay", "wardogs-money-guide", "wardogs-ammo-reload-guide"]
       : ["wardogs-gameplay", "wardogs-cargo-guide", "wardogs-beginner-guide"],
     relatedItems,
-    sources: [officialSteam, officialTeam17, gameplayVideo],
+    sources: [
+      officialSteam,
+      officialTeam17,
+      record.type === "weapons" ? weaponsCatalogueVideo : vehiclesCatalogueVideo,
+    ],
     detailImage: record.mediaState === "pending" ? undefined : record.image,
     detailImageAlt: record.mediaState === "pending" ? undefined : record.imageAlt,
     observedPrice: record.facts.find((fact) => /price/.test(fact.label.toLowerCase()))?.value,
     observedProgressionOrGate: record.facts.find((fact) => fact.label === "Progression" || fact.label === "Observed gate")?.value,
     observedAmmoOrVehicleClass: record.facts.find((fact) => fact.label === "Ammunition" || fact.label === "Role")?.value,
-    confirmedFacts: knownFacts.map((fact) => `Observed in ${record.dataAsOf}: ${fact.label}: ${fact.value}`),
+    confirmedFacts: [
+      `Evidence tier: ${record.evidenceTier}.`,
+      ...record.sourceNotes,
+      ...knownFacts.map((fact) => `Observed in ${record.dataAsOf}: ${fact.label}: ${fact.value}`),
+    ],
     unconfirmedFacts: [
       `Final Early Access and release values for ${record.name} remain unconfirmed.`,
       "Damage, handling, price, availability, and compatibility can change with a new Build.",
@@ -410,7 +434,7 @@ export const itemLibrary: readonly WardogsItem[] = [
     ...(item.type === "equipment" ? ["wardogs-equipment-tools-guide"] : []),
     ...(item.type === "loadouts" ? ["wardogs-best-weapons-loadouts"] : []),
     ...item.relatedGuides,
-  ])].slice(0, 4),
+  ])].slice(0, 5),
 }));
 
 export function getItemType(type: string): ItemType | undefined {

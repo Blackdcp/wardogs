@@ -35,7 +35,8 @@ export const categoryHeroes: Record<ItemTypeId, CategoryHero> = {
 };
 
 function normalizedRecordName(value: string) {
-  return value.normalize("NFKC").trim().toLocaleLowerCase("en-US");
+  const normalized = value.normalize("NFKC").trim().toLocaleLowerCase("en-US").replace(/[^a-z0-9]/g, "");
+  return normalized === "maws" ? "maaws" : normalized;
 }
 
 export function matchCatalogueGuideRecords(

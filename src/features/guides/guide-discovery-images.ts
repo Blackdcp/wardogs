@@ -1,3 +1,5 @@
+import {assetPath} from "@/lib/assets";
+
 export type GuideDiscoveryImage = {
   url: string;
   width: 1280;
@@ -94,4 +96,8 @@ export const guideDiscoveryImages: Readonly<Record<string, GuideDiscoveryImage>>
 
 export function getGuideDiscoveryImage(slug: string) {
   return guideDiscoveryImages[slug];
+}
+
+export function getGuideDiscoveryImageSrc(image: GuideDiscoveryImage): string {
+  return assetPath(image.url);
 }

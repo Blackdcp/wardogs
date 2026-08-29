@@ -1,5 +1,8 @@
 import {describe, expect, it} from "vitest";
-import {itemLibrary} from "../../src/features/items/item-library";
+import {getLocalizedCatalogGuide, getLocalizedCatalogueRecords} from "../../src/features/catalogue/catalogue-localization";
+import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
+import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
+import {getItemBySlug, itemLibrary} from "../../src/features/items/item-library";
 import {getLocalizedItem} from "../../src/features/items/item-localization";
 import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
@@ -61,6 +64,40 @@ describe("localized shared editorial content", () => {
         expect(bodyText, `${locale}/${item.slug}`).toMatch(languageSignals[locale]);
         expect(bodyText.length, `${locale}/${item.slug}`).toBeGreaterThanOrEqual(700);
       }
+    }
+  });
+
+  it("preserves Alpha and Closed Beta evidence dates in every localized catalogue surface", () => {
+    const t21 = getCatalogueRecords("weapons").find((record) => record.slug === "t-21");
+    const weaponsGuide = getCatalogGuide("weapons");
+    expect(t21).toBeDefined();
+    expect(weaponsGuide).toBeDefined();
+
+    for (const locale of localizedLocales) {
+      const localizedT21 = getLocalizedCatalogueRecords([t21!], locale)[0];
+      const localizedGuide = getLocalizedCatalogGuide(weaponsGuide!, locale);
+
+      expect(localizedT21.dataAsOf, locale).toMatch(/Beta|ベータ|бета/i);
+      expect(localizedT21.dataAsOf, locale).not.toMatch(/Alpha 1/i);
+      expect(localizedGuide.dataAsOf, locale).toMatch(/Alpha 1/i);
+      expect(localizedGuide.dataAsOf, locale).toMatch(/Beta|ベータ|бета/i);
+    }
+  });
+
+  it("localizes new Closed Beta subtypes, fact labels, and build dates on detail pages", () => {
+    const m249 = getItemBySlug("m249-saw");
+    const talon = getItemBySlug("talon-9k-sam");
+    expect(m249).toBeDefined();
+    expect(talon).toBeDefined();
+
+    for (const locale of localizedLocales) {
+      const localizedM249 = getLocalizedItem(m249!, locale);
+      const localizedTalon = getLocalizedItem(talon!, locale);
+
+      expect(localizedM249.subtype, locale).not.toBe("LMG");
+      expect(localizedTalon.subtype, locale).not.toBe("Stationary anti-air");
+      expect(localizedTalon.facts.map((fact) => fact.label), locale).not.toContain("Closed Beta price");
+      expect(localizedTalon.build, locale).not.toBe(talon!.build);
     }
   });
 });

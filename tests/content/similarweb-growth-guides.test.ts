@@ -148,12 +148,16 @@ describe("Similarweb growth guide cluster", () => {
     expect(ps5?.body).toContain("not confirmed");
   });
 
-  it("promotes the strongest commercial and growth pages without expanding the block", () => {
-    expect(TOP_GUIDE_SLUGS).toHaveLength(12);
+  it("promotes new growth pages without dropping established homepage routes", () => {
+    expect(TOP_GUIDE_SLUGS).toHaveLength(16);
     expect(TOP_GUIDE_SLUGS).toEqual(expect.arrayContaining([
       "wardogs-release-date",
       "wardogs-steam",
-      "wardogs-best-settings"
+      "wardogs-best-settings",
+      "wardogs-squad-guide",
+      "wardogs-oil-rig-guide",
+      "wardogs-ps5",
+      "wardogs-crash-fix"
     ]));
   });
 
