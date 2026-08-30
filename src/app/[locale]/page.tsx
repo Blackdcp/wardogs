@@ -18,9 +18,6 @@ import {getHomeFacts} from "@/features/home/home-data";
 import {buildPageMetadata} from "@/lib/metadata";
 import {buildHomeJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
-import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
-import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type HomePageProps = {
   params: Promise<{locale: string}>;
@@ -48,11 +45,6 @@ export default async function HomePage({params}: HomePageProps) {
       <JsonLd data={buildHomeJsonLd(locale)} />
       <HomeHero facts={facts} />
       <PriorityGuides guides={guides} locale={locale} />
-      <section className="site-container py-2">
-        <AdsterraDisplayBanner label={t("ads.label")} placement="horizontal" />
-        <AdsterraNativeBanner label={t("ads.label")} />
-        <AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />
-      </section>
       <StartHere />
       <CatalogueHomeBand locale={locale} />
       <VideoIntelligence locale={locale} />

@@ -126,7 +126,7 @@ test("exports all 34 model articles in every locale with exact public URLs and r
         expect(html, pathname).not.toContain(`href="/images/catalogue/${type}/${slug}.webp"`);
         expect(html, pathname).not.toContain(`src="/images/catalogue/${type}/${slug}.webp"`);
       }
-      expect(html.match(/data-ad-slot="adsterra-native"/g), pathname).toHaveLength(1);
+      expect(html, pathname).not.toMatch(/Adsterra|arkgleamfox|effectivecpmnetwork/i);
       expect(renderedHtml, pathname).not.toMatch(/NEXT_HTTP_ERROR_FALLBACK|<title>404|Page not found/i);
 
       const image = await request.get(imagePath);
@@ -200,9 +200,9 @@ test("locale switching uses only exported item routes", async ({page}) => {
   await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/items/weapons/mortar/")}`);
 });
 
-test("crawls every catalogue-facing internal link across all five locales", async ({page, request}) => {
+test("crawls every catalogue-facing internal link across all locales", async ({page, request}) => {
   test.setTimeout(180_000);
-  await page.route("**/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js", (route) => route.abort("failed"));
+  await page.route("**/pagead2.googlesyndication.com/**", (route) => route.abort("blockedbyclient"));
   const categories = ["weapons", "vehicles", "ammo", "attachments", "gear", "equipment", "loadouts"] as const;
   const legacyDetails = [
     "/items/weapons/mortar/",

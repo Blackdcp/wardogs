@@ -20,10 +20,6 @@ import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
 import {buildItemHubMetadata} from "@/lib/item-metadata";
 import {buildItemIndexJsonLd} from "@/lib/item-structured-data";
-import {getTranslations} from "next-intl/server";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
-import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
-import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string}>};
 
@@ -142,7 +138,6 @@ export default async function ItemsPage({params}: PageProps) {
   const categories = catalogueCategories(locale);
   const featured = getFeaturedItems(6).map((item) => getLocalizedItem(item, locale));
   const ui = getItemUi(locale);
-  const adsT = await getTranslations({locale, namespace: "ads"});
 
   return (
     <main>
@@ -180,9 +175,6 @@ export default async function ItemsPage({params}: PageProps) {
       </section>
 
       <section className="site-container py-2">
-        <AdsterraDisplayBanner label={adsT("label")} placement="horizontal" />
-        <AdsterraNativeBanner label={adsT("label")} />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
 
       <section className="site-container py-12 md:py-16" aria-labelledby="catalogue-categories-title">

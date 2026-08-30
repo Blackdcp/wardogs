@@ -19,10 +19,7 @@ import {buildArticleMetadata} from "@/lib/metadata";
 import {buildArticleJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker";
-import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
-import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {formatLocalizedDate} from "@/lib/localized-date";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -57,10 +54,9 @@ export default async function GuideArticlePage({params}: PageProps) {
   if (!guide) notFound();
   const discoveryImage = getGuideDiscoveryImage(slug);
   setRequestLocale(locale);
-  const [t, categoryT, adsT, related, compiled] = await Promise.all([
+  const [t, categoryT, related, compiled] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "categories"}),
-    getTranslations({locale, namespace: "ads"}),
     getRelatedGuides(locale, slug),
     compileLocalizedGuideBody(guide.body, mdxComponents, locale)
   ]);
@@ -108,9 +104,6 @@ export default async function GuideArticlePage({params}: PageProps) {
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
           <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
         </aside>
-        <AdsterraNativeBanner label={adsT("label")} />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
-        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
         <div className="guide-prose">{compiled.content}</div>
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">

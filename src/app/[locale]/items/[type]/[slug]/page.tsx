@@ -17,13 +17,9 @@ import {buildItemArticleJsonLd} from "@/lib/item-structured-data";
 import {assetPath} from "@/lib/assets";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
-import {getTranslations} from "next-intl/server";
-import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
-import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
 import {getItemUi} from "@/features/items/item-ui";
 import {loadGuideDocument} from "@/content/guides";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
 
 type PageProps = {params: Promise<{locale: string; type: string; slug: string}>};
 
@@ -56,10 +52,9 @@ export default async function ItemDetailPage({params}: PageProps) {
   const baseItemType = getItemType(item.type);
   const itemType = baseItemType ? getLocalizedItemType(baseItemType, locale) : undefined;
   const relatedItems = getRelatedItems(baseItem, locale).map((related) => getLocalizedItem(related, locale));
-  const [adsT, relatedGuideDocuments] = await Promise.all([
-    getTranslations({locale, namespace: "ads"}),
-    Promise.all(item.relatedGuides.map((guideSlug) => loadGuideDocument(locale, guideSlug)))
-  ]);
+  const relatedGuideDocuments = await Promise.all(
+    item.relatedGuides.map((guideSlug) => loadGuideDocument(locale, guideSlug))
+  );
   const ui = getItemUi(locale);
   const quickFacts = item.detailImage
     ? [
@@ -112,10 +107,6 @@ export default async function ItemDetailPage({params}: PageProps) {
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>
           <p className="mt-3 text-base leading-7 text-white">{item.summary}</p>
         </aside>
-
-        <AdsterraNativeBanner label={adsT("label")} />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
-        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
 
         <section aria-labelledby="facts-title">
           <h2 className="display-font text-3xl text-white" id="facts-title">{ui.quickFacts}</h2>
