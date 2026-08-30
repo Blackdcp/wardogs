@@ -4,7 +4,7 @@ import {join} from "node:path";
 import {loadGuideDocument} from "../../src/content/guides";
 import {CONFIRMED_RUMOR_ITEMS} from "../../src/features/home/home-data";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const statusSlugs = ["wardogs-beta", "wardogs-playtest", "wardogs-preload", "wardogs-download"] as const;
 
 const endedPhrases = {
@@ -13,6 +13,7 @@ const endedPhrases = {
   ru: /завершен|завершилась 24 августа/i,
   "pt-br": /foi encerrado|beta encerrado|terminou em 24 de agosto|encerramento do Closed Beta em 24 de agosto/i,
   ja: /終了しました|8月24日(?:02:00 UTC)?に終了/i,
+  "zh-cn": /已经结束|于8月24日结束|8月24日.*结束|截至8月24日|封闭测试.*结束|测试.*已结束|八月份结束.*Beta|已封闭测试/i,
 } as const;
 
 const noNextTestPhrases = {
@@ -21,6 +22,7 @@ const noNextTestPhrases = {
   ru: /новая дата.*(?:не подтверждена|не объявлена)|следующий тест.*не объявлен/i,
   "pt-br": /nenhuma nova data.*(?:confirmada|anunciada)|próximo teste.*não foi anunciado/i,
   ja: /次回.*(?:日程|日時).*(?:未発表|発表されていません)|新たな.*日程.*(?:確認|発表)されていません/i,
+  "zh-cn": /下一次.*(?:日期|时间).*(?:尚未公布|没有公布|未确认)|没有.*新的.*测试日期|没有后续.*测试日期.*确认|没有下一次.*公布|没有宣布新的测试/i,
 } as const;
 
 const releaseDatePhrases = {
@@ -29,6 +31,7 @@ const releaseDatePhrases = {
   ru: /10 сентября 2026/i,
   "pt-br": /10 de setembro de 2026/i,
   ja: /2026年9月10日/i,
+  "zh-cn": /2026年9月10日/i,
 } as const;
 
 const preloadEndedPhrases = {
@@ -37,6 +40,7 @@ const preloadEndedPhrases = {
   ru: /предзагрузка.*завершилась/i,
   "pt-br": /preload.*terminou/i,
   ja: /プリロードは終了しました/i,
+  "zh-cn": /预(?:载|装).*(?:已经|已).*结束/i,
 } as const;
 
 const faqNoActiveBetaPhrases = {
@@ -45,6 +49,7 @@ const faqNoActiveBetaPhrases = {
   ru: /новая дата беты не объявлена/i,
   "pt-br": /nenhum novo beta foi anunciado/i,
   ja: /次回テストは未発表/i,
+  "zh-cn": /没有.*活跃.*测试|下一次测试.*尚未公布|没有公布.*新.*测试|没有活动.*beta|没有后期测试日期/i,
 } as const;
 
 const staleActiveBetaFaqPhrases = {
@@ -53,6 +58,7 @@ const staleActiveBetaFaqPhrases = {
   ru: /доступ гарантирован|получают лишь шанс|Заявка Request Access.*бесплатная|Можно ли заранее/i,
   "pt-br": /contas convidadas podem instalar|clientes de pré-venda têm acesso|Solicitar acesso.*oferece/i,
   ja: /現在のBetaアクセス|Betaに参加できます|Request Access.*できます/i,
+  "zh-cn": /当前.*测试资格|可以参加.*测试|Request Access.*可以/i,
 } as const;
 
 const staleActiveDropsFaqPhrases = {
@@ -61,6 +67,7 @@ const staleActiveDropsFaqPhrases = {
   ru: /Как включить|Проверьте, что эфир|Где забрать/i,
   "pt-br": /Como ativar|Confirme que a live|Onde resgato/i,
   ja: /有効にする方法|ライブか、Drops対象|どこで受け取りますか/i,
+  "zh-cn": /如何激活|直播.*Drops|在哪里领取/i,
 } as const;
 
 describe("WARDOGS post-beta status refresh", () => {
@@ -148,7 +155,7 @@ describe("WARDOGS post-beta status refresh", () => {
       expect(commercialText).toContain("Valkyra");
       expect(commercialText).toContain("Lonestar");
       expect(commercialText).toContain("Manticore");
-      expect(commercialText).toMatch(/monetization|Monetarisierung|монетизац|monetização|収益化/i);
+      expect(commercialText).toMatch(/monetization|Monetarisierung|монетизац|monetização|収益化|变现|商业化|商业界限/i);
     }
   });
 
@@ -159,6 +166,7 @@ describe("WARDOGS post-beta status refresh", () => {
       ru: /активная.*кампания.*не подтверждена/i,
       "pt-br": /nenhuma campanha.*(?:ativa|confirmada)/i,
       ja: /有効な.*キャンペーン.*確認されていません/i,
+      "zh-cn": /没有.*活跃.*活动.*确认|尚未确认.*新的.*活动|没有确认.*活动|没有活动.*WARDOGS/i,
     } as const;
 
     for (const locale of locales) {

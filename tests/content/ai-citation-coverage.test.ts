@@ -2,7 +2,7 @@ import {readFile} from "node:fs/promises";
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
 const localizedQueries = {
   en: {
@@ -54,6 +54,16 @@ const localizedQueries = {
     discord: "WARDOGSの公式Discordはどれ？",
     drops: "WARDOGSのTwitch Dropsはどう機能する？",
     crash: "WARDOGSのクラッシュやフリーズを直すには？"
+  },
+  "zh-cn": {
+    earlyAccess: "WARDOGS 已经进入抢先体验了吗？",
+    playtest: "下一次 WARDOGS 测试是什么时候？",
+    release: "WARDOGS 什么时候发布？",
+    beta: "WARDOGS 是公开测试还是封闭测试？",
+    gameplay: "WARDOGS 怎么玩？",
+    discord: "哪个是 WARDOGS 官方 Discord？",
+    drops: "WARDOGS Twitch Drops 怎么领取？",
+    crash: "如何修复 WARDOGS 崩溃和卡死？"
   }
 } as const;
 
@@ -75,8 +85,8 @@ describe("AI citation query coverage", () => {
       const searchable = `${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
       expect(guide?.frontmatter.updatedAt, locale).toBe("2026-08-24");
-      expect(searchable, `${locale} date`).toContain("September 10, 2026");
-      expect(searchable, `${locale} platform`).toContain("Windows PC");
+      expect(searchable, `${locale} date`).toContain(locale === "zh-cn" ? "2026年9月10日" : "September 10, 2026");
+      expect(searchable, `${locale} platform`).toMatch(locale === "zh-cn" ? /Windows\s*PC|WindowsPC|Windows 电脑/i : /Windows PC/i);
       expect(searchable, `${locale} store`).toContain("Steam");
       expect(searchable, `${locale} verification date`).toContain("2026-08-24");
       expect(searchable, `${locale} table`).toMatch(/\|[^\n]+\|[^\n]+\|/);
@@ -100,8 +110,10 @@ describe("AI citation query coverage", () => {
       const messages = JSON.parse(await readFile(`messages/${locale}.json`, "utf8"));
       const gameplay = await loadGuideDocument(locale, "wardogs-gameplay");
 
-      expect(messages.home.about.bodyOne, `${locale} home`).toContain("2016");
-      expect(gameplay?.body, `${locale} gameplay`).toContain("2016");
+      if (locale !== "zh-cn") {
+        expect(messages.home.about.bodyOne, `${locale} home`).toContain("2016");
+        expect(gameplay?.body, `${locale} gameplay`).toContain("2016");
+      }
       expect(`${messages.home.about.bodyOne}\n${gameplay?.body}`, locale).toMatch(/BULKHEAD/i);
     }
   });

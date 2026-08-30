@@ -2,7 +2,7 @@ import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
 
-const locales = ["en", "ru", "de", "pt-br", "ja"] as const;
+const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
 
 describe("Search Console growth pages", () => {
   it("publishes a substantial WARDOGS preload guide in every locale", async () => {

@@ -69,10 +69,23 @@ const profiles: Record<TranslatedLocale, ItemLocaleProfile> = {
     confirmed: (item, typeName) => [`モデル名: ${item.name}。カテゴリー: ${typeName}。`, `証拠の状態: ${item.statusLabel}。元データの確認対象: ${item.build}。`, `このページは観察可能な値と、アイテムが確認できる映像・公式資料へのリンクを保持しています。`],
     unconfirmed: (item) => [`${item.name}の早期アクセス版および正式版における最終性能は確認されていません。`, `現在の価格、バランス、進行条件、入手可否は発売前ビルドと異なる可能性があります。`, `情報がないことは、機能が存在しないことや将来の変更予定を証明するものではありません。`],
     imageAlt: (item, typeName) => `WARDOGSの${typeName}、${item.name}`
+  },
+  "zh-cn": {
+    typeNames: {weapons: "武器", vehicles: "载具", ammo: "弹药", attachments: "配件", gear: "个人装备", equipment: "战术装备", loadouts: "配装"},
+    status: {official: "官方信息", "verified-in-game": "游戏内已验证", "pre-release-build": "预发布版本", "community-report": "社区报告"},
+    buildPrefix: "验证版本",
+    summary: (item, typeName) => `${item.name} 是 WARDOGS 中的${typeName}。本页汇总已确认的定位、实战用法、版本限制和来源，不会把 Alpha 测试数据当作抢先体验版的最终数值。`,
+    description: (item, typeName) => `${item.name} 按 WARDOGS 三方大规模战斗中的${typeName}进行分析。正文区分官方资料、创作者实机画面中可直接观察的事实，以及伤害、价格、耐久和解锁条件等尚未确认的数值。可用它规划职责和预算，但购买或更换配装前仍应核对当前游戏版本。`,
+    role: (item, typeName) => `当小队确实需要${typeName}时再选择 ${item.name}。先确认任务、路线、预算和队友支援，再评估损失风险。它的效果不仅取决于型号，还取决于沟通、补给、站位以及持续向控制区施压的能力。`,
+    strengths: (item) => [`${item.name} 能为预先确定的任务提供清晰工具，方便小队分工。`, `已观察数据可用于比较相邻选项，无需编造最终平衡数值。`, `本页从经济、后勤和团队协作评估该物品，而不是只看单一数字。`, `来源和核查日期说明每项结论对应的游戏版本。`],
+    cautions: (item) => [`${item.name} 的属性、价格、可用性和解锁条件可能在抢先体验前后调整。`, `单段视频不能确认隐藏参数、完整伤害模型、装甲、容量或服务器规则。`, `昂贵或专业化的选择如果缺少弹药、维修、运输、沟通和安全路线，会迅速失去价值。`, `每次重大更新后请重新核对 Steam 页面和 WARDOGS 官方公告。`],
+    confirmed: (item, typeName) => [`型号：${item.name}；类别：${typeName}。`, `证据状态：${item.statusLabel}；原始核查版本：${item.build}。`, `本页保留可观察数据，并链接展示该物品的官方资料或实机内容。`],
+    unconfirmed: (item) => [`${item.name} 在抢先体验版和正式版中的最终属性尚未确认。`, `当前价格、平衡、进度条件和可用性可能与预发布版本不同。`, `缺少数据不代表某项功能不存在，也不代表官方计划进行某种改动。`],
+    imageAlt: (item, typeName) => `WARDOGS ${typeName} ${item.name}`
   }
 };
 
-const localizedTerms: Record<string, Record<TranslatedLocale, string>> = {
+const localizedTerms: Record<string, Partial<Record<TranslatedLocale, string>>> = {
   "Alpha price": {ru:"Цена в Alpha", de:"Alpha-Preis", "pt-br":"Preço no Alpha", ja:"アルファ価格"},
   "Closed Beta price": {ru:"Цена в закрытой бете", de:"Closed-Beta-Preis", "pt-br":"Preço no Beta Fechado", ja:"クローズドベータ価格"},
   "Assault rifle": {ru:"Штурмовая винтовка", de:"Sturmgewehr", "pt-br":"Fuzil de assalto", ja:"アサルトライフル"},
@@ -157,7 +170,17 @@ const localizedTerms: Record<string, Record<TranslatedLocale, string>> = {
   "Predictable routes": {ru:"Предсказуемые маршруты", de:"Vorhersehbare Routen", "pt-br":"Rotas previsíveis", ja:"予測されやすいルート"}
 };
 
+const chineseTerms: Record<string, string> = {
+  "Alpha price":"Alpha 测试价格", "Closed Beta price":"封闭测试价格", "Assault rifle":"突击步枪", SMG:"冲锋枪", "Marksman rifle":"精确射手步枪", "Sniper rifle":"狙击步枪", Bow:"弓", Sidearm:"副武器", Shotgun:"霰弹枪", LMG:"轻机枪", Launcher:"发射器",
+  Ammunition:"弹药", "Fire modes":"射击模式", Weight:"重量", Progression:"进度", Role:"定位", "Observed gate":"已观察解锁条件", "Observed crew":"已观察乘员", "Observed shell":"已观察弹种", "Observed setup":"已观察部署方式", Track:"进度路线", "Combat role":"战斗定位", "Vehicle class":"载具类别", "Aircraft class":"飞行器类别", "Build role":"建造定位",
+  "Base damage":"基础伤害", Loads:"弹种", "Standard per round":"标准单发价格", "Box price":"弹药箱价格", Weapons:"适用武器", Kind:"类型", "Zoom or capacity":"倍率或容量", "Weight or calibre":"重量或口径", Slot:"栏位", Tier:"等级", "Recorded identifier":"已记录标识", "Spending rule":"花费原则", "Best use":"最佳用途", "Main risk":"主要风险", "Not captured":"未记录", "Gate unread":"解锁条件无法辨认", "Open purchase":"可直接购买", Variable:"可变", fixed:"固定",
+  "Semi / Full Auto":"半自动 / 全自动", "Semi / Burst":"半自动 / 点射", "Semi automatic":"半自动", "Break-action":"折开式", "Single-shot":"单发", "Bolt action":"栓动", "Bolt-action / Magazine":"栓动 / 弹匣", "Pull and Release":"拉弓并释放", "Assault XP":"突击经验", "Medic XP":"医疗经验", "Support XP":"支援经验", "Recon XP":"侦察经验", "Driver XP":"驾驶经验", "Pilot XP":"飞行经验",
+  Driver:"驾驶员", Pilot:"飞行员", Wardog:"战士", Optic:"瞄具", Magazine:"弹匣", Helmet:"头盔", Armor:"护甲", Backpack:"背包", Special:"特殊", Lightest:"最轻", Offensive:"进攻", Medical:"医疗", Recon:"侦察", Building:"建造", Utility:"通用", "Building / Offensive":"建造 / 进攻",
+  "Light transport":"轻型运输", "Fast transport":"快速运输", "Utility transport":"通用运输", "Cargo transport":"货运载具", "Protected transport":"防护运输", "Armed transport":"武装运输", "Heavy armed transport":"重型武装运输", "Logistics truck":"后勤卡车", "Protected logistics":"防护后勤", "Armed logistics":"武装后勤", "Anti-air armor":"防空装甲载具", "Main battle tank":"主战坦克", "Self-propelled artillery":"自行火炮", "Combat helicopter":"战斗直升机", "Armed utility helicopter":"武装通用直升机", "Rocket helicopter":"火箭直升机", "Attack helicopter":"攻击直升机", "Light air transport":"轻型空运", "Air transport":"空中运输"
+};
+
 function translateItemTerm(value: string, locale: TranslatedLocale): string {
+  if (locale === "zh-cn") return chineseTerms[value] ?? value;
   const direct = localizedTerms[value]?.[locale];
   if (direct) return direct;
 

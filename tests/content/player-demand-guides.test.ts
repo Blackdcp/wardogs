@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const newGuideSlugs = [
   "wardogs-crash-fix",
   "wardogs-towers-guide",

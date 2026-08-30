@@ -5,7 +5,8 @@ const dateLocales: Record<Locale, string> = {
   ru: "ru-RU",
   de: "de-DE",
   "pt-br": "pt-BR",
-  ja: "ja-JP"
+  ja: "ja-JP",
+  "zh-cn": "zh-CN"
 };
 
 export function formatLocalizedDate(value: string, locale: Locale) {

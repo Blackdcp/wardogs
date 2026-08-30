@@ -2,7 +2,7 @@ import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {getItemBySlug} from "../../src/features/items/item-library";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const growthPages = [
   "wardogs-beta",
   "wardogs-playtest",
@@ -34,7 +34,7 @@ describe("GSC growth page reinforcement", () => {
         expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
           expectedCheckDate
         );
-        expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(24);
+        expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(locale === "zh-cn" ? 12 : 24);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeGreaterThanOrEqual(100);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug} FAQ`).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug} FAQ`).toBeLessThanOrEqual(5);

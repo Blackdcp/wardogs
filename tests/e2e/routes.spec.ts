@@ -3,7 +3,7 @@ import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-record
 import type {CatalogueRecordType} from "../../src/features/catalogue/catalogue-types";
 import {expectImagesLoaded} from "./helpers";
 
-const locales = ["en", "ru", "de", "pt-br", "ja"] as const;
+const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
 const weaponModelSlugs = [
   "a-91",
   "ak74",

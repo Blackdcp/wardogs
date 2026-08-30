@@ -5,7 +5,7 @@ import {START_GUIDES, TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 import {getLocalizedVideoArticle} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
 const newGuides = [
   ["wardogs-launch-checklist", "wardogs launch checklist"],
@@ -39,7 +39,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
       expect(sources).toContain("https://store.steampowered.com/app/1867240/WARDOGS/");
       expect(guide?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9月3日/i);
       expect(guide?.body).toMatch(/September 10|10\. September|10 сентября|10 de setembro|9月10日/i);
-      expect(guide?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認/i);
+      expect(guide?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認|尚未确认|未确认/i);
     }
   });
 
@@ -52,20 +52,20 @@ describe("2026-08-29 launch and logistics expansion", () => {
 
       expect(cargo?.frontmatter.sources.some(({url}) => url.includes("2aU4OB0duYg"))).toBe(true);
       expect(cargo?.body).toMatch(/Ural/i);
-      expect(cargo?.body).toMatch(/pallet|Palette|поддон|palete|パレット/i);
-      expect(cargo?.body).toMatch(/build.*ammo.*fuel.*mechanical|Bau.*Munition.*Treibstoff.*mechanisch|строит.*боеприпас.*топлив.*механ|construção.*munição.*combustível.*mecân|建築.*弾薬.*燃料.*機械/i);
+      expect(cargo?.body).toMatch(/pallet|Palette|поддон|palete|パレット|托盘/i);
+      expect(cargo?.body).toMatch(/build.*ammo.*fuel.*mechanical|Bau.*Munition.*Treibstoff.*mechanisch|строит.*боеприпас.*топлив.*механ|construção.*munição.*combustível.*mecân|建築.*弾薬.*燃料.*機械|建筑.*弹药.*燃料.*机械/i);
 
       expect(ammo?.frontmatter.sources.some(({url}) => url.includes("1vzsky2"))).toBe(true);
-      expect(ammo?.body).toMatch(/loose ammo|lose Munition|россып|munição avulsa|バラ弾/i);
-      expect(ammo?.body).toMatch(/combine|zusammenführen|объедин|combinar|まとめ/i);
+      expect(ammo?.body).toMatch(/loose ammo|lose Munition|россып|munição avulsa|バラ弾|散装弹药|宽松弹药/i);
+      expect(ammo?.body).toMatch(/combine|zusammenführen|объедин|combinar|まとめ|合并/i);
 
       expect(squad?.frontmatter.sources.some(({url}) => url.includes("team17.com/games/wardogs"))).toBe(true);
-      expect(squad?.body).toMatch(/proximity|Nähe|локаль|proximidade|近接/i);
+      expect(squad?.body).toMatch(/proximity|Nähe|локаль|proximidade|近接|附近|近距离/i);
       expect(squad?.body).toMatch(/Steam/i);
 
       expect(oilRig?.frontmatter.sources.some(({url}) => url.includes("1vv5wex"))).toBe(true);
-      expect(oilRig?.body).toMatch(/Oil Rig|Drill Rig/i);
-      expect(oilRig?.body).toMatch(/Hot Zone/i);
+      expect(oilRig?.body).toMatch(/Oil Rig|Drill Rig|石油钻机|钻机/i);
+      expect(oilRig?.body).toMatch(/Hot Zone|热区/i);
       expect(oilRig?.body).toMatch(/fuel|Treibstoff|топлив|combustível|燃料/i);
     }
   });
@@ -95,7 +95,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
       expect(guide?.frontmatter.title).toMatch(/Xbox/i);
       expect(guide?.frontmatter.description).toMatch(/PS5/i);
       expect(guide?.frontmatter.description).toMatch(/Xbox/i);
-      expect(guide?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認/i);
+      expect(guide?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認|尚未(?:得到)?确认|未确认/i);
     }
   });
 

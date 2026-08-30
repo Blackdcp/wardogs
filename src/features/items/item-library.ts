@@ -409,7 +409,7 @@ function catalogueRecordToItem(record: CatalogueRecord, priority: number): Wardo
     ],
     detailUpdatedAt: "2026-08-30",
     priority,
-    indexLocales: ["en", "ru", "de", "pt-br", "ja"],
+    indexLocales: ["en", "ru", "de", "pt-br", "ja", "zh-cn"],
   };
 }
 
@@ -424,7 +424,7 @@ export const itemLibrary: readonly WardogsItem[] = [
   ...generatedCatalogueItems,
 ].map((item) => ({
   ...item,
-  indexLocales: ["en", "ru", "de", "pt-br", "ja"] as const,
+  indexLocales: ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const,
   relatedGuides: [...new Set([
     ...(item.type === "weapons" ? ["wardogs-best-weapons-loadouts", "wardogs-armor-damage-ttk-guide"] : []),
     ...(item.type === "vehicles" ? ["wardogs-equipment-tools-guide"] : []),

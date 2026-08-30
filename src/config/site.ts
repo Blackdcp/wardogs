@@ -1,6 +1,6 @@
 import links from "../../config/official-links.json";
 
-export const locales = ["en", "ru", "de", "pt-br", "ja"] as const;
+export const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
 export type Locale = (typeof locales)[number];
 
 export const officialLinks = links;

@@ -14,6 +14,7 @@ describe("item metadata", () => {
     de: `http://localhost:3000/de${pathname}`,
     "pt-br": `http://localhost:3000/pt-br${pathname}`,
     ja: `http://localhost:3000/ja${pathname}`,
+    "zh-cn": `http://localhost:3000/zh-cn${pathname}`,
     "x-default": `http://localhost:3000/en${pathname}`
   });
 
@@ -90,6 +91,7 @@ describe("item metadata", () => {
         de: "http://localhost:3000/de/items/weapons",
         "pt-BR": "http://localhost:3000/pt-br/items/weapons",
         ja: "http://localhost:3000/ja/items/weapons",
+        "zh-CN": "http://localhost:3000/zh-cn/items/weapons",
         "x-default": "http://localhost:3000/en/items/weapons"
       }
     });
@@ -108,6 +110,7 @@ describe("item metadata", () => {
         de: "http://localhost:3000/de/items",
         "pt-BR": "http://localhost:3000/pt-br/items",
         ja: "http://localhost:3000/ja/items",
+        "zh-CN": "http://localhost:3000/zh-cn/items",
         "x-default": "http://localhost:3000/en/items"
       }
     });
@@ -158,6 +161,7 @@ describe("item metadata", () => {
         de: "https://blackdcp.github.io/wardogs/de/items/vehicles/bobcat/",
         "pt-br": "https://blackdcp.github.io/wardogs/pt-br/items/vehicles/bobcat/",
         ja: "https://blackdcp.github.io/wardogs/ja/items/vehicles/bobcat/",
+        "zh-cn": "https://blackdcp.github.io/wardogs/zh-cn/items/vehicles/bobcat/",
         "x-default": "https://blackdcp.github.io/wardogs/en/items/vehicles/bobcat/"
       }
     });

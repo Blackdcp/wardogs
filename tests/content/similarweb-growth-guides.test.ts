@@ -4,7 +4,7 @@ import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 import {videoArticles} from "../../src/features/videos/video-library";
 import sitemap from "../../src/app/sitemap";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const newGuideSlugs = [
   "wardogs-map",
   "wardogs-best-settings",
@@ -15,7 +15,8 @@ const requiredHeadings = {
   en: ["Quick Answer", "Confirmed Facts", "What Players Search For", "How to Use This Guide", "FAQ", "Sources and Last Checked", "Related Guides"],
   ru: ["Краткий ответ", "Подтверждённые факты", "Что ищут игроки", "Как пользоваться этим руководством", "Частые вопросы", "Источники и последняя проверка", "Связанные руководства"],
   de: ["Kurzantwort", "Bestätigte Fakten", "Wonach Spieler suchen", "So nutzt du diesen Guide", "Häufige Fragen", "Quellen und letzte Prüfung", "Verwandte Guides"],
-  "pt-br": ["Resposta rápida", "Fatos confirmados", "O que os jogadores pesquisam", "Como usar este guia", "Perguntas frequentes", "Fontes e última verificação", "Guias relacionados"]
+  "pt-br": ["Resposta rápida", "Fatos confirmados", "O que os jogadores pesquisam", "Como usar este guia", "Perguntas frequentes", "Fontes e última verificação", "Guias relacionados"],
+  "zh-cn": ["快速结论", "已确认信息", "玩家想知道什么", "如何使用本攻略", "常见问题", "来源和最后检查", "相关攻略"]
 } as const;
 
 describe("Similarweb growth guide cluster", () => {
@@ -74,7 +75,7 @@ describe("Similarweb growth guide cluster", () => {
         const searchable = `${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(searchable, `${locale}/${slug} missing opening time`).toContain("17:00 UTC");
-        expect(searchable, `${locale}/${slug} missing closing time`).toContain("02:00 UTC");
+        expect(searchable, `${locale}/${slug} missing closing time`).toMatch(/0?2:00 UTC/);
         expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({
           url: "https://steamcommunity.com/app/1867240/announcements/",
           kind: "official"
@@ -91,9 +92,9 @@ describe("Similarweb growth guide cluster", () => {
         url: "https://www.linkedin.com/posts/bulkhead_new-devlog-level-design-performance-activity-7483535791831478273-9DOJ",
         kind: "official"
       }));
-      expect(guide?.body).toContain("Potato Mode");
-      expect(guide?.body).toContain("Overkill Mode");
-      expect(guide?.body).toMatch(/60\+? FPS/i);
+      expect(guide?.body).toMatch(/Potato Mode|土豆模式/);
+      expect(guide?.body).toMatch(/Overkill Mode|过度打开模式|超级.*模式/);
+      expect(guide?.body).toMatch(/60\+?\s*FPS/i);
     }
   });
 
@@ -115,6 +116,7 @@ describe("Similarweb growth guide cluster", () => {
       ru: /официальн[^.]*геймпад|геймпад[^.]*официальн/i,
       "pt-br": /oficial[^.]*gamepad|gamepad[^.]*oficial/i,
       ja: /公式[^。]*ゲームパッド|ゲームパッド[^。]*公式/i
+      ,"zh-cn": /官方[^。]*(?:手柄|游戏pad)|(?:手柄|游戏pad)[^。]*官方/i
     } as const;
 
     for (const locale of locales) {

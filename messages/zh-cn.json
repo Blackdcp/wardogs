@@ -1,0 +1,425 @@
+{
+  "common": {
+    "fanMade": "玩家自制社区维基",
+    "language": "语言",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "learnMore": "了解更多",
+    "updated": "更新于",
+    "official": "官方",
+    "community": "社区",
+    "skipToContent": "跳到正文",
+    "openSteam": "在 Steam 查看 WARDOGS"
+  },
+  "ads": {
+    "label": "广告",
+    "sponsored": "赞助内容",
+    "smartlinkCta": "查看赞助推荐",
+    "smartlinkDescription": "在新标签页打开外部赞助页面。"
+  },
+  "nav": {
+    "game": "游戏",
+    "guides": "攻略",
+    "catalogue": "图鉴",
+    "playtest": "测试资格",
+    "release": "发布信息",
+    "releaseDate": "发布日期",
+    "steam": "Steam",
+    "steamEarlyAccess": "Steam 与抢先体验",
+    "gameplay": "核心玩法",
+    "factions": "阵营",
+    "community": "社区",
+    "beginnerGuide": "新手攻略",
+    "crashFix": "崩溃修复",
+    "helicopterGuide": "直升机攻略",
+    "gameplayGuide": "玩法攻略",
+    "fobLogistics": "FOB 与后勤",
+    "mortarGuide": "迫击炮攻略",
+    "allGuides": "全部攻略",
+    "catalogueHome": "图鉴首页",
+    "weapons": "武器",
+    "vehicles": "载具",
+    "ammo": "弹药",
+    "attachments": "配件",
+    "gear": "个人装备",
+    "equipment": "战术装备",
+    "loadouts": "配装",
+    "videos": "视频",
+    "items": "物品",
+    "news": "新闻",
+    "steamCta": "在 Steam 查看",
+    "primaryLabel": "主导航"
+  },
+  "home": {
+    "metaTitle": "WARDOGS 中文维基 - 上线、玩法与抢先体验攻略",
+    "metaDescription": "为 WARDOGS 抢先体验做好准备：查看经过来源核实的发布日期、价格、下载与安装、核心玩法、武器和弹药、FOB 后勤、载具驾驶、小队协作、PC 性能设置及新手攻略。我们会区分官方确认、实机观察和仍未公布的信息，并在重大版本更新后及时复核。每篇页面均提供来源、核查日期和版本敏感提示，帮助玩家快速找到可靠答案。",
+    "heroTitle": "完整中文攻略",
+    "heroDescription": "通过已核实的测试资格、发布日期、玩法、阵营、社区与视频攻略，规划你的第一次部署。",
+    "primaryCta": "浏览全部攻略",
+    "secondaryCta": "打开上线清单",
+    "status": "抢先体验已公布",
+    "statsLabel": "WARDOGS 关键信息",
+    "stats": {
+      "earlyAccess": "2026 年 9 月 10 日抢先体验",
+      "players": "最多 100 名玩家",
+      "teams": "三方对战",
+      "controlZone": "2 × 2 公里控制区"
+    },
+    "aboutTitle": "WARDOGS 是什么游戏？",
+    "about": {
+      "eyebrow": "战术全面战争",
+      "imageAlt": "官方WARDOGS从直升机驾驶的游戏视图",
+      "bodyOne": "WARDOGS是BULKHEAD这是你pc除了战术全面战争FPS据悉,这场比赛将在一场由三支队组成的100名玩家参加,使用步兵,车辆,防御和后勤.",
+      "bodyTwo": "战斗和支持行动可以帮助团队,同时维持经济.",
+      "points": {
+        "teams": "三支球队追求相同的得分目标",
+        "battlefield": "车辆,建筑和破坏的路线",
+        "roles": "战斗和支持角色都有助于"
+      }
+    },
+    "startEyebrow": "从这里开始",
+    "startTitle": "准备你的第一次部署",
+    "start": {
+      "description": "通过这些四个指南,了解进入,核心匹配,",
+      "cards": {
+        "beginner": {
+          "title": "初学者指南",
+          "description": "建立一个合理的第一批配装, 并将每一个行动与团队目标联系起来."
+        },
+        "playtest": {
+          "title": "测试历史",
+          "description": "检查完成的测试时间表和任何刚刚确认的访问窗口."
+        },
+        "launch": {
+          "title": "启动检查列表",
+          "description": "准备9月3日的公告和9月10日的公告Early Access发射."
+        },
+        "gameplay": {
+          "title": "游戏方式解释",
+          "description": "了解控制区的分数,现金,角色,车辆和后勤如何相应."
+        },
+        "factions": {
+          "title": "三个阵营",
+          "description": "遇见瓦尔基拉,洛尼斯塔和曼蒂科尔,"
+        }
+      }
+    },
+    "priority": {
+      "eyebrow": "优先级信息",
+      "title": "其他WARDOGS玩家需要先",
+      "description": "直接进入确认访问,发布,平台,社区和游戏页面,WARDOGS搜索.",
+      "top": {
+        "title": "最好的指南",
+        "description": "对于新玩家来说,最强大的12个内部链接.Steam搜索器和访问问题."
+      },
+      "recent": {
+        "title": "最近更新",
+        "description": "新检查的文章显示了WARDOGS现在,我们正在维护页面."
+      },
+      "status": {
+        "title": "证实与谣言",
+        "description": "快速检查官方,仍然缺失或常被误解的细节.",
+        "labels": {
+          "confirmed": "确认",
+          "rumor": "没有确认"
+        },
+        "items": {
+          "betaEnded": {
+            "title": "8月封闭测试已结束",
+            "description": "服务器于8月24日关闭,beta或确认比赛测试日期."
+          },
+          "oneMillionWishlists": {
+            "title": "1,000,000 Steam愿望单",
+            "description": "BULKHEAD据证实,8月14日这一里程碑是确定的."
+          },
+          "fpsGameShow": {
+            "title": "FPS9月3日的游戏展",
+            "description": "BULKHEAD宣布了一个主要的WARDOGS时间为BST晚上7点;内容尚未确认."
+          },
+          "steamEarlyAccess": {
+            "title": "Steam PC Early Access",
+            "description": "Early Access已确认Steam PC."
+          },
+          "hundredPlayers": {
+            "title": "百人三队战斗",
+            "description": "WARDOGS游戏的基础是100名玩家分为3支球队."
+          },
+          "persistentCash": {
+            "title": "持久现金经济",
+            "description": "现金持续存在,影响生活和比赛之间的配装决定."
+          },
+          "ps5Release": {
+            "title": "PS5发布",
+            "description": "没有证实PlayStation 5的发布."
+          },
+          "freeToPlay": {
+            "title": "免费玩的定价",
+            "description": "免费玩费价格未确认;查看Steam在购买之前."
+          }
+        }
+      }
+    },
+    "catalogue": {
+      "heading": "WARDOGS产品目录",
+      "weapons": {
+        "title": "武器",
+        "count": "{count}插图模型",
+        "imageAlt": "WARDOGS武器目录"
+      },
+      "vehicles": {
+        "title": "车辆",
+        "count": "{count}插图车辆",
+        "imageAlt": "WARDOGS车辆目录"
+      },
+      "ammo": {
+        "title": "弹药",
+        "count": "{count}度",
+        "imageAlt": "弹药盒 5.56x45mm"
+      },
+      "attachments": {
+        "title": "附带",
+        "count": "{count}插图附件",
+        "imageAlt": "WARDOGS武器附件目录"
+      },
+      "gear": {
+        "title": "设备",
+        "count": "{count}设备记录",
+        "imageAlt": "WARDOGS重装甲"
+      },
+      "loadouts": {
+        "title": "配装",
+        "count": "{count}预算范围",
+        "imageAlt": "WARDOGS装载目录"
+      }
+    },
+    "categories": {
+      "eyebrow": "所有指导区域",
+      "title": "找到你需要的信息",
+      "description": "在独立的网站上浏览八个专注领域,涵盖每个主题.WARDOGS导读图书馆.",
+      "allGuides": "查看所有34个指南",
+      "items": {
+        "access": "测试beta历史alpha状态和关键",
+        "release": "发布日期和Early Access详细信息",
+        "store": "Steam价格和下载指南",
+        "platform": "确认和未确认的平台状态",
+        "video": "官方预告片,首次看,以及流媒体",
+        "community": "官方道和账户安全",
+        "developer": "BULKHEAD其他Team17背景",
+        "guide": "游戏系统,角色和阵营"
+      }
+    },
+    "media": {
+      "eyebrow": "官方媒体",
+      "title": "看到WARDOGS行动",
+      "description": "观看官员揭示的拖车,直接看战场,车辆,破坏,和三支战队.",
+      "videoTitle": "WARDOGS官方揭示预告片",
+      "watch": "继续看YouTube",
+      "imageAlt": "官方WARDOGS作为揭示拖车海报使用的游戏游戏图像",
+      "fieldReports": "社区的实地报告"
+    },
+    "tips": {
+      "eyebrow": "在你第一次比赛之前",
+      "title": "确认初学者建议",
+      "description": "开始使用官方所描述的系统WARDOGS没有具体的构建快捷方式或未经验证的超级建议.",
+      "items": {
+        "objective": {
+          "title": "玩控制区",
+          "description": "球队在活动区中最多的球员获得积分."
+        },
+        "economy": {
+          "title": "为了团队支付",
+          "description": "现金在比赛之间持续,为每一场比赛的配装付出."
+        },
+        "support": {
+          "title": "支持行动的报酬",
+          "description": "恢复,运输,补给运输和客观控制可以在战斗中获得现金."
+        },
+        "mobility": {
+          "title": "规划方法",
+          "description": "控制区在更大的战场内进行随机测试."
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "常见问题",
+      "title": "WARDOGS基本的东西",
+      "description": "直接回答玩家在进入战场之前提出的问题.",
+      "items": {
+        "game": {
+          "question": "这是一场什么样的游戏WARDOGS?",
+          "answer": "WARDOGS是一个战术全面战斗的第一人射击游戏,可供100名玩家分为三个团队."
+        },
+        "release": {
+          "question": "什么时候?WARDOGS输入Early Access?",
+          "answer": "WARDOGS预计将进入Steam Early Access在2026年9月10日."
+        },
+        "controlZone": {
+          "question": "控制区是如何工作的?",
+          "answer": "随机控制区2 x2公里成为主动目标. 球队中最多的球员获得胜利的积分."
+        },
+        "official": {
+          "question": "是WARDOGS维基是一个官方网站?",
+          "answer": "官方游戏和账户活动应该始终通过链接完成.WARDOGS, Team17, Steam其他Discord其他来源"
+        }
+      }
+    },
+    "finalTitle": "准备进入控制区了吗？",
+    "finalDescription": "使用独立攻略库了解测试资格、小队职责、载具、目标和每个已确认的发布节点。",
+    "final": {
+      "eyebrow": "部署前准备",
+      "guidesCta": "浏览攻略",
+      "steamCta": "打开 Steam"
+    }
+  },
+  "guides": {
+    "metaTitle": "WARDOGS 中文攻略大全 - 上线、玩法、武器、载具与故障修复",
+    "title": "WARDOGS 攻略",
+    "description": "浏览上线、货运、弹药、小队、故障排除、载具、FOB 后勤、发布和核心玩法攻略。",
+    "count": "43 篇攻略",
+    "read": "阅读攻略"
+  },
+  "news": {
+    "metaTitle": "WARDOGS新闻Beta, Early Access & Steam更新",
+    "metaDescription": "轨迹确认WARDOGS新闻beta时间Steam Early Access时间,价格说明,平台状态,预装问题和更新的指南链接.",
+    "eyebrow": "最新更新",
+    "title": "WARDOGS消息和确认时间表",
+    "description": "一个清洁的更新中心WARDOGS beta访问Steam Early Access每个项目都被标记为确认或未确认,以便玩家可以分享它,而不需要把谣言变成事实.",
+    "timeline": {
+      "title": "确认时间表",
+      "readMore": "阅读全文",
+      "status": {
+        "Confirmed": "确认",
+        "Not confirmed": "没有确认"
+      },
+      "items": {
+        "steamPreorder": {
+          "title": "Steam预订和请求访问是现场",
+          "description": "Steam是目前的愿望单,请求访问,预订,定价和安装权的官方路线."
+        },
+        "closedBeta": {
+          "title": "封闭测试截止 2026 年 8 月 24 日",
+          "description": "服务器窗口已完成,最迟beta或是已宣布了比赛日期."
+        },
+        "betaRecap": {
+          "title": "BULKHEAD发表的Beta复制和下一步",
+          "description": "几乎有5万个独特的玩家加入了,最高的同时超过10万,Early Access."
+        },
+        "earlyAccess": {
+          "title": "Steam Early Access2026年9月10日开始",
+          "description": "WARDOGS计划于1930年发射.Early Access对于WindowsPC通过Steam完全版本还未被更新."
+        },
+        "ps5": {
+          "title": "没有.PS5发布日期已确认",
+          "description": "目前官方产品页面公布了WindowsPC通过Steam控制台时间和交叉播放尚未确认."
+        },
+        "preload": {
+          "title": "封闭测试预装已结束",
+          "description": "旧的WARDOGS玩试入口属于完成的beta没有Early Access预装日期已确认."
+        },
+        "twitchDrops": {
+          "title": "封闭测试 Twitch滴滴已经结束了",
+          "description": "没有证实新活动活动正在进行; 声称奖励仍然无法获得游戏."
+        },
+        "fpsGameShow": {
+          "title": "FPS游戏 节目9月3日",
+          "description": "BULKHEAD展览时间为BST晚上7点,WARDOGS揭示公布;直到演出,揭示本身仍然是未知的."
+        }
+      }
+    },
+    "checklist": {
+      "title": "发射前检查列表",
+      "description": "在9月3日的揭示之前使用这些页面.Early Access它们涵盖了访问,定价,安装安全,以及实际的游戏循环."
+    },
+    "rules": {
+      "title": "我们如何标记更新",
+      "items": {
+        "official": {
+          "title": "官方第一",
+          "description": "时间,价格,平台和访问要求均被检查.Steam, Team17, BULKHEAD官方的WARDOGS道."
+        },
+        "rumor": {
+          "title": "传言保持标签",
+          "description": "PS5免费的价格,服务的确切变化,beta延长将未确认,直到主要来源说出另一个."
+        },
+        "refresh": {
+          "title": "在分享之前刷新",
+          "description": "WARDOGS现在,我们在快速启动前的窗口中,"
+        }
+      }
+    }
+  },
+  "article": {
+    "sources": "来源",
+    "related": "相关攻略",
+    "faq": "常见问题",
+    "back": "全部攻略",
+    "directAnswer": "快速结论",
+    "lastChecked": "最后核查",
+    "watch": "观看视频",
+    "videoConsent": "加载隐私增强模式的 YouTube 视频",
+    "byline": "研究与维护",
+    "teamName": "WARDOGS Wiki 编辑团队",
+    "editorialPolicy": "编辑规范",
+    "imageSource": "画面来源"
+  },
+  "categories": {
+    "access": "测试资格",
+    "release": "发布",
+    "store": "商店",
+    "platform": "平台",
+    "video": "视频",
+    "community": "社区",
+    "developer": "开发团队",
+    "guide": "攻略"
+  },
+  "footer": {
+    "aboutTitle": "WARDOGS Wiki",
+    "about": "WARDOGS Wiki 是玩家制作的独立攻略站，提供经过核实的测试资格、发布、玩法、阵营、社区与媒体信息，与 BULKHEAD、Team17 或 Steam 无隶属关系。",
+    "description": "面向 WARDOGS 玩家的独立战术 FPS 攻略。",
+    "guideLinks": "攻略链接",
+    "officialLinks": "官方链接",
+    "officialSite": "WARDOGS 官方网站",
+    "revealTrailer": "发布预告片",
+    "legal": "法律信息",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "editorialPolicy": "编辑规范"
+  },
+  "editorial": {
+    "metaTitle": "WARDOGS维基编辑政策和研究标准",
+    "metaDescription": "让我们看看.WARDOGS维基验证官方的声明,分析创作者录像,标签构建敏感的细节,纠正错误,并保持每个玩家的指导更新.",
+    "eyebrow": "编辑标准",
+    "title": "我们如何研究?WARDOGS",
+    "intro": "WARDOGS维基是一个独立的粉丝出版物. 每个指南都是为了清楚地回答玩家的问题,同时分开官方事实,观察到的镜头,社区报告和未解决的索赔.",
+    "teamTitle": "独立的,首先由玩家进行的研究",
+    "teamBody": "其他WARDOGS维基编辑团队没有任何相关关系.BULKHEAD, Team17, Steam商业关系并不能决定我们的结论或来源标签.",
+    "methodTitle": "我们的验证方法",
+    "officialTitle": "首先是官方来源",
+    "officialBody": "发布日期,价格,平台,访问规则和功能要求均被检查.Steam, Team17, BULKHEAD官方的WARDOGS在出版前的道.",
+    "footageTitle": "录像是证据,而不是最终的文件",
+    "footageBody": "创作者视频可以解释控制,匹配流量,载量,车辆和策略.Alpha其他beta只有当前官方消息来源确认这些数字,仍然被标记为构建敏感.",
+    "statusTitle": "确认和不确定的索赔保持分开",
+    "statusBody": "我们清楚地标记了谣言,社区观察和未知的细节.",
+    "updatesTitle": "更新材料获得新的日期",
+    "updatesBody": "页面不仅仅是为了在搜索结果中出现新鲜.",
+    "correctionsTitle": "纠正仍然是记录的一部分",
+    "correctionsBody": "当源源发生变化或发现错误时,我们会更新影响的指南,修改其状态语言,并保存链接,让读者验证当前的结论."
+  },
+  "privacy": {
+    "title": "隐私政策",
+    "intro": "本站尽量减少数据收集，并说明外部媒体和链接的工作方式。",
+    "content": "我们不经营玩家账户,也不收集游戏凭证.",
+    "advertising": "内容页面可能会加载来自Adsterra的本地广告,社交,频率限制的 popunder和明确标记的赞助链接.Adsterra可能会接收您的IP地址,浏览器和设备信息,并在自己的隐私控制下使用cookies或类似技术."
+  },
+  "terms": {
+    "title": "服务条款",
+    "intro": "本独立站点内容仅供玩家参考。",
+    "content": "游戏信息可能变化。购买、测试资格、平台可用性与账号操作请以 WARDOGS 官方来源为准。"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "description": "该地址不在当前已核实的攻略库中。",
+    "home": "返回首页",
+    "guides": "浏览攻略"
+  }
+}

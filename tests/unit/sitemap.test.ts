@@ -14,6 +14,7 @@ function itemAlternates(pathname: string) {
     de: `${origin}/de${pathname}`,
     "pt-br": `${origin}/pt-br${pathname}`,
     ja: `${origin}/ja${pathname}`,
+    "zh-cn": `${origin}/zh-cn${pathname}`,
     "x-default": `${origin}/en${pathname}`
   };
 }
@@ -25,6 +26,7 @@ function pageAlternates(pathname: string) {
     de: `${origin}/de${pathname}`,
     "pt-BR": `${origin}/pt-br${pathname}`,
     ja: `${origin}/ja${pathname}`,
+    "zh-CN": `${origin}/zh-cn${pathname}`,
     "x-default": `${origin}/en${pathname}`
   };
 }
@@ -157,6 +159,7 @@ describe("sitemap", () => {
         de: `https://blackdcp.github.io/wardogs/de${pathname}/`,
         "pt-br": `https://blackdcp.github.io/wardogs/pt-br${pathname}/`,
         ja: `https://blackdcp.github.io/wardogs/ja${pathname}/`,
+        "zh-cn": `https://blackdcp.github.io/wardogs/zh-cn${pathname}/`,
         "x-default": `https://blackdcp.github.io/wardogs/en${pathname}/`
       });
     } finally {

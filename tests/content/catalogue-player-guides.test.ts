@@ -2,7 +2,7 @@ import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {guideManifest} from "../../src/content/manifest";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const slugs = [
   "wardogs-best-weapons-loadouts",
   "wardogs-armor-damage-ttk-guide",
@@ -16,6 +16,7 @@ const languageSignals = {
   ru: /[А-Яа-яЁё]/,
   "pt-br": /\b(?:o|a|de|do|da|para|com|guia|arma)\b/i,
   ja: /[\u3040-\u30ff\u3400-\u9fff]/,
+  "zh-cn": /[\u3400-\u9fff]/,
 } as const;
 
 describe("source-backed catalogue player guides", () => {
@@ -33,7 +34,7 @@ describe("source-backed catalogue player guides", () => {
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(1_800);
         expect(searchable, `${locale}/${slug}`).toMatch(languageSignals[locale]);
         expect(guide?.body, `${locale}/${slug}`).toMatch(new RegExp(`\\(/${locale}/items/(?:weapons|vehicles|gear|attachments)`));
-        expect(guide?.body, `${locale}/${slug}`).toMatch(/build-sensitive|buildabhängig|завис(?:ит|ят) от сборки|depend(?:e|em) da build|ビルド依存/i);
+        expect(guide?.body, `${locale}/${slug}`).toMatch(/build-sensitive|buildabhängig|завис(?:ит|ят) от сборки|depend(?:e|em) da build|ビルド依存|版本相关|构建敏感/i);
       }
     }
   });
@@ -44,7 +45,7 @@ describe("source-backed catalogue player guides", () => {
       const weapons = await loadGuideDocument(locale, "wardogs-best-weapons-loadouts");
       const combined = `${armor?.body}\n${weapons?.body}`;
 
-      expect(combined).toMatch(/not confirmed|nicht bestätigt|не подтвержден|não (?:está|estão)?\s*confirmad|未確認/i);
+      expect(combined).toMatch(/not confirmed|nicht bestätigt|не подтвержден|não (?:está|estão)?\s*confirmad|未確認|尚未确认|未得到确认/i);
       expect(combined).not.toMatch(/(?:exact|exakt|точн|exato|正確).{0,30}(?:ttk|shots? to kill|treffer|выстрел|tiros|キル)/i);
     }
   });

@@ -3,7 +3,7 @@ import {videoArticles, type VideoArticle} from "./video-library";
 
 type TranslatedLocale = Exclude<Locale, "en">;
 
-const topics: Record<VideoArticle["slug"], Record<TranslatedLocale, string>> = {
+const topics: Record<VideoArticle["slug"], Partial<Record<TranslatedLocale, string>>> = {
   "wardogs-10-reasons-not-to-buy": {ru: "официальные доводы разработчиков о спорных особенностях и ожиданиях перед покупкой", de: "die offiziellen Entwicklerargumente zu möglichen Nachteilen und realistischen Erwartungen vor dem Kauf", "pt-br": "os argumentos oficiais dos desenvolvedores sobre limitações e expectativas antes da compra", ja: "開発者が説明した購入前に知るべき弱点と現実的な期待"},
   "wardogs-7-things-you-need-to-know": {ru: "масштаб на 100 игроков, три команды, постоянные деньги, мобильные FOB и сроки выхода", de: "100 Spieler, drei Teams, dauerhaftes Geld, mobile FOBs und der Veröffentlichungsplan", "pt-br": "100 jogadores, três equipes, dinheiro persistente, FOBs móveis e o cronograma de lançamento", ja: "100人・3チーム戦、持ち越し資金、移動FOB、発売予定"},
   "wardogs-loadout-gear-guide": {ru: "оружие, магазины, медицина, броня, рюкзаки, парашюты, специалисты и строительство FOB", de: "Waffen, Magazine, Medizin, Rüstung, Rucksäcke, Fallschirme, Spezialisten und FOB-Bau", "pt-br": "armas, carregadores, medicina, armadura, mochilas, paraquedas, especialistas e construção de FOB", ja: "武器、マガジン、医療、装甲、バックパック、パラシュート、特殊装備、FOB建築"},
@@ -37,11 +37,12 @@ const titles: Record<TranslatedLocale, Record<VideoArticle["slug"], string>> = {
   ru: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS: разбор видео — ${topics[article.slug].ru}`])) as Record<VideoArticle["slug"], string>,
   de: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS Video-Guide: ${topics[article.slug].de}`])) as Record<VideoArticle["slug"], string>,
   "pt-br": Object.fromEntries(videoArticles.map((article) => [article.slug, `Guia em vídeo de WARDOGS: ${topics[article.slug]["pt-br"]}`])) as Record<VideoArticle["slug"], string>,
-  ja: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS動画攻略: ${topics[article.slug].ja}`])) as Record<VideoArticle["slug"], string>
+  ja: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS動画攻略: ${topics[article.slug].ja}`])) as Record<VideoArticle["slug"], string>,
+  "zh-cn": Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS 视频攻略：${article.title}`])) as Record<VideoArticle["slug"], string>
 };
 
 function localizedArticle(article: VideoArticle, locale: TranslatedLocale): VideoArticle {
-  const topic = topics[article.slug][locale];
+  const topic = topics[article.slug][locale] ?? `“${article.title}”中的玩法、证据与实战建议`;
   const title = titles[locale][article.slug];
 
   if (locale === "ru") return {
@@ -86,6 +87,21 @@ function localizedArticle(article: VideoArticle, locale: TranslatedLocale): Vide
       {heading: "Aplicação prática", body: [`Use as conclusões sobre ${topic} para planejar uma função antes da partida. Defina a tarefa, quanto dinheiro pode ser perdido, qual munição ou transporte é necessário e quem transmitirá informação no esquadrão.`, "Teste a orientação na versão atual e não copie um kit sem considerar mapa, composição da equipe e atualização. Valor consistente para o time costuma importar mais que uma jogada isolada."]},
       {heading: "O que pode mudar", body: ["Uma build de pré-lançamento pode alterar preço, recuo, dano, capacidade, recarga, pontuação, progressão, controles e disponibilidade. Uma cena muito forte ou fraca também não comprova o balanceamento médio.", "Por isso, o artigo preserva a lógica de função e decisão, mas não transforma um quadro do vídeo em tabela permanente. Confira a data de atualização antes de comprar ou mudar configurações."]},
       {heading: "Próximo passo", body: [`Depois desta análise, abra o guia principal ligado a ${topic}. Ele reúne instruções mantidas, links oficiais e marcações de Confirmado vs Rumor que podem ser atualizadas quando uma nova build sair.`, "Assista ao vídeo original para contexto completo, som, tempo e posição da interface. O artigo facilita busca e preparação, mas não substitui o trabalho do criador."]}
+    ]
+  };
+
+  if (locale === "zh-cn") return {
+    ...article,
+    title,
+    description: `这是一篇关于${topic}的 WARDOGS 中文视频攻略。正文把画面中可验证的事实与可能变化的 Alpha、Beta 数值分开说明。`,
+    quickAnswer: `这段视频可用于理解${topic}。它记录的是特定测试版本：画面中的操作与界面更可信，最终数值、平衡、价格和可用性仍需通过 Steam 与官方渠道复核。`,
+    takeaways: [`视频的核心主题是${topic}。`, "画面中直接出现的操作，比作者对未来版本的推测更可靠。", "Alpha 与 Beta 数值不能自动视为抢先体验版最终数据。", "实战结论需要同时考虑目标、资金、补给和小队沟通。", "发布日期、价格和参与方式始终单独核对 Steam 与 WARDOGS 官方消息。"],
+    sections: [
+      {heading: "视频展示了什么", body: [`素材重点讲解${topic}。本页将视频重组为可搜索的文字结构，便于快速找到机制、实战结论与来源限制。`, "创作者实机能证明特定测试版本中的界面和行为，但不是最终说明书；服务器规则、经济、属性与可用性都可能在录制后改变。"]},
+      {heading: "如何判断证据", body: ["只有画面或声音能直接支持的玩家动作、界面反馈、载具定位、购买过程和团队沟通，才标记为已观察。没有画面支撑的解说仍属于作者判断。", "旧视频若与当前 Steam 页面或官方公告冲突，应以最新的一手来源为准；发布日期和对应版本与结论本身同样重要。"]},
+      {heading: "实战怎么用", body: [`把${topic}的结论用于赛前分工：明确任务、可承受损失、所需弹药或运输，以及小队内负责传递信息的人。`, "在当前版本中再次验证，不要忽略地图、队伍构成和更新内容直接照搬别人的配装；稳定的团队价值通常比一次亮眼击杀更重要。"]},
+      {heading: "哪些内容可能变化", body: ["预发布版本可能调整价格、后坐力、伤害、容量、冷却、得分、进度、控制和物品可用性。单次特别强或特别弱的片段也不能证明平均平衡。", "因此本文保留角色逻辑和决策方法，但不会把某一帧画面写成永久属性表。购买或改设置前请检查最后更新时间。"]},
+      {heading: "下一步", body: [`看完后打开与${topic}相关的核心攻略，其中包含持续维护的步骤、官方链接以及已确认与传闻标记。`, "需要完整上下文、声音、时机或准确界面位置时，请观看原视频；本文用于搜索和准备，不替代视频作者的作品。", "实战前还应核对当前更新说明与服务器公告，尤其注意控制、经济、武器属性和载具可用性是否已经变化。"]}
     ]
   };
 

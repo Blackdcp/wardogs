@@ -26,6 +26,7 @@ describe("item detail route entry", () => {
         de: "http://localhost:3000/de/items/vehicles/bobcat",
         "pt-br": "http://localhost:3000/pt-br/items/vehicles/bobcat",
         ja: "http://localhost:3000/ja/items/vehicles/bobcat",
+        "zh-cn": "http://localhost:3000/zh-cn/items/vehicles/bobcat",
         "x-default": "http://localhost:3000/en/items/vehicles/bobcat"
       }
     });

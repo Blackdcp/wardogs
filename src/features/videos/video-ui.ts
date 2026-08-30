@@ -32,6 +32,9 @@ type VideoUi = {
 };
 
 const copy: Record<Locale, VideoUi> = {
+  "zh-cn": {
+    metaTitle: "WARDOGS 视频攻略 - YouTube 实机解析", metaDescription: "独立整理的 WARDOGS 中文视频攻略，覆盖新手、设置、赚钱、直升机、FOB、武器、载具、目标和抢先体验信息。", eyebrow: "WARDOGS 视频情报", hubTitle: "WARDOGS YouTube 攻略", hubDescription: (count) => `${count} 篇独立撰写的视频解析，将官方和创作者实机整理成新手、资金、设置、目标、直升机、FOB、武器、载具与购买判断攻略。`, officialVideo: "官方视频", creatorFootage: "创作者实机", readBreakdown: "阅读视频解析", allVideos: "全部视频攻略", officialBreakdown: "官方视频解析", creatorBreakdown: "创作者视频解析", lastUpdated: "最后更新", quickAnswer: "快速结论", takeaways: "关键要点", connectionTitle: "它与核心攻略的关系", connectionBody: "本页分析一段特定视频。已确认的游戏系统、测试时间、价格和平台信息，请通过链接的核心攻略核对，不要把视频画面当作最终版本。", youtubeSource: "YouTube 来源", relatedGuide: "阅读相关 WARDOGS 攻略", internalGuide: "相关攻略", homeEyebrow: "视频分析", homeTitle: "将 YouTube 实机整理成独立攻略", homeDescription: "从新手、资金、设置、直升机、FOB 后勤和目标视频开始。每篇文章均保留来源、测试版本提示和相关攻略。", stripEyebrow: "视频驱动攻略", stripTitle: "YouTube 独立解析", openHub: "打开视频攻略", official: "官方", creator: "创作者", thumbnail: "缩略图"
+  },
   en: {
     metaTitle: "WARDOGS Videos - YouTube Gameplay Breakdowns",
     metaDescription: "Standalone WARDOGS video guides for beginner tips, settings, money, helicopters, FOBs, weapons, vehicles, objectives, gameplay, and Early Access context.",

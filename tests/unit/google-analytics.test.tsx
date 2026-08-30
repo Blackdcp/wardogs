@@ -54,6 +54,13 @@ describe("Google Analytics", () => {
       parameters: {item_slug: "m4", item_type: "weapons", link_url: "https://www.wardogswiki.com/en/items/weapons/m4"}
     });
     expect(analytics.getTrackedLinkEvent?.(
+      "https://www.wardogswiki.com/zh-cn/items/weapons/m4",
+      "https://www.wardogswiki.com"
+    )).toEqual({
+      name: "catalogue_item_open",
+      parameters: {item_slug: "m4", item_type: "weapons", link_url: "https://www.wardogswiki.com/zh-cn/items/weapons/m4"}
+    });
+    expect(analytics.getTrackedLinkEvent?.(
       "https://steamcommunity.com/app/1867240/announcements/",
       "https://www.wardogswiki.com"
     )).toEqual({

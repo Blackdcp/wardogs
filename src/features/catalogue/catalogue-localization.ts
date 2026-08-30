@@ -6,6 +6,7 @@ import {getItemType} from "@/features/items/item-library";
 import type {CatalogueGroup, CatalogueRecord} from "./catalogue-types";
 
 const sectionNames: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  "zh-cn": {"Assault Rifles":"突击步枪", SMGs:"冲锋枪", "Shotguns and LMGs":"霰弹枪与轻机枪", "Marksman and Sniper Rifles":"精确射手步枪与狙击步枪", "Bow, Sidearms, and Launchers":"弓、副武器与发射器", "Land Transport":"地面运输", "Armor and Artillery":"装甲与火炮", Aircraft:"飞行器", "Every Calibre":"全部口径", "Short Optics":"低倍率瞄具", "Medium Optics":"中倍率瞄具", "Captured Optics With Incomplete Tooltips":"信息不完整的已记录瞄具", Magazines:"弹匣", Helmets:"头盔", Armor:"护甲", Backpacks:"背包", Offensive:"进攻装备", Medical:"医疗装备", "Recon and Vehicle Support":"侦察与载具支援", "Building and Utility":"建造与通用装备", "Budget Bands":"预算档位"},
   ru: {"Assault Rifles":"Штурмовые винтовки", SMGs:"Пистолеты-пулеметы", "Shotguns and LMGs":"Дробовики и пулеметы", "Marksman and Sniper Rifles":"Марксманские и снайперские винтовки", "Bow, Sidearms, and Launchers":"Лук, пистолеты и пусковые установки", "Land Transport":"Наземный транспорт", "Armor and Artillery":"Бронетехника и артиллерия", Aircraft:"Авиация", "Every Calibre":"Все калибры", "Short Optics":"Прицелы малой кратности", "Medium Optics":"Прицелы средней кратности", "Captured Optics With Incomplete Tooltips":"Прицелы с неполными подсказками", Magazines:"Магазины", Helmets:"Шлемы", Armor:"Броня", Backpacks:"Рюкзаки", Offensive:"Наступательное", Medical:"Медицинское", "Recon and Vehicle Support":"Разведка и обслуживание транспорта", "Building and Utility":"Строительство и вспомогательные средства", "Budget Bands":"Уровни бюджета"},
   de: {"Assault Rifles":"Sturmgewehre", SMGs:"Maschinenpistolen", "Shotguns and LMGs":"Schrotflinten und leichte MGs", "Marksman and Sniper Rifles":"Präzisions- und Scharfschützengewehre", "Bow, Sidearms, and Launchers":"Bogen, Seitenwaffen und Werfer", "Land Transport":"Landtransport", "Armor and Artillery":"Panzerung und Artillerie", Aircraft:"Luftfahrzeuge", "Every Calibre":"Alle Kaliber", "Short Optics":"Optiken mit geringer Vergrößerung", "Medium Optics":"Optiken mit mittlerer Vergrößerung", "Captured Optics With Incomplete Tooltips":"Erfasste Optiken mit unvollständigen Angaben", Magazines:"Magazine", Helmets:"Helme", Armor:"Körperpanzerung", Backpacks:"Rucksäcke", Offensive:"Offensiv", Medical:"Medizinisch", "Recon and Vehicle Support":"Aufklärung und Fahrzeugunterstützung", "Building and Utility":"Bau und Hilfsmittel", "Budget Bands":"Budgetstufen"},
   "pt-br": {"Assault Rifles":"Fuzis de assalto", SMGs:"Submetralhadoras", "Shotguns and LMGs":"Escopetas e metralhadoras leves", "Marksman and Sniper Rifles":"Fuzis de precisão e de atirador", "Bow, Sidearms, and Launchers":"Arco, armas secundárias e lançadores", "Land Transport":"Transporte terrestre", "Armor and Artillery":"Blindados e artilharia", Aircraft:"Aeronaves", "Every Calibre":"Todos os calibres", "Short Optics":"Miras de curto alcance", "Medium Optics":"Miras de médio alcance", "Captured Optics With Incomplete Tooltips":"Miras registradas com dados incompletos", Magazines:"Carregadores", Helmets:"Capacetes", Armor:"Armaduras", Backpacks:"Mochilas", Offensive:"Ofensivo", Medical:"Médico", "Recon and Vehicle Support":"Reconhecimento e suporte a veículos", "Building and Utility":"Construção e utilidade", "Budget Bands":"Faixas de orçamento"},
@@ -13,6 +14,7 @@ const sectionNames: Record<Exclude<Locale, "en">, Record<string, string>> = {
 };
 
 const localeText = {
+  "zh-cn": {count:(n:number,l:string)=>`${l}：${n} 条记录`, description:(l:string)=>`WARDOGS ${l}完整观察图鉴。比较型号、定位、测试版本价格和证据，不推测最终平衡。`, disclaimer:"社区在预发布版本中观察到的数据。价格、解锁、平衡和可用性可能在抢先体验前发生变化。", section:(s:string,l:string)=>`${s}：${l}类别中已观察的型号与数值。所有数字仅对应标注的测试版本。`, insight:(l:string)=>[`${l}应按照明确的职责、预算和补给计划选择。`,"已观察数值适合比较选项，但不是最终平衡表。","昂贵选择只有在小队能持续使用和补给时才有价值。"], unknown:(l:string)=>[`${l}在抢先体验版中的最终属性尚未确认。`,"价格、进度、可用性和平衡可能随新版本改变。","不能根据单个视频或截图补写缺失数值。"], asOf:"Alpha 1 — 2026年8月7日", sources:["WARDOGS Steam 页面","Team17 WARDOGS 页面","BULKHEAD WARDOGS 页面"]},
   ru: {count:(n:number,l:string)=>`${n} записей: ${l}`, description:(l:string)=>`Полный наблюдаемый каталог WARDOGS: ${l}. Сравнивайте модели, роли, цены сборки и доказательства без предположений о финальном балансе.`, disclaimer:"Данные сообщества из предрелизной сборки. Цена, разблокировка, баланс и доступность могут измениться до раннего доступа.", section:(s:string,l:string)=>`${s}: наблюдаемые модели и значения для категории «${l}». Все числа относятся к указанной тестовой сборке.`, insight:(l:string)=>[`Категория «${l}» должна выбираться под конкретную роль, бюджет и план снабжения.`,"Наблюдаемые значения помогают сравнивать варианты, но не являются окончательной таблицей баланса.","Дорогой выбор оправдан только тогда, когда отряд может использовать и поддерживать его в бою."], unknown:(l:string)=>[`Финальные характеристики категории «${l}» для раннего доступа не подтверждены.`,"Цены, прогресс, доступность и баланс могут измениться после обновления сборки.","Неуказанное значение не следует восстанавливать по одному видео или скриншоту."], asOf:"Alpha 1 — 7 августа 2026", sources:["WARDOGS в Steam","Страница WARDOGS на Team17","Страница WARDOGS на BULKHEAD"]},
   de: {count:(n:number,l:string)=>`${n} Einträge: ${l}`, description:(l:string)=>`Vollständiger beobachteter WARDOGS-Katalog für ${l}. Vergleiche Modelle, Rollen, Preise der Testversion und Belege ohne Annahmen zur endgültigen Balance.`, disclaimer:"Von der Community beobachtete Vorabdaten. Preise, Freischaltungen, Balance und Verfügbarkeit können sich vor dem Early Access ändern.", section:(s:string,l:string)=>`${s}: beobachtete Modelle und Werte für ${l}. Alle Zahlen beziehen sich auf die angegebene Testversion.`, insight:(l:string)=>[`Wähle ${l} nach klarer Rolle, Budget und Versorgungsplan.`,"Beobachtete Werte ermöglichen Vergleiche, sind aber keine endgültige Balancetabelle.","Eine teure Wahl lohnt sich nur, wenn der Trupp sie im Einsatz unterstützen und versorgen kann."], unknown:(l:string)=>[`Die endgültigen Early-Access-Werte für ${l} sind nicht bestätigt.`,"Preise, Fortschritt, Verfügbarkeit und Balance können sich mit neuen Versionen ändern.","Fehlende Werte dürfen nicht aus einem einzelnen Video oder Bild ergänzt werden."], asOf:"Alpha 1 — 7. August 2026", sources:["WARDOGS auf Steam","WARDOGS bei Team17","WARDOGS bei BULKHEAD"]},
   "pt-br": {count:(n:number,l:string)=>`${n} registros de ${l}`, description:(l:string)=>`Catálogo completo observado de WARDOGS para ${l}. Compare modelos, funções, preços da build e evidências sem presumir o balanceamento final.`, disclaimer:"Dados de pré-lançamento observados pela comunidade. Preços, desbloqueios, balanceamento e disponibilidade podem mudar antes do Acesso Antecipado.", section:(s:string,l:string)=>`${s}: modelos e valores observados para ${l}. Todos os números pertencem à build de teste indicada.`, insight:(l:string)=>[`Escolha ${l} de acordo com uma função, orçamento e plano de suprimento claros.`,"Valores observados ajudam na comparação, mas não são uma tabela final de balanceamento.","Uma opção cara só compensa quando o esquadrão consegue usá-la e sustentá-la em combate."], unknown:(l:string)=>[`Os valores finais de ${l} no Acesso Antecipado não foram confirmados.`,"Preços, progressão, disponibilidade e balanceamento podem mudar com novas builds.","Um valor ausente não deve ser inventado a partir de um único vídeo ou imagem."], asOf:"Alpha 1 — 7 de agosto de 2026", sources:["WARDOGS na Steam","Página de WARDOGS na Team17","Página de WARDOGS na BULKHEAD"]},
@@ -20,6 +22,7 @@ const localeText = {
 } as const;
 
 const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  "zh-cn": {"Alpha 1 - 7 Aug 2026":"Alpha 1 — 2026年8月7日", "Closed Beta - 21-23 Aug 2026":"封闭测试 — 2026年8月21日至23日", "Alpha 1 and Closed Beta - 7-23 Aug 2026":"Alpha 1 与封闭测试 — 2026年8月7日至23日"},
   ru: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 августа 2026",
     "Closed Beta - 21-23 Aug 2026": "Закрытая бета — 21–23 августа 2026",
@@ -47,6 +50,7 @@ function localizeDataAsOf(value: string, locale: Exclude<Locale, "en">): string 
 }
 
 const expandedLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  "zh-cn": {LMG:"轻机枪", Shotgun:"霰弹枪", Launcher:"发射器", "Identifier only":"仅记录标识", "Stationary system":"固定式系统", "Closed Beta price":"封闭测试价格", Build:"版本", Verification:"验证", "Anti-air launcher":"防空发射器", "Anti-vehicle launcher":"反载具发射器", "Grenade launcher":"榴弹发射器", "Stationary support":"固定式支援", "Stationary anti-air":"固定式防空", "Stationary artillery":"固定式火炮", "Stationary defense":"固定式防御", "Stationary weapon":"固定式武器"},
   ru: {
     LMG: "Ручной пулемет",
     Shotgun: "Дробовик",
@@ -122,6 +126,7 @@ const expandedLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
 };
 
 const expandedSectionNames: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  "zh-cn": {"Closed Beta Identifiers":"封闭测试标识", "Closed Beta Systems and Identifiers":"封闭测试系统与标识"},
   ru: {
     "Closed Beta Identifiers": "Идентификаторы закрытой беты",
     "Closed Beta Systems and Identifiers": "Системы и идентификаторы закрытой беты",
@@ -141,6 +146,7 @@ const expandedSectionNames: Record<Exclude<Locale, "en">, Record<string, string>
 };
 
 const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  "zh-cn": {Weapon:"武器", Vehicle:"载具", Calibre:"口径", Attachment:"配件", Gear:"个人装备", Equipment:"战术装备", Band:"预算档位", "Alpha price":"Alpha 测试价格", Ammunition:"弹药", "Fire modes":"射击模式", Weight:"重量", Progression:"进度", Role:"定位", "Observed gate":"已观察解锁条件", Track:"进度路线", "Base damage":"基础伤害", Loads:"弹种", "Standard per round":"标准单发价格", "Box price":"弹药箱价格", Weapons:"适用武器", Kind:"类型", "Zoom or capacity":"倍率或容量", "Weight or calibre":"重量或口径", Slot:"栏位", Tier:"等级", "Recorded identifier":"已记录标识", "Spending rule":"花费原则", "Best use":"最佳用途", "Main risk":"主要风险", "Not captured":"未记录", "Gate unread":"条件无法辨认", "Open purchase":"可直接购买", Variable:"可变", fixed:"固定", "Semi / Full Auto":"半自动 / 全自动", "Semi / Burst":"半自动 / 点射", "Semi automatic":"半自动", "Break-action":"折开式", "Single-shot":"单发", "Bolt action":"栓动", "Bolt-action / Magazine":"栓动 / 弹匣", "Pull and Release":"拉弓并释放", "Assault XP":"突击经验", "Medic XP":"医疗经验", "Support XP":"支援经验", "Recon XP":"侦察经验", "Driver XP":"驾驶经验", "Pilot XP":"飞行经验", Driver:"驾驶员", Pilot:"飞行员", Wardog:"战士", Optic:"瞄具", Magazine:"弹匣", Helmet:"头盔", Armor:"护甲", Backpack:"背包", Special:"特殊", Lightest:"最轻", Offensive:"进攻", Medical:"医疗", Recon:"侦察", Building:"建造", Utility:"通用", "Building / Offensive":"建造 / 进攻", "Assault rifle":"突击步枪", SMG:"冲锋枪", "Marksman rifle":"精确射手步枪", "Sniper rifle":"狙击步枪", Bow:"弓", Sidearm:"副武器", "Light transport":"轻型运输", "Fast transport":"快速运输", "Utility transport":"通用运输", "Cargo transport":"货运载具", "Protected transport":"防护运输", "Armed transport":"武装运输", "Heavy armed transport":"重型武装运输", "Logistics truck":"后勤卡车", "Protected logistics":"防护后勤", "Armed logistics":"武装后勤", "Anti-air armor":"防空装甲载具", "Main battle tank":"主战坦克", "Self-propelled artillery":"自行火炮", "Combat helicopter":"战斗直升机", "Armed utility helicopter":"武装通用直升机", "Rocket helicopter":"火箭直升机", "Attack helicopter":"攻击直升机", "Light air transport":"轻型空运", "Air transport":"空中运输", Budget:"低预算", Standard:"标准", "Full Budget":"全额投入"},
   ru: {
     Weapon:"Оружие", Vehicle:"Транспорт", Calibre:"Калибр", Attachment:"Модификация", Gear:"Экипировка", Equipment:"Оборудование", Band:"Бюджет",
     "Alpha price":"Цена в Alpha", Ammunition:"Боеприпасы", "Fire modes":"Режимы огня", Weight:"Вес", Progression:"Прогресс", Role:"Роль", "Observed gate":"Условие доступа", Track:"Ветка",
@@ -209,7 +215,8 @@ function translateValue(value: string, locale: Exclude<Locale, "en">): string {
 
   const rounds = value.match(/^(\d+) rounds$/);
   if (rounds) {
-    return locale === "ru" ? `${rounds[1]} патронов`
+    return locale === "zh-cn" ? `${rounds[1]} 发`
+      : locale === "ru" ? `${rounds[1]} патронов`
       : locale === "de" ? `${rounds[1]} Schuss`
       : locale === "pt-br" ? `${rounds[1]} projéteis`
       : `${rounds[1]}発`;
@@ -218,12 +225,13 @@ function translateValue(value: string, locale: Exclude<Locale, "en">): string {
   const level = value.match(/^(Driver|Pilot|Wardog) Level (\d+)$/);
   if (level) {
     const role: string = translateValue(level[1], locale);
-    return locale === "ja" ? `${role}レベル${level[2]}` : `${role} ${locale === "ru" ? "уровня" : locale === "de" ? "Stufe" : "nível"} ${level[2]}`;
+    return locale === "ja" ? `${role}レベル${level[2]}` : locale === "zh-cn" ? `${role}等级 ${level[2]}` : `${role} ${locale === "ru" ? "уровня" : locale === "de" ? "Stufe" : "nível"} ${level[2]}`;
   }
 
   const unlock = value.match(/^(\$[\d,]+) unlock$/);
   if (unlock) {
-    return locale === "ru" ? `Разблокировка за ${unlock[1]}`
+    return locale === "zh-cn" ? `${unlock[1]} 解锁`
+      : locale === "ru" ? `Разблокировка за ${unlock[1]}`
       : locale === "de" ? `Freischaltung für ${unlock[1]}`
       : locale === "pt-br" ? `Desbloqueio por ${unlock[1]}`
       : `${unlock[1]}で解除`;
@@ -231,7 +239,7 @@ function translateValue(value: string, locale: Exclude<Locale, "en">): string {
 
   return value
     .replace(/\bfixed\b/g, valueMaps[locale].fixed)
-    .replace(/\brounds\b/g, locale === "ru" ? "патронов" : locale === "de" ? "Schuss" : locale === "pt-br" ? "projéteis" : "発");
+    .replace(/\brounds\b/g, locale === "zh-cn" ? "发" : locale === "ru" ? "патронов" : locale === "de" ? "Schuss" : locale === "pt-br" ? "projéteis" : "発");
 }
 
 export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): CatalogGuide {

@@ -24,7 +24,7 @@ const modelPaths = [
   ...weaponModels.map((slug) => ({type: "weapons" as const, slug})),
   ...vehicleModels.map((slug) => ({type: "vehicles" as const, slug}))
 ];
-const locales = ["en", "ru", "de", "pt-br", "ja"] as const;
+const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
 
 function deployed(pathname: string) {
   return `${basePath}${pathname}`;
@@ -178,7 +178,7 @@ test("exports localized copies of every new model", async ({request}) => {
     modelPaths.map(({type, slug}) => ({locale, type, slug}))
   );
 
-  expect(probes).toHaveLength(170);
+  expect(probes).toHaveLength(204);
   await Promise.all(probes.map(async ({locale, type, slug}) => {
     const pathname = `/${locale}/items/${type}/${slug}/`;
     expect(existsSync(resolve("out", locale, "items", type, slug, "index.html")), pathname).toBe(true);

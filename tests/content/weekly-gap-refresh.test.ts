@@ -2,7 +2,7 @@ import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {NEWS_UPDATES} from "../../src/features/news/news-data";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
 describe("weekly source-gap refresh", () => {
   it("turns the September FPS Games Show into a current livestream guide in every locale", async () => {
@@ -11,9 +11,9 @@ describe("weekly source-gap refresh", () => {
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(guide?.frontmatter.updatedAt, locale).toBe("2026-08-28");
-      expect(guide?.body, locale).toContain("FPS Games Show");
-      expect(guide?.body, locale).toContain("3 September 2026");
-      expect(guide?.body, locale).toContain("7pm BST");
+      expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /FPS Games Show|FPS游戏展|FPS 游戏展/ : /FPS Games Show/);
+      expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /2026年9月3日/ : /3 September 2026/);
+      expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /英国夏令时晚上7点|晚上7点/ : /7pm BST/);
       expect(sources, locale).toContain("https://www.youtube.com/watch?v=VQRd91fcQUM");
       expect(sources, locale).toContain("https://x.com/FPSGamesShow/status/2090076326120300897");
     }
@@ -32,8 +32,8 @@ describe("weekly source-gap refresh", () => {
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(guide?.body, locale).toContain("HOTAS");
-      expect(guide?.body, locale).toMatch(locale === "ja" ? /自動|切り替/ : /auto(?:matic(?:ally)?)? switch/i);
-      expect(guide?.body, locale).toMatch(locale === "ja" ? /割り当て|再設定/ : /remap|rebind|binding/i);
+      expect(guide?.body, locale).toMatch(locale === "ja" ? /自動|切り替/ : locale === "zh-cn" ? /自动|切换/ : /auto(?:matic(?:ally)?)? switch/i);
+      expect(guide?.body, locale).toMatch(locale === "ja" ? /割り当て|再設定/ : locale === "zh-cn" ? /绑定|重新映射|重设/ : /remap|rebind|binding/i);
       expect(sources, locale).toContain("https://www.reddit.com/r/WarDogs/comments/1vqvbk7/hotas_mega/");
       expect(guide?.body, locale).not.toMatch(/best flight stick|buy the|affiliate/i);
     }

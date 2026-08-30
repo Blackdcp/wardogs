@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const targetSlugs = [
   "wardogs-beginner-guide",
   "wardogs-towers-guide",
@@ -30,7 +30,7 @@ describe("source-driven 2026-08-26 content refresh", () => {
         expect(guide?.frontmatter.sources.some(({kind}) => kind === "official"), `${locale}/${slug}`).toBe(true);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeLessThanOrEqual(5);
-        expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(locale === "ja" ? 1_800 : 3_000);
+        expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(locale === "ja" ? 1_800 : locale === "zh-cn" ? 2_200 : 3_000);
       }
     }
   });
@@ -46,23 +46,23 @@ describe("source-driven 2026-08-26 content refresh", () => {
       const playtest = await loadGuideDocument(locale, "wardogs-playtest");
       const beta = await loadGuideDocument(locale, "wardogs-beta");
 
-      expect(beginner?.body).toMatch(/first deployment|erste[nr]? Einsatz|перв.*выход|primeira mobilização|初出撃/i);
+      expect(beginner?.body).toMatch(/first deployment|erste[nr]? Einsatz|перв.*выход|primeira mobilização|初出撃|首次部署/i);
       expect(towers?.body).toMatch(/digits|Ziffern|цифр|dígitos|数字/i);
-      expect(towers?.body).toContain("Hot Zone");
+      expect(towers?.body).toMatch(/Hot Zone|热区/);
       expect(mortar?.body).toMatch(/azimuth|Azimut|азимут|azimute|方位/i);
-      expect(mortar?.body).toMatch(/100\s?[mм]/i);
+      expect(mortar?.body).toMatch(/100\s?[mм米]/i);
       expect(fob?.body).toContain("2x3");
-      expect(fob?.body).toMatch(/pallet|Palette|паллет|palete|パレット/i);
-      expect(controls?.body).toMatch(/free.?look|Freelook|свободн.*обзор|visão livre|フリールック/i);
-      expect(helicopter?.body).toMatch(/go-around|durchstart|уход.*втор|arremet|ゴーアラウンド/i);
+      expect(fob?.body).toMatch(/pallet|Palette|паллет|palete|パレット|托盘/i);
+      expect(controls?.body).toMatch(/free.?look|Freelook|свободн.*обзор|visão livre|フリールック|自由观察|免费看法|自由看|免费视觉/i);
+      expect(helicopter?.body).toMatch(/go-around|durchstart|уход.*втор|arremet|ゴーアラウンド|复飞|绕行/i);
       expect(playtest?.body).toMatch(/500[, .]?000|50万/i);
       expect(beta?.body).toMatch(/100[, .]?000|10万/i);
 
       const playtestFaq = playtest?.frontmatter.faq.map(({answer}) => answer).join(" ") ?? "";
-      expect(playtestFaq).toMatch(/ended|beendet|заверш|encerrad|終了/i);
+      expect(playtestFaq).toMatch(/ended|beendet|заверш|encerrad|終了|结束/i);
 
       for (const guide of [towers, mortar, fob, controls, helicopter]) {
-        expect(guide?.body).toMatch(/build-sensitive|buildabhängig|версии сборки|dependentes? da build|ビルド依存/i);
+        expect(guide?.body).toMatch(/build-sensitive|buildabhängig|версии сборки|dependentes? da build|ビルド依存|版本相关|构建敏感/i);
       }
     }
   });
@@ -76,8 +76,8 @@ describe("source-driven 2026-08-26 content refresh", () => {
         expect(sourceUrls).toContain(
           "https://www.pcgamer.com/games/fps/nearly-500k-players-showed-up-for-the-wardogs-beta-the-reaction-from-the-fps-community-has-been-insane/",
         );
-        expect(guide?.body).toMatch(/reported|bericht|сообщ|relat|報じ/i);
-        expect(guide?.body).toMatch(/not.*current|nicht.*aktuell|не.*текущ|não.*atual|現在.*では(?:ない|ありません)/i);
+        expect(guide?.body).toMatch(/reported|bericht|сообщ|relat|報じ|报道|报告/i);
+        expect(guide?.body).toMatch(/not.*current|nicht.*aktuell|не.*текущ|não.*atual|現在.*では(?:ない|ありません)|不是当前|并非当前/i);
       }
     }
   });

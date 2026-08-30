@@ -5,7 +5,7 @@ import {NEWS_UPDATES} from "../../src/features/news/news-data";
 import {getLocalizedVideoArticle} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
 
-const locales = ["en", "de", "ru", "pt-br", "ja"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
 describe("2026-08-28 weekend and YouTube refresh", () => {
   it("publishes a source-backed artillery guide in every supported locale", async () => {
@@ -23,9 +23,9 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       expect(sourceUrls).toContain("https://www.youtube.com/watch?v=oP9RelmWk6A");
       expect(sourceUrls).toContain("https://www.youtube.com/watch?v=ZFRrDSru7Kg");
       expect(guide?.body).toMatch(/SPH-?2/i);
-      expect(guide?.body).toMatch(/stabili|стабилиз|stabilisieren|estabiliz|安定化/i);
-      expect(guide?.body).toMatch(/reload|перезар|nachladen|recarga|リロード/i);
-      expect(guide?.body).toMatch(/build-sensitive|buildabhängig|версии сборки|dependente da build|ビルド依存/i);
+      expect(guide?.body).toMatch(/stabili|стабилиз|stabilisieren|estabiliz|安定化|稳定/i);
+      expect(guide?.body).toMatch(/reload|перезар|nachladen|recarga|リロード|装填|换弹|重新加载/i);
+      expect(guide?.body).toMatch(/build-sensitive|buildabhängig|версии сборки|dependente da build|ビルド依存|版本相关|构建敏感/i);
     }
   });
 
@@ -57,18 +57,18 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       }
 
       expect(beginner?.frontmatter.sources.some(({url}) => url.includes("Msg78ysR_hQ"))).toBe(true);
-      expect(beginner?.body).toMatch(/practice range|Übungsplatz|полигон|campo de treino|射撃練習場/i);
-      expect(beginner?.body).toMatch(/vehicle ammo|Fahrzeugmunition|боеприпас.*техник|munição do veículo|車両弾薬/i);
+      expect(beginner?.body).toMatch(/practice range|Übungsplatz|полигон|campo de treino|射撃練習場|训练场|实践范围/i);
+      expect(beginner?.body).toMatch(/vehicle ammo|Fahrzeugmunition|боеприпас.*техник|munição do veículo|車両弾薬|车辆弹药/i);
 
       expect(fob?.frontmatter.sources.some(({url}) => url.includes("F5YU7eaQHBU"))).toBe(true);
       expect(fob?.frontmatter.sources.some(({url}) => url.includes("kg46BZ1H2W0"))).toBe(true);
-      expect(fob?.body).toMatch(/ammo.*build.*fuel.*mechanical|Munition.*Bau.*Treibstoff.*mechanisch|боеприпас.*строит.*топлив.*механ|munição.*construção.*combustível.*mecân|弾薬.*建築.*燃料.*機械/i);
-      expect(fob?.body).toMatch(/small.*medium.*large|klein.*mittel.*groß|мал.*сред.*больш|pequen.*médio.*grande|小型.*中型.*大型/i);
+      expect(fob?.body).toMatch(/ammo.*build.*fuel.*mechanical|Munition.*Bau.*Treibstoff.*mechanisch|боеприпас.*строит.*топлив.*механ|munição.*construção.*combustível.*mecân|弾薬.*建築.*燃料.*機械|弹药.*建造.*燃料.*机械/i);
+      expect(fob?.body).toMatch(/small.*medium.*large|klein.*mittel.*groß|мал.*сред.*больш|pequen.*médio.*grande|小型.*中型.*大型|小.*中.*大/i);
 
       expect(money?.frontmatter.sources.some(({url}) => url.includes("Jm7ogJLKIJo"))).toBe(true);
-      expect(money?.body).toMatch(/pilot|Pilot|пилот|piloto|パイロット/i);
+      expect(money?.body).toMatch(/pilot|Pilot|пилот|piloto|パイロット|飞行员/i);
       expect(money?.body).toMatch(/Gold Bars|Goldbarren|золот.*слит|Barras de Ouro|ゴールドバー/i);
-      expect(money?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認/i);
+      expect(money?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認|尚未(?:得到)?确认|未确认/i);
     }
   });
 

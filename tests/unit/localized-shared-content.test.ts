@@ -7,13 +7,14 @@ import {getLocalizedItem} from "../../src/features/items/item-localization";
 import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
 
-const localizedLocales = ["ru", "de", "pt-br", "ja"] as const;
+const localizedLocales = ["ru", "de", "pt-br", "ja", "zh-cn"] as const;
 
 const languageSignals = {
   ru: /[А-Яа-яЁё]/,
   de: /\b(?:der|die|das|und|mit|für|auf|Spiel|Zugang|Guide)\b/i,
   "pt-br": /\b(?:o|a|de|do|da|para|com|jogo|acesso|guia)\b/i,
-  ja: /[\u3040-\u30ff\u3400-\u9fff]/
+  ja: /[\u3040-\u30ff\u3400-\u9fff]/,
+  "zh-cn": /[\u3400-\u9fff]/
 } as const;
 
 describe("localized shared editorial content", () => {
@@ -40,9 +41,9 @@ describe("localized shared editorial content", () => {
     }
   });
 
-  it("localizes every Catalogue detail and publishes it in all five languages", () => {
+  it("localizes every Catalogue detail and publishes it in all supported languages", () => {
     for (const item of itemLibrary) {
-      expect(item.indexLocales, item.slug).toEqual(["en", "ru", "de", "pt-br", "ja"]);
+      expect(item.indexLocales, item.slug).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn"]);
 
       for (const locale of localizedLocales) {
         const localized = getLocalizedItem(item, locale);
@@ -77,10 +78,10 @@ describe("localized shared editorial content", () => {
       const localizedT21 = getLocalizedCatalogueRecords([t21!], locale)[0];
       const localizedGuide = getLocalizedCatalogGuide(weaponsGuide!, locale);
 
-      expect(localizedT21.dataAsOf, locale).toMatch(/Beta|ベータ|бета/i);
+      expect(localizedT21.dataAsOf, locale).toMatch(/Beta|ベータ|бета|封闭测试/i);
       expect(localizedT21.dataAsOf, locale).not.toMatch(/Alpha 1/i);
       expect(localizedGuide.dataAsOf, locale).toMatch(/Alpha 1/i);
-      expect(localizedGuide.dataAsOf, locale).toMatch(/Beta|ベータ|бета/i);
+      expect(localizedGuide.dataAsOf, locale).toMatch(/Beta|ベータ|бета|封闭测试/i);
     }
   });
 
