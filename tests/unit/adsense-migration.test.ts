@@ -33,7 +33,7 @@ describe("AdSense migration", () => {
     }
   });
 
-  it("renders the approved AdSense site script once", async () => {
+  it("renders the approved AdSense site script and account meta tag", async () => {
     const {ADSENSE_CLIENT_ID, GoogleAdsense} = await import(
       "../../src/components/ads/google-adsense"
     );
@@ -44,6 +44,9 @@ describe("AdSense migration", () => {
       "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9912575932665397"
     );
     expect(html).toContain('crossorigin="anonymous"');
+    expect(html).toContain(
+      '<meta name="google-adsense-account" content="ca-pub-9912575932665397"/>'
+    );
   });
 
   it("publishes the matching authorized seller record", () => {
