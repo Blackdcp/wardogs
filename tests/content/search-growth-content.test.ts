@@ -23,12 +23,17 @@ describe("Search Console growth pages", () => {
   it("uses query-matched metadata for the three high-impression English pages", async () => {
     const beta = await loadGuideDocument("en", "wardogs-beta");
     const ps5 = await loadGuideDocument("en", "wardogs-ps5");
+    const release = await loadGuideDocument("en", "wardogs-release-date");
+    const earlyAccess = await loadGuideDocument("en", "wardogs-early-access");
     const weapons = getCatalogGuide("weapons");
 
     expect(beta?.frontmatter.title).toBe("WARDOGS Beta Status: Next Test Date & Access");
     expect(beta?.frontmatter.description).toBe("Check the September 2 WARDOGS Firing Range test time, why it is not an open beta, Steam Playtest access, August beta history, and Early Access.");
-    expect(ps5?.frontmatter.title).toBe("WARDOGS PS5 & Xbox Release: Console Status");
-    expect(ps5?.frontmatter.description).toBe("Check whether WARDOGS is coming to PS5 or Xbox, what BULKHEAD has confirmed for PC Early Access, and where to follow reliable console release news.");
+    expect(ps5?.frontmatter.title).toBe("Is WARDOGS Coming to PS5 or Xbox? Console Status");
+    expect(ps5?.frontmatter.description).toContain("remain unconfirmed");
+    expect(release?.frontmatter.title).toBe("WARDOGS Release Date: September 10 Early Access Launch");
+    expect(earlyAccess?.frontmatter.title).toBe("WARDOGS Early Access: September 10, Price & Roadmap");
+    expect(earlyAccess?.frontmatter.description).toContain("$39.99");
     expect(weapons).toEqual(expect.objectContaining({
         title: "WARDOGS Weapons List: All 38 Documented Weapons",
         description: "Browse all 38 documented WARDOGS pre-release weapon records, including rifles, SMGs, shotguns, launchers, sidearms, and incomplete identifiers with explicit evidence notes."

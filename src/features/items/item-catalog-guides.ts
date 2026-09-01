@@ -361,8 +361,8 @@ export const catalogGuides: readonly CatalogGuide[] = [
   },
   {
     id: "gear",
-    title: "WARDOGS Gear Guide",
-    description: "The observed wearable progression ladder for helmets, armor, and the first recorded backpack.",
+    title: "WARDOGS Gear Guide: Armor, Helmets, Backpacks & Prices",
+    description: "Compare 11 WARDOGS helmets, armor pieces, and backpacks with observed Alpha 1 prices from $200 to $4,000, plus progression notes and pre-release caveats.",
     countLabel: "11 gear records",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
     heroImage: "/images/items/catalog-gear.jpg",

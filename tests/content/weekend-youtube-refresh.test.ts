@@ -89,7 +89,7 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       expect(livestream?.body).toMatch(/18:00 UTC/);
       expect(price?.frontmatter.updatedAt).toBe("2026-08-28");
       expect(price?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9月3日/i);
-      expect(release?.frontmatter.updatedAt).toBe("2026-08-28");
+      expect(release?.frontmatter.updatedAt).toBe(locale === "en" ? "2026-09-01" : "2026-08-28");
       expect(release?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9月3日/i);
     }
   });

@@ -16,4 +16,10 @@ describe("legacy unprefixed paths", () => {
     expect(getLegacyEnglishRedirectPath("/not-a-page")).toBeNull();
     expect(getLegacyEnglishRedirectPath("/en/guides/wardogs-factions")).toBeNull();
   });
+
+  it("removes the obsolete deployment prefix while preserving locale and route", () => {
+    expect(getLegacyEnglishRedirectPath("/wardogs/en")).toBe("/en");
+    expect(getLegacyEnglishRedirectPath("/wardogs/zh-cn/items/weapons")).toBe("/zh-cn/items/weapons");
+    expect(getLegacyEnglishRedirectPath("/wardogs/not-a-locale")).toBeNull();
+  });
 });

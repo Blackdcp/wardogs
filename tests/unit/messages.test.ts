@@ -42,4 +42,21 @@ describe("localized messages", () => {
       expect(guides.metaTitle, `${locale} guide title`).toContain("WARDOGS");
     }
   });
+
+  it("provides complete privacy and terms metadata in every locale", () => {
+    for (const locale of locales) {
+      for (const namespace of ["privacy", "terms"] as const) {
+        const messages = loadMessages(locale)[namespace] as {metaTitle?: unknown; metaDescription?: unknown};
+
+        expect(messages.metaTitle, `${locale} ${namespace} title`).toBeTypeOf("string");
+        expect(messages.metaDescription, `${locale} ${namespace} description`).toBeTypeOf("string");
+        if (typeof messages.metaTitle !== "string" || typeof messages.metaDescription !== "string") continue;
+        const cjk = locale === "ja" || locale === "zh-cn";
+        expect(messages.metaTitle.length, `${locale} ${namespace} title`).toBeGreaterThanOrEqual(cjk ? 16 : 30);
+        expect(messages.metaTitle.length, `${locale} ${namespace} title`).toBeLessThanOrEqual(60);
+        expect(messages.metaDescription.length, `${locale} ${namespace} description`).toBeGreaterThanOrEqual(cjk ? 60 : 120);
+        expect(messages.metaDescription.length, `${locale} ${namespace} description`).toBeLessThanOrEqual(cjk ? 110 : 160);
+      }
+    }
+  });
 });

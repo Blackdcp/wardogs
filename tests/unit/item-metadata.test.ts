@@ -1,6 +1,6 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
-import {getItemBySlug} from "../../src/features/items/item-library";
+import {getItemBySlug, itemLibrary} from "../../src/features/items/item-library";
 import {buildCatalogGuideMetadata, buildItemHubMetadata, buildItemMetadata} from "../../src/lib/item-metadata";
 
 afterEach(() => {
@@ -39,6 +39,24 @@ describe("item metadata", () => {
     expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/catalogue/weapons/amp-9.webp"]);
   });
 
+  it("turns weapon evidence into a descriptive search title and snippet", () => {
+    const amp9 = getItemBySlug("amp-9");
+    expect(amp9).toBeDefined();
+
+    const metadata = buildItemMetadata("en", amp9!);
+    const title = String(metadata.title);
+    const description = String(metadata.description);
+
+    expect(title.length).toBeGreaterThanOrEqual(40);
+    expect(title).toContain("AMP-9");
+    expect(title).toContain("Guide");
+    expect(description.length).toBeGreaterThanOrEqual(140);
+    expect(description.length).toBeLessThanOrEqual(160);
+    expect(description).toContain("$900");
+    expect(description).toContain("9x19mm");
+    expect(description).toContain("Medic XP");
+  });
+
   it("publishes a vehicle model in every locale with its exact committed image", () => {
     const bobcat = getItemBySlug("bobcat");
     expect(bobcat).toBeDefined();
@@ -49,6 +67,46 @@ describe("item metadata", () => {
     expect(metadata.openGraph?.images).toEqual([
       expect.objectContaining({url: "http://localhost:3000/images/catalogue/vehicles/bobcat.webp", alt: "Bobcat light transport"})
     ]);
+  });
+
+  it.each(["bobcat", "l2a6"])("publishes a complete vehicle snippet for %s", (slug) => {
+    const vehicle = getItemBySlug(slug);
+    expect(vehicle).toBeDefined();
+
+    const metadata = buildItemMetadata("en", vehicle!);
+    const title = String(metadata.title);
+    const description = String(metadata.description);
+
+    expect(title.length).toBeGreaterThanOrEqual(40);
+    expect(title).toContain("Vehicle Guide");
+    expect(description.length).toBeGreaterThanOrEqual(140);
+    expect(description.length).toBeLessThanOrEqual(160);
+    expect(description).toContain(vehicle!.observedPrice!);
+  });
+
+  it("uses a complete search title and description for the gear catalogue", () => {
+    const gear = getCatalogGuide("gear");
+    expect(gear).toBeDefined();
+
+    const metadata = buildCatalogGuideMetadata("en", gear!);
+
+    expect(String(metadata.title).length).toBeGreaterThanOrEqual(40);
+    expect(String(metadata.title)).toContain("Armor");
+    expect(String(metadata.description).length).toBeGreaterThanOrEqual(140);
+    expect(String(metadata.description).length).toBeLessThanOrEqual(160);
+  });
+
+  it("keeps every standalone item title and description within search snippet limits", () => {
+    for (const item of itemLibrary) {
+      const metadata = buildItemMetadata("en", item);
+      const title = String(metadata.title);
+      const description = String(metadata.description);
+
+      expect(title.length, `${item.slug} title`).toBeGreaterThanOrEqual(30);
+      expect(title.length, `${item.slug} title`).toBeLessThanOrEqual(60);
+      expect(description.length, `${item.slug} description`).toBeGreaterThanOrEqual(140);
+      expect(description.length, `${item.slug} description`).toBeLessThanOrEqual(160);
+    }
   });
 
   it("keeps model metadata canonical on the requested locale", () => {

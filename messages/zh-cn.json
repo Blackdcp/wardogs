@@ -414,12 +414,16 @@
     "correctionsBody": "当源源发生变化或发现错误时,我们会更新影响的指南,修改其状态语言,并保存链接,让读者验证当前的结论."
   },
   "privacy": {
+    "metaTitle": "WARDOGS Wiki 隐私政策：Cookie、分析与广告",
+    "metaDescription": "了解 WARDOGS Wiki 如何处理 Cookie、网站分析、Google AdSense 广告、外部媒体和链接，以及本站为何不收集任何游戏账号凭证或登录信息。",
     "title": "隐私政策",
     "intro": "本站尽量减少数据收集，并说明外部媒体和链接的工作方式。",
     "content": "我们不经营玩家账户,也不收集游戏凭证.",
     "advertising": "我们使用Google AdSense支持网站运营。Google可能会处理您的IP地址、浏览器和设备信息，并在需要征得同意的地区依据您的选择，使用Cookie或类似技术来投放、衡量及个性化广告。"
   },
   "terms": {
+    "metaTitle": "WARDOGS Wiki 使用条款：攻略规范与免责声明",
+    "metaDescription": "查看 WARDOGS Wiki 的使用规则，包括测试版本资料可能变化、官方来源核验、购买决策、外部链接和账号安全等重要免责声明。",
     "title": "服务条款",
     "intro": "本独立站点内容仅供玩家参考。",
     "content": "游戏信息可能变化。购买、测试资格、平台可用性与账号操作请以 WARDOGS 官方来源为准。"

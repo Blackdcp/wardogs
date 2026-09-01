@@ -16,6 +16,61 @@ export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Local
   return resolveItemRouteTarget(locale, itemPath(item)).locale;
 }
 
+function searchTitle(item: WardogsItem): string {
+  let candidates: string[];
+  if (item.type === "weapons") {
+    candidates = [
+      `WARDOGS ${item.name} Guide: ${item.subtype} Price, Ammo & Unlocks`,
+      `WARDOGS ${item.name} Guide: Price, Ammo & Unlocks`,
+      `WARDOGS ${item.name} Weapon Guide`
+    ];
+  } else if (item.type === "vehicles") {
+    candidates = [
+      `WARDOGS ${item.name} Vehicle Guide: Price, Role & Unlocks`,
+      `WARDOGS ${item.name} Vehicle Guide: Price & Unlocks`,
+      `WARDOGS ${item.name} Vehicle Guide`
+    ];
+  } else {
+    candidates = [
+      `WARDOGS ${item.name} Guide: ${item.subtype}, Price & Unlocks`,
+      `WARDOGS ${item.name} Guide: Price & Unlocks`,
+      `WARDOGS ${item.name} Guide`
+    ];
+  }
+  return candidates.find((candidate) => candidate.length <= 60) ?? candidates.at(-1)!;
+}
+
+function clampSearchDescription(value: string): string {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  const complete = normalized.length >= 140
+    ? normalized
+    : `${normalized} Review the source-checked role, costs, and pre-release limits.`;
+  if (complete.length <= 160) return complete;
+
+  const boundary = complete.lastIndexOf(" ", 159);
+  return `${complete.slice(0, boundary).replace(/[,:;.-]+$/, "")}.`;
+}
+
+function searchDescription(item: WardogsItem): string {
+  const price = item.observedPrice ?? "an unconfirmed price";
+  const gate = item.observedProgressionOrGate ?? "an unconfirmed unlock";
+  const classOrAmmo = item.observedAmmoOrVehicleClass ?? item.subtype;
+
+  if (item.type === "weapons") {
+    return clampSearchDescription(
+      `WARDOGS ${item.name} guide: ${item.subtype} observed at ${price} using ${classOrAmmo}, with ${gate} progression. Check its role, strengths, cautions, source evidence, and pre-release limits.`
+    );
+  }
+  if (item.type === "vehicles") {
+    return clampSearchDescription(
+      `WARDOGS ${item.name} vehicle guide: ${classOrAmmo} at ${price} with ${gate} in Alpha 1. Check its role, strengths, cautions, evidence, and pre-release limits.`
+    );
+  }
+  return clampSearchDescription(
+    `WARDOGS ${item.name} guide: ${item.subtype} observed at ${price} with ${gate}. Check its role, strengths, cautions, source evidence, and pre-release limits.`
+  );
+}
+
 export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   const canonicalLocale = getItemCanonicalLocale(locale, item);
   const canonical = buildLocalizedUrl(canonicalLocale, itemPath(item));
@@ -24,8 +79,8 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   ) as Record<string, string>;
   languages["x-default"] = languages.en ?? canonical;
 
-  const title = `WARDOGS ${item.name} - ${item.subtype}`;
-  const description = item.summary;
+  const title = searchTitle(item);
+  const description = searchDescription(item);
   const image = publicAssetUrl(item.detailImage ?? "/images/og-wardogs.jpg");
   const imageAlt = item.detailImageAlt ?? `WARDOGS ${item.name}`;
 
