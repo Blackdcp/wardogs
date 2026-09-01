@@ -26,7 +26,12 @@ describe("Similarweb growth guide cluster", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt).toBe(slug === "wardogs-controls" ? "2026-08-26" : "2026-08-23");
+        const expectedDate = locale === "zh-cn" && ["wardogs-system-requirements", "wardogs-controls", "wardogs-map", "wardogs-best-settings"].includes(slug)
+          ? "2026-09-01"
+          : slug === "wardogs-controls"
+            ? "2026-08-26"
+            : "2026-08-23";
+        expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources.length).toBeGreaterThan(0);
@@ -150,18 +155,19 @@ describe("Similarweb growth guide cluster", () => {
     expect(ps5?.body).toContain("not confirmed");
   });
 
-  it("promotes new growth pages without dropping established homepage routes", () => {
-    expect(TOP_GUIDE_SLUGS).toHaveLength(18);
+  it("keeps the homepage focused on current high-intent player tasks", () => {
+    expect(TOP_GUIDE_SLUGS).toHaveLength(12);
     expect(TOP_GUIDE_SLUGS).toEqual(expect.arrayContaining([
+      "wardogs-launch-checklist",
+      "wardogs-playtest",
+      "wardogs-livestream",
+      "wardogs-early-access",
       "wardogs-release-date",
-      "wardogs-steam",
-      "wardogs-best-settings",
-      "wardogs-squad-guide",
-      "wardogs-oil-rig-guide",
-      "wardogs-ps5",
+      "wardogs-system-requirements",
+      "wardogs-download",
+      "wardogs-best-weapons-loadouts",
+      "wardogs-fob-guide",
       "wardogs-crash-fix",
-      "wardogs-progression-wipes-guide",
-      "wardogs-community-servers-guide"
     ]));
   });
 

@@ -32,7 +32,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const item = getItemByTypeAndSlug(type, slug);
   if (!item) return {};
-  return buildItemMetadata(locale, getLocalizedItem(item, locale));
+  return buildItemMetadata(locale, item);
 }
 
 function statusTone(item: WardogsItem): "accent" | "warning" | "muted" {
@@ -120,7 +120,7 @@ export default async function ItemDetailPage({params}: PageProps) {
           </dl>
         </section>
 
-        <section className="mt-12 grid gap-6 md:grid-cols-2" aria-label="Evidence summary">
+        <section className="mt-12 grid gap-6 md:grid-cols-2" aria-label={ui.evidenceTitle}>
           <div>
             <h2 className="display-font text-3xl text-white">{observedHeading}</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">

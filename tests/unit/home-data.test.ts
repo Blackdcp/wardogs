@@ -25,10 +25,10 @@ describe("homepage data", () => {
       "2 x 2 km Control Zone"
     ]);
     expect(START_GUIDES).toEqual([
-      {number: "1", slug: "wardogs-beginner-guide", titleKey: "beginner"},
-      {number: "2", slug: "wardogs-launch-checklist", titleKey: "launch"},
-      {number: "3", slug: "wardogs-gameplay", titleKey: "gameplay"},
-      {number: "4", slug: "wardogs-factions", titleKey: "factions"}
+      {number: "1", slug: "wardogs-launch-checklist", titleKey: "launch"},
+      {number: "2", slug: "wardogs-playtest", titleKey: "playtest"},
+      {number: "3", slug: "wardogs-beginner-guide", titleKey: "beginner"},
+      {number: "4", slug: "wardogs-gameplay", titleKey: "gameplay"}
     ]);
     expect(facts.every((fact) => typeof fact === "string")).toBe(true);
   });
@@ -36,23 +36,17 @@ describe("homepage data", () => {
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
       "wardogs-launch-checklist",
-      "wardogs-progression-wipes-guide",
-      "wardogs-community-servers-guide",
-      "wardogs-cargo-guide",
-      "wardogs-ammo-reload-guide",
-      "wardogs-best-weapons-loadouts",
-      "wardogs-armor-damage-ttk-guide",
-      "wardogs-medic-revive-guide",
-      "wardogs-equipment-tools-guide",
-      "wardogs-squad-guide",
-      "wardogs-oil-rig-guide",
-      "wardogs-ps5",
-      "wardogs-crash-fix",
-      "wardogs-beginner-guide",
-      "wardogs-fob-guide",
-      "wardogs-best-settings",
+      "wardogs-playtest",
+      "wardogs-livestream",
+      "wardogs-early-access",
       "wardogs-release-date",
-      "wardogs-steam"
+      "wardogs-price",
+      "wardogs-system-requirements",
+      "wardogs-download",
+      "wardogs-beginner-guide",
+      "wardogs-best-weapons-loadouts",
+      "wardogs-fob-guide",
+      "wardogs-crash-fix"
     ]);
     expect(new Set(TOP_GUIDE_SLUGS).size).toBe(TOP_GUIDE_SLUGS.length);
 
@@ -76,5 +70,10 @@ describe("homepage data", () => {
       titleKey: "betaEnded",
       slug: "wardogs-beta"
     }));
+    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual({
+      status: "confirmed",
+      titleKey: "paidPrepurchase",
+      slug: "wardogs-price"
+    });
   });
 });

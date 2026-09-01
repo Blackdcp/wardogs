@@ -19,7 +19,7 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(guide, `${locale}/wardogs-artillery-guide`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt).toBe("2026-08-28");
+      expect(guide?.frontmatter.updatedAt).toBe(locale === "zh-cn" ? "2026-09-01" : "2026-08-28");
       expect(sourceUrls).toContain("https://www.youtube.com/watch?v=oP9RelmWk6A");
       expect(sourceUrls).toContain("https://www.youtube.com/watch?v=ZFRrDSru7Kg");
       expect(guide?.body).toMatch(/SPH-?2/i);
@@ -51,10 +51,9 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const fob = await loadGuideDocument(locale, "wardogs-fob-guide");
       const money = await loadGuideDocument(locale, "wardogs-money-guide");
 
-      expect(beginner?.frontmatter.updatedAt, locale).toBe("2026-08-28");
-      for (const guide of [fob, money]) {
-        expect(guide?.frontmatter.updatedAt, locale).toBe("2026-08-29");
-      }
+      expect(beginner?.frontmatter.updatedAt, locale).toBe(locale === "zh-cn" ? "2026-09-01" : "2026-08-28");
+      expect(fob?.frontmatter.updatedAt, locale).toBe(locale === "zh-cn" ? "2026-09-01" : "2026-08-29");
+      expect(money?.frontmatter.updatedAt, locale).toBe(locale === "zh-cn" ? "2026-09-01" : "2026-08-29");
 
       expect(beginner?.frontmatter.sources.some(({url}) => url.includes("Msg78ysR_hQ"))).toBe(true);
       expect(beginner?.body).toMatch(/practice range|Übungsplatz|полигон|campo de treino|射撃練習場|训练场|实践范围/i);
@@ -87,9 +86,9 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       expect(livestream?.frontmatter.updatedAt).toBe("2026-09-01");
       expect(livestream?.body).toContain("https://www.twitch.tv/thefpsgamesshow");
       expect(livestream?.body).toMatch(/18:00 UTC/);
-      expect(price?.frontmatter.updatedAt).toBe("2026-08-28");
+      expect(price?.frontmatter.updatedAt).toBe("2026-09-01");
       expect(price?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9月3日/i);
-      expect(release?.frontmatter.updatedAt).toBe(locale === "en" ? "2026-09-01" : "2026-08-28");
+      expect(release?.frontmatter.updatedAt).toBe(locale === "en" || locale === "zh-cn" ? "2026-09-01" : "2026-08-28");
       expect(release?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9月3日/i);
     }
   });

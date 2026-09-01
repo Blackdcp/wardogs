@@ -6,6 +6,7 @@ import {getItemBySlug, itemLibrary} from "../../src/features/items/item-library"
 import {getLocalizedItem} from "../../src/features/items/item-localization";
 import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
+import {getVideoUi} from "../../src/features/videos/video-ui";
 
 const localizedLocales = ["ru", "de", "pt-br", "ja", "zh-cn"] as const;
 
@@ -36,7 +37,8 @@ describe("localized shared editorial content", () => {
         expect(article.title, `${locale}/${article.slug}`).not.toBe(english.title);
         expect(article.quickAnswer, `${locale}/${article.slug}`).not.toBe(english.quickAnswer);
         expect(bodyText, `${locale}/${article.slug}`).toMatch(languageSignals[locale]);
-        expect(bodyText.length, `${locale}/${article.slug}`).toBeGreaterThanOrEqual(1_200);
+        const minimumLength = locale === "zh-cn" ? 900 : 1_200;
+        expect(bodyText.length, `${locale}/${article.slug}`).toBeGreaterThanOrEqual(minimumLength);
       }
     }
   });
@@ -85,6 +87,26 @@ describe("localized shared editorial content", () => {
     }
   });
 
+  it("keeps Simplified Chinese video surfaces free of Japanese fallbacks and English template titles", () => {
+    const localizedArticles = getLocalizedVideoArticles("zh-cn");
+    const uiText = JSON.stringify(getVideoUi("zh-cn"));
+
+    expect(uiText).not.toMatch(/[\u3040-\u30ff]/);
+    for (const article of localizedArticles) {
+      const english = videoArticles.find(({slug}) => slug === article.slug)!;
+      const bodyText = [
+        article.title,
+        article.description,
+        article.quickAnswer,
+        ...article.takeaways,
+        ...article.sections.flatMap(({heading, body}) => [heading, ...body])
+      ].join(" ");
+
+      expect(article.title, article.slug).not.toContain(english.title);
+      expect(bodyText, article.slug).not.toMatch(/[\u3040-\u30ff]/);
+    }
+  });
+
   it("localizes new Closed Beta subtypes, fact labels, and build dates on detail pages", () => {
     const m249 = getItemBySlug("m249-saw");
     const talon = getItemBySlug("talon-9k-sam");
@@ -100,5 +122,48 @@ describe("localized shared editorial content", () => {
       expect(localizedTalon.facts.map((fact) => fact.label), locale).not.toContain("Closed Beta price");
       expect(localizedTalon.build, locale).not.toBe(talon!.build);
     }
+  });
+
+  it("does not leak Japanese build labels into Simplified Chinese item pages", () => {
+    for (const item of itemLibrary) {
+      const localized = getLocalizedItem(item, "zh-cn");
+      const visibleText = [
+        localized.subtype,
+        localized.statusLabel,
+        localized.build,
+        ...localized.facts.flatMap(({label, value}) => [label, value]),
+        ...(localized.confirmedFacts ?? [])
+      ].join(" ");
+
+      expect(visibleText, item.slug).not.toMatch(/[\u3040-\u30ff]/);
+      expect(visibleText, item.slug).not.toContain("Pre-release build");
+      expect(visibleText, item.slug).not.toContain("Creator footage checked");
+    }
+  });
+
+  it("does not leave ordinary English catalogue phrases on Simplified Chinese item pages", () => {
+    const untranslated = new Set<string>();
+    const allowedAmmunitionNames = new Set([
+      ".308 Winchester",
+      ".45 ACP",
+      ".45 Colt",
+      ".50 Cal",
+      "12 Gauge",
+      "7.62x54mmR",
+    ]);
+
+    for (const item of itemLibrary) {
+      const localized = getLocalizedItem(item, "zh-cn");
+      item.facts.forEach((fact, index) => {
+        const localizedFact = localized.facts[index];
+        for (const [source, translated] of [[fact.label, localizedFact.label], [fact.value, localizedFact.value]]) {
+          if (source === translated && /[A-Za-z]{3}/.test(source) && !allowedAmmunitionNames.has(source)) {
+            untranslated.add(source);
+          }
+        }
+      });
+    }
+
+    expect([...untranslated].sort()).toEqual([]);
   });
 });

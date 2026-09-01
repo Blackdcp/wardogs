@@ -1,5 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
+import {catalogueMediaSources} from "../../src/features/catalogue/catalogue-media-sources";
+import {getItemByTypeAndSlug} from "../../src/features/items/item-library";
 
 describe("catalogue competitive expansion contract", () => {
   it("publishes the documented pre-launch weapon and vehicle coverage", () => {
@@ -25,5 +27,16 @@ describe("catalogue competitive expansion contract", () => {
 
     expect(expandedRecords.every((record) => record.dataAsOf.length > 0)).toBe(true);
     expect(expandedRecords.every((record) => record.sourceNotes.length > 0)).toBe(true);
+  });
+
+  it("renders source-linked imagery on the high-demand Mortar detail route", () => {
+    const mortar = getItemByTypeAndSlug("weapons", "mortar");
+
+    expect(mortar?.detailImage).toBe("/images/catalogue/vehicles/l81-mortar.webp");
+    expect(mortar?.detailImageAlt).toMatch(/L81 mortar/i);
+    expect(catalogueMediaSources[mortar!.detailImage!]).toEqual(expect.objectContaining({
+      sourceUrl: "https://www.youtube.com/watch?v=kg46BZ1H2W0",
+      capturedAt: "01:16",
+    }));
   });
 });

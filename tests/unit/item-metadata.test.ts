@@ -109,6 +109,45 @@ describe("item metadata", () => {
     }
   });
 
+  it("writes Simplified Chinese item metadata without English search templates", () => {
+    const mortar = getItemBySlug("mortar");
+    expect(mortar).toBeDefined();
+
+    const metadata = buildItemMetadata("zh-cn", mortar!);
+    const title = String(metadata.title);
+    const description = String(metadata.description);
+
+    expect(title).toContain("攻略");
+    expect(title).not.toMatch(/\b(?:Guide|Price|Ammo|Unlocks)\b/);
+    expect(description).toMatch(/[\u3400-\u9fff]/);
+    expect(description).not.toContain("Check its role");
+    expect(description.length).toBeGreaterThanOrEqual(140);
+    expect(description.length).toBeLessThanOrEqual(160);
+  });
+
+  it("keeps every localized item snippet complete and within search limits", () => {
+    const localizedSignals = {
+      ru: /[А-Яа-яЁё]/,
+      de: /\b(?:der|die|das|und|mit|für|Spiel|Guide)\b/i,
+      "pt-br": /\b(?:o|a|de|do|da|para|com|jogo|guia)\b/i,
+      ja: /[\u3040-\u30ff\u3400-\u9fff]/,
+      "zh-cn": /[\u3400-\u9fff]/,
+    } as const;
+
+    for (const locale of ["ru", "de", "pt-br", "ja", "zh-cn"] as const) {
+      for (const item of itemLibrary) {
+        const metadata = buildItemMetadata(locale, item);
+        const title = String(metadata.title);
+        const description = String(metadata.description);
+
+        expect(title.length, `${locale}/${item.slug} title`).toBeLessThanOrEqual(60);
+        expect(description.length, `${locale}/${item.slug} description`).toBeGreaterThanOrEqual(140);
+        expect(description.length, `${locale}/${item.slug} description`).toBeLessThanOrEqual(160);
+        expect(`${title} ${description}`, `${locale}/${item.slug}`).toMatch(localizedSignals[locale]);
+      }
+    }
+  });
+
   it("keeps model metadata canonical on the requested locale", () => {
     const bobcat = getItemBySlug("bobcat");
     expect(bobcat).toBeDefined();
@@ -122,16 +161,19 @@ describe("item metadata", () => {
     expect(metadata.openGraph?.url).toBe("http://localhost:3000/ru/items/vehicles/bobcat");
   });
 
-  it("keeps legacy item social metadata on the generic fallback image", () => {
+  it("uses the mortar evidence image in social metadata", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();
 
     const metadata = buildItemMetadata("en", mortar!);
 
     expect(metadata.openGraph?.images).toEqual([
-      expect.objectContaining({url: "http://localhost:3000/images/og-wardogs.jpg", alt: "WARDOGS Mortar"})
+      expect.objectContaining({
+        url: "http://localhost:3000/images/catalogue/vehicles/l81-mortar.webp",
+        alt: "L81 mortar emplacement shown in WARDOGS pre-release gameplay",
+      })
     ]);
-    expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/og-wardogs.jpg"]);
+    expect(metadata.twitter?.images).toEqual(["http://localhost:3000/images/catalogue/vehicles/l81-mortar.webp"]);
   });
 
   it("keeps localized catalogue pages indexable with five-language alternates", () => {

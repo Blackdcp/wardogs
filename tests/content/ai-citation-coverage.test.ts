@@ -83,7 +83,7 @@ describe("AI citation query coverage", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-early-access");
       const searchable = `${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
-      const expectedDate = locale === "en" ? "2026-09-01" : "2026-08-24";
+      const expectedDate = locale === "en" || locale === "zh-cn" ? "2026-09-01" : "2026-08-24";
 
       expect(guide?.frontmatter.updatedAt, locale).toBe(expectedDate);
       expect(searchable, `${locale} date`).toContain(locale === "zh-cn" ? "2026年9月10日" : "September 10, 2026");

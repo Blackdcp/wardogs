@@ -62,13 +62,15 @@ describe("item structured data", () => {
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
-  it("keeps legacy Article schema on the generic fallback image", () => {
+  it("uses the mortar evidence image in Article schema", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();
 
     const jsonLd = buildItemArticleJsonLd("en", mortar!);
 
-    expect(jsonLd[0]).toMatchObject({image: "http://localhost:3000/images/og-wardogs.jpg"});
+    expect(jsonLd[0]).toMatchObject({
+      image: "http://localhost:3000/images/catalogue/vehicles/l81-mortar.webp",
+    });
   });
 
   it("uses collection schema for item hubs", () => {

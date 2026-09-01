@@ -24,7 +24,14 @@ describe("2026-08-29 launch and logistics expansion", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt).toBe(slug === "wardogs-launch-checklist" ? "2026-09-01" : "2026-08-29");
+        const reviewedToday = slug === "wardogs-launch-checklist"
+          || (locale === "zh-cn" && [
+            "wardogs-cargo-guide",
+            "wardogs-ammo-reload-guide",
+            "wardogs-squad-guide",
+            "wardogs-oil-rig-guide",
+          ].includes(slug));
+        expect(guide?.frontmatter.updatedAt).toBe(reviewedToday ? "2026-09-01" : "2026-08-29");
         expect(guide?.frontmatter.sources.length).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug} body`).toBeGreaterThan(1800);
       }
@@ -90,7 +97,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-ps5");
 
-      expect(guide?.frontmatter.updatedAt).toBe(locale === "en" ? "2026-09-01" : "2026-08-29");
+      expect(guide?.frontmatter.updatedAt).toBe(locale === "en" || locale === "zh-cn" ? "2026-09-01" : "2026-08-29");
       expect(guide?.frontmatter.title).toMatch(/PS5/i);
       expect(guide?.frontmatter.title).toMatch(/Xbox/i);
       expect(guide?.frontmatter.description).toMatch(/PS5/i);
@@ -100,13 +107,14 @@ describe("2026-08-29 launch and logistics expansion", () => {
   });
 
   it("promotes launch preparation ahead of ended playtest content", () => {
-    expect(START_GUIDES[1].slug).toBe("wardogs-launch-checklist");
+    expect(START_GUIDES[0].slug).toBe("wardogs-launch-checklist");
+    expect(START_GUIDES[1].slug).toBe("wardogs-playtest");
     expect(TOP_GUIDE_SLUGS.slice(0, 5)).toEqual([
       "wardogs-launch-checklist",
-      "wardogs-progression-wipes-guide",
-      "wardogs-community-servers-guide",
-      "wardogs-cargo-guide",
-      "wardogs-ammo-reload-guide",
+      "wardogs-playtest",
+      "wardogs-livestream",
+      "wardogs-early-access",
+      "wardogs-release-date",
     ]);
   });
 });

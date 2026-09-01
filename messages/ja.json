@@ -46,21 +46,23 @@
           "firingRangeTest": {"title": "9月2日に限定射撃場テスト", "description": "バックエンドとログイン待機列のテストは17:00 UTC開始です。オープンベータではなく、サーバー参加は保証されません。"},
           "betaEnded": {"title": "8月のClosed Betaは終了", "description": "サーバーは8月24日に終了しました。この履歴は9月2日の限定バックエンドテストとは別です。"},
           "oneMillionWishlists": {"title": "Steamウィッシュリスト100万件", "description": "BULKHEADが8月14日に確認した関心度の節目で、同時接続数ではありません。"},
+          "paidPrepurchase": {"title": "有料の予約購入を受付中", "description": "米国Steamは通常版39.99ドル、Supporter Edition 49.99ドルを表示中です。実際の支払額は地域ストアのカートを確認してください。"},
           "fpsGameShow": {"title": "FPS Games Showは9月3日", "description": "BULKHEADは英国夏時間19時の大型WARDOGS発表を予告していますが、内容は未確認です。"},
           "steamEarlyAccess": {"title": "Steam PC早期アクセス", "description": "SteamのWindows PC版早期アクセスが公式に確認されています。"},
           "hundredPlayers": {"title": "100人・3チームの戦争", "description": "WARDOGSは最大100人を3チームに分けて戦う設計です。"},
           "persistentCash": {"title": "持ち越される資金経済", "description": "資金は保持され、ライフや試合をまたぐロードアウト判断に影響します。"},
           "ps5Release": {"title": "PS5版", "description": "PlayStation 5版の発売は確認されていません。"},
-          "freeToPlay": {"title": "基本プレイ無料", "description": "基本プレイ無料とは発表されていません。購入前にSteamの表示を確認してください。"}
+          "freeToPlay": {"title": "基本プレイ無料の状況", "description": "現在はSteamの有料予約購入であり、基本プレイ無料モデルは発表されていません。"}
         }
       }
     },
     "catalogue": {
       "heading": "WARDOGSカタログ",
-      "weapons": {"title": "武器", "count": "画像付き{count}モデル", "imageAlt": "WARDOGS武器カタログ"},
-      "vehicles": {"title": "車両", "count": "画像付き{count}車両", "imageAlt": "WARDOGS車両カタログ"},
+      "publishedModels": "公開済みモデルガイド",
+      "weapons": {"title": "武器", "count": "発売前ビルドの記録{count}件", "imageAlt": "WARDOGS武器カタログ"},
+      "vehicles": {"title": "車両", "count": "発売前ビルドの記録{count}件", "imageAlt": "WARDOGS車両カタログ"},
       "ammo": {"title": "弾薬", "count": "{count}口径", "imageAlt": "5.56x45mm弾薬箱"},
-      "attachments": {"title": "アタッチメント", "count": "画像付き{count}種類", "imageAlt": "WARDOGS武器アタッチメント"},
+      "attachments": {"title": "アタッチメント", "count": "確認済み記録{count}件", "imageAlt": "WARDOGS武器アタッチメント"},
       "gear": {"title": "装備", "count": "{count}件の装備データ", "imageAlt": "WARDOGS重装甲"},
       "loadouts": {"title": "ロードアウト", "count": "{count}つの予算帯", "imageAlt": "WARDOGSロードアウトカタログ"}
     },
@@ -115,7 +117,7 @@
     "finalDescription": "独立系攻略ライブラリで、参加方法、分隊の役割、車両、目標、確認済みの発売予定を準備できます。",
     "final": {"eyebrow": "出撃準備", "guidesCta": "攻略を見る", "steamCta": "Steamを開く"}
   },
-  "guides": {"metaTitle": "WARDOGS 攻略ガイド - 発売準備、ゲームプレイ、武器、トラブル対策", "title": "WARDOGS攻略", "description": "発売、貨物輸送、弾薬、分隊、車両、FOB兵站、ゲームプレイを扱う39の攻略です。", "count": "39攻略トピック", "read": "攻略を読む"},
+  "guides": {"metaTitle": "WARDOGS 攻略ガイド - 発売準備、ゲームプレイ、武器、トラブル対策", "title": "WARDOGS攻略", "description": "発売、貨物輸送、弾薬、分隊、車両、FOB兵站、ゲームプレイを扱う{count}件の攻略です。", "count": "{count}件の攻略", "read": "攻略を読む"},
   "news": {
     "metaTitle": "WARDOGSニュース - ベータ、早期アクセス、Steam更新",
     "metaDescription": "WARDOGSのベータ日程、Steam早期アクセス、価格、対応機種、事前ダウンロード、ゲーム更新を確認済み情報に基づいて追跡します。",
@@ -130,7 +132,7 @@
         "firingRangeTest": {"title": "9月2日に限定射撃場テストを実施", "description": "17:00 UTCから射撃場、バックエンド、ログイン待機列を検証します。少数サーバーが稼働する可能性はありますが、参加は保証されません。"},
         "steamPreorder": {"title": "Steamの予約購入とアクセス申請が開始", "description": "ウィッシュリスト、アクセス申請、予約、価格、インストール権限はSteamが公式窓口です。"},
         "closedBeta": {"title": "Closed Betaは2026年8月24日に終了", "description": "サーバー期間は終了し、次回BetaまたはPlaytestの日程は発表されていません。"},
-        "betaRecap": {"title": "BULKHEADがBeta振り返りと今後を公開", "description": "ユニーク参加者は約50万人、同時接続ピークは10万人超となり、Early Accessに向けた進行とメタゲームの改善が示されました。"},
+        "betaRecap": {"title": "BULKHEADがClosed Betaの振り返りを公開", "description": "公式の振り返りではテスト週末の終了が確認され、WARDOGSの次の大きな発表は9月3日のFPS Games Showで行われると案内されました。"},
         "earlyAccess": {"title": "Steam早期アクセスは2026年9月10日開始", "description": "Windows PC向けSteam早期アクセスが予定されています。正式版の日程は未発表です。"},
         "ps5": {"title": "PS5版の発売日は未確認", "description": "公式製品ページはSteamのWindows PC版のみを発表しており、家庭用機とクロスプレイは未確認です。"},
         "preload": {"title": "Closed Betaのプリロードは終了", "description": "旧WARDOGS Playtestは終了済みBeta用です。Early Accessプリロード日は未確認です。"},
@@ -143,7 +145,7 @@
       "title": "更新情報の分類方法",
       "items": {
         "official": {"title": "公式情報を優先", "description": "日程、価格、機種、参加条件、機能はSteam、Team17、BULKHEAD、WARDOGS公式情報で確認します。"},
-        "rumor": {"title": "噂は噂として表示", "description": "PS5、基本無料、サービス変更、ベータ延長は一次情報が出るまで未確認のまま扱います。"},
+        "rumor": {"title": "噂は噂として表示", "description": "PS5、正確な解禁時刻、開始時のサーバー地域、追加ベータは一次情報が出るまで未確認として扱います。"},
         "refresh": {"title": "共有前に再確認", "description": "発売前は状況が速く変化するため、確認・更新できる詳細攻略へ案内します。"}
       }
     }
@@ -154,5 +156,5 @@
   "editorial": {"metaTitle": "WARDOGS Wiki 編集方針と調査基準", "metaDescription": "WARDOGS Wikiが公式情報、クリエイター映像、ビルド依存情報をどう検証し、誤りを訂正して攻略を更新するかを説明します。", "eyebrow": "編集基準", "title": "WARDOGSの調査方法", "intro": "WARDOGS Wikiは独立したファンメディアです。公式情報、確認映像、コミュニティ報告、未解決情報を区別しながら、プレイヤーの疑問に答えます。", "teamTitle": "独立したプレイヤー優先の調査", "teamBody": "編集チームはBULKHEAD、Team17、Steam、クリエイター、広告主と提携せず、このゲームに特化した攻略を維持しています。商業関係で結論や情報源の表示を変えません。", "methodTitle": "検証方法", "officialTitle": "公式情報を最優先", "officialBody": "発売日、価格、対応機種、参加条件、機能は、公開前にSteam、Team17、BULKHEAD、WARDOGS公式チャンネルで確認します。", "footageTitle": "映像は証拠であり最終仕様書ではない", "footageBody": "クリエイター動画は操作、試合進行、装備、車両、戦術の説明に使います。アルファやベータの数値は、現行の公式情報が確認するまでビルド依存として表示します。", "statusTitle": "確認済みと不確定情報を分離", "statusBody": "噂、コミュニティ観察、未判明事項を明示します。答えがない内容を確定した発売約束や最終バランスとして書きません。", "updatesTitle": "実質的な更新だけ日付を変更", "updatesBody": "情報源や案内を意味のある形で再確認した場合のみ最終確認日を更新します。検索上新しく見せるだけの再日付は行いません。", "correctionsTitle": "訂正も記録の一部", "correctionsBody": "情報源の変更や誤りが見つかった場合、対象攻略と状態表示を修正し、読者が現在の結論を検証できるリンクを残します。"},
   "privacy": {"metaTitle": "WARDOGS Wikiプライバシーポリシー：Cookie・解析・広告", "metaDescription": "WARDOGS WikiにおけるCookie、アクセス解析、Google AdSense広告、外部メディアとリンクの扱い、ゲームアカウント情報を収集しない方針を説明します。", "title": "プライバシーポリシー", "intro": "このファン攻略はデータ収集を最小限にし、外部メディアとリンクの動作を説明します。", "content": "当サイトはプレイヤーアカウントを運営せず、ゲームの認証情報を収集しません。外部サービスを開いた後は各社のプライバシーポリシーが適用されます。", "advertising": "当サイトの運営費用を賄うためGoogle AdSenseを使用します。Googleは、同意が必要な地域では同意に基づき、広告の配信、測定、パーソナライズのためにIPアドレス、ブラウザや端末情報、Cookie等を処理する場合があります。"},
   "terms": {"metaTitle": "WARDOGS Wiki利用規約：攻略情報の注意事項と免責", "metaDescription": "WARDOGS Wikiの利用条件、テスト版情報の変更可能性、公式情報の確認、購入判断、外部リンク、アカウント保護に関する注意事項をまとめています。", "title": "利用規約", "intro": "この独立系攻略をコミュニティ向け情報として利用してください。", "content": "ゲーム情報は変更される場合があります。購入、参加期間、対応機種、アカウント操作はWARDOGS公式情報で確認してください。"},
-  "notFound": {"title": "ページが見つかりません", "description": "指定されたページは、確認済みの34トピック攻略ライブラリに存在しません。", "home": "トップへ戻る", "guides": "攻略を見る"}
+  "notFound": {"title": "ページが見つかりません", "description": "指定されたページは、現在の確認済み攻略ライブラリに存在しません。", "home": "トップへ戻る", "guides": "攻略を見る"}
 }

@@ -41,7 +41,8 @@ describe("WARDOGS Closed Beta reference content", () => {
     }
     expect(TOP_GUIDE_SLUGS).not.toContain("wardogs-twitch-drops");
     expect(TOP_GUIDE_SLUGS).toContain("wardogs-launch-checklist");
-    expect(START_GUIDES[0].slug).toBe("wardogs-beginner-guide");
+    expect(START_GUIDES[0].slug).toBe("wardogs-launch-checklist");
+    expect(START_GUIDES[1].slug).toBe("wardogs-playtest");
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",
       titleKey: "betaEnded",
@@ -49,8 +50,8 @@ describe("WARDOGS Closed Beta reference content", () => {
     }));
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",
-      titleKey: "oneMillionWishlists",
-      slug: "wardogs-steam",
+      titleKey: "paidPrepurchase",
+      slug: "wardogs-price",
     }));
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",

@@ -20,8 +20,11 @@ export function generateStaticParams() {
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
-  const t = await getTranslations({locale, namespace: "guides"});
-  return buildPageMetadata(locale, "/guides", t("metaTitle"), t("description"));
+  const [t, guides] = await Promise.all([
+    getTranslations({locale, namespace: "guides"}),
+    buildGuideIndex(locale)
+  ]);
+  return buildPageMetadata(locale, "/guides", t("metaTitle"), t("description", {count: guides.length}));
 }
 
 export default async function GuidesPage({params}: PageProps) {
@@ -44,9 +47,9 @@ export default async function GuidesPage({params}: PageProps) {
       <JsonLd data={buildGuideIndexJsonLd(locale, guides)} />
       <section className="border-b border-[#2c3631] bg-[#111512] py-16 md:py-24">
         <div className="site-container">
-          <p className="font-mono text-xs uppercase text-[#68bd8d]">{t("count")}</p>
+          <p className="font-mono text-xs uppercase text-[#68bd8d]">{t("count", {count: guides.length})}</p>
           <h1 className="display-font mt-4 max-w-4xl text-5xl leading-none text-white md:text-7xl">{t("title")}</h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">{t("description")}</p>
+          <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">{t("description", {count: guides.length})}</p>
         </div>
       </section>
       <section className="site-container py-10 md:py-12">

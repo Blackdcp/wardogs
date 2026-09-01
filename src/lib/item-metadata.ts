@@ -3,6 +3,7 @@ import type {Locale} from "@/config/site";
 import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import type {WardogsItem} from "@/features/items/item-library";
+import {getLocalizedItem} from "@/features/items/item-localization";
 import {getItemUi} from "@/features/items/item-ui";
 import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {buildLocalizedUrl, buildPageMetadata, languageTags} from "./metadata";
@@ -16,9 +17,31 @@ export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Local
   return resolveItemRouteTarget(locale, itemPath(item)).locale;
 }
 
-function searchTitle(item: WardogsItem): string {
+function searchTitle(locale: Locale, item: WardogsItem): string {
   let candidates: string[];
-  if (item.type === "weapons") {
+  if (locale === "zh-cn") {
+    candidates = item.type === "vehicles"
+      ? [`WARDOGS ${item.name} 载具攻略：价格、定位与解锁`, `WARDOGS ${item.name} 载具攻略`]
+      : item.type === "weapons"
+        ? [`WARDOGS ${item.name} 武器攻略：${item.subtype}、价格与解锁`, `WARDOGS ${item.name} 武器攻略`]
+        : [`WARDOGS ${item.name} 攻略：${item.subtype}、价格与用途`, `WARDOGS ${item.name} 攻略`];
+  } else if (locale === "ja") {
+    candidates = item.type === "vehicles"
+      ? [`WARDOGS ${item.name}車両攻略：価格・役割・解除条件`, `WARDOGS ${item.name}車両攻略`]
+      : [`WARDOGS ${item.name}攻略：${item.subtype}・価格・解除条件`, `WARDOGS ${item.name}攻略`];
+  } else if (locale === "ru") {
+    candidates = item.type === "vehicles"
+      ? [`WARDOGS ${item.name}: гайд по технике, цене и открытию`, `WARDOGS ${item.name}: гайд по технике`]
+      : [`WARDOGS ${item.name}: гайд по ${item.subtype}, цене и открытию`, `WARDOGS ${item.name}: гайд`];
+  } else if (locale === "de") {
+    candidates = item.type === "vehicles"
+      ? [`WARDOGS ${item.name} Fahrzeug-Guide: Preis, Rolle & Freischaltung`, `WARDOGS ${item.name} Fahrzeug-Guide`]
+      : [`WARDOGS ${item.name} Guide: ${item.subtype}, Preis & Freischaltung`, `WARDOGS ${item.name} Guide`];
+  } else if (locale === "pt-br") {
+    candidates = item.type === "vehicles"
+      ? [`Guia do veículo ${item.name} em WARDOGS: preço, função e desbloqueio`, `Guia do ${item.name} em WARDOGS`]
+      : [`Guia de ${item.name} em WARDOGS: ${item.subtype}, preço e desbloqueio`, `Guia de ${item.name} em WARDOGS`];
+  } else if (item.type === "weapons") {
     candidates = [
       `WARDOGS ${item.name} Guide: ${item.subtype} Price, Ammo & Unlocks`,
       `WARDOGS ${item.name} Guide: Price, Ammo & Unlocks`,
@@ -40,18 +63,37 @@ function searchTitle(item: WardogsItem): string {
   return candidates.find((candidate) => candidate.length <= 60) ?? candidates.at(-1)!;
 }
 
-function clampSearchDescription(value: string): string {
+function clampSearchDescription(value: string, locale: Locale = "en"): string {
   const normalized = value.replace(/\s+/g, " ").trim();
+  const fillers: Record<Locale, string> = {
+    en: "Review the source-checked role, costs, and pre-release limits.",
+    ru: "Сверяйте роль, стоимость, источники и ограничения текущей версии.",
+    de: "Prüfe Rolle, Kosten, Quellen und die Grenzen der aktuellen Version.",
+    "pt-br": "Confira função, custos, fontes e limites da versão atual.",
+    ja: "役割、費用、情報源、現在のビルドでの制限を確認できます。",
+    "zh-cn": "页面同时标注来源、版本边界与尚未确认的内容，便于出战前复核。"
+  };
   const complete = normalized.length >= 140
     ? normalized
-    : `${normalized} Review the source-checked role, costs, and pre-release limits.`;
+    : `${normalized} ${fillers[locale]}`;
   if (complete.length <= 160) return complete;
+
+  if (locale === "zh-cn" || locale === "ja") {
+    const window = complete.slice(0, 160);
+    const punctuation = [..."。！？；"].reduce((last, mark) => Math.max(last, window.lastIndexOf(mark)), -1);
+    if (punctuation >= 139) return window.slice(0, punctuation + 1);
+    return `${complete.slice(0, 159).replace(/[、，；。]+$/, "")}。`;
+  }
 
   const boundary = complete.lastIndexOf(" ", 159);
   return `${complete.slice(0, boundary).replace(/[,:;.-]+$/, "")}.`;
 }
 
-function searchDescription(item: WardogsItem): string {
+function searchDescription(locale: Locale, item: WardogsItem): string {
+  if (locale !== "en") {
+    return clampSearchDescription(`WARDOGS ${item.name}: ${item.description}`, locale);
+  }
+
   const price = item.observedPrice ?? "an unconfirmed price";
   const gate = item.observedProgressionOrGate ?? "an unconfirmed unlock";
   const classOrAmmo = item.observedAmmoOrVehicleClass ?? item.subtype;
@@ -72,23 +114,24 @@ function searchDescription(item: WardogsItem): string {
 }
 
 export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
-  const canonicalLocale = getItemCanonicalLocale(locale, item);
-  const canonical = buildLocalizedUrl(canonicalLocale, itemPath(item));
+  const localizedItem = getLocalizedItem(item, locale);
+  const canonicalLocale = getItemCanonicalLocale(locale, localizedItem);
+  const canonical = buildLocalizedUrl(canonicalLocale, itemPath(localizedItem));
   const languages = Object.fromEntries(
-    item.indexLocales.map((itemLocale) => [itemLocale, buildLocalizedUrl(itemLocale, itemPath(item))])
+    localizedItem.indexLocales.map((itemLocale) => [itemLocale, buildLocalizedUrl(itemLocale, itemPath(localizedItem))])
   ) as Record<string, string>;
   languages["x-default"] = languages.en ?? canonical;
 
-  const title = searchTitle(item);
-  const description = searchDescription(item);
-  const image = publicAssetUrl(item.detailImage ?? "/images/og-wardogs.jpg");
-  const imageAlt = item.detailImageAlt ?? `WARDOGS ${item.name}`;
+  const title = searchTitle(locale, localizedItem);
+  const description = searchDescription(locale, localizedItem);
+  const image = publicAssetUrl(localizedItem.detailImage ?? "/images/og-wardogs.jpg");
+  const imageAlt = localizedItem.detailImageAlt ?? `WARDOGS ${localizedItem.name}`;
 
   return {
     title,
     description,
     alternates: {canonical, languages},
-    keywords: `WARDOGS ${item.name}, WARDOGS items, WARDOGS ${item.type}, WARDOGS guide`,
+    keywords: `WARDOGS ${localizedItem.name}, WARDOGS items, WARDOGS ${localizedItem.type}, WARDOGS guide`,
     openGraph: {
       type: "article",
       locale: languageTags[canonicalLocale],

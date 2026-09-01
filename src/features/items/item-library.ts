@@ -2,6 +2,7 @@ import type {Locale} from "@/config/site";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {
+  buildingMortarVideo,
   gameplayVideo,
   mortarsVideo,
   officialSteam,
@@ -160,7 +161,10 @@ const legacyItemLibrary: readonly WardogsItem[] = [
     ],
     relatedGuides: ["wardogs-gameplay", "wardogs-factions", "wardogs-playtest"],
     relatedItems: ["mobile-fob", "tank"],
-    sources: [mortarsVideo, sevenThingsVideo, officialSteam],
+    sources: [mortarsVideo, buildingMortarVideo, sevenThingsVideo, officialSteam],
+    detailImage: "/images/catalogue/vehicles/l81-mortar.webp",
+    detailImageAlt: "L81 mortar emplacement shown in WARDOGS pre-release gameplay",
+    detailUpdatedAt: "2026-09-01",
     priority: 1,
     indexLocales: ["en", "ru"]
   },

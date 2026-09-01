@@ -40,6 +40,13 @@ export const gameplayVideo: ItemSource = {
   lastChecked: "2026-08-16"
 };
 
+export const buildingMortarVideo: ItemSource = {
+  label: "The Ultimate WARDOGS Building Guide (mortar at 01:16)",
+  url: "https://www.youtube.com/watch?v=kg46BZ1H2W0&t=76s",
+  kind: "creator",
+  lastChecked: "2026-09-01"
+};
+
 export const weaponsCatalogueVideo: ItemSource = {
   label: "Every Weapon Tested in WARDOGS",
   url: "https://www.youtube.com/watch?v=9mSvZyAk62E",

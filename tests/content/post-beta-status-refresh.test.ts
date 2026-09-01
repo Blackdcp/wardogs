@@ -22,7 +22,7 @@ const releaseDatePhrases = {
   ru: /10 сентября 2026/i,
   "pt-br": /10 de setembro de 2026/i,
   ja: /2026年9月10日/i,
-  "zh-cn": /2026年9月10日/i,
+  "zh-cn": /2026\s*年\s*9\s*月\s*10\s*日/i,
 } as const;
 
 const preloadEndedPhrases = {
@@ -63,7 +63,7 @@ describe("WARDOGS post-beta status refresh", () => {
         expect(guide?.frontmatter.updatedAt).toBe("2026-09-01");
         expect(searchable, `${locale}/${slug} should say the beta ended`).toMatch(endedPhrases[locale]);
         expect(guide?.frontmatter.sources, `${locale}/${slug} should cite the current limited test`).toContainEqual(expect.objectContaining({
-          url: "https://x.com/WARDOGS/status/2094076336134308024",
+          url: "https://x.com/WARDOGS/status/2094074731972419976",
           checkedAt: "2026-09-01",
         }));
         expect(searchable).toMatch(releaseDatePhrases[locale]);
@@ -88,7 +88,7 @@ describe("WARDOGS post-beta status refresh", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt).toBe("2026-08-24");
+        expect(guide?.frontmatter.updatedAt).toBe(locale === "zh-cn" ? "2026-09-01" : "2026-08-24");
         expect(searchable, `${locale}/${slug} should say the beta ended`).toMatch(endedPhrases[locale]);
         expect(searchable).toMatch(releaseDatePhrases[locale]);
       }
@@ -114,7 +114,12 @@ describe("WARDOGS post-beta status refresh", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt).toBe("2026-08-24");
+        const expectedUpdatedAt = slug === "wardogs-steam"
+          || (locale === "zh-cn" && ["wardogs-discord", "wardogs-discord-account-verification", "wardogs-twitter"].includes(slug))
+          ? "2026-09-01"
+          : "2026-08-24";
+
+        expect(guide?.frontmatter.updatedAt).toBe(expectedUpdatedAt);
         expect(searchable, `${locale}/${slug} should say the beta ended`).toMatch(endedPhrases[locale]);
         expect(searchable, `${locale}/${slug} should point to Early Access`).toMatch(releaseDatePhrases[locale]);
       }
@@ -128,10 +133,10 @@ describe("WARDOGS post-beta status refresh", () => {
       const earlyAccess = await loadGuideDocument(locale, "wardogs-early-access");
       const commercialText = `${price?.body}\n${earlyAccess?.body}`;
 
-      expect(steam?.frontmatter.updatedAt).toBe("2026-08-24");
+      expect(steam?.frontmatter.updatedAt).toBe("2026-09-01");
       expect(steam?.body).toContain("1,000,000");
-      expect(price?.frontmatter.updatedAt).toBe("2026-08-28");
-      expect(earlyAccess?.frontmatter.updatedAt).toBe(locale === "en" ? "2026-09-01" : "2026-08-24");
+      expect(price?.frontmatter.updatedAt).toBe("2026-09-01");
+      expect(earlyAccess?.frontmatter.updatedAt).toBe(locale === "en" || locale === "zh-cn" ? "2026-09-01" : "2026-08-24");
       expect(commercialText).toContain("$39.99");
       expect(commercialText).toContain("$49.99");
       expect(commercialText).toContain("Valkyra");
@@ -156,7 +161,7 @@ describe("WARDOGS post-beta status refresh", () => {
       const faqText = drops?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n") ?? "";
       const searchable = `${drops?.frontmatter.description}\n${faqText}\n${drops?.body}`;
 
-      expect(drops?.frontmatter.updatedAt).toBe("2026-08-24");
+      expect(drops?.frontmatter.updatedAt).toBe(locale === "zh-cn" ? "2026-09-01" : "2026-08-24");
       expect(searchable).toMatch(endedPhrases[locale]);
       expect(searchable).toMatch(noActiveCampaign[locale]);
       expect(faqText).toMatch(noActiveCampaign[locale]);
@@ -183,8 +188,8 @@ describe("WARDOGS post-beta status refresh", () => {
     }));
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",
-      titleKey: "oneMillionWishlists",
-      slug: "wardogs-steam",
+      titleKey: "paidPrepurchase",
+      slug: "wardogs-price",
     }));
     expect(CONFIRMED_RUMOR_ITEMS).not.toContainEqual(expect.objectContaining({titleKey: "closedBeta"}));
     expect(CONFIRMED_RUMOR_ITEMS).not.toContainEqual(expect.objectContaining({titleKey: "betaPreload"}));

@@ -34,6 +34,7 @@ export type CatalogueHomeModelEntry = {
 
 type CatalogueHomeBandViewProps = {
   heading: string;
+  modelHeading?: string;
   entries: readonly CatalogueHomeBandEntry[];
   modelEntries?: readonly CatalogueHomeModelEntry[];
   LinkComponent?: CatalogueLinkComponent;
@@ -104,7 +105,7 @@ function CatalogueModelEntry({entry}: {entry: CatalogueHomeModelEntry}) {
   );
 }
 
-export function CatalogueHomeBandView({heading, entries, modelEntries = [], LinkComponent = NativeLink}: CatalogueHomeBandViewProps) {
+export function CatalogueHomeBandView({heading, modelHeading = "Published model guides", entries, modelEntries = [], LinkComponent = NativeLink}: CatalogueHomeBandViewProps) {
   const features = entries.filter((entry) => entry.layout === "feature");
   const compact = entries.filter((entry) => entry.layout === "compact");
 
@@ -122,7 +123,7 @@ export function CatalogueHomeBandView({heading, entries, modelEntries = [], Link
         </ul>
         {modelEntries.length > 0 ? (
           <div className="mt-10 border-t border-[#526159] pt-7">
-            <p className="font-mono text-xs uppercase text-[#d9a93a]">Published model guides</p>
+            <p className="font-mono text-xs uppercase text-[#d9a93a]">{modelHeading}</p>
             <ul className="mt-5 grid gap-x-5 sm:grid-cols-2 lg:grid-cols-4">
               {modelEntries.map((entry) => <CatalogueModelEntry entry={entry} key={entry.key} />)}
             </ul>
@@ -175,5 +176,13 @@ export async function CatalogueHomeBand({locale}: {locale: Locale}) {
     <Link className={className} href={href}>{children}</Link>
   );
 
-  return <CatalogueHomeBandView heading={t("heading")} entries={entries} modelEntries={modelEntries} LinkComponent={LocalizedLink} />;
+  return (
+    <CatalogueHomeBandView
+      heading={t("heading")}
+      modelHeading={t("publishedModels")}
+      entries={entries}
+      modelEntries={modelEntries}
+      LinkComponent={LocalizedLink}
+    />
+  );
 }

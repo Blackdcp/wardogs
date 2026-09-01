@@ -1,15 +1,24 @@
-"""Generate the Simplified Chinese message catalogue and guide corpus.
+"""DRAFT ONLY: generate a machine-translated Simplified Chinese corpus.
 
 The English edition remains the factual source of truth. Markdown syntax, URLs,
 route slugs, product names, dates, and ICU placeholders are protected while the
-human-readable copy is translated with the locally installed Argos model.
+human-readable copy is translated with the locally installed NLLB model. Output
+must receive factual and editorial review before publication.
 """
 
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
+
+OPT_IN_ENV = "ALLOW_ZH_CN_DRAFT_GENERATION"
+if __name__ == "__main__" and os.environ.get(OPT_IN_ENV) != "1":
+    raise SystemExit(
+        f"DRAFT ONLY: set {OPT_IN_ENV}=1 to allow this script to overwrite "
+        "the Chinese catalogue and guides. Review every generated page before publishing."
+    )
 
 import torch
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer

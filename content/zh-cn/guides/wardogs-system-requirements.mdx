@@ -1,124 +1,129 @@
 ---
-title: "WARDOGS PC 配置要求与性能目标"
-description: "查看官方WARDOGS系统要求对Windows,CPU,16GB的RAM,GPU,50GB的存储量,加上最低和建议的Steam绩效目标.本攻略依据官方页面、已核实的测试资料和注明出处的实机内容整理，并明确区分当前可确认的信息、可能随版本变化的数值以及尚未公布的细节；重大更新后请重新核对 Steam 与 WARDOGS"
+title: "WARDOGS PC 配置要求：最低与推荐性能目标"
+description: "WARDOGS 官方最低配置为 Windows 10、i5-8600 或 Ryzen 5 3500、GTX 1660 或 RX 590、16 GB 内存和 50 GB 可用空间。本页逐项对照最低与推荐硬件、官方分辨率和帧率目标，说明升频、笔记本型号、硬盘余量、网络与负载的影响，并标出仍可能随抢先体验版本变化的性能结论。"
 keyword: "wardogs system requirements"
 category: "guide"
 slug: "wardogs-system-requirements"
 order: 32
-updatedAt: "2026-08-23"
+updatedAt: "2026-09-01"
 badges:
-  - label: "官方规格"
+  - label: "官方配置"
     tone: "accent"
-  - label: "PC只有"
+  - label: "仅 PC"
     tone: "muted"
 faq:
-  - question: "能否使用GTX1660?WARDOGS?"
-    answer: "它们与列出的最小GPU相匹配.Steam目标 1080p 低于 60fps随着其他PC符合最低规格."
-  - question: "多少RAM?WARDOGS需要什么?"
-    answer: "最低和建议的Steam列表列表 16 GB 存储器."
-  - question: "存储量有多少?WARDOGS需要什么?"
-    answer: "Steam存储空间为更新,缓存和临时安装工作提供更多空间."
-  - question: "没有WARDOGS需要Windows 11吗?"
-    answer: "没有.Windows 10是最低级别,而Windows 11则是推级别."
+  - question: "GTX 1660 能玩 WARDOGS 吗？"
+    answer: "它是官方最低显卡之一；搭配其余最低配置时，官方目标为 1080p 低画质、升频后 60fps，但实际表现仍受当前版本和整机状态影响。"
+  - question: "WARDOGS 需要多少内存？"
+    answer: "官方最低与推荐配置都列出 16 GB RAM，8 GB 低于当前最低要求。"
+  - question: "WARDOGS 需要多少硬盘空间？"
+    answer: "Steam 列出 50 GB 可用空间。建议额外预留补丁、着色器缓存和临时安装空间，实际下载量不一定等于 50 GB。"
+  - question: "WARDOGS 必须使用 Windows 11 吗？"
+    answer: "不必。Windows 10 64 位是最低要求，Windows 11 64 位属于推荐配置。"
 sources:
-  - label: "WARDOGS现在Steam"
+  - label: "WARDOGS Steam 官方配置"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-08-23"
-  - label: "BULKHEAD WARDOGS页面"
+    checkedAt: "2026-09-01"
+  - label: "BULKHEAD WARDOGS 官方页面"
     url: "https://bulkhead.com/games/wardogs/"
     kind: "official"
-    checkedAt: "2026-08-23"
+    checkedAt: "2026-09-01"
 ---
+
+## WARDOGS 配置要求是什么？
+
+官方最低配置从 **Windows 10 64 位、Core i5-8600 或 Ryzen 5 3500、16 GB RAM、GTX 1660 或 RX 590、50 GB 可用空间**起步。官方最低性能目标是 1080p 低画质、使用升频达到 60fps；这不是原生 1080p 或所有战况下锁定 60fps 的保证。
 
 ## 快速结论
 
-官员WARDOGS系统要求从**Windows 10**,英特尔核心i5-8600或AMD Ryzen 5 3500,**16GB内存**,GTX 1660或RX 590,宽带互联网和**50GB可存储**开始.fps** 升级. 建议的层次转向Windows 11,Core i7-12700K或Ryzen 7 5700X和RTX 3070或RX 6700 XT.
+如果电脑只刚好达到最低配置，应把目标放在低画质、升频和稳定帧时间，而不是最高画质。推荐配置面向中画质：1440p 原生 70fps 以上，或 4K 使用升频达到 60fps 以上。大型 Control Zone 战斗中的玩家、载具、爆炸、建造和破坏会同时增加 CPU 与 GPU 压力，空服或训练场不能代表最重负载。
 
 ## 已确认信息
 
-- WARDOGS目前为64位Windows发布PC通过Steam.
-- 最低CPU:英特尔核心i5-8600或AMDRYZEN5 3500.
-- 最低的GPU:Nvidia GTX 1660或AMD Radeon RX 590.
-- 推的CPU:英特尔核心i7-12700K或AMDRYZEN7 5700X.
-- 建议的GPU:Nvidia RTX 3070或AMD Radeon RX 6700 XT.
-- 两层级都列出**16GB的RAM**,宽带互联网和**50GB**可存储空间.
-- 最低目标: 1080p 60°Cfps增加了规模.
-- 建议目标:1440p 平均70fps重生的,或4K中度在60fps增加规模.
+- 当前已确认平台是 Windows PC Steam。
+- 最低 CPU：Intel Core i5-8600 或 AMD Ryzen 5 3500。
+- 最低 GPU：Nvidia GTX 1660 或 AMD Radeon RX 590。
+- 推荐 CPU：Intel Core i7-12700K 或 AMD Ryzen 7 5700X。
+- 推荐 GPU：Nvidia RTX 3070 或 AMD Radeon RX 6700 XT。
+- 最低和推荐配置都列出 16 GB RAM、宽带网络和 50 GB 可用空间。
+- 最低目标：1080p 低画质、升频、60fps。
+- 推荐目标：1440p 中画质原生 70fps 以上，或 4K 中画质升频 60fps 以上。
 
 ## 玩家想知道什么
 
-玩家正在寻找`wardogs system requirements`或`wardogs sys req`总是需要简单的"是"或"不"硬件比较.比较完整的层次,而不是仅匹配图形卡.WARDOGS连接到100个播放器,车辆,破坏和构建,即使平均GPU性能看起来足够,这可以使CPU配装和框架时间稳定性变得重要.
+搜索 `wardogs system requirements` 的玩家需要的是整机判断，不是只比较显卡。CPU、内存、显卡、系统版本、存储空间和散热都可能成为限制。即使显卡达到最低要求，较弱 CPU 或后台占用也可能在百人战斗中造成卡顿和帧时间波动。
 
-存储是常见的混乱来源.Steam网络下载量可能是50GB,但并不是承诺的.安装,补丁,模糊缓存和Windows本身可能需要额外的空间.
+“50 GB”也经常被误解。Steam 写的是可用存储空间，不是承诺网络下载包恰好为 50 GB。安装解压、补丁、着色器缓存、录屏和 Windows 本身都需要额外余量。
 
 ## 如何使用本攻略
 
-查找你的CPU,GPU,安装的RAM,Windows版本和空格磁盘空间.PC读一读[WARDOGS最好的设置](/zh-cn/guides/wardogs-best-settings)如果机器遇到桌子,但游戏未能启动,请使用[WARDOGS崩解决指南](/zh-cn/guides/wardogs-crash-fix).
+先在 Windows 设置和任务管理器中确认 CPU、GPU、内存、系统版本与磁盘空间，然后按完整的一档配置比较。不要把移动版显卡与同名桌面卡默认视为相同表现。若接近最低配置，先阅读画面设置攻略；若满足要求却无法启动，再检查驱动、Easy Anti-Cheat、文件完整性和后台冲突。
 
-## 官方最低要求
+## 官方最低配置
 
-部分 官方最低限度
+| 部件 | 官方最低要求 |
 | --- | --- |
-现在,我们在这个系统中,
-简单的处理器是Intel Core i5-8600或AMD Ryzen 5 3500
-记忆力16GB的内存
-没有任何其他技术,
-网络,宽带互联网连接
-存储空间50GB
-目标 1080p 低,60fps现在,我在做什么?
+| 操作系统 | Windows 10 64 位 |
+| 处理器 | Intel Core i5-8600 或 AMD Ryzen 5 3500 |
+| 内存 | 16 GB RAM |
+| 显卡 | Nvidia GTX 1660 或 AMD Radeon RX 590 |
+| 网络 | 宽带互联网连接 |
+| 存储 | 50 GB 可用空间 |
+| 性能目标 | 1080p 低画质，升频，60fps |
 
-满足最低标准意味着在所述条件下官方目标是可行的;它不能保证在本地分辨率,更高的设置或在每一个发布前构建中都能达到相同的结果.
+达到最低型号意味着官方认为该整机档位可瞄准上述条件，不代表原生分辨率、高画质或所有服务器都能稳定达到同样结果。驱动、温度、双通道内存、后台软件和预发布构建都会影响表现。
 
-## 官方建议的要求
+## 官方推荐配置
 
-部件 官方推
+| 部件 | 官方推荐要求 |
 | --- | --- |
-现在,我们在这个系统中,
-简单的数据库是Intel Core i7-12700K或AMD Ryzen 7 5700X
-记忆力16GB的内存
-现在,我们可以看到一个图像,
-网络,宽带互联网连接
-存储空间50GB
-目标1440p,平均70fps重生的,或4K中度在60fps现在,我在做什么?
+| 操作系统 | Windows 11 64 位 |
+| 处理器 | Intel Core i7-12700K 或 AMD Ryzen 7 5700X |
+| 内存 | 16 GB RAM |
+| 显卡 | Nvidia RTX 3070 或 AMD Radeon RX 6700 XT |
+| 网络 | 宽带互联网连接 |
+| 存储 | 50 GB 可用空间 |
+| 性能目标 | 1440p 中画质原生 70fps+，或 4K 中画质升频 60fps+ |
 
-推表不是一个超级或最高质量的规范.它描述了中等目标. 寻求更高的更新速度,最大效果或高清的游戏玩家应该预计需要额外的头空间,并且应该测试当前的客户.
+推荐配置不是“最高画质配置”。官方目标仍写的是中画质。想要高刷新率、最高特效、超宽屏或更高原生分辨率的玩家，需要为 CPU、GPU 和散热保留更多余量，并在实际版本上线后重新测试。
 
-## 如何检查自己的情况PC
+## 怎么查看自己的电脑配置
 
-在Windows中,打开**处理器,安装的RAM和Windows版本的设置>系统>约**.打开**任务管理器>性能>GPU**或图形驱动程序的控制面板以确认GPU模型.在文件观察员中,检查驱动器上的空格空间,Steam安装游戏.
+打开 **设置 > 系统 > 系统信息**查看处理器、已安装内存和 Windows 版本；打开 **任务管理器 > 性能 > GPU**确认显卡型号；在文件资源管理器中查看 Steam 安装盘剩余空间。
 
-电脑组件名称可以在不同功率限制下运行时类似于桌面部件.WARDOGS机器可以在纸上满足模型名称,而热或电源限制则会降低持续性能.
+笔记本还要确认游戏使用独立显卡，并在接通电源后选择合适的性能模式。同一型号的移动显卡会因功耗和散热设计出现明显差异，所以“型号相同”不等于持续性能相同。
 
-## 绩效预期
+## 实战性能怎么判断
 
-实用装载下测试.一个安静的重生,空的服务器或菜单不能代表拥挤的控制区,车辆,爆炸和建筑.使用一致的位置并比较最低的持续性能而不是一个峰值.FPS号码.
+进入游戏后，应该在玩家密集、载具和破坏效果较多的 Control Zone 测试，而不是只看菜单、出生点或空服的峰值帧率。记录平均帧率的同时关注最低帧和卡顿，单次最高数字没有太大意义。
 
-如果分辨率变化造成了很大的改进,GPU可能是一个重要的限制.如果降低分辨率几乎没有帮助,而大战仍然下降,CPU或当前的构建可能是限制. 按照设置指南一次改变一个变量.
+如果降低分辨率后帧率明显上升，GPU 更可能是主要限制；如果分辨率降低帮助很小，但大规模战斗仍会掉帧，CPU、内存或当前构建可能更关键。一次只改一个设置，才能知道真正有效的是哪项。
 
-WARDOGS通过网络多人游戏系统和Steam列表标识易防欺诈.宽带质量和本地染性能是不同的:即使框架计数器稳定,结或延迟服务器反也可以发生.
+网络延迟与本地渲染也要分开判断。画面帧率稳定时仍可能出现橡皮筋、位置回弹或服务器反馈延迟；反过来，低 FPS 也不一定是网络故障。官方商店页还标注 Easy Anti-Cheat，启动问题可能与反作弊服务、权限或安全软件有关。
 
 ## 常见问题
 
-我可以玩吗?WARDOGS具有8GB的内存?**
-两者都发布了16GB的内存列表.
+**8 GB 内存能玩吗？**
+它低于官方最低要求。即使客户端能够启动，也不能据此认为达到受支持配置。
 
-现在,我们在线观看.
-没有.Steam描述最低目标为1080p低于60fps随着扩展.
+**GTX 1660 的目标是原生 1080p 吗？**
+不是。Steam 写的是 1080p 低画质、使用升频达到 60fps。
 
-对于4K来说,一个RTX 3070足够吗?
-Steam列出了RTX 3070级GPU为4K中度60fps+ 升级,或1440p 中度为70fps实际结果仍然取决于整个系统和构建.
+**RTX 3070 能跑 4K 吗？**
+官方推荐目标之一是 4K 中画质、升频、60fps 以上；实际结果仍取决于整机、驱动和当前版本。
 
-我需要50GB以上免费吗?
-Steam补丁,缓存和临时安装文件的空间是合理的.
+**50 GB 空间刚好够吗？**
+官方要求是 50 GB 可用空间，但为安装、更新和缓存预留更多空间更稳妥。
 
 ## 来源和最后检查
 
-所有组件名称和性能目标都与官方进行了检查WARDOGS Steam游戏仍在开发中,所以再检查Steam在购买硬件或解决后续构建问题之前.
+所有硬件型号、系统要求和性能目标均核对自 WARDOGS Steam 官方商店页，并与 BULKHEAD 官方产品页面交叉确认。最后核查日期为 **2026-09-01**。抢先体验期间优化和配置要求可能调整，购买硬件前应再次查看 Steam。
 
 ## 相关攻略
 
-- [WARDOGS最好的设置](/zh-cn/guides/wardogs-best-settings)
-- [WARDOGS崩解决指南](/zh-cn/guides/wardogs-crash-fix)
-- [WARDOGS Steam导航](/zh-cn/guides/wardogs-steam)
-- [WARDOGS下载指南](/zh-cn/guides/wardogs-download)
+- [WARDOGS 最佳画面设置](/zh-cn/guides/wardogs-best-settings)
+- [WARDOGS 崩溃修复](/zh-cn/guides/wardogs-crash-fix)
+- [WARDOGS 下载与安装](/zh-cn/guides/wardogs-download)
+- [WARDOGS Steam 购买指南](/zh-cn/guides/wardogs-steam)
+- [WARDOGS 上线准备清单](/zh-cn/guides/wardogs-launch-checklist)

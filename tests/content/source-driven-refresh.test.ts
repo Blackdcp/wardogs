@@ -20,7 +20,16 @@ describe("source-driven 2026-08-26 content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        const expectedDate = ["wardogs-playtest", "wardogs-beta"].includes(slug)
+        const expectedDate = locale === "zh-cn" && [
+          "wardogs-beginner-guide",
+          "wardogs-fob-guide",
+          "wardogs-towers-guide",
+          "wardogs-mortar-guide",
+          "wardogs-controls",
+          "wardogs-helicopter-guide",
+        ].includes(slug)
+          ? "2026-09-01"
+          : ["wardogs-playtest", "wardogs-beta"].includes(slug)
           ? "2026-09-01"
           : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
             ? "2026-08-29"

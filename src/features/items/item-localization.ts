@@ -176,11 +176,26 @@ const chineseTerms: Record<string, string> = {
   "Base damage":"基础伤害", Loads:"弹种", "Standard per round":"标准单发价格", "Box price":"弹药箱价格", Weapons:"适用武器", Kind:"类型", "Zoom or capacity":"倍率或容量", "Weight or calibre":"重量或口径", Slot:"栏位", Tier:"等级", "Recorded identifier":"已记录标识", "Spending rule":"花费原则", "Best use":"最佳用途", "Main risk":"主要风险", "Not captured":"未记录", "Gate unread":"解锁条件无法辨认", "Open purchase":"可直接购买", Variable:"可变", fixed:"固定",
   "Semi / Full Auto":"半自动 / 全自动", "Semi / Burst":"半自动 / 点射", "Semi automatic":"半自动", "Break-action":"折开式", "Single-shot":"单发", "Bolt action":"栓动", "Bolt-action / Magazine":"栓动 / 弹匣", "Pull and Release":"拉弓并释放", "Assault XP":"突击经验", "Medic XP":"医疗经验", "Support XP":"支援经验", "Recon XP":"侦察经验", "Driver XP":"驾驶经验", "Pilot XP":"飞行经验",
   Driver:"驾驶员", Pilot:"飞行员", Wardog:"战士", Optic:"瞄具", Magazine:"弹匣", Helmet:"头盔", Armor:"护甲", Backpack:"背包", Special:"特殊", Lightest:"最轻", Offensive:"进攻", Medical:"医疗", Recon:"侦察", Building:"建造", Utility:"通用", "Building / Offensive":"建造 / 进攻",
-  "Light transport":"轻型运输", "Fast transport":"快速运输", "Utility transport":"通用运输", "Cargo transport":"货运载具", "Protected transport":"防护运输", "Armed transport":"武装运输", "Heavy armed transport":"重型武装运输", "Logistics truck":"后勤卡车", "Protected logistics":"防护后勤", "Armed logistics":"武装后勤", "Anti-air armor":"防空装甲载具", "Main battle tank":"主战坦克", "Self-propelled artillery":"自行火炮", "Combat helicopter":"战斗直升机", "Armed utility helicopter":"武装通用直升机", "Rocket helicopter":"火箭直升机", "Attack helicopter":"攻击直升机", "Light air transport":"轻型空运", "Air transport":"空中运输"
+  "Light transport":"轻型运输", "Fast transport":"快速运输", "Utility transport":"通用运输", "Cargo transport":"货运载具", "Protected transport":"防护运输", "Armed transport":"武装运输", "Heavy armed transport":"重型武装运输", "Logistics truck":"后勤卡车", "Protected logistics":"防护后勤", "Armed logistics":"武装后勤", "Anti-air armor":"防空装甲载具", "Main battle tank":"主战坦克", "Self-propelled artillery":"自行火炮", "Combat helicopter":"战斗直升机", "Armed utility helicopter":"武装通用直升机", "Rocket helicopter":"火箭直升机", "Attack helicopter":"攻击直升机", "Light air transport":"轻型空运", "Air transport":"空中运输",
+  "Best targets":"最佳目标", "Key support":"关键支援", "Final balance":"最终平衡", "System role":"系统定位", "Placement needs":"部署要求", "Team dependency":"团队依赖", "Final upgrade list":"最终升级列表", "Vehicle role":"载具定位", "Final loadout":"最终配装", "Best support":"最佳支援", "Final stats":"最终属性", "Natural counter":"主要克制方式", "Final weapons":"最终武装", "Final capacity":"最终容量", "Not confirmed":"尚未确认",
+  "Indirect fire pressure":"间接火力压制", "Static clusters, rooftops, towers, FOB defenses":"固定集群、屋顶、塔楼与 FOB 防御点", "Spotting, distance correction, supply":"侦察标记、距离修正与补给", "Forward logistics and defense point":"前线后勤与防御支点", "Terrain, cover, delivery room, route access":"地形、掩体、卸货空间与路线通行条件", "Requires supplies and defense":"需要持续补给与防守", "Light air mobility":"轻型空中机动", "Scouting, insertion, fast rotation":"侦察、投送与快速转场", "Exposure during approach and landing":"接近与着陆阶段容易暴露", "Heavy armor pressure":"重装甲火力压制", "Infantry screen and logistics":"步兵掩护与后勤支援", "Isolation from the team":"脱离团队支援", "Air support pressure":"空中支援压制", "Anti-air coverage and pressure":"防空掩护与压制", "Exposed movement and clustered fights":"开阔移动与密集交战", "Squad movement and supply support":"小队运输与补给支援", "Predictable routes":"路线容易被预判",
+  "Driver / gunner / top gunner":"驾驶员 / 炮手 / 顶部机枪手", "155 mm high explosive":"155 毫米高爆弹", "Stabilize before firing":"开火前需要稳定车体",
+  "Anti-air launcher":"防空发射器", "Anti-vehicle launcher":"反载具发射器", "Grenade launcher":"榴弹发射器", "Standard Arrows":"标准箭矢", "Stationary anti-air":"固定式防空", "Stationary artillery":"固定式火炮", "Stationary defense":"固定防御设施", "Stationary support":"固定支援设备", "Stationary weapon":"固定式武器"
 };
 
 function translateItemTerm(value: string, locale: TranslatedLocale): string {
-  if (locale === "zh-cn") return chineseTerms[value] ?? value;
+  if (locale === "zh-cn") {
+    const direct = chineseTerms[value];
+    if (direct) return direct;
+
+    const level = value.match(/^(Driver|Pilot|Wardog) Level (\d+)$/);
+    if (level) return `${chineseTerms[level[1]] ?? level[1]}等级 ${level[2]}`;
+
+    const unlock = value.match(/^(\$[\d,]+) unlock$/);
+    if (unlock) return `${unlock[1]} 解锁`;
+
+    return value;
+  }
   const direct = localizedTerms[value]?.[locale];
   if (direct) return direct;
 
@@ -202,25 +217,29 @@ function translateItemTerm(value: string, locale: TranslatedLocale): string {
 
 function localizeBuild(build: string, locale: TranslatedLocale, prefix: string): string {
   if (build === "Alpha 1 - 7 Aug 2026") {
-    return locale === "ru" ? "Alpha 1 — 7 августа 2026"
+    return locale === "zh-cn" ? "Alpha 1 — 2026 年 8 月 7 日"
+      : locale === "ru" ? "Alpha 1 — 7 августа 2026"
       : locale === "de" ? "Alpha 1 — 7. August 2026"
       : locale === "pt-br" ? "Alpha 1 — 7 de agosto de 2026"
       : "Alpha 1 — 2026年8月7日";
   }
   if (build === "Closed Beta - 21-23 Aug 2026") {
-    return locale === "ru" ? "Закрытая бета — 21–23 августа 2026"
+    return locale === "zh-cn" ? "封闭测试 — 2026 年 8 月 21 日至 23 日"
+      : locale === "ru" ? "Закрытая бета — 21–23 августа 2026"
       : locale === "de" ? "Closed Beta — 21.–23. August 2026"
       : locale === "pt-br" ? "Beta Fechado — 21–23 de agosto de 2026"
       : "クローズドベータ — 2026年8月21日～23日";
   }
   if (build === "Creator footage checked 2026-08-16") {
-    return locale === "ru" ? "Видео автора проверено 16 августа 2026"
+    return locale === "zh-cn" ? "创作者实机核查于 2026 年 8 月 16 日"
+      : locale === "ru" ? "Видео автора проверено 16 августа 2026"
       : locale === "de" ? "Creator-Aufnahme geprüft am 16. August 2026"
       : locale === "pt-br" ? "Vídeo do criador verificado em 16 de agosto de 2026"
       : "クリエイター映像を2026年8月16日に確認";
   }
   if (build === "Creator footage checked 2026-08-25") {
-    return locale === "ru" ? "Видео автора проверено 25 августа 2026"
+    return locale === "zh-cn" ? "创作者实机核查于 2026 年 8 月 25 日"
+      : locale === "ru" ? "Видео автора проверено 25 августа 2026"
       : locale === "de" ? "Creator-Aufnahme geprüft am 25. August 2026"
       : locale === "pt-br" ? "Vídeo do criador verificado em 25 de agosto de 2026"
       : "クリエイター映像を2026年8月25日に確認";
@@ -233,11 +252,14 @@ export function getLocalizedItem(item: WardogsItem, locale: Locale): WardogsItem
   const profile = profiles[locale];
   const typeName = profile.typeNames[item.type];
   const translatedSubtype = translateItemTerm(item.subtype, locale);
+  const statusLabel = profile.status[item.status];
+  const build = localizeBuild(item.build, locale, profile.buildPrefix);
+  const localizedEvidenceItem = {...item, statusLabel, build};
   return {
     ...item,
     subtype: translatedSubtype === item.subtype ? typeName : translatedSubtype,
-    statusLabel: profile.status[item.status],
-    build: localizeBuild(item.build, locale, profile.buildPrefix),
+    statusLabel,
+    build,
     summary: profile.summary(item, typeName),
     description: profile.description(item, typeName),
     role: profile.role(item, typeName),
@@ -250,7 +272,7 @@ export function getLocalizedItem(item: WardogsItem, locale: Locale): WardogsItem
     })),
     observedProgressionOrGate: item.observedProgressionOrGate ? translateItemTerm(item.observedProgressionOrGate, locale) : item.observedProgressionOrGate,
     observedAmmoOrVehicleClass: item.observedAmmoOrVehicleClass ? translateItemTerm(item.observedAmmoOrVehicleClass, locale) : item.observedAmmoOrVehicleClass,
-    confirmedFacts: profile.confirmed(item, typeName),
+    confirmedFacts: profile.confirmed(localizedEvidenceItem, typeName),
     unconfirmedFacts: profile.unconfirmed(item, typeName),
     detailImageAlt: item.detailImage ? profile.imageAlt(item, typeName) : item.detailImageAlt,
     imageAlt: item.image ? profile.imageAlt(item, typeName) : item.imageAlt

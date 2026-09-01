@@ -6,10 +6,10 @@ export function getHomeFacts(translate: (key: HomeFactKey) => string): string[] 
 }
 
 export const START_GUIDES = [
-  {number: "1", slug: "wardogs-beginner-guide", titleKey: "beginner"},
-  {number: "2", slug: "wardogs-launch-checklist", titleKey: "launch"},
-  {number: "3", slug: "wardogs-gameplay", titleKey: "gameplay"},
-  {number: "4", slug: "wardogs-factions", titleKey: "factions"}
+  {number: "1", slug: "wardogs-launch-checklist", titleKey: "launch"},
+  {number: "2", slug: "wardogs-playtest", titleKey: "playtest"},
+  {number: "3", slug: "wardogs-beginner-guide", titleKey: "beginner"},
+  {number: "4", slug: "wardogs-gameplay", titleKey: "gameplay"}
 ] as const;
 
 export const HOME_CATEGORY_GUIDES = [
@@ -25,23 +25,17 @@ export const HOME_CATEGORY_GUIDES = [
 
 export const TOP_GUIDE_SLUGS = [
   "wardogs-launch-checklist",
-  "wardogs-progression-wipes-guide",
-  "wardogs-community-servers-guide",
-  "wardogs-cargo-guide",
-  "wardogs-ammo-reload-guide",
-  "wardogs-best-weapons-loadouts",
-  "wardogs-armor-damage-ttk-guide",
-  "wardogs-medic-revive-guide",
-  "wardogs-equipment-tools-guide",
-  "wardogs-squad-guide",
-  "wardogs-oil-rig-guide",
-  "wardogs-ps5",
-  "wardogs-crash-fix",
-  "wardogs-beginner-guide",
-  "wardogs-fob-guide",
-  "wardogs-best-settings",
+  "wardogs-playtest",
+  "wardogs-livestream",
+  "wardogs-early-access",
   "wardogs-release-date",
-  "wardogs-steam"
+  "wardogs-price",
+  "wardogs-system-requirements",
+  "wardogs-download",
+  "wardogs-beginner-guide",
+  "wardogs-best-weapons-loadouts",
+  "wardogs-fob-guide",
+  "wardogs-crash-fix"
 ] as const;
 
 export type RecentlyUpdatedGuideInput = {
@@ -64,7 +58,7 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 export const CONFIRMED_RUMOR_ITEMS = [
   {status: "confirmed", titleKey: "firingRangeTest", slug: "wardogs-playtest"},
   {status: "confirmed", titleKey: "betaEnded", slug: "wardogs-beta"},
-  {status: "confirmed", titleKey: "oneMillionWishlists", slug: "wardogs-steam"},
+  {status: "confirmed", titleKey: "paidPrepurchase", slug: "wardogs-price"},
   {status: "confirmed", titleKey: "fpsGameShow", slug: "wardogs-livestream"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
