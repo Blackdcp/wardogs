@@ -46,6 +46,12 @@ export const NEWS_UPDATES = [
     status: "Confirmed",
     titleKey: "fpsGameShow",
     guideSlug: "wardogs-livestream"
+  },
+  {
+    date: "2026-09-02",
+    status: "Confirmed",
+    titleKey: "firingRangeTest",
+    guideSlug: "wardogs-playtest"
   }
 ] as const;
 

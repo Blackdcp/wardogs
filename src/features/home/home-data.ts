@@ -25,6 +25,8 @@ export const HOME_CATEGORY_GUIDES = [
 
 export const TOP_GUIDE_SLUGS = [
   "wardogs-launch-checklist",
+  "wardogs-progression-wipes-guide",
+  "wardogs-community-servers-guide",
   "wardogs-cargo-guide",
   "wardogs-ammo-reload-guide",
   "wardogs-best-weapons-loadouts",
@@ -60,6 +62,7 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 }
 
 export const CONFIRMED_RUMOR_ITEMS = [
+  {status: "confirmed", titleKey: "firingRangeTest", slug: "wardogs-playtest"},
   {status: "confirmed", titleKey: "betaEnded", slug: "wardogs-beta"},
   {status: "confirmed", titleKey: "oneMillionWishlists", slug: "wardogs-steam"},
   {status: "confirmed", titleKey: "fpsGameShow", slug: "wardogs-livestream"},

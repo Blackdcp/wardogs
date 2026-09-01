@@ -43,7 +43,8 @@
         "description": "公式に確認された内容、未発表の内容、誤解されやすい情報を素早く判別できます。",
         "labels": {"confirmed": "確認済み", "rumor": "未確認"},
         "items": {
-          "betaEnded": {"title": "8月のClosed Betaは終了", "description": "サーバーは8月24日に終了し、次回BetaまたはPlaytestの日程は未発表です。"},
+          "firingRangeTest": {"title": "9月2日に限定射撃場テスト", "description": "バックエンドとログイン待機列のテストは17:00 UTC開始です。オープンベータではなく、サーバー参加は保証されません。"},
+          "betaEnded": {"title": "8月のClosed Betaは終了", "description": "サーバーは8月24日に終了しました。この履歴は9月2日の限定バックエンドテストとは別です。"},
           "oneMillionWishlists": {"title": "Steamウィッシュリスト100万件", "description": "BULKHEADが8月14日に確認した関心度の節目で、同時接続数ではありません。"},
           "fpsGameShow": {"title": "FPS Games Showは9月3日", "description": "BULKHEADは英国夏時間19時の大型WARDOGS発表を予告していますが、内容は未確認です。"},
           "steamEarlyAccess": {"title": "Steam PC早期アクセス", "description": "SteamのWindows PC版早期アクセスが公式に確認されています。"},
@@ -126,6 +127,7 @@
       "readMore": "詳しい攻略を読む",
       "status": {"Confirmed": "確認済み", "Not confirmed": "未確認"},
       "items": {
+        "firingRangeTest": {"title": "9月2日に限定射撃場テストを実施", "description": "17:00 UTCから射撃場、バックエンド、ログイン待機列を検証します。少数サーバーが稼働する可能性はありますが、参加は保証されません。"},
         "steamPreorder": {"title": "Steamの予約購入とアクセス申請が開始", "description": "ウィッシュリスト、アクセス申請、予約、価格、インストール権限はSteamが公式窓口です。"},
         "closedBeta": {"title": "Closed Betaは2026年8月24日に終了", "description": "サーバー期間は終了し、次回BetaまたはPlaytestの日程は発表されていません。"},
         "betaRecap": {"title": "BULKHEADがBeta振り返りと今後を公開", "description": "ユニーク参加者は約50万人、同時接続ピークは10万人超となり、Early Accessに向けた進行とメタゲームの改善が示されました。"},

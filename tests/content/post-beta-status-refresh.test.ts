@@ -16,15 +16,6 @@ const endedPhrases = {
   "zh-cn": /已经结束|于8月24日结束|8月24日.*结束|截至8月24日|封闭测试.*结束|测试.*已结束|八月份结束.*Beta|已封闭测试/i,
 } as const;
 
-const noNextTestPhrases = {
-  en: /no (?:later|next|new) (?:beta|playtest|test) date (?:is|has been) (?:confirmed|announced)/i,
-  de: /kein (?:neuer|weiterer|nächster) (?:Beta|Playtest|Test).*(?:bestätigt|angekündigt)/i,
-  ru: /новая дата.*(?:не подтверждена|не объявлена)|следующий тест.*не объявлен/i,
-  "pt-br": /nenhuma nova data.*(?:confirmada|anunciada)|próximo teste.*não foi anunciado/i,
-  ja: /次回.*(?:日程|日時).*(?:未発表|発表されていません)|新たな.*日程.*(?:確認|発表)されていません/i,
-  "zh-cn": /下一次.*(?:日期|时间).*(?:尚未公布|没有公布|未确认)|没有.*新的.*测试日期|没有后续.*测试日期.*确认|没有下一次.*公布|没有宣布新的测试/i,
-} as const;
-
 const releaseDatePhrases = {
   en: /September 10, 2026/i,
   de: /10\. September 2026/i,
@@ -41,15 +32,6 @@ const preloadEndedPhrases = {
   "pt-br": /preload.*terminou/i,
   ja: /プリロードは終了しました/i,
   "zh-cn": /预(?:载|装).*(?:已经|已).*结束/i,
-} as const;
-
-const faqNoActiveBetaPhrases = {
-  en: /no (?:active|later) beta|no later beta is announced/i,
-  de: /(?:kein neuer Beta-Termin ist|ein neuer Beta-Termin ist nicht) (?:angekündigt|bestätigt)/i,
-  ru: /новая дата беты не объявлена/i,
-  "pt-br": /nenhum novo beta foi anunciado/i,
-  ja: /次回テストは未発表/i,
-  "zh-cn": /没有.*活跃.*测试|下一次测试.*尚未公布|没有公布.*新.*测试|没有活动.*beta|没有后期测试日期/i,
 } as const;
 
 const staleActiveBetaFaqPhrases = {
@@ -78,12 +60,12 @@ describe("WARDOGS post-beta status refresh", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        const expectedDate = ["wardogs-beta", "wardogs-playtest"].includes(slug)
-          ? "2026-08-26"
-          : "2026-08-24";
-        expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
+        expect(guide?.frontmatter.updatedAt).toBe("2026-09-01");
         expect(searchable, `${locale}/${slug} should say the beta ended`).toMatch(endedPhrases[locale]);
-        expect(searchable, `${locale}/${slug} should avoid inventing a next test`).toMatch(noNextTestPhrases[locale]);
+        expect(guide?.frontmatter.sources, `${locale}/${slug} should cite the current limited test`).toContainEqual(expect.objectContaining({
+          url: "https://x.com/WARDOGS/status/2094076336134308024",
+          checkedAt: "2026-09-01",
+        }));
         expect(searchable).toMatch(releaseDatePhrases[locale]);
       }
     }
@@ -94,7 +76,7 @@ describe("WARDOGS post-beta status refresh", () => {
       const beta = await loadGuideDocument(locale, "wardogs-beta");
       const faqText = beta?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n") ?? "";
 
-      expect(faqText, `${locale}/wardogs-beta FAQ should state that no beta is active`).toMatch(faqNoActiveBetaPhrases[locale]);
+      expect(faqText, `${locale}/wardogs-beta FAQ should identify the current limited test`).toContain("17:00 UTC");
       expect(faqText, `${locale}/wardogs-beta FAQ should not describe ended access as current`).not.toMatch(staleActiveBetaFaqPhrases[locale]);
     }
   });

@@ -43,7 +43,8 @@
         "description": "Verifique rapidamente o que é oficial, o que ainda falta e o que costuma gerar confusão.",
         "labels": {"confirmed": "Confirmado", "rumor": "Não confirmado"},
         "items": {
-          "betaEnded": {"title": "Beta Fechado de agosto encerrado", "description": "Os servidores fecharam em 24 de agosto; nenhuma nova data de beta ou playtest foi confirmada."},
+          "firingRangeTest": {"title": "Teste limitado do Campo de Tiro em 2 de setembro", "description": "O teste de backend e fila de login começa às 17:00 UTC. Não é um beta aberto e o acesso aos servidores não é garantido."},
+          "betaEnded": {"title": "Beta Fechado de agosto encerrado", "description": "Os servidores fecharam em 24 de agosto; esse histórico é separado do teste limitado de backend em 2 de setembro."},
           "oneMillionWishlists": {"title": "1,000,000 de listas de desejos na Steam", "description": "A BULKHEAD confirmou o marco em 14 de agosto; não é uma contagem de jogadores online."},
           "fpsGameShow": {"title": "FPS Games Show em 3 de setembro", "description": "A BULKHEAD anunciou uma grande revelação de WARDOGS para 19h BST; o conteúdo segue sem confirmação."},
           "steamEarlyAccess": {"title": "Steam PC Early Access", "description": "O Acesso Antecipado está confirmado para Steam PC."},
@@ -126,6 +127,7 @@
       "readMore": "Ler o guia completo",
       "status": {"Confirmed": "Confirmado", "Not confirmed": "Não confirmado"},
       "items": {
+        "firingRangeTest": {"title": "Teste limitado do Campo de Tiro marcado para 2 de setembro", "description": "WARDOGS testará Campo de Tiro, backend e fila de login a partir das 17:00 UTC; poucos servidores podem funcionar e o acesso não foi prometido."},
         "steamPreorder": {"title": "Pré-venda e Request Access estão ativos na Steam", "description": "A Steam é a rota oficial atual para lista de desejos, Request Access, pré-venda, preço e instalação."},
         "closedBeta": {"title": "Beta Fechado terminou em 24 de agosto de 2026", "description": "A janela dos servidores acabou e nenhuma nova data de beta ou playtest foi anunciada."},
         "betaRecap": {"title": "BULKHEAD publicou o resumo do Beta e próximos passos", "description": "Quase 500 mil jogadores únicos participaram, o pico passou de 100 mil, e o estúdio apresentou trabalho de progressão e metagame para o Acesso Antecipado."},

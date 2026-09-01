@@ -140,7 +140,7 @@ describe("Similarweb growth guide cluster", () => {
 
     for (const [slug, phrases] of expectations) {
       const guide = await loadGuideDocument("en", slug);
-      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29"]).toContain(guide?.frontmatter.updatedAt);
+      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01"]).toContain(guide?.frontmatter.updatedAt);
       for (const phrase of phrases) expect(guide?.body).toContain(phrase);
     }
 
@@ -151,7 +151,7 @@ describe("Similarweb growth guide cluster", () => {
   });
 
   it("promotes new growth pages without dropping established homepage routes", () => {
-    expect(TOP_GUIDE_SLUGS).toHaveLength(16);
+    expect(TOP_GUIDE_SLUGS).toHaveLength(18);
     expect(TOP_GUIDE_SLUGS).toEqual(expect.arrayContaining([
       "wardogs-release-date",
       "wardogs-steam",
@@ -159,7 +159,9 @@ describe("Similarweb growth guide cluster", () => {
       "wardogs-squad-guide",
       "wardogs-oil-rig-guide",
       "wardogs-ps5",
-      "wardogs-crash-fix"
+      "wardogs-crash-fix",
+      "wardogs-progression-wipes-guide",
+      "wardogs-community-servers-guide"
     ]));
   });
 

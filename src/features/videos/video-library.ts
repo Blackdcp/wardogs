@@ -1880,6 +1880,283 @@ export const videoArticles: readonly VideoArticle[] = [
         ]
       }
     ]
+  },
+  {
+    slug: "wardogs-huge-news-progression",
+    title: "WARDOGS Huge News Explained: Progression, Tanks and Launch",
+    description:
+      "A fact-checked breakdown of the recent WARDOGS news overview, separating developer-confirmed progression and tank changes from release rumors and creator predictions.",
+    youtubeId: "im60BiRZFow",
+    sourceLabel: "WARDOGS Just Got Some HUGE News",
+    sourceUrl: "https://www.youtube.com/watch?v=im60BiRZFow",
+    publishedDate: "2026-08-31",
+    updatedDate: "2026-09-01",
+    kind: "creator",
+    priority: -22,
+    internalGuideSlug: "wardogs-progression-wipes-guide",
+    quickAnswer:
+      "The useful part of this news video is its source trail: Beta progression was deliberately compressed, tanks are planned to move into the Driver track for Early Access, and a major September 3 reveal is scheduled. Release rumors, season guesses, lawsuit discussion and private-server predictions remain commentary until a primary source confirms them.",
+    takeaways: [
+      "Use the developer statements linked by the creator, not the headline alone.",
+      "Closed Beta leveling speed was intentionally faster than the planned normal pace.",
+      "Tanks are moving from the temporary main track into Driver progression.",
+      "September 3 is a confirmed reveal event, but its content is not known in advance.",
+      "Season, wipe, lawsuit and roadmap claims need separate first-party confirmation.",
+      "The maintained progression and launch guides replace predictions as new facts arrive."
+    ],
+    sections: [
+      {
+        heading: "What the video contributes",
+        body: [
+          "The creator collects several late-August WARDOGS updates in one place and links viewers back to developer posts. That makes the video useful as a discovery map, especially for progression changes and the September event.",
+          "A compilation still mixes confirmed statements, interpretation and speculation. This page follows each durable claim back to its source before sending it into a maintained guide."
+        ]
+      },
+      {
+        heading: "Progression and tanks",
+        body: [
+          "The strongest confirmed detail is that Closed Beta progression was compressed for a three-day test. Early Access should not be expected to unlock equipment at the same speed.",
+          "The developer also says tanks were temporarily placed in the main War Dog path and are planned for the Driver path. Final level requirements, prices and XP actions remain unknown."
+        ]
+      },
+      {
+        heading: "Release and event claims",
+        body: [
+          "The September 3 FPS Games Show appearance and September 10 Steam Early Access date have official support. A creator can explain those milestones but cannot reveal the unannounced contents of the show.",
+          "Any claim about an earlier launch, another open beta or a changed release date must wait for Steam or an official WARDOGS post."
+        ]
+      },
+      {
+        heading: "Private servers and seasons",
+        body: [
+          "Community-server hosting now has a separate developer statement: two approved providers at launch, map and mode selection, no arbitrary self-hosting at launch and RCON in development.",
+          "Season length, wipe scope and carryover are not fully documented. Keep those topics in the progression and community-server guides rather than turning one discussion segment into permanent rules."
+        ]
+      },
+      {
+        heading: "How to use this page",
+        body: [
+          "Watch the original for the creator's complete argument and source links. Use our maintained pages for the current yes-or-no answer after September 2, the FPS Games Show and Early Access.",
+          "This approach preserves the value of fast creator coverage without allowing a high-energy headline to outrun the underlying evidence."
+        ]
+      },
+      {
+        heading: "Verification checklist after each update",
+        body: [
+          "Start with the current Steam announcement, official WARDOGS channels and the live progression menus. Record the build date beside every screenshot so a Beta track, Early Access track and later balance patch are never presented as the same system.",
+          "For tanks, capture the Driver track position, level requirement, purchase cost and the actions that visibly move its XP bar. For carryover, look for an explicit account-data statement rather than inferring permanence from an unchanged Playtest library entry.",
+          "Until those checks produce primary evidence, describe launch pace, wipe timing, season length and economy persistence as unknown. That wording is less dramatic than a prediction, but it remains useful after the next patch."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-support-skill-leveling",
+    title: "WARDOGS Support Skill Guide: Leveling Through Team Value",
+    description:
+      "A build-sensitive WARDOGS Support skill guide covering repeatable XP through logistics, transport, FOB supply, repairs, revives, objective work and safe role testing.",
+    youtubeId: "IO7-_TwxpII",
+    sourceLabel: "WARDOGS - Leveling the Support Skill",
+    sourceUrl: "https://www.youtube.com/watch?v=IO7-_TwxpII",
+    publishedDate: "2026-08-31",
+    updatedDate: "2026-09-01",
+    kind: "creator",
+    priority: -20,
+    internalGuideSlug: "wardogs-progression-wipes-guide",
+    quickAnswer:
+      "Support progression is best approached as a repeatable team-service loop rather than a search for one exploit. Deliver the requested resource, keep transport and spawn assets useful, repair or revive from safe positions, help the active objective and verify which action moves the current Support bar. Exact XP values from the Beta can change.",
+    takeaways: [
+      "Measure one Support action at a time in the current build.",
+      "A completed delivery is more useful than moving an unrequested pallet.",
+      "Transport, repair, medical and FOB work need safe repeatable cycles.",
+      "Objective context matters because activity far from the fight may create no team value.",
+      "Net cash and role XP are related but should be recorded separately.",
+      "Beta progression was accelerated, so old per-action values are not launch promises."
+    ],
+    sections: [
+      {
+        heading: "The reliable Support loop",
+        body: [
+          "The useful lesson is to choose a service the team needs, complete it, confirm the result and repeat it without losing an expensive kit or vehicle. Random motion is not the same as support.",
+          "A supply run should answer a request, a transport route should move players toward useful pressure, and a revive should begin only after the immediate threat is controlled."
+        ]
+      },
+      {
+        heading: "Test XP without mixing actions",
+        body: [
+          "To learn the current Support system, record the bar, perform one action and read it again. Mixing deliveries, repairs, revives, objective ticks and match rewards makes the result impossible to attribute.",
+          "Repeat the same action several times and record build date, resource type, destination and squad context. Publish a range only when the interface supports it."
+        ]
+      },
+      {
+        heading: "Logistics and FOB work",
+        body: [
+          "Bring the resource the FOB actually needs, approach without blocking roads or spawns, unload in a valid area and confirm that the base inventory changed. A dropped pallet that cannot be used is not a successful route.",
+          "Protect the return trip. A surviving vehicle that begins another cycle often creates more long-term value than a risky one-way delivery."
+        ]
+      },
+      {
+        heading: "Transport, repairs and medical support",
+        body: [
+          "Transport value depends on safe pickup, useful drop and repetition. Repair work depends on carrying the compatible tool or resource and keeping the asset away from immediate destruction.",
+          "Medical support should follow the same discipline: remove or suppress the threat, revive, restore enough health for movement and leave the exposed line."
+        ]
+      },
+      {
+        heading: "Build and progression limits",
+        body: [
+          "The video records a pre-release progression state. XP amounts, role labels, unlock thresholds, payouts and eligible actions may change for Early Access.",
+          "Use the maintained progression, cargo, FOB and money guides after each patch. They preserve the workflow while allowing the numbers to follow the live client."
+        ]
+      },
+      {
+        heading: "A repeatable Support test plan",
+        body: [
+          "Begin a session with a screenshot of the Support bar, current cash and the build number. Complete one clearly defined task, such as one accepted supply delivery, one repaired asset or one safe revive, then capture the same screens again before another reward can mix into the result.",
+          "Repeat the action in similar conditions and note whether objective ownership, squad membership, resource type or match completion changes the award. A single increase shows that an action can contribute; several controlled repetitions are needed before publishing a useful range.",
+          "Judge the route by team value and net cost as well as XP. A method that gains progress while abandoning a truck, blocking a spawn or consuming scarce medical supplies may level a bar but still weaken the team and the player's economy."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-kamikaze-drone-guide",
+    title: "WARDOGS Kamikaze Drone Guide: Targets, Flight and Counters",
+    description:
+      "A WARDOGS kamikaze-drone field guide covering launch safety, target confirmation, terminal control, high-value strikes, operator protection and vehicle counterplay.",
+    youtubeId: "7O5QJNRzXzQ",
+    sourceLabel: "KAMIKAZE DRONES in WARDOGS are BRUTAL!",
+    sourceUrl: "https://www.youtube.com/watch?v=7O5QJNRzXzQ",
+    publishedDate: "2026-08-31",
+    updatedDate: "2026-09-01",
+    kind: "creator",
+    priority: -19,
+    internalGuideSlug: "wardogs-equipment-tools-guide",
+    quickAnswer:
+      "A kamikaze drone is worth the risk only when the operator has a confirmed high-value target and a protected launch position. Use marks and compass information, preserve enough control for the final correction, and avoid spending a one-way asset on fast low-value transport. Damage, cost and one-hit claims remain Beta-specific.",
+    takeaways: [
+      "Confirm the target before launching a one-way drone.",
+      "Stationary artillery, exposed armor or spawn support can justify the cost.",
+      "The operator needs cover and a teammate watching the local approach.",
+      "Full-speed flight can reduce the time available for terminal correction.",
+      "Vehicle crews should relocate and avoid predictable stationary positions.",
+      "Cost, damage, handling and detection behavior need live-build verification."
+    ],
+    sections: [
+      {
+        heading: "Choose value before spectacle",
+        body: [
+          "The dramatic impact is not the decision. The decision is whether the target's battlefield value exceeds the drone's cash, resource and operator risk.",
+          "A marked stationary artillery piece, deployed spawn asset or exposed armored vehicle is a clearer target than random transport crossing the map."
+        ]
+      },
+      {
+        heading: "Protect the launch",
+        body: [
+          "Drone control narrows the operator's local awareness. Launch from cover, avoid clustering beside every valuable FOB asset and ask one teammate to watch nearby routes.",
+          "If the base is under pressure, cancel or delay the launch. Losing the operator and the entire support position for one distant attempt is poor trade."
+        ]
+      },
+      {
+        heading: "Flight and terminal correction",
+        body: [
+          "Use the known direction and map mark to reduce search time. Save enough speed and steering authority to make the final correction rather than boosting blindly from launch.",
+          "Handling shown in the video belongs to that build. Practice against a friendly landmark or Firing Range target before spending a combat asset after an update."
+        ]
+      },
+      {
+        heading: "Counterplay for vehicles",
+        body: [
+          "High-value vehicles should relocate after repeated fire, use terrain and avoid the most obvious straight line from enemy territory. Local observers should report drones before the terminal phase.",
+          "FOB defenders can hunt exposed operators, disrupt the mechanical supply chain and separate stationary assets so one attack does not remove the entire position."
+        ]
+      },
+      {
+        heading: "Evidence limits",
+        body: [
+          "Visible impacts demonstrate the tool's role, not a permanent damage table. Armor state, target class, hit location, cost, payout and flight behavior can change.",
+          "Use the equipment guide and current catalogue for live values. This page preserves target selection, launch protection and counterplay."
+        ]
+      },
+      {
+        heading: "Pre-flight and after-action checklist",
+        body: [
+          "Before launch, confirm the mark is current, identify the target class, compare its value with the drone cost, check that the operator has hard cover and assign a teammate to watch the immediate approach. Decide the abort condition before entering the camera view, especially when the FOB or squad is already under pressure.",
+          "During flight, use terrain and the shortest reliable search pattern instead of sweeping the entire horizon. Keep enough steering margin for the terminal turn, and do not chase a fast vehicle into an uncertain area simply because the drone is already airborne.",
+          "After impact, record whether the target was destroyed, disabled, forced to move or unaffected. Separate a direct hit from nearby splash and note any prior damage. One clip can demonstrate a tactic, but only repeated current-build observations can support a damage or cost-efficiency claim.",
+          "Defenders should use the same checklist in reverse: move high-value assets after firing, avoid clustering stationary equipment, keep observers outside the vehicle and pressure likely launch positions. These habits remain useful even when detection ranges or damage values change."
+        ]
+      }
+    ]
+  },
+  {
+    slug: "wardogs-gameplay-overview-tomographic",
+    title: "WARDOGS Gameplay Overview: Why the Beta Surprised Players",
+    description:
+      "A source-aware breakdown of Tomographic's recent WARDOGS gameplay, covering combined arms, three-team pressure, vehicles, objectives, support work and Beta limits.",
+    youtubeId: "JSAu5nlLjJw",
+    sourceLabel: "WARDOGS is way better than anyone expected...",
+    sourceUrl: "https://www.youtube.com/watch?v=JSAu5nlLjJw",
+    publishedDate: "2026-08-30",
+    updatedDate: "2026-09-01",
+    kind: "creator",
+    priority: -18,
+    internalGuideSlug: "wardogs-gameplay",
+    quickAnswer:
+      "The video is useful because it shows how WARDOGS systems collide in a real creator session: infantry, vehicles, three teams, travel, objective pressure, support jobs and sudden reversals. It supports the game's broad appeal but cannot prove final performance, launch balance, queue health or long-term progression.",
+    takeaways: [
+      "Three teams make an apparently winning fight vulnerable to a new direction.",
+      "Vehicles shorten travel and create pressure but also concentrate financial risk.",
+      "Support and logistics turn a large map into a functioning team operation.",
+      "The active objective should guide movement instead of isolated kill chasing.",
+      "Creator enthusiasm is evidence of experience, not proof of launch stability.",
+      "Every Beta control, price, reward and balance conclusion needs a current-build check."
+    ],
+    sections: [
+      {
+        heading: "Why this overview matters",
+        body: [
+          "A broad gameplay video can answer the player who knows the WARDOGS name but not the loop. It shows the transition from deployment and travel to a vehicle fight, objective pressure, support action and unexpected third-team contact.",
+          "That sequence explains the appeal more clearly than a feature list. The game tries to make individual decisions matter inside a much larger operation."
+        ]
+      },
+      {
+        heading: "Combined arms and three-team pressure",
+        body: [
+          "Infantry, helicopters, armored vehicles, indirect fire and construction share the same battle. The third faction means a strong attack can expose both teams to a fresh angle.",
+          "Players should therefore preserve information and an exit route. Winning the current exchange does not remove the wider map."
+        ]
+      },
+      {
+        heading: "Movement, objectives and support",
+        body: [
+          "Large terrain creates dead time when a squad ignores transport and spawn planning. Check the active Control Zone, choose a route and use vehicles or FOBs to keep useful players near the objective.",
+          "Revives, transport and supply work are not background tasks. They determine whether the team can keep pressure after the first contact."
+        ]
+      },
+      {
+        heading: "What enthusiasm can and cannot prove",
+        body: [
+          "A creator's positive reaction is strong evidence that the recorded session produced memorable combined-arms moments. It does not establish every region's queues, hardware performance, tutorial quality or long-term balance.",
+          "Players deciding whether to buy should pair the video with current Steam information, system requirements and live player reports."
+        ]
+      },
+      {
+        heading: "Beta values remain temporary",
+        body: [
+          "Weapons, vehicles, cash rewards, progression, controls and server behavior shown in the video come from a Beta environment. The useful lessons are map awareness, team movement and role choice.",
+          "Use the maintained gameplay, beginner, settings and launch guides for facts that can change after this upload."
+        ]
+      },
+      {
+        heading: "A practical first-session plan",
+        body: [
+          "Enter the live build with one narrow goal: learn deployment, identify the active objective, join a squad and complete one useful movement loop before spending heavily. Check the map again after every major contact because a third team can turn a safe route into the exposed side of a new fight.",
+          "Use inexpensive equipment while testing controls, performance and travel time. Once the squad understands its spawn and resupply options, add a vehicle or specialist role that solves a real problem instead of buying the most dramatic asset immediately.",
+          "At the end of the session, separate durable lessons from build values. Map-reading habits, communication and protecting logistics may survive an update; prices, unlock levels, recoil, rewards, server capacity and queue behavior must be checked again."
+        ]
+      }
+    ]
   }
 ] as const;
 

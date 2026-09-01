@@ -10,7 +10,7 @@ describe("weekly source-gap refresh", () => {
       const guide = await loadGuideDocument(locale, "wardogs-livestream");
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-08-28");
+      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-01");
       expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /FPS Games Show|FPS游戏展|FPS 游戏展/ : /FPS Games Show/);
       expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /2026年9月3日/ : /3 September 2026/);
       expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /英国夏令时晚上7点|晚上7点/ : /7pm BST/);

@@ -43,7 +43,8 @@
         "description": "Fast status checks for details that are official, still missing, or commonly misunderstood.",
         "labels": {"confirmed": "Confirmed", "rumor": "Not confirmed"},
         "items": {
-          "betaEnded": {"title": "August Closed Beta has ended", "description": "The servers closed on August 24, and no later beta or playtest date is confirmed."},
+          "firingRangeTest": {"title": "Limited Firing Range test on September 2", "description": "A backend and login-queue test starts at 17:00 UTC. It is not an open beta, and server availability is not guaranteed."},
+          "betaEnded": {"title": "August Closed Beta has ended", "description": "The servers closed on August 24; its history remains separate from the limited September 2 backend test."},
           "oneMillionWishlists": {"title": "1,000,000 Steam wishlists", "description": "BULKHEAD confirmed the milestone on August 14; it is not a live player count."},
           "fpsGameShow": {"title": "FPS Games Show on September 3", "description": "BULKHEAD has announced a major WARDOGS reveal for 7pm BST; the content remains unconfirmed."},
           "steamEarlyAccess": {"title": "Steam PC Early Access", "description": "Early Access is confirmed for Steam PC."},
@@ -126,6 +127,7 @@
       "readMore": "Read the full guide",
       "status": {"Confirmed": "Confirmed", "Not confirmed": "Not confirmed"},
       "items": {
+        "firingRangeTest": {"title": "Limited Firing Range test scheduled for September 2", "description": "WARDOGS will test the Firing Range, backend, and login queue from 17:00 UTC; only a handful of servers may run and access is not promised."},
         "steamPreorder": {"title": "Steam pre-orders and Request Access are live", "description": "Steam is the current official route for wishlist, Request Access, pre-order, pricing, and install entitlement."},
         "closedBeta": {"title": "Closed Beta ended on August 24, 2026", "description": "The server window is complete and no later beta or playtest date has been announced."},
         "betaRecap": {"title": "BULKHEAD published the Beta Recap and next steps", "description": "Nearly 500,000 unique players joined, peak concurrency exceeded 100,000, and the studio outlined progression and metagame work for Early Access."},

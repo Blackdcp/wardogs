@@ -24,7 +24,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt).toBe("2026-08-29");
+        expect(guide?.frontmatter.updatedAt).toBe(slug === "wardogs-launch-checklist" ? "2026-09-01" : "2026-08-29");
         expect(guide?.frontmatter.sources.length).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug} body`).toBeGreaterThan(1800);
       }
@@ -101,8 +101,10 @@ describe("2026-08-29 launch and logistics expansion", () => {
 
   it("promotes launch preparation ahead of ended playtest content", () => {
     expect(START_GUIDES[1].slug).toBe("wardogs-launch-checklist");
-    expect(TOP_GUIDE_SLUGS.slice(0, 3)).toEqual([
+    expect(TOP_GUIDE_SLUGS.slice(0, 5)).toEqual([
       "wardogs-launch-checklist",
+      "wardogs-progression-wipes-guide",
+      "wardogs-community-servers-guide",
       "wardogs-cargo-guide",
       "wardogs-ammo-reload-guide",
     ]);

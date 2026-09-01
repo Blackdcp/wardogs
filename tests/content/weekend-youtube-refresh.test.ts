@@ -84,7 +84,7 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const release = await loadGuideDocument(locale, "wardogs-release-date");
 
-      expect(livestream?.frontmatter.updatedAt).toBe("2026-08-28");
+      expect(livestream?.frontmatter.updatedAt).toBe("2026-09-01");
       expect(livestream?.body).toContain("https://www.twitch.tv/thefpsgamesshow");
       expect(livestream?.body).toMatch(/18:00 UTC/);
       expect(price?.frontmatter.updatedAt).toBe("2026-08-28");

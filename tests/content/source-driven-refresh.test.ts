@@ -20,8 +20,10 @@ describe("source-driven 2026-08-26 content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        const expectedDate = ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
-          ? "2026-08-29"
+        const expectedDate = ["wardogs-playtest", "wardogs-beta"].includes(slug)
+          ? "2026-09-01"
+          : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
+            ? "2026-08-29"
           : slug === "wardogs-beginner-guide"
             ? "2026-08-28"
             : "2026-08-26";
@@ -59,7 +61,7 @@ describe("source-driven 2026-08-26 content refresh", () => {
       expect(beta?.body).toMatch(/100[, .]?000|10万/i);
 
       const playtestFaq = playtest?.frontmatter.faq.map(({answer}) => answer).join(" ") ?? "";
-      expect(playtestFaq).toMatch(/ended|beendet|заверш|encerrad|終了|结束/i);
+      expect(playtestFaq).toMatch(/ended|completed|beendet|abgeschlossen|заверш|encerrad|終了|结束|完成/i);
 
       for (const guide of [towers, mortar, fob, controls, helicopter]) {
         expect(guide?.body).toMatch(/build-sensitive|buildabhängig|версии сборки|dependentes? da build|ビルド依存|版本相关|构建敏感/i);

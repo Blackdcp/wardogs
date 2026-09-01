@@ -124,9 +124,13 @@
           "rumor": "没有确认"
         },
         "items": {
+          "firingRangeTest": {
+            "title": "9 月 2 日有限靶场测试",
+            "description": "后端与登录队列测试将于 17:00 UTC 开始。这不是公开测试，服务器名额也不保证开放。"
+          },
           "betaEnded": {
             "title": "8月封闭测试已结束",
-            "description": "服务器于8月24日关闭,beta或确认比赛测试日期."
+            "description": "服务器已于 8 月 24 日关闭；这段历史与 9 月 2 日的有限后端测试相互独立。"
           },
           "oneMillionWishlists": {
             "title": "1,000,000 Steam愿望单",
@@ -292,6 +296,10 @@
         "Not confirmed": "没有确认"
       },
       "items": {
+        "firingRangeTest": {
+          "title": "9 月 2 日将进行有限靶场测试",
+          "description": "WARDOGS 将从 17:00 UTC 开始测试靶场、后端与登录队列；当晚可能只有少量服务器，官方没有保证所有玩家都能进入。"
+        },
         "steamPreorder": {
           "title": "Steam预订和请求访问是现场",
           "description": "Steam是目前的愿望单,请求访问,预订,定价和安装权的官方路线."

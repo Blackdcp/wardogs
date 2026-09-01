@@ -43,7 +43,8 @@
         "description": "Schnelle Statusprüfung für offizielle, fehlende oder häufig missverstandene Details.",
         "labels": {"confirmed": "Bestätigt", "rumor": "Nicht bestätigt"},
         "items": {
-          "betaEnded": {"title": "August-Closed-Beta ist beendet", "description": "Die Server schlossen am 24. August; kein späterer Beta- oder Playtest-Termin ist bestätigt."},
+          "firingRangeTest": {"title": "Begrenzter Schießstand-Test am 2. September", "description": "Der Backend- und Login-Warteschlangen-Test beginnt um 17:00 UTC. Er ist keine offene Beta und Serverzugang wird nicht garantiert."},
+          "betaEnded": {"title": "August-Closed-Beta ist beendet", "description": "Die Server schlossen am 24. August; dieser Rückblick bleibt vom begrenzten Backend-Test am 2. September getrennt."},
           "oneMillionWishlists": {"title": "1,000,000 Steam-Wunschlisteneinträge", "description": "BULKHEAD bestätigte den Meilenstein am 14. August; er ist keine Live-Spielerzahl."},
           "fpsGameShow": {"title": "FPS Games Show am 3. September", "description": "BULKHEAD kündigte für 19 Uhr BST eine große WARDOGS-Enthüllung an; der Inhalt ist noch unbestätigt."},
           "steamEarlyAccess": {"title": "Steam PC Early Access", "description": "Early Access ist für Steam PC bestätigt."},
@@ -126,6 +127,7 @@
       "readMore": "Vollständigen Guide lesen",
       "status": {"Confirmed": "Bestätigt", "Not confirmed": "Nicht bestätigt"},
       "items": {
+        "firingRangeTest": {"title": "Begrenzter Schießstand-Test für den 2. September angesetzt", "description": "WARDOGS testet ab 17:00 UTC Schießstand, Backend und Login-Warteschlange; nur wenige Server können laufen und Zugang ist nicht versprochen."},
         "steamPreorder": {"title": "Steam-Vorbestellung und Request Access sind live", "description": "Steam ist aktuell die offizielle Route für Wunschliste, Request Access, Vorbestellung, Preise und Installation."},
         "closedBeta": {"title": "Closed Beta endete am 24. August 2026", "description": "Das Serverfenster ist abgeschlossen; ein weiterer Beta- oder Playtest-Termin wurde nicht angekündigt."},
         "betaRecap": {"title": "BULKHEAD veröffentlichte Beta-Rückblick und nächste Schritte", "description": "Fast 500.000 einzelne Spieler nahmen teil, die Spitze lag über 100.000 gleichzeitig, und das Studio skizzierte Fortschritt und Metagame für Early Access."},

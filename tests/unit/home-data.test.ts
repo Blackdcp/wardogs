@@ -36,6 +36,8 @@ describe("homepage data", () => {
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
       "wardogs-launch-checklist",
+      "wardogs-progression-wipes-guide",
+      "wardogs-community-servers-guide",
       "wardogs-cargo-guide",
       "wardogs-ammo-reload-guide",
       "wardogs-best-weapons-loadouts",
@@ -62,6 +64,7 @@ describe("homepage data", () => {
 
     expect(latest.map((guide) => guide.slug)).toEqual(["newest", "middle"]);
     expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.status)).toEqual([
+      "confirmed",
       "confirmed",
       "confirmed",
       "confirmed",

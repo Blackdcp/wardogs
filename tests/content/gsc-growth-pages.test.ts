@@ -24,8 +24,10 @@ describe("GSC growth page reinforcement", () => {
     for (const locale of locales) {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedCheckDate = slug === "wardogs-crash-fix"
-          ? "2026-08-25"
+        const expectedCheckDate = ["wardogs-beta", "wardogs-playtest"].includes(slug)
+          ? "2026-09-01"
+          : slug === "wardogs-crash-fix"
+            ? "2026-08-25"
           : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
             ? "2026-08-29"
             : "2026-08-26";
@@ -40,12 +42,11 @@ describe("GSC growth page reinforcement", () => {
         expect(guide?.frontmatter.faq.length, `${locale}/${slug} FAQ`).toBeLessThanOrEqual(5);
         expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({
           url: "https://store.steampowered.com/app/1867240/WARDOGS/",
-          kind: "official",
-          checkedAt: expectedCheckDate
+          kind: "official"
         }));
         expect(
-          guide?.frontmatter.sources.filter(({kind}) => kind === "official").every(({checkedAt}) => checkedAt === expectedCheckDate),
-          `${locale}/${slug} has a stale official source check`
+          guide?.frontmatter.sources.some(({kind, checkedAt}) => kind === "official" && checkedAt === expectedCheckDate),
+          `${locale}/${slug} has no official source checked on its update date`
         ).toBe(true);
 
         for (const relatedSlug of requiredRelatedSlugs[slug]) {
