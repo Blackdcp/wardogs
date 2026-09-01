@@ -17,11 +17,23 @@ describe("catalogue media provenance", () => {
     }
   });
 
-  it("does not treat a pending identifier as verified media", () => {
+  it("uses unique item-specific media wherever an authentic capture exists", () => {
     const pendingRecords = catalogueRecords.filter((record) => record.mediaState === "pending");
+    const visibleRecords = catalogueRecords.filter((record) => record.mediaState !== "pending");
+    const visibleImages = visibleRecords.map((record) => record.image);
 
-    expect(pendingRecords.length).toBeGreaterThan(0);
+    expect(pendingRecords.map((record) => record.slug).sort()).toEqual([
+      "at4",
+      "browning-mg",
+      "g60",
+      "m113-apc-sv-variant-1",
+      "m113-apc-sv-variant-2",
+      "m113-apc-sv-variant-3",
+      "m12g",
+    ]);
     expect(pendingRecords.every((record) => record.imageAlt.toLowerCase().includes("pending"))).toBe(true);
+    expect(new Set(visibleImages)).toHaveLength(visibleImages.length);
+    expect(visibleImages.every((image) => !image.includes("/banners/"))).toBe(true);
   });
 
   it("contains no competitor asset or watermark-removal source", () => {
