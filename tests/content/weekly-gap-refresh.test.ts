@@ -5,15 +5,16 @@ import {NEWS_UPDATES} from "../../src/features/news/news-data";
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
 describe("weekly source-gap refresh", () => {
-  it("turns the September FPS Games Show into a current livestream guide in every locale", async () => {
+  it("turns the completed FPS Games Show into a current reveal recap in every locale", async () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-livestream");
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-01");
+      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-04");
       expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /FPS Games Show|FPS游戏展|FPS 游戏展/ : /FPS Games Show/);
-      expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /2026年9月3日/ : /3 September 2026/);
-      expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /英国夏令时晚上7点|晚上7点/ : /7pm BST/);
+      expect(guide?.body, locale).toContain("18:00 UTC");
+      expect(guide?.body, locale).toContain("19:00 UTC");
+      expect(guide?.body, locale).toContain("Closed Beta 02");
       expect(sources, locale).toContain("https://www.youtube.com/watch?v=VQRd91fcQUM");
       expect(sources, locale).toContain("https://x.com/FPSGamesShow/status/2090076326120300897");
     }

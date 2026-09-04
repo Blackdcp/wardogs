@@ -6,10 +6,12 @@ export function getHomeFacts(translate: (key: HomeFactKey) => string): string[] 
 }
 
 export const START_GUIDES = [
-  {number: "1", slug: "wardogs-launch-checklist", titleKey: "launch"},
-  {number: "2", slug: "wardogs-playtest", titleKey: "playtest"},
-  {number: "3", slug: "wardogs-beginner-guide", titleKey: "beginner"},
-  {number: "4", slug: "wardogs-gameplay", titleKey: "gameplay"}
+  {number: "1", slug: "wardogs-beta", titleKey: "playtest"},
+  {number: "2", slug: "wardogs-download", titleKey: "download"},
+  {number: "3", slug: "wardogs-controls", titleKey: "controls"},
+  {number: "4", slug: "wardogs-known-issues", titleKey: "issues"},
+  {number: "5", slug: "wardogs-100k-clip-contest", titleKey: "contest"},
+  {number: "6", slug: "wardogs-launch-checklist", titleKey: "launch"}
 ] as const;
 
 export const HOME_CATEGORY_GUIDES = [
@@ -24,14 +26,17 @@ export const HOME_CATEGORY_GUIDES = [
 ] as const;
 
 export const TOP_GUIDE_SLUGS = [
+  "wardogs-beta",
+  "wardogs-known-issues",
+  "wardogs-100k-clip-contest",
+  "wardogs-download",
+  "wardogs-controls",
   "wardogs-launch-checklist",
   "wardogs-playtest",
-  "wardogs-livestream",
   "wardogs-early-access",
   "wardogs-release-date",
   "wardogs-price",
   "wardogs-system-requirements",
-  "wardogs-download",
   "wardogs-beginner-guide",
   "wardogs-best-weapons-loadouts",
   "wardogs-fob-guide",
@@ -56,10 +61,9 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 }
 
 export const CONFIRMED_RUMOR_ITEMS = [
-  {status: "confirmed", titleKey: "firingRangeTest", slug: "wardogs-playtest"},
-  {status: "confirmed", titleKey: "betaEnded", slug: "wardogs-beta"},
+  {status: "confirmed", titleKey: "closedBeta02", slug: "wardogs-beta"},
+  {status: "confirmed", titleKey: "clipContest", slug: "wardogs-100k-clip-contest"},
   {status: "confirmed", titleKey: "paidPrepurchase", slug: "wardogs-price"},
-  {status: "confirmed", titleKey: "fpsGameShow", slug: "wardogs-livestream"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
 ] as const;

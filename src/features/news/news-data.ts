@@ -1,5 +1,17 @@
 export const NEWS_UPDATES = [
   {
+    date: "2026-09-03",
+    status: "Confirmed",
+    titleKey: "closedBeta02",
+    guideSlug: "wardogs-beta"
+  },
+  {
+    date: "2026-09-03",
+    status: "Confirmed",
+    titleKey: "clipContest",
+    guideSlug: "wardogs-100k-clip-contest"
+  },
+  {
     date: "2026-08-13",
     status: "Confirmed",
     titleKey: "steamPreorder",
@@ -56,6 +68,8 @@ export const NEWS_UPDATES = [
 ] as const;
 
 export const NEWS_CHECKLIST_SLUGS = [
+  "wardogs-known-issues",
+  "wardogs-100k-clip-contest",
   "wardogs-playtest",
   "wardogs-beta",
   "wardogs-steam",

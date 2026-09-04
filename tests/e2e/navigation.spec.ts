@@ -1,4 +1,5 @@
 import {expect, test} from "@playwright/test";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 
 test("locale switching preserves the current article slug", async ({page}) => {
   await page.goto("/en/guides/wardogs-gameplay");
@@ -196,26 +197,15 @@ test("homepage promotes priority guide links and confirmed status signals", asyn
   await expect(page.getByRole("heading", {name: "Recently Updated"})).toBeVisible();
   await expect(page.getByRole("heading", {name: "Confirmed vs Rumor"})).toBeVisible();
   const topGuides = page.getByRole("list", {name: "Top Guides"});
-  for (const slug of [
-    "wardogs-beta",
-    "wardogs-playtest",
-    "wardogs-preload",
-    "wardogs-ps5",
-    "wardogs-crash-fix",
-    "wardogs-beginner-guide",
-    "wardogs-fob-guide",
-    "wardogs-twitch-drops",
-    "wardogs-gameplay",
-    "wardogs-release-date",
-    "wardogs-steam",
-    "wardogs-best-settings"
-  ]) {
+  const statusSection = page.getByRole("heading", {name: "Confirmed vs Rumor"}).locator("xpath=ancestor::section");
+  for (const slug of TOP_GUIDE_SLUGS) {
     await expect(topGuides.locator(`a[href="/en/guides/${slug}"]`)).toBeVisible();
   }
-  await expect(page.getByText("WARDOGS Playtest preload", {exact: true})).toBeVisible();
-  await expect(page.getByText("Twitch Drops campaign", {exact: true})).toBeVisible();
-  await expect(page.getByText("Steam PC Early Access", {exact: true})).toBeVisible();
-  await expect(page.getByText("PS5 release", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("Closed Beta 02 is live", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("$100K clip contest is open", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("Pre-purchase guarantees test access", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("Steam Early Access on September 10", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("PS5 release", {exact: true})).toBeVisible();
 });
 
 test("first-look guide embeds all three supplied YouTube reports", async ({page}) => {

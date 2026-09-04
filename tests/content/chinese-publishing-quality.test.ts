@@ -61,8 +61,8 @@ describe("Simplified Chinese publishing quality", () => {
     const homeText = JSON.stringify(messages.home);
     const siteText = JSON.stringify(messages);
 
-    expect(messages.home.status).toBe("9 月 10 日开启抢先体验");
-    expect(messages.home.priority.title).toBe("玩家当前最需要的 WARDOGS 攻略");
+    expect(messages.home.status).toBe("Closed Beta 02 正在进行");
+    expect(messages.home.priority.title).toBe("这个周末 WARDOGS 玩家最需要的内容");
     expect(messages.home.catalogue.heading).toBe("WARDOGS 图鉴");
     expect(messages.home.catalogue.publishedModels).toBe("已发布的武器与载具条目");
     expect(messages.home.faq.title).toBe("WARDOGS 常见问题");
@@ -95,7 +95,9 @@ describe("Simplified Chinese publishing quality", () => {
         guide?.body,
       ].join("\n");
 
-      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe("2026-09-01");
+      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(
+        ["wardogs-release-date", "wardogs-price"].includes(slug) ? "2026-09-04" : "2026-09-01"
+      );
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
       expect(searchable, `zh-cn/${slug}`).toContain("已确认");
       expect(searchable, `zh-cn/${slug}`).toMatch(/尚未确认|可能调整|版本.*变化|以.*为准/);
@@ -120,7 +122,7 @@ describe("Simplified Chinese publishing quality", () => {
         guide?.body,
       ].join("\n");
 
-      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe("2026-09-01");
+      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(slug === "wardogs-controls" ? "2026-09-04" : "2026-09-01");
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
       expect(searchable, `zh-cn/${slug}`).toContain("版本相关");
       expect(guide?.frontmatter.sources.length, `zh-cn/${slug}`).toBeGreaterThanOrEqual(3);
@@ -156,7 +158,19 @@ describe("Simplified Chinese publishing quality", () => {
         guide?.body,
       ].join("\n");
 
-      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe("2026-09-01");
+      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(
+        [
+          "wardogs-alpha",
+          "wardogs-alpha-key",
+          "wardogs-best-settings",
+          "wardogs-discord-account-verification",
+          "wardogs-factions",
+          "wardogs-twitch-drops",
+          "wardogs-twitter",
+        ].includes(slug)
+          ? "2026-09-04"
+          : "2026-09-01"
+      );
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
       expect(guide?.frontmatter.sources.length, `zh-cn/${slug}`).toBeGreaterThanOrEqual(2);
       expect(guide?.body.length, `zh-cn/${slug}`).toBeGreaterThanOrEqual(1_200);

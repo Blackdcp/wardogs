@@ -10,6 +10,7 @@ import type {ItemTypeId} from "@/features/items/item-library";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
 import {CatalogueExplorer} from "./catalogue-explorer";
+import {CatalogueBuildNotice} from "./catalogue-build-notice";
 import {getLocalizedCatalogueGroup, getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getItemUi} from "@/features/items/item-ui";
 
@@ -105,6 +106,8 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
           <p className="mt-6 max-w-3xl text-base leading-7 text-[#d0dad5] md:text-lg">{guide.description}</p>
         </div>
       </section>
+
+      <CatalogueBuildNotice locale={locale} />
 
       {group && records.length > 0 ? (
         <CatalogueExplorer

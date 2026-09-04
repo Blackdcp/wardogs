@@ -1,76 +1,158 @@
 {
   "common": {"fanMade": "Fan-Made Community Wiki", "language": "Language", "openMenu": "Open menu", "closeMenu": "Close menu", "learnMore": "Learn more", "updated": "Updated", "official": "Official", "community": "Community", "skipToContent": "Skip to content", "openSteam": "Open WARDOGS on Steam"},
-  "ads": {"label": "Advertisement", "sponsored": "Sponsored", "smartlinkCta": "Explore sponsored recommendations", "smartlinkDescription": "Open an external sponsored destination in a new tab."},
+  "liveOps": {
+    "eyebrow": "Live service update",
+    "title": "Closed Beta 02 is live",
+    "description": "The show began at 18:00 UTC; the revised Beta 02 server window opened at 19:00 UTC and tests servers, voice, Drops, and entitlements.",
+    "windowLabel": "Test window",
+    "windowValue": "Sep 3, 19:00 UTC - Sep 6, 08:00 UTC",
+    "accessLabel": "Access",
+    "accessValue": "Pre-purchase guarantees access; free Steam Playtest approvals arrive in waves.",
+    "closedBetaNote": "The 18:00 UTC time is the broadcast. A later official notice moved server opening to 19:00 UTC. Free requests remain unguaranteed.",
+    "accessCta": "Beta 02 access",
+    "issuesCta": "Known issues"
+  },
   "nav": {"game": "Game", "guides": "Guides", "catalogue": "Catalogue", "playtest": "Playtest", "release": "Release", "releaseDate": "Release Date", "steam": "Steam", "steamEarlyAccess": "Steam and Early Access", "gameplay": "Gameplay", "factions": "Factions", "community": "Community", "beginnerGuide": "Beginner Guide", "crashFix": "Crash Fix", "helicopterGuide": "Helicopter Guide", "gameplayGuide": "Gameplay Guide", "fobLogistics": "FOB and Logistics", "mortarGuide": "Mortar Guide", "allGuides": "All Guides", "catalogueHome": "Catalogue Home", "weapons": "Weapons", "vehicles": "Vehicles", "ammo": "Ammo", "attachments": "Attachments", "gear": "Gear", "equipment": "Equipment", "loadouts": "Loadouts", "videos": "Videos", "items": "Items", "news": "News", "steamCta": "View on Steam", "primaryLabel": "Primary navigation"},
   "home": {
-    "metaTitle": "WARDOGS Wiki - Launch, Gameplay & Early Access Guides",
-    "metaDescription": "Prepare for WARDOGS Early Access with verified launch, gameplay, cargo, ammo, squad, vehicles, Steam, PC settings, and beginner guides for September 10.",
-    "heroTitle": "Complete Guide",
-    "heroDescription": "Plan your first deployment with verified WARDOGS access, release, gameplay, faction, community, and video guides.",
-    "primaryCta": "Explore All Guides",
-    "secondaryCta": "Open Launch Checklist",
-    "status": "Early Access announced",
+    "metaTitle": "WARDOGS Wiki - Closed Beta 02, Launch & Gameplay Guides",
+    "metaDescription": "Use verified WARDOGS Closed Beta 02 access, known issues, download, controls, launch, weapons, vehicles, settings, and Early Access guides today.",
+    "heroTitle": "Closed Beta 02 Guide",
+    "heroDescription": "Enter the current test with verified access times, troubleshooting, controls, downloads, launch preparation, and honest build-sensitive advice.",
+    "primaryCta": "Open Beta 02 Guide",
+    "secondaryCta": "Check Known Issues",
+    "status": "Closed Beta 02 is live",
     "statsLabel": "Key WARDOGS facts",
-    "stats": {"earlyAccess": "Early Access Sep 10, 2026", "players": "Up to 100 Players", "teams": "3 Teams", "controlZone": "2 x 2 km Control Zone"},
+    "stats": {
+      "earlyAccess": "Early Access Sep 10, 2026",
+      "players": "Up to 100 Players",
+      "teams": "3 Teams",
+      "controlZone": "2 x 2 km Control Zone"
+    },
     "aboutTitle": "What is WARDOGS?",
     "about": {
       "eyebrow": "Tactical all-out warfare",
       "imageAlt": "Official WARDOGS gameplay view from a helicopter cockpit",
       "bodyOne": "WARDOGS is BULKHEAD's upcoming tactical all-out warfare FPS, not the 2016 War Dogs movie. Up to 100 players in three teams contest a randomized 2 x 2 km Control Zone using infantry, vehicles, fortifications, and logistics.",
       "bodyTwo": "Cash persists between matches and funds a new loadout for each life. Combat and support actions can both help the team while sustaining your economy.",
-      "points": {"teams": "Three teams pursue the same scoring objective", "battlefield": "Vehicles, construction, and destruction reshape routes", "roles": "Combat and support roles both contribute"}
+      "points": {
+        "teams": "Three teams pursue the same scoring objective",
+        "battlefield": "Vehicles, construction, and destruction reshape routes",
+        "roles": "Combat and support roles both contribute"
+      }
     },
     "startEyebrow": "Start Here",
     "startTitle": "Your WARDOGS Deployment",
     "start": {
-      "description": "Use these four guides to understand access, the core match, and the forces entering the Control Zone.",
+      "description": "Use these six guides to enter the current test, install safely, solve known problems, and prepare for Early Access.",
       "cards": {
-        "beginner": {"title": "Beginner Guide", "description": "Build a sensible first loadout and connect every action to the team objective."},
-        "playtest": {"title": "Playtest History", "description": "Check the completed test timeline and any newly confirmed access window."},
-        "launch": {"title": "Launch Checklist", "description": "Prepare for the September 3 announcement and September 10 Early Access launch."},
-        "gameplay": {"title": "Gameplay Explained", "description": "Learn how Control Zone scoring, cash, roles, vehicles, and logistics fit together."},
-        "factions": {"title": "The Three Factions", "description": "Meet Valkyra, Lonestar, and Manticore without inventing unconfirmed bonuses."}
+        "playtest": {
+          "title": "Beta 02 Access",
+          "description": "Check the live test window, paid guarantee, and free Steam approval waves."
+        },
+        "download": {
+          "title": "Download and Install",
+          "description": "Use the correct Steam library entry and avoid unofficial keys or installers."
+        },
+        "controls": {
+          "title": "Controls and Voice",
+          "description": "Review infantry, vehicle, helicopter, map, and local voice controls."
+        },
+        "issues": {
+          "title": "Known Issues",
+          "description": "Fix the empty server list, voice interruptions, crashes, and access confusion safely."
+        },
+        "contest": {
+          "title": "$100K Clip Contest",
+          "description": "Follow the official posting, hashtag, form, deadline, and eligibility rules."
+        },
+        "launch": {
+          "title": "Launch Checklist",
+          "description": "Prepare your account, PC, squad, settings, and sources for September 10."
+        }
       }
     },
     "priority": {
       "eyebrow": "Priority Intel",
-      "title": "The WARDOGS Pages Players Need First",
-      "description": "Jump straight into the confirmed access, release, platform, community, and gameplay pages that answer the highest-intent WARDOGS searches.",
-      "top": {"title": "Top Guides", "description": "The 12 strongest internal links for new players, Steam searchers, and access questions."},
-      "recent": {"title": "Recently Updated", "description": "Freshly checked articles signal which WARDOGS pages are being maintained."},
+      "title": "What WARDOGS Players Need This Weekend",
+      "description": "Start with the active test, official known issues, safe install steps, controls, and confirmed Early Access preparation.",
+      "top": {
+        "title": "Top Guides",
+        "description": "The 15 strongest internal links for new players, Steam searchers, and access questions."
+      },
+      "recent": {
+        "title": "Recently Updated",
+        "description": "Freshly checked articles signal which WARDOGS pages are being maintained."
+      },
       "status": {
         "title": "Confirmed vs Rumor",
         "description": "Fast status checks for details that are official, still missing, or commonly misunderstood.",
-        "labels": {"confirmed": "Confirmed", "rumor": "Not confirmed"},
+        "labels": {
+          "confirmed": "Confirmed",
+          "rumor": "Not confirmed"
+        },
         "items": {
-          "firingRangeTest": {"title": "Limited Firing Range test on September 2", "description": "A backend and login-queue test starts at 17:00 UTC. It is not an open beta, and server availability is not guaranteed."},
-          "betaEnded": {"title": "August Closed Beta has ended", "description": "The servers closed on August 24; its history remains separate from the limited September 2 backend test."},
-          "oneMillionWishlists": {"title": "1,000,000 Steam wishlists", "description": "BULKHEAD confirmed the milestone on August 14; it is not a live player count."},
-          "paidPrepurchase": {"title": "Paid pre-purchase is live", "description": "Steam currently lists $39.99 for the base game and $49.99 for the Supporter Edition; your regional checkout is authoritative."},
-          "fpsGameShow": {"title": "FPS Games Show on September 3", "description": "BULKHEAD has announced a major WARDOGS reveal for 7pm BST; the content remains unconfirmed."},
-          "steamEarlyAccess": {"title": "Steam PC Early Access", "description": "Early Access is confirmed for Steam PC."},
-          "hundredPlayers": {"title": "100-player three-team warfare", "description": "WARDOGS is built around up to 100 players split across three teams."},
-          "persistentCash": {"title": "Persistent cash economy", "description": "Cash persists and affects loadout decisions between lives and matches."},
-          "ps5Release": {"title": "PS5 release", "description": "A PlayStation 5 launch has not been confirmed."},
-          "freeToPlay": {"title": "Free-to-play status", "description": "WARDOGS is currently a paid Steam pre-purchase; no free-to-play model has been announced."}
+          "closedBeta02": {
+            "title": "Closed Beta 02 is live",
+            "description": "The 18:00 UTC show preceded the revised server window: September 3 at 19:00 UTC through September 6 at 08:00 UTC."
+          },
+          "clipContest": {
+            "title": "$100K clip contest is open",
+            "description": "Post a clip of up to two minutes with #WARDOGS100K and @WARDOGS, then submit its link through the official form."
+          },
+          "paidPrepurchase": {
+            "title": "Pre-purchase guarantees test access",
+            "description": "Free Steam Playtest requests are accepted in waves; a pending request is not an entitlement."
+          },
+          "steamEarlyAccess": {
+            "title": "Steam Early Access on September 10",
+            "description": "Windows PC Early Access is confirmed through Steam; the exact launch-hour unlock is not published here."
+          },
+          "ps5Release": {
+            "title": "PS5 release",
+            "description": "A PlayStation 5 release date and cross-play plan remain unconfirmed."
+          }
         }
       }
     },
     "catalogue": {
       "heading": "WARDOGS Catalogue",
       "publishedModels": "Published model guides",
-      "weapons": {"title": "Weapons", "count": "{count} pre-release records", "imageAlt": "WARDOGS weapons catalogue"},
-      "vehicles": {"title": "Vehicles", "count": "{count} pre-release records", "imageAlt": "WARDOGS vehicles catalogue"},
-      "ammo": {"title": "Ammo", "count": "{count} calibres", "imageAlt": "5.56x45mm ammunition box"},
-      "attachments": {"title": "Attachments", "count": "{count} observed records", "imageAlt": "WARDOGS weapon attachments catalogue"},
-      "gear": {"title": "Gear", "count": "{count} gear records", "imageAlt": "WARDOGS heavy armor"},
-      "loadouts": {"title": "Loadouts", "count": "{count} budget bands", "imageAlt": "WARDOGS loadout catalogue"}
+      "weapons": {
+        "title": "Weapons",
+        "count": "{count} pre-release records",
+        "imageAlt": "WARDOGS weapons catalogue"
+      },
+      "vehicles": {
+        "title": "Vehicles",
+        "count": "{count} pre-release records",
+        "imageAlt": "WARDOGS vehicles catalogue"
+      },
+      "ammo": {
+        "title": "Ammo",
+        "count": "{count} calibres",
+        "imageAlt": "5.56x45mm ammunition box"
+      },
+      "attachments": {
+        "title": "Attachments",
+        "count": "{count} observed records",
+        "imageAlt": "WARDOGS weapon attachments catalogue"
+      },
+      "gear": {
+        "title": "Gear",
+        "count": "{count} gear records",
+        "imageAlt": "WARDOGS heavy armor"
+      },
+      "loadouts": {
+        "title": "Loadouts",
+        "count": "{count} budget bands",
+        "imageAlt": "WARDOGS loadout catalogue"
+      }
     },
     "categories": {
       "eyebrow": "All guide areas",
       "title": "Find the Intel You Need",
       "description": "Browse eight focused areas covering every topic in the independent WARDOGS guide library.",
-    "allGuides": "View all 34 guides",
+      "allGuides": "View all 47 guides",
       "items": {
         "access": "Playtests, beta history, alpha status, and keys",
         "release": "Release date and Early Access details",
@@ -96,10 +178,22 @@
       "title": "Confirmed Beginner Tips",
       "description": "Start with the systems described by official WARDOGS sources, not build-specific shortcuts or unverified meta advice.",
       "items": {
-        "objective": {"title": "Play the Control Zone", "description": "The team with the most players in the active zone earns points. Enter, hold, and retake it with teammates."},
-        "economy": {"title": "Spend for the Team", "description": "Cash persists between matches and pays for each life's loadout. Match purchases to the role the team needs."},
-        "support": {"title": "Support Actions Pay", "description": "Revives, transport, supply runs, and objective control can earn cash alongside combat."},
-        "mobility": {"title": "Plan the Approach", "description": "The Control Zone is randomized inside a much larger battlefield. Check routes and transport before a long approach."}
+        "objective": {
+          "title": "Play the Control Zone",
+          "description": "The team with the most players in the active zone earns points. Enter, hold, and retake it with teammates."
+        },
+        "economy": {
+          "title": "Spend for the Team",
+          "description": "Cash persists between matches and pays for each life's loadout. Match purchases to the role the team needs."
+        },
+        "support": {
+          "title": "Support Actions Pay",
+          "description": "Revives, transport, supply runs, and objective control can earn cash alongside combat."
+        },
+        "mobility": {
+          "title": "Plan the Approach",
+          "description": "The Control Zone is randomized inside a much larger battlefield. Check routes and transport before a long approach."
+        }
       }
     },
     "faq": {
@@ -107,15 +201,32 @@
       "title": "WARDOGS Essentials",
       "description": "Straight answers to the questions players ask before entering the battlefield.",
       "items": {
-        "game": {"question": "What kind of game is WARDOGS?", "answer": "WARDOGS is a tactical all-out warfare first-person shooter for up to 100 players split across three teams."},
-        "release": {"question": "When does WARDOGS enter Early Access?", "answer": "WARDOGS is scheduled to enter Steam Early Access on September 10, 2026."},
-        "controlZone": {"question": "How does the Control Zone work?", "answer": "A randomized 2 x 2 km Control Zone becomes the active objective. The team with the most players inside earns points toward victory."},
-        "official": {"question": "Is WARDOGS Wiki an official site?", "answer": "No. This is an independent, fan-made community guide. Official game and account actions should always be completed through the linked WARDOGS, Team17, Steam, and Discord sources."}
+        "game": {
+          "question": "What kind of game is WARDOGS?",
+          "answer": "WARDOGS is a tactical all-out warfare first-person shooter for up to 100 players split across three teams."
+        },
+        "release": {
+          "question": "When does WARDOGS enter Early Access?",
+          "answer": "WARDOGS is scheduled to enter Steam Early Access on September 10, 2026."
+        },
+        "controlZone": {
+          "question": "How does the Control Zone work?",
+          "answer": "A randomized 2 x 2 km Control Zone becomes the active objective. The team with the most players inside earns points toward victory."
+        },
+        "official": {
+          "question": "Is WARDOGS Wiki an official site?",
+          "answer": "No. This is an independent, fan-made community guide. Official game and account actions should always be completed through the linked WARDOGS, Team17, Steam, and Discord sources."
+        }
       }
     },
     "finalTitle": "Ready to Enter the Control Zone?",
     "finalDescription": "Use our independent guide library to prepare for access, squad roles, vehicles, objectives, and every confirmed release milestone.",
-    "final": {"eyebrow": "Prepare for deployment", "guidesCta": "Explore the Guides", "steamCta": "Open Steam"}
+    "final": {
+      "eyebrow": "Prepare for deployment",
+      "guidesCta": "Explore the Guides",
+      "steamCta": "Open Steam"
+    },
+    "heroImageAlt": "WARDOGS soldiers and vehicles fighting across the active Control Zone"
   },
   "guides": {"metaTitle": "WARDOGS Guides - Launch, Gameplay, Weapons & Fixes", "title": "WARDOGS Guides", "description": "Browse {count} focused guides covering launch, cargo, ammunition, squads, troubleshooting, vehicles, FOB logistics, release, and gameplay.", "count": "{count} Guide Topics", "read": "Read guide"},
   "news": {
@@ -123,30 +234,80 @@
     "metaDescription": "Track confirmed WARDOGS news, beta dates, Steam Early Access timing, pricing notes, platform status, preload questions, and updated guide links.",
     "eyebrow": "Latest Updates",
     "title": "WARDOGS News and Confirmed Timeline",
-    "description": "A clean update hub for WARDOGS beta access, Steam Early Access, price, platform, preload, and gameplay news. Every item is labeled as confirmed or not confirmed so players can share it without turning rumors into facts.",
+    "description": "Current, sourced WARDOGS updates for Closed Beta 02, known issues, the clip contest, Steam Early Access, platforms, downloads, and gameplay.",
     "timeline": {
       "title": "Confirmed Timeline",
       "readMore": "Read the full guide",
-      "status": {"Confirmed": "Confirmed", "Not confirmed": "Not confirmed"},
+      "status": {
+        "Confirmed": "Confirmed",
+        "Not confirmed": "Not confirmed"
+      },
       "items": {
-        "firingRangeTest": {"title": "Limited Firing Range test scheduled for September 2", "description": "WARDOGS will test the Firing Range, backend, and login queue from 17:00 UTC; only a handful of servers may run and access is not promised."},
-        "steamPreorder": {"title": "Steam pre-orders and Request Access are live", "description": "Steam is the current official route for wishlist, Request Access, pre-order, pricing, and install entitlement."},
-        "closedBeta": {"title": "Closed Beta ended on August 24, 2026", "description": "The server window is complete and no later beta or playtest date has been announced."},
-        "betaRecap": {"title": "BULKHEAD published the Closed Beta recap", "description": "The official recap confirmed that the test weekend had ended and directed players to the September 3 FPS Games Show for the next major WARDOGS announcement."},
-        "earlyAccess": {"title": "Steam Early Access starts September 10, 2026", "description": "WARDOGS is scheduled to launch in Early Access for Windows PC through Steam, with the full version still undated."},
-        "ps5": {"title": "No PS5 release date is confirmed", "description": "Official product pages currently announce Windows PC through Steam; console timing and cross-play are not confirmed."},
-        "preload": {"title": "Closed Beta preload has ended", "description": "The old WARDOGS Playtest entry belonged to the completed beta; no Early Access preload date is confirmed."},
-        "twitchDrops": {"title": "Closed Beta Twitch Drops have ended", "description": "No active new campaign is confirmed; claimed rewards still do not provide game access."},
-        "fpsGameShow": {"title": "FPS Games Show airs September 3", "description": "BULKHEAD's showcase starts at 7pm BST with a major WARDOGS reveal announced; the reveal itself remains unknown until the show."}
+        "closedBeta02": {
+          "title": "Closed Beta 02 runs September 3-6",
+          "description": "The show began at 18:00 UTC; revised servers opened September 3 at 19:00 UTC and close September 6 at 08:00 UTC. Paid access is guaranteed; free approvals arrive in waves."
+        },
+        "clipContest": {
+          "title": "Official WARDOGS $100K clip contest opens",
+          "description": "Players can post a clip of up to two minutes with #WARDOGS100K and @WARDOGS, then submit it through the official form before October 8."
+        },
+        "steamPreorder": {
+          "title": "Steam pre-purchase and Request Access are live",
+          "description": "Steam remains the official route for pricing, purchase, free Playtest requests, entitlement, and installation."
+        },
+        "closedBeta": {
+          "title": "The August Closed Beta ended August 24",
+          "description": "That first test is historical; it is separate from the live Closed Beta 02 window announced on September 3."
+        },
+        "betaRecap": {
+          "title": "BULKHEAD published the first Closed Beta recap",
+          "description": "The recap covers the completed August test and should not be used as the status for Closed Beta 02."
+        },
+        "earlyAccess": {
+          "title": "Steam Early Access starts September 10, 2026",
+          "description": "Windows PC Early Access is confirmed through Steam; the full-version date and exact unlock hour remain unconfirmed."
+        },
+        "ps5": {
+          "title": "No PS5 release date is confirmed",
+          "description": "Official product pages currently name Windows PC through Steam; console timing and cross-play remain unconfirmed."
+        },
+        "preload": {
+          "title": "Beta 02 installs through the Steam entitlement",
+          "description": "Approved or paid-access players should use the official WARDOGS entry delivered in Steam and avoid third-party installers."
+        },
+        "twitchDrops": {
+          "title": "Beta 02 is testing Twitch Drops",
+          "description": "The official test scope includes Drops functionality, but players should verify any active reward and watch time in Twitch Inventory before viewing."
+        },
+        "fpsGameShow": {
+          "title": "The September 3 reveal confirmed Beta 02",
+          "description": "The announced showcase is complete; the current source of truth is the live Steam event and its September 3-6 schedule."
+        },
+        "firingRangeTest": {
+          "title": "The September 2 Firing Range test is complete",
+          "description": "That limited backend and queue check preceded Closed Beta 02 and is retained only as historical context."
+        }
       }
     },
-    "checklist": {"title": "Pre-Launch Checklist", "description": "Use these pages before the September 3 reveal and Early Access launch. They cover access, pricing, install safety, and the actual gameplay loop."},
+    "checklist": {
+      "title": "Pre-Launch Checklist",
+      "description": "Use these pages during Closed Beta 02 and before September 10 Early Access for access, troubleshooting, installation, controls, settings, and verified launch details."
+    },
     "rules": {
       "title": "How We Label Updates",
       "items": {
-        "official": {"title": "Official first", "description": "Dates, prices, platforms, and access claims are checked against Steam, Team17, BULKHEAD, or official WARDOGS channels."},
-        "rumor": {"title": "Rumors stay labeled", "description": "PS5, the exact unlock time, launch server regions, and any extra beta window stay unconfirmed until a primary source says otherwise."},
-        "refresh": {"title": "Refresh before sharing", "description": "WARDOGS is in a fast pre-launch window, so this page points readers to the detailed guide that can be checked and updated."}
+        "official": {
+          "title": "Official first",
+          "description": "Dates, prices, platforms, and access claims are checked against Steam, Team17, BULKHEAD, or official WARDOGS channels."
+        },
+        "rumor": {
+          "title": "Rumors stay labeled",
+          "description": "PS5, the exact unlock time, launch server regions, and any extra beta window stay unconfirmed until a primary source says otherwise."
+        },
+        "refresh": {
+          "title": "Refresh before sharing",
+          "description": "WARDOGS is in a fast pre-launch window, so this page points readers to the detailed guide that can be checked and updated."
+        }
       }
     }
   },

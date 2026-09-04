@@ -67,6 +67,18 @@ describe("sitemap", () => {
     }
   });
 
+  it("uses each video article's actual editorial update date", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+
+    for (const locale of locales) {
+      for (const article of videoArticles) {
+        const url = `${origin}/${locale}/videos/${article.slug}`;
+        expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url)
+          .toBe(`${article.updatedDate}T00:00:00.000Z`);
+      }
+    }
+  });
+
   it("includes item hubs, all seven categories, and all 40 details in every locale", () => {
     const urls = new Set(sitemap().map((entry) => entry.url));
 

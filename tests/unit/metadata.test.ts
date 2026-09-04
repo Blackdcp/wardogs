@@ -60,8 +60,8 @@ describe("localized metadata", () => {
 
     expect(crashImage).toMatchObject({width: 1280, height: 720});
     expect(helicopterImage).toMatchObject({width: 1280, height: 720});
-    expect(String(crashImage.url)).toContain("fupZGU7LJaU/maxresdefault.jpg");
-    expect(String(helicopterImage.url)).toContain("wcsY2EeIlyc/maxresdefault.jpg");
+    expect(String(crashImage.url)).toContain("fupZGU7LJaU/hqdefault.jpg");
+    expect(String(helicopterImage.url)).toContain("wcsY2EeIlyc/hqdefault.jpg");
     expect(String(crashImage.url)).not.toBe(String(helicopterImage.url));
   });
 

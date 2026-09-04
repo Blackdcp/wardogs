@@ -85,7 +85,7 @@ test("serves the Pages export from its deployment base", async ({page, request})
     expect(await image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0);
     const src = await image.getAttribute("src");
     const isLocalAsset = src?.startsWith(`${basePath}/`) ?? false;
-    const isYouTubeThumbnail = /^https:\/\/i\.ytimg\.com\/vi\/[^/]+\/maxresdefault\.jpg$/.test(src ?? "");
+    const isYouTubeThumbnail = /^https:\/\/i\.ytimg\.com\/vi\/[^/]+\/hqdefault\.jpg$/.test(src ?? "");
     expect(isLocalAsset || isYouTubeThumbnail, src ?? "missing image source").toBe(true);
   }
 

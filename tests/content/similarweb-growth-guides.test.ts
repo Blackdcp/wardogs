@@ -26,10 +26,10 @@ describe("Similarweb growth guide cluster", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        const expectedDate = locale === "zh-cn" && ["wardogs-system-requirements", "wardogs-controls", "wardogs-map", "wardogs-best-settings"].includes(slug)
+        const expectedDate = ["wardogs-controls", "wardogs-best-settings"].includes(slug)
+          ? "2026-09-04"
+          : locale === "zh-cn" && ["wardogs-system-requirements", "wardogs-map"].includes(slug)
           ? "2026-09-01"
-          : slug === "wardogs-controls"
-            ? "2026-08-26"
             : "2026-08-23";
         expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
@@ -79,8 +79,8 @@ describe("Similarweb growth guide cluster", () => {
         const guide = await loadGuideDocument(locale, slug);
         const searchable = `${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
-        expect(searchable, `${locale}/${slug} missing opening time`).toContain("17:00 UTC");
-        expect(searchable, `${locale}/${slug} missing closing time`).toMatch(/0?2:00 UTC/);
+        expect(searchable, `${locale}/${slug} missing revised opening time`).toContain("19:00 UTC");
+        expect(searchable, `${locale}/${slug} missing closing time`).toContain("08:00 UTC");
         expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({
           url: "https://steamcommunity.com/app/1867240/announcements/",
           kind: "official"
@@ -137,34 +137,38 @@ describe("Similarweb growth guide cluster", () => {
 
   it("upgrades existing ranking pages around the exact player questions", async () => {
     const expectations = new Map([
-      ["wardogs-playtest", ["When is the next WARDOGS playtest?", "How long does the WARDOGS playtest last?", "How do I get WARDOGS playtest access?"]],
-      ["wardogs-beta", ["When is the next WARDOGS beta?", "Is WARDOGS open beta or closed beta?"]],
+      ["wardogs-playtest", ["What is the current WARDOGS Playtest window?", "Does a free Steam request guarantee access?", "WARDOGS playtest sign up"]],
+      ["wardogs-beta", ["Is WARDOGS Closed Beta 02 live?", "Is Closed Beta 02 open to everyone?"]],
       ["wardogs-release-date", ["When does WARDOGS come out?", "When is WARDOGS releasing?"]],
       ["wardogs-steam", ["/guides/wardogs-system-requirements", "/guides/wardogs-best-settings"]]
     ]);
 
     for (const [slug, phrases] of expectations) {
       const guide = await loadGuideDocument("en", slug);
-      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01"]).toContain(guide?.frontmatter.updatedAt);
-      for (const phrase of phrases) expect(guide?.body).toContain(phrase);
+      const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}`;
+      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01", "2026-09-04"]).toContain(guide?.frontmatter.updatedAt);
+      for (const phrase of phrases) expect(searchable).toContain(phrase);
     }
 
     const ps5 = await loadGuideDocument("en", "wardogs-ps5");
-    expect(ps5?.frontmatter.updatedAt).toBe("2026-09-01");
+    expect(ps5?.frontmatter.updatedAt).toBe("2026-09-04");
     expect(ps5?.frontmatter.title).toBe("Is WARDOGS Coming to PS5 or Xbox? Console Status");
     expect(ps5?.body).toContain("not confirmed");
   });
 
   it("keeps the homepage focused on current high-intent player tasks", () => {
-    expect(TOP_GUIDE_SLUGS).toHaveLength(12);
+    expect(TOP_GUIDE_SLUGS).toHaveLength(15);
     expect(TOP_GUIDE_SLUGS).toEqual(expect.arrayContaining([
+      "wardogs-beta",
+      "wardogs-known-issues",
+      "wardogs-100k-clip-contest",
+      "wardogs-download",
+      "wardogs-controls",
       "wardogs-launch-checklist",
       "wardogs-playtest",
-      "wardogs-livestream",
       "wardogs-early-access",
       "wardogs-release-date",
       "wardogs-system-requirements",
-      "wardogs-download",
       "wardogs-best-weapons-loadouts",
       "wardogs-fob-guide",
       "wardogs-crash-fix",

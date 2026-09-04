@@ -9,7 +9,7 @@ export type GuideDiscoveryImage = {
   creditUrl: string;
 };
 
-const youtubeImage = (youtubeId: string) => `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`;
+const youtubeImage = (youtubeId: string) => `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
 
 export const guideDiscoveryImages: Readonly<Record<string, GuideDiscoveryImage>> = {
   "wardogs-best-weapons-loadouts": {

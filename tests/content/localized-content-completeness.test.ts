@@ -26,7 +26,7 @@ describe("complete localized guide library", () => {
 
     for (const locale of localizedLocales) {
       const summaries = await listGuideSummaries(locale);
-      expect(summaries, locale).toHaveLength(45);
+      expect(summaries, locale).toHaveLength(47);
 
       for (const summary of summaries) {
         const guide = await loadGuideDocument(locale, summary.slug);

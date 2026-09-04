@@ -71,7 +71,7 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
     }
   });
 
-  it("updates the next-event pages and records the official beta recap", async () => {
+  it("keeps the completed reveal, live Beta 02, and official beta recap aligned", async () => {
     expect(NEWS_UPDATES).toContainEqual(expect.objectContaining({
       date: "2026-08-24",
       titleKey: "betaRecap",
@@ -83,13 +83,15 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const release = await loadGuideDocument(locale, "wardogs-release-date");
 
-      expect(livestream?.frontmatter.updatedAt).toBe("2026-09-01");
-      expect(livestream?.body).toContain("https://www.twitch.tv/thefpsgamesshow");
+      expect(livestream?.frontmatter.updatedAt).toBe("2026-09-04");
+      expect(livestream?.frontmatter.sources.map(({url}) => url)).toContain("https://www.twitch.tv/thefpsgamesshow");
       expect(livestream?.body).toMatch(/18:00 UTC/);
-      expect(price?.frontmatter.updatedAt).toBe("2026-09-01");
-      expect(price?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9月3日/i);
-      expect(release?.frontmatter.updatedAt).toBe(locale === "en" || locale === "zh-cn" ? "2026-09-01" : "2026-08-28");
-      expect(release?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9月3日/i);
+      expect(price?.frontmatter.updatedAt).toBe("2026-09-04");
+      expect(price?.body).toContain("Beta 02");
+      expect(price?.body).toContain("19:00 UTC");
+      expect(release?.frontmatter.updatedAt).toBe("2026-09-04");
+      expect(release?.body).toContain("Beta 02");
+      expect(release?.body).toContain("08:00 UTC");
     }
   });
 });

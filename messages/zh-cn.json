@@ -11,11 +11,17 @@
     "skipToContent": "跳到正文",
     "openSteam": "在 Steam 查看 WARDOGS"
   },
-  "ads": {
-    "label": "广告",
-    "sponsored": "赞助内容",
-    "smartlinkCta": "查看赞助推荐",
-    "smartlinkDescription": "在新标签页打开外部赞助页面。"
+  "liveOps": {
+    "eyebrow": "实时运营更新",
+    "title": "Closed Beta 02 正在进行",
+    "description": "发布会于 18:00 UTC 开始；修订后的 Beta 02 服务器于 19:00 UTC 开放，正在测试服务器、语音、Drops 与权益系统。",
+    "windowLabel": "测试时间",
+    "windowValue": "9 月 3 日 19:00 UTC - 9 月 6 日 08:00 UTC",
+    "accessLabel": "参与方式",
+    "accessValue": "付费预购保证资格；免费的 Steam Playtest 申请分批放行。",
+    "closedBetaNote": "18:00 UTC 是发布会时间。官方后续通知把服务器开服调整到 19:00 UTC；免费申请仍不保证获得资格。",
+    "accessCta": "Beta 02 参与攻略",
+    "issuesCta": "查看已知问题"
   },
   "nav": {
     "game": "游戏",
@@ -51,13 +57,13 @@
     "primaryLabel": "主导航"
   },
   "home": {
-    "metaTitle": "WARDOGS 中文维基 - 上线、玩法与抢先体验攻略",
-    "metaDescription": "为 WARDOGS 抢先体验做好准备：查看经过来源核实的发布日期、价格、下载与安装、核心玩法、武器和弹药、FOB 后勤、载具驾驶、小队协作、PC 性能设置及新手攻略。我们会区分官方确认、实机观察和仍未公布的信息，并在重大版本更新后及时复核。每篇页面均提供来源、核查日期和版本敏感提示，帮助玩家快速找到可靠答案。",
-    "heroTitle": "WARDOGS 中文攻略与图鉴",
-    "heroDescription": "查看经过来源核实的测试资格、发布日期、核心玩法、武器、载具、阵营与实机攻略，为第一次部署做好准备。",
-    "primaryCta": "浏览全部攻略",
-    "secondaryCta": "打开上线清单",
-    "status": "9 月 10 日开启抢先体验",
+    "metaTitle": "WARDOGS Wiki - Closed Beta 02、上线与完整攻略",
+    "metaDescription": "查看 WARDOGS Closed Beta 02 资格、已知问题、下载、操作、上线准备、武器、载具、设置和 Steam 抢先体验的核实攻略，并整理服务器列表、语音、崩溃、免费申请与预购资格的差异、9 月 10 日准备、来源和更新时间；所有未确认信息都会单独标注，避免旧测试结论误导当前玩家。",
+    "heroTitle": "Closed Beta 02 完整攻略",
+    "heroDescription": "用核实过的测试时间、参与资格、故障排查、操作、下载和上线准备进入本轮测试，所有版本敏感信息都会明确标注。",
+    "primaryCta": "打开 Beta 02 攻略",
+    "secondaryCta": "查看已知问题",
+    "status": "Closed Beta 02 正在进行",
     "statsLabel": "WARDOGS 关键信息",
     "stats": {
       "earlyAccess": "2026 年 9 月 10 日抢先体验",
@@ -80,37 +86,41 @@
     "startEyebrow": "从这里开始",
     "startTitle": "准备你的第一次部署",
     "start": {
-      "description": "先确认当前开放状态和安装权限，再了解基础玩法与新手准备。这四篇攻略覆盖最常见的入门问题。",
+      "description": "从这六篇开始，完成测试资格、官方安装、已知问题处理、操作熟悉和抢先体验准备。",
       "cards": {
-        "beginner": {
-          "title": "初学者指南",
-          "description": "从目标、经济、移动和基础配装开始，避免把每局都打成单人冲锋。"
-        },
         "playtest": {
-          "title": "当前测试状态",
-          "description": "区分已结束的 8 月测试、9 月 2 日有限测试与之后可能公布的开放窗口。"
+          "title": "Beta 02 参与资格",
+          "description": "确认当前测试时间、预购保证资格和 Steam 免费分批放行。"
+        },
+        "download": {
+          "title": "下载与安装",
+          "description": "使用正确的 Steam 库条目，避开第三方安装器和所谓测试码。"
+        },
+        "controls": {
+          "title": "操作与语音",
+          "description": "检查步兵、载具、直升机、地图和本地语音的全部常用按键。"
+        },
+        "issues": {
+          "title": "已知问题",
+          "description": "安全处理服务器列表空白、语音失效、崩溃和资格不同步。"
+        },
+        "contest": {
+          "title": "10 万美元剪辑大赛",
+          "description": "按官方规则检查发布平台、标签、表格、截止时间和地区资格。"
         },
         "launch": {
-          "title": "上线准备清单",
-          "description": "为 9 月 3 日节目公告和 9 月 10 日 Steam 抢先体验提前做好准备。"
-        },
-        "gameplay": {
-          "title": "核心玩法说明",
-          "description": "了解控制区计分、现金、兵种、载具与后勤如何在同一场战斗中配合。"
-        },
-        "factions": {
-          "title": "三个阵营",
-          "description": "了解 Valkyra、Lonestar 与 Manticore 三个阵营的公开设定。"
+          "title": "上线检查清单",
+          "description": "为 9 月 10 日准备账户、电脑、队伍、设置和可靠信息源。"
         }
       }
     },
     "priority": {
       "eyebrow": "优先级信息",
-      "title": "玩家当前最需要的 WARDOGS 攻略",
-      "description": "优先查看测试资格、直播公告、抢先体验、下载、配置与高频玩法问题；不确定的信息会明确标注。",
+      "title": "这个周末 WARDOGS 玩家最需要的内容",
+      "description": "优先处理正在进行的测试、官方已知问题、安全安装、操作和已确认的抢先体验准备。",
       "top": {
         "title": "核心攻略",
-        "description": "围绕当前开放状态、Steam 权限、上线准备和高频搜索问题精选 12 篇攻略。"
+        "description": "围绕当前开放状态、Steam 权限、上线准备和高频搜索问题精选 15 篇攻略。"
       },
       "recent": {
         "title": "最近更新",
@@ -124,45 +134,25 @@
           "rumor": "未确认"
         },
         "items": {
-          "firingRangeTest": {
-            "title": "9 月 2 日有限靶场测试",
-            "description": "后端与登录队列测试将于 17:00 UTC 开始。这不是公开测试，服务器名额也不保证开放。"
+          "closedBeta02": {
+            "title": "Closed Beta 02 正在进行",
+            "description": "18:00 UTC 发布会结束后，修订服务器窗口为 9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC。"
           },
-          "betaEnded": {
-            "title": "8 月封闭测试已结束",
-            "description": "服务器已于 8 月 24 日关闭；这段历史与 9 月 2 日的有限后端测试相互独立。"
-          },
-          "oneMillionWishlists": {
-            "title": "Steam 愿望单突破 100 万",
-            "description": "BULKHEAD 于 8 月 14 日公布了这一里程碑；它不是在线人数或实际销量。"
+          "clipContest": {
+            "title": "10 万美元剪辑大赛开放报名",
+            "description": "发布两分钟以内的视频，带上 #WARDOGS100K 并标记 @WARDOGS，再通过官方表格提交链接。"
           },
           "paidPrepurchase": {
-            "title": "付费预购已开放",
-            "description": "Steam 美国区当前显示基础版 $39.99、支持者版 $49.99；本地价格以登录后的结算页为准。"
-          },
-          "fpsGameShow": {
-            "title": "9 月 3 日 FPS Games Show",
-            "description": "官方确认节目将包含 WARDOGS 重大消息，直播时间为 18:00 UTC；具体公布内容尚未确认。"
+            "title": "预购保证测试资格",
+            "description": "免费的 Steam Playtest 申请分批通过；显示已申请并不等于已经获得许可。"
           },
           "steamEarlyAccess": {
-            "title": "Steam PC 抢先体验",
-            "description": "官方已确认 Windows PC Steam 抢先体验将于 2026 年 9 月 10 日开始。"
-          },
-          "hundredPlayers": {
-            "title": "百人三方战斗",
-            "description": "官方将核心模式描述为最多 100 名玩家、三支队伍争夺控制区。"
-          },
-          "persistentCash": {
-            "title": "跨局现金经济",
-            "description": "官方介绍称，现金会影响后续配装选择；最终平衡仍可能调整。"
+            "title": "9 月 10 日开启 Steam 抢先体验",
+            "description": "Windows PC 抢先体验已经确认，但本站不会在官方公布前编写具体解锁时刻。"
           },
           "ps5Release": {
-            "title": "PS5 与 Xbox 版本",
-            "description": "目前没有官方确认的主机发布日期；现阶段只确认 Windows PC Steam。"
-          },
-          "freeToPlay": {
-            "title": "是否免费游玩",
-            "description": "WARDOGS 当前为 Steam 付费预购，官方没有宣布免费游玩模式；本地价格以商店结算页为准。"
+            "title": "PS5 版本",
+            "description": "PS5 上线日期和跨平台计划仍未确认。"
           }
         }
       }
@@ -205,7 +195,7 @@
       "eyebrow": "攻略分类",
       "title": "找到你需要的信息",
       "description": "按测试资格、发布日期、商店、平台、视频、社区、开发团队和玩法系统浏览攻略。",
-      "allGuides": "查看全部攻略",
+      "allGuides": "查看全部 47 篇攻略",
       "items": {
         "access": "测试资格、历史测试和访问权限",
         "release": "发布日期与抢先体验信息",
@@ -278,7 +268,8 @@
       "eyebrow": "部署前准备",
       "guidesCta": "浏览攻略",
       "steamCta": "打开 Steam"
-    }
+    },
+    "heroImageAlt": "WARDOGS 士兵和载具正在争夺当前 Control Zone 的官方游戏画面"
   },
   "guides": {
     "metaTitle": "WARDOGS 中文攻略大全 - 上线、玩法、武器、载具与故障修复",
@@ -292,7 +283,7 @@
     "metaDescription": "查看经过来源核实的 WARDOGS 测试、Steam 预购、9 月 2 日有限测试、9 月 3 日直播与 9 月 10 日抢先体验时间表，并区分已确认事项和仍未公布的细节。",
     "eyebrow": "最新更新",
     "title": "WARDOGS 新闻与确认时间表",
-    "description": "集中查看测试资格、Steam 商店、直播与抢先体验节点。每条信息都会标明确认状态并链接到对应攻略，避免把旧测试、社区猜测或创作者预测当成当前事实。",
+    "description": "持续整理有来源的 WARDOGS 更新，包括 Closed Beta 02、已知问题、剪辑活动、Steam 抢先体验、平台、下载和玩法。",
     "timeline": {
       "title": "确认时间表",
       "readMore": "阅读全文",
@@ -301,47 +292,55 @@
         "Not confirmed": "未确认"
       },
       "items": {
-        "firingRangeTest": {
-          "title": "9 月 2 日将进行有限靶场测试",
-          "description": "WARDOGS 将从 17:00 UTC 开始测试靶场、后端与登录队列；当晚可能只有少量服务器，官方没有保证所有玩家都能进入。"
+        "closedBeta02": {
+          "title": "Closed Beta 02 于 9 月 3 日至 6 日进行",
+          "description": "发布会于 18:00 UTC 开始；修订后的服务器于 9 月 3 日 19:00 UTC 开放，并在 9 月 6 日 08:00 UTC 关闭。预购保证资格，免费申请分批放行。"
+        },
+        "clipContest": {
+          "title": "WARDOGS 官方 10 万美元剪辑大赛开放",
+          "description": "把两分钟以内的视频带 #WARDOGS100K 和 @WARDOGS 公开发布，并在 10 月 8 日前通过官方表格提交。"
         },
         "steamPreorder": {
-          "title": "Steam 付费预购已开放",
-          "description": "Steam 美国区当前显示基础版 $39.99、支持者版 $49.99；地区价格、购买、退款和安装权限以实际账号页面为准。"
+          "title": "Steam 预购和 Request Access 均已开放",
+          "description": "价格、购买、免费申请、游戏许可和安装都应通过 Steam 官方页面完成。"
         },
         "closedBeta": {
-          "title": "8 月封闭测试已经结束",
-          "description": "8 月 21 日至 23 日的测试窗口已关闭；旧 Playtest 权限与预载客户端不能证明当前仍可进入。"
+          "title": "8 月 Closed Beta 已于 8 月 24 日结束",
+          "description": "这是第一轮测试的历史记录，不能代表正在进行的 Closed Beta 02。"
         },
         "betaRecap": {
-          "title": "BULKHEAD 发布封闭测试回顾",
-          "description": "官方确认测试周末结束，并提醒玩家关注 9 月 3 日 FPS Games Show 的重大消息；测试表现不等于当前在线人数。"
+          "title": "BULKHEAD 发布第一轮封测总结",
+          "description": "总结对应已经结束的 8 月测试，不应用来判断 Closed Beta 02 当前状态。"
         },
         "earlyAccess": {
-          "title": "9 月 10 日开启 Steam 抢先体验",
-          "description": "官方确认 WARDOGS 将于 2026 年 9 月 10 日在 Windows PC Steam 开启抢先体验；精确全球解锁小时尚未公布。"
+          "title": "Steam 抢先体验将于 2026 年 9 月 10 日开始",
+          "description": "Windows PC 版本已确认；正式版日期和准确解锁时刻仍未确认。"
         },
         "ps5": {
-          "title": "PS5 与 Xbox 版本尚未确认",
-          "description": "当前官方产品页面只确认 Windows PC Steam；主机发布日期、跨平台联机和跨平台进度均未公布。"
+          "title": "PS5 上线日期尚未确认",
+          "description": "官方产品页面目前只列出 Steam Windows PC；主机时间和跨平台仍未确认。"
         },
         "preload": {
-          "title": "封闭测试预装已结束",
-          "description": "旧 WARDOGS Playtest 安装入口属于已结束的封闭测试；抢先体验预载日期尚未确认。"
+          "title": "Beta 02 通过 Steam 正式许可安装",
+          "description": "获得资格或付费预购的玩家应使用 Steam 库里的 WARDOGS 条目，不要下载第三方安装器。"
         },
         "twitchDrops": {
-          "title": "封闭测试 Twitch Drops 活动已经结束",
-          "description": "目前尚未确认新的 Drops 活动；旧奖励也不能作为当前游戏资格。"
+          "title": "Beta 02 正在测试 Twitch Drops",
+          "description": "Drops 属于官方测试范围，但具体活动奖励和观看时长必须在观看前去 Twitch Inventory 核对。"
         },
         "fpsGameShow": {
-          "title": "9 月 3 日 FPS Games Show",
-          "description": "官方确认节目将于 18:00 UTC 播出并包含 WARDOGS 重大消息；具体公布内容尚未确认。"
+          "title": "9 月 3 日发布确认 Closed Beta 02",
+          "description": "直播已经结束，当前应以 Steam 活动页面和 9 月 3 日至 6 日时间表为准。"
+        },
+        "firingRangeTest": {
+          "title": "9 月 2 日靶场测试已经结束",
+          "description": "该次有限的后台和队列检查发生在 Closed Beta 02 之前，只保留为历史信息。"
         }
       }
     },
     "checklist": {
       "title": "上线前检查清单",
-      "description": "在 9 月 3 日节目和 9 月 10 日抢先体验前，核对购买、下载、配置、账号安全与基础玩法。"
+      "description": "在 Closed Beta 02 期间以及 9 月 10 日抢先体验前，用这些页面处理资格、故障、安装、操作、设置和上线事实。"
     },
     "rules": {
       "title": "我们如何标记更新",

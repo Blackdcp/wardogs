@@ -2,6 +2,7 @@ import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {CatalogueCard} from "../../src/components/catalogue/catalogue-card";
+import {CatalogueBuildNotice} from "../../src/components/catalogue/catalogue-build-notice";
 import {
   CatalogueExplorer,
   filterCatalogueRecords
@@ -108,6 +109,19 @@ describe("CatalogueCard", () => {
     expect(japaneseHtml).toContain("画像を検証中");
     expect(englishHtml).toContain('data-media-state="pending"');
     expect(englishHtml).not.toContain("/_next/image");
+  });
+});
+
+describe("CatalogueBuildNotice", () => {
+  it("labels the build scope and pending item art without presenting it as final data", () => {
+    const englishHtml = renderToStaticMarkup(<CatalogueBuildNotice locale="en" />);
+    const chineseHtml = renderToStaticMarkup(<CatalogueBuildNotice locale="zh-cn" />);
+
+    expect(englishHtml).toContain("Alpha 1 and August Closed Beta");
+    expect(englishHtml.toLowerCase()).toContain("seven identifier-only records");
+    expect(chineseHtml).toContain("Alpha 1 和 8 月封闭测试");
+    expect(chineseHtml).toContain("7 个仅有标识的条目");
+    expect(englishHtml).not.toContain("final launch data");
   });
 });
 

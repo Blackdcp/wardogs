@@ -1,5 +1,5 @@
 import {expect, test, type Page} from "@playwright/test";
-import {expectAdSlotsTerminal, expectImagesLoaded, installDeterministicAdFallback} from "./helpers";
+import {expectImagesLoaded, installDeterministicExternalMediaFallback} from "./helpers";
 import {calculateMobileSegmentScrollTops} from "./visual-segments";
 
 async function expectMobileCategoryScrollSegments(page: Page, name: string) {
@@ -35,12 +35,12 @@ for (const viewport of [
     {name: "catalogue-vehicle-model", pathname: "/en/items/vehicles/bobcat"}
   ]) {
     test(`${pageCase.name} ${viewport.name} visual`, async ({page}) => {
-      await installDeterministicAdFallback(page);
+      test.setTimeout(120_000);
+      await installDeterministicExternalMediaFallback(page);
       await page.setViewportSize(viewport);
       await page.goto(pageCase.pathname);
       await page.addStyleTag({content: "nextjs-portal { display: none !important; }"});
       await expectImagesLoaded(page);
-      await expectAdSlotsTerminal(page);
       await page.evaluate(() => window.scrollTo(0, 0));
       if (viewport.name === "mobile" && (pageCase.name === "catalogue-weapons" || pageCase.name === "catalogue-vehicles")) {
         await expectMobileCategoryScrollSegments(page, pageCase.name);

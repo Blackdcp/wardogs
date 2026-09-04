@@ -31,7 +31,9 @@ describe("2026-08-29 launch and logistics expansion", () => {
             "wardogs-squad-guide",
             "wardogs-oil-rig-guide",
           ].includes(slug));
-        expect(guide?.frontmatter.updatedAt).toBe(reviewedToday ? "2026-09-01" : "2026-08-29");
+        expect(guide?.frontmatter.updatedAt).toBe(
+          slug === "wardogs-launch-checklist" ? "2026-09-04" : reviewedToday ? "2026-09-01" : "2026-08-29"
+        );
         expect(guide?.frontmatter.sources.length).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug} body`).toBeGreaterThan(1800);
       }
@@ -44,8 +46,8 @@ describe("2026-08-29 launch and logistics expansion", () => {
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(sources).toContain("https://store.steampowered.com/app/1867240/WARDOGS/");
-      expect(guide?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9月3日/i);
-      expect(guide?.body).toMatch(/September 10|10\. September|10 сентября|10 de setembro|9月10日/i);
+      expect(guide?.body).toMatch(/September 3|3\. September|3 сентября|3 de setembro|9\s*月\s*3\s*日/i);
+      expect(guide?.body).toMatch(/September 10|10\. September|10 сентября|10 de setembro|9\s*月\s*10\s*日/i);
       expect(guide?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認|尚未确认|未确认/i);
     }
   });
@@ -97,7 +99,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-ps5");
 
-      expect(guide?.frontmatter.updatedAt).toBe(locale === "en" || locale === "zh-cn" ? "2026-09-01" : "2026-08-29");
+      expect(guide?.frontmatter.updatedAt).toBe("2026-09-04");
       expect(guide?.frontmatter.title).toMatch(/PS5/i);
       expect(guide?.frontmatter.title).toMatch(/Xbox/i);
       expect(guide?.frontmatter.description).toMatch(/PS5/i);
@@ -106,15 +108,15 @@ describe("2026-08-29 launch and logistics expansion", () => {
     }
   });
 
-  it("promotes launch preparation ahead of ended playtest content", () => {
-    expect(START_GUIDES[0].slug).toBe("wardogs-launch-checklist");
-    expect(START_GUIDES[1].slug).toBe("wardogs-playtest");
+  it("promotes live Beta 02 tasks before evergreen launch preparation", () => {
+    expect(START_GUIDES[0].slug).toBe("wardogs-beta");
+    expect(START_GUIDES[1].slug).toBe("wardogs-download");
     expect(TOP_GUIDE_SLUGS.slice(0, 5)).toEqual([
-      "wardogs-launch-checklist",
-      "wardogs-playtest",
-      "wardogs-livestream",
-      "wardogs-early-access",
-      "wardogs-release-date",
+      "wardogs-beta",
+      "wardogs-known-issues",
+      "wardogs-100k-clip-contest",
+      "wardogs-download",
+      "wardogs-controls",
     ]);
   });
 });

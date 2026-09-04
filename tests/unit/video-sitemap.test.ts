@@ -22,7 +22,7 @@ describe("video sitemap", () => {
 
     const xml = buildVideoSitemapXml();
     expect(xml).toContain('xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"');
-    expect(xml).toContain("https://i.ytimg.com/vi/J5QZXLENLgQ/maxresdefault.jpg");
+    expect(xml).toContain("https://i.ytimg.com/vi/J5QZXLENLgQ/hqdefault.jpg");
     expect(xml).toContain("https://www.youtube-nocookie.com/embed/J5QZXLENLgQ");
     expect(xml.match(/<video:video>/g)).toHaveLength(locales.length * videoArticles.length);
   });

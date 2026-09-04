@@ -1890,17 +1890,17 @@ export const videoArticles: readonly VideoArticle[] = [
     sourceLabel: "WARDOGS Just Got Some HUGE News",
     sourceUrl: "https://www.youtube.com/watch?v=im60BiRZFow",
     publishedDate: "2026-08-31",
-    updatedDate: "2026-09-01",
+    updatedDate: "2026-09-04",
     kind: "creator",
     priority: -22,
     internalGuideSlug: "wardogs-progression-wipes-guide",
     quickAnswer:
-      "The useful part of this news video is its source trail: Beta progression was deliberately compressed, tanks are planned to move into the Driver track for Early Access, and a major September 3 reveal is scheduled. Release rumors, season guesses, lawsuit discussion and private-server predictions remain commentary until a primary source confirms them.",
+      "The useful part of this news video is its source trail: Beta progression was deliberately compressed and tanks are planned to move into the Driver track for Early Access. The later September 3 reveal confirmed Closed Beta 02, while release rumors, season guesses, lawsuit discussion and private-server predictions still need primary-source confirmation.",
     takeaways: [
       "Use the developer statements linked by the creator, not the headline alone.",
       "Closed Beta leveling speed was intentionally faster than the planned normal pace.",
       "Tanks are moving from the temporary main track into Driver progression.",
-      "September 3 is a confirmed reveal event, but its content is not known in advance.",
+      "The completed September 3 reveal confirmed Closed Beta 02 for September 3-6; it did not confirm an exact Early Access unlock hour.",
       "Season, wipe, lawsuit and roadmap claims need separate first-party confirmation.",
       "The maintained progression and launch guides replace predictions as new facts arrive."
     ],
@@ -1908,7 +1908,7 @@ export const videoArticles: readonly VideoArticle[] = [
       {
         heading: "What the video contributes",
         body: [
-          "The creator collects several late-August WARDOGS updates in one place and links viewers back to developer posts. That makes the video useful as a discovery map, especially for progression changes and the September event.",
+          "The creator collects several late-August WARDOGS updates in one place and links viewers back to developer posts. That makes the video useful as a discovery map, especially for progression changes and the context behind the completed September event.",
           "A compilation still mixes confirmed statements, interpretation and speculation. This page follows each durable claim back to its source before sending it into a maintained guide."
         ]
       },
@@ -1922,8 +1922,8 @@ export const videoArticles: readonly VideoArticle[] = [
       {
         heading: "Release and event claims",
         body: [
-          "The September 3 FPS Games Show appearance and September 10 Steam Early Access date have official support. A creator can explain those milestones but cannot reveal the unannounced contents of the show.",
-          "Any claim about an earlier launch, another open beta or a changed release date must wait for Steam or an official WARDOGS post."
+          "The September 3 FPS Games Show is complete. Its confirmed outcome was Closed Beta 02 on the revised September 3, 19:00 UTC to September 6, 08:00 UTC server window; September 10 remains the listed Steam Early Access date.",
+          "The checked reveal did not confirm an earlier launch, open beta, new platform or exact Early Access unlock hour. Any later change still needs Steam or an official WARDOGS post."
         ]
       },
       {
@@ -1936,7 +1936,7 @@ export const videoArticles: readonly VideoArticle[] = [
       {
         heading: "How to use this page",
         body: [
-          "Watch the original for the creator's complete argument and source links. Use our maintained pages for the current yes-or-no answer after September 2, the FPS Games Show and Early Access.",
+          "Watch the original for the creator's complete argument and source links. Use our maintained pages for the current answer after the September 2 technical session and completed FPS Games Show, then recheck them again at Early Access.",
           "This approach preserves the value of fast creator coverage without allowing a high-energy headline to outrun the underlying evidence."
         ]
       },

@@ -12,8 +12,8 @@ describe("MDX policy", () => {
     await expect(compileGuideBody(source, {})).rejects.toThrow(message);
   });
 
-  it("compiles all six approved components with the caller map", async () => {
-    const names = ["FactGrid", "Notice", "Steps", "ComparisonTable", "OfficialVideo", "SourceNote"];
+  it("compiles every approved component with the caller map", async () => {
+    const names = ["FactGrid", "Notice", "Steps", "ComparisonTable", "OfficialVideo", "SourceNote", "FactionVisuals"];
     const components = Object.fromEntries(names.map((name) => [name, () => null]));
     const source = names.map((name) => `<${name} />`).join("\n");
     await expect(compileGuideBody(source, components)).resolves.toHaveProperty("content");

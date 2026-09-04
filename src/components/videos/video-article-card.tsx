@@ -1,6 +1,6 @@
 import {ArrowRight, PlayCircle} from "lucide-react";
-import Image from "next/image";
 import type {Locale} from "@/config/site";
+import {VideoThumbnailImage} from "@/components/videos/video-thumbnail-image";
 import type {VideoArticle} from "@/features/videos/video-library";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 import {getVideoUi} from "@/features/videos/video-ui";
@@ -19,14 +19,10 @@ export function VideoArticleCard({article, locale, eager = false}: {article: Vid
       className="group flex min-h-64 flex-col overflow-hidden border border-[#2c3631] bg-[#151b18] transition-colors hover:border-[#4d946d] hover:bg-[#1b241f]"
     >
       <span className="relative block aspect-video overflow-hidden border-b border-[#2c3631] bg-[#0d100e]">
-        <Image
+        <VideoThumbnailImage
           alt={`${article.sourceLabel} ${ui.thumbnail}`}
-          className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-          fill
-          loading={eager ? "eager" : "lazy"}
-          sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
-          src={videoThumbnailUrl(article.youtubeId)}
-          unoptimized
+          eager={eager}
+          youtubeId={article.youtubeId}
         />
         <span className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
         <span className="absolute bottom-3 left-3 inline-flex size-10 items-center justify-center bg-[#d9a93a] text-[#111512]" aria-hidden="true">

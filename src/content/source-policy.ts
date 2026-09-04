@@ -16,7 +16,9 @@ const approvedHosts = new Set([
   "www.reddit.com",
   "support.microsoft.com",
   "pcgamer.com",
-  "www.pcgamer.com"
+  "www.pcgamer.com",
+  "wardogs100k.com",
+  "www.wardogs100k.com",
 ]);
 
 const competitorHosts = new Set([

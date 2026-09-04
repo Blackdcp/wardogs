@@ -18,6 +18,7 @@ import {getHomeFacts} from "@/features/home/home-data";
 import {buildPageMetadata} from "@/lib/metadata";
 import {buildHomeJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
+import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
 
 type HomePageProps = {
   params: Promise<{locale: string}>;
@@ -44,6 +45,7 @@ export default async function HomePage({params}: HomePageProps) {
     <main>
       <JsonLd data={buildHomeJsonLd(locale)} />
       <HomeHero facts={facts} />
+      <LiveBetaBanner />
       <PriorityGuides guides={guides} locale={locale} />
       <StartHere />
       <CatalogueHomeBand locale={locale} />

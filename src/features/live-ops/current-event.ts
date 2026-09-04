@@ -1,0 +1,32 @@
+export const CURRENT_EVENT = {
+  id: "closed-beta-02",
+  status: "live",
+  broadcastAt: "2026-09-03T18:00:00Z",
+  startsAt: "2026-09-03T19:00:00Z",
+  endsAt: "2026-09-06T08:00:00Z",
+  earlyAccessAt: "2026-09-10",
+  officialUrl: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807",
+  scheduleUrl: "https://x.com/BULKHEAD/status/2095447401725153576",
+  storeUrl: "https://store.steampowered.com/app/1867240/WARDOGS/",
+  accessGuideSlug: "wardogs-beta",
+  downloadGuideSlug: "wardogs-download",
+  issuesGuideSlug: "wardogs-known-issues",
+  contestGuideSlug: "wardogs-100k-clip-contest",
+} as const;
+
+export const CURRENT_EVENT_GUIDE_SLUGS = new Set([
+  "wardogs-beta",
+  "wardogs-playtest",
+  "wardogs-download",
+  "wardogs-preload",
+  "wardogs-launch-checklist",
+  "wardogs-livestream",
+  "wardogs-known-issues",
+  "wardogs-100k-clip-contest",
+  "wardogs-best-settings",
+  "wardogs-crash-fix",
+  "wardogs-controls",
+  "wardogs-ps5",
+  "wardogs-factions",
+  "wardogs-twitch-drops",
+]);

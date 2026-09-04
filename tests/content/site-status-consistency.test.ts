@@ -3,29 +3,40 @@ import {loadGuideDocument} from "../../src/content/guides";
 import {guideManifest} from "../../src/content/manifest";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
+const beta02Url = "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807";
+const revisedScheduleUrl = "https://x.com/BULKHEAD/status/2095447401725153576";
 
-const staleGenericTestClaims = {
-  en: /no (?:later|next|new|additional) (?:playtest|test)(?: date| window)? (?:is|has been|was)? ?(?:announced|confirmed|dated)|no current(?:ly announced)? playtest/i,
-  de: /kein (?:weiterer|neuer|nächster) (?:Playtest|Test)(?:-Termin)? (?:ist |wurde )?(?:angekündigt|bestätigt)|ein weiterer Testtermin wurde nicht angekündigt/i,
-  ru: /нов(?:ая|ый) (?:дата теста|тест|тестовая сессия) (?:не объявлен[а]?|не подтвержден[а]?)|новая тестовая сессия пока не объявлена/i,
-  "pt-br": /nenhuma nova data de (?:teste|Playtest) foi anunciada|nenhum novo teste foi confirmado|nenhuma nova sessão posterior anunciada/i,
-  ja: /次回(?:の)?(?:プレイテスト|テスト)(?:の日程)?は未発表|新しいテストは未発表|次回テスト未発表/,
-  "zh-cn": /没有(?:公布|确认)?(?:下一次|后续)(?:的)?(?:Playtest|测试)|尚未公布下一次(?:Playtest|测试)/i,
+const statusSensitiveSlugs = [
+  "wardogs-alpha",
+  "wardogs-alpha-key",
+  "wardogs-discord",
+  "wardogs-discord-account-verification",
+  "wardogs-price",
+  "wardogs-release-date",
+  "wardogs-steam",
+  "wardogs-twitter",
+] as const;
+
+const staleCurrentClaims = {
+  en: /no later beta or playtest|no new session (?:was|has been) announced|next official information checkpoint is .*september 3|test starts september 2|show is announced for september 3|what that show will reveal is not yet confirmed/i,
+  de: /keine neue (?:beta|playtest|testsitzung).*angekündigt|nächste offizielle informationspunkt ist .*3\. september|test beginnt am 2\. september|show.*3\. september.*angekündigt.*noch nicht bestätigt/i,
+  ru: /новая дата (?:беты|playtest).*не объявлена|новая тестовая сессия.*не объявлена|следующ(?:ая|ий).*точк.*3 сентября|тест начн[её]тся 2 сентября|шоу.*3 сентября.*ещ[её] не подтвержден/i,
+  "pt-br": /nenhuma nova sessão.*(?:foi )?anunciada|nenhuma nova data (?:de teste|do playtest).*(?:foi )?anunciada|próximo ponto oficial.*3 de setembro|teste começa em 2 de setembro|show.*3 de setembro.*ainda não foi confirmado/i,
+  ja: /新しい(?:Beta|ベータ|Playtest|テスト).*(?:発表|確認)されていません|次の公式.*9月3日|9月2日に開始します|9月3日.*発表予定.*未確認/,
+  "zh-cn": /没有(?:公布|确认).*新的(?: Beta| Playtest|测试)|下一(?:个|次)官方.*9 月 3 日|9 月 2 日.*开始|9 月 3 日.*将公布.*尚未确认/,
 } as const;
 
-const stalePatchNotes = /supersedes older statements|ersetzt ältere Aussagen|заменяет старые фразы|substitui os trechos antigos|以前の記述より優先|优先于下文仍保留/i;
-
 const currentPrepurchasePhrases = {
-  en: /paid pre-purchase|paid pre-order/i,
-  de: /bezahlte Vorbestellung/i,
-  ru: /платн(?:ый|ого) предзаказ/i,
-  "pt-br": /pré-venda paga/i,
-  ja: /有料の予約購入/,
-  "zh-cn": /付费预购/,
+  en: /paid pre-purchase|paid pre-order|qualifying pre-purchase/i,
+  de: /bezahlte Vorbestellung|qualifizierte Vorbestellung/i,
+  ru: /платн(?:ый|ого) предзаказ|подходящ(?:ий|его) предзаказ/i,
+  "pt-br": /pré-venda (?:paga|qualificada)/i,
+  ja: /有料の予約購入|対象の予約購入/,
+  "zh-cn": /付费预购|符合条件的预购/,
 } as const;
 
 describe("site-wide live status consistency", () => {
-  it("does not publish generic no-test claims after the September 2 limited test announcement", async () => {
+  it("removes stale pre-reveal and no-test claims from every guide", async () => {
     for (const locale of locales) {
       for (const {slug} of guideManifest) {
         const guide = await loadGuideDocument(locale, slug);
@@ -35,8 +46,23 @@ describe("site-wide live status consistency", () => {
           guide?.body,
         ].join("\n");
 
-        expect(searchable, `${locale}/${slug}`).not.toMatch(staleGenericTestClaims[locale]);
-        expect(searchable, `${locale}/${slug}`).not.toMatch(stalePatchNotes);
+        expect(searchable, `${locale}/${slug}`).not.toMatch(staleCurrentClaims[locale]);
+      }
+    }
+  });
+
+  it("puts the live Beta 02 checkpoint and primary sources on high-intent status pages", async () => {
+    for (const locale of locales) {
+      for (const slug of statusSensitiveSlugs) {
+        const guide = await loadGuideDocument(locale, slug);
+        const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
+
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-04");
+        expect(guide?.body, `${locale}/${slug}`).toContain("Beta 02");
+        expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
+        expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
+        expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
+        expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
       }
     }
   });
@@ -47,8 +73,8 @@ describe("site-wide live status consistency", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const searchable = `${steam?.frontmatter.description}\n${steam?.body}\n${price?.frontmatter.description}\n${price?.body}`;
 
-      expect(steam?.frontmatter.updatedAt, `${locale}/wardogs-steam`).toBe("2026-09-01");
-      expect(price?.frontmatter.updatedAt, `${locale}/wardogs-price`).toBe("2026-09-01");
+      expect(steam?.frontmatter.updatedAt, `${locale}/wardogs-steam`).toBe("2026-09-04");
+      expect(price?.frontmatter.updatedAt, `${locale}/wardogs-price`).toBe("2026-09-04");
       expect(searchable, `${locale}/commerce`).toContain("$39.99");
       expect(searchable, `${locale}/commerce`).toContain("$49.99");
       expect(searchable, `${locale}/commerce`).toMatch(currentPrepurchasePhrases[locale]);

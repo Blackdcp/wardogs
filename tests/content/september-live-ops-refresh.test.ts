@@ -12,77 +12,50 @@ const eventGuideSlugs = [
   "wardogs-launch-checklist",
   "wardogs-livestream",
 ] as const;
-const newGuideSlugs = [
-  "wardogs-progression-wipes-guide",
-  "wardogs-community-servers-guide",
-] as const;
-const officialTestPost = "https://x.com/WARDOGS/status/2094074731972419976";
-const producerClarification = "https://x.com/Brammflakes/status/2094076336134308024";
+const newGuideSlugs = ["wardogs-progression-wipes-guide", "wardogs-community-servers-guide"] as const;
+const beta02Url = "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807";
+const revisedScheduleUrl = "https://x.com/BULKHEAD/status/2095447401725153576";
 
-const limitedTestSignals = {
-  en: /not an open beta/i,
-  de: /keine offene Beta|kein Open-Beta/i,
-  ru: /не открытая бета/i,
-  "pt-br": /não é (?:um|uma) beta abert[ao]/i,
-  ja: /オープンベータでは(?:ありません|ない)/,
-  "zh-cn": /不是(?:一次)?(?:公开|开放)测试|并非(?:一次)?(?:公开|开放)测试/,
-} as const;
-
-const firingRangeSignals = {
-  en: /Firing Range/i,
-  de: /Schießstand/i,
-  ru: /стрельбищ/i,
-  "pt-br": /Campo de Tiro/i,
-  ja: /射撃場/,
-  "zh-cn": /靶场/,
-} as const;
-
-const unknownEndTimeSignals = {
-  en: /official (?:end|closing) time has not been announced/i,
-  de: /offizielle Endzeit wurde nicht (?:angekündigt|veröffentlicht|bestätigt)/i,
-  ru: /официальное время окончания не (?:объявлено|указано)/i,
-  "pt-br": /horário oficial de encerramento não (?:foi )?(?:anunciado|confirmado)/i,
-  ja: /公式の終了時刻は(?:発表|告知)されていません/,
-  "zh-cn": /官方(?:尚未|没有)公布结束时间|结束时间尚未公布/,
-} as const;
-
-const staleNoTestSignals = {
-  en: /no (?:later|next) (?:playtest|test)|no (?:current|currently announced) playtest/i,
-  de: /kein (?:späterer|nächster|neuer) (?:Playtest|Test)|kein Playtest.*angekündigt/i,
-  ru: /(?:новый|следующий) (?:Playtest|тест) не (?:объявлен|подтвержден)/i,
-  "pt-br": /nenhum (?:novo|próximo) (?:Playtest|teste).*(?:anunciad|confirmad)|não há (?:um )?(?:novo|próximo) (?:Playtest|teste)/i,
-  ja: /次回(?:の)?(?:Playtest|プレイテスト|テスト).*(?:未発表|確認されていません)/,
-  "zh-cn": /没有(?:公布|确认)?(?:下一次|后续)(?:的)?(?:Playtest|测试)|尚未公布下一次(?:Playtest|测试)/i,
+const closedTestSignals = {
+  en: /closed scale test|not an open beta/i,
+  de: /geschlossene\w* skalierungstest|nicht als open beta|keine offene beta|kein open-beta/i,
+  ru: /закрыт.*масштаб.*тест|не открытая бета/i,
+  "pt-br": /teste fechado de escala|não é (?:um|uma) beta abert[ao]/i,
+  ja: /クローズド.*テスト|オープンベータでは(?:なく|ありません|ない)/,
+  "zh-cn": /封闭(?:扩容|规模)测试|不是(?:一次)?(?:公开|开放)测试/,
 } as const;
 
 describe("September 2026 live-ops content refresh", () => {
-  it("publishes the September 2 limited test status across every affected guide and locale", async () => {
+  it("publishes the revised Closed Beta 02 status across every affected guide and locale", async () => {
     for (const locale of locales) {
       for (const slug of eventGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-01");
-        expect(sourceUrls, `${locale}/${slug}`).toContain(officialTestPost);
-        expect(guide?.body, `${locale}/${slug}`).toContain("17:00 UTC");
-        expect(guide?.body, `${locale}/${slug}`).toMatch(firingRangeSignals[locale]);
-        expect(guide?.body, `${locale}/${slug}`).toMatch(limitedTestSignals[locale]);
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-04");
+        expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
+        expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
+        expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
+        expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
+        expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
+        expect(guide?.body, `${locale}/${slug}`).toMatch(closedTestSignals[locale]);
       }
     }
   });
 
-  it("keeps the current test separate from the completed August beta window", async () => {
+  it("keeps the broadcast separate from the playable server window", async () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-playtest");
-      const currentEventSection = guide?.body.split(/^##\s+/m)[1] ?? "";
+      const currentEventSection = guide?.body.split(/^##\s+/m).slice(1, 3).join("\n") ?? "";
       const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-      expect(sourceUrls, `${locale}/wardogs-playtest official source`).toContain(officialTestPost);
-      expect(sourceUrls, `${locale}/wardogs-playtest producer clarification`).toContain(producerClarification);
-      expect(currentEventSection, `${locale}/wardogs-playtest current event`).not.toContain("02:00 UTC");
-      expect(guide?.body, `${locale}/wardogs-playtest unknown end time`).toMatch(unknownEndTimeSignals[locale]);
-      expect(guide?.body, `${locale}/wardogs-playtest stale contradiction`).not.toMatch(staleNoTestSignals[locale]);
+      expect(sourceUrls, `${locale}/wardogs-playtest announcement`).toContain(beta02Url);
+      expect(sourceUrls, `${locale}/wardogs-playtest schedule`).toContain(revisedScheduleUrl);
+      expect(currentEventSection, `${locale}/wardogs-playtest`).toContain("18:00 UTC");
+      expect(currentEventSection, `${locale}/wardogs-playtest`).toContain("19:00 UTC");
+      expect(currentEventSection, `${locale}/wardogs-playtest`).toContain("08:00 UTC");
+      expect(currentEventSection, `${locale}/wardogs-playtest`).not.toContain("17:00 UTC");
     }
   });
 
@@ -100,12 +73,12 @@ describe("September 2026 live-ops content refresh", () => {
     }
   });
 
-  it("adds the September 2 event and four current creator videos", () => {
+  it("keeps the Beta 02 news item and researched creator videos", () => {
     expect(NEWS_UPDATES).toContainEqual({
-      date: "2026-09-02",
+      date: "2026-09-03",
       status: "Confirmed",
-      titleKey: "firingRangeTest",
-      guideSlug: "wardogs-playtest",
+      titleKey: "closedBeta02",
+      guideSlug: "wardogs-beta",
     });
 
     for (const youtubeId of ["im60BiRZFow", "IO7-_TwxpII", "7O5QJNRzXzQ", "JSAu5nlLjJw"]) {

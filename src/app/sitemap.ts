@@ -40,7 +40,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const alternates = buildAlternates(locale, pathname || "/");
     const itemDetailMatch = pathname.match(/^\/items\/([^\/]+)\/([^\/]+)$/);
     const guideDetailMatch = pathname.match(/^\/guides\/([^\/]+)$/);
+    const videoDetailMatch = pathname.match(/^\/videos\/([^\/]+)$/);
     const item = itemDetailMatch ? getItemByTypeAndSlug(itemDetailMatch[1], itemDetailMatch[2]) : undefined;
+    const videoArticle = videoDetailMatch
+      ? videoArticles.find(({slug}) => slug === videoDetailMatch[1])
+      : undefined;
     const languages = itemDetailMatch
       ? Object.fromEntries(
         indexableItemPaths
@@ -53,6 +57,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: String(alternates.canonical),
       lastModified: guideDetailMatch
         ? resolveGuideLastModified(locale, guideDetailMatch[1])
+        : videoArticle
+          ? new Date(`${videoArticle.updatedDate}T00:00:00.000Z`)
         : resolveItemLastModified(item),
       changeFrequency: pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? "weekly" as const : "daily" as const,
       priority: pathname === "" ? 1 : pathname === "/guides" || pathname === "/videos" || pathname === "/items" ? 0.9 : pathname === "/news" ? 0.85 : pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? 0.8 : 0.3,

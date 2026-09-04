@@ -1,76 +1,158 @@
 {
   "common": {"fanMade": "ファン運営コミュニティWiki", "language": "言語", "openMenu": "メニューを開く", "closeMenu": "メニューを閉じる", "learnMore": "詳しく見る", "updated": "更新", "official": "公式", "community": "コミュニティ", "skipToContent": "本文へ移動", "openSteam": "SteamでWARDOGSを開く"},
-  "ads": {"label": "広告", "sponsored": "スポンサー", "smartlinkCta": "スポンサー提供のおすすめを見る", "smartlinkDescription": "外部のスポンサーリンクを新しいタブで開きます。"},
+  "liveOps": {
+    "eyebrow": "ライブサービス更新",
+    "title": "Closed Beta 02開催中",
+    "description": "配信は18:00 UTC開始、訂正後のBeta 02サーバーは19:00 UTC開始で、サーバー、ボイス、Drops、権利処理を検証中です。",
+    "windowLabel": "テスト期間",
+    "windowValue": "9月3日19:00 UTC - 9月6日08:00 UTC",
+    "accessLabel": "参加方法",
+    "accessValue": "予約購入はアクセス保証、無料Steam Playtest申請は順次承認です。",
+    "closedBetaNote": "18:00 UTCは配信時刻です。後の公式告知でサーバー開始は19:00 UTCに変更されました。無料申請は参加保証ではありません。",
+    "accessCta": "Beta 02参加ガイド",
+    "issuesCta": "既知の問題"
+  },
   "nav": {"game": "ゲーム", "guides": "攻略", "catalogue": "カタログ", "playtest": "プレイテスト", "release": "リリース", "releaseDate": "発売日", "steam": "Steam", "steamEarlyAccess": "Steamと早期アクセス", "gameplay": "ゲームプレイ", "factions": "勢力", "community": "コミュニティ", "beginnerGuide": "初心者ガイド", "crashFix": "クラッシュ対策", "helicopterGuide": "ヘリコプターガイド", "gameplayGuide": "ゲームプレイガイド", "fobLogistics": "FOBと兵站", "mortarGuide": "迫撃砲ガイド", "allGuides": "すべての攻略", "catalogueHome": "カタログトップ", "weapons": "武器", "vehicles": "車両", "ammo": "弾薬", "attachments": "アタッチメント", "gear": "装備", "equipment": "特殊装備", "loadouts": "ロードアウト", "videos": "動画", "items": "アイテム", "news": "ニュース", "steamCta": "Steamで見る", "primaryLabel": "メインナビゲーション"},
   "home": {
-    "metaTitle": "WARDOGS Wiki - 発売準備、攻略、早期アクセス情報",
-    "metaDescription": "WARDOGS Wikiは、ゲームプレイ、プレイテスト、発売日、Steamでのアクセス、勢力、トレーラー、コミュニティ、初心者向け戦術を、公式情報と確認済み映像に基づいて整理する非公式攻略サイトです。装備、車両、FOB、設定、トラブル対策まで、出撃前に必要な最新情報を分かりやすく確認できます。",
-    "heroTitle": "完全攻略ガイド",
-    "heroDescription": "確認済みのアクセス情報、発売予定、ゲームシステム、勢力、コミュニティ、動画攻略を使って最初の出撃を準備しましょう。",
-    "primaryCta": "攻略をすべて見る",
-    "secondaryCta": "発売前チェックリスト",
-    "status": "早期アクセス発表済み",
+    "metaTitle": "WARDOGS Wiki - Closed Beta 02・発売・攻略ガイド",
+    "metaDescription": "WARDOGS Closed Beta 02の参加方法、既知の問題、ダウンロード、操作、発売準備、武器、車両、設定、Early Accessを一次情報で確認できます。サーバー一覧、ボイス、クラッシュ、無料申請と予約購入の違い、9月10日の準備、出典と更新日も整理し、未確認情報を明確に分けます。",
+    "heroTitle": "Closed Beta 02攻略",
+    "heroDescription": "開催時間、参加資格、不具合対策、操作、ダウンロード、発売準備を確認し、ビルド依存の情報を区別してテストへ参加できます。",
+    "primaryCta": "Beta 02ガイド",
+    "secondaryCta": "既知の問題を確認",
+    "status": "Closed Beta 02開催中",
     "statsLabel": "WARDOGSの重要情報",
-    "stats": {"earlyAccess": "早期アクセス 2026年9月10日", "players": "最大100人", "teams": "3チーム", "controlZone": "2 x 2 kmのコントロールゾーン"},
+    "stats": {
+      "earlyAccess": "早期アクセス 2026年9月10日",
+      "players": "最大100人",
+      "teams": "3チーム",
+      "controlZone": "2 x 2 kmのコントロールゾーン"
+    },
     "aboutTitle": "WARDOGSとは？",
     "about": {
       "eyebrow": "大規模タクティカル戦争",
       "imageAlt": "ヘリコプターの操縦席から見たWARDOGS公式ゲームプレイ",
       "bodyOne": "WARDOGSはBULKHEADが開発する大規模タクティカルFPSで、2016年の映画War Dogsとは別作品です。最大100人が3チームに分かれ、ランダムに設定される2 x 2 kmのコントロールゾーンを歩兵、車両、要塞化、兵站で争います。",
       "bodyTwo": "資金は試合をまたいで保持され、各ライフの新しいロードアウトに使います。戦闘だけでなく、輸送、補給、蘇生などの支援行動もチームと自分の経済に貢献します。",
-      "points": {"teams": "3チームが同じ得点目標を追う", "battlefield": "車両、建築、破壊で進軍ルートが変化", "roles": "戦闘役と支援役の両方が勝利に貢献"}
+      "points": {
+        "teams": "3チームが同じ得点目標を追う",
+        "battlefield": "車両、建築、破壊で進軍ルートが変化",
+        "roles": "戦闘役と支援役の両方が勝利に貢献"
+      }
     },
     "startEyebrow": "ここから開始",
     "startTitle": "WARDOGSへの出撃準備",
     "start": {
-      "description": "4つのガイドで参加方法、基本ルール、コントロールゾーンに入る3勢力を理解できます。",
+      "description": "現在のテスト参加、安全なインストール、既知の問題の解決、Early Access準備に必要な6本です。",
       "cards": {
-        "beginner": {"title": "初心者ガイド", "description": "無理のない初期ロードアウトを組み、すべての行動をチーム目標につなげます。"},
-        "playtest": {"title": "テスト履歴", "description": "終了済みテストと新たに確認された参加期間を確認します。"},
-        "launch": {"title": "発売前チェックリスト", "description": "9月3日の発表と9月10日の早期アクセス開始に備えます。"},
-        "gameplay": {"title": "ゲームプレイ解説", "description": "ゾーン得点、資金、役割、車両、兵站がどう結び付くかを学びます。"},
-        "factions": {"title": "3つの勢力", "description": "未確認の能力を作り上げず、Valkyra、Lonestar、Manticoreを整理します。"}
+        "playtest": {
+          "title": "Beta 02参加方法",
+          "description": "開催期間、予約購入の保証、無料Steam申請の順次承認を確認します。"
+        },
+        "download": {
+          "title": "ダウンロードと導入",
+          "description": "正しいSteamライブラリ項目を使い、非公式キーやインストーラーを避けます。"
+        },
+        "controls": {
+          "title": "操作とボイス",
+          "description": "歩兵、車両、ヘリ、マップ、ローカルボイスの操作を確認します。"
+        },
+        "issues": {
+          "title": "既知の問題",
+          "description": "空のサーバー一覧、ボイス停止、クラッシュ、参加資格を安全に切り分けます。"
+        },
+        "contest": {
+          "title": "10万ドル動画コンテスト",
+          "description": "投稿先、タグ、フォーム、締切、参加条件を公式ルールで確認します。"
+        },
+        "launch": {
+          "title": "発売チェックリスト",
+          "description": "9月10日に向けてアカウント、PC、分隊、設定、情報源を準備します。"
+        }
       }
     },
     "priority": {
       "eyebrow": "優先情報",
-      "title": "プレイヤーが最初に読むWARDOGSページ",
-      "description": "参加、発売、対応機種、コミュニティ、ゲームプレイに関する検索意図の強い疑問へ、確認済みページから直接進めます。",
-      "top": {"title": "人気攻略", "description": "初心者、Steam利用者、参加方法を探す人向けの重要な12ページです。"},
-      "recent": {"title": "最近更新", "description": "直近に再確認されたWARDOGS記事をまとめています。"},
+      "title": "今週末にWARDOGSプレイヤーが必要な情報",
+      "description": "開催中テスト、公式不具合、安全な導入、操作、Early Access準備から確認してください。",
+      "top": {
+        "title": "人気攻略",
+        "description": "初心者、Steam利用者、参加方法を探す人向けの重要な12ページです。"
+      },
+      "recent": {
+        "title": "最近更新",
+        "description": "直近に再確認されたWARDOGS記事をまとめています。"
+      },
       "status": {
         "title": "確認済み / 噂",
         "description": "公式に確認された内容、未発表の内容、誤解されやすい情報を素早く判別できます。",
-        "labels": {"confirmed": "確認済み", "rumor": "未確認"},
+        "labels": {
+          "confirmed": "確認済み",
+          "rumor": "未確認"
+        },
         "items": {
-          "firingRangeTest": {"title": "9月2日に限定射撃場テスト", "description": "バックエンドとログイン待機列のテストは17:00 UTC開始です。オープンベータではなく、サーバー参加は保証されません。"},
-          "betaEnded": {"title": "8月のClosed Betaは終了", "description": "サーバーは8月24日に終了しました。この履歴は9月2日の限定バックエンドテストとは別です。"},
-          "oneMillionWishlists": {"title": "Steamウィッシュリスト100万件", "description": "BULKHEADが8月14日に確認した関心度の節目で、同時接続数ではありません。"},
-          "paidPrepurchase": {"title": "有料の予約購入を受付中", "description": "米国Steamは通常版39.99ドル、Supporter Edition 49.99ドルを表示中です。実際の支払額は地域ストアのカートを確認してください。"},
-          "fpsGameShow": {"title": "FPS Games Showは9月3日", "description": "BULKHEADは英国夏時間19時の大型WARDOGS発表を予告していますが、内容は未確認です。"},
-          "steamEarlyAccess": {"title": "Steam PC早期アクセス", "description": "SteamのWindows PC版早期アクセスが公式に確認されています。"},
-          "hundredPlayers": {"title": "100人・3チームの戦争", "description": "WARDOGSは最大100人を3チームに分けて戦う設計です。"},
-          "persistentCash": {"title": "持ち越される資金経済", "description": "資金は保持され、ライフや試合をまたぐロードアウト判断に影響します。"},
-          "ps5Release": {"title": "PS5版", "description": "PlayStation 5版の発売は確認されていません。"},
-          "freeToPlay": {"title": "基本プレイ無料の状況", "description": "現在はSteamの有料予約購入であり、基本プレイ無料モデルは発表されていません。"}
+          "closedBeta02": {
+            "title": "Closed Beta 02開催中",
+            "description": "18:00 UTCの配信後、訂正版サーバー期間は9月3日19:00 UTCから9月6日08:00 UTCまでです。"
+          },
+          "clipContest": {
+            "title": "10万ドル動画コンテスト開催中",
+            "description": "2分以内の動画に#WARDOGS100Kと@WARDOGSを付け、公式フォームからリンクを送ります。"
+          },
+          "paidPrepurchase": {
+            "title": "予約購入はテスト参加保証",
+            "description": "無料Steam Playtest申請は順次承認され、申請中表示だけではアクセス権になりません。"
+          },
+          "steamEarlyAccess": {
+            "title": "9月10日にSteam Early Access",
+            "description": "Windows PC版は確認済みですが、正確な解禁時刻はここでは断定しません。"
+          },
+          "ps5Release": {
+            "title": "PS5版",
+            "description": "PS5の発売日とクロスプレイ計画は未確認です。"
+          }
         }
       }
     },
     "catalogue": {
       "heading": "WARDOGSカタログ",
       "publishedModels": "公開済みモデルガイド",
-      "weapons": {"title": "武器", "count": "発売前ビルドの記録{count}件", "imageAlt": "WARDOGS武器カタログ"},
-      "vehicles": {"title": "車両", "count": "発売前ビルドの記録{count}件", "imageAlt": "WARDOGS車両カタログ"},
-      "ammo": {"title": "弾薬", "count": "{count}口径", "imageAlt": "5.56x45mm弾薬箱"},
-      "attachments": {"title": "アタッチメント", "count": "確認済み記録{count}件", "imageAlt": "WARDOGS武器アタッチメント"},
-      "gear": {"title": "装備", "count": "{count}件の装備データ", "imageAlt": "WARDOGS重装甲"},
-      "loadouts": {"title": "ロードアウト", "count": "{count}つの予算帯", "imageAlt": "WARDOGSロードアウトカタログ"}
+      "weapons": {
+        "title": "武器",
+        "count": "発売前ビルドの記録{count}件",
+        "imageAlt": "WARDOGS武器カタログ"
+      },
+      "vehicles": {
+        "title": "車両",
+        "count": "発売前ビルドの記録{count}件",
+        "imageAlt": "WARDOGS車両カタログ"
+      },
+      "ammo": {
+        "title": "弾薬",
+        "count": "{count}口径",
+        "imageAlt": "5.56x45mm弾薬箱"
+      },
+      "attachments": {
+        "title": "アタッチメント",
+        "count": "確認済み記録{count}件",
+        "imageAlt": "WARDOGS武器アタッチメント"
+      },
+      "gear": {
+        "title": "装備",
+        "count": "{count}件の装備データ",
+        "imageAlt": "WARDOGS重装甲"
+      },
+      "loadouts": {
+        "title": "ロードアウト",
+        "count": "{count}つの予算帯",
+        "imageAlt": "WARDOGSロードアウトカタログ"
+      }
     },
     "categories": {
       "eyebrow": "攻略カテゴリー",
       "title": "必要な情報を探す",
       "description": "独立系WARDOGS攻略ライブラリを8つの分野から閲覧できます。",
-      "allGuides": "全34攻略を見る",
+      "allGuides": "全47ガイドを見る",
       "items": {
         "access": "プレイテスト、ベータ、アルファ、キー",
         "release": "発売日と早期アクセス",
@@ -96,10 +178,22 @@
       "title": "確認済み初心者向けヒント",
       "description": "特定ビルドだけの裏技や未確認メタではなく、公式情報で説明されているシステムから始めましょう。",
       "items": {
-        "objective": {"title": "コントロールゾーンで戦う", "description": "アクティブゾーン内の人数が多いチームに得点が入ります。味方と進入、維持、奪還を行いましょう。"},
-        "economy": {"title": "チームのために資金を使う", "description": "資金は試合間で保持され、各ライフの装備購入に使います。チームが必要とする役割に合わせて購入します。"},
-        "support": {"title": "支援行動でも稼げる", "description": "蘇生、輸送、補給、目標確保は、戦闘と同様に資金獲得へつながります。"},
-        "mobility": {"title": "進入ルートを計画する", "description": "広い戦場内でゾーン位置はランダムです。長距離を歩く前にルートと輸送手段を確認します。"}
+        "objective": {
+          "title": "コントロールゾーンで戦う",
+          "description": "アクティブゾーン内の人数が多いチームに得点が入ります。味方と進入、維持、奪還を行いましょう。"
+        },
+        "economy": {
+          "title": "チームのために資金を使う",
+          "description": "資金は試合間で保持され、各ライフの装備購入に使います。チームが必要とする役割に合わせて購入します。"
+        },
+        "support": {
+          "title": "支援行動でも稼げる",
+          "description": "蘇生、輸送、補給、目標確保は、戦闘と同様に資金獲得へつながります。"
+        },
+        "mobility": {
+          "title": "進入ルートを計画する",
+          "description": "広い戦場内でゾーン位置はランダムです。長距離を歩く前にルートと輸送手段を確認します。"
+        }
       }
     },
     "faq": {
@@ -107,15 +201,32 @@
       "title": "WARDOGSの基本",
       "description": "戦場へ入る前にプレイヤーが確認したい疑問へ簡潔に答えます。",
       "items": {
-        "game": {"question": "WARDOGSはどんなゲームですか？", "answer": "最大100人が3チームに分かれて戦う大規模タクティカルFPSです。"},
-        "release": {"question": "早期アクセスはいつ始まりますか？", "answer": "Steam早期アクセスは2026年9月10日に開始予定です。"},
-        "controlZone": {"question": "コントロールゾーンの仕組みは？", "answer": "ランダムな2 x 2 kmの範囲が目標になります。ゾーン内の人数が最も多いチームが勝利に必要な得点を獲得します。"},
-        "official": {"question": "WARDOGS Wikiは公式サイトですか？", "answer": "いいえ。独立したファン運営の攻略サイトです。ゲームやアカウントの操作は、リンク先のWARDOGS、Team17、Steam、Discord公式情報で行ってください。"}
+        "game": {
+          "question": "WARDOGSはどんなゲームですか？",
+          "answer": "最大100人が3チームに分かれて戦う大規模タクティカルFPSです。"
+        },
+        "release": {
+          "question": "早期アクセスはいつ始まりますか？",
+          "answer": "Steam早期アクセスは2026年9月10日に開始予定です。"
+        },
+        "controlZone": {
+          "question": "コントロールゾーンの仕組みは？",
+          "answer": "ランダムな2 x 2 kmの範囲が目標になります。ゾーン内の人数が最も多いチームが勝利に必要な得点を獲得します。"
+        },
+        "official": {
+          "question": "WARDOGS Wikiは公式サイトですか？",
+          "answer": "いいえ。独立したファン運営の攻略サイトです。ゲームやアカウントの操作は、リンク先のWARDOGS、Team17、Steam、Discord公式情報で行ってください。"
+        }
       }
     },
     "finalTitle": "コントロールゾーンへ入る準備はできましたか？",
     "finalDescription": "独立系攻略ライブラリで、参加方法、分隊の役割、車両、目標、確認済みの発売予定を準備できます。",
-    "final": {"eyebrow": "出撃準備", "guidesCta": "攻略を見る", "steamCta": "Steamを開く"}
+    "final": {
+      "eyebrow": "出撃準備",
+      "guidesCta": "攻略を見る",
+      "steamCta": "Steamを開く"
+    },
+    "heroImageAlt": "WARDOGSの兵士と車両がControl Zoneで戦っている公式ゲーム画面"
   },
   "guides": {"metaTitle": "WARDOGS 攻略ガイド - 発売準備、ゲームプレイ、武器、トラブル対策", "title": "WARDOGS攻略", "description": "発売、貨物輸送、弾薬、分隊、車両、FOB兵站、ゲームプレイを扱う{count}件の攻略です。", "count": "{count}件の攻略", "read": "攻略を読む"},
   "news": {
@@ -123,30 +234,80 @@
     "metaDescription": "WARDOGSのベータ日程、Steam早期アクセス、価格、対応機種、事前ダウンロード、ゲーム更新を確認済み情報に基づいて追跡します。",
     "eyebrow": "最新情報",
     "title": "WARDOGSニュースと確認済みスケジュール",
-    "description": "ベータ参加、Steam早期アクセス、価格、対応機種、事前ダウンロード、ゲームプレイの更新拠点です。確認済みと未確認を分けて表示します。",
+    "description": "Closed Beta 02、既知の問題、動画コンテスト、Steam Early Access、対応機種、導入、ゲームプレイを出典付きで更新します。",
     "timeline": {
       "title": "確認済みスケジュール",
       "readMore": "詳しい攻略を読む",
-      "status": {"Confirmed": "確認済み", "Not confirmed": "未確認"},
+      "status": {
+        "Confirmed": "確認済み",
+        "Not confirmed": "未確認"
+      },
       "items": {
-        "firingRangeTest": {"title": "9月2日に限定射撃場テストを実施", "description": "17:00 UTCから射撃場、バックエンド、ログイン待機列を検証します。少数サーバーが稼働する可能性はありますが、参加は保証されません。"},
-        "steamPreorder": {"title": "Steamの予約購入とアクセス申請が開始", "description": "ウィッシュリスト、アクセス申請、予約、価格、インストール権限はSteamが公式窓口です。"},
-        "closedBeta": {"title": "Closed Betaは2026年8月24日に終了", "description": "サーバー期間は終了し、次回BetaまたはPlaytestの日程は発表されていません。"},
-        "betaRecap": {"title": "BULKHEADがClosed Betaの振り返りを公開", "description": "公式の振り返りではテスト週末の終了が確認され、WARDOGSの次の大きな発表は9月3日のFPS Games Showで行われると案内されました。"},
-        "earlyAccess": {"title": "Steam早期アクセスは2026年9月10日開始", "description": "Windows PC向けSteam早期アクセスが予定されています。正式版の日程は未発表です。"},
-        "ps5": {"title": "PS5版の発売日は未確認", "description": "公式製品ページはSteamのWindows PC版のみを発表しており、家庭用機とクロスプレイは未確認です。"},
-        "preload": {"title": "Closed Betaのプリロードは終了", "description": "旧WARDOGS Playtestは終了済みBeta用です。Early Accessプリロード日は未確認です。"},
-        "twitchDrops": {"title": "Closed BetaのTwitch Dropsは終了", "description": "現在、有効な新規キャンペーンは未確認です。受取済み報酬もゲーム参加権ではありません。"},
-        "fpsGameShow": {"title": "FPS Games Showは9月3日開催", "description": "BULKHEADの番組は英国夏時間19時開始で大型発表が予告されていますが、内容は放送まで未確認です。"}
+        "closedBeta02": {
+          "title": "Closed Beta 02は9月3日から6日まで",
+          "description": "配信は18:00 UTC開始、訂正後のサーバーは9月3日19:00 UTC開始、9月6日08:00 UTC終了です。予約購入は参加保証、無料申請は順次承認です。"
+        },
+        "clipContest": {
+          "title": "WARDOGS公式10万ドル動画コンテスト",
+          "description": "2分以内の動画を#WARDOGS100Kと@WARDOGS付きで公開し、10月8日までに公式フォームから送信します。"
+        },
+        "steamPreorder": {
+          "title": "Steam予約購入とRequest Access受付中",
+          "description": "価格、購入、無料申請、アクセス権、インストールはSteamが公式経路です。"
+        },
+        "closedBeta": {
+          "title": "8月のClosed Betaは8月24日に終了",
+          "description": "最初のテストは履歴であり、現在のClosed Beta 02とは別の期間です。"
+        },
+        "betaRecap": {
+          "title": "BULKHEADが最初のベータ振り返りを公開",
+          "description": "8月の終了済みテストを扱う記事で、Closed Beta 02の現在状況ではありません。"
+        },
+        "earlyAccess": {
+          "title": "Steam Early Accessは2026年9月10日",
+          "description": "Windows PC版は確認済みで、正式版の日程と正確な解禁時刻は未確認です。"
+        },
+        "ps5": {
+          "title": "PS5版の発売日は未確認",
+          "description": "公式製品ページはSteamのWindows PC版を案内し、家庭用機とクロスプレイは未確認です。"
+        },
+        "preload": {
+          "title": "Beta 02はSteamの正式な権利から導入",
+          "description": "承認済みまたは購入済みのプレイヤーはSteamのWARDOGS項目を使い、外部インストーラーを避けます。"
+        },
+        "twitchDrops": {
+          "title": "Beta 02でTwitch Dropsをテスト",
+          "description": "Dropsは公式テスト対象ですが、報酬と視聴時間は視聴前にTwitch Inventoryで確認してください。"
+        },
+        "fpsGameShow": {
+          "title": "9月3日の発表でBeta 02を公開",
+          "description": "配信は終了し、現在はSteamイベントと9月3日から6日の予定が一次情報です。"
+        },
+        "firingRangeTest": {
+          "title": "9月2日の射撃場テストは終了",
+          "description": "限定的なバックエンドと待機列の確認はClosed Beta 02前の履歴です。"
+        }
       }
     },
-    "checklist": {"title": "発売前チェックリスト", "description": "9月3日の発表とEarly Access前に、参加、価格、インストール安全性、基本ループを確認します。"},
+    "checklist": {
+      "title": "発売前チェックリスト",
+      "description": "Closed Beta 02開催中と9月10日のEarly Access前に、参加、問題解決、導入、操作、設定、発売情報を確認してください。"
+    },
     "rules": {
       "title": "更新情報の分類方法",
       "items": {
-        "official": {"title": "公式情報を優先", "description": "日程、価格、機種、参加条件、機能はSteam、Team17、BULKHEAD、WARDOGS公式情報で確認します。"},
-        "rumor": {"title": "噂は噂として表示", "description": "PS5、正確な解禁時刻、開始時のサーバー地域、追加ベータは一次情報が出るまで未確認として扱います。"},
-        "refresh": {"title": "共有前に再確認", "description": "発売前は状況が速く変化するため、確認・更新できる詳細攻略へ案内します。"}
+        "official": {
+          "title": "公式情報を優先",
+          "description": "日程、価格、機種、参加条件、機能はSteam、Team17、BULKHEAD、WARDOGS公式情報で確認します。"
+        },
+        "rumor": {
+          "title": "噂は噂として表示",
+          "description": "PS5、正確な解禁時刻、開始時のサーバー地域、追加ベータは一次情報が出るまで未確認として扱います。"
+        },
+        "refresh": {
+          "title": "共有前に再確認",
+          "description": "発売前は状況が速く変化するため、確認・更新できる詳細攻略へ案内します。"
+        }
       }
     }
   },

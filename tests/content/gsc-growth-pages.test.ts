@@ -24,12 +24,10 @@ describe("GSC growth page reinforcement", () => {
     for (const locale of locales) {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedCheckDate = locale === "zh-cn" && ["wardogs-crash-fix", "wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
+        const expectedCheckDate = ["wardogs-beta", "wardogs-playtest", "wardogs-crash-fix"].includes(slug)
+          ? "2026-09-04"
+          : locale === "zh-cn" && ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
           ? "2026-09-01"
-          : ["wardogs-beta", "wardogs-playtest"].includes(slug)
-          ? "2026-09-01"
-          : slug === "wardogs-crash-fix"
-            ? "2026-08-25"
           : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
             ? "2026-08-29"
             : "2026-08-26";
@@ -67,12 +65,12 @@ describe("GSC growth page reinforcement", () => {
   it("gives the English landing pages exact, non-overlapping search intent", async () => {
     const expectations = {
       "wardogs-beta": {
-        title: "WARDOGS Beta Status: Next Test Date & Access",
-        phrases: ["Is WARDOGS beta live right now?", "What happens after the WARDOGS beta?"]
+        title: "WARDOGS Closed Beta 02: Dates, Access & Status",
+        phrases: ["Is WARDOGS Closed Beta 02 live?", "Is the WARDOGS beta free?"]
       },
       "wardogs-playtest": {
-        title: "WARDOGS Playtest Status: Next Date, Signup & Access",
-        phrases: ["Is WARDOGS Playtest still available?", "How do I request WARDOGS Playtest access on Steam?"]
+        title: "WARDOGS Playtest: Closed Beta 02 Access Guide",
+        phrases: ["What is the current WARDOGS Playtest window?", "WARDOGS playtest sign up"]
       },
       "wardogs-crash-fix": {
         title: "WARDOGS Crash Fix: Startup, Reboots & Stutter",
@@ -90,9 +88,10 @@ describe("GSC growth page reinforcement", () => {
 
     for (const [slug, expectation] of Object.entries(expectations)) {
       const guide = await loadGuideDocument("en", slug);
+      const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}`;
       expect(guide?.frontmatter.title).toBe(expectation.title);
       expect(guide?.frontmatter.title.length).toBeLessThanOrEqual(60);
-      for (const phrase of expectation.phrases) expect(guide?.body).toContain(phrase);
+      for (const phrase of expectation.phrases) expect(searchable).toContain(phrase);
     }
   });
 

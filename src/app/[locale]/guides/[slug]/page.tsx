@@ -20,6 +20,7 @@ import {buildArticleJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker";
 import {formatLocalizedDate} from "@/lib/localized-date";
+import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -81,6 +82,8 @@ export default async function GuideArticlePage({params}: PageProps) {
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]" style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.description}</p>
         </div>
       </header>
+
+      <LiveBetaBanner compact />
 
       <article className="site-container max-w-4xl py-10 md:py-14">
         {discoveryImage ? (

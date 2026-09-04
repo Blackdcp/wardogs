@@ -17,7 +17,7 @@ export async function HomeHero({facts}: HomeHeroProps) {
     <section aria-labelledby="home-hero-title" className="relative isolate flex min-h-[680px] items-center overflow-hidden border-b border-[#2c3631]">
       <Image
         src={assetPath("/images/wardogs-hero.jpg")}
-        alt=""
+        alt={t("home.heroImageAlt")}
         fill
         priority
         sizes="100vw"
@@ -53,11 +53,11 @@ export async function HomeHero({facts}: HomeHeroProps) {
           </p>
 
           <div className="mt-6 flex w-full max-w-xl flex-col justify-center gap-3 sm:flex-row">
-            <ButtonLink href="/guides" className="w-full sm:w-auto">
+            <ButtonLink href="/guides/wardogs-beta" className="w-full sm:w-auto">
               {t("home.primaryCta")}
               <ArrowRight aria-hidden="true" className="size-4" />
             </ButtonLink>
-            <ButtonLink href="/guides/wardogs-launch-checklist" variant="secondary" className="w-full sm:w-auto">
+            <ButtonLink href="/guides/wardogs-known-issues" variant="secondary" className="w-full sm:w-auto">
               {t("home.secondaryCta")}
             </ButtonLink>
           </div>

@@ -20,7 +20,9 @@ describe("source-driven 2026-08-26 content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        const expectedDate = locale === "zh-cn" && [
+        const expectedDate = ["wardogs-controls", "wardogs-playtest", "wardogs-beta"].includes(slug)
+          ? "2026-09-04"
+          : locale === "zh-cn" && [
           "wardogs-beginner-guide",
           "wardogs-fob-guide",
           "wardogs-towers-guide",
@@ -28,8 +30,6 @@ describe("source-driven 2026-08-26 content refresh", () => {
           "wardogs-controls",
           "wardogs-helicopter-guide",
         ].includes(slug)
-          ? "2026-09-01"
-          : ["wardogs-playtest", "wardogs-beta"].includes(slug)
           ? "2026-09-01"
           : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
             ? "2026-08-29"
@@ -66,11 +66,12 @@ describe("source-driven 2026-08-26 content refresh", () => {
       expect(fob?.body).toMatch(/pallet|Palette|паллет|palete|パレット|托盘/i);
       expect(controls?.body).toMatch(/free.?look|Freelook|свободн.*обзор|visão livre|フリールック|自由观察|免费看法|自由看|免费视觉/i);
       expect(helicopter?.body).toMatch(/go-around|durchstart|уход.*втор|arremet|ゴーアラウンド|复飞|绕行/i);
-      expect(playtest?.body).toMatch(/500[, .]?000|50万/i);
-      expect(beta?.body).toMatch(/100[, .]?000|10万/i);
+      expect(playtest?.body).toMatch(/500[, .]?000|50\s*万/i);
+      expect(beta?.body).toMatch(/100[, .]?000|10\s*万/i);
 
       const playtestFaq = playtest?.frontmatter.faq.map(({answer}) => answer).join(" ") ?? "";
-      expect(playtestFaq).toMatch(/ended|completed|beendet|abgeschlossen|заверш|encerrad|終了|结束|完成/i);
+      expect(playtestFaq).toContain("19:00 UTC");
+      expect(playtestFaq).toContain("08:00 UTC");
 
       for (const guide of [towers, mortar, fob, controls, helicopter]) {
         expect(guide?.body).toMatch(/build-sensitive|buildabhängig|версии сборки|dependentes? da build|ビルド依存|版本相关|构建敏感/i);

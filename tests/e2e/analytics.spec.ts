@@ -31,12 +31,12 @@ test("delegated official and catalogue links emit analytics events", async ({pag
       if ((event.target as Element | null)?.closest("a[data-analytics-destination]")) event.preventDefault();
     }, true);
   });
-  await page.getByRole("link", {name: "Official WARDOGS Closed Beta schedule"}).click();
+  await page.getByRole("link", {name: "Official WARDOGS Closed Beta 02 announcement"}).click();
 
   await expect.poll(() => dataLayerEvents(page, "official_outbound_click")).toEqual([
     expect.objectContaining({
       name: "official_outbound_click",
-      parameters: expect.objectContaining({destination: "steam_community", locale: "en"})
+      parameters: expect.objectContaining({destination: "official_source", locale: "en"})
     })
   ]);
 

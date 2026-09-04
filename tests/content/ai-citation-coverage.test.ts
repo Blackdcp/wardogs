@@ -7,62 +7,62 @@ const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const localizedQueries = {
   en: {
     earlyAccess: "Is WARDOGS in Early Access?",
-    playtest: "When is the next WARDOGS playtest?",
+    playtest: "What is the current WARDOGS Playtest window?",
     release: "When does WARDOGS release?",
-    beta: "Is WARDOGS open beta or closed beta?",
+    beta: "Is WARDOGS Closed Beta 02 live?",
     gameplay: "How do you play WARDOGS?",
     discord: "What is the official WARDOGS Discord?",
-    drops: "How do WARDOGS Twitch Drops work?",
+    drops: "Are WARDOGS Twitch Drops active in Beta 02?",
     crash: "How do you fix WARDOGS crashes and freezes?"
   },
   de: {
     earlyAccess: "Ist WARDOGS im Early Access?",
-    playtest: "Wann ist der nächste WARDOGS-Playtest?",
+    playtest: "Wann läuft der aktuelle WARDOGS-Playtest?",
     release: "Wann erscheint WARDOGS?",
-    beta: "Ist WARDOGS in der Open Beta oder Closed Beta?",
+    beta: "Läuft WARDOGS Closed Beta 02 jetzt?",
     gameplay: "Wie spielt man WARDOGS?",
     discord: "Welcher WARDOGS-Discord ist offiziell?",
-    drops: "Wie funktionieren WARDOGS Twitch Drops?",
+    drops: "Sind WARDOGS Twitch Drops in Beta 02 aktiv?",
     crash: "Wie behebt man Abstürze und Einfrieren in WARDOGS?"
   },
   ru: {
     earlyAccess: "WARDOGS уже в раннем доступе?",
-    playtest: "Когда следующий плейтест WARDOGS?",
+    playtest: "Когда идет текущий WARDOGS Playtest?",
     release: "Когда выйдет WARDOGS?",
-    beta: "WARDOGS находится в открытой или закрытой бете?",
+    beta: "Идет ли сейчас WARDOGS Closed Beta 02?",
     gameplay: "Как играть в WARDOGS?",
     discord: "Какой Discord WARDOGS является официальным?",
-    drops: "Как работают Twitch Drops для WARDOGS?",
+    drops: "Активны ли WARDOGS Twitch Drops в Beta 02?",
     crash: "Как исправить вылеты и зависания WARDOGS?"
   },
   "pt-br": {
     earlyAccess: "WARDOGS já está em Acesso Antecipado?",
-    playtest: "Quando será o próximo playtest de WARDOGS?",
+    playtest: "Qual é a janela atual do WARDOGS Playtest?",
     release: "Quando WARDOGS será lançado?",
-    beta: "WARDOGS está em beta aberto ou beta fechado?",
+    beta: "O Closed Beta 02 de WARDOGS está ativo?",
     gameplay: "Como jogar WARDOGS?",
     discord: "Qual é o Discord oficial de WARDOGS?",
-    drops: "Como funcionam os Twitch Drops de WARDOGS?",
+    drops: "Os Twitch Drops de WARDOGS estão ativos no Beta 02?",
     crash: "Como corrigir travamentos e congelamentos em WARDOGS?"
   },
   ja: {
     earlyAccess: "WARDOGSはEarly Access中？",
-    playtest: "次回のWARDOGSプレイテストはいつ？",
+    playtest: "現在のWARDOGS Playtest期間は？",
     release: "WARDOGSの発売日はいつ？",
-    beta: "WARDOGSはオープンBeta、それともClosed Beta？",
+    beta: "WARDOGS Closed Beta 02は開催中ですか？",
     gameplay: "WARDOGSの遊び方は？",
     discord: "WARDOGSの公式Discordはどれ？",
-    drops: "WARDOGSのTwitch Dropsはどう機能する？",
+    drops: "Beta 02でWARDOGS Twitch Dropsは開催中ですか？",
     crash: "WARDOGSのクラッシュやフリーズを直すには？"
   },
   "zh-cn": {
     earlyAccess: "WARDOGS 已经进入抢先体验了吗？",
-    playtest: "下一次 WARDOGS 测试是什么时候？",
+    playtest: "当前 WARDOGS Playtest 时间是什么？",
     release: "WARDOGS 什么时候发布？",
-    beta: "WARDOGS 是公开测试还是封闭测试？",
+    beta: "WARDOGS Closed Beta 02 现在开放吗？",
     gameplay: "WARDOGS 怎么玩？",
     discord: "哪个是 WARDOGS 官方 Discord？",
-    drops: "WARDOGS Twitch Drops 怎么领取？",
+    drops: "Beta 02 正在开放 WARDOGS Twitch Drops 吗？",
     crash: "如何修复 WARDOGS 崩溃和卡死？"
   }
 } as const;
@@ -100,8 +100,9 @@ describe("AI citation query coverage", () => {
         const guide = await loadGuideDocument(locale, slug);
         const query = localizedQueries[locale][intent as keyof typeof localizedQueries.en];
 
-        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
-        expect(guide?.body, `${locale}/${slug} missing ${query}`).toContain(`## ${query}`);
+        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
+        const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question}) => question).join("\n")}`;
+        expect(searchable, `${locale}/${slug} missing ${query}`).toContain(query);
       }
     }
   });

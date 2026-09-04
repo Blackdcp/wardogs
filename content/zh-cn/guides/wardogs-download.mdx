@@ -1,23 +1,23 @@
 ---
-title: "WARDOGS 下载、安装与 Steam 权限检查"
-description: "查看 WARDOGS 应该从哪里安全下载、为什么旧 Playtest 客户端不代表服务器仍开放，以及 9 月 2 日有限靶场测试和 9 月 10 日抢先体验分别需要什么 Steam 权限。页面提供安装按钮缺失、预载已经结束、磁盘空间、下载地区、文件验证与账号权益排查步骤，并说明哪些第三方密钥和安装包应避免。"
+title: "WARDOGS Closed Beta 02 安全下载与安装攻略"
+description: "从 Steam 安全下载 WARDOGS Closed Beta 02，检查测试许可、硬盘空间和安装按钮，处理库中没有客户端、验证文件与反作弊问题，同时避开第三方安装器、所谓必进测试码、账号钓鱼和复制客户端，并完整整理驱动更新、文件校验、测试结束后的客户端状态与抢先体验准备步骤。"
 keyword: "wardogs download"
 category: "store"
 slug: "wardogs-download"
 order: 9
-updatedAt: "2026-09-01"
+updatedAt: "2026-09-04"
 badges:
   - label: "安装指南"
     tone: "accent"
 faq:
-  - question: "WARDOGS 应该在哪里下载？"
-    answer: "只使用 WARDOGS Steam 官方商店页和 Steam 客户端。不要从网盘、第三方启动器或所谓测试密钥网站下载。"
-  - question: "9 月 2 日有限测试需要单独安装包吗？"
-    answer: "不需要外部安装包。测试于 17:00 UTC 开始且不是公开测试；只有账号在 Steam 中出现 WARDOGS Playtest 权限和安装按钮时才可安装。"
-  - question: "8 月 WARDOGS 预载还有效吗？"
-    answer: "无效。8 月封闭测试的预载已经结束，旧 WARDOGS Playtest 条目不会自动提供 9 月测试或 9 月 10 日抢先体验权限。"
-  - question: "Steam 没有安装按钮怎么办？"
-    answer: "先确认账号权限与发布时间，再重启 Steam、检查下载地区和磁盘空间。没有权限时，重装客户端或购买第三方密钥都不会生成安装按钮。"
+  - question: "在哪里下载 WARDOGS Beta 02？"
+    answer: "只有账号获权后，才能通过 Steam 官方客户端中的 WARDOGS Playtest 条目安装。"
+  - question: "为什么没有安装按钮？"
+    answer: "免费申请可能仍在等待，或当前账号没有测试权限。先核对 Steam 登录账号和库权限，再排查本地文件。"
+  - question: "可以用第三方 WARDOGS 安装器吗？"
+    answer: "不可以。外部安装器、整合包、所谓解码器和激活工具都不是官方分发渠道。"
+  - question: "抢先体验可以预载了吗？"
+    answer: "官方尚未确认单独的抢先体验预载时间或最终下载大小，应以 Steam 库的实时状态为准。"
 sources:
   - label: "WARDOGS 官方 9 月 2 日靶场测试公告"
     url: "https://x.com/WARDOGS/status/2094074731972419976"
@@ -26,41 +26,57 @@ sources:
   - label: "WARDOGS Steam 官方商店页"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-09-01"
+    checkedAt: "2026-09-04"
   - label: "WARDOGS Steam 官方公告"
     url: "https://steamcommunity.com/app/1867240/announcements/"
     kind: "official"
     checkedAt: "2026-08-26"
+  - label: "WARDOGS Closed Beta 02 官方公告"
+    url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"
+    kind: "official"
+    checkedAt: "2026-09-04"
+  - label: "Closed Beta 02 服务器时间官方修订"
+    url: "https://x.com/BULKHEAD/status/2095447401725153576"
+    kind: "official"
+    checkedAt: "2026-09-04"
 ---
+
+## Beta 02 时间修订
+
+FPS Games Show 于 9 月 3 日 **18:00 UTC** 开始。官方随后发布了服务器时间调整通知，把 Beta 02 的实际开服时间改为 **19:00 UTC**，结束时间仍为 **9 月 6 日 08:00 UTC**。Steam 旧文案和搜索摘要里仍可能显示 18:00 UTC 是测试开始时间；判断服务器窗口时应以 19:00 UTC 为准，18:00 UTC 只对应发布会直播。
+
+本轮测试只能通过发放到本人账户的 Steam 正式库条目安装。**Closed Beta 02 从 9 月 3 日 19:00 UTC 持续到 9 月 6 日 08:00 UTC**。如果 Steam 没有许可，不要购买第三方测试码，也不要使用复制的启动器。
+
+## Closed Beta 02 当前官方状态
+
+Steam 将本轮活动定义为封闭扩容测试，不是公开测试。测试范围包括服务器扩容、浏览器、登录队列、本地语音、Twitch Drops 和 DLC 权益。服务器容量仍可能限制进入。免费的 Request Access 会分批批准，保持申请中不代表已经获得资格。
+
+### 现在应该做什么
+
+1. 使用申请或购买资格的账户打开 Steam 官方页面。
+2. 查看库中是否出现正式 WARDOGS 条目和安装按钮。
+3. 服务器列表空白时，浏览器里只选择**一个地区**。
+4. 本地语音失效时，先关闭一次语音，或打开计分板后**连续按两次 U**。
+5. Supporter Pack 道具在 Beta 中不可用，开发者说明会在抢先体验解锁。
+6. 联系支持前记录完整报错、UTC 时间、地区、硬件和驱动。
+
+### 测试结束之后
+
+Windows PC 的 Steam 抢先体验仍定于 **2026 年 9 月 10 日**。本站不会编写官方尚未公布的具体解锁时刻、进度继承、最终平衡、主机版本或跨平台计划。测试关闭后，要重新查看 Steam 和 WARDOGS 官方渠道。
+
+遇到故障请看[已知问题](/zh-cn/guides/wardogs-known-issues)，检查安装许可请看[下载攻略](/zh-cn/guides/wardogs-download)，准备上线请看[抢先体验清单](/zh-cn/guides/wardogs-launch-checklist)。
 
 ## 当前应该下载哪个版本？
 
-WARDOGS 的合法下载入口只有 Steam。8 月封闭测试使用独立的 **WARDOGS Playtest** 库条目，但该测试已经结束，服务器于 8 月 24 日 02:00 UTC 关闭。旧客户端留在硬盘或游戏库中，不代表现在仍能进入。
-
-9 月 2 日 17:00 UTC 将进行一次有限的**靶场、登录队列与后端测试**。这不是公开测试，官方只说当晚可能运行少量服务器，也没有保证所有账号都获得权限。不要为这次测试寻找外部安装器；只在 Steam 账号实际出现 Playtest 权限和安装按钮时操作。
-
-Windows PC Steam 抢先体验计划于 **2026年9月10日**开始。它是主产品发布阶段，与旧 Playtest 条目是两个不同的 Steam 权限。抢先体验是否提前开放预载，仍要等待新的官方公告。
+Closed Beta 02 期间，有资格的账号只安装 Steam 库里的 **WARDOGS Playtest**。修订后的服务器窗口会在 9 月 6 日 08:00 UTC 结束；抢先体验的独立预载时间和最终下载大小尚未确认。
 
 ## 安全下载步骤
-
-1. 登录准备购买或申请测试的正确 Steam 账号。
-2. 打开 WARDOGS 官方 Steam 商店页，核对 App ID、发行商和发布日期。
-3. 若参加 9 月 2 日测试，在库中查找 **WARDOGS Playtest**，并确认账号确实显示安装按钮。
-4. 若准备 9 月 10 日抢先体验，等待主产品页面向你的账号开放安装。
-5. 安装前预留官方页面要求的磁盘空间，并让 Steam 完成更新。
 
 Steam 的 **Request Access** 只记录申请，不等于已经取得测试资格。预购记录、Discord 身份组、Twitch Drops 或社区消息也不能替代库中的 Steam 权限。
 
 ## 没有安装按钮的原因
 
 最常见的原因不是文件损坏，而是账号或时间状态：
-
-- 账号尚未获得 Playtest 权限；
-- 有权限但测试安装尚未开放；
-- 旧 8 月客户端仍可见，但服务器已经关闭；
-- 抢先体验尚未到可安装时间；
-- 登录了不同的 Steam 账号；
-- Steam 客户端需要刷新账号或下载状态。
 
 先退出并重新启动 Steam，再检查账号购买历史、商店页和游戏库。如果权限本身不存在，清理缓存、反复重装 Steam 或更改下载地区都不会创建资格。
 
@@ -74,8 +90,6 @@ Steam 的 **Request Access** 只记录申请，不等于已经取得测试资格
 
 8 月 Closed Beta 的预载已经结束。受邀玩家当时使用独立 WARDOGS Playtest 条目，服务器窗口从 8 月 21 日 17:00 UTC 持续到 8 月 24 日 02:00 UTC。
 
-9 月 2 日公告没有提供新的普遍预载承诺，也没有公布结束时间。9 月 10 日抢先体验是否提前预载同样尚未确认。最安全的做法是保持 Steam 客户端更新、预留空间，并等待主产品或 Playtest 条目直接出现安装按钮。
-
 ## 不要使用这些下载方式
 
 - 第三方网盘或压缩包；
@@ -87,8 +101,6 @@ Steam 的 **Request Access** 只记录申请，不等于已经取得测试资格
 这些方式无法合法生成 Steam 权限，还可能造成账号或支付风险。即使社区帖子附有成功截图，也应回到 Steam 与 WARDOGS 官方渠道核对。
 
 ## 安装完成后的检查
-
-确认启动的是账号中真实存在的 WARDOGS 条目，并查看官方服务状态。若 9 月 2 日出现排队或认证错误，先考虑有限服务器与后端压力，而不是立即判断电脑故障。若 9 月 10 日主产品开放后出现崩溃，再按照[崩溃修复攻略](/zh-cn/guides/wardogs-crash-fix)逐项检查驱动、文件与后台程序。
 
 武器与配置数据可能在抢先体验前调整。安装成功后，可先查看[中文武器图鉴](/zh-cn/items/weapons)，但要注意图鉴明确标注的是预发布版本观察，而不是永久数值。
 
