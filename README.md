@@ -1,6 +1,6 @@
 # WARDOGS Wiki
 
-WARDOGS is a fan-made guide for players following BULKHEAD and Team17's tactical all-out warfare FPS. The site is independent and is not affiliated with BULKHEAD, Team17, Valve, Steam, or the WARDOGS rights holders.
+[WARDOGS Wiki](https://www.wardogswiki.com/) is a fan-made guide and item database for players following BULKHEAD and Team17's tactical all-out warfare FPS. The site is independent and is not affiliated with BULKHEAD, Team17, Valve, Steam, or the WARDOGS rights holders.
 
 ## Requirements
 
@@ -13,11 +13,11 @@ npm.cmd install
 npm.cmd run dev
 ```
 
-Local routes start at `http://127.0.0.1:3000/en`. The root path redirects to English, and every visible route is available in English, Russian, German, and Brazilian Portuguese.
+Local routes start at `http://127.0.0.1:3000/en`. The root path redirects to English, and every visible route is available in English, Russian, German, Brazilian Portuguese, Japanese, and Simplified Chinese.
 
 ## Content Contract
 
-The library contains **33 topics x 5 locales**, stored as MDX under `content/{locale}/guides`. Every locale must include every slug listed in `keywords.json`; changing that manifest requires synchronized content and tests rather than automatic route expansion.
+The library contains **48 topics x 6 locales**, stored as MDX under `content/{locale}/guides`. Every locale must include every slug listed in `keywords.json`; changing that manifest requires synchronized content and tests rather than automatic route expansion.
 
 Frontmatter keeps `keyword`, `category`, `slug`, and `order` synchronized with the manifest. Titles are at most 60 characters, descriptions are 140-160 characters, and every source must use HTTPS, be dated, and belong to the approved official, creator, or community host set. Competitor URLs and copied competitor prose are forbidden. Local visual assets originate from official WARDOGS media and are used for identification and commentary on this independent guide.
 
