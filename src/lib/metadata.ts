@@ -88,6 +88,9 @@ export function buildPageMetadataWithImage(
 export function buildSiteMetadata(): Metadata {
   return {
     manifest: assetPath("/site.webmanifest"),
+    alternates: {
+      types: {"application/rss+xml": assetPath("/feed.xml")},
+    },
     icons: {
       icon: [
         {url: assetPath("/icons/favicon.ico"), sizes: "any"},

@@ -1,0 +1,63 @@
+name: Monitor public backlinks and discovery status
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backlink-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Restore previous report baseline
+        uses: actions/cache/restore@v4
+        with:
+          path: .monitor-cache
+          key: backlink-monitor-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            backlink-monitor-
+
+      - name: Generate JSON report and GITHUB_STEP_SUMMARY
+        env:
+          BACKLINK_TARGET_URL: https://www.wardogswiki.com
+          BACKLINK_URLS: ${{ vars.BACKLINK_URLS }}
+          MARGINALIA_STATUS_URL: ${{ vars.MARGINALIA_STATUS_URL }}
+          MARGINALIA_API_KEY: ${{ secrets.MARGINALIA_API_KEY }}
+          PREVIOUS_BACKLINK_REPORT_PATH: .monitor-cache/latest.json
+          BACKLINK_REPORT_PATH: artifacts/backlink-monitor/report.json
+        run: node scripts/monitor-backlinks.mjs
+
+      - name: Store current report as next baseline
+        run: |
+          mkdir -p .monitor-cache
+          cp artifacts/backlink-monitor/report.json .monitor-cache/latest.json
+
+      - name: Save report baseline
+        uses: actions/cache/save@v4
+        with:
+          path: .monitor-cache
+          key: backlink-monitor-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Upload backlink monitor report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backlink-monitor-${{ github.run_number }}-${{ github.run_attempt }}
+          path: artifacts/backlink-monitor/report.json
+          if-no-files-found: warn
+          retention-days: 90

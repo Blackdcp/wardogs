@@ -13,7 +13,8 @@ describe("grouped navigation", () => {
       "/items/attachments",
       "/items/gear",
       "/items/equipment",
-      "/items/loadouts"
+      "/items/loadouts",
+      "/tools/loadout-budget"
     ]);
     expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.beginnerGuide")?.href)
       .toBe("/guides/wardogs-beginner-guide");
@@ -23,6 +24,8 @@ describe("grouped navigation", () => {
       .toBe("/guides/wardogs-crash-fix");
     expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.helicopterGuide")?.href)
       .toBe("/guides/wardogs-helicopter-guide");
+    expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.systemCheck")?.href)
+      .toBe("/tools/system-check");
   });
 
   it("keeps every guide link on the current locale", () => {

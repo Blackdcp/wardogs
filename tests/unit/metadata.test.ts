@@ -32,6 +32,7 @@ describe("localized metadata", () => {
       icon: expect.arrayContaining([expect.objectContaining({url: "/wardogs/icons/favicon.ico"})]),
       apple: expect.arrayContaining([expect.objectContaining({url: "/wardogs/icons/apple-touch-icon.png"})])
     });
+    expect(metadata.alternates?.types).toEqual({"application/rss+xml": "/wardogs/feed.xml"});
     expect(alternates.canonical).toBe("https://blackdcp.github.io/wardogs/en/guides/wardogs-gameplay/");
     delete process.env.NEXT_PUBLIC_BASE_PATH;
     delete process.env.NEXT_PUBLIC_SITE_URL;
@@ -63,6 +64,10 @@ describe("localized metadata", () => {
     expect(String(crashImage.url)).toContain("fupZGU7LJaU/hqdefault.jpg");
     expect(String(helicopterImage.url)).toContain("wcsY2EeIlyc/hqdefault.jpg");
     expect(String(crashImage.url)).not.toBe(String(helicopterImage.url));
+  });
+
+  it("advertises the RSS feed for browser and feed-reader discovery", () => {
+    expect(buildSiteMetadata().alternates?.types).toEqual({"application/rss+xml": "/feed.xml"});
   });
 
   it("publishes local Team17 discovery assets as absolute social URLs", async () => {

@@ -141,6 +141,15 @@ describe("sitemap", () => {
     expect(new Set(urls).size).toBe(urls.length);
   });
 
+  it("includes the shareable system-check and loadout-budget tools", () => {
+    const urls = new Set(sitemap().map((entry) => entry.url));
+
+    for (const locale of locales) {
+      expect(urls.has(`${origin}/${locale}/tools/system-check`)).toBe(true);
+      expect(urls.has(`${origin}/${locale}/tools/loadout-budget`)).toBe(true);
+    }
+  });
+
   it("uses the same trailing-slash form in a Pages export", () => {
     const previous = process.env.GITHUB_PAGES;
     process.env.GITHUB_PAGES = "true";

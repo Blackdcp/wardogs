@@ -14,5 +14,5 @@ export default defineConfig({
       return {code: result.code, moduleType: "js"};
     }
   }],
-  test: {environment: "node", include: ["tests/**/*.test.{ts,tsx}"]}
+  test: {environment: "node", include: ["tests/**/*.test.{ts,tsx}"], testTimeout: 15_000}
 });

@@ -1,0 +1,87 @@
+import type {Locale} from "@/config/site";
+
+const copy = {
+  en: {
+    systemTitle: "WARDOGS PC Configuration Check",
+    systemDescription: "Compare your declared PC with the official Windows minimum and recommended tiers. This does not benchmark your hardware.",
+    budgetTitle: "WARDOGS Loadout Budget",
+    budgetDescription: "Plan a life using amounts from the build you are playing. No pre-release catalogue price is inserted automatically.",
+    officialBasis: "Official requirement basis",
+    os: "Operating system",
+    ram: "Installed RAM (GB)",
+    storage: "Free storage (GB)",
+    cpu: "CPU comparison",
+    gpu: "GPU comparison",
+    windows10: "Windows 10, 64-bit",
+    windows11: "Windows 11, 64-bit",
+    unsupported: "Older Windows or another OS",
+    below: "Below minimum",
+    minimum: "Minimum class",
+    recommended: "Recommended class",
+    unknown: "Not sure",
+    result: "Result",
+    resultBelow: "Below the advertised minimum",
+    resultReview: "Manual comparison needed",
+    resultMinimum: "Meets the advertised minimum tier",
+    resultRecommended: "Meets the advertised recommended tier",
+    limiting: "Review",
+    share: "Copy result link",
+    copied: "Result link copied",
+    cash: "Cash available",
+    loadout: "Weapons, ammo and gear",
+    vehicle: "Vehicle or team purchase",
+    reserve: "Reserve target",
+    spent: "Planned spend",
+    remaining: "Cash remaining",
+    reserveMet: "Reserve protected",
+    reserveMissed: "Reserve shortfall",
+    buildWarning: "Prices and balance are build-sensitive. Enter the values shown in your current game client.",
+    source: "Open official Steam requirements",
+  },
+  de: {
+    systemTitle: "WARDOGS PC-Konfigurationscheck", systemDescription: "Vergleiche deine Angaben mit den offiziellen Windows-Mindest- und empfohlenen Anforderungen. Dies ist kein Benchmark.",
+    budgetTitle: "WARDOGS Loadout-Budget", budgetDescription: "Plane ein Leben mit den Preisen deines aktuellen Builds. Vorabpreise werden nicht automatisch eingesetzt.",
+    officialBasis: "Offizielle Anforderungsbasis", os: "Betriebssystem", ram: "Installierter RAM (GB)", storage: "Freier Speicher (GB)", cpu: "CPU-Vergleich", gpu: "GPU-Vergleich",
+    windows10: "Windows 10, 64-Bit", windows11: "Windows 11, 64-Bit", unsupported: "Älteres Windows oder anderes OS", below: "Unter Minimum", minimum: "Mindestklasse", recommended: "Empfohlene Klasse", unknown: "Unsicher",
+    result: "Ergebnis", resultBelow: "Unter dem veröffentlichten Minimum", resultReview: "Manueller Vergleich nötig", resultMinimum: "Erfüllt die veröffentlichte Mindeststufe", resultRecommended: "Erfüllt die empfohlene Stufe", limiting: "Prüfen", share: "Ergebnislink kopieren", copied: "Ergebnislink kopiert",
+    cash: "Verfügbares Geld", loadout: "Waffen, Munition und Ausrüstung", vehicle: "Fahrzeug- oder Teamkauf", reserve: "Reserveziel", spent: "Geplante Ausgaben", remaining: "Verbleibendes Geld", reserveMet: "Reserve geschützt", reserveMissed: "Reserve unterschritten", buildWarning: "Preise und Balance hängen vom Build ab. Nutze die Werte aus deinem aktuellen Spielclient.", source: "Offizielle Steam-Anforderungen öffnen",
+  },
+  ru: {
+    systemTitle: "Проверка конфигурации ПК для WARDOGS", systemDescription: "Сравните указанный ПК с официальными минимальными и рекомендуемыми требованиями Windows. Это не тест производительности.",
+    budgetTitle: "Бюджет комплекта WARDOGS", budgetDescription: "Планируйте одну жизнь по ценам текущей сборки. Цены из предварительных версий не подставляются.",
+    officialBasis: "Официальные требования", os: "Операционная система", ram: "ОЗУ (ГБ)", storage: "Свободное место (ГБ)", cpu: "Сравнение CPU", gpu: "Сравнение GPU",
+    windows10: "Windows 10, 64-разрядная", windows11: "Windows 11, 64-разрядная", unsupported: "Старая Windows или другая ОС", below: "Ниже минимума", minimum: "Минимальный класс", recommended: "Рекомендуемый класс", unknown: "Не уверен",
+    result: "Результат", resultBelow: "Ниже заявленного минимума", resultReview: "Нужно ручное сравнение", resultMinimum: "Соответствует заявленному минимуму", resultRecommended: "Соответствует рекомендуемому уровню", limiting: "Проверить", share: "Копировать ссылку", copied: "Ссылка скопирована",
+    cash: "Доступные средства", loadout: "Оружие, боеприпасы и снаряжение", vehicle: "Транспорт или командная покупка", reserve: "Целевой резерв", spent: "Планируемые расходы", remaining: "Остаток", reserveMet: "Резерв сохранён", reserveMissed: "Резерва не хватает", buildWarning: "Цены и баланс зависят от сборки. Введите значения из текущего клиента игры.", source: "Открыть требования в Steam",
+  },
+  "pt-br": {
+    systemTitle: "Verificador de configuração de WARDOGS", systemDescription: "Compare o PC informado com os requisitos oficiais mínimo e recomendado para Windows. Isto não é um benchmark.",
+    budgetTitle: "Orçamento de equipamento de WARDOGS", budgetDescription: "Planeje uma vida com os valores da build atual. Nenhum preço de pré-lançamento é preenchido automaticamente.",
+    officialBasis: "Base oficial de requisitos", os: "Sistema operacional", ram: "RAM instalada (GB)", storage: "Armazenamento livre (GB)", cpu: "Comparação de CPU", gpu: "Comparação de GPU",
+    windows10: "Windows 10, 64 bits", windows11: "Windows 11, 64 bits", unsupported: "Windows antigo ou outro sistema", below: "Abaixo do mínimo", minimum: "Classe mínima", recommended: "Classe recomendada", unknown: "Não tenho certeza",
+    result: "Resultado", resultBelow: "Abaixo do mínimo divulgado", resultReview: "Comparação manual necessária", resultMinimum: "Atende ao nível mínimo divulgado", resultRecommended: "Atende ao nível recomendado", limiting: "Revisar", share: "Copiar link do resultado", copied: "Link do resultado copiado",
+    cash: "Dinheiro disponível", loadout: "Armas, munição e equipamento", vehicle: "Veículo ou compra da equipe", reserve: "Reserva desejada", spent: "Gasto planejado", remaining: "Dinheiro restante", reserveMet: "Reserva protegida", reserveMissed: "Reserva insuficiente", buildWarning: "Preços e balanceamento dependem da build. Informe os valores mostrados no cliente atual.", source: "Abrir requisitos oficiais na Steam",
+  },
+  ja: {
+    systemTitle: "WARDOGS PC構成チェック", systemDescription: "入力したPCを公式のWindows最低・推奨要件と比較します。ベンチマークではありません。",
+    budgetTitle: "WARDOGS ロードアウト予算", budgetDescription: "現在プレイ中のビルドに表示された金額で1ライフを計画します。旧ビルド価格は自動入力しません。",
+    officialBasis: "公式要件に基づく比較", os: "OS", ram: "搭載RAM (GB)", storage: "空き容量 (GB)", cpu: "CPU比較", gpu: "GPU比較",
+    windows10: "Windows 10 64-bit", windows11: "Windows 11 64-bit", unsupported: "古いWindowsまたは別OS", below: "最低未満", minimum: "最低クラス", recommended: "推奨クラス", unknown: "不明",
+    result: "結果", resultBelow: "公表された最低要件未満", resultReview: "手動確認が必要", resultMinimum: "公表された最低要件を満たす", resultRecommended: "公表された推奨要件を満たす", limiting: "確認項目", share: "結果リンクをコピー", copied: "結果リンクをコピーしました",
+    cash: "利用可能な資金", loadout: "武器・弾薬・装備", vehicle: "車両またはチーム購入", reserve: "残す資金", spent: "支出予定", remaining: "残金", reserveMet: "予備資金を確保", reserveMissed: "予備資金不足", buildWarning: "価格とバランスはビルドで変わります。現在のゲーム内表示額を入力してください。", source: "Steamの公式要件を見る",
+  },
+  "zh-cn": {
+    systemTitle: "WARDOGS 电脑配置检测", systemDescription: "把你填写的电脑配置与 Steam 官方 Windows 最低、推荐配置比较。本工具不运行性能测试。",
+    budgetTitle: "WARDOGS 配装预算工具", budgetDescription: "使用当前游戏版本里显示的价格规划一次生命，不自动套用测试版本旧价格。",
+    officialBasis: "官方配置依据", os: "操作系统", ram: "内存容量 (GB)", storage: "可用硬盘空间 (GB)", cpu: "CPU 对比", gpu: "显卡对比",
+    windows10: "Windows 10 64 位", windows11: "Windows 11 64 位", unsupported: "旧版 Windows 或其他系统", below: "低于最低配置", minimum: "最低配置级别", recommended: "推荐配置级别", unknown: "不确定",
+    result: "检测结果", resultBelow: "低于官方公布的最低配置", resultReview: "需要手动核对", resultMinimum: "达到官方公布的最低配置", resultRecommended: "达到官方公布的推荐配置", limiting: "需要复核", share: "复制结果链接", copied: "结果链接已复制",
+    cash: "可用资金", loadout: "武器、弹药和装备", vehicle: "载具或团队支出", reserve: "计划保留资金", spent: "计划支出", remaining: "剩余资金", reserveMet: "已保留预算", reserveMissed: "未达到保留目标", buildWarning: "价格和平衡会随版本变化，请输入你当前游戏客户端中显示的数值。", source: "查看 Steam 官方配置",
+  },
+} as const;
+
+export function getToolCopy(locale: Locale) {
+  return copy[locale];
+}
+
+export type ToolCopy = ReturnType<typeof getToolCopy>;

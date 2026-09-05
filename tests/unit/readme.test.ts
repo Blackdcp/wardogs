@@ -9,8 +9,8 @@ describe("project handoff", () => {
       "npm.cmd run content:validate",
       "npm.cmd run links:check",
       "npm.cmd run test:e2e",
-      "33 topics x 5 locales",
-      "WARDOGS is a fan-made guide"
+      "48 topics x 6 locales",
+      "is a fan-made guide and item database"
     ]) expect(readme).toContain(phrase);
   });
 

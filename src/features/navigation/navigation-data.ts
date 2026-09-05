@@ -39,6 +39,7 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
         {href: "/guides/wardogs-gameplay", label: t("nav.gameplayGuide")},
         {href: "/guides/wardogs-fob-guide", label: t("nav.fobLogistics")},
         {href: "/guides/wardogs-mortar-guide", label: t("nav.mortarGuide")},
+        {href: "/tools/system-check", label: t("nav.systemCheck")},
         {href: "/guides", label: t("nav.allGuides")}
       ]
     },
@@ -53,7 +54,8 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
         {href: "/items/attachments", label: t("nav.attachments")},
         {href: "/items/gear", label: t("nav.gear")},
         {href: "/items/equipment", label: t("nav.equipment")},
-        {href: "/items/loadouts", label: t("nav.loadouts")}
+        {href: "/items/loadouts", label: t("nav.loadouts")},
+        {href: "/tools/loadout-budget", label: t("nav.budgetTool")}
       ]
     },
     {id: "videos", label: t("nav.videos"), href: "/videos", items: []},
