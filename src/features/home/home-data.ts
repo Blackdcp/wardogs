@@ -14,6 +14,13 @@ export const START_GUIDES = [
   {number: "6", slug: "wardogs-launch-checklist", titleKey: "launch"}
 ] as const;
 
+export const HOME_ACTIONS = [
+  {key: "play", href: "/guides/wardogs-download", image: "/images/wardogs-hero.jpg"},
+  {key: "fix", href: "/guides/wardogs-known-issues", image: "/images/guide-discovery/equipment-tools.webp"},
+  {key: "gear", href: "/items", image: "/images/catalogue/banners/weapons-1280.webp"},
+  {key: "system", href: "/tools/system-check", image: "/images/catalogue/banners/thegame-1280.webp"}
+] as const;
+
 export const HOME_CATEGORY_GUIDES = [
   {key: "access", slug: "wardogs-launch-checklist"},
   {key: "release", slug: "wardogs-release-date"},
@@ -68,6 +75,20 @@ export const CONFIRMED_RUMOR_ITEMS = [
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
 ] as const;
+
+export function getHomePriorityGuides<T extends RecentlyUpdatedGuideInput>(guides: readonly T[]) {
+  const bySlug = new Map(guides.map((guide) => [guide.slug, guide]));
+  const top = TOP_GUIDE_SLUGS
+    .map((slug) => bySlug.get(slug))
+    .filter((guide): guide is T => Boolean(guide))
+    .slice(0, 6);
+
+  return {
+    top,
+    recent: getRecentlyUpdatedGuides(guides, 3),
+    status: [CONFIRMED_RUMOR_ITEMS[0], CONFIRMED_RUMOR_ITEMS[1], CONFIRMED_RUMOR_ITEMS[4]]
+  } as const;
+}
 
 export const BEGINNER_TIP_KEYS = ["objective", "economy", "support", "mobility"] as const;
 export const HOME_FAQ_KEYS = ["game", "release", "controlZone", "official"] as const;

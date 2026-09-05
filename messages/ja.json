@@ -10,7 +10,21 @@
     "accessValue": "予約購入はアクセス保証、無料Steam Playtest申請は順次承認です。",
     "closedBetaNote": "18:00 UTCは配信時刻です。後の公式告知でサーバー開始は19:00 UTCに変更されました。無料申請は参加保証ではありません。",
     "accessCta": "Beta 02参加ガイド",
-    "issuesCta": "既知の問題"
+    "issuesCta": "既知の問題",
+    "countdown": {
+      "starts": "Beta開始まで",
+      "ends": "Beta終了まで",
+      "earlyAccess": "早期アクセス",
+      "reached": "予定日になりました",
+      "checking": "日程を確認中",
+      "scheduleOnly": "公式日程に基づく表示で、サーバーのリアルタイム監視ではありません。",
+      "exactTimeUnconfirmed": "早期アクセスの正確な解禁時刻は未確認です。",
+      "dateValue": "2026年9月10日",
+      "days": "日",
+      "hours": "時",
+      "minutes": "分",
+      "seconds": "秒"
+    }
   },
   "nav": {"game": "ゲーム", "guides": "攻略", "catalogue": "カタログ", "playtest": "プレイテスト", "release": "リリース", "releaseDate": "発売日", "steam": "Steam", "steamEarlyAccess": "Steamと早期アクセス", "gameplay": "ゲームプレイ", "factions": "勢力", "community": "コミュニティ", "beginnerGuide": "初心者ガイド", "crashFix": "クラッシュ対策", "helicopterGuide": "ヘリコプターガイド", "gameplayGuide": "ゲームプレイガイド", "fobLogistics": "FOBと兵站", "mortarGuide": "迫撃砲ガイド", "allGuides": "すべての攻略", "catalogueHome": "カタログトップ", "weapons": "武器", "vehicles": "車両", "ammo": "弾薬", "attachments": "アタッチメント", "gear": "装備", "equipment": "特殊装備", "loadouts": "ロードアウト", "systemCheck": "PC構成チェック", "budgetTool": "ロードアウト予算", "videos": "動画", "items": "アイテム", "news": "ニュース", "steamCta": "Steamで見る", "primaryLabel": "メインナビゲーション"},
   "home": {
@@ -71,13 +85,22 @@
         }
       }
     },
+    "actions": {
+      "eyebrow": "目的を選択",
+      "title": "今、何をしたいですか？",
+      "description": "一覧を探し回らず、必要な作業へ直接進めます。ビルドによって変わる情報は引き続き明確に表示します。",
+      "play": {"title": "今すぐプレイ", "description": "参加権を確認し、正しいSteamビルドをインストールしてテストに参加します。", "imageAlt": "参加・ダウンロードガイド用のWARDOGS戦場画面"},
+      "fix": {"title": "問題を解決", "description": "クラッシュ、サーバー、ボイス、性能、参加権の対処法を確認します。", "imageAlt": "トラブル対処用のWARDOGS戦術装備"},
+      "gear": {"title": "装備を見る", "description": "画像付きの武器、車両、防具、弾薬、ロードアウトを調べます。", "imageAlt": "画像付き装備カタログに掲載されたWARDOGSの武器"},
+      "system": {"title": "PCを確認", "description": "設定変更前に、PCを確認済み動作要件と比較します。", "imageAlt": "PC構成チェック用のWARDOGSゲーム画面"}
+    },
     "priority": {
       "eyebrow": "優先情報",
       "title": "今週末にWARDOGSプレイヤーが必要な情報",
       "description": "開催中テスト、公式不具合、安全な導入、操作、Early Access準備から確認してください。",
       "top": {
         "title": "人気攻略",
-        "description": "初心者、Steam利用者、参加方法を探す人向けの重要な12ページです。"
+        "description": "初心者、Steam利用者、現在の参加方法を探す人向けに厳選した6つのガイドです。"
       },
       "recent": {
         "title": "最近更新",

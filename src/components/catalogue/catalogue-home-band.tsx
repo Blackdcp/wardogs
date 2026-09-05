@@ -115,20 +115,20 @@ export function CatalogueHomeBandView({heading, modelHeading = "Published model 
         <h2 id="catalogue-home-title" className="display-font max-w-3xl text-3xl leading-tight text-[#f2f5f3] sm:text-4xl">
           {heading}
         </h2>
-        <ul className="mt-9 grid gap-x-5 md:grid-cols-2 md:gap-x-6">
-          {features.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
-        </ul>
-        <ul className="mt-3 grid grid-cols-2 gap-x-4 md:grid-cols-4 md:gap-x-5">
-          {compact.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
-        </ul>
         {modelEntries.length > 0 ? (
-          <div className="mt-10 border-t border-[#526159] pt-7">
+          <div className="mt-9 border-y border-[#526159] py-7">
             <p className="font-mono text-xs uppercase text-[#d9a93a]">{modelHeading}</p>
             <ul className="mt-5 grid gap-x-5 sm:grid-cols-2 lg:grid-cols-4">
               {modelEntries.map((entry) => <CatalogueModelEntry entry={entry} key={entry.key} />)}
             </ul>
           </div>
         ) : null}
+        <ul className="mt-9 grid gap-x-5 md:grid-cols-2 md:gap-x-6">
+          {features.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
+        </ul>
+        <ul className="mt-3 grid grid-cols-2 gap-x-4 md:grid-cols-4 md:gap-x-5">
+          {compact.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
+        </ul>
       </div>
     </section>
   );

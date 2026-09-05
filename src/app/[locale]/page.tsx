@@ -7,10 +7,10 @@ import {BeginnerTips} from "@/components/home/beginner-tips";
 import {CategoryGrid} from "@/components/home/category-grid";
 import {FinalCta} from "@/components/home/final-cta";
 import {HomeFaq} from "@/components/home/home-faq";
+import {HomeActionHub} from "@/components/home/home-action-hub";
 import {HomeHero} from "@/components/home/home-hero";
 import {OfficialMedia} from "@/components/home/official-media";
 import {PriorityGuides} from "@/components/home/priority-guides";
-import {StartHere} from "@/components/home/start-here";
 import {VideoIntelligence} from "@/components/home/video-intelligence";
 import {isLocale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
@@ -46,9 +46,9 @@ export default async function HomePage({params}: HomePageProps) {
       <JsonLd data={buildHomeJsonLd(locale)} />
       <HomeHero facts={facts} />
       <LiveBetaBanner />
-      <PriorityGuides guides={guides} locale={locale} />
-      <StartHere />
+      <HomeActionHub />
       <CatalogueHomeBand locale={locale} />
+      <PriorityGuides guides={guides} locale={locale} />
       <VideoIntelligence locale={locale} />
       <CategoryGrid />
       <AboutGame />

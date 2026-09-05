@@ -10,7 +10,21 @@
     "accessValue": "Vorbestellung garantiert Zugang; kostenlose Steam-Playtest-Zusagen kommen in Wellen.",
     "closedBetaNote": "18:00 UTC ist die Show. Eine spätere offizielle Meldung verschob den Serverstart auf 19:00 UTC. Kostenlose Anfragen bleiben ohne Garantie.",
     "accessCta": "Beta-02-Zugang",
-    "issuesCta": "Bekannte Probleme"
+    "issuesCta": "Bekannte Probleme",
+    "countdown": {
+      "starts": "Beta startet in",
+      "ends": "Beta endet in",
+      "earlyAccess": "Early Access",
+      "reached": "Geplantes Datum erreicht",
+      "checking": "Zeitplan wird geprüft",
+      "scheduleOnly": "Basiert auf dem Zeitplan, keine Live-Servertelemetrie.",
+      "exactTimeUnconfirmed": "Die genaue Early-Access-Freischaltzeit ist nicht bestätigt.",
+      "dateValue": "10. September 2026",
+      "days": "T",
+      "hours": "Std",
+      "minutes": "Min",
+      "seconds": "Sek"
+    }
   },
   "nav": {"game": "Spiel", "guides": "Anleitungen", "catalogue": "Katalog", "playtest": "Spieltest", "release": "Veröffentlichung", "releaseDate": "Erscheinungsdatum", "steam": "Steam", "steamEarlyAccess": "Steam und Vorabzugang", "gameplay": "Spielablauf", "factions": "Fraktionen", "community": "Gemeinschaft", "beginnerGuide": "Einsteigerleitfaden", "crashFix": "Absturz beheben", "helicopterGuide": "Helikopter-Leitfaden", "gameplayGuide": "Spielanleitung", "fobLogistics": "FOB und Logistik", "mortarGuide": "Mörser-Leitfaden", "allGuides": "Alle Anleitungen", "catalogueHome": "Katalogübersicht", "weapons": "Waffen", "vehicles": "Fahrzeuge", "ammo": "Munition", "attachments": "Aufsätze", "gear": "Ausrüstung", "equipment": "Geräte", "loadouts": "Zusammenstellungen", "systemCheck": "PC-Konfigurationscheck", "budgetTool": "Loadout-Budget", "videos": "Videos", "items": "Gegenstände", "news": "Neuigkeiten", "steamCta": "Auf Steam ansehen", "primaryLabel": "Hauptnavigation"},
   "home": {
@@ -71,13 +85,22 @@
         }
       }
     },
+    "actions": {
+      "eyebrow": "Wähle deine Aufgabe",
+      "title": "Was brauchst du gerade?",
+      "description": "Überspringe das Verzeichnis und öffne direkt die passende Aufgabe. Versionsabhängige Fakten bleiben klar gekennzeichnet.",
+      "play": {"title": "Jetzt spielen", "description": "Zugang prüfen, den richtigen Steam-Build installieren und dem Test beitreten.", "imageAlt": "WARDOGS-Schlachtfeld für Spiel- und Downloadanleitungen"},
+      "fix": {"title": "Problem beheben", "description": "Aktuelle Lösungen für Abstürze, Server, Sprache, Leistung und Zugang prüfen.", "imageAlt": "Taktische WARDOGS-Ausrüstung für die Fehlerbehebung"},
+      "gear": {"title": "Ausrüstung ansehen", "description": "Bebilderte Waffen, Fahrzeuge, Rüstung, Munition und Loadouts durchsuchen.", "imageAlt": "WARDOGS-Waffen im bebilderten Ausrüstungskatalog"},
+      "system": {"title": "PC prüfen", "description": "Hardware mit bestätigten Anforderungen vergleichen, bevor Einstellungen geändert werden.", "imageAlt": "WARDOGS-Spielszene für den PC-Konfigurationscheck"}
+    },
     "priority": {
       "eyebrow": "Wichtige Infos",
       "title": "Was WARDOGS-Spieler dieses Wochenende brauchen",
       "description": "Beginne mit Live-Test, offiziellen Problemen, sicherer Installation, Steuerung und bestätigter Early-Access-Vorbereitung.",
       "top": {
         "title": "Top Guides",
-        "description": "Die 15 stärksten internen Links für neue Spieler, Steam-Suchen und Zugangsfragen."
+        "description": "Sechs gezielte Guides für neue Spieler, Steam-Suchen und aktuelle Zugangsfragen."
       },
       "recent": {
         "title": "Zuletzt aktualisiert",

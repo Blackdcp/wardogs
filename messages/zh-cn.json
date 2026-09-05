@@ -21,7 +21,21 @@
     "accessValue": "付费预购保证资格；免费的 Steam Playtest 申请分批放行。",
     "closedBetaNote": "18:00 UTC 是发布会时间。官方后续通知把服务器开服调整到 19:00 UTC；免费申请仍不保证获得资格。",
     "accessCta": "Beta 02 参与攻略",
-    "issuesCta": "查看已知问题"
+    "issuesCta": "查看已知问题",
+    "countdown": {
+      "starts": "距离 Beta 开始",
+      "ends": "距离 Beta 结束",
+      "earlyAccess": "抢先体验日期",
+      "reached": "计划日期已到",
+      "checking": "正在核对日程",
+      "scheduleOnly": "根据官方日程计算，并非实时服务器监控。",
+      "exactTimeUnconfirmed": "官方尚未确认抢先体验的具体解锁时刻。",
+      "dateValue": "2026 年 9 月 10 日",
+      "days": "天",
+      "hours": "时",
+      "minutes": "分",
+      "seconds": "秒"
+    }
   },
   "nav": {
     "game": "游戏",
@@ -116,13 +130,22 @@
         }
       }
     },
+    "actions": {
+      "eyebrow": "选择你的任务",
+      "title": "你现在最需要做什么？",
+      "description": "不必翻完整目录，直接进入你当前要完成的事情。所有可能随版本变化的数据都会继续明确标注。",
+      "play": {"title": "立即开玩", "description": "确认资格、安装正确的 Steam 版本并进入当前测试。", "imageAlt": "用于参与和下载攻略的 WARDOGS 战场画面"},
+      "fix": {"title": "解决当前问题", "description": "查看崩溃、服务器、语音、性能和资格问题的当前处理办法。", "imageAlt": "用于故障排查的 WARDOGS 战术装备画面"},
+      "gear": {"title": "浏览武器与装备", "description": "查看带图的武器、载具、护甲、弹药和配装资料。", "imageAlt": "WARDOGS 带图武器与装备图鉴"},
+      "system": {"title": "检测你的电脑", "description": "调整设置前，先把你的硬件与已确认配置要求进行比较。", "imageAlt": "用于电脑配置检测的 WARDOGS 游戏画面"}
+    },
     "priority": {
       "eyebrow": "优先级信息",
       "title": "这个周末 WARDOGS 玩家最需要的内容",
       "description": "优先处理正在进行的测试、官方已知问题、安全安装、操作和已确认的抢先体验准备。",
       "top": {
         "title": "核心攻略",
-        "description": "围绕当前开放状态、Steam 权限、上线准备和高频搜索问题精选 15 篇攻略。"
+        "description": "围绕当前开放状态、Steam 权限、上线准备和高频搜索问题精选核心攻略。"
       },
       "recent": {
         "title": "最近更新",

@@ -10,7 +10,21 @@
     "accessValue": "Pre-purchase guarantees access; free Steam Playtest approvals arrive in waves.",
     "closedBetaNote": "The 18:00 UTC time is the broadcast. A later official notice moved server opening to 19:00 UTC. Free requests remain unguaranteed.",
     "accessCta": "Beta 02 access",
-    "issuesCta": "Known issues"
+    "issuesCta": "Known issues",
+    "countdown": {
+      "starts": "Beta starts in",
+      "ends": "Beta ends in",
+      "earlyAccess": "Early Access",
+      "reached": "Scheduled date reached",
+      "checking": "Checking schedule",
+      "scheduleOnly": "Schedule-based, not live server telemetry.",
+      "exactTimeUnconfirmed": "Exact Early Access unlock time is not confirmed.",
+      "dateValue": "Sep 10, 2026",
+      "days": "D",
+      "hours": "H",
+      "minutes": "M",
+      "seconds": "S"
+    }
   },
   "nav": {"game": "Game", "guides": "Guides", "catalogue": "Catalogue", "playtest": "Playtest", "release": "Release", "releaseDate": "Release Date", "steam": "Steam", "steamEarlyAccess": "Steam and Early Access", "gameplay": "Gameplay", "factions": "Factions", "community": "Community", "beginnerGuide": "Beginner Guide", "crashFix": "Crash Fix", "helicopterGuide": "Helicopter Guide", "gameplayGuide": "Gameplay Guide", "fobLogistics": "FOB and Logistics", "mortarGuide": "Mortar Guide", "allGuides": "All Guides", "catalogueHome": "Catalogue Home", "weapons": "Weapons", "vehicles": "Vehicles", "ammo": "Ammo", "attachments": "Attachments", "gear": "Gear", "equipment": "Equipment", "loadouts": "Loadouts", "systemCheck": "PC Configuration Check", "budgetTool": "Loadout Budget", "videos": "Videos", "items": "Items", "news": "News", "steamCta": "View on Steam", "primaryLabel": "Primary navigation"},
   "home": {
@@ -71,13 +85,22 @@
         }
       }
     },
+    "actions": {
+      "eyebrow": "Choose your mission",
+      "title": "What do you need right now?",
+      "description": "Skip the directory and go directly to the task that brought you here. Every destination keeps build-sensitive facts clearly labeled.",
+      "play": {"title": "Play now", "description": "Confirm access, install the correct Steam build, and enter the current test.", "imageAlt": "WARDOGS battlefield used for the play and download guide"},
+      "fix": {"title": "Fix a problem", "description": "Check current crash, server, voice, performance, and entitlement workarounds.", "imageAlt": "WARDOGS tactical equipment used for troubleshooting"},
+      "gear": {"title": "Browse equipment", "description": "Explore illustrated weapons, vehicles, armor, ammunition, and loadout records.", "imageAlt": "WARDOGS weapons displayed in the illustrated equipment catalogue"},
+      "system": {"title": "Check your PC", "description": "Compare your hardware with confirmed requirements before changing settings.", "imageAlt": "WARDOGS gameplay used for the PC configuration checker"}
+    },
     "priority": {
       "eyebrow": "Priority Intel",
       "title": "What WARDOGS Players Need This Weekend",
       "description": "Start with the active test, official known issues, safe install steps, controls, and confirmed Early Access preparation.",
       "top": {
         "title": "Top Guides",
-        "description": "The 15 strongest internal links for new players, Steam searchers, and access questions."
+        "description": "Six focused guides for new players, Steam searchers, and current access questions."
       },
       "recent": {
         "title": "Recently Updated",

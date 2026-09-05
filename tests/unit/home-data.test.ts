@@ -1,7 +1,9 @@
 import {describe, expect, it} from "vitest";
 import {
   CONFIRMED_RUMOR_ITEMS,
+  HOME_ACTIONS,
   getHomeFacts,
+  getHomePriorityGuides,
   getRecentlyUpdatedGuides,
   TOP_GUIDE_SLUGS,
   START_GUIDES
@@ -80,5 +82,34 @@ describe("homepage data", () => {
       titleKey: "paidPrepurchase",
       slug: "wardogs-price"
     });
+  });
+
+  it("keeps the homepage intel panel concise while preserving confirmed and rumor states", () => {
+    const guides = Array.from({length: 20}, (_, index) => ({
+      slug: `guide-${index}`,
+      title: `Guide ${index}`,
+      updatedAt: `2026-08-${String(index + 1).padStart(2, "0")}`
+    }));
+    const result = getHomePriorityGuides(guides);
+
+    expect(result.top).toHaveLength(0);
+    expect(result.recent).toHaveLength(3);
+    expect(result.status).toEqual([
+      expect.objectContaining({titleKey: "closedBeta02", status: "confirmed"}),
+      expect.objectContaining({titleKey: "clipContest", status: "confirmed"}),
+      expect.objectContaining({titleKey: "ps5Release", status: "rumor"})
+    ]);
+  });
+
+  it("defines four task-first homepage actions with visual assets", () => {
+    expect(HOME_ACTIONS).toEqual([
+      expect.objectContaining({key: "play", href: "/guides/wardogs-download"}),
+      expect.objectContaining({key: "fix", href: "/guides/wardogs-known-issues"}),
+      expect.objectContaining({key: "gear", href: "/items"}),
+      expect.objectContaining({key: "system", href: "/tools/system-check"})
+    ]);
+    expect(HOME_ACTIONS).toHaveLength(4);
+    expect(HOME_ACTIONS.every((action) => action.image.startsWith("/images/"))).toBe(true);
+    expect(new Set(HOME_ACTIONS.map((action) => action.image)).size).toBe(4);
   });
 });
