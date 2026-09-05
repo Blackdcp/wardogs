@@ -1,4 +1,4 @@
-import {AlertTriangle, ArrowRight, CalendarClock, Download, Radio} from "lucide-react";
+import {ArrowRight, CalendarClock, Download, Radio} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {Link} from "@/i18n/navigation";
 import {CURRENT_EVENT} from "@/features/live-ops/current-event";
@@ -32,7 +32,10 @@ export async function LiveBetaBanner({compact = false}: LiveBetaBannerProps) {
       data-live-event={CURRENT_EVENT.id}
     >
       <div className={`site-container ${compact ? "max-w-4xl py-5" : "py-7"}`}>
-        <div className={`grid items-center gap-5 ${compact ? "md:grid-cols-[1fr_auto]" : "lg:grid-cols-2 xl:grid-cols-[1.15fr_0.72fr_1fr_auto]"}`}>
+        <div
+          className={`grid gap-5 ${compact ? "items-center md:grid-cols-[1fr_auto]" : "lg:grid-cols-[minmax(0,1fr)_minmax(250px,0.62fr)_auto] lg:items-end"}`}
+          data-live-summary-row
+        >
           <div className="min-w-0">
             <p className="flex items-center gap-2 text-xs font-semibold uppercase text-[#7ddd9f]">
               <Radio aria-hidden="true" className="size-4" />
@@ -54,25 +57,7 @@ export async function LiveBetaBanner({compact = false}: LiveBetaBannerProps) {
             />
           ) : null}
 
-          {!compact ? (
-            <div className="border-y border-[#31543f] py-4 xl:border-y-0 xl:border-l xl:py-0 xl:pl-6">
-              <dl className="grid grid-cols-2 gap-x-6 gap-y-3">
-                <div>
-                  <dt className="flex items-center gap-2 text-xs uppercase text-[#8ba99a]"><CalendarClock aria-hidden="true" className="size-4" />{t("windowLabel")}</dt>
-                  <dd className="mt-1 text-sm font-semibold text-white">{t("windowValue")}</dd>
-                </div>
-                <div>
-                  <dt className="flex items-center gap-2 text-xs uppercase text-[#8ba99a]"><Download aria-hidden="true" className="size-4" />{t("accessLabel")}</dt>
-                  <dd className="mt-1 text-sm font-semibold text-white">{t("accessValue")}</dd>
-                </div>
-              </dl>
-              <div className="col-span-2 flex items-start gap-2 text-xs leading-5 text-[#d6c47f]">
-                <AlertTriangle aria-hidden="true" className="mt-0.5 size-4 shrink-0" />{t("closedBetaNote")}
-              </div>
-            </div>
-          ) : null}
-
-          <div className="flex flex-wrap gap-2 xl:justify-end">
+          <div className="flex flex-wrap gap-2 lg:flex-col lg:items-stretch lg:justify-self-end xl:flex-row">
             <Link className="inline-flex min-h-11 items-center gap-2 border border-[#68bd8d] bg-[#24583a] px-4 py-2 text-sm font-semibold text-white hover:bg-[#2c6a46]" href={`/guides/${CURRENT_EVENT.accessGuideSlug}`}>
               {t("accessCta")}<ArrowRight aria-hidden="true" className="size-4" />
             </Link>
@@ -81,6 +66,25 @@ export async function LiveBetaBanner({compact = false}: LiveBetaBannerProps) {
             </Link>
           </div>
         </div>
+
+        {!compact ? (
+          <dl className="mt-5 grid gap-4 border-t border-[#31543f] pt-4 sm:grid-cols-2 sm:gap-8" data-live-detail-row>
+            <div className="flex min-w-0 items-start gap-3">
+              <CalendarClock aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-[#8ba99a]" />
+              <div className="min-w-0">
+                <dt className="text-[11px] uppercase text-[#8ba99a]">{t("windowLabel")}</dt>
+                <dd className="mt-1 text-sm font-semibold leading-5 text-white">{t("windowValue")}</dd>
+              </div>
+            </div>
+            <div className="flex min-w-0 items-start gap-3">
+              <Download aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-[#8ba99a]" />
+              <div className="min-w-0">
+                <dt className="text-[11px] uppercase text-[#8ba99a]">{t("accessLabel")}</dt>
+                <dd className="mt-1 text-sm leading-5 text-[#d8e3dc]">{t("accessValue")}</dd>
+              </div>
+            </div>
+          </dl>
+        ) : null}
       </div>
     </section>
   );
