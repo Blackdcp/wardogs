@@ -96,7 +96,11 @@ describe("Simplified Chinese publishing quality", () => {
       ].join("\n");
 
       expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(
-        ["wardogs-release-date", "wardogs-price"].includes(slug) ? "2026-09-04" : "2026-09-01"
+        slug === "wardogs-system-requirements"
+          ? "2026-09-05"
+          : ["wardogs-release-date", "wardogs-price"].includes(slug)
+            ? "2026-09-04"
+            : "2026-09-01"
       );
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
       expect(searchable, `zh-cn/${slug}`).toContain("已确认");

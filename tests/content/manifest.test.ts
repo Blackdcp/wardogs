@@ -48,13 +48,14 @@ const expected = [
   ["guide", "wardogs progression wipes guide", "wardogs-progression-wipes-guide"],
   ["guide", "wardogs community servers guide", "wardogs-community-servers-guide"],
   ["guide", "wardogs 100k clip contest", "wardogs-100k-clip-contest"],
-  ["guide", "wardogs known issues", "wardogs-known-issues"]
+  ["guide", "wardogs known issues", "wardogs-known-issues"],
+  ["guide", "wardogs linux proton", "wardogs-linux-proton"]
 ] as const;
 
 describe("guideManifest", () => {
   it("maps every approved keyword exactly once and in traffic order", () => {
     expect(guideManifest.map(({category, keyword, slug}) => [category, keyword, slug])).toEqual(expected);
-    expect(new Set(guideManifest.map(({slug}) => slug)).size).toBe(47);
-    expect(guideManifest.map(({order}) => order)).toEqual(Array.from({length: 47}, (_, index) => index + 1));
+    expect(new Set(guideManifest.map(({slug}) => slug)).size).toBe(48);
+    expect(guideManifest.map(({order}) => order)).toEqual(Array.from({length: 48}, (_, index) => index + 1));
   });
 });

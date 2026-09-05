@@ -48,6 +48,7 @@ describe("homepage data", () => {
       "wardogs-release-date",
       "wardogs-price",
       "wardogs-system-requirements",
+      "wardogs-linux-proton",
       "wardogs-beginner-guide",
       "wardogs-best-weapons-loadouts",
       "wardogs-fob-guide",

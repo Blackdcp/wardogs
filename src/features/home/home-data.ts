@@ -37,6 +37,7 @@ export const TOP_GUIDE_SLUGS = [
   "wardogs-release-date",
   "wardogs-price",
   "wardogs-system-requirements",
+  "wardogs-linux-proton",
   "wardogs-beginner-guide",
   "wardogs-best-weapons-loadouts",
   "wardogs-fob-guide",

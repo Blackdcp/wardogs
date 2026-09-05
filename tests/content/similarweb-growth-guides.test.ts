@@ -26,11 +26,13 @@ describe("Similarweb growth guide cluster", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        const expectedDate = ["wardogs-controls", "wardogs-best-settings"].includes(slug)
-          ? "2026-09-04"
-          : locale === "zh-cn" && ["wardogs-system-requirements", "wardogs-map"].includes(slug)
-          ? "2026-09-01"
-            : "2026-08-23";
+        const expectedDate = slug === "wardogs-system-requirements"
+          ? "2026-09-05"
+          : ["wardogs-controls", "wardogs-best-settings"].includes(slug)
+            ? "2026-09-04"
+            : locale === "zh-cn" && slug === "wardogs-map"
+              ? "2026-09-01"
+              : "2026-08-23";
         expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
@@ -157,7 +159,7 @@ describe("Similarweb growth guide cluster", () => {
   });
 
   it("keeps the homepage focused on current high-intent player tasks", () => {
-    expect(TOP_GUIDE_SLUGS).toHaveLength(15);
+    expect(TOP_GUIDE_SLUGS).toHaveLength(16);
     expect(TOP_GUIDE_SLUGS).toEqual(expect.arrayContaining([
       "wardogs-beta",
       "wardogs-known-issues",
@@ -169,6 +171,7 @@ describe("Similarweb growth guide cluster", () => {
       "wardogs-early-access",
       "wardogs-release-date",
       "wardogs-system-requirements",
+      "wardogs-linux-proton",
       "wardogs-best-weapons-loadouts",
       "wardogs-fob-guide",
       "wardogs-crash-fix",
