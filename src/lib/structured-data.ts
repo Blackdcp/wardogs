@@ -24,16 +24,24 @@ function faqSchema(faq: GuideDocument["frontmatter"]["faq"]): JsonLd {
 
 export function buildHomeJsonLd(locale: Locale): JsonLd[] {
   const origin = getSiteOrigin();
+  const siteUrl = `${origin.replace(/\/$/, "")}/`;
   return [
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       name: "WARDOGS Wiki",
-      url: pageUrl(locale),
+      url: siteUrl,
       logo: `${origin}/images/wardogs-fullmark-full.png`,
       description: "WARDOGS Wiki is an independent fan-made guide for WARDOGS players."
     },
-    {"@context": "https://schema.org", "@type": "WebSite", name: "WARDOGS Wiki", url: pageUrl(locale)},
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "WARDOGS Wiki",
+      alternateName: ["WardogsWiki", "wardogswiki.com"],
+      inLanguage: locale,
+      url: siteUrl
+    },
     {
       "@context": "https://schema.org",
       "@type": "VideoGame",

@@ -45,9 +45,11 @@ export async function HomeHero({facts}: HomeHeroProps) {
             className="mt-6 h-auto w-[260px] sm:w-[360px] lg:w-[430px]"
           />
           <h1 id="home-hero-title" className="display-font mt-2 text-4xl leading-none text-white sm:text-5xl lg:text-6xl">
-            <span className="screen-reader-only">WARDOGS </span>
-            {t("home.heroTitle")}
+            WARDOGS Wiki
           </h1>
+          <p className="display-font mt-3 text-xl leading-tight text-[#edf2ef] sm:text-2xl">
+            {t("home.heroTitle")}
+          </p>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-[#d6ded9] sm:text-base sm:leading-8">
             {t("home.heroDescription")}
           </p>

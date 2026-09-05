@@ -29,6 +29,18 @@ describe("structured data", () => {
     expect(game?.publisher).toMatchObject({name: "Team17", url: officialLinks.team17});
   });
 
+  it("identifies the permanent site name at the canonical domain root", () => {
+    const home = buildHomeJsonLd("en");
+    const website = home.find((item) => item["@type"] === "WebSite");
+
+    expect(website).toMatchObject({
+      name: "WARDOGS Wiki",
+      alternateName: ["WardogsWiki", "wardogswiki.com"],
+      inLanguage: "en",
+      url: "http://localhost:3000/"
+    });
+  });
+
   it("uses an absolute source-audited image URL for new catalogue guides", async () => {
     const guide = await loadGuideDocument("en", "wardogs-medic-revive-guide");
     const article = buildArticleJsonLd("en", guide!)[0];

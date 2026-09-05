@@ -73,10 +73,10 @@
     "primaryLabel": "主导航"
   },
   "home": {
-    "metaTitle": "WARDOGS Wiki - Closed Beta 02、上线与完整攻略",
-    "metaDescription": "查看 WARDOGS Closed Beta 02 资格、已知问题、下载、操作、上线准备、武器、载具、设置和 Steam 抢先体验的核实攻略，并整理服务器列表、语音、崩溃、免费申请与预购资格的差异、9 月 10 日准备、来源和更新时间；所有未确认信息都会单独标注，避免旧测试结论误导当前玩家。",
-    "heroTitle": "Closed Beta 02 完整攻略",
-    "heroDescription": "用核实过的测试时间、参与资格、故障排查、操作、下载和上线准备进入本轮测试，所有版本敏感信息都会明确标注。",
+    "metaTitle": "WARDOGS Wiki：武器、载具、攻略与游戏资料库",
+    "metaDescription": "独立运营的 WARDOGS Wiki 提供经过核实的武器、载具、装备、操作、当前参与状态、已知问题、设置与实战攻略。我们会交叉检查官方来源和公开资料，标注出处、更新时间与适用版本，明确区分容易变化的数值和未经确认的信息，并整理新手入门、下载、飞行操作、小队协作及实用玩家工具，帮助玩家快速找到可靠答案。",
+    "heroTitle": "武器、载具、攻略与游戏资料库",
+    "heroDescription": "这里整理经过来源核实的装备、操作、当前参与状态、故障排查与实战策略，并明确标注所有受版本影响的信息。",
     "primaryCta": "打开 Beta 02 攻略",
     "secondaryCta": "查看已知问题",
     "status": "Closed Beta 02 正在进行",

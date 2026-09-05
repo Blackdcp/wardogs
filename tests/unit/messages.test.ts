@@ -24,10 +24,17 @@ describe("localized messages", () => {
 
   it("keeps homepage SEO metadata within the requested limits", () => {
     for (const locale of locales) {
-      const home = loadMessages(locale).home as {metaTitle: string; metaDescription: string};
+      const home = loadMessages(locale).home as {
+        metaTitle: string;
+        metaDescription: string;
+        heroTitle: string;
+      };
       expect(home.metaTitle.length, `${locale} title`).toBeLessThanOrEqual(60);
       expect(home.metaDescription.length, `${locale} description`).toBeGreaterThanOrEqual(140);
       expect(home.metaDescription.length, `${locale} description`).toBeLessThanOrEqual(160);
+      expect(home.metaTitle, `${locale} site name`).toMatch(/^WARDOGS Wiki/);
+      expect(home.metaTitle, `${locale} evergreen title`).not.toContain("Closed Beta");
+      expect(home.heroTitle, `${locale} evergreen heading`).not.toContain("Closed Beta");
     }
   });
 
