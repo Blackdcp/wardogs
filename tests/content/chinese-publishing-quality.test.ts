@@ -61,7 +61,7 @@ describe("Simplified Chinese publishing quality", () => {
     const homeText = JSON.stringify(messages.home);
     const siteText = JSON.stringify(messages);
 
-    expect(messages.home.status).toBe("Closed Beta 02 正在进行");
+    expect(messages.home.status).toBe("Beta 02 已结束 - 9 月 10 日抢先体验");
     expect(messages.home.priority.title).toBe("这个周末 WARDOGS 玩家最需要的内容");
     expect(messages.home.catalogue.heading).toBe("WARDOGS 图鉴");
     expect(messages.home.catalogue.publishedModels).toBe("已发布的武器与载具条目");
@@ -99,7 +99,7 @@ describe("Simplified Chinese publishing quality", () => {
         slug === "wardogs-system-requirements"
           ? "2026-09-05"
           : ["wardogs-release-date", "wardogs-price"].includes(slug)
-            ? "2026-09-04"
+            ? "2026-09-09"
             : "2026-09-01"
       );
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
@@ -163,13 +163,14 @@ describe("Simplified Chinese publishing quality", () => {
       ].join("\n");
 
       expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(
-        [
+        ["wardogs-alpha", "wardogs-alpha-key", "wardogs-discord-account-verification", "wardogs-twitch-drops", "wardogs-twitter"].includes(slug)
+          ? "2026-09-09"
+          : [
           "wardogs-alpha",
           "wardogs-alpha-key",
           "wardogs-best-settings",
           "wardogs-discord-account-verification",
           "wardogs-factions",
-          "wardogs-twitch-drops",
           "wardogs-twitter",
         ].includes(slug)
           ? "2026-09-04"

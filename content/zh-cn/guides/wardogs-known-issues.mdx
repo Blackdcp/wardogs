@@ -1,19 +1,19 @@
 ---
-title: "WARDOGS 已知问题：Beta 02 服务器与崩溃处理"
-description: "汇总 WARDOGS Closed Beta 02 当前已知问题，覆盖服务器浏览器空白、登录队列、崩溃与反作弊、本地语音、Supporter Pack、FPS、内存和显存波动；明确区分开发者确认的临时处理方法与受硬件、驱动和测试版本影响的社区观察，并给出安全排查及提交支持信息的步骤。"
+title: "WARDOGS 上线问题观察：Beta 02 问题复核清单"
+description: "汇总 WARDOGS Closed Beta 02 报告过的服务器浏览器空白、登录队列、崩溃与反作弊、本地语音、Supporter Pack、FPS、内存和显存波动；明确区分开发者确认的临时处理方法与受硬件、驱动和测试版本影响的社区观察，并给出安全排查、提交支持信息以及在抢先体验版本中重新验证的步骤。"
 keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-04"
+updatedAt: "2026-09-09"
 badges:
   - label: "Beta 02"
     tone: "warning"
   - label: "版本敏感"
     tone: "muted"
 faq:
-  - question: "为什么 WARDOGS 服务器列表是空的？"
-    answer: "开发者公告要求只选择一个服务器区域；同时勾选多个区域可能导致列表不显示。服务器容量、维护、会话和访问资格也可能造成类似现象。"
+  - question: "Beta 02 的问题会继续出现在抢先体验吗？"
+    answer: "这些只是上线观察项目，不是已经确认的抢先体验故障；官方公告与社区报告必须分开。"
   - question: "WARDOGS 崩溃时怎么安全排查？"
     answer: "重启 Steam 和 Windows，验证文件，移除非官方启动参数，从显卡厂商更新驱动，关闭叠加层，并一次只改一个项目，同时记录准确报错。"
   - question: "本地语音失效怎么办？"
@@ -28,8 +28,25 @@ sources:
   - label: "WARDOGS Closed Beta 02 官方 Steam 页面"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-09-04"
+    checkedAt: "2026-09-09"
+  - label: "Beta 02 体验 63 小时的社区反馈"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/"
+    kind: "community"
+    checkedAt: "2026-09-09"
 ---
+
+## 9 月 9 日状态：抢先体验前最后核查
+
+**Beta 02 已经结束。** 9 月 3 日发布会于 **18:00 UTC** 开始；修订后的服务器窗口从 **19:00 UTC** 运行至 **9 月 6 日 08:00 UTC**。此前的资格规则、临时处理方法、价格与平衡数值都是带日期的测试记录，不能代表现在仍可参与。
+
+Steam 列出的 Windows PC 抢先体验日期是 **2026 年 9 月 10 日**。截至 9 月 9 日，**具体解锁时间尚未确认**，**抢先体验预载也尚未确认**。不要自行推断零点开放，也不要使用第三方倒计时或安装包。
+
+先查看 Steam 实际状态，再使用[抢先体验前 48 小时清单](/zh-cn/guides/wardogs-launch-checklist)和[上线问题观察清单](/zh-cn/guides/wardogs-known-issues)。
+## Beta 02 社区报告的上线观察清单
+
+玩家在 Beta 02 中报告过排队与服务器浏览器、可重复崩溃、帧时间波动、RAM 或 VRAM 压力、DLSS、DLAA、阴影和 Reflex + Boost 表现差异、本地语音中断，以及进度或权益混乱。这些是**特定硬件和 Beta 02 版本下的社区报告**，不是已经确认的抢先体验故障，也不是通用修复结论。
+
+只把每条报告当作测试用例：在 9 月 10 日版本重新复现，记录硬件、驱动、地区、报错和版本号，然后核对官方公告。[63 小时 Beta 反馈帖](https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/)可以提供线索，但不能替代官方补丁说明。
 
 ## 快速结论
 
@@ -37,7 +54,7 @@ sources:
 
 ## 已确认事实
 
-这些处理方法来自官方已知问题帖，只适用于当前测试版本，测试期间仍可能变化。服务器或第三方语音服务故障不一定能在玩家电脑上修复。
+这些处理方法来自官方 Beta 02 已知问题帖，只适用于已经结束的测试版本，必须在抢先体验版本重新验证。服务器或第三方语音服务故障不一定能在玩家电脑上修复。
 
 ## 玩家最常查什么
 
@@ -50,9 +67,9 @@ sources:
 
 Closed Beta 02 是一次面向多人规模、服务器浏览器、登录队列、Twitch Drops、DLC 权益和语音通信的测试。排队、服务器列表空白、断线或语音失效，不一定都是你的电脑造成的。先执行开发者已经给出的处理方法，每次只改一个项目，并保留错误信息，通常比直接重装更有效。
 
-## 当前测试时间与访问资格
+## Beta 02 历史时间与访问资格
 
-Steam 官方页面列出的 Closed Beta 02 时间是**9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC**。付费预购保证获得测试访问资格，免费的 Steam Playtest 申请则分批发放。“已申请访问权限”并不代表已经拿到许可；已经拿到许可也不代表高峰期一定有空余服务器。
+Closed Beta 02 已按 **9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC** 的修订窗口运行并结束。付费预购保证资格和免费 Steam Playtest 分批放行都是测试期规则；旧许可或“已申请访问权限”不能证明当前服务器仍开放。
 
 只使用 Steam 库里由官方发放的 WARDOGS 条目。不要下载第三方启动器，不要按照陌生帖子绕过反作弊，也不要向任何人提供 Steam Guard 验证码。测试期间出现错误时，来源不明的“修复工具”可能比原问题更危险。
 
@@ -70,7 +87,7 @@ Steam 官方页面列出的 Closed Beta 02 时间是**9 月 3 日 19:00 UTC 至 
 
 ## FPS、内存和显存波动
 
-玩家和视频作者报告过 FPS 不稳定、RAM 或 VRAM 占用较高，以及 DLSS、DLAA、阴影、网格质量、NVIDIA Reflex + Boost 对帧时间产生不同影响。这些内容属于**受当前测试版本和具体硬件影响的社区观察**，不是开发者确认的通用最终参数。
+玩家和视频作者报告过 FPS 不稳定、RAM 或 VRAM 占用较高，以及 DLSS、DLAA、阴影、网格质量、NVIDIA Reflex + Boost 对帧时间产生不同影响。这些内容属于**受 Beta 02 版本和具体硬件影响的社区观察**，不是已经确认的抢先体验故障或通用参数。
 
 从游戏预设开始，在同一地点和近似战况下观察帧时间与内存，只降低一个负载较高的选项，再比较结果。引用博主测试时，必须一起核对分辨率、CPU、GPU、驱动和游戏版本。只复制一个“最佳设置”表，而不匹配硬件，可能得到完全相反的结果。
 

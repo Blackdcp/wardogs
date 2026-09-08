@@ -32,7 +32,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
             "wardogs-oil-rig-guide",
           ].includes(slug));
         expect(guide?.frontmatter.updatedAt).toBe(
-          slug === "wardogs-launch-checklist" ? "2026-09-04" : reviewedToday ? "2026-09-01" : "2026-08-29"
+          slug === "wardogs-launch-checklist" ? "2026-09-09" : reviewedToday ? "2026-09-01" : "2026-08-29"
         );
         expect(guide?.frontmatter.sources.length).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug} body`).toBeGreaterThan(1800);
@@ -99,7 +99,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-ps5");
 
-      expect(guide?.frontmatter.updatedAt).toBe("2026-09-04");
+      expect(guide?.frontmatter.updatedAt).toBe("2026-09-09");
       expect(guide?.frontmatter.title).toMatch(/PS5/i);
       expect(guide?.frontmatter.title).toMatch(/Xbox/i);
       expect(guide?.frontmatter.description).toMatch(/PS5/i);
@@ -108,15 +108,15 @@ describe("2026-08-29 launch and logistics expansion", () => {
     }
   });
 
-  it("promotes live Beta 02 tasks before evergreen launch preparation", () => {
-    expect(START_GUIDES[0].slug).toBe("wardogs-beta");
+  it("promotes Early Access preparation after Beta 02 ends", () => {
+    expect(START_GUIDES[0].slug).toBe("wardogs-launch-checklist");
     expect(START_GUIDES[1].slug).toBe("wardogs-download");
     expect(TOP_GUIDE_SLUGS.slice(0, 5)).toEqual([
-      "wardogs-beta",
-      "wardogs-known-issues",
-      "wardogs-100k-clip-contest",
+      "wardogs-launch-checklist",
+      "wardogs-release-date",
+      "wardogs-preload",
       "wardogs-download",
-      "wardogs-controls",
+      "wardogs-known-issues",
     ]);
   });
 });

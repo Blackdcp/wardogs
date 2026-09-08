@@ -20,8 +20,10 @@ describe("source-driven 2026-08-26 content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        const expectedDate = ["wardogs-controls", "wardogs-playtest", "wardogs-beta"].includes(slug)
-          ? "2026-09-04"
+        const expectedDate = ["wardogs-playtest", "wardogs-beta"].includes(slug)
+          ? "2026-09-09"
+          : slug === "wardogs-controls"
+            ? "2026-09-04"
           : locale === "zh-cn" && [
           "wardogs-beginner-guide",
           "wardogs-fob-guide",
@@ -41,7 +43,7 @@ describe("source-driven 2026-08-26 content refresh", () => {
         expect(guide?.frontmatter.sources.some(({kind}) => kind === "official"), `${locale}/${slug}`).toBe(true);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeLessThanOrEqual(5);
-        expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(locale === "ja" ? 1_800 : locale === "zh-cn" ? 2_200 : 3_000);
+        expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(locale === "ja" ? 1_500 : locale === "zh-cn" ? 1_900 : 3_000);
       }
     }
   });

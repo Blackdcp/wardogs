@@ -42,12 +42,12 @@ export function GET() {
     <div class="content">
       <div class="topline">
         <p class="eyebrow">WARDOGS current status</p>
-        <span class="badge" id="status-badge">Live</span>
+        <span class="badge" id="status-badge">Ended</span>
       </div>
-      <h1 id="status-title">${status.currentEvent.name}</h1>
-      <p class="schedule" id="status-schedule">Ends September 6, 2026 at 08:00 UTC</p>
-      <p class="countdown" id="status-countdown" role="status" aria-live="polite">Checking current time...</p>
-      <p class="note" id="status-note">Early Access is scheduled for September 10, 2026. Exact Early Access unlock time has not been announced.</p>
+      <h1 id="status-title">Closed Beta 02 has ended</h1>
+      <p class="schedule" id="status-schedule">Ended September 6, 2026 at 08:00 UTC</p>
+      <p class="countdown" id="status-countdown" role="status" aria-live="polite">Early Access: September 10, 2026</p>
+      <p class="note" id="status-note">The exact Early Access unlock time and preload have not been announced. Check Steam for current availability.</p>
       <div class="links">
         <a href="${officialSource.url}" target="_blank" rel="noopener noreferrer">Official source</a>
         <span>Powered by <a href="${status.links.home}" target="_blank" rel="noopener noreferrer">WARDOGS Wiki</a></span>
@@ -106,10 +106,10 @@ export function GET() {
         }
 
         const daysUntilEarlyAccess = earlyAccessDayNumber() - utcDayNumber(now);
-        badge.textContent = "Scheduled";
-        title.textContent = "Early Access";
+        badge.textContent = "Next";
+        title.textContent = "Steam Early Access";
         schedule.textContent = "Scheduled for September 10, 2026";
-        note.textContent = "Exact Early Access unlock time has not been announced. Check Steam for current availability.";
+        note.textContent = "The exact Early Access unlock time and preload have not been announced. Check Steam for current availability.";
 
         if (daysUntilEarlyAccess > 1) {
           countdown.textContent = daysUntilEarlyAccess + " calendar days to the scheduled date";

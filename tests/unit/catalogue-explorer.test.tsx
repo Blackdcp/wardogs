@@ -119,8 +119,9 @@ describe("CatalogueBuildNotice", () => {
 
     expect(englishHtml).toContain("Alpha 1 and August Closed Beta");
     expect(englishHtml.toLowerCase()).toContain("seven identifier-only records");
-    expect(chineseHtml).toContain("Alpha 1 和 8 月封闭测试");
+    expect(chineseHtml).toContain("Alpha 1 与 8 月封闭测试");
     expect(chineseHtml).toContain("7 个仅有标识的条目");
+    expect(chineseHtml).toContain("抢先体验版本重新验证");
     expect(englishHtml).not.toContain("final launch data");
   });
 });

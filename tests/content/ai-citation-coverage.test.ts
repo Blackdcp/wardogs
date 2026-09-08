@@ -7,7 +7,7 @@ const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const localizedQueries = {
   en: {
     earlyAccess: "Is WARDOGS in Early Access?",
-    playtest: "What is the current WARDOGS Playtest window?",
+    playtest: "What is the current WARDOGS Playtest status?",
     release: "When does WARDOGS release?",
     beta: "Is WARDOGS Closed Beta 02 live?",
     gameplay: "How do you play WARDOGS?",
@@ -17,9 +17,9 @@ const localizedQueries = {
   },
   de: {
     earlyAccess: "Ist WARDOGS im Early Access?",
-    playtest: "Wann läuft der aktuelle WARDOGS-Playtest?",
+    playtest: "Wie ist der aktuelle WARDOGS-Playtest-Status?",
     release: "Wann erscheint WARDOGS?",
-    beta: "Läuft WARDOGS Closed Beta 02 jetzt?",
+    beta: "Läuft WARDOGS Closed Beta 02 noch?",
     gameplay: "Wie spielt man WARDOGS?",
     discord: "Welcher WARDOGS-Discord ist offiziell?",
     drops: "Sind WARDOGS Twitch Drops in Beta 02 aktiv?",
@@ -27,9 +27,9 @@ const localizedQueries = {
   },
   ru: {
     earlyAccess: "WARDOGS уже в раннем доступе?",
-    playtest: "Когда идет текущий WARDOGS Playtest?",
+    playtest: "Каков текущий статус WARDOGS Playtest?",
     release: "Когда выйдет WARDOGS?",
-    beta: "Идет ли сейчас WARDOGS Closed Beta 02?",
+    beta: "Идёт ли сейчас WARDOGS Closed Beta 02?",
     gameplay: "Как играть в WARDOGS?",
     discord: "Какой Discord WARDOGS является официальным?",
     drops: "Активны ли WARDOGS Twitch Drops в Beta 02?",
@@ -37,9 +37,9 @@ const localizedQueries = {
   },
   "pt-br": {
     earlyAccess: "WARDOGS já está em Acesso Antecipado?",
-    playtest: "Qual é a janela atual do WARDOGS Playtest?",
+    playtest: "Qual é o status atual do WARDOGS Playtest?",
     release: "Quando WARDOGS será lançado?",
-    beta: "O Closed Beta 02 de WARDOGS está ativo?",
+    beta: "O WARDOGS Closed Beta 02 ainda está ativo?",
     gameplay: "Como jogar WARDOGS?",
     discord: "Qual é o Discord oficial de WARDOGS?",
     drops: "Os Twitch Drops de WARDOGS estão ativos no Beta 02?",
@@ -47,9 +47,9 @@ const localizedQueries = {
   },
   ja: {
     earlyAccess: "WARDOGSはEarly Access中？",
-    playtest: "現在のWARDOGS Playtest期間は？",
+    playtest: "現在のWARDOGS Playtest状況は？",
     release: "WARDOGSの発売日はいつ？",
-    beta: "WARDOGS Closed Beta 02は開催中ですか？",
+    beta: "WARDOGS Closed Beta 02はまだ開催中ですか？",
     gameplay: "WARDOGSの遊び方は？",
     discord: "WARDOGSの公式Discordはどれ？",
     drops: "Beta 02でWARDOGS Twitch Dropsは開催中ですか？",
@@ -57,9 +57,9 @@ const localizedQueries = {
   },
   "zh-cn": {
     earlyAccess: "WARDOGS 已经进入抢先体验了吗？",
-    playtest: "当前 WARDOGS Playtest 时间是什么？",
+    playtest: "当前 WARDOGS Playtest 是什么状态？",
     release: "WARDOGS 什么时候发布？",
-    beta: "WARDOGS Closed Beta 02 现在开放吗？",
+    beta: "WARDOGS Closed Beta 02 还在开放吗？",
     gameplay: "WARDOGS 怎么玩？",
     discord: "哪个是 WARDOGS 官方 Discord？",
     drops: "Beta 02 正在开放 WARDOGS Twitch Drops 吗？",
@@ -100,7 +100,7 @@ describe("AI citation query coverage", () => {
         const guide = await loadGuideDocument(locale, slug);
         const query = localizedQueries[locale][intent as keyof typeof localizedQueries.en];
 
-        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
+        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04", "2026-09-09"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
         const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question}) => question).join("\n")}`;
         expect(searchable, `${locale}/${slug} missing ${query}`).toContain(query);
       }

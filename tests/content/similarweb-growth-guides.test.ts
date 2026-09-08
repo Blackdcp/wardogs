@@ -139,7 +139,7 @@ describe("Similarweb growth guide cluster", () => {
 
   it("upgrades existing ranking pages around the exact player questions", async () => {
     const expectations = new Map([
-      ["wardogs-playtest", ["What is the current WARDOGS Playtest window?", "Does a free Steam request guarantee access?", "WARDOGS playtest sign up"]],
+      ["wardogs-playtest", ["What is the current WARDOGS Playtest status?", "Does a free Steam request guarantee access?", "WARDOGS playtest sign up"]],
       ["wardogs-beta", ["Is WARDOGS Closed Beta 02 live?", "Is Closed Beta 02 open to everyone?"]],
       ["wardogs-release-date", ["When does WARDOGS come out?", "When is WARDOGS releasing?"]],
       ["wardogs-steam", ["/guides/wardogs-system-requirements", "/guides/wardogs-best-settings"]]
@@ -148,12 +148,12 @@ describe("Similarweb growth guide cluster", () => {
     for (const [slug, phrases] of expectations) {
       const guide = await loadGuideDocument("en", slug);
       const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}`;
-      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01", "2026-09-04"]).toContain(guide?.frontmatter.updatedAt);
+      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01", "2026-09-04", "2026-09-09"]).toContain(guide?.frontmatter.updatedAt);
       for (const phrase of phrases) expect(searchable).toContain(phrase);
     }
 
     const ps5 = await loadGuideDocument("en", "wardogs-ps5");
-    expect(ps5?.frontmatter.updatedAt).toBe("2026-09-04");
+    expect(ps5?.frontmatter.updatedAt).toBe("2026-09-09");
     expect(ps5?.frontmatter.title).toBe("Is WARDOGS Coming to PS5 or Xbox? Console Status");
     expect(ps5?.body).toContain("not confirmed");
   });
@@ -161,7 +161,6 @@ describe("Similarweb growth guide cluster", () => {
   it("keeps the homepage focused on current high-intent player tasks", () => {
     expect(TOP_GUIDE_SLUGS).toHaveLength(16);
     expect(TOP_GUIDE_SLUGS).toEqual(expect.arrayContaining([
-      "wardogs-beta",
       "wardogs-known-issues",
       "wardogs-100k-clip-contest",
       "wardogs-download",

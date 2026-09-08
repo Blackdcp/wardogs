@@ -1,19 +1,19 @@
 ---
-title: "WARDOGS既知の問題：Beta 02のサーバー・クラッシュ対策"
-description: "WARDOGS Closed Beta 02で確認されているサーバーブラウザー、ログイン待機列、クラッシュ、アンチチート、ボイスチャット、Supporter Pack、FPSやメモリの問題を整理し、公式回避策とハードウェア依存の報告を区別しながら、安全な切り分け手順とサポートへ伝える情報を解説します。"
+title: "WARDOGS発売時の注意点：Beta 02問題の再確認"
+description: "WARDOGS Beta 02で報告されたサーバーブラウザー、ログイン待機列、クラッシュ、アンチチート、ボイスチャット、Supporter Pack、FPSやメモリの問題を整理します。公式回避策とハードウェア依存のコミュニティ報告を区別し、安全な切り分け手順とEarly Accessで再確認する情報を解説します。"
 keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-04"
+updatedAt: "2026-09-09"
 badges:
   - label: "Beta 02"
     tone: "warning"
   - label: "ビルド依存"
     tone: "muted"
 faq:
-  - question: "WARDOGSのサーバー一覧が空なのはなぜですか？"
-    answer: "開発者の案内では、サーバーブラウザーで地域を一つだけ選択します。複数地域を選ぶと一覧が空になる場合があります。容量、メンテナンス、アクセス権も別の原因になり得ます。"
+  - question: "Beta 02の問題はEarly Accessでも発生しますか？"
+    answer: "発売時の確認候補であり、確定したEarly Access不具合ではありません。公式情報とコミュニティ報告を分けます。"
   - question: "WARDOGSがクラッシュするときの安全な確認方法は？"
     answer: "SteamとWindowsを再起動し、ファイル整合性を確認し、非公式の起動オプションを外し、GPUドライバーを更新してオーバーレイを閉じます。変更は一つずつ行い、エラーを記録します。"
   - question: "近接ボイスチャットが使えない場合は？"
@@ -28,8 +28,25 @@ sources:
   - label: "Closed Beta 02の公式Steam案内"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-09-04"
+    checkedAt: "2026-09-09"
+  - label: "Beta 02を63時間プレイしたコミュニティ報告"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/"
+    kind: "community"
+    checkedAt: "2026-09-09"
 ---
+
+## 9月9日の状況：Early Access前の最終確認
+
+**Beta 02は終了しました。** 9月3日の配信は**18:00 UTC**開始、訂正版サーバー期間は**19:00 UTC**から**9月6日08:00 UTC**まででした。参加条件、回避策、価格、バランスは日付付きテスト記録であり、現在の提供状況ではありません。
+
+SteamはWindows PC版Early Accessを**2026年9月10日**としています。9月9日時点で**正確な解禁時刻は未確認**、**プリロードも未確認**です。午前0時と推測せず、外部パッケージを使わないでください。
+
+Steam、[発売前48時間チェックリスト](/ja/guides/wardogs-launch-checklist)、[発売時の注意点](/ja/guides/wardogs-known-issues)を確認してください。
+## Beta 02コミュニティ報告の発売時チェック項目
+
+待機列、サーバーブラウザー、再現するクラッシュ、フレームタイム、RAM・VRAM負荷、DLSS・DLAA・影・Reflex + Boostの差、ボイス停止、進行や権利の混乱が報告されました。これは**Beta 02のコミュニティ報告**であり、Early Accessの確定不具合や万能な修正ではありません。
+
+9月10日のビルドで再現し、PC、ドライバー、地域、エラー、ビルド番号を記録してください。[63時間プレイ後のフィードバック](https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/)は検証候補として使えますが、公式パッチノートの代わりにはなりません。
 
 ## 結論
 
@@ -48,7 +65,7 @@ Closed Beta 02は、多人数接続、サーバーブラウザー、ログイン
 
 ## 現在の開催時間とアクセス
 
-Steamの公式案内では、Closed Beta 02は**9月3日19:00 UTCから9月6日08:00 UTCまで**です。有料の事前購入にはアクセスが含まれ、無料のSteam Playtest申請は段階的に承認されます。「アクセスをリクエスト済み」はライセンス取得済みと同じではなく、ライセンスがあっても混雑時のサーバー枠を保証するものではありません。
+Closed Beta 02は**9月3日19:00 UTCから9月6日08:00 UTCまで**実施され、終了しました。有料の事前購入にはベータアクセスが含まれ、無料のSteam Playtest申請は段階的に承認されました。これはテスト期間中のルールであり、古い権利は現在サーバーが開いている証明にはなりません。
 
 Steamライブラリに正式に追加されたWARDOGSの項目だけを使い、外部ランチャーや非公式パッチをダウンロードしないでください。アンチチートを回避する手順、Steam Guardコードを求めるDM、正体不明の修復ツールは利用しないでください。
 
@@ -66,7 +83,7 @@ Steamライブラリに正式に追加されたWARDOGSの項目だけを使い�
 
 ## FPS、RAM、VRAMの報告
 
-プレイヤーや動画投稿者から、FPSの変動、高いRAM・VRAM使用量、DLSS、DLAA、影、メッシュ品質、NVIDIA Reflex + Boostによる違いが報告されています。ただし、これらは**現在のテストビルドと個別ハードウェアに依存するコミュニティ観測**で、全員に効く公式の最終設定ではありません。
+プレイヤーや動画投稿者から、FPSの変動、高いRAM・VRAM使用量、DLSS、DLAA、影、メッシュ品質、NVIDIA Reflex + Boostによる違いが報告されました。ただし、これらは**Beta 02ビルドと個別ハードウェアに依存するコミュニティ観測**で、Early Accessの確定不具合や全員に効く設定ではありません。
 
 まずゲーム内プリセットを基準にし、同じ場所と状況でフレームタイムとメモリを確認します。重い項目を一つずつ下げ、結果を比較してください。動画の数値を使う場合は、解像度、GPU、CPU、ドライバー、ゲームビルドが自分と一致するか確認します。
 

@@ -24,8 +24,10 @@ describe("GSC growth page reinforcement", () => {
     for (const locale of locales) {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedCheckDate = ["wardogs-beta", "wardogs-playtest", "wardogs-crash-fix"].includes(slug)
-          ? "2026-09-04"
+        const expectedCheckDate = ["wardogs-beta", "wardogs-playtest"].includes(slug)
+          ? "2026-09-09"
+          : slug === "wardogs-crash-fix"
+            ? "2026-09-04"
           : locale === "zh-cn" && ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
           ? "2026-09-01"
           : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
@@ -65,12 +67,12 @@ describe("GSC growth page reinforcement", () => {
   it("gives the English landing pages exact, non-overlapping search intent", async () => {
     const expectations = {
       "wardogs-beta": {
-        title: "WARDOGS Closed Beta 02: Dates, Access & Status",
+        title: "WARDOGS Beta 02 Has Ended: Results & Early Access Next",
         phrases: ["Is WARDOGS Closed Beta 02 live?", "Is the WARDOGS beta free?"]
       },
       "wardogs-playtest": {
-        title: "WARDOGS Playtest: Closed Beta 02 Access Guide",
-        phrases: ["What is the current WARDOGS Playtest window?", "WARDOGS playtest sign up"]
+        title: "WARDOGS Playtest Status: Beta 02 Ended, What Comes Next",
+        phrases: ["What is the current WARDOGS Playtest status?", "WARDOGS playtest sign up"]
       },
       "wardogs-crash-fix": {
         title: "WARDOGS Crash Fix: Startup, Reboots & Stutter",

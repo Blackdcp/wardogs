@@ -1,16 +1,16 @@
 {
   "common": {"fanMade": "Wiki da comunidade feita por fãs", "language": "Idioma", "openMenu": "Abrir menu", "closeMenu": "Fechar menu", "learnMore": "Saiba mais", "updated": "Atualizado", "official": "Oficial", "community": "Comunidade", "skipToContent": "Ir para o conteúdo", "openSteam": "Abrir WARDOGS na Steam"},
   "liveOps": {
-    "eyebrow": "Atualização ao vivo",
-    "title": "Closed Beta 02 está ao vivo",
-    "description": "Confira o cronograma confirmado e os problemas verificados antes de entrar no teste atual.",
-    "windowLabel": "Janela do teste",
-    "windowValue": "3 set., 19:00 UTC - 6 set., 08:00 UTC",
-    "accessLabel": "Acesso",
-    "accessValue": "A pré-compra garante acesso; aprovações gratuitas do Steam Playtest chegam em ondas.",
-    "closedBetaNote": "18:00 UTC é o horário do show. Um aviso oficial posterior moveu os servidores para 19:00 UTC. Pedidos gratuitos seguem sem garantia.",
-    "accessCta": "Acesso ao Beta 02",
-    "issuesCta": "Problemas conhecidos",
+    "eyebrow": "Atualização de acesso",
+    "title": "Closed Beta 02 foi encerrado",
+    "description": "O beta terminou em 6 de setembro. O Acesso Antecipado no Steam está previsto para 10 de setembro; horário exato e pré-carregamento não foram confirmados.",
+    "windowLabel": "Teste anterior",
+    "windowValue": "Encerrado em 6 set., 08:00 UTC",
+    "accessLabel": "Próxima etapa",
+    "accessValue": "O Acesso Antecipado no Steam está previsto para 10 de setembro; confira a disponibilidade na Steam.",
+    "closedBetaNote": "A janela revisada do Beta 02 terminou em 6 de setembro às 08:00 UTC. Uma licença antiga do Playtest não reabre o teste.",
+    "accessCta": "Lista das próximas 48 horas",
+    "issuesCta": "Riscos do lançamento",
     "countdown": {
       "starts": "Beta começa em",
       "ends": "Beta termina em",
@@ -32,9 +32,9 @@
     "metaDescription": "A WARDOGS Wiki independente reúne informações verificadas sobre armas, veículos, equipamentos, controles, acesso atual, problemas e guias práticos.",
     "heroTitle": "Armas, veículos, guias e banco de dados",
     "heroDescription": "Use uma referência de WARDOGS verificada por fontes para equipamentos, controles, acesso, solução de problemas e táticas, com detalhes de build sinalizados.",
-    "primaryCta": "Abrir guia do Beta 02",
-    "secondaryCta": "Ver problemas conhecidos",
-    "status": "Closed Beta 02 está ao vivo",
+    "primaryCta": "Abrir lista das próximas 48 horas",
+    "secondaryCta": "Ver riscos do lançamento",
+    "status": "Beta 02 foi encerrado - Acesso Antecipado em 10 set.",
     "statsLabel": "Fatos principais sobre WARDOGS",
     "stats": {
       "earlyAccess": "Acesso Antecipado em 10 set. 2026",
@@ -57,11 +57,11 @@
     "startEyebrow": "Comece aqui",
     "startTitle": "Sua missão em WARDOGS",
     "start": {
-      "description": "Use seis guias para entrar no teste, instalar com segurança, resolver problemas e preparar o Acesso Antecipado.",
+      "description": "Use seis guias para preparar o Acesso Antecipado, instalar com segurança e manter o Beta 02 como registro histórico.",
       "cards": {
         "playtest": {
-          "title": "Acesso ao Beta 02",
-          "description": "Confira a janela ativa, garantia da compra e ondas gratuitas do Steam."
+          "title": "Resultados do Beta 02",
+          "description": "Revise a janela encerrada, regras históricas de acesso e o que precisa ser testado no lançamento."
         },
         "download": {
           "title": "Download e instalação",
@@ -89,7 +89,7 @@
       "eyebrow": "Escolha sua missão",
       "title": "O que você precisa agora?",
       "description": "Ignore o diretório e vá direto à tarefa certa. Fatos que mudam conforme a versão continuam claramente marcados.",
-      "play": {"title": "Jogar agora", "description": "Confirme o acesso, instale a versão correta da Steam e entre no teste atual.", "imageAlt": "Campo de batalha de WARDOGS para o guia de acesso e download"},
+      "play": {"title": "Preparar o lançamento", "description": "Confira Steam, instalação, conta e o status não confirmado do pré-carregamento.", "imageAlt": "Campo de batalha de WARDOGS para o guia de acesso e download"},
       "fix": {"title": "Resolver um problema", "description": "Veja soluções atuais para travamentos, servidores, voz, desempenho e acesso.", "imageAlt": "Equipamento tático de WARDOGS usado na solução de problemas"},
       "gear": {"title": "Explorar equipamentos", "description": "Consulte armas, veículos, armaduras, munições e equipamentos ilustrados.", "imageAlt": "Armas de WARDOGS no catálogo ilustrado de equipamentos"},
       "system": {"title": "Verificar o PC", "description": "Compare seu hardware com os requisitos confirmados antes de alterar configurações.", "imageAlt": "Cena de WARDOGS usada no verificador de configuração do PC"}
@@ -97,7 +97,7 @@
     "priority": {
       "eyebrow": "Informação prioritária",
       "title": "O que jogadores de WARDOGS precisam neste fim de semana",
-      "description": "Comece pelo teste ativo, problemas oficiais, instalação segura, controles e preparação confirmada para o Acesso Antecipado.",
+      "description": "Comece pela lista de 48 horas, status da Steam, instalação segura, controles e riscos após o Beta 02.",
       "top": {
         "title": "Top Guides",
         "description": "Seis guias essenciais para novos jogadores, buscas no Steam e dúvidas atuais de acesso."
@@ -115,8 +115,8 @@
         },
         "items": {
           "closedBeta02": {
-            "title": "Closed Beta 02 está ao vivo",
-            "description": "Após o show das 18:00 UTC, vale a janela revisada: 3 de setembro 19:00 UTC até 6 de setembro 08:00 UTC."
+            "title": "Closed Beta 02 foi encerrado",
+            "description": "A janela revisada terminou em 6 de setembro às 08:00 UTC. É um registro datado, não uma rota de acesso atual."
           },
           "clipContest": {
             "title": "Concurso de clipes $100K está aberto",
@@ -267,8 +267,8 @@
       },
       "items": {
         "closedBeta02": {
-          "title": "Closed Beta 02 ocorre de 3 a 6 de setembro",
-          "description": "O show começou às 18:00 UTC; os servidores revisados abriram em 3 de setembro às 19:00 UTC e fecham em 6 de setembro às 08:00 UTC. Compra garante acesso; aprovações gratuitas chegam em ondas."
+          "title": "Closed Beta 02 terminou em 6 de setembro",
+          "description": "O show começou às 18:00 UTC; os servidores operaram de 3 de setembro às 19:00 UTC até 6 de setembro às 08:00 UTC. As regras de acesso são históricas."
         },
         "clipContest": {
           "title": "Concurso oficial de clipes WARDOGS $100K",
@@ -280,7 +280,7 @@
         },
         "closedBeta": {
           "title": "O Closed Beta de agosto terminou em 24 de agosto",
-          "description": "O primeiro teste é histórico e separado da janela atual do Closed Beta 02."
+          "description": "Os testes de agosto e setembro são históricos e não oferecem acesso atual."
         },
         "betaRecap": {
           "title": "BULKHEAD publicou a retrospectiva do primeiro beta",
@@ -295,16 +295,16 @@
           "description": "As páginas oficiais citam Windows PC no Steam; consoles e cross-play seguem sem confirmação."
         },
         "preload": {
-          "title": "Beta 02 instala pela licença oficial do Steam",
-          "description": "Jogadores aprovados ou com acesso pago devem usar a entrada oficial de WARDOGS e evitar instaladores externos."
+          "title": "Preload do Acesso Antecipado não confirmado",
+          "description": "O Steam confirma 10 de setembro, mas nenhum horário exato ou cronograma separado de preload foi publicado até 9 de setembro."
         },
         "twitchDrops": {
-          "title": "Beta 02 testa Twitch Drops",
-          "description": "Drops fazem parte do teste oficial, mas recompensa e tempo ativo devem ser conferidos no Inventário da Twitch."
+          "title": "Beta 02 testou Twitch Drops",
+          "description": "A integração fez parte do teste encerrado. Nenhuma nova recompensa, tempo, lista de canais ou prazo foi confirmada para o Acesso Antecipado."
         },
         "fpsGameShow": {
-          "title": "A revelação de 3 de setembro confirmou o Beta 02",
-          "description": "A apresentação acabou; a fonte atual é o evento do Steam e sua programação de 3 a 6 de setembro."
+          "title": "A revelação de 3 de setembro terminou",
+          "description": "Ela anunciou o Beta 02 e o concurso; o Steam agora é a fonte da disponibilidade em 10 de setembro."
         },
         "firingRangeTest": {
           "title": "O teste de campo de tiro de 2 de setembro terminou",
@@ -314,7 +314,7 @@
     },
     "checklist": {
       "title": "Checklist pré-lançamento",
-      "description": "Use estas páginas durante o Closed Beta 02 e antes do Acesso Antecipado em 10 de setembro para acesso, problemas, instalação, controles e dados verificados."
+      "description": "Use estas páginas antes do Acesso Antecipado em 10 de setembro para status do Steam, instalação segura, problemas, controles e dados verificados."
     },
     "rules": {
       "title": "Como marcamos atualizações",

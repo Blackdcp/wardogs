@@ -6,7 +6,7 @@ export function getPublicStatus() {
 
   return {
     schemaVersion: 1,
-    dataAsOf: "2026-09-05",
+    dataAsOf: "2026-09-09",
     site: "WARDOGS Wiki",
     game: "WARDOGS",
     currentEvent: {
@@ -14,12 +14,14 @@ export function getPublicStatus() {
       name: "Closed Beta 02",
       status: CURRENT_EVENT.status,
       startsAt: CURRENT_EVENT.startsAt,
+      openedToAllAt: CURRENT_EVENT.openedToAllAt,
       endsAt: CURRENT_EVENT.endsAt
     },
     earlyAccess: {
       date: CURRENT_EVENT.earlyAccessAt,
       datePrecision: "date",
       exactUnlockTimeConfirmed: false,
+      preloadConfirmed: false,
       storeUrl: CURRENT_EVENT.storeUrl
     },
     links: {
@@ -31,9 +33,10 @@ export function getPublicStatus() {
       widget: `${origin}/embed/status`
     },
     sources: [
-      {kind: "official", label: "Official Closed Beta 02 announcement", url: CURRENT_EVENT.officialUrl},
-      {kind: "official", label: "Official revised schedule", url: CURRENT_EVENT.scheduleUrl},
-      {kind: "official", label: "Official Steam store", url: CURRENT_EVENT.storeUrl}
+      {kind: "official", label: "Official Steam store and Early Access date", url: CURRENT_EVENT.storeUrl},
+      {kind: "official", label: "Historical Closed Beta 02 announcement", url: CURRENT_EVENT.officialUrl},
+      {kind: "official", label: "Historical September 5 Open Beta notice", url: CURRENT_EVENT.openBetaUrl},
+      {kind: "official", label: "Historical revised Beta 02 schedule", url: CURRENT_EVENT.scheduleUrl}
     ]
   } as const;
 }

@@ -10,7 +10,7 @@ describe("Search Console growth pages", () => {
       const guide = await loadGuideDocument(locale, "wardogs-preload");
 
       expect(guide, `${locale}/wardogs-preload should exist`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt).toBe("2026-09-04");
+      expect(guide?.frontmatter.updatedAt).toBe("2026-09-09");
       expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
       expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
       expect(guide?.frontmatter.sources.every(({kind}) => kind === "official")).toBe(true);
@@ -27,8 +27,8 @@ describe("Search Console growth pages", () => {
     const earlyAccess = await loadGuideDocument("en", "wardogs-early-access");
     const weapons = getCatalogGuide("weapons");
 
-    expect(beta?.frontmatter.title).toBe("WARDOGS Closed Beta 02: Dates, Access & Status");
-    expect(beta?.frontmatter.description).toBe("Join WARDOGS Closed Beta 02 from September 3 to 6 with verified UTC times, paid and free access rules, server notes, known issues, and Early Access timing.");
+    expect(beta?.frontmatter.title).toBe("WARDOGS Beta 02 Has Ended: Results & Early Access Next");
+    expect(beta?.frontmatter.description).toBe("Closed Beta 02 ended September 6. Review its verified UTC schedule, historical access rules, server notes, results, and unconfirmed Early Access launch details.");
     expect(ps5?.frontmatter.title).toBe("Is WARDOGS Coming to PS5 or Xbox? Console Status");
     expect(ps5?.frontmatter.description).toContain("remain unconfirmed");
     expect(release?.frontmatter.title).toBe("WARDOGS Release Date: September 10 Early Access Launch");

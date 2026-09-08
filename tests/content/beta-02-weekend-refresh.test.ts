@@ -42,7 +42,7 @@ describe("Closed Beta 02 weekend release contract", () => {
     expect(source).toContain('startsAt: "2026-09-03T19:00:00Z"');
     expect(source).toContain('endsAt: "2026-09-06T08:00:00Z"');
     expect(source).toContain('earlyAccessAt: "2026-09-10"');
-    expect(source).toContain('status: "live"');
+    expect(source).toContain('status: "ended"');
   });
 
   it("publishes the contest and known-issues guides in every language", async () => {
@@ -56,7 +56,7 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of newGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-04");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-known-issues" ? "2026-09-09" : "2026-09-04");
         expect(guide?.frontmatter.description.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(140);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(1_200);
@@ -72,12 +72,12 @@ describe("Closed Beta 02 weekend release contract", () => {
     }
   });
 
-  it("puts the live Beta 02 window on every high-intent access page", async () => {
+  it("keeps the ended Beta 02 window on every high-intent access page", async () => {
     for (const locale of locales) {
       for (const slug of currentGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-04");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-09");
         expect(sources, `${locale}/${slug}`).toContain(steamUrl);
         expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
         expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
@@ -90,7 +90,9 @@ describe("Closed Beta 02 weekend release contract", () => {
     for (const locale of locales) {
       for (const slug of refreshedGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-04");
+        const reviewedOnSeptember9 = ["wardogs-preload", "wardogs-ps5", "wardogs-twitch-drops"].includes(slug)
+          || (locale === "en" && slug === "wardogs-factions");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(reviewedOnSeptember9 ? "2026-09-09" : "2026-09-04");
         expect(guide?.frontmatter.sources.map(({url}) => url), `${locale}/${slug}`).toContain(beta02Url);
         expect(guide?.body, `${locale}/${slug}`).toContain("Beta 02");
       }
@@ -107,7 +109,7 @@ describe("Closed Beta 02 weekend release contract", () => {
     }
   });
 
-  it("surfaces the live beta and completed contest reveal in home and news data", () => {
+  it("keeps the ended beta and completed contest reveal in home and news data", () => {
     expect(NEWS_UPDATES).toContainEqual({
       date: "2026-09-03",
       status: "Confirmed",

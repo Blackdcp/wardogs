@@ -10,7 +10,7 @@ describe("weekly source-gap refresh", () => {
       const guide = await loadGuideDocument(locale, "wardogs-livestream");
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-04");
+      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-09");
       expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /FPS Games Show|FPS游戏展|FPS 游戏展/ : /FPS Games Show/);
       expect(guide?.body, locale).toContain("18:00 UTC");
       expect(guide?.body, locale).toContain("19:00 UTC");

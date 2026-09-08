@@ -17,12 +17,12 @@ const beta02Url = "https://steamcommunity.com/ogg/1867240/announcements/detail/6
 const revisedScheduleUrl = "https://x.com/BULKHEAD/status/2095447401725153576";
 
 const closedTestSignals = {
-  en: /closed scale test|not an open beta/i,
-  de: /geschlossene\w* skalierungstest|nicht als open beta|keine offene beta|kein open-beta/i,
-  ru: /закрыт.*масштаб.*тест|не открытая бета/i,
-  "pt-br": /teste fechado de escala|não é (?:um|uma) beta abert[ao]/i,
-  ja: /クローズド.*テスト|オープンベータでは(?:なく|ありません|ない)/,
-  "zh-cn": /封闭(?:扩容|规模)测试|不是(?:一次)?(?:公开|开放)测试/,
+  en: /Beta 02 has ended/i,
+  de: /Beta 02 ist beendet/i,
+  ru: /Beta 02 завершена/i,
+  "pt-br": /Beta 02 foi encerrado/i,
+  ja: /Beta 02は終了しました/,
+  "zh-cn": /Beta 02 (?:已经|已)结束/,
 } as const;
 
 describe("September 2026 live-ops content refresh", () => {
@@ -33,7 +33,7 @@ describe("September 2026 live-ops content refresh", () => {
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-04");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-09");
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
         expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
@@ -47,7 +47,7 @@ describe("September 2026 live-ops content refresh", () => {
   it("keeps the broadcast separate from the playable server window", async () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-playtest");
-      const currentEventSection = guide?.body.split(/^##\s+/m).slice(1, 3).join("\n") ?? "";
+      const currentEventSection = guide?.body.split(/^##\s+/m).slice(1, 2).join("\n") ?? "";
       const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(sourceUrls, `${locale}/wardogs-playtest announcement`).toContain(beta02Url);

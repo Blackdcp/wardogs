@@ -30,8 +30,8 @@ describe("embed/status", () => {
     expect(body).toMatch(/^<!doctype html>/i);
     expect(body).toContain('data-event-ends-at="2026-09-06T08:00:00Z"');
     expect(body).toContain('data-early-access-date="2026-09-10"');
-    expect(body).toContain("Exact Early Access unlock time has not been announced.");
-    expect(body).toContain("https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807");
+    expect(body).toContain("The exact Early Access unlock time and preload have not been announced.");
+    expect(body).toContain("https://store.steampowered.com/app/1867240/WARDOGS/");
     expect(body).toMatch(/Powered by[\s\S]*WARDOGS Wiki/);
     expect(body).toContain("/en");
     expect(body).toContain("setInterval(updateStatus, 1000)");

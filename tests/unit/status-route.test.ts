@@ -30,14 +30,15 @@ describe("api/status.json", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
     expect(payload).toMatchObject({
       schemaVersion: 1,
-      dataAsOf: "2026-09-05",
+      dataAsOf: "2026-09-09",
       game: "WARDOGS",
       currentEvent: {
         id: "closed-beta-02",
         name: "Closed Beta 02",
-        status: "live",
+        status: "ended",
         startsAt: "2026-09-03T19:00:00Z",
-        endsAt: "2026-09-06T08:00:00Z"
+        endsAt: "2026-09-06T08:00:00Z",
+        openedToAllAt: "2026-09-05"
       },
       earlyAccess: {
         date: "2026-09-10",
@@ -49,7 +50,8 @@ describe("api/status.json", () => {
     expect(payload.earlyAccess).not.toHaveProperty("unlockAt");
     expect(payload.sources).toEqual(expect.arrayContaining([
       expect.objectContaining({kind: "official", url: "https://store.steampowered.com/app/1867240/WARDOGS/"}),
-      expect.objectContaining({kind: "official", url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"})
+      expect.objectContaining({kind: "official", url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"}),
+      expect.objectContaining({kind: "official", url: "https://steamcommunity.com/app/1867240/homecontent/"})
     ]));
   });
 });

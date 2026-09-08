@@ -1,16 +1,16 @@
 {
   "common": {"fanMade": "ファン運営コミュニティWiki", "language": "言語", "openMenu": "メニューを開く", "closeMenu": "メニューを閉じる", "learnMore": "詳しく見る", "updated": "更新", "official": "公式", "community": "コミュニティ", "skipToContent": "本文へ移動", "openSteam": "SteamでWARDOGSを開く"},
   "liveOps": {
-    "eyebrow": "ライブサービス更新",
-    "title": "Closed Beta 02開催中",
-    "description": "現在のテストに参加する前に、確認済みの日程と検証済みの問題情報を確認してください。",
-    "windowLabel": "テスト期間",
-    "windowValue": "9月3日19:00 UTC - 9月6日08:00 UTC",
-    "accessLabel": "参加方法",
-    "accessValue": "予約購入はアクセス保証、無料Steam Playtest申請は順次承認です。",
-    "closedBetaNote": "18:00 UTCは配信時刻です。後の公式告知でサーバー開始は19:00 UTCに変更されました。無料申請は参加保証ではありません。",
-    "accessCta": "Beta 02参加ガイド",
-    "issuesCta": "既知の問題",
+    "eyebrow": "アクセス更新",
+    "title": "Closed Beta 02は終了しました",
+    "description": "ベータは9月6日に終了しました。Steam Early Accessは9月10日予定ですが、正確な解禁時刻とプリロードは未確認です。",
+    "windowLabel": "終了したテスト",
+    "windowValue": "9月6日08:00 UTCに終了",
+    "accessLabel": "次の予定",
+    "accessValue": "Steam Early Accessは9月10日予定です。実際の提供状況はSteamで確認してください。",
+    "closedBetaNote": "訂正版Beta 02サーバー期間は9月6日08:00 UTCに終了しました。古いPlaytest権利で再参加はできません。",
+    "accessCta": "48時間チェックリスト",
+    "issuesCta": "発売時の注意点",
     "countdown": {
       "starts": "Beta開始まで",
       "ends": "Beta終了まで",
@@ -32,9 +32,9 @@
     "metaDescription": "独立運営の WARDOGS Wiki で、武器、車両、装備、操作、現在の参加状況、既知の問題、設定、実戦向け攻略を確認できます。一次情報と公開資料を照合し、出典、更新日、対象ビルドを明記して、変わりやすい数値と未確認情報を区別。初心者向け導入、ダウンロード、機体操作、分隊連携、プレイヤーツールも整理しています。",
     "heroTitle": "武器・車両・攻略・ゲームデータベース",
     "heroDescription": "装備、操作、現在の参加状況、不具合対策、実戦戦術を出典付きで確認できます。ビルド依存の情報は明確に区別しています。",
-    "primaryCta": "Beta 02ガイド",
-    "secondaryCta": "既知の問題を確認",
-    "status": "Closed Beta 02開催中",
+    "primaryCta": "発売前48時間チェックリスト",
+    "secondaryCta": "発売時の注意点",
+    "status": "Beta 02は終了 - Early Accessは9月10日",
     "statsLabel": "WARDOGSの重要情報",
     "stats": {
       "earlyAccess": "早期アクセス 2026年9月10日",
@@ -57,11 +57,11 @@
     "startEyebrow": "ここから開始",
     "startTitle": "WARDOGSへの出撃準備",
     "start": {
-      "description": "現在のテスト参加、安全なインストール、既知の問題の解決、Early Access準備に必要な6本です。",
+      "description": "Early Access準備、安全な導入、発売時の注意点、Beta 02の履歴確認に必要な6本です。",
       "cards": {
         "playtest": {
-          "title": "Beta 02参加方法",
-          "description": "開催期間、予約購入の保証、無料Steam申請の順次承認を確認します。"
+          "title": "Beta 02の結果",
+          "description": "終了した期間、過去の参加条件、発売後に再確認する項目を整理します。"
         },
         "download": {
           "title": "ダウンロードと導入",
@@ -89,7 +89,7 @@
       "eyebrow": "目的を選択",
       "title": "今、何をしたいですか？",
       "description": "一覧を探し回らず、必要な作業へ直接進めます。ビルドによって変わる情報は引き続き明確に表示します。",
-      "play": {"title": "今すぐプレイ", "description": "参加権を確認し、正しいSteamビルドをインストールしてテストに参加します。", "imageAlt": "参加・ダウンロードガイド用のWARDOGS戦場画面"},
+      "play": {"title": "発売準備", "description": "Steam、インストール、アカウント、未確認のプリロード状況を確認します。", "imageAlt": "参加・ダウンロードガイド用のWARDOGS戦場画面"},
       "fix": {"title": "問題を解決", "description": "クラッシュ、サーバー、ボイス、性能、参加権の対処法を確認します。", "imageAlt": "トラブル対処用のWARDOGS戦術装備"},
       "gear": {"title": "装備を見る", "description": "画像付きの武器、車両、防具、弾薬、ロードアウトを調べます。", "imageAlt": "画像付き装備カタログに掲載されたWARDOGSの武器"},
       "system": {"title": "PCを確認", "description": "設定変更前に、PCを確認済み動作要件と比較します。", "imageAlt": "PC構成チェック用のWARDOGSゲーム画面"}
@@ -97,7 +97,7 @@
     "priority": {
       "eyebrow": "優先情報",
       "title": "今週末にWARDOGSプレイヤーが必要な情報",
-      "description": "開催中テスト、公式不具合、安全な導入、操作、Early Access準備から確認してください。",
+      "description": "48時間チェックリスト、Steam状況、安全な導入、操作、Beta 02後の注意点から確認してください。",
       "top": {
         "title": "人気攻略",
         "description": "初心者、Steam利用者、現在の参加方法を探す人向けに厳選した6つのガイドです。"
@@ -115,8 +115,8 @@
         },
         "items": {
           "closedBeta02": {
-            "title": "Closed Beta 02開催中",
-            "description": "18:00 UTCの配信後、訂正版サーバー期間は9月3日19:00 UTCから9月6日08:00 UTCまでです。"
+            "title": "Closed Beta 02は終了しました",
+            "description": "訂正版サーバー期間は9月6日08:00 UTCに終了しました。現在の参加方法ではなく、日付付きのテスト記録です。"
           },
           "clipContest": {
             "title": "10万ドル動画コンテスト開催中",
@@ -267,8 +267,8 @@
       },
       "items": {
         "closedBeta02": {
-          "title": "Closed Beta 02は9月3日から6日まで",
-          "description": "配信は18:00 UTC開始、訂正後のサーバーは9月3日19:00 UTC開始、9月6日08:00 UTC終了です。予約購入は参加保証、無料申請は順次承認です。"
+          "title": "Closed Beta 02は9月6日に終了",
+          "description": "配信は18:00 UTC開始、訂正後のサーバーは9月3日19:00 UTCから9月6日08:00 UTCまで稼働しました。参加条件は過去の記録です。"
         },
         "clipContest": {
           "title": "WARDOGS公式10万ドル動画コンテスト",
@@ -280,7 +280,7 @@
         },
         "closedBeta": {
           "title": "8月のClosed Betaは8月24日に終了",
-          "description": "最初のテストは履歴であり、現在のClosed Beta 02とは別の期間です。"
+          "description": "8月と9月のテストはどちらも履歴であり、現在の参加権にはなりません。"
         },
         "betaRecap": {
           "title": "BULKHEADが最初のベータ振り返りを公開",
@@ -295,16 +295,16 @@
           "description": "公式製品ページはSteamのWindows PC版を案内し、家庭用機とクロスプレイは未確認です。"
         },
         "preload": {
-          "title": "Beta 02はSteamの正式な権利から導入",
-          "description": "承認済みまたは購入済みのプレイヤーはSteamのWARDOGS項目を使い、外部インストーラーを避けます。"
+          "title": "Early Accessプリロードは未確認",
+          "description": "Steamは9月10日を確認できますが、9月9日時点で正確な解禁時刻と個別のプリロード日程は未発表です。"
         },
         "twitchDrops": {
-          "title": "Beta 02でTwitch Dropsをテスト",
-          "description": "Dropsは公式テスト対象ですが、報酬と視聴時間は視聴前にTwitch Inventoryで確認してください。"
+          "title": "Beta 02でTwitch Dropsをテスト済み",
+          "description": "連携は終了したテストの対象でした。Early Access向けの新しい報酬、視聴時間、対象チャンネル、期限は未確認です。"
         },
         "fpsGameShow": {
-          "title": "9月3日の発表でBeta 02を公開",
-          "description": "配信は終了し、現在はSteamイベントと9月3日から6日の予定が一次情報です。"
+          "title": "9月3日の発表は終了",
+          "description": "Beta 02と動画コンテストを発表しました。9月10日の提供状況はSteamで確認します。"
         },
         "firingRangeTest": {
           "title": "9月2日の射撃場テストは終了",
@@ -314,7 +314,7 @@
     },
     "checklist": {
       "title": "発売前チェックリスト",
-      "description": "Closed Beta 02開催中と9月10日のEarly Access前に、参加、問題解決、導入、操作、設定、発売情報を確認してください。"
+      "description": "9月10日のEarly Access前に、Steam状況、安全な導入、問題解決、操作、設定、確認済みの発売情報を確認してください。"
     },
     "rules": {
       "title": "更新情報の分類方法",

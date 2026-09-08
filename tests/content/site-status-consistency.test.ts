@@ -51,15 +51,14 @@ describe("site-wide live status consistency", () => {
     }
   });
 
-  it("puts the live Beta 02 checkpoint and primary sources on high-intent status pages", async () => {
+  it("puts the ended Beta 02 checkpoint and primary sources on high-intent status pages", async () => {
     for (const locale of locales) {
       for (const slug of statusSensitiveSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-04");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-09");
         expect(guide?.body, `${locale}/${slug}`).toContain("Beta 02");
-        expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
         expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
@@ -73,8 +72,8 @@ describe("site-wide live status consistency", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const searchable = `${steam?.frontmatter.description}\n${steam?.body}\n${price?.frontmatter.description}\n${price?.body}`;
 
-      expect(steam?.frontmatter.updatedAt, `${locale}/wardogs-steam`).toBe("2026-09-04");
-      expect(price?.frontmatter.updatedAt, `${locale}/wardogs-price`).toBe("2026-09-04");
+      expect(steam?.frontmatter.updatedAt, `${locale}/wardogs-steam`).toBe("2026-09-09");
+      expect(price?.frontmatter.updatedAt, `${locale}/wardogs-price`).toBe("2026-09-09");
       expect(searchable, `${locale}/commerce`).toContain("$39.99");
       expect(searchable, `${locale}/commerce`).toContain("$49.99");
       expect(searchable, `${locale}/commerce`).toMatch(currentPrepurchasePhrases[locale]);

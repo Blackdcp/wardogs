@@ -27,27 +27,27 @@ describe("homepage data", () => {
       "2 x 2 km Control Zone"
     ]);
     expect(START_GUIDES).toEqual([
-      {number: "1", slug: "wardogs-beta", titleKey: "playtest"},
+      {number: "1", slug: "wardogs-launch-checklist", titleKey: "launch"},
       {number: "2", slug: "wardogs-download", titleKey: "download"},
       {number: "3", slug: "wardogs-controls", titleKey: "controls"},
       {number: "4", slug: "wardogs-known-issues", titleKey: "issues"},
-      {number: "5", slug: "wardogs-100k-clip-contest", titleKey: "contest"},
-      {number: "6", slug: "wardogs-launch-checklist", titleKey: "launch"}
+      {number: "5", slug: "wardogs-beta", titleKey: "playtest"},
+      {number: "6", slug: "wardogs-100k-clip-contest", titleKey: "contest"}
     ]);
     expect(facts.every((fact) => typeof fact === "string")).toBe(true);
   });
 
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
-      "wardogs-beta",
-      "wardogs-known-issues",
-      "wardogs-100k-clip-contest",
-      "wardogs-download",
-      "wardogs-controls",
       "wardogs-launch-checklist",
+      "wardogs-release-date",
+      "wardogs-preload",
+      "wardogs-download",
+      "wardogs-known-issues",
+      "wardogs-controls",
+      "wardogs-100k-clip-contest",
       "wardogs-playtest",
       "wardogs-early-access",
-      "wardogs-release-date",
       "wardogs-price",
       "wardogs-system-requirements",
       "wardogs-linux-proton",
