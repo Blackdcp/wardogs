@@ -25,6 +25,7 @@ function faqSchema(faq: GuideDocument["frontmatter"]["faq"]): JsonLd {
 export function buildHomeJsonLd(locale: Locale): JsonLd[] {
   const origin = getSiteOrigin();
   const siteUrl = `${origin.replace(/\/$/, "")}/`;
+  const localizedHomeUrl = pageUrl(locale);
   return [
     {
       "@context": "https://schema.org",
@@ -41,6 +42,19 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
       alternateName: ["WardogsWiki", "wardogswiki.com"],
       inLanguage: locale,
       url: siteUrl
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "WARDOGS Wiki",
+      url: localizedHomeUrl,
+      inLanguage: locale,
+      datePublished: "2026-08-13",
+      dateModified: "2026-09-10",
+      author: {"@type": "Organization", name: "WARDOGS Wiki Editorial Team", url: pageUrl(locale, "/editorial-policy")},
+      publisher: {"@type": "Organization", name: "WARDOGS Wiki", url: pageUrl(locale, "/about")},
+      isPartOf: {"@type": "WebSite", name: "WARDOGS Wiki", url: siteUrl},
+      about: {"@type": "VideoGame", name: "WARDOGS", url: officialLinks.steam}
     },
     {
       "@context": "https://schema.org",

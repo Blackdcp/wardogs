@@ -93,6 +93,8 @@
       "imageAlt": "WARDOGS 官方实机画面中的直升机与战场",
       "bodyOne": "WARDOGS 是由 BULKHEAD 开发、Team17 发行的 PC 战术射击游戏。官方资料显示，每局最多容纳 100 名玩家，分成三支队伍，通过步兵、载具、防御工事与后勤协作争夺控制区。",
       "bodyTwo": "击杀不是唯一贡献方式。救治、运输、补给和目标控制也会影响团队推进与个人经济；具体数值和规则仍可能在抢先体验阶段调整。",
+      "officialQuote": "Every player starts their journey with $10,000.",
+      "officialQuoteSource": "Steam 上的 WARDOGS 官方介绍",
       "points": {
         "teams": "三支队伍争夺同一得分目标",
         "battlefield": "载具、建造与可破坏路线共同改变战局",
@@ -420,7 +422,34 @@
     "legal": "法律信息",
     "privacy": "隐私政策",
     "terms": "服务条款",
-    "editorialPolicy": "编辑规范"
+    "editorialPolicy": "编辑规范",
+    "aboutLink": "关于我们",
+    "contact": "联系我们"
+  },
+  "aboutPage": {
+    "metaTitle": "关于 WARDOGS Wiki：独立玩家资料站",
+    "metaDescription": "了解 WARDOGS Wiki 由谁维护、独立编辑团队如何核实游戏资料、标记不确定信息、区分不同版本并持续更新玩家攻略。",
+    "eyebrow": "关于本站",
+    "title": "关于 WARDOGS Wiki",
+    "intro": "WARDOGS Wiki 是独立运营的非官方玩家资料站，目标是让持续变化的游戏信息更容易核实和使用。",
+    "identityTitle": "专注于一个游戏的社区资料",
+    "identityBody": "本站以六种语言整理 WARDOGS 的参与方式、装备、操作、故障排查和战术。它采用编辑审核，而不是任何人都能直接发布的开放百科模式。",
+    "methodTitle": "核对来源并标记版本",
+    "methodBody": "事实更新优先采用 Steam、Team17、BULKHEAD 和 WARDOGS 官方来源。创作者实机和社区报告会明确标注日期、性质与适用版本。",
+    "independenceTitle": "独立于游戏官方和广告商",
+    "independenceBody": "WARDOGS Wiki 与 BULKHEAD、Team17、Steam 或内容创作者没有隶属关系。广告不会影响排名、结论、来源标签和错误修正。"
+  },
+  "contactPage": {
+    "metaTitle": "联系 WARDOGS Wiki：纠错与资料线索",
+    "metaDescription": "如发现事实错误、失效来源、缺少证据或版本敏感信息，可通过公开渠道联系独立运营的 WARDOGS Wiki 编辑团队。",
+    "eyebrow": "联系与纠错",
+    "title": "联系 WARDOGS Wiki",
+    "intro": "网站纠错和资料证据请使用公开 Issue Tracker；账号、购买、封禁和服务器问题必须联系 WARDOGS 官方服务。",
+    "correctionsTitle": "报告事实或网站问题",
+    "correctionsBody": "请提供页面地址、有疑问的原文、公开来源以及对应日期或游戏版本。提交前请删除账号名、令牌、订单凭证和个人信息。",
+    "correctionsCta": "打开公开 Issue Tracker",
+    "gameSupportTitle": "需要官方游戏支持？",
+    "gameSupportBody": "独立攻略站无法修改游戏资格、付款、社区处罚或服务器状态。这些问题请通过 Steam 或 WARDOGS 官方 Discord 处理。"
   },
   "editorial": {
     "metaTitle": "WARDOGS Wiki 编辑规范与来源核查标准",

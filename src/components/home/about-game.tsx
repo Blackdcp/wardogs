@@ -1,6 +1,7 @@
 import Image from "next/image";
-import {Check} from "lucide-react";
+import {Check, ExternalLink} from "lucide-react";
 import {getTranslations} from "next-intl/server";
+import {officialLinks} from "@/config/site";
 import {assetPath} from "@/lib/assets";
 
 export async function AboutGame() {
@@ -38,6 +39,15 @@ export async function AboutGame() {
               </li>
             ))}
           </ul>
+          <blockquote className="mt-7 border-l-2 border-[#d9a93a] pl-4 text-sm leading-7 text-[#d7ded9]">
+            <p>“{t("home.about.officialQuote")}”</p>
+            <cite className="mt-2 block not-italic text-[#8f9d96]">
+              <a className="inline-flex items-center gap-1.5 hover:text-[#79d19c]" href={officialLinks.steam} target="_blank" rel="noreferrer">
+                {t("home.about.officialQuoteSource")}
+                <ExternalLink aria-hidden="true" className="size-3.5" />
+              </a>
+            </cite>
+          </blockquote>
         </div>
       </div>
     </section>

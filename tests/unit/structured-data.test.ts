@@ -41,6 +41,25 @@ describe("structured data", () => {
     });
   });
 
+  it("exposes homepage authorship and machine-readable freshness signals", () => {
+    const home = buildHomeJsonLd("en");
+    const page = home.find((item) => item["@type"] === "WebPage");
+
+    expect(page).toMatchObject({
+      url: "http://localhost:3000/en",
+      datePublished: "2026-08-13",
+      dateModified: "2026-09-10",
+      author: {
+        name: "WARDOGS Wiki Editorial Team",
+        url: "http://localhost:3000/en/editorial-policy"
+      },
+      publisher: {
+        name: "WARDOGS Wiki",
+        url: "http://localhost:3000/en/about"
+      }
+    });
+  });
+
   it("uses an absolute source-audited image URL for new catalogue guides", async () => {
     const guide = await loadGuideDocument("en", "wardogs-medic-revive-guide");
     const article = buildArticleJsonLd("en", guide!)[0];

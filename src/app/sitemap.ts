@@ -14,6 +14,8 @@ const staticPaths = [
   "/news",
   "/tools/system-check",
   "/tools/loadout-budget",
+  "/about",
+  "/contact",
   "/editorial-policy",
   "/privacy",
   "/terms",

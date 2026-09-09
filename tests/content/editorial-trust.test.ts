@@ -21,6 +21,22 @@ describe("editorial trust signals", () => {
     }
   });
 
+  it("publishes localized about and contact routes", () => {
+    expect(existsSync(path.join(process.cwd(), "src", "app", "[locale]", "about", "page.tsx"))).toBe(true);
+    expect(existsSync(path.join(process.cwd(), "src", "app", "[locale]", "contact", "page.tsx"))).toBe(true);
+
+    const urls = sitemap().map((entry) => entry.url);
+    for (const locale of locales) {
+      const messages = JSON.parse(readFileSync(path.join(process.cwd(), "messages", `${locale}.json`), "utf8"));
+      expect(messages.footer.aboutLink, locale).toBeTruthy();
+      expect(messages.footer.contact, locale).toBeTruthy();
+      expect(messages.aboutPage.metaDescription, locale).toBeTruthy();
+      expect(messages.contactPage.metaDescription, locale).toBeTruthy();
+      expect(urls).toContain(buildLocalizedUrl(locale, "/about"));
+      expect(urls).toContain(buildLocalizedUrl(locale, "/contact"));
+    }
+  });
+
   it("connects article authorship to the public editorial policy", async () => {
     const guide = await loadGuideDocument("en", "wardogs-gameplay");
     const article = buildArticleJsonLd("en", guide!).find((item) => item["@type"] === "Article");
