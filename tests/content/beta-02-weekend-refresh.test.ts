@@ -46,7 +46,7 @@ describe("Closed Beta 02 weekend release contract", () => {
   });
 
   it("publishes the contest and known-issues guides in every language", async () => {
-    expect(guideManifest).toHaveLength(48);
+    expect(guideManifest).toHaveLength(50);
     for (const slug of newGuideSlugs) {
       expect(guideManifest.some((entry) => entry.slug === slug), slug).toBe(true);
       expect(TOP_GUIDE_SLUGS, slug).toContain(slug);
@@ -77,7 +77,9 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of currentGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-09");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
+          slug === "wardogs-launch-checklist" ? "2026-09-10" : "2026-09-09",
+        );
         expect(sources, `${locale}/${slug}`).toContain(steamUrl);
         expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
         expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");

@@ -1,16 +1,16 @@
 {
   "common": {"fanMade": "ファン運営コミュニティWiki", "language": "言語", "openMenu": "メニューを開く", "closeMenu": "メニューを閉じる", "learnMore": "詳しく見る", "updated": "更新", "official": "公式", "community": "コミュニティ", "skipToContent": "本文へ移動", "openSteam": "SteamでWARDOGSを開く"},
   "liveOps": {
-    "eyebrow": "アクセス更新",
-    "title": "Closed Beta 02は終了しました",
-    "description": "ベータは9月6日に終了しました。Steam Early Accessは9月10日予定ですが、正確な解禁時刻とプリロードは未確認です。",
-    "windowLabel": "終了したテスト",
-    "windowValue": "9月6日08:00 UTCに終了",
-    "accessLabel": "次の予定",
-    "accessValue": "Steam Early Accessは9月10日予定です。実際の提供状況はSteamで確認してください。",
+    "eyebrow": "発売日の状況",
+    "title": "9月10日になりました - Steamを確認",
+    "description": "最終確認時はSteamがまだ予約購入表示でした。実際の解禁は公式ストアを確認し、未発表の世界共通時刻を推測しないでください。",
+    "windowLabel": "公式発売日",
+    "windowValue": "2026年9月10日",
+    "accessLabel": "現在の確認",
+    "accessValue": "Steamを確認し、提供開始後にWARDOGS本体のライブラリ項目を起動してください。",
     "closedBetaNote": "訂正版Beta 02サーバー期間は9月6日08:00 UTCに終了しました。古いPlaytest権利で再参加はできません。",
-    "accessCta": "48時間チェックリスト",
-    "issuesCta": "発売時の注意点",
+    "accessCta": "発売日チェックリスト",
+    "issuesCta": "サーバー状況",
     "countdown": {
       "starts": "Beta開始まで",
       "ends": "Beta終了まで",
@@ -32,9 +32,9 @@
     "metaDescription": "独立運営の WARDOGS Wiki で、武器、車両、装備、操作、現在の参加状況、既知の問題、設定、実戦向け攻略を確認できます。一次情報と公開資料を照合し、出典、更新日、対象ビルドを明記して、変わりやすい数値と未確認情報を区別。初心者向け導入、ダウンロード、機体操作、分隊連携、プレイヤーツールも整理しています。",
     "heroTitle": "武器・車両・攻略・ゲームデータベース",
     "heroDescription": "装備、操作、現在の参加状況、不具合対策、実戦戦術を出典付きで確認できます。ビルド依存の情報は明確に区別しています。",
-    "primaryCta": "発売前48時間チェックリスト",
-    "secondaryCta": "発売時の注意点",
-    "status": "Beta 02は終了 - Early Accessは9月10日",
+    "primaryCta": "発売日チェックリスト",
+    "secondaryCta": "サーバー状況を確認",
+    "status": "Early Access予定日 - Steamを確認",
     "statsLabel": "WARDOGSの重要情報",
     "stats": {
       "earlyAccess": "早期アクセス 2026年9月10日",
@@ -57,11 +57,11 @@
     "startEyebrow": "ここから開始",
     "startTitle": "WARDOGSへの出撃準備",
     "start": {
-      "description": "Early Access準備、安全な導入、発売時の注意点、Beta 02の履歴確認に必要な6本です。",
+      "description": "発売日の参加確認、安全な導入、サーバー状況、公式更新、Beta 02履歴の区別に必要な6本です。",
       "cards": {
         "playtest": {
-          "title": "Beta 02の結果",
-          "description": "終了した期間、過去の参加条件、発売後に再確認する項目を整理します。"
+          "title": "パッチノート追跡",
+          "description": "公式発売ノートの有無を確認し、Beta履歴と現在の変更を分けます。"
         },
         "download": {
           "title": "ダウンロードと導入",
@@ -72,8 +72,8 @@
           "description": "歩兵、車両、ヘリ、マップ、ローカルボイスの操作を確認します。"
         },
         "issues": {
-          "title": "既知の問題",
-          "description": "空のサーバー一覧、ボイス停止、クラッシュ、参加資格を安全に切り分けます。"
+          "title": "サーバー状況",
+          "description": "Steam、待機列、空の一覧、地域、公式障害告知を確認します。"
         },
         "contest": {
           "title": "10万ドル動画コンテスト",
@@ -81,7 +81,7 @@
         },
         "launch": {
           "title": "発売チェックリスト",
-          "description": "9月10日に向けてアカウント、PC、分隊、設定、情報源を準備します。"
+          "description": "Steam参加状態、正しいライブラリ項目、PC、分隊、設定、情報源を確認します。"
         }
       }
     },
@@ -96,8 +96,8 @@
     },
     "priority": {
       "eyebrow": "優先情報",
-      "title": "今週末にWARDOGSプレイヤーが必要な情報",
-      "description": "48時間チェックリスト、Steam状況、安全な導入、操作、Beta 02後の注意点から確認してください。",
+      "title": "発売日にWARDOGSプレイヤーが必要な情報",
+      "description": "Steam状況、発売日チェック、サーバー状況、確認済みパッチノート、安全な導入、操作から確認します。",
       "top": {
         "title": "人気攻略",
         "description": "初心者、Steam利用者、現在の参加方法を探す人向けに厳選した6つのガイドです。"
@@ -115,8 +115,8 @@
         },
         "items": {
           "closedBeta02": {
-            "title": "Closed Beta 02は終了しました",
-            "description": "訂正版サーバー期間は9月6日08:00 UTCに終了しました。現在の参加方法ではなく、日付付きのテスト記録です。"
+            "title": "発売状況はSteamで直接確認",
+            "description": "9月10日は公式日付ですが、実際の提供状態はSteamに従います。Beta 02は過去のテスト記録です。"
           },
           "clipContest": {
             "title": "10万ドル動画コンテスト開催中",

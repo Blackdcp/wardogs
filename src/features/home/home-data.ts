@@ -38,6 +38,8 @@ export const TOP_GUIDE_SLUGS = [
   "wardogs-preload",
   "wardogs-download",
   "wardogs-known-issues",
+  "wardogs-server-status",
+  "wardogs-patch-notes",
   "wardogs-controls",
   "wardogs-100k-clip-contest",
   "wardogs-playtest",

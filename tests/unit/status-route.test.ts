@@ -30,7 +30,7 @@ describe("api/status.json", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
     expect(payload).toMatchObject({
       schemaVersion: 1,
-      dataAsOf: "2026-09-09",
+      dataAsOf: "2026-09-10",
       game: "WARDOGS",
       currentEvent: {
         id: "closed-beta-02",

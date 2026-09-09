@@ -39,7 +39,7 @@ describe("September 9 Early Access handoff", () => {
     expect(CURRENT_EVENT.status).toBe("ended");
 
     const status = getPublicStatus();
-    expect(status.dataAsOf).toBe("2026-09-09");
+    expect(status.dataAsOf).toBe("2026-09-10");
     expect(status.currentEvent).toMatchObject({
       id: "closed-beta-02",
       name: "Closed Beta 02",
@@ -76,7 +76,8 @@ describe("September 9 Early Access handoff", () => {
         messages.home.priority.status.items.closedBeta02.description,
       ].join("\n");
 
-      expect(copy, locale).toMatch(endedSignals[locale]);
+      expect(copy, locale).toMatch(/Steam/);
+      expect(copy, locale).toMatch(/Beta 02/i);
       expect(copy, locale).not.toMatch(/(?:is live|正在进行|läuft jetzt|está ao vivo|ид[её]т сейчас|実施中)/i);
     }
   });
@@ -88,7 +89,9 @@ describe("September 9 Early Access handoff", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-09");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
+          slug === "wardogs-launch-checklist" ? "2026-09-10" : "2026-09-09",
+        );
         expect(searchable, `${locale}/${slug}`).toMatch(endedSignals[locale]);
         expect(searchable, `${locale}/${slug}`).toMatch(unconfirmedSignals[locale]);
       }
@@ -100,7 +103,9 @@ describe("September 9 Early Access handoff", () => {
       const checklist = await loadGuideDocument(locale, "wardogs-launch-checklist");
       const issues = await loadGuideDocument(locale, "wardogs-known-issues");
 
-      expect(`${checklist?.frontmatter.title}\n${checklist?.frontmatter.description}\n${checklist?.body}`, `${locale}/checklist`).toMatch(/48/);
+      expect(`${checklist?.frontmatter.title}\n${checklist?.frontmatter.description}\n${checklist?.body}`, `${locale}/checklist`).toMatch(
+        /launch.day|launch-tag|день запуска|dia de lançamento|発売日|发售日/i,
+      );
       expect(`${issues?.frontmatter.description}\n${issues?.body}`, `${locale}/issues`).toMatch(
         /community|community-gemeldet|сообществ|comunidade|コミュニティ|社区/i,
       );

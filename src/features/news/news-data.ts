@@ -68,6 +68,8 @@ export const NEWS_UPDATES = [
 ] as const;
 
 export const NEWS_CHECKLIST_SLUGS = [
+  "wardogs-server-status",
+  "wardogs-patch-notes",
   "wardogs-known-issues",
   "wardogs-100k-clip-contest",
   "wardogs-playtest",

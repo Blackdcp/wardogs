@@ -61,8 +61,8 @@ describe("Simplified Chinese publishing quality", () => {
     const homeText = JSON.stringify(messages.home);
     const siteText = JSON.stringify(messages);
 
-    expect(messages.home.status).toBe("Beta 02 已结束 - 9 月 10 日抢先体验");
-    expect(messages.home.priority.title).toBe("这个周末 WARDOGS 玩家最需要的内容");
+    expect(messages.home.status).toBe("抢先体验日期已到 - 请检查 Steam");
+    expect(messages.home.priority.title).toBe("WARDOGS 玩家发售日最需要的内容");
     expect(messages.home.catalogue.heading).toBe("WARDOGS 图鉴");
     expect(messages.home.catalogue.publishedModels).toBe("已发布的武器与载具条目");
     expect(messages.home.faq.title).toBe("WARDOGS 常见问题");

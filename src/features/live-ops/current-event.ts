@@ -13,6 +13,8 @@ export const CURRENT_EVENT = {
   accessGuideSlug: "wardogs-launch-checklist",
   downloadGuideSlug: "wardogs-download",
   issuesGuideSlug: "wardogs-known-issues",
+  statusGuideSlug: "wardogs-server-status",
+  patchNotesGuideSlug: "wardogs-patch-notes",
   contestGuideSlug: "wardogs-100k-clip-contest",
 } as const;
 
@@ -24,6 +26,8 @@ export const CURRENT_EVENT_GUIDE_SLUGS = new Set([
   "wardogs-launch-checklist",
   "wardogs-livestream",
   "wardogs-known-issues",
+  "wardogs-server-status",
+  "wardogs-patch-notes",
   "wardogs-100k-clip-contest",
   "wardogs-best-settings",
   "wardogs-crash-fix",

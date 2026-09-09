@@ -33,7 +33,9 @@ describe("September 2026 live-ops content refresh", () => {
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-09");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
+          slug === "wardogs-launch-checklist" ? "2026-09-10" : "2026-09-09",
+        );
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
         expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");

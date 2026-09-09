@@ -32,7 +32,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
             "wardogs-oil-rig-guide",
           ].includes(slug));
         expect(guide?.frontmatter.updatedAt).toBe(
-          slug === "wardogs-launch-checklist" ? "2026-09-09" : reviewedToday ? "2026-09-01" : "2026-08-29"
+          slug === "wardogs-launch-checklist" ? "2026-09-10" : reviewedToday ? "2026-09-01" : "2026-08-29"
         );
         expect(guide?.frontmatter.sources.length).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug} body`).toBeGreaterThan(1800);

@@ -1,16 +1,16 @@
 {
   "common": {"fanMade": "Fan-Wiki der Community", "language": "Sprache", "openMenu": "Menü öffnen", "closeMenu": "Menü schließen", "learnMore": "Mehr erfahren", "updated": "Aktualisiert", "official": "Offiziell", "community": "Community", "skipToContent": "Zum Inhalt springen", "openSteam": "WARDOGS auf Steam öffnen"},
   "liveOps": {
-    "eyebrow": "Zugangsupdate",
-    "title": "Closed Beta 02 ist beendet",
-    "description": "Die Beta endete am 6. September. Steam Early Access ist für den 10. September geplant; genaue Freischaltzeit und Preload sind nicht bestätigt.",
-    "windowLabel": "Vorheriger Test",
-    "windowValue": "Beendet am 6. Sept., 08:00 UTC",
-    "accessLabel": "Nächster Termin",
-    "accessValue": "Steam Early Access ist für den 10. September geplant; aktuelle Verfügbarkeit auf Steam prüfen.",
+    "eyebrow": "Launch-Status",
+    "title": "Der 10. September ist da - Steam prüfen",
+    "description": "Beim letzten Check zeigte Steam noch Vorbestellung. Der offizielle Shop entscheidet über die Freischaltung; eine genaue globale Uhrzeit ist nicht bestätigt.",
+    "windowLabel": "Offizielles Datum",
+    "windowValue": "10. September 2026",
+    "accessLabel": "Jetzt prüfen",
+    "accessValue": "Steam-Shop prüfen und nur den WARDOGS-Haupteintrag starten, sobald er verfügbar ist.",
     "closedBetaNote": "Das korrigierte Beta-02-Serverfenster endete am 6. September um 08:00 UTC. Ein alter Playtest-Zugang öffnet es nicht erneut.",
-    "accessCta": "48-Stunden-Checkliste",
-    "issuesCta": "Launch-Beobachtung",
+    "accessCta": "Launch-Checkliste",
+    "issuesCta": "Serverstatus",
     "countdown": {
       "starts": "Beta startet in",
       "ends": "Beta endet in",
@@ -32,9 +32,9 @@
     "metaDescription": "Die unabhängige WARDOGS Wiki bietet geprüfte Infos zu Waffen, Fahrzeugen, Ausrüstung, Steuerung, aktuellem Zugang, Problemen und praktischen Guides.",
     "heroTitle": "Waffen, Fahrzeuge, Guides & Spieldatenbank",
     "heroDescription": "Nutze ein quellengeprüftes WARDOGS-Nachschlagewerk für Ausrüstung, Steuerung, Zugang, Problemlösungen und Taktiken mit klaren Build-Hinweisen.",
-    "primaryCta": "48-Stunden-Launch-Checkliste",
-    "secondaryCta": "Launch-Beobachtung öffnen",
-    "status": "Beta 02 ist beendet - Early Access am 10. Sept.",
+    "primaryCta": "Launch-Checkliste öffnen",
+    "secondaryCta": "Serverstatus prüfen",
+    "status": "Early-Access-Datum erreicht - Steam prüfen",
     "statsLabel": "Wichtige Fakten zu WARDOGS",
     "stats": {
       "earlyAccess": "Early Access am 10. Sept. 2026",
@@ -57,11 +57,11 @@
     "startEyebrow": "Hier starten",
     "startTitle": "Dein WARDOGS-Einsatz",
     "start": {
-      "description": "Diese sechs Guides bereiten auf Early Access vor, sichern die Installation ab und halten Beta-02-Angaben als Historie getrennt.",
+      "description": "Diese sechs Launch-Guides prüfen Zugang, Installation, Server und offizielle Updates und trennen alte Beta-02-Angaben.",
       "cards": {
         "playtest": {
-          "title": "Ergebnisse von Beta 02",
-          "description": "Prüfe das beendete Testfenster, historische Zugangsregeln und die Punkte für den Launch-Retest."
+          "title": "Patchnotes-Tracker",
+          "description": "Prüfe offizielle Launch-Notizen und halte Beta-Historie von aktuellen Änderungen getrennt."
         },
         "download": {
           "title": "Download und Installation",
@@ -72,8 +72,8 @@
           "description": "Prüfe Infanterie-, Fahrzeug-, Helikopter-, Karten- und Voice-Tasten."
         },
         "issues": {
-          "title": "Bekannte Probleme",
-          "description": "Behebe leere Serverlisten, Voice-Ausfälle, Abstürze und Zugangsfragen sicher."
+          "title": "Serverstatus",
+          "description": "Prüfe Steam, Warteschlangen, leere Listen, Regionen und offizielle Störungsmeldungen."
         },
         "contest": {
           "title": "$100K-Clip-Wettbewerb",
@@ -81,7 +81,7 @@
         },
         "launch": {
           "title": "Launch-Checkliste",
-          "description": "Bereite Konto, PC, Squad, Einstellungen und Quellen für den 10. September vor."
+          "description": "Prüfe heute Steam-Zugang, Bibliothek, PC, Squad, Einstellungen und Quellen."
         }
       }
     },
@@ -96,8 +96,8 @@
     },
     "priority": {
       "eyebrow": "Wichtige Infos",
-      "title": "Was WARDOGS-Spieler dieses Wochenende brauchen",
-      "description": "Beginne mit der 48-Stunden-Checkliste, Steam-Status, sicherer Installation, Steuerung und der Beta-02-Launch-Beobachtung.",
+      "title": "Was WARDOGS-Spieler am Launch-Tag brauchen",
+      "description": "Beginne mit Steam-Status, Launch-Checkliste, Serverstatus, geprüften Patchnotes, Installation und Steuerung.",
       "top": {
         "title": "Top Guides",
         "description": "Sechs gezielte Guides für neue Spieler, Steam-Suchen und aktuelle Zugangsfragen."
@@ -115,8 +115,8 @@
         },
         "items": {
           "closedBeta02": {
-            "title": "Closed Beta 02 ist beendet",
-            "description": "Das korrigierte Serverfenster endete am 6. September um 08:00 UTC. Es ist ein datierter Testbericht, kein aktueller Zugang."
+            "title": "Launch-Status direkt auf Steam prüfen",
+            "description": "Der 10. September ist offiziell; die tatsächliche Verfügbarkeit folgt Steam. Beta 02 bleibt historische Testinformation."
           },
           "clipContest": {
             "title": "$100K-Clip-Wettbewerb ist offen",

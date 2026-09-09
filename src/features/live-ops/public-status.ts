@@ -6,7 +6,7 @@ export function getPublicStatus() {
 
   return {
     schemaVersion: 1,
-    dataAsOf: "2026-09-09",
+    dataAsOf: "2026-09-10",
     site: "WARDOGS Wiki",
     game: "WARDOGS",
     currentEvent: {
@@ -29,6 +29,8 @@ export function getPublicStatus() {
       accessGuide: `${origin}/en/guides/${CURRENT_EVENT.accessGuideSlug}`,
       downloadGuide: `${origin}/en/guides/${CURRENT_EVENT.downloadGuideSlug}`,
       knownIssues: `${origin}/en/guides/${CURRENT_EVENT.issuesGuideSlug}`,
+      serverStatus: `${origin}/en/guides/${CURRENT_EVENT.statusGuideSlug}`,
+      patchNotes: `${origin}/en/guides/${CURRENT_EVENT.patchNotesGuideSlug}`,
       api: `${origin}/api/status.json`,
       widget: `${origin}/embed/status`
     },

@@ -12,16 +12,16 @@
     "openSteam": "在 Steam 查看 WARDOGS"
   },
   "liveOps": {
-    "eyebrow": "参与状态更新",
-    "title": "Closed Beta 02 已经结束",
-    "description": "Beta 已于 9 月 6 日关闭。Steam 抢先体验定于 9 月 10 日；具体解锁时间和预载目前都尚未确认。",
-    "windowLabel": "上一轮测试",
-    "windowValue": "已于 9 月 6 日 08:00 UTC 结束",
-    "accessLabel": "下一节点",
-    "accessValue": "Steam 抢先体验定于 9 月 10 日，实际开放状态请以 Steam 为准。",
+    "eyebrow": "发售日状态",
+    "title": "9 月 10 日已到，请检查 Steam 开放状态",
+    "description": "本站最后检查时 Steam 仍显示预购。是否已经解锁请以官方商店为准；官方没有公布全球统一的具体开放时刻或 Early Access 预载。",
+    "windowLabel": "官方发售日期",
+    "windowValue": "2026 年 9 月 10 日",
+    "accessLabel": "现在应该做什么",
+    "accessValue": "检查 Steam 商店，正式开放后只启动库中的 WARDOGS 主条目。",
     "closedBetaNote": "修订后的 Beta 02 服务器窗口已于 9 月 6 日 08:00 UTC 关闭；旧 Playtest 权限不能重新开放测试。",
-    "accessCta": "抢先体验前 48 小时清单",
-    "issuesCta": "上线问题观察清单",
+    "accessCta": "发售日检查清单",
+    "issuesCta": "服务器状态",
     "countdown": {
       "starts": "距离 Beta 开始",
       "ends": "距离 Beta 结束",
@@ -77,9 +77,9 @@
     "metaDescription": "独立运营的 WARDOGS Wiki 提供经过核实的武器、载具、装备、操作、当前参与状态、已知问题、设置与实战攻略。我们会交叉检查官方来源和公开资料，标注出处、更新时间与适用版本，明确区分容易变化的数值和未经确认的信息，并整理新手入门、下载、飞行操作、小队协作及实用玩家工具，帮助玩家快速找到可靠答案。",
     "heroTitle": "武器、载具、攻略与游戏资料库",
     "heroDescription": "这里整理经过来源核实的装备、操作、当前参与状态、故障排查与实战策略，并明确标注所有受版本影响的信息。",
-    "primaryCta": "打开抢先体验前 48 小时清单",
-    "secondaryCta": "查看上线问题观察清单",
-    "status": "Beta 02 已结束 - 9 月 10 日抢先体验",
+    "primaryCta": "打开发售日检查清单",
+    "secondaryCta": "检查服务器状态",
+    "status": "抢先体验日期已到 - 请检查 Steam",
     "statsLabel": "WARDOGS 关键信息",
     "stats": {
       "earlyAccess": "2026 年 9 月 10 日抢先体验",
@@ -102,11 +102,11 @@
     "startEyebrow": "从这里开始",
     "startTitle": "准备你的第一次部署",
     "start": {
-      "description": "从这六篇开始准备抢先体验、核对官方安装与上线风险，并把 Beta 02 信息保留为历史记录。",
+      "description": "从这六篇开始检查发售日资格、安全安装、服务器、官方更新，并把 Beta 02 信息保留为历史记录。",
       "cards": {
         "playtest": {
-          "title": "Beta 02 测试结果",
-          "description": "查看已经结束的测试窗口、历史参与规则，以及上线后必须重新验证的项目。"
+          "title": "补丁说明追踪",
+          "description": "检查官方是否发布发售补丁，并把 Beta 历史和当前改动严格分开。"
         },
         "download": {
           "title": "下载与安装",
@@ -117,16 +117,16 @@
           "description": "检查步兵、载具、直升机、地图和本地语音的全部常用按键。"
         },
         "issues": {
-          "title": "已知问题",
-          "description": "安全处理服务器列表空白、语音失效、崩溃和资格不同步。"
+          "title": "服务器状态",
+          "description": "检查 Steam 开放状态、登录排队、服务器列表、地区和官方故障公告。"
         },
         "contest": {
           "title": "10 万美元剪辑大赛",
           "description": "按官方规则检查发布平台、标签、表格、截止时间和地区资格。"
         },
         "launch": {
-          "title": "上线检查清单",
-          "description": "为 9 月 10 日准备账户、电脑、队伍、设置和可靠信息源。"
+          "title": "发售日检查清单",
+          "description": "今天核对 Steam 资格、正确库条目、电脑、小队、设置和信息来源。"
         }
       }
     },
@@ -134,15 +134,15 @@
       "eyebrow": "选择你的任务",
       "title": "你现在最需要做什么？",
       "description": "不必翻完整目录，直接进入你当前要完成的事情。所有可能随版本变化的数据都会继续明确标注。",
-      "play": {"title": "准备上线", "description": "检查 Steam、安装、账号状态以及尚未确认的预载安排。", "imageAlt": "用于参与和下载攻略的 WARDOGS 战场画面"},
-      "fix": {"title": "解决当前问题", "description": "查看崩溃、服务器、语音、性能和资格问题的当前处理办法。", "imageAlt": "用于故障排查的 WARDOGS 战术装备画面"},
+      "play": {"title": "检查发售资格", "description": "检查 Steam 开放状态、安装、账号权限和正确的游戏库条目。", "imageAlt": "用于参与和下载攻略的 WARDOGS 战场画面"},
+      "fix": {"title": "检查服务器状态", "description": "区分官方故障、登录排队与账号、地区、语音或电脑问题。", "imageAlt": "用于故障排查的 WARDOGS 战术装备画面"},
       "gear": {"title": "浏览武器与装备", "description": "查看带图的武器、载具、护甲、弹药和配装资料。", "imageAlt": "WARDOGS 带图武器与装备图鉴"},
       "system": {"title": "检测你的电脑", "description": "调整设置前，先把你的硬件与已确认配置要求进行比较。", "imageAlt": "用于电脑配置检测的 WARDOGS 游戏画面"}
     },
     "priority": {
       "eyebrow": "优先级信息",
-      "title": "这个周末 WARDOGS 玩家最需要的内容",
-      "description": "优先查看 48 小时清单、Steam 状态、安全安装、操作和 Beta 02 上线问题观察。",
+      "title": "WARDOGS 玩家发售日最需要的内容",
+      "description": "优先检查 Steam 开放状态、发售清单、服务器、已核实补丁、安全安装和操作。",
       "top": {
         "title": "核心攻略",
         "description": "围绕当前开放状态、Steam 权限、上线准备和高频搜索问题精选核心攻略。"
@@ -160,8 +160,8 @@
         },
         "items": {
           "closedBeta02": {
-            "title": "Closed Beta 02 已经结束",
-            "description": "修订后的服务器窗口已于 9 月 6 日 08:00 UTC 结束；它是带日期的测试记录，不是当前参与入口。"
+            "title": "发售状态需要直接检查 Steam",
+            "description": "9 月 10 日是官方日期，但实际开放以 Steam 为准。Beta 02 只保留为历史测试记录。"
           },
           "clipContest": {
             "title": "10 万美元剪辑大赛开放报名",

@@ -39,8 +39,7 @@ export async function HomeHero({facts}: HomeHeroProps) {
             src={assetPath("/images/wardogs-fullmark-full.png")}
             width={2468}
             height={490}
-            alt=""
-            aria-hidden="true"
+            alt="WARDOGS"
             priority
             className="mt-6 h-auto w-[260px] sm:w-[360px] lg:w-[430px]"
           />
@@ -55,11 +54,11 @@ export async function HomeHero({facts}: HomeHeroProps) {
           </p>
 
           <div className="mt-6 flex w-full max-w-xl flex-col justify-center gap-3 sm:flex-row">
-            <ButtonLink href="/guides/wardogs-beta" className="w-full sm:w-auto">
+            <ButtonLink href="/guides/wardogs-launch-checklist" className="w-full sm:w-auto">
               {t("home.primaryCta")}
               <ArrowRight aria-hidden="true" className="size-4" />
             </ButtonLink>
-            <ButtonLink href="/guides/wardogs-known-issues" variant="secondary" className="w-full sm:w-auto">
+            <ButtonLink href="/guides/wardogs-server-status" variant="secondary" className="w-full sm:w-auto">
               {t("home.secondaryCta")}
             </ButtonLink>
           </div>
