@@ -25,7 +25,12 @@ export async function SiteFooter() {
       <div className="site-container py-12 md:py-16">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.6fr)_minmax(160px,0.7fr)_minmax(180px,0.7fr)] md:gap-12">
           <div className="max-w-xl">
-            <Link href="/" aria-label={t("footer.aboutTitle")} className="inline-flex">
+            <Link
+              href="/"
+              aria-label={t("footer.aboutTitle")}
+              title={t("footer.aboutTitle")}
+              className="inline-flex"
+            >
               <SiteBrand markClassName="w-[156px]" />
             </Link>
             <p className="mt-5 text-sm leading-7 text-[#a8b4ae]">{t("footer.about")}</p>
