@@ -1,0 +1,11 @@
+.git/
+.next/
+.tmp/
+.tmp-catalogue-media/
+node_modules/
+out/
+coverage/
+playwright-report/
+test-results/
+.superpowers/
+*.tsbuildinfo

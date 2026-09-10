@@ -11,3 +11,7 @@ test-results/
 .superpowers/
 .worktrees/
 *.tsbuildinfo
+
+.vercel
+
+.vercel
