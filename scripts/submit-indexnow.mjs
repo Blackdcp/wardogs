@@ -82,8 +82,8 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
 }
 
 function changedFilesFromGit() {
-  const base = process.env.BEFORE_SHA;
-  const head = process.env.CURRENT_SHA ?? "HEAD";
+  const base = process.env.BEFORE_SHA ?? process.argv[2];
+  const head = process.env.CURRENT_SHA ?? process.argv[3] ?? "HEAD";
   if (!base || /^0+$/.test(base)) return [];
 
   try {

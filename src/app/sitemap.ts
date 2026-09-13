@@ -23,6 +23,15 @@ const staticPaths = [
 
 export const dynamic = "force-static";
 
+const freshHubPaths = new Set(["", "/guides", "/news", "/videos", "/items"]);
+
+function resolvePageLastModified(pathname: string) {
+  if (freshHubPaths.has(pathname) || /^\/items\/[^/]+$/.test(pathname)) {
+    return new Date("2026-09-13T00:00:00.000Z");
+  }
+  return new Date("2026-08-16T00:00:00.000Z");
+}
+
 export function resolveItemLastModified(item: {detailUpdatedAt?: string} | undefined) {
   return new Date(item?.detailUpdatedAt ?? "2026-08-16T00:00:00.000Z");
 }
@@ -70,7 +79,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ? resolveGuideLastModified(locale, guideDetailMatch[1])
         : videoArticle
           ? new Date(`${videoArticle.updatedDate}T00:00:00.000Z`)
-        : resolveItemLastModified(item),
+        : itemDetailMatch
+          ? resolveItemLastModified(item)
+          : resolvePageLastModified(pathname),
       changeFrequency: pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? "weekly" as const : "daily" as const,
       priority: pathname === "" ? 1 : pathname === "/guides" || pathname === "/videos" || pathname === "/items" ? 0.9 : pathname === "/news" ? 0.85 : pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? 0.8 : 0.3,
       alternates: {languages}
