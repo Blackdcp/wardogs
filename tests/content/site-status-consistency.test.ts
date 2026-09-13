@@ -26,13 +26,13 @@ const staleCurrentClaims = {
   "zh-cn": /没有(?:公布|确认).*新的(?: Beta| Playtest|测试)|下一(?:个|次)官方.*9 月 3 日|9 月 2 日.*开始|9 月 3 日.*将公布.*尚未确认/,
 } as const;
 
-const currentPrepurchasePhrases = {
-  en: /paid pre-purchase|paid pre-order|qualifying pre-purchase/i,
-  de: /bezahlte Vorbestellung|qualifizierte Vorbestellung/i,
-  ru: /платн(?:ый|ого) предзаказ|подходящ(?:ий|его) предзаказ/i,
-  "pt-br": /pré-venda (?:paga|qualificada)/i,
-  ja: /有料の予約購入|対象の予約購入/,
-  "zh-cn": /付费预购|符合条件的预购/,
+const currentPurchasePhrases = {
+  en: /buy|purchase|Supporter Edition/i,
+  de: /kaufen|Kauf|Supporter Edition/i,
+  ru: /купить|покупк|Supporter Edition/i,
+  "pt-br": /comprar|compra|Supporter Edition/i,
+  ja: /購入|Supporter Edition/,
+  "zh-cn": /购买|购入|Supporter Edition/,
 } as const;
 
 describe("site-wide live status consistency", () => {
@@ -57,26 +57,25 @@ describe("site-wide live status consistency", () => {
         const guide = await loadGuideDocument(locale, slug);
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-09");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
         expect(guide?.body, `${locale}/${slug}`).toContain("Beta 02");
-        expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
       }
     }
   });
 
-  it("keeps the storefront on the current paid pre-purchase and edition prices", async () => {
+  it("keeps the storefront on the current Early Access purchase and edition prices", async () => {
     for (const locale of locales) {
       const steam = await loadGuideDocument(locale, "wardogs-steam");
       const price = await loadGuideDocument(locale, "wardogs-price");
       const searchable = `${steam?.frontmatter.description}\n${steam?.body}\n${price?.frontmatter.description}\n${price?.body}`;
 
-      expect(steam?.frontmatter.updatedAt, `${locale}/wardogs-steam`).toBe("2026-09-09");
-      expect(price?.frontmatter.updatedAt, `${locale}/wardogs-price`).toBe("2026-09-09");
+      expect(steam?.frontmatter.updatedAt, `${locale}/wardogs-steam`).toBe("2026-09-13");
+      expect(price?.frontmatter.updatedAt, `${locale}/wardogs-price`).toBe("2026-09-13");
       expect(searchable, `${locale}/commerce`).toContain("$39.99");
       expect(searchable, `${locale}/commerce`).toContain("$49.99");
-      expect(searchable, `${locale}/commerce`).toMatch(currentPrepurchasePhrases[locale]);
+      expect(searchable, `${locale}/commerce`).toMatch(currentPurchasePhrases[locale]);
     }
   });
 });

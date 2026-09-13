@@ -25,28 +25,42 @@ const endedSignals = {
   "zh-cn": /beta 02.*(?:已经|已)结束/i,
 } as const;
 
-const unconfirmedSignals = {
-  en: /exact (?:early access )?unlock (?:hour|time).*(?:not confirmed|not been announced)|preload.*(?:not confirmed|not been announced)/i,
-  de: /genaue.*(?:freischalt|startzeit).*(?:nicht bestätigt|nicht angekündigt)|preload.*nicht bestätigt/i,
-  ru: /точн.*врем.*(?:не подтвержден|не объявлен)|предзагруз.*не подтвержден/i,
-  "pt-br": /horário exato.*não (?:foi )?confirmado|pré-carregamento.*não (?:foi )?confirmado/i,
-  ja: /正確な.*(?:解禁|解除|開始)時刻.*(?:未確認|発表されていません)|プリロード.*未確認/i,
-  "zh-cn": /具体.*(?:解锁|开放)时间.*(?:尚未|未)(?:得到)?确认|预载.*(?:尚未|未)(?:得到)?确认/i,
+const liveSignals = {
+  en: /Early Access (?:is live|launched)|live in (?:Steam )?Early Access/i,
+  de: /Early Access (?:ist live|startete)|im Steam Early Access live/i,
+  ru: /Early Access.*(?:запущен|начал|вышла|доступна)|доступна в Steam Early Access/i,
+  "pt-br": /Acesso Antecipado (?:disponível|começou|entrou)|disponível no Acesso Antecipado/i,
+  ja: /Early Access.*(?:配信中|開始)/,
+  "zh-cn": /抢先体验.*(?:已上线|已经上线|开启)/,
 } as const;
 
-describe("September 9 Early Access handoff", () => {
-  it("publishes Beta 02 as ended and keeps launch logistics explicitly unconfirmed", () => {
-    expect(CURRENT_EVENT.status).toBe("ended");
+const staleBetaSignals = {
+  en: /Beta 02 is live/i,
+  de: /Beta 02 läuft jetzt/i,
+  ru: /Beta 02 ид[её]т сейчас/i,
+  "pt-br": /Beta 02 está ao vivo/i,
+  ja: /Beta 02.*実施中/,
+  "zh-cn": /Beta 02.*正在进行/,
+} as const;
+
+describe("September 13 Early Access operations", () => {
+  it("publishes Early Access as live while preserving ended Beta 02 history", () => {
+    expect(CURRENT_EVENT.status).toBe("live");
 
     const status = getPublicStatus();
-    expect(status.dataAsOf).toBe("2026-09-10");
+    expect(status.schemaVersion).toBe(2);
+    expect(status.dataAsOf).toBe("2026-09-13");
     expect(status.currentEvent).toMatchObject({
-      id: "closed-beta-02",
-      name: "Closed Beta 02",
-      status: "ended",
-      openedToAllAt: "2026-09-05",
-      endsAt: "2026-09-06T08:00:00Z",
+      id: "early-access-patch-0-11",
+      name: "Early Access - Patch 0.11",
+      status: "live",
+      launchedOn: "2026-09-10",
     });
+    expect(status.historicalEvents).toContainEqual(expect.objectContaining({
+      id: "closed-beta-02",
+      status: "ended",
+      endsAt: "2026-09-06T08:00:00Z",
+    }));
     expect(status.sources).toContainEqual(expect.objectContaining({
       kind: "official",
       url: "https://steamcommunity.com/app/1867240/homecontent/",
@@ -54,11 +68,15 @@ describe("September 9 Early Access handoff", () => {
     expect(status.earlyAccess).toMatchObject({
       date: "2026-09-10",
       datePrecision: "date",
-      exactUnlockTimeConfirmed: false,
-      preloadConfirmed: false,
+      status: "live",
+      launched: true,
     });
-    expect(status.earlyAccess).not.toHaveProperty("at");
-    expect(status.earlyAccess).not.toHaveProperty("unlockAt");
+    expect(status.maintenance).toMatchObject({
+      status: "scheduled",
+      patchVersion: "0.11",
+      startsAt: "2026-09-14T08:00:00Z",
+      expectedDurationMinutes: 60,
+    });
   });
 
   it("removes the live-beta claim from homepage copy in every locale", () => {
@@ -78,22 +96,22 @@ describe("September 9 Early Access handoff", () => {
 
       expect(copy, locale).toMatch(/Steam/);
       expect(copy, locale).toMatch(/Beta 02/i);
-      expect(copy, locale).not.toMatch(/(?:is live|正在进行|läuft jetzt|está ao vivo|ид[её]т сейчас|実施中)/i);
+      expect(copy, locale).toMatch(liveSignals[locale]);
+      expect(copy, locale).toMatch(endedSignals[locale]);
+      expect(copy, locale).not.toMatch(staleBetaSignals[locale]);
     }
   });
 
-  it("updates every high-intent access guide without inventing an unlock time or preload", async () => {
+  it("updates every high-intent access guide for the live Early Access state", async () => {
     for (const locale of locales) {
       for (const slug of statusGuides) {
         const guide = await loadGuideDocument(locale, slug);
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          slug === "wardogs-launch-checklist" ? "2026-09-10" : "2026-09-09",
-        );
-        expect(searchable, `${locale}/${slug}`).toMatch(endedSignals[locale]);
-        expect(searchable, `${locale}/${slug}`).toMatch(unconfirmedSignals[locale]);
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(searchable, `${locale}/${slug}`).toContain("Beta 02");
+        expect(searchable, `${locale}/${slug}`).toMatch(liveSignals[locale]);
       }
     }
   });

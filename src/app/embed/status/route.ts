@@ -34,20 +34,19 @@ export function GET() {
 <body>
   <main
     class="widget"
-    data-event-starts-at="${status.currentEvent.startsAt}"
-    data-event-ends-at="${status.currentEvent.endsAt}"
-    data-early-access-date="${status.earlyAccess.date}"
+    data-maintenance-starts-at="${status.maintenance.startsAt}"
+    data-maintenance-duration-minutes="${status.maintenance.expectedDurationMinutes}"
   >
     <div class="accent"></div>
     <div class="content">
       <div class="topline">
         <p class="eyebrow">WARDOGS current status</p>
-        <span class="badge" id="status-badge">Ended</span>
+        <span class="badge" id="status-badge">Live</span>
       </div>
-      <h1 id="status-title">Closed Beta 02 has ended</h1>
-      <p class="schedule" id="status-schedule">Ended September 6, 2026 at 08:00 UTC</p>
-      <p class="countdown" id="status-countdown" role="status" aria-live="polite">Early Access: September 10, 2026</p>
-      <p class="note" id="status-note">The exact Early Access unlock time and preload have not been announced. Check Steam for current availability.</p>
+      <h1 id="status-title">WARDOGS Early Access is live</h1>
+      <p class="schedule" id="status-schedule">Patch 0.11 maintenance: September 14 at 08:00 UTC</p>
+      <p class="countdown" id="status-countdown" role="status" aria-live="polite">Calculating maintenance time</p>
+      <p class="note" id="status-note">Servers are expected to be offline for about one hour while the server browser is updated. This widget is schedule-based, not live telemetry.</p>
       <div class="links">
         <a href="${officialSource.url}" target="_blank" rel="noopener noreferrer">Official source</a>
         <span>Powered by <a href="${status.links.home}" target="_blank" rel="noopener noreferrer">WARDOGS Wiki</a></span>
@@ -62,10 +61,9 @@ export function GET() {
       const schedule = document.getElementById("status-schedule");
       const countdown = document.getElementById("status-countdown");
       const note = document.getElementById("status-note");
-      const eventStart = Date.parse(widget.dataset.eventStartsAt);
-      const eventEnd = Date.parse(widget.dataset.eventEndsAt);
-      const earlyAccessDate = widget.dataset.earlyAccessDate;
-      const dayMs = 24 * 60 * 60 * 1000;
+      const maintenanceStart = Date.parse(widget.dataset.maintenanceStartsAt);
+      const maintenanceDuration = Number(widget.dataset.maintenanceDurationMinutes) * 60 * 1000;
+      const maintenanceEnd = maintenanceStart + maintenanceDuration;
 
       function formatDuration(milliseconds) {
         const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
@@ -76,50 +74,31 @@ export function GET() {
         return [days + "d", String(hours).padStart(2, "0") + "h", String(minutes).padStart(2, "0") + "m", String(seconds).padStart(2, "0") + "s"].join(" ");
       }
 
-      function utcDayNumber(date) {
-        return Math.floor(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / dayMs);
-      }
-
-      function earlyAccessDayNumber() {
-        const parts = earlyAccessDate.split("-").map(Number);
-        return Math.floor(Date.UTC(parts[0], parts[1] - 1, parts[2]) / dayMs);
-      }
-
       function updateStatus() {
-        const now = new Date();
-        const nowMs = now.getTime();
+        const nowMs = Date.now();
 
-        if (nowMs < eventStart) {
-          badge.textContent = "Upcoming";
-          title.textContent = "Closed Beta 02";
-          schedule.textContent = "Starts September 3, 2026 at 19:00 UTC";
-          countdown.textContent = "Starts in " + formatDuration(eventStart - nowMs);
-          return;
-        }
-
-        if (nowMs < eventEnd) {
+        if (nowMs < maintenanceStart) {
           badge.textContent = "Live";
-          title.textContent = "Closed Beta 02";
-          schedule.textContent = "Ends September 6, 2026 at 08:00 UTC";
-          countdown.textContent = "Ends in " + formatDuration(eventEnd - nowMs);
+          title.textContent = "WARDOGS Early Access is live";
+          schedule.textContent = "Patch 0.11 maintenance: September 14 at 08:00 UTC";
+          countdown.textContent = "Maintenance in " + formatDuration(maintenanceStart - nowMs);
           return;
         }
 
-        const daysUntilEarlyAccess = earlyAccessDayNumber() - utcDayNumber(now);
-        badge.textContent = "Next";
-        title.textContent = "Steam Early Access";
-        schedule.textContent = "Scheduled for September 10, 2026";
-        note.textContent = "The exact Early Access unlock time and preload have not been announced. Check Steam for current availability.";
-
-        if (daysUntilEarlyAccess > 1) {
-          countdown.textContent = daysUntilEarlyAccess + " calendar days to the scheduled date";
-        } else if (daysUntilEarlyAccess === 1) {
-          countdown.textContent = "1 calendar day to the scheduled date";
-        } else if (daysUntilEarlyAccess === 0) {
-          countdown.textContent = "The scheduled Early Access date is today";
-        } else {
-          countdown.textContent = "The scheduled Early Access date has passed";
+        if (nowMs < maintenanceEnd) {
+          badge.textContent = "Maintenance";
+          title.textContent = "Patch 0.11 maintenance window";
+          schedule.textContent = "Scheduled downtime began at 08:00 UTC";
+          countdown.textContent = "Approximate window remaining " + formatDuration(maintenanceEnd - nowMs);
+          note.textContent = "The one-hour duration is an estimate, not live server telemetry. Check the official update before retrying.";
+          return;
         }
+
+        badge.textContent = "Check status";
+        title.textContent = "Patch 0.11 maintenance window passed";
+        schedule.textContent = "The scheduled one-hour window began September 14 at 08:00 UTC";
+        countdown.textContent = "Check the official source for completion";
+        note.textContent = "This widget does not infer that servers are back online. Confirm the latest official notice before troubleshooting locally.";
       }
 
       updateStatus();

@@ -174,7 +174,7 @@ describe("weekly backlink monitor", () => {
     expect(existsSync(workflowPath), ".github/workflows/monitor-backlinks.yml must exist").toBe(true);
     if (!existsSync(workflowPath)) return;
 
-    const workflow = readFileSync(workflowPath, "utf8");
+    const workflow = readFileSync(workflowPath, "utf8").replace(/\r\n/g, "\n");
     expect(workflow).toMatch(/schedule:\s*\n\s*- cron:/);
     expect(workflow).toContain("workflow_dispatch:");
     expect(workflow).toContain("permissions:\n  contents: read");

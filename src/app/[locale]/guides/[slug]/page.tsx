@@ -68,7 +68,7 @@ export default async function GuideArticlePage({params}: PageProps) {
       <GuideEngagementTracker category={guide.frontmatter.category} locale={locale} slug={slug} />
       <header className="border-b border-[#2c3631] bg-[#101411] py-12 md:py-16">
         <div className="site-container max-w-4xl">
-          <Link className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href="/guides">
+          <Link className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href="/guides" title={t("back")}>
             <ArrowLeft aria-hidden="true" size={16} />{t("back")}
           </Link>
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -76,7 +76,7 @@ export default async function GuideArticlePage({params}: PageProps) {
             <span className="inline-flex items-center gap-2 text-xs text-[#8b9992]"><CalendarDays aria-hidden="true" size={14} />{t("lastChecked")} {formatLocalizedDate(guide.frontmatter.updatedAt, locale)}</span>
           </div>
           <p className="mt-3 text-xs text-[#8b9992]">
-            {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy">{t("teamName")}</Link>
+            {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy" title={t("teamName")}>{t("teamName")}</Link>
           </p>
           <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "zh-cn" ? "text-3xl sm:text-5xl" : "text-4xl sm:text-5xl"} md:text-6xl`} style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]" style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.description}</p>
@@ -99,7 +99,7 @@ export default async function GuideArticlePage({params}: PageProps) {
               width={discoveryImage.width}
             />
             <figcaption className="border-t border-[#2c3631] px-4 py-3 text-xs text-[#8b9992]">
-              {t("imageSource")}: <a className="inline-flex items-center gap-1 text-[#8bb59d] hover:text-white" href={discoveryImage.creditUrl} rel="noreferrer" target="_blank">{discoveryImage.creditLabel}<ExternalLink aria-hidden="true" className="size-3" /></a>
+              {t("imageSource")}: <a className="inline-flex items-center gap-1 text-[#8bb59d] hover:text-white" href={discoveryImage.creditUrl} rel="noreferrer" target="_blank" title={discoveryImage.creditLabel}>{discoveryImage.creditLabel}<ExternalLink aria-hidden="true" className="size-3" /></a>
             </figcaption>
           </figure>
         ) : null}
@@ -114,8 +114,8 @@ export default async function GuideArticlePage({params}: PageProps) {
           <FaqList items={guide.frontmatter.faq} />
         </section>
         <div className="mt-14 flex flex-wrap gap-3 border-t border-[#2c3631] pt-8">
-          <ButtonLink href="/guides">{t("back")}</ButtonLink>
-          <ButtonLink external href={officialLinks.steam} variant="secondary">Steam</ButtonLink>
+          <ButtonLink href="/guides" title={t("back")}>{t("back")}</ButtonLink>
+          <ButtonLink external href={officialLinks.steam} title="WARDOGS on Steam" variant="secondary">Steam</ButtonLink>
         </div>
       </article>
       <div className="border-t border-[#2c3631] bg-[#111512]">

@@ -42,7 +42,7 @@ export async function AboutGame() {
           <blockquote className="mt-7 border-l-2 border-[#d9a93a] pl-4 text-sm leading-7 text-[#d7ded9]">
             <p>“{t("home.about.officialQuote")}”</p>
             <cite className="mt-2 block not-italic text-[#8f9d96]">
-              <a className="inline-flex items-center gap-1.5 hover:text-[#79d19c]" href={officialLinks.steam} target="_blank" rel="noreferrer">
+              <a className="inline-flex items-center gap-1.5 hover:text-[#79d19c]" href={officialLinks.steam} target="_blank" rel="noreferrer" title={t("home.about.officialQuoteSource")}>
                 {t("home.about.officialQuoteSource")}
                 <ExternalLink aria-hidden="true" className="size-3.5" />
               </a>

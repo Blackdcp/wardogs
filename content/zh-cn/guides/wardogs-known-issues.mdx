@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-09"
+updatedAt: "2026-09-13"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -13,14 +13,26 @@ badges:
     tone: "muted"
 faq:
   - question: "Beta 02 的问题会继续出现在抢先体验吗？"
-    answer: "这些只是上线观察项目，不是已经确认的抢先体验故障；官方公告与社区报告必须分开。"
+    answer: "WARDOGS 抢先体验已经上线。Patch 0.11 维护定于 9 月 14 日 08:00 UTC，预计约一小时；结束状态必须以 Steam 官方动态为准。"
   - question: "WARDOGS 崩溃时怎么安全排查？"
     answer: "重启 Steam 和 Windows，验证文件，移除非官方启动参数，从显卡厂商更新驱动，关闭叠加层，并一次只改一个项目，同时记录准确报错。"
   - question: "本地语音失效怎么办？"
     answer: "开发者建议在选项中关闭一次语音聊天，或者打开计分板后连续按两次 U；第三方语音服务本身也可能出现中断。"
   - question: "Beta 02 里没有 Supporter Pack 道具，是购买失败吗？"
-    answer: "官方已知问题说明 Supporter Pack 道具不会在测试阶段开放，计划到 Early Access 解锁，因此 Beta 02 内看不到并不能证明购买失败。"
+    answer: "这是 Beta 期间的已知限制。Supporter Pack 现已作为 Steam DLC 销售；当前缺失应核对 DLC 权益和最新版本。"
 sources:
+  - label: "官方预载与 Season 1 更新日志"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Launch Stability Hotfix #1 官方公告"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Patch 0.11 维护官方公告"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-13"
   - label: "开发者发布的 Beta 已知问题"
     url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
     kind: "official"
@@ -34,14 +46,13 @@ sources:
     kind: "community"
     checkedAt: "2026-09-09"
 ---
+## 9 月 13 日已知问题中心
 
-## 9 月 9 日状态：抢先体验前最后核查
+开发团队承认社区服务器浏览器体验不足，并安排 **9 月 14 日 08:00 UTC** 上线 Patch 0.11；补丁还会修复现金漏洞、处理更多 GPU 崩溃并增加亚洲容量。
 
-**Beta 02 已经结束。** 9 月 3 日发布会于 **18:00 UTC** 开始；修订后的服务器窗口从 **19:00 UTC** 运行至 **9 月 6 日 08:00 UTC**。此前的资格规则、临时处理方法、价格与平衡数值都是带日期的测试记录，不能代表现在仍可参与。
+这不代表所有崩溃、掉线、语音或性能问题已解决。硬件报告在官方确认版本和原因前仍是社区观察。记录地区、版本、硬件、驱动、错误和 UTC 时间，不要关闭反作弊、安装未知工具或照做漏洞教程。
 
-Steam 列出的 Windows PC 抢先体验日期是 **2026 年 9 月 10 日**。截至 9 月 9 日，**具体解锁时间尚未确认**，**抢先体验预载也尚未确认**。不要自行推断零点开放，也不要使用第三方倒计时或安装包。
 
-先查看 Steam 实际状态，再使用[发售日检查清单](/zh-cn/guides/wardogs-launch-checklist)和[服务器状态页](/zh-cn/guides/wardogs-server-status)。
 ## Beta 02 社区报告的上线观察清单
 
 玩家在 Beta 02 中报告过排队与服务器浏览器、可重复崩溃、帧时间波动、RAM 或 VRAM 压力、DLSS、DLAA、阴影和 Reflex + Boost 表现差异、本地语音中断，以及进度或权益混乱。这些是**特定硬件和 Beta 02 版本下的社区报告**，不是已经确认的抢先体验故障，也不是通用修复结论。
@@ -50,7 +61,7 @@ Steam 列出的 Windows PC 抢先体验日期是 **2026 年 9 月 10 日**。截
 
 ## 快速结论
 
-服务器列表空白时只选择**一个地区**；本地语音失效时关闭一次语音，或打开计分板后**连续按两次 U**。Supporter Pack 在 Beta 中不可用，计划在抢先体验开放。官方没有确认一个适用于所有崩溃的万能修复。
+服务器列表空白时只选择**一个地区**；本地语音失效时关闭一次语音，或打开计分板后**连续按两次 U**。Supporter Pack 在 Beta 中不可用，目前已作为 Steam DLC 上架。官方没有确认一个适用于所有崩溃的万能修复。
 
 ## 已确认事实
 
@@ -65,7 +76,7 @@ Steam 列出的 Windows PC 抢先体验日期是 **2026 年 9 月 10 日**。截
 先锁定单一症状，每次只改一项，记录结果和 UTC 时间；仍失败时带上硬件、驱动、地区与完整报错提交支持。
 
 
-Closed Beta 02 是一次面向多人规模、服务器浏览器、登录队列、Twitch Drops、DLC 权益和语音通信的测试。排队、服务器列表空白、断线或语音失效，不一定都是你的电脑造成的。先执行开发者已经给出的处理方法，每次只改一个项目，并保留错误信息，通常比直接重装更有效。
+Closed Beta 02 是一次已经结束的多人规模测试。当时的排队、服务器列表空白、断线或语音失效不一定由玩家电脑造成。遇到当前问题，应先检查 Early Access 最新补丁与维护状态，每次只改一个项目，并保留错误信息。
 
 ## Beta 02 历史时间与访问资格
 
@@ -99,7 +110,7 @@ Closed Beta 02 已按 **9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC** 的修
 
 ## Supporter Pack 与进度
 
-官方已知问题说明，Supporter Pack 道具在 Beta 02 中不可用，预计在 **Early Access** 解锁。因此，测试阶段没有看到对应外观或内容，并不能单独证明订单失败。购买记录和 DLC 权益应在 Steam 的官方账户页面检查。
+官方已知问题说明，Supporter Pack 道具在 Beta 02 中不可用。该内容现已作为 Steam DLC 销售；若当前仍看不到，应在 Steam 官方页面检查购买记录、DLC 权益和正在运行的游戏版本。
 
 目前也不能从这次测试推断现金、经验、解锁和统计一定会保留到 Early Access。除非开发者正式确认，否则本攻略不会承诺测试进度继承，也不会把社区传言写成已确定的清档规则。
 
@@ -109,7 +120,7 @@ Closed Beta 02 已按 **9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC** 的修
 
 ## 相关攻略
 
-- [Closed Beta 02 参与方法](/guides/wardogs-beta)
+- [Closed Beta 02 参与方法](/zh-cn/guides/wardogs-beta)
 - [WARDOGS 崩溃修复](/guides/wardogs-crash-fix)
 - [WARDOGS 最佳设置](/guides/wardogs-best-settings)
 - [WARDOGS 配置要求](/guides/wardogs-system-requirements)

@@ -24,7 +24,7 @@ export function VideoIntelligence({locale}: {locale: Locale}) {
               {ui.homeDescription}
             </p>
           </div>
-          <a href={`/${locale}/videos`} className="inline-flex min-h-11 items-center gap-2 self-start rounded-[6px] border border-[#46534d] px-5 py-2.5 text-sm font-semibold text-[#f2f5f3] hover:border-[#5e7168] hover:bg-[#202723] md:self-auto">
+          <a href={`/${locale}/videos`} className="inline-flex min-h-11 items-center gap-2 self-start rounded-[6px] border border-[#46534d] px-5 py-2.5 text-sm font-semibold text-[#f2f5f3] hover:border-[#5e7168] hover:bg-[#202723] md:self-auto" title={ui.allVideos}>
             {ui.allVideos}
             <ArrowRight aria-hidden="true" className="size-4" />
           </a>

@@ -15,7 +15,7 @@ async function loadStatusRoute(): Promise<StatusRouteModule | null> {
 }
 
 describe("api/status.json", () => {
-  it("publishes the verified current event without inventing an unlock time", async () => {
+  it("publishes the live Early Access event and sourced maintenance window", async () => {
     const route = await loadStatusRoute();
 
     expect(route, "src/app/api/status.json/route.ts must exist").not.toBeNull();
@@ -29,28 +29,35 @@ describe("api/status.json", () => {
     expect(response.headers.get("content-type")).toContain("application/json");
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
     expect(payload).toMatchObject({
-      schemaVersion: 1,
-      dataAsOf: "2026-09-10",
+      schemaVersion: 2,
+      dataAsOf: "2026-09-13",
       game: "WARDOGS",
       currentEvent: {
-        id: "closed-beta-02",
-        name: "Closed Beta 02",
-        status: "ended",
-        startsAt: "2026-09-03T19:00:00Z",
-        endsAt: "2026-09-06T08:00:00Z",
-        openedToAllAt: "2026-09-05"
+        id: "early-access-patch-0-11",
+        name: "Early Access - Patch 0.11",
+        status: "live",
+        launchedOn: "2026-09-10"
       },
       earlyAccess: {
         date: "2026-09-10",
         datePrecision: "date",
-        exactUnlockTimeConfirmed: false
+        status: "live",
+        launched: true
+      },
+      maintenance: {
+        status: "scheduled",
+        patchVersion: "0.11",
+        startsAt: "2026-09-14T08:00:00Z",
+        expectedDurationMinutes: 60
       }
     });
-    expect(payload.earlyAccess).not.toHaveProperty("at");
-    expect(payload.earlyAccess).not.toHaveProperty("unlockAt");
+    expect(payload.historicalEvents).toContainEqual(expect.objectContaining({
+      id: "closed-beta-02",
+      status: "ended",
+      endsAt: "2026-09-06T08:00:00Z"
+    }));
     expect(payload.sources).toEqual(expect.arrayContaining([
       expect.objectContaining({kind: "official", url: "https://store.steampowered.com/app/1867240/WARDOGS/"}),
-      expect.objectContaining({kind: "official", url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"}),
       expect.objectContaining({kind: "official", url: "https://steamcommunity.com/app/1867240/homecontent/"})
     ]));
   });

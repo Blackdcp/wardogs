@@ -26,7 +26,7 @@ export function CatalogueCategoryCard({
 }: CatalogueCategoryCardProps) {
   return (
     <li data-catalogue-category className="min-w-0 border border-[#303b35] bg-[#151b18]">
-      <Link className="group flex h-full min-w-0 flex-col" href={href}>
+      <Link aria-label={title} className="group flex h-full min-w-0 flex-col" href={href} title={title}>
         <span className="relative block aspect-[16/9] overflow-hidden bg-[#090c0a]">
           <Image
             src={assetPath(image)}

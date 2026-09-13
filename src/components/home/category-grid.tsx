@@ -40,7 +40,7 @@ export async function CategoryGrid() {
             </h2>
             <p className="mt-4 text-sm leading-7 text-[#a8b4ae] sm:text-base">{t("home.categories.description")}</p>
           </div>
-          <Link href="/guides" className="inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba] md:self-auto">
+          <Link href="/guides" className="inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba] md:self-auto" title={t("home.categories.allGuides")}>
             {t("home.categories.allGuides")}
             <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
@@ -53,6 +53,7 @@ export async function CategoryGrid() {
               <li key={category.key} className="border-t border-[#344039]">
                 <Link
                   href={`/guides/${category.slug}`}
+                  title={t(`categories.${category.key}`)}
                   className="group flex min-h-[132px] items-start gap-4 py-5"
                 >
                   <span className={`inline-flex size-10 shrink-0 items-center justify-center rounded-[5px] border ${categoryTones[category.key]}`}>

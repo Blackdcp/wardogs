@@ -76,7 +76,7 @@ export default async function ItemDetailPage({params}: PageProps) {
       <JsonLd data={buildItemArticleJsonLd(locale, item)} />
       <header className="border-b border-[#2c3631] bg-[#101411] py-12 md:py-16">
         <div className="site-container max-w-4xl">
-          <Link className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href={`/items/${item.type}`}>
+          <Link className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href={`/items/${item.type}`} title={`WARDOGS ${itemType?.label ?? ui.itemsFallback}`}>
             <ArrowLeft aria-hidden="true" size={16} />WARDOGS {itemType?.label ?? ui.itemsFallback}
           </Link>
           <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -166,6 +166,7 @@ export default async function ItemDetailPage({params}: PageProps) {
                   href={source.url}
                   target="_blank"
                   rel="noreferrer"
+                  title={source.label}
                 >
                   {source.label}<ExternalLink aria-hidden="true" size={15} />
                 </a>
@@ -181,7 +182,7 @@ export default async function ItemDetailPage({params}: PageProps) {
             <ul className="mt-4 space-y-2">
               {item.relatedGuides.map((guideSlug, index) => (
                 <li key={guideSlug}>
-                  <Link className="inline-flex min-h-11 items-center text-[#7fd0a1] hover:text-white" href={`/guides/${guideSlug}`}>
+                  <Link className="inline-flex min-h-11 items-center text-[#7fd0a1] hover:text-white" href={`/guides/${guideSlug}`} title={relatedGuideDocuments[index]?.frontmatter.title ?? guideSlug.replace(/-/g, " ")}>
                     {relatedGuideDocuments[index]?.frontmatter.title ?? guideSlug.replace(/-/g, " ")}
                   </Link>
                 </li>
@@ -193,7 +194,7 @@ export default async function ItemDetailPage({params}: PageProps) {
             <ul className="mt-4 space-y-2">
               {relatedItems.map((related) => (
                 <li key={related.slug}>
-                  <Link className="inline-flex min-h-11 items-center text-[#7fd0a1] hover:text-white" href={`/items/${related.type}/${related.slug}`}>
+                  <Link className="inline-flex min-h-11 items-center text-[#7fd0a1] hover:text-white" href={`/items/${related.type}/${related.slug}`} title={`WARDOGS ${related.name}`}>
                     WARDOGS {related.name}
                   </Link>
                 </li>

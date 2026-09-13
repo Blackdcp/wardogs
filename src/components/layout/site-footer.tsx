@@ -41,7 +41,7 @@ export async function SiteFooter() {
             <ul className="mt-4 space-y-2.5">
               {guideLinks.map((item) => (
                 <li key={item.href}>
-                  <Link className="text-sm text-[#a8b4ae] transition-colors hover:text-[#79d19c]" href={item.href}>
+                  <Link className="text-sm text-[#a8b4ae] transition-colors hover:text-[#79d19c]" href={item.href} title={item.label}>
                     {item.label}
                   </Link>
                 </li>
@@ -59,6 +59,7 @@ export async function SiteFooter() {
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
+                    title={item.label}
                   >
                     {item.label}
                     <ExternalLink aria-hidden="true" className="size-3.5" />
@@ -72,11 +73,11 @@ export async function SiteFooter() {
         <div className="mt-10 flex flex-col gap-4 border-t border-[#27312c] pt-6 text-xs text-[#7f8d86] sm:flex-row sm:items-center sm:justify-between">
           <p>{t("footer.description")}</p>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/about">{t("footer.aboutLink")}</Link>
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/contact">{t("footer.contact")}</Link>
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/editorial-policy">{t("footer.editorialPolicy")}</Link>
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/privacy">{t("footer.privacy")}</Link>
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/terms">{t("footer.terms")}</Link>
+            <Link className="transition-colors hover:text-[#c7d1cc]" href="/about" title={t("footer.aboutLink")}>{t("footer.aboutLink")}</Link>
+            <Link className="transition-colors hover:text-[#c7d1cc]" href="/contact" title={t("footer.contact")}>{t("footer.contact")}</Link>
+            <Link className="transition-colors hover:text-[#c7d1cc]" href="/editorial-policy" title={t("footer.editorialPolicy")}>{t("footer.editorialPolicy")}</Link>
+            <Link className="transition-colors hover:text-[#c7d1cc]" href="/privacy" title={t("footer.privacy")}>{t("footer.privacy")}</Link>
+            <Link className="transition-colors hover:text-[#c7d1cc]" href="/terms" title={t("footer.terms")}>{t("footer.terms")}</Link>
           </div>
         </div>
       </div>

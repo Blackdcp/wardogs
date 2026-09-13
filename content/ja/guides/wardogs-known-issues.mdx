@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-09"
+updatedAt: "2026-09-13"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -13,14 +13,26 @@ badges:
     tone: "muted"
 faq:
   - question: "Beta 02の問題はEarly Accessでも発生しますか？"
-    answer: "発売時の確認候補であり、確定したEarly Access不具合ではありません。公式情報とコミュニティ報告を分けます。"
+    answer: "WARDOGS Early Accessは配信中です。Patch 0.11メンテナンスは9月14日08:00 UTCから約1時間の予定で、完了はSteam公式情報で確認します。"
   - question: "WARDOGSがクラッシュするときの安全な確認方法は？"
     answer: "SteamとWindowsを再起動し、ファイル整合性を確認し、非公式の起動オプションを外し、GPUドライバーを更新してオーバーレイを閉じます。変更は一つずつ行い、エラーを記録します。"
   - question: "近接ボイスチャットが使えない場合は？"
     answer: "開発者は、設定でボイスチャットを一度無効にするか、スコアボードを開いてUキーを2回押す方法を案内しています。外部音声サービス側の障害もあり得ます。"
   - question: "Supporter PackのアイテムがBeta 02にありません。購入失敗ですか？"
-    answer: "公式の既知の問題では、Supporter Packのアイテムはベータでは利用できず、Early Accessで解放される予定です。ベータで表示されないことだけでは購入失敗を意味しません。"
+    answer: "Betaでは利用できない既知の問題でした。現在はSteam DLCとして販売されているため、見えない場合はDLC権利と最新ビルドを確認します。"
 sources:
+  - label: "公式Pre-Load・Season 1変更履歴"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Launch Stability Hotfix #1公式告知"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Patch 0.11メンテナンス公式告知"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-13"
   - label: "開発者によるベータ既知の問題"
     url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
     kind: "official"
@@ -34,14 +46,13 @@ sources:
     kind: "community"
     checkedAt: "2026-09-09"
 ---
+## 9月13日の既知の問題
 
-## 9月9日の状況：Early Access前の最終確認
+開発元はCommunityサーバーブラウザーの問題を認めています。**9月14日08:00 UTC**予定のPatch 0.11では、Cash不正、追加GPUクラッシュ、アジア容量も対象です。
 
-**Beta 02は終了しました。** 9月3日の配信は**18:00 UTC**開始、訂正版サーバー期間は**19:00 UTC**から**9月6日08:00 UTC**まででした。参加条件、回避策、価格、バランスは日付付きテスト記録であり、現在の提供状況ではありません。
+すべてのクラッシュ、ボイス、性能問題が解決した意味ではありません。ハードウェア別報告はコミュニティ観測です。Anti-Cheatを無効化せず、不明なツールや不正手順を使わないでください。
 
-SteamはWindows PC版Early Accessを**2026年9月10日**としています。9月9日時点で**正確な解禁時刻は未確認**、**プリロードも未確認**です。午前0時と推測せず、外部パッケージを使わないでください。
 
-Steam、[発売日チェックリスト](/ja/guides/wardogs-launch-checklist)、[サーバー状況](/ja/guides/wardogs-server-status)を確認してください。
 ## Beta 02コミュニティ報告の発売時チェック項目
 
 待機列、サーバーブラウザー、再現するクラッシュ、フレームタイム、RAM・VRAM負荷、DLSS・DLAA・影・Reflex + Boostの差、ボイス停止、進行や権利の混乱が報告されました。これは**Beta 02のコミュニティ報告**であり、Early Accessの確定不具合や万能な修正ではありません。
@@ -61,7 +72,7 @@ Steam、[発売日チェックリスト](/ja/guides/wardogs-launch-checklist)、
 変更は1回に1つとし、UTC時刻、地域、ハードウェア、ドライバー、エラー全文を記録します。
 
 
-Closed Beta 02は、多人数接続、サーバーブラウザー、ログイン待機列、Twitch Drops、DLC権利、ボイス通信などを確認するための大規模テストです。したがって、待機列、空の一覧、音声停止、切断が起きても、必ずしも自分のPCだけが原因とは限りません。公式の回避策を先に試し、変更は一度に一つだけ行ってください。
+Closed Beta 02は、多人数接続、サーバーブラウザー、ログイン待機列、DLC権利、ボイス通信などを確認した過去の大規模テストです。当時の待機列、空の一覧、音声停止、切断はPCだけが原因とは限りませんでした。現在の問題ではEarly Accessの最新パッチを先に確認し、変更は一度に一つだけ行ってください。
 
 ## 現在の開催時間とアクセス
 
@@ -95,7 +106,7 @@ Windowsの既定入力・出力デバイス、ゲーム内デバイス、マイ�
 
 ## Supporter Packと進行状況
 
-公式の既知の問題によると、Supporter Packのアイテムはベータ中には利用できず、**Early Accessで解放される予定**です。Beta 02でアイテムが見えないことだけでは、購入やDLC権利の失敗とは判断できません。Steam購入履歴は、Steamの公式画面で確認してください。
+公式の既知の問題によると、Supporter PackのアイテムはBeta 02では利用できませんでした。現在はSteam DLCとして販売されているため、問題が続く場合は購入履歴、DLC権利、最新ビルドをSteamの公式画面で確認してください。
 
 現時点で、このガイドはベータのキャッシュ、XP、解除、統計がEarly Accessへ引き継がれるとは約束しません。ワイプや引き継ぎは、開発者が明示したときだけ確定情報として扱います。
 

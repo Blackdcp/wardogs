@@ -85,7 +85,7 @@ function CataloguePreviewRow({locale, type, title, description}: {locale: Locale
           <h2 id={headingId} className="display-font mt-2 text-3xl leading-tight text-[#f2f5f3] md:text-4xl">{title}</h2>
           <p className="mt-3 text-sm leading-6 text-[#a8b4ae]">{description}</p>
         </div>
-        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c] hover:text-white" href={`/items/${type}`}>
+        <Link className="inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c] hover:text-white" href={`/items/${type}`} title={`${ui.viewAll}: ${getLocalizedItemType(itemTypes.find((itemType) => itemType.id === type)!, locale).label}`}>
           {ui.viewAll}: {getLocalizedItemType(itemTypes.find((itemType) => itemType.id === type)!, locale).label}
           <ArrowRight aria-hidden="true" className="size-4" />
         </Link>
@@ -96,6 +96,7 @@ function CataloguePreviewRow({locale, type, title, description}: {locale: Locale
             <a
               className="group block h-full"
               href={publicRoutePath(localizedItemRoutePath(resolveItemRouteTarget(locale, record.detailHref)))}
+              title={`WARDOGS ${record.name}`}
             >
               <span className="relative block aspect-[4/3] overflow-hidden bg-[#090c0a]">
                 <Image src={assetPath(record.image)} alt={record.imageAlt} fill sizes={previewSizes} className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.02]" />
@@ -250,6 +251,7 @@ export default async function ItemsPage({params}: PageProps) {
                   className="group block min-h-48 py-5"
                   href={resolveItemRouteTarget(locale, `/items/${item.type}/${item.slug}`).pathname}
                   locale={resolveItemRouteTarget(locale, `/items/${item.type}/${item.slug}`).locale}
+                  title={`WARDOGS ${item.name}`}
                 >
                   <div className="flex flex-wrap items-center gap-2">
                     <StatusBadge tone={item.status === "official" ? "accent" : "warning"}>{item.statusLabel}</StatusBadge>

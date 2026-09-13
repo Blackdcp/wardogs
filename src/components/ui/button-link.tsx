@@ -1,7 +1,7 @@
 import type {ReactNode} from "react";
 import {Link} from "@/i18n/navigation";
 
-type ButtonLinkProps = {href: string; children: ReactNode; variant?: "primary" | "secondary" | "light"; className?: string; external?: boolean};
+type ButtonLinkProps = {href: string; children: ReactNode; title?: string; variant?: "primary" | "secondary" | "light"; className?: string; external?: boolean};
 
 const variants = {
   primary: "border-[#397b59] bg-[#397b59] text-white hover:bg-[#45946c]",
@@ -9,8 +9,9 @@ const variants = {
   light: "border-[#f2f5f3] bg-[#f2f5f3] text-[#132219] hover:bg-white"
 };
 
-export function ButtonLink({href, children, variant = "primary", className = "", external = false}: ButtonLinkProps) {
+export function ButtonLink({href, children, title, variant = "primary", className = "", external = false}: ButtonLinkProps) {
   const classes = `inline-flex min-h-11 items-center justify-center gap-2 rounded-[6px] border px-5 py-2.5 text-sm font-semibold transition-colors ${variants[variant]} ${className}`;
-  if (external) return <a className={classes} href={href} target="_blank" rel="noreferrer">{children}</a>;
-  return <Link className={classes} href={href}>{children}</Link>;
+  const linkTitle = title ?? (typeof children === "string" ? children : undefined);
+  if (external) return <a className={classes} href={href} target="_blank" rel="noreferrer" title={linkTitle}>{children}</a>;
+  return <Link className={classes} href={href} title={linkTitle}>{children}</Link>;
 }

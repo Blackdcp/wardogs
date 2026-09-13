@@ -91,7 +91,7 @@ export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
                             cellIndex === 0 ? (
                               <th className="px-4 py-3 font-semibold text-white" key={`${cell}-${cellIndex}`} scope="row">
                                 {firstCellHref ? (
-                                  <a className="underline decoration-[#397b59] underline-offset-4 hover:text-[#7fd0a1]" href={firstCellHref}>{cell}</a>
+                                  <a className="underline decoration-[#397b59] underline-offset-4 hover:text-[#7fd0a1]" href={firstCellHref} title={cell}>{cell}</a>
                                 ) : cell}
                               </th>
                             ) : (
@@ -146,6 +146,7 @@ export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
                 href={source.url}
                 rel="noreferrer"
                 target="_blank"
+                title={source.label}
               >
                 {source.label}<ExternalLink aria-hidden="true" size={15} />
               </a>

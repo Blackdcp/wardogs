@@ -31,7 +31,7 @@ export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
             </h2>
             <p className="mt-4 text-sm leading-7 text-[#a8b4ae] sm:text-base">{t("home.priority.description")}</p>
           </div>
-          <Link className="inline-flex min-h-11 w-fit items-center gap-2 border border-[#536159] px-4 py-2 text-sm font-semibold text-[#dce4df] hover:border-[#79d19c] hover:text-white" href="/guides">
+          <Link className="inline-flex min-h-11 w-fit items-center gap-2 border border-[#536159] px-4 py-2 text-sm font-semibold text-[#dce4df] hover:border-[#79d19c] hover:text-white" href="/guides" title={t("nav.allGuides")}>
             {t("nav.allGuides")}<ArrowRight aria-hidden="true" className="size-4" />
           </Link>
         </div>
@@ -48,6 +48,7 @@ export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
                 <li key={guide.slug}>
                   <Link
                     href={`/guides/${guide.slug}`}
+                    title={guide.title}
                     className="group flex min-h-12 items-start gap-3 border-b border-[#26312c] pb-3 text-sm text-[#d7ded9] hover:text-[#79d19c]"
                   >
             <span className="display-font mt-0.5 w-6 shrink-0 text-right text-xs text-[#82938a]">
@@ -70,7 +71,7 @@ export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
               <ul aria-label={t("home.priority.recent.title")} className="mt-5 space-y-3">
                 {recentGuides.map((guide) => (
                   <li key={guide.slug}>
-                    <Link href={`/guides/${guide.slug}`} className="group block border-b border-[#26312c] pb-3">
+                    <Link href={`/guides/${guide.slug}`} className="group block border-b border-[#26312c] pb-3" title={guide.title}>
                       <span className="block text-sm font-semibold leading-6 text-[#d7ded9] group-hover:text-[#79d19c]">{guide.title}</span>
                       <span className="mt-1 block text-xs uppercase text-[#82938a]">{t("common.updated")} {formatLocalizedDate(guide.updatedAt, locale)}</span>
                     </Link>
@@ -87,7 +88,7 @@ export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
               <ul aria-label={t("home.priority.status.title")} className="mt-5 space-y-3">
                 {statusItems.map((item) => (
                   <li key={item.titleKey}>
-                    <Link href={`/guides/${item.slug}`} className="group flex items-start gap-3 border-b border-[#26312c] pb-3">
+                    <Link href={`/guides/${item.slug}`} className="group flex items-start gap-3 border-b border-[#26312c] pb-3" title={t(`home.priority.status.items.${item.titleKey}.title`)}>
                       <span className={`mt-0.5 inline-flex h-6 shrink-0 items-center rounded-[4px] border px-2 text-[10px] font-semibold uppercase ${statusStyles[item.status]}`}>
                         {t(`home.priority.status.labels.${item.status}`)}
                       </span>

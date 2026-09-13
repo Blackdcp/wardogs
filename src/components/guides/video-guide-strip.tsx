@@ -16,14 +16,14 @@ export function VideoGuideStrip({locale}: {locale: Locale}) {
             <p className="text-xs font-semibold uppercase text-[#d9a93a]">{ui.stripEyebrow}</p>
             <h2 id="video-guide-strip-title" className="display-font mt-2 text-3xl text-white">{ui.stripTitle}</h2>
           </div>
-          <a href={`/${locale}/videos`} className="inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-[#79d19c] hover:text-white">
+          <a href={`/${locale}/videos`} className="inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-[#79d19c] hover:text-white" title={ui.openHub}>
             {ui.openHub}
             <ArrowRight aria-hidden="true" className="size-4" />
           </a>
         </div>
         <div className="mt-6 grid gap-px bg-[#2c3631] md:grid-cols-2 xl:grid-cols-4">
           {articles.map((article) => (
-            <a href={videoArticleHref(locale, article.slug)} className="group min-h-36 bg-[#151b18] p-4 hover:bg-[#1b241f]" key={article.slug}>
+            <a href={videoArticleHref(locale, article.slug)} className="group min-h-36 bg-[#151b18] p-4 hover:bg-[#1b241f]" key={article.slug} title={article.title}>
               <span className="inline-flex items-center gap-2 text-xs uppercase text-[#d9a93a]">
                 <PlayCircle aria-hidden="true" className="size-4" />
                 {article.kind === "official" ? ui.official : ui.creator}

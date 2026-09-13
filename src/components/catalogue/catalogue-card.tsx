@@ -86,7 +86,7 @@ export function CatalogueCard({locale, record, eagerImage = false, hidden = fals
       id={`record-${record.type}-${record.slug}`}
     >
       {detailHref ? (
-        <a className={`group ${className}`} href={detailHref}>
+        <a aria-label={record.name} className={`group ${className}`} href={detailHref} title={record.name}>
           <CardContent eagerImage={eagerImage} linked locale={locale} record={record} />
         </a>
       ) : (

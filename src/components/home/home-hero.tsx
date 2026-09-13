@@ -5,6 +5,7 @@ import {assetPath} from "@/lib/assets";
 import {ButtonLink} from "@/components/ui/button-link";
 import {StatsGrid} from "@/components/ui/stats-grid";
 import {StatusBadge} from "@/components/ui/status-badge";
+import {CURRENT_EVENT} from "@/features/live-ops/current-event";
 
 type HomeHeroProps = {
   facts: readonly string[];
@@ -54,11 +55,11 @@ export async function HomeHero({facts}: HomeHeroProps) {
           </p>
 
           <div className="mt-6 flex w-full max-w-xl flex-col justify-center gap-3 sm:flex-row">
-            <ButtonLink href="/guides/wardogs-launch-checklist" className="w-full sm:w-auto">
+            <ButtonLink href={`/guides/${CURRENT_EVENT.patchNotesGuideSlug}`} className="w-full sm:w-auto" title={t("home.primaryCta")}>
               {t("home.primaryCta")}
               <ArrowRight aria-hidden="true" className="size-4" />
             </ButtonLink>
-            <ButtonLink href="/guides/wardogs-server-status" variant="secondary" className="w-full sm:w-auto">
+            <ButtonLink href="/guides/wardogs-server-status" variant="secondary" className="w-full sm:w-auto" title={t("home.secondaryCta")}>
               {t("home.secondaryCta")}
             </ButtonLink>
           </div>

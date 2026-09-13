@@ -60,6 +60,7 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
               <li key={group.id}>
                 <Link
                   href={group.href}
+                  title={group.label}
                   className="inline-flex min-h-11 min-w-20 items-center justify-center whitespace-nowrap px-3 text-[13px] font-semibold text-[#c2ccc7] transition-colors hover:text-[#79d19c]"
                 >
                   {group.label}
@@ -117,6 +118,7 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
                       <Link
                         href={item.href}
                         locale={item.locale}
+                        title={item.label}
                         className="flex min-h-10 items-center whitespace-nowrap rounded-[4px] px-3 py-2 text-sm font-semibold text-[#dce4df] transition-colors hover:bg-[#1e2923] hover:text-[#79d19c]"
                         onClick={() => {
                           pointerEntryGroupRef.current = null;

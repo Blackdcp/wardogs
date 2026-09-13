@@ -16,6 +16,8 @@ export function VideoArticleCard({article, locale, eager = false}: {article: Vid
   return (
     <a
       href={videoArticleHref(locale, article.slug)}
+      aria-label={article.title}
+      title={article.title}
       className="group flex min-h-64 flex-col overflow-hidden border border-[#2c3631] bg-[#151b18] transition-colors hover:border-[#4d946d] hover:bg-[#1b241f]"
     >
       <span className="relative block aspect-video overflow-hidden border-b border-[#2c3631] bg-[#0d100e]">

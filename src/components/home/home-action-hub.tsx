@@ -16,7 +16,7 @@ export type HomeActionHubEntry = {
   description: string;
 };
 
-type ActionLinkComponent = ComponentType<{className: string; href: string; children: ReactNode}>;
+type ActionLinkComponent = ComponentType<{className: string; href: string; title: string; children: ReactNode}>;
 
 type HomeActionHubViewProps = {
   eyebrow: string;
@@ -33,7 +33,7 @@ const actionPresentation = {
   system: {icon: MonitorCog, accent: "text-[#ef8585]", border: "group-hover:border-[#8f4f4f]"}
 } as const;
 
-function NativeLink({children, ...props}: {className: string; href: string; children: ReactNode}) {
+function NativeLink({children, ...props}: {className: string; href: string; title: string; children: ReactNode}) {
   return <a {...props}>{children}</a>;
 }
 
@@ -60,6 +60,7 @@ export function HomeActionHubView({eyebrow, title, description, actions, LinkCom
                 <LinkComponent
                   className={`group flex h-full min-h-[318px] flex-col overflow-hidden rounded-[7px] border border-[#303b35] bg-[#141a17] transition-colors ${presentation.border}`}
                   href={action.href}
+                  title={action.title}
                 >
                   <span className="relative block aspect-[16/9] overflow-hidden bg-[#080a09]">
                     <Image
@@ -99,8 +100,8 @@ export async function HomeActionHub() {
     imageAlt: t(`${action.key}.imageAlt`)
   }));
 
-  const LocalizedLink: ActionLinkComponent = ({children, href, className}) => (
-    <Link className={className} href={href}>{children}</Link>
+  const LocalizedLink: ActionLinkComponent = ({children, href, className, title}) => (
+    <Link aria-label={title} className={className} href={href} title={title}>{children}</Link>
   );
 
   return (

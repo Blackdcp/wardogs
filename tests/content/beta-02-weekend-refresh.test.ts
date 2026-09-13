@@ -42,7 +42,9 @@ describe("Closed Beta 02 weekend release contract", () => {
     expect(source).toContain('startsAt: "2026-09-03T19:00:00Z"');
     expect(source).toContain('endsAt: "2026-09-06T08:00:00Z"');
     expect(source).toContain('earlyAccessAt: "2026-09-10"');
-    expect(source).toContain('status: "ended"');
+    expect(source).toContain('status: "live"');
+    expect(source).toContain('latestPatchVersion: "0.11"');
+    expect(source).toContain('maintenanceStartsAt: "2026-09-14T08:00:00Z"');
   });
 
   it("publishes the contest and known-issues guides in every language", async () => {
@@ -56,7 +58,7 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of newGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-known-issues" ? "2026-09-09" : "2026-09-04");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-known-issues" ? "2026-09-13" : "2026-09-04");
         expect(guide?.frontmatter.description.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(140);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(1_200);
@@ -77,13 +79,13 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of currentGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          slug === "wardogs-launch-checklist" ? "2026-09-10" : "2026-09-09",
-        );
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
         expect(sources, `${locale}/${slug}`).toContain(steamUrl);
-        expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
-        expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
         expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
+        if (["wardogs-beta", "wardogs-playtest", "wardogs-livestream"].includes(slug)) {
+          expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
+          expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
+        }
       }
     }
   });
@@ -92,19 +94,29 @@ describe("Closed Beta 02 weekend release contract", () => {
     for (const locale of locales) {
       for (const slug of refreshedGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
-        const reviewedOnSeptember9 = ["wardogs-preload", "wardogs-ps5", "wardogs-twitch-drops"].includes(slug)
-          || (locale === "en" && slug === "wardogs-factions");
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(reviewedOnSeptember9 ? "2026-09-09" : "2026-09-04");
+        const expectedDate = ["wardogs-preload", "wardogs-ps5"].includes(slug)
+          ? "2026-09-13"
+          : slug === "wardogs-twitch-drops"
+            ? "2026-09-09"
+            : locale === "en" && slug === "wardogs-factions"
+              ? "2026-09-09"
+            : "2026-09-04";
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedDate);
         expect(guide?.frontmatter.sources.map(({url}) => url), `${locale}/${slug}`).toContain(beta02Url);
-        expect(guide?.body, `${locale}/${slug}`).toContain("Beta 02");
+        if (slug === "wardogs-ps5") {
+          expect(guide?.body, `${locale}/${slug}`).toContain("2028");
+        } else {
+          expect(guide?.body, `${locale}/${slug}`).toContain("Beta 02");
+        }
       }
 
       const preload = await loadGuideDocument(locale, "wardogs-preload");
       const controls = await loadGuideDocument(locale, "wardogs-controls");
       const drops = await loadGuideDocument(locale, "wardogs-twitch-drops");
       const ps5 = await loadGuideDocument(locale, "wardogs-ps5");
-      expect(preload?.body, locale).toContain("19:00 UTC");
-      expect(preload?.body, locale).toContain("08:00 UTC");
+      const preloadSearchable = `${preload?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${preload?.body}`;
+      expect(preloadSearchable, locale).toContain("19:00 UTC");
+      expect(preloadSearchable, locale).toContain("08:00 UTC");
       expect(controls?.body, locale).toContain("U");
       expect(drops?.body, locale).toContain("Twitch Inventory");
       expect(ps5?.body, locale).toContain("PS5");

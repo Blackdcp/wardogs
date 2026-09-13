@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-09"
+updatedAt: "2026-09-13"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -13,14 +13,26 @@ badges:
     tone: "muted"
 faq:
   - question: "Gelten Beta-02-Probleme auch in Early Access?"
-    answer: "Sie sind eine Launch-Beobachtung, keine bestätigten Early-Access-Fehler. Offizielle Meldungen und Community-Berichte bleiben getrennt."
+    answer: "WARDOGS ist im Steam Early Access live. Die Wartung für Patch 0.11 ist am 14. September um 08:00 UTC für etwa eine Stunde geplant; Abschluss offiziell prüfen."
   - question: "Wie untersuche ich einen WARDOGS-Absturz sicher?"
     answer: "Starte Steam und Windows neu, prüfe die Dateien, entferne inoffizielle Startparameter, aktualisiere den Grafiktreiber, schließe Overlays und notiere den exakten Fehler."
   - question: "Warum ist der lokale Sprachchat ausgefallen?"
     answer: "Der Entwickler rät, Sprachchat in den Einstellungen aus- und einzuschalten oder im Scoreboard zweimal U zu drücken; auch der externe Sprachanbieter kann gestört sein."
   - question: "Sind Supporter-Pack-Gegenstände in Beta 02 verfügbar?"
-    answer: "Laut Entwicklerhinweis sind Supporter-Pack-Gegenstände in der Beta nicht verfügbar und sollen erst zum Early Access freigeschaltet werden."
+    answer: "Das war ein Beta-Hinweis. Das Supporter Pack wird inzwischen als Steam-DLC verkauft; bei fehlenden Gegenständen müssen DLC-Recht und aktueller Build geprüft werden."
 sources:
+  - label: "Offizieller Preload- und Season-1-Changelog"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Offizieller Launch Stability Hotfix #1"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Offizielle Ankündigung zur Wartung für Patch 0.11"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-13"
   - label: "WARDOGS-Entwicklerhinweis zu bekannten Beta-Problemen"
     url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
     kind: "official"
@@ -34,14 +46,13 @@ sources:
     kind: "community"
     checkedAt: "2026-09-09"
 ---
+## Bekannte Probleme am 13. September
 
-## Status am 9. September: letzter Check vor Early Access
+Der Entwickler bestätigte Schwächen im Serverbrowser und bei Community-Servern. Patch 0.11 ist für **14. September, 08:00 UTC** geplant und behandelt außerdem Cash-Exploits, weitere GPU-Abstürze und die Kapazität in Asien.
 
-**Beta 02 ist beendet.** Die Show begann am 3. September um **18:00 UTC**; das korrigierte Serverfenster lief von **19:00 UTC** bis **6. September um 08:00 UTC**. Zugangsregeln, Workarounds, Preise und Balancewerte sind datierte Testhistorie, keine aktuelle Verfügbarkeit.
+Damit sind nicht alle Abstürze, Kicks, Voice- oder Leistungsprobleme gelöst. Hardwareberichte bleiben Community-Beobachtungen, bis Build und Ursache bestätigt sind. Anti-Cheat nicht deaktivieren und keine unbekannten Netzwerktools oder Exploit-Anleitungen verwenden.
 
-Steam nennt **10. September 2026** für Windows-PC-Early-Access. Am 9. September sind die **genaue Freischaltzeit nicht bestätigt** und ein **Early-Access-Preload nicht bestätigt**. Keine Mitternachtszeit ableiten und keine externen Pakete laden.
 
-Prüfe Steam und nutze die [Launch-Checkliste](/de/guides/wardogs-launch-checklist) sowie den [Serverstatus](/de/guides/wardogs-server-status).
 ## Von der Community gemeldete Beta-02-Launch-Beobachtung
 
 Spieler meldeten Warteschlangen, Serverbrowser-Probleme, wiederholbare Abstürze, ungleichmäßige Frame-Zeiten, RAM- oder VRAM-Druck, unterschiedliche Ergebnisse mit DLSS, DLAA, Schatten und Reflex + Boost, Voice-Ausfälle und Fortschrittsfragen. Das sind **Community-Meldungen aus Beta 02**, keine bestätigten Early-Access-Fehler oder universellen Lösungen.
@@ -61,7 +72,7 @@ Die Hinweise stammen aus dem offiziellen Known-Issues-Thread und können sich im
 Bearbeite ein Symptom nach dem anderen und dokumentiere UTC-Zeit, Region, Hardware, Treiber und Fehlermeldung.
 
 
-Closed Beta 02 ist ein laufender Belastungstest. Eine Warteschlange, ein leerer Serverbrowser, ein Absturz oder ausgefallener Sprachchat kann deshalb am Dienst oder an der Test-Build liegen und muss kein Defekt deines PCs sein. Beginne mit den offiziellen Prüfungen, ändere immer nur einen Faktor und sichere den genauen Fehlercode.
+Closed Beta 02 war ein Belastungstest. Eine damalige Warteschlange, ein leerer Serverbrowser, ein Absturz oder ausgefallener Sprachchat konnte am Dienst oder an der Test-Build liegen und musste kein Defekt des PCs sein. Für aktuelle Fälle prüfe zuerst die Early-Access-Patchnotes, ändere immer nur einen Faktor und sichere den genauen Fehlercode.
 
 ## Aktuelles Zeitfenster und Zugang
 
@@ -93,7 +104,7 @@ Bei ausgefallenem lokalem Sprachchat empfiehlt der Entwickler, Voice Chat in den
 
 ## Supporter Pack und Fortschritt
 
-Supporter-Pack-Inhalte sind laut Entwicklerbeitrag in der Beta nicht aktiv und sollen mit Early Access freigeschaltet werden. Ihr Fehlen beweist daher keinen fehlgeschlagenen Kauf. Für Geld, XP, Freischaltungen oder Statistiken aus Beta 02 gibt es hier keine Übernahmegarantie.
+Supporter-Pack-Inhalte waren laut Entwicklerbeitrag in der Beta nicht aktiv. Das Pack wird inzwischen als Steam-DLC verkauft; bei aktuellen Problemen sind Kaufverlauf, DLC-Recht und Live-Build maßgeblich. Für Geld, XP, Freischaltungen oder Statistiken aus Beta 02 gab es keine dokumentierte Übernahmegarantie.
 
 ## Angaben für den Support
 

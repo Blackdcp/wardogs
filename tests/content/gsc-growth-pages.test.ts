@@ -25,7 +25,7 @@ describe("GSC growth page reinforcement", () => {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
         const expectedCheckDate = ["wardogs-beta", "wardogs-playtest"].includes(slug)
-          ? "2026-09-09"
+          ? "2026-09-13"
           : slug === "wardogs-crash-fix"
             ? "2026-09-04"
           : locale === "zh-cn" && ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)

@@ -12,16 +12,16 @@
     "openSteam": "在 Steam 查看 WARDOGS"
   },
   "liveOps": {
-    "eyebrow": "发售日状态",
-    "title": "9 月 10 日已到，请检查 Steam 开放状态",
-    "description": "本站最后检查时 Steam 仍显示预购。是否已经解锁请以官方商店为准；官方没有公布全球统一的具体开放时刻或 Early Access 预载。",
-    "windowLabel": "官方发售日期",
-    "windowValue": "2026 年 9 月 10 日",
-    "accessLabel": "现在应该做什么",
-    "accessValue": "检查 Steam 商店，正式开放后只启动库中的 WARDOGS 主条目。",
+    "eyebrow": "抢先体验运营状态",
+    "title": "抢先体验已上线，Patch 0.11 维护已排期",
+    "description": "WARDOGS 已可在 Steam 游玩。服务器计划于 9 月 14 日 08:00 UTC 暂停约一小时，用于上线改善服务器浏览器的 Patch 0.11。",
+    "windowLabel": "下一次维护",
+    "windowValue": "9 月 14 日 08:00 UTC - 约 1 小时",
+    "accessLabel": "Patch 0.11 重点",
+    "accessValue": "拆分官方与社区服务器列表，改进搜索和筛选，保留服务器 ID，修复现金与 GPU 问题，并增加亚洲容量。",
     "closedBetaNote": "修订后的 Beta 02 服务器窗口已于 9 月 6 日 08:00 UTC 关闭；旧 Playtest 权限不能重新开放测试。",
-    "accessCta": "发售日检查清单",
-    "issuesCta": "服务器状态",
+    "accessCta": "查看 Patch 0.11",
+    "issuesCta": "检查服务器状态",
     "countdown": {
       "starts": "距离 Beta 开始",
       "ends": "距离 Beta 结束",
@@ -77,9 +77,9 @@
     "metaDescription": "独立运营的 WARDOGS Wiki 提供经过核实的武器、载具、装备、操作、当前参与状态、已知问题、设置与实战攻略。我们会交叉检查官方来源和公开资料，标注出处、更新时间与适用版本，明确区分容易变化的数值和未经确认的信息，并整理新手入门、下载、飞行操作、小队协作及实用玩家工具，帮助玩家快速找到可靠答案。",
     "heroTitle": "武器、载具、攻略与游戏资料库",
     "heroDescription": "这里整理经过来源核实的装备、操作、当前参与状态、故障排查与实战策略，并明确标注所有受版本影响的信息。",
-    "primaryCta": "打开发售日检查清单",
+    "primaryCta": "查看 Patch 0.11",
     "secondaryCta": "检查服务器状态",
-    "status": "抢先体验日期已到 - 请检查 Steam",
+    "status": "Steam 抢先体验已上线",
     "statsLabel": "WARDOGS 关键信息",
     "stats": {
       "earlyAccess": "2026 年 9 月 10 日抢先体验",
@@ -91,7 +91,7 @@
     "about": {
       "eyebrow": "百人三方战术射击",
       "imageAlt": "WARDOGS 官方实机画面中的直升机与战场",
-      "bodyOne": "WARDOGS 是由 BULKHEAD 开发、Team17 发行的 PC 战术射击游戏。官方资料显示，每局最多容纳 100 名玩家，分成三支队伍，通过步兵、载具、防御工事与后勤协作争夺控制区。",
+      "bodyOne": "WARDOGS 是 BULKHEAD 已在 Steam 抢先体验上线的战术全面战争 FPS，并非 2016 年电影《War Dogs》。最多 100 名玩家分成三队，在随机 2 x 2 公里控制区中使用步兵、载具、工事和后勤作战。",
       "bodyTwo": "击杀不是唯一贡献方式。救治、运输、补给和目标控制也会影响团队推进与个人经济；具体数值和规则仍可能在抢先体验阶段调整。",
       "officialQuote": "Every player starts their journey with $10,000.",
       "officialQuoteSource": "Steam 上的 WARDOGS 官方介绍",
@@ -104,11 +104,11 @@
     "startEyebrow": "从这里开始",
     "startTitle": "准备你的第一次部署",
     "start": {
-      "description": "从这六篇开始检查发售日资格、安全安装、服务器、官方更新，并把 Beta 02 信息保留为历史记录。",
+      "description": "使用这六篇当前攻略安全安装、核对 9 月 14 日维护、监控服务器、查看已验证改动，并避开已经过期的 Beta 建议。",
       "cards": {
         "playtest": {
-          "title": "补丁说明追踪",
-          "description": "检查官方是否发布发售补丁，并把 Beta 历史和当前改动严格分开。"
+          "title": "Patch 0.11 与更新记录",
+          "description": "核对维护计划、已确认的服务器浏览器改动、当前修复与明确标成尚未上线的后续功能。"
         },
         "download": {
           "title": "下载与安装",
@@ -127,8 +127,8 @@
           "description": "按官方规则检查发布平台、标签、表格、截止时间和地区资格。"
         },
         "launch": {
-          "title": "发售日检查清单",
-          "description": "今天核对 Steam 资格、正确库条目、电脑、小队、设置和信息来源。"
+          "title": "上线首周检查清单",
+          "description": "每次游玩前检查版本、地区、设置、队伍、已知问题和第一方信息。"
         }
       }
     },
@@ -136,15 +136,31 @@
       "eyebrow": "选择你的任务",
       "title": "你现在最需要做什么？",
       "description": "不必翻完整目录，直接进入你当前要完成的事情。所有可能随版本变化的数据都会继续明确标注。",
-      "play": {"title": "检查发售资格", "description": "检查 Steam 开放状态、安装、账号权限和正确的游戏库条目。", "imageAlt": "用于参与和下载攻略的 WARDOGS 战场画面"},
-      "fix": {"title": "检查服务器状态", "description": "区分官方故障、登录排队与账号、地区、语音或电脑问题。", "imageAlt": "用于故障排查的 WARDOGS 战术装备画面"},
-      "gear": {"title": "浏览武器与装备", "description": "查看带图的武器、载具、护甲、弹药和配装资料。", "imageAlt": "WARDOGS 带图武器与装备图鉴"},
-      "system": {"title": "检测你的电脑", "description": "调整设置前，先把你的硬件与已确认配置要求进行比较。", "imageAlt": "用于电脑配置检测的 WARDOGS 游戏画面"}
+      "play": {
+        "title": "安装并游玩抢先体验",
+        "description": "打开 Steam 中的 WARDOGS 主应用，安装当前版本，并在进入服务器前核对维护状态。",
+        "imageAlt": "用于参与和下载攻略的 WARDOGS 战场画面"
+      },
+      "fix": {
+        "title": "检查服务器状态",
+        "description": "区分官方故障、登录排队与账号、地区、语音或电脑问题。",
+        "imageAlt": "用于故障排查的 WARDOGS 战术装备画面"
+      },
+      "gear": {
+        "title": "浏览武器与装备",
+        "description": "查看带图的武器、载具、护甲、弹药和配装资料。",
+        "imageAlt": "WARDOGS 带图武器与装备图鉴"
+      },
+      "system": {
+        "title": "检测你的电脑",
+        "description": "调整设置前，先把你的硬件与已确认配置要求进行比较。",
+        "imageAlt": "用于电脑配置检测的 WARDOGS 游戏画面"
+      }
     },
     "priority": {
       "eyebrow": "优先级信息",
-      "title": "WARDOGS 玩家发售日最需要的内容",
-      "description": "优先检查 Steam 开放状态、发售清单、服务器、已核实补丁、安全安装和操作。",
+      "title": "WARDOGS 玩家本周末最需要的内容",
+      "description": "优先查看 Patch 0.11 维护、当前服务器状态、已核实改动、安全安装和操作。",
       "top": {
         "title": "核心攻略",
         "description": "围绕当前开放状态、Steam 权限、上线准备和高频搜索问题精选核心攻略。"
@@ -162,24 +178,24 @@
         },
         "items": {
           "closedBeta02": {
-            "title": "发售状态需要直接检查 Steam",
-            "description": "9 月 10 日是官方日期，但实际开放以 Steam 为准。Beta 02 只保留为历史测试记录。"
+            "title": "Closed Beta 02 已结束",
+            "description": "9 月 3 日至 6 日的测试已成为历史；WARDOGS 当前已通过 Steam 主应用开放抢先体验。"
           },
           "clipContest": {
             "title": "10 万美元剪辑大赛开放报名",
             "description": "发布两分钟以内的视频，带上 #WARDOGS100K 并标记 @WARDOGS，再通过官方表格提交链接。"
           },
           "paidPrepurchase": {
-            "title": "预购保证测试资格",
-            "description": "免费的 Steam Playtest 申请分批通过；显示已申请并不等于已经获得许可。"
+            "title": "Beta 资格规则已经成为历史",
+            "description": "预购保证和免费 Playtest 分批放行只适用于已结束测试；当前产品是 Steam 主应用的抢先体验版。"
           },
           "steamEarlyAccess": {
-            "title": "9 月 10 日开启 Steam 抢先体验",
-            "description": "Windows PC 抢先体验已经确认，但本站不会在官方公布前编写具体解锁时刻。"
+            "title": "Steam 抢先体验已经上线",
+            "description": "Windows PC 版已于 9 月 10 日上线；当前安装与补丁均由 Steam 主应用提供。"
           },
           "ps5Release": {
-            "title": "PS5 版本",
-            "description": "PS5 上线日期和跨平台计划仍未确认。"
+            "title": "主机版计划于 2028 年推出",
+            "description": "官方预告确认 2028 年主机窗口，但没有分别确认 PS5、Xbox、具体日期、跨平台联机或进度。"
           }
         }
       }
@@ -189,12 +205,12 @@
       "publishedModels": "已发布的武器与载具条目",
       "weapons": {
         "title": "武器",
-        "count": "{count} 条预发布记录",
+        "count": "{count} 条带版本标记的记录",
         "imageAlt": "WARDOGS 武器图鉴"
       },
       "vehicles": {
         "title": "载具",
-        "count": "{count} 条预发布记录",
+        "count": "{count} 条带版本标记的记录",
         "imageAlt": "WARDOGS 载具图鉴"
       },
       "ammo": {
@@ -277,7 +293,7 @@
         },
         "release": {
           "question": "WARDOGS 什么时候开启抢先体验？",
-          "answer": "官方计划于 2026 年 9 月 10 日在 Windows PC Steam 开启抢先体验。"
+          "answer": "WARDOGS 已于 2026 年 9 月 10 日在 Steam 开启抢先体验。"
         },
         "controlZone": {
           "question": "控制区如何计分？",
@@ -306,11 +322,11 @@
     "read": "阅读攻略"
   },
   "news": {
-    "metaTitle": "WARDOGS 新闻与更新时间表 - 测试、直播和抢先体验",
-    "metaDescription": "查看经过来源核实的 WARDOGS 测试、Steam 预购、9 月 2 日有限测试、9 月 3 日直播与 9 月 10 日抢先体验时间表，并区分已确认事项和仍未公布的细节。",
+    "metaTitle": "WARDOGS 新闻 - Patch 0.11、服务器与抢先体验",
+    "metaDescription": "追踪 WARDOGS Patch 0.11 维护、服务器修复、Steam 抢先体验、主机计划、平台状态和攻略更新，所有关键结论附第一方来源。",
     "eyebrow": "最新更新",
     "title": "WARDOGS 新闻与确认时间表",
-    "description": "持续整理有来源的 WARDOGS 更新，包括 Closed Beta 02、已知问题、剪辑活动、Steam 抢先体验、平台、下载和玩法。",
+    "description": "持续更新有来源的 WARDOGS Patch 0.11、服务器状态、已知问题、Steam 抢先体验、平台、下载和玩法信息。",
     "timeline": {
       "title": "确认时间表",
       "readMore": "阅读全文",
@@ -328,8 +344,8 @@
           "description": "把两分钟以内的视频带 #WARDOGS100K 和 @WARDOGS 公开发布，并在 10 月 8 日前通过官方表格提交。"
         },
         "steamPreorder": {
-          "title": "Steam 预购和 Request Access 均已开放",
-          "description": "价格、购买、免费申请、游戏许可和安装都应通过 Steam 官方页面完成。"
+          "title": "Steam 预购曾在发售前开放",
+          "description": "Steam 是发售前购买与 Beta 资格的官方入口；当前主产品已经进入抢先体验。"
         },
         "closedBeta": {
           "title": "8 月 Closed Beta 已于 8 月 24 日结束",
@@ -340,16 +356,16 @@
           "description": "总结对应已经结束的 8 月测试，不应用来判断 Closed Beta 02 当前状态。"
         },
         "earlyAccess": {
-          "title": "Steam 抢先体验将于 2026 年 9 月 10 日开始",
-          "description": "Windows PC 版本已确认；正式版日期和准确解锁时刻仍未确认。"
+          "title": "WARDOGS 抢先体验已于 9 月 10 日上线",
+          "description": "Windows PC 版已可在 Steam 游玩。官方首发预告宣布 2028 年登陆主机，但未公布具体平台和日期。"
         },
         "ps5": {
-          "title": "PS5 上线日期尚未确认",
-          "description": "官方产品页面目前只列出 Steam Windows PC；主机时间和跨平台仍未确认。"
+          "title": "主机版已宣布于 2028 年推出",
+          "description": "首发预告确认 2028 年主机窗口，但没有点名 PS5、Xbox、具体日期、跨平台联机或跨平台进度。"
         },
         "preload": {
-          "title": "抢先体验预载尚未确认",
-          "description": "Steam 已确认 9 月 10 日日期，但截至 9 月 9 日仍未公布具体解锁时间或独立预载安排。"
+          "title": "官方预载已于 9 月 9 日开放",
+          "description": "预载早于 9 月 10 日抢先体验上线；当前安装与补丁均由 Steam 主产品提供。"
         },
         "twitchDrops": {
           "title": "Beta 02 曾测试 Twitch Drops",
@@ -362,12 +378,24 @@
         "firingRangeTest": {
           "title": "9 月 2 日靶场测试已经结束",
           "description": "该次有限的后台和队列检查发生在 Closed Beta 02 之前，只保留为历史信息。"
+        },
+        "patch011": {
+          "title": "Patch 0.11 维护定于 9 月 14 日",
+          "description": "服务器计划从 08:00 UTC 起暂停约一小时；更新重点为服务器浏览器、社区服发现、稳定性修复与亚洲容量。"
+        },
+        "copiesSold": {
+          "title": "WARDOGS 官方宣布销量达到 125 万份",
+          "description": "该数据由 Steam 官方动态在抢先体验上线后公布，代表销量，不是同时在线人数。"
+        },
+        "launchHotfix": {
+          "title": "Launch Stability Hotfix #1 已上线",
+          "description": "9 月 10 日客户端热修复针对无法加入服务器、游玩中意外被踢和登录队列过长。"
         }
       }
     },
     "checklist": {
-      "title": "上线前检查清单",
-      "description": "在 9 月 10 日抢先体验前，使用这些页面核对 Steam 状态、安全安装、故障处理、操作设置和经过来源确认的上线信息。"
+      "title": "上线首周检查清单",
+      "description": "抢先体验期间使用这些页面检查服务器、安全安装、故障排查、操作、设置与已确认补丁内容。"
     },
     "rules": {
       "title": "我们如何标记更新",
@@ -382,7 +410,7 @@
         },
         "refresh": {
           "title": "分享前重新核对",
-          "description": "WARDOGS 正处于上线前快速变化阶段；转发旧截图前先检查页面核查日期与最新官方公告。"
+          "description": "WARDOGS 正处于持续更新的抢先体验阶段；转发旧截图前先检查页面核查日期、版本标签与最新官方公告。"
         }
       }
     }

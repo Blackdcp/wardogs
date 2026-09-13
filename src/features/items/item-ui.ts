@@ -85,6 +85,69 @@ const ui: Record<Locale, ItemUi> = {
   }
 };
 
+const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
+  en: {
+    hubMetaDescription: "Browse WARDOGS Early Access weapons, vehicles, ammunition, attachments, gear and loadouts with source dates and build labels.",
+    hubDescription: "Compare WARDOGS equipment with clear Early Access, official, and historical Alpha evidence labels instead of mixing builds.",
+    alphaSnapshot: "Historical Alpha 1 baseline",
+    preRelease: "Historical test record",
+    preReleaseDescription: "Observed before Early Access; values, unlocks, and balance require a current-build recheck.",
+    featuredVehiclesDescription: "Representative transport, armor, and aircraft records with their observation build clearly identified.",
+    officialSourcesDescription: "Official pages confirm the live game, platform, and high-level systems. Each catalogue row keeps its observation build until reverified in Early Access.",
+    unconfirmedRelease: "Not reverified in the current Early Access build"
+  },
+  de: {
+    hubMetaDescription: "WARDOGS-Waffen, Fahrzeuge, Munition, Aufsätze, Ausrüstung und Loadouts mit Quellen, Datum und Build-Kennzeichnung.",
+    hubDescription: "Vergleiche WARDOGS-Ausrüstung mit klaren Kennzeichnungen für Early Access, offizielle Angaben und historische Alpha-Belege.",
+    alphaSnapshot: "Historischer Alpha-1-Stand",
+    preRelease: "Historischer Teststand",
+    preReleaseDescription: "Vor Early Access beobachtet; Werte, Freischaltungen und Balance müssen im aktuellen Build erneut geprüft werden.",
+    featuredVehiclesDescription: "Beispiele für Transport, Panzerung und Luftfahrzeuge mit klarer Kennzeichnung des beobachteten Builds.",
+    officialSourcesDescription: "Offizielle Seiten bestätigen das live verfügbare Spiel, die Plattform und Hauptsysteme. Jeder Katalogeintrag behält seine Build-Kennzeichnung, bis er im Early Access erneut geprüft wurde.",
+    unconfirmedRelease: "Im aktuellen Early-Access-Build nicht erneut bestätigt"
+  },
+  ru: {
+    hubMetaDescription: "Каталог оружия, транспорта, боеприпасов, модификаций, экипировки и комплектов WARDOGS с датами источников и метками сборки.",
+    hubDescription: "Сравнивайте снаряжение WARDOGS, разделяя данные Early Access, официальные сведения и исторические наблюдения Alpha.",
+    alphaSnapshot: "Исторический снимок Alpha 1",
+    preRelease: "Историческая тестовая запись",
+    preReleaseDescription: "Наблюдалось до Early Access; значения, разблокировки и баланс нужно перепроверить в текущей сборке.",
+    featuredVehiclesDescription: "Примеры транспорта, бронетехники и авиации с указанием сборки, в которой они наблюдались.",
+    officialSourcesDescription: "Официальные страницы подтверждают доступность игры, платформу и основные системы. Каждая строка сохраняет метку сборки до повторной проверки в Early Access.",
+    unconfirmedRelease: "Не перепроверено в текущей сборке Early Access"
+  },
+  "pt-br": {
+    hubMetaDescription: "Veja armas, veículos, munições, acessórios, equipamentos e kits de WARDOGS com data das fontes e identificação da build.",
+    hubDescription: "Compare equipamentos de WARDOGS separando claramente dados do Acesso Antecipado, fontes oficiais e registros históricos do Alpha.",
+    alphaSnapshot: "Base histórica do Alpha 1",
+    preRelease: "Registro histórico de teste",
+    preReleaseDescription: "Observado antes do Acesso Antecipado; valores, desbloqueios e balanceamento exigem nova verificação na build atual.",
+    featuredVehiclesDescription: "Exemplos de transporte, blindados e aeronaves com a build observada claramente identificada.",
+    officialSourcesDescription: "As páginas oficiais confirmam o jogo disponível, a plataforma e os sistemas gerais. Cada linha mantém a identificação da build até nova verificação no Acesso Antecipado.",
+    unconfirmedRelease: "Ainda não verificado na build atual do Acesso Antecipado"
+  },
+  ja: {
+    hubMetaDescription: "WARDOGSの武器、車両、弾薬、アタッチメント、装備、ロードアウトを、出典日とビルド区分付きで確認できます。",
+    hubDescription: "Early Access、公式情報、過去のAlpha観測を明確に分けてWARDOGS装備を比較します。",
+    alphaSnapshot: "過去のAlpha 1基準",
+    preRelease: "過去テストの記録",
+    preReleaseDescription: "Early Access前の観測です。数値、解除条件、バランスは現行ビルドで再確認が必要です。",
+    featuredVehiclesDescription: "輸送車両、装甲車両、航空機の代表例を、観測ビルドを明記して掲載します。",
+    officialSourcesDescription: "公式ページは配信中のゲーム、対応プラットフォーム、主要システムを確認する一次情報です。各行はEarly Accessで再確認されるまで観測ビルドを保持します。",
+    unconfirmedRelease: "現行Early Accessビルドでは未再確認"
+  },
+  "zh-cn": {
+    hubMetaDescription: "查看 WARDOGS 抢先体验版武器、载具、弹药、配件、装备和配装，包含来源日期与版本证据标记。",
+    hubDescription: "按抢先体验、官方资料和历史 Alpha 证据分层比较 WARDOGS 装备，避免把不同版本的数据混在一起。",
+    alphaSnapshot: "历史 Alpha 1 基线",
+    preRelease: "历史测试记录",
+    preReleaseDescription: "该数据在抢先体验前观察；数值、解锁和平衡仍需在当前版本重新核验。",
+    featuredVehiclesDescription: "展示运输、装甲和飞行器代表记录，并明确标注各项素材的观察版本。",
+    officialSourcesDescription: "官方页面确认当前游戏、平台与主要系统。每条图鉴数据都会保留观察版本，直到在抢先体验当前版本重新核验。",
+    unconfirmedRelease: "尚未在当前抢先体验版本重新确认"
+  }
+};
+
 export function getItemUi(locale: Locale) {
-  return ui[locale];
+  return {...ui[locale], ...earlyAccessOverrides[locale]};
 }

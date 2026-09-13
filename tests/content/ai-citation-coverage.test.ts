@@ -78,18 +78,29 @@ const queryPages = {
   crash: "wardogs-crash-fix"
 } as const;
 
+const releaseDateSignals = {
+  en: /September 10, 2026/i,
+  de: /10\. September 2026/i,
+  ru: /10 сентября 2026/i,
+  "pt-br": /10 de setembro de 2026/i,
+  ja: /2026年9月10日/i,
+  "zh-cn": /2026\s*年\s*9\s*月\s*10\s*日/i,
+} as const;
+
 describe("AI citation query coverage", () => {
   it("puts a current, source-backed Early Access status snapshot in every locale", async () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-early-access");
       const searchable = `${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
-      const expectedDate = locale === "en" || locale === "zh-cn" ? "2026-09-01" : "2026-08-24";
+      const expectedDate = "2026-09-13";
 
       expect(guide?.frontmatter.updatedAt, locale).toBe(expectedDate);
-      expect(searchable, `${locale} date`).toContain(locale === "zh-cn" ? "2026年9月10日" : "September 10, 2026");
+      expect(searchable, `${locale} date`).toMatch(releaseDateSignals[locale]);
       expect(searchable, `${locale} platform`).toMatch(locale === "zh-cn" ? /Windows\s*PC|WindowsPC|Windows 电脑/i : /Windows PC/i);
       expect(searchable, `${locale} store`).toContain("Steam");
-      expect(searchable, `${locale} verification date`).toContain(expectedDate);
+      expect(searchable, `${locale} verification date`).toMatch(
+        /September 13|13\. September|13 сентября|13 de setembro|9月13日|9 月 13 日|2026-09-13/,
+      );
       expect(searchable, `${locale} table`).toMatch(/\|[^\n]+\|[^\n]+\|/);
     }
   });
@@ -100,7 +111,7 @@ describe("AI citation query coverage", () => {
         const guide = await loadGuideDocument(locale, slug);
         const query = localizedQueries[locale][intent as keyof typeof localizedQueries.en];
 
-        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04", "2026-09-09"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
+        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
         const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question}) => question).join("\n")}`;
         expect(searchable, `${locale}/${slug} missing ${query}`).toContain(query);
       }

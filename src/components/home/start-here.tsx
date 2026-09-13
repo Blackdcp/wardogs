@@ -21,10 +21,12 @@ export async function StartHere() {
           {START_GUIDES.map((guide) => {
             const anchor = "anchor" in guide ? `#${guide.anchor}` : "";
             const href = `/guides/${guide.slug}${anchor}`;
+            const title = t(`home.start.cards.${guide.titleKey}.title`);
             return (
               <li key={guide.number}>
                 <Link
                   href={href}
+                  title={title}
                   className="group flex min-h-[224px] h-full flex-col rounded-[7px] border border-[#303c36] bg-[#171d1a] p-5 transition-colors hover:border-[#4d946d] hover:bg-[#1d2621]"
                 >
                   <div className="flex items-start justify-between gap-4">
@@ -34,7 +36,7 @@ export async function StartHere() {
           <ArrowUpRight aria-hidden="true" className="size-5 text-[#82938a] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
                   </div>
                   <h3 className="display-font mt-8 text-xl leading-tight text-[#f2f5f3]">
-                    {t(`home.start.cards.${guide.titleKey}.title`)}
+                    {title}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-[#9fada6]">
                     {t(`home.start.cards.${guide.titleKey}.description`)}

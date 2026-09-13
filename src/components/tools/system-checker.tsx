@@ -65,7 +65,7 @@ export function SystemChecker({copy}: {copy: ToolCopy}) {
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
             <button className="inline-flex min-h-11 items-center gap-2 border border-[#397b59] bg-[#397b59] px-4 text-sm font-semibold text-white hover:bg-[#45946c]" onClick={copyResult} type="button" title={copy.share}><Copy className="size-4" aria-hidden="true" />{copied ? copy.copied : copy.share}</button>
-            <a className="inline-flex min-h-11 items-center gap-2 border border-[#3a473f] px-4 text-sm font-semibold text-[#d7e2dc] hover:border-[#69c78f]" href="https://store.steampowered.com/app/1867240/WARDOGS/" target="_blank" rel="noreferrer">{copy.source}<ExternalLink className="size-4" aria-hidden="true" /></a>
+            <a className="inline-flex min-h-11 items-center gap-2 border border-[#3a473f] px-4 text-sm font-semibold text-[#d7e2dc] hover:border-[#69c78f]" href="https://store.steampowered.com/app/1867240/WARDOGS/" target="_blank" rel="noreferrer" title={copy.source}>{copy.source}<ExternalLink className="size-4" aria-hidden="true" /></a>
           </div>
         </div>
       </div>

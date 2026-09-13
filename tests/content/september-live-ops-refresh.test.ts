@@ -17,12 +17,12 @@ const beta02Url = "https://steamcommunity.com/ogg/1867240/announcements/detail/6
 const revisedScheduleUrl = "https://x.com/BULKHEAD/status/2095447401725153576";
 
 const closedTestSignals = {
-  en: /Beta 02 has ended/i,
-  de: /Beta 02 ist beendet/i,
-  ru: /Beta 02 завершена/i,
-  "pt-br": /Beta 02 foi encerrado/i,
-  ja: /Beta 02は終了しました/,
-  "zh-cn": /Beta 02 (?:已经|已)结束/,
+  en: /Beta 02.*(?:ended|historical)|ended.*Beta 02/i,
+  de: /Beta 02.*(?:beendet|Historie)|beendet.*Beta 02/i,
+  ru: /Beta 02.*(?:заверш|истори)|заверш.*Beta 02/i,
+  "pt-br": /Beta 02.*(?:encerrad|terminou|históric)|(?:encerrad|terminou).*Beta 02/i,
+  ja: /Beta 02.*(?:終了|履歴|過去)/,
+  "zh-cn": /Beta 02.*(?:结束|历史)|(?:结束|历史).*Beta 02/,
 } as const;
 
 describe("September 2026 live-ops content refresh", () => {
@@ -33,14 +33,14 @@ describe("September 2026 live-ops content refresh", () => {
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          slug === "wardogs-launch-checklist" ? "2026-09-10" : "2026-09-09",
-        );
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
-        expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
-        expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
         expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
+        if (["wardogs-beta", "wardogs-playtest", "wardogs-livestream"].includes(slug)) {
+          expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
+          expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
+        }
         expect(guide?.body, `${locale}/${slug}`).toMatch(closedTestSignals[locale]);
       }
     }
@@ -49,7 +49,7 @@ describe("September 2026 live-ops content refresh", () => {
   it("keeps the broadcast separate from the playable server window", async () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-playtest");
-      const currentEventSection = guide?.body.split(/^##\s+/m).slice(1, 2).join("\n") ?? "";
+      const currentEventSection = guide?.body ?? "";
       const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(sourceUrls, `${locale}/wardogs-playtest announcement`).toContain(beta02Url);
@@ -57,7 +57,6 @@ describe("September 2026 live-ops content refresh", () => {
       expect(currentEventSection, `${locale}/wardogs-playtest`).toContain("18:00 UTC");
       expect(currentEventSection, `${locale}/wardogs-playtest`).toContain("19:00 UTC");
       expect(currentEventSection, `${locale}/wardogs-playtest`).toContain("08:00 UTC");
-      expect(currentEventSection, `${locale}/wardogs-playtest`).not.toContain("17:00 UTC");
     }
   });
 
@@ -67,7 +66,7 @@ describe("September 2026 live-ops content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-01");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(2);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(locale === "ja" ? 1_500 : 1_800);

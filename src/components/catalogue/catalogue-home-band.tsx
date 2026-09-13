@@ -40,12 +40,12 @@ type CatalogueHomeBandViewProps = {
   LinkComponent?: CatalogueLinkComponent;
 };
 
-type CatalogueLinkComponent = ComponentType<{className: string; href: string; children: ReactNode}>;
+type CatalogueLinkComponent = ComponentType<{className: string; href: string; title: string; children: ReactNode}>;
 
 const featureSizes = "(min-width: 1280px) 574px, (min-width: 768px) calc(50vw - 48px), calc(100vw - 32px)";
 const compactSizes = "(min-width: 1280px) 277px, (min-width: 768px) calc(25vw - 28px), calc(50vw - 24px)";
 
-function NativeLink({children, ...props}: {className: string; href: string; children: ReactNode}) {
+function NativeLink({children, ...props}: {className: string; href: string; title: string; children: ReactNode}) {
   return <a {...props}>{children}</a>;
 }
 
@@ -54,7 +54,7 @@ function CatalogueEntry({entry, LinkComponent}: {entry: CatalogueHomeBandEntry; 
 
   return (
     <li className="min-w-0 border-t border-[#3a473f]" data-catalogue-entry={entry.key}>
-      <LinkComponent className="group block h-full min-w-0 pt-4" href={entry.href}>
+      <LinkComponent className="group block h-full min-w-0 pt-4" href={entry.href} title={entry.title}>
         <span className={`relative block overflow-hidden bg-[#090b0a] ${feature ? "aspect-[8/3]" : "aspect-[8/5]"}`}>
           <Image
             src={assetPath(entry.image)}
@@ -83,7 +83,7 @@ function CatalogueEntry({entry, LinkComponent}: {entry: CatalogueHomeBandEntry; 
 function CatalogueModelEntry({entry}: {entry: CatalogueHomeModelEntry}) {
   return (
     <li className="min-w-0 border-t border-[#3a473f]" data-catalogue-model-entry={entry.key}>
-      <a className="group block h-full pt-4" href={entry.href}>
+      <a aria-label={entry.title} className="group block h-full pt-4" href={entry.href} title={entry.title}>
         <span className="relative block aspect-[4/3] overflow-hidden bg-[#090b0a]">
           <Image
             src={assetPath(entry.image)}
@@ -172,8 +172,8 @@ export async function CatalogueHomeBand({locale}: {locale: Locale}) {
     };
   });
 
-  const LocalizedLink: CatalogueLinkComponent = ({children, href, className}) => (
-    <Link className={className} href={href}>{children}</Link>
+  const LocalizedLink: CatalogueLinkComponent = ({children, href, className, title}) => (
+    <Link aria-label={title} className={className} href={href} title={title}>{children}</Link>
   );
 
   return (

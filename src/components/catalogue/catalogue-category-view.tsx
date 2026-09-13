@@ -95,7 +95,7 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
         />
         <div aria-hidden="true" className="absolute inset-0 bg-[#080b09]/60" />
         <div className="site-container relative flex min-h-[28rem] flex-col justify-end py-12 md:min-h-[34rem] md:py-16">
-          <a className="mb-auto inline-flex min-h-11 w-fit items-center gap-2 text-sm text-[#9bd1b3] hover:text-white" href={publicRoutePath(`/${locale}/items`)}>
+          <a className="mb-auto inline-flex min-h-11 w-fit items-center gap-2 text-sm text-[#9bd1b3] hover:text-white" href={publicRoutePath(`/${locale}/items`)} title={ui.allItems}>
             <ArrowLeft aria-hidden="true" size={16} />{ui.allItems}
           </a>
           <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#e2bc61]">

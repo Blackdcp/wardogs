@@ -14,6 +14,7 @@ export function SourceList({sources, title, checkedLabel}: {sources: GuideFrontm
               href={source.url}
               target="_blank"
               rel="noreferrer"
+              title={source.label}
             >
               {source.label}<ExternalLink aria-hidden="true" size={15} />
             </a>

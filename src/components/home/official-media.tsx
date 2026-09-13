@@ -26,7 +26,7 @@ export async function OfficialMedia() {
             {t("home.media.title")}
           </h2>
           <p className="mt-5 text-sm leading-7 text-[#a8b4ae] sm:text-base sm:leading-8">{t("home.media.description")}</p>
-          <ButtonLink href={officialLinks.trailer} external variant="secondary" className="mt-7">
+          <ButtonLink href={officialLinks.trailer} external variant="secondary" className="mt-7" title={t("home.media.watch")}>
             {t("home.media.watch")}
             <ExternalLink aria-hidden="true" className="size-4" />
           </ButtonLink>
@@ -40,6 +40,7 @@ export async function OfficialMedia() {
                     href={video.href}
                     target="_blank"
                     rel="noreferrer"
+                    title={`${video.creator}: ${video.title}`}
                     className="group flex min-h-14 items-center justify-between gap-4 py-3 text-sm text-[#c9d2cd] transition-colors hover:text-white"
                   >
                     <span className="min-w-0">

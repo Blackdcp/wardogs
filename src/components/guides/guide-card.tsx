@@ -20,9 +20,11 @@ export function GuideCard({guide, categoryLabel, readLabel}: GuideCardProps) {
       <p className="mt-4 flex-1 text-sm leading-6 text-[#a8b4ae]">{guide.description}</p>
       <Link
         href={`/guides/${guide.slug}`}
+        aria-label={`${readLabel}: ${guide.title}`}
+        title={guide.title}
         className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#68bd8d] group-hover:text-[#8bd5aa]"
       >
-        {readLabel}<ArrowRight aria-hidden="true" size={17} />
+        {readLabel}<span className="sr-only">: {guide.title}</span><ArrowRight aria-hidden="true" size={17} />
       </Link>
     </article>
   );

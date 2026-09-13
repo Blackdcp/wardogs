@@ -41,7 +41,7 @@ export default async function ContactPage({params}: PageProps) {
           <MessageSquareWarning aria-hidden="true" className="size-6 text-[#79d19c]" />
           <h2 className="display-font mt-5 text-2xl text-white">{t("correctionsTitle")}</h2>
           <p className="mt-4 text-sm leading-7 text-[#aebbb4]">{t("correctionsBody")}</p>
-          <a className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c] hover:text-[#9ae3b7]" href={repositoryIssues} target="_blank" rel="noreferrer">
+          <a className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c] hover:text-[#9ae3b7]" href={repositoryIssues} target="_blank" rel="noreferrer" title={t("correctionsCta")}>
             {t("correctionsCta")}
             <ExternalLink aria-hidden="true" className="size-4" />
           </a>
@@ -52,10 +52,10 @@ export default async function ContactPage({params}: PageProps) {
           <h2 className="display-font mt-5 text-2xl text-white">{t("gameSupportTitle")}</h2>
           <p className="mt-4 text-sm leading-7 text-[#aebbb4]">{t("gameSupportBody")}</p>
           <div className="mt-6 flex flex-wrap gap-4 text-sm font-semibold">
-            <a className="inline-flex items-center gap-2 text-[#79d19c] hover:text-[#9ae3b7]" href={officialLinks.steam} target="_blank" rel="noreferrer">
+            <a className="inline-flex items-center gap-2 text-[#79d19c] hover:text-[#9ae3b7]" href={officialLinks.steam} target="_blank" rel="noreferrer" title="WARDOGS on Steam">
               Steam <ExternalLink aria-hidden="true" className="size-4" />
             </a>
-            <a className="inline-flex items-center gap-2 text-[#79d19c] hover:text-[#9ae3b7]" href={officialLinks.discord} target="_blank" rel="noreferrer">
+            <a className="inline-flex items-center gap-2 text-[#79d19c] hover:text-[#9ae3b7]" href={officialLinks.discord} target="_blank" rel="noreferrer" title="WARDOGS Discord">
               Discord <ExternalLink aria-hidden="true" className="size-4" />
             </a>
           </div>

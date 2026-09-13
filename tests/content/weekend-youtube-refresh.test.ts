@@ -83,15 +83,15 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const release = await loadGuideDocument(locale, "wardogs-release-date");
 
-      expect(livestream?.frontmatter.updatedAt).toBe("2026-09-09");
+      expect(livestream?.frontmatter.updatedAt).toBe("2026-09-13");
       expect(livestream?.frontmatter.sources.map(({url}) => url)).toContain("https://www.twitch.tv/thefpsgamesshow");
       expect(livestream?.body).toMatch(/18:00 UTC/);
-      expect(price?.frontmatter.updatedAt).toBe("2026-09-09");
+      expect(price?.frontmatter.updatedAt).toBe("2026-09-13");
       expect(price?.body).toContain("Beta 02");
       expect(price?.body).toContain("08:00 UTC");
-      expect(release?.frontmatter.updatedAt).toBe("2026-09-09");
+      expect(release?.frontmatter.updatedAt).toBe("2026-09-13");
       expect(release?.body).toContain("Beta 02");
-      expect(release?.body).toContain("08:00 UTC");
+      expect(release?.body).toContain("2028");
     }
   });
 });

@@ -60,6 +60,7 @@ export default async function ItemTypePage({params}: PageProps) {
                   <Link
                     href={target.pathname}
                     locale={target.locale}
+                    title={`WARDOGS ${item.name}`}
                     className="border border-[#2c3631] bg-[#151b18] p-5 transition-colors hover:border-[#4d946d]"
                     key={item.slug}
                   >

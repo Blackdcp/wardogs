@@ -24,16 +24,16 @@ describe("2026-08-29 launch and logistics expansion", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        const reviewedToday = slug === "wardogs-launch-checklist"
-          || (locale === "zh-cn" && [
-            "wardogs-cargo-guide",
-            "wardogs-ammo-reload-guide",
-            "wardogs-squad-guide",
-            "wardogs-oil-rig-guide",
-          ].includes(slug));
-        expect(guide?.frontmatter.updatedAt).toBe(
-          slug === "wardogs-launch-checklist" ? "2026-09-10" : reviewedToday ? "2026-09-01" : "2026-08-29"
-        );
+        const expectedDate = ["wardogs-launch-checklist", "wardogs-cargo-guide"].includes(slug)
+          ? "2026-09-13"
+          : locale === "pt-br" && slug === "wardogs-squad-guide"
+            ? "2026-09-13"
+            : locale === "zh-cn" && slug === "wardogs-oil-rig-guide"
+              ? "2026-09-13"
+              : locale === "zh-cn"
+                ? "2026-09-01"
+                : "2026-08-29";
+        expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
         expect(guide?.frontmatter.sources.length).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug} body`).toBeGreaterThan(1800);
       }
@@ -99,12 +99,12 @@ describe("2026-08-29 launch and logistics expansion", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-ps5");
 
-      expect(guide?.frontmatter.updatedAt).toBe("2026-09-09");
+      expect(guide?.frontmatter.updatedAt).toBe("2026-09-13");
       expect(guide?.frontmatter.title).toMatch(/PS5/i);
       expect(guide?.frontmatter.title).toMatch(/Xbox/i);
       expect(guide?.frontmatter.description).toMatch(/PS5/i);
       expect(guide?.frontmatter.description).toMatch(/Xbox/i);
-      expect(guide?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認|尚未(?:得到)?确认|未确认/i);
+      expect(`${guide?.frontmatter.description}\n${guide?.body}`).toMatch(/not confirmed|unconfirmed|nicht.*bestätigt|не.*подтверж|não.*confirmad|未確認|尚未(?:得到)?确认|未确认/i);
     }
   });
 

@@ -43,6 +43,7 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
         <NextIntlClientProvider locale={locale} messages={messages}>
           <a
             href="#main-content"
+            title={t("skipToContent")}
             className="fixed left-4 top-2 z-[100] -translate-y-20 rounded-[4px] bg-[#69c78f] px-4 py-2 text-sm font-semibold text-[#071009] transition-transform focus:translate-y-0"
           >
             {t("skipToContent")}

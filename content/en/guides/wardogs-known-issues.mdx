@@ -1,11 +1,11 @@
 ---
 title: "WARDOGS Launch Watchlist: Beta 02 Issues to Recheck"
-description: "Track Beta 02 reports on servers, crashes, voice, RAM, VRAM, DLSS, and progression for Early Access retesting, with official and community evidence separated."
+description: "Track Beta 02 reports on servers, crashes, voice, RAM, VRAM, DLSS, and progression against the live Early Access build, with official and community evidence."
 keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-09"
+updatedAt: "2026-09-13"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -13,14 +13,26 @@ badges:
     tone: "muted"
 faq:
   - question: "Do Beta 02 issues still apply to Early Access?"
-    answer: "They are a launch watchlist, not confirmed Early Access defects. Retest each symptom in the current build and separate official notices from community reports."
+    answer: "WARDOGS is live in Steam Early Access. Patch 0.11 maintenance is scheduled for September 14 at 08:00 UTC for about one hour; verify completion through the official Steam feed."
   - question: "How should I troubleshoot a WARDOGS crash?"
     answer: "Restart Steam and Windows, verify game files, remove unsupported launch commands, update the GPU driver, close overlays, and capture the exact error before contacting official support."
   - question: "Why did local voice chat stop working?"
     answer: "The developer advised toggling voice chat off in settings or opening the scoreboard and pressing U twice; third-party voice-provider outages may also be under investigation."
   - question: "Are Supporter Pack items available in Closed Beta 02?"
-    answer: "The developer's beta known-issues post says Supporter Pack items are unavailable in the beta and are intended to unlock at Early Access."
+    answer: "Their absence was a Beta-only known issue. The Supporter Pack is now sold as Steam DLC; verify the live DLC entitlement and current build if items are missing."
 sources:
+  - label: "Official Pre-Load Live and Season 1 changelog"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Official Launch Stability Hotfix #1"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Official Patch 0.11 maintenance announcement"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-13"
   - label: "Developer WARDOGS Closed Beta known issues"
     url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
     kind: "official"
@@ -34,23 +46,17 @@ sources:
     kind: "community"
     checkedAt: "2026-09-09"
 ---
+## September 13 known-issues desk
 
-## September 9 status: final check before Early Access
+WARDOGS is live in Early Access. The developer acknowledged poor server-browser and Community-server discovery and scheduled Patch 0.11 for **September 14 at 08:00 UTC**. The patch also fixes cash exploits, addresses more GPU crashes, and increases capacity in Asia.
 
-**Closed Beta 02 has ended.** The September 3 show began at **18:00 UTC**; the revised server window ran from **19:00 UTC** through **September 6 at 08:00 UTC**. Its access rules, workarounds, prices, and balance notes are dated test history, not current availability.
+That does not mean every crash, queue, kick, voice fault, or performance problem is resolved. Hardware-specific reports remain community observations unless the affected build and cause are confirmed. Record region, build, CPU, GPU, driver, RAM, error text, and UTC time.
 
-Steam lists Windows PC Early Access for **September 10, 2026**. As checked on September 9, the **exact unlock time has not been announced** and an **Early Access preload has not been confirmed**. Do not infer a midnight release or download a third-party package.
-
-Check the official Steam store, then use the [launch-day checklist](/en/guides/wardogs-launch-checklist) and [server status desk](/en/guides/wardogs-server-status).
-## Beta 02 community-reported launch watchlist
-
-Beta 02 players reported queues and server-browser trouble, repeatable crashes, uneven frame time, RAM or VRAM pressure, different results from DLSS, DLAA, shadows and Reflex + Boost, voice interruptions, and progression or entitlement confusion. These are **community-reported Beta 02 observations**, not confirmed Early Access defects or universal fixes.
-
-Use each report only as a test case: reproduce it on the September 10 build, record hardware, driver, region, error, and build number, then check for an official notice. The [63-hour community feedback thread](https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/) is a useful lead list, but it does not replace first-party patch notes.
+Do not disable anti-cheat, install unknown network tools, or follow exploit tutorials. The official policy says repeated economy abuse and XP farming can result in resets or bans.
 
 ## Quick Answer
 
-For an empty server browser, select **one region only**. For local voice failure, disable voice once or open the scoreboard and press **U twice**. Supporter Pack content is unavailable in the beta and is intended for Early Access. No single universal crash fix is confirmed.
+WARDOGS is live in Steam Early Access. Patch 0.11 maintenance is scheduled for September 14 at 08:00 UTC for about one hour; verify completion through the official Steam feed.
 
 ## Confirmed Facts
 
@@ -97,7 +103,7 @@ For lost local voice chat, the developer suggested turning voice chat off in set
 
 ## Supporter Pack and Progress
 
-The official beta notice says Supporter Pack items are not available during the beta and should unlock at Early Access. Their absence in Beta 02 is therefore not proof that a purchase failed.
+The official beta notice said Supporter Pack items were not available during Beta 02. The pack is now sold as Steam DLC, so a current missing-item report should be checked against the Steam DLC entitlement, purchase history, and live build rather than the old Playtest client.
 
 No page on this wiki promises that Beta 02 cash, XP, unlocks, or statistics will carry into Early Access. Treat test progression as temporary until an official statement says otherwise.
 
@@ -105,17 +111,9 @@ No page on this wiki promises that Beta 02 cash, XP, unlocks, or statistics will
 
 Before contacting support, capture the exact error, UTC time, selected region, entitlement state, system specifications, driver version, and steps that reproduce the problem. Remove email addresses, account tokens, QR codes, and Steam Guard details from screenshots.
 
-## FAQ
-
-**Should I reinstall when the server browser is empty?**
-No. Select one region first and check official service status. Reinstalling cannot create server capacity or a missing Steam entitlement.
-
-**Are the voice workarounds permanent fixes?**
-No. They are developer-supplied Beta 02 workarounds and may become unnecessary after a service or build update.
-
 ## Sources and Last Checked
 
-The server-browser, voice, Supporter Pack, and crash-status statements were checked against the developer's official known-issues thread on **2026-09-04**. Local diagnostic steps are deliberately separated from those first-party workarounds.
+The historical Beta workarounds were checked against the developer's official known-issues thread. Current server-browser, crash, exploit, capacity, and maintenance status was rechecked against the Patch 0.11 Steam notice on **2026-09-13**. Local diagnostic steps remain separated from first-party claims.
 
 ## Related Guides
 

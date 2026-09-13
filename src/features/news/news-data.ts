@@ -1,5 +1,35 @@
 export const NEWS_UPDATES = [
   {
+    date: "2026-09-13",
+    status: "Confirmed",
+    titleKey: "patch011",
+    guideSlug: "wardogs-patch-notes"
+  },
+  {
+    date: "2026-09-10",
+    status: "Confirmed",
+    titleKey: "copiesSold",
+    guideSlug: "wardogs-early-access"
+  },
+  {
+    date: "2026-09-10",
+    status: "Confirmed",
+    titleKey: "launchHotfix",
+    guideSlug: "wardogs-server-status"
+  },
+  {
+    date: "2026-09-10",
+    status: "Confirmed",
+    titleKey: "earlyAccess",
+    guideSlug: "wardogs-release-date"
+  },
+  {
+    date: "2026-09-10",
+    status: "Confirmed",
+    titleKey: "ps5",
+    guideSlug: "wardogs-ps5"
+  },
+  {
     date: "2026-09-03",
     status: "Confirmed",
     titleKey: "closedBeta02",
@@ -12,48 +42,6 @@ export const NEWS_UPDATES = [
     guideSlug: "wardogs-100k-clip-contest"
   },
   {
-    date: "2026-08-13",
-    status: "Confirmed",
-    titleKey: "steamPreorder",
-    guideSlug: "wardogs-steam"
-  },
-  {
-    date: "2026-08-21",
-    status: "Confirmed",
-    titleKey: "closedBeta",
-    guideSlug: "wardogs-beta"
-  },
-  {
-    date: "2026-08-24",
-    status: "Confirmed",
-    titleKey: "betaRecap",
-    guideSlug: "wardogs-beta"
-  },
-  {
-    date: "2026-09-10",
-    status: "Confirmed",
-    titleKey: "earlyAccess",
-    guideSlug: "wardogs-release-date"
-  },
-  {
-    date: "2026-08-13",
-    status: "Not confirmed",
-    titleKey: "ps5",
-    guideSlug: "wardogs-ps5"
-  },
-  {
-    date: "2026-08-20",
-    status: "Confirmed",
-    titleKey: "preload",
-    guideSlug: "wardogs-download"
-  },
-  {
-    date: "2026-08-21",
-    status: "Confirmed",
-    titleKey: "twitchDrops",
-    guideSlug: "wardogs-twitch-drops"
-  },
-  {
     date: "2026-09-03",
     status: "Confirmed",
     titleKey: "fpsGameShow",
@@ -64,6 +52,36 @@ export const NEWS_UPDATES = [
     status: "Confirmed",
     titleKey: "firingRangeTest",
     guideSlug: "wardogs-playtest"
+  },
+  {
+    date: "2026-08-24",
+    status: "Confirmed",
+    titleKey: "betaRecap",
+    guideSlug: "wardogs-beta"
+  },
+  {
+    date: "2026-08-21",
+    status: "Confirmed",
+    titleKey: "closedBeta",
+    guideSlug: "wardogs-beta"
+  },
+  {
+    date: "2026-08-21",
+    status: "Confirmed",
+    titleKey: "twitchDrops",
+    guideSlug: "wardogs-twitch-drops"
+  },
+  {
+    date: "2026-08-20",
+    status: "Confirmed",
+    titleKey: "preload",
+    guideSlug: "wardogs-download"
+  },
+  {
+    date: "2026-08-13",
+    status: "Confirmed",
+    titleKey: "steamPreorder",
+    guideSlug: "wardogs-steam"
   }
 ] as const;
 

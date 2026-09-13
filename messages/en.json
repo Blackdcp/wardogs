@@ -1,16 +1,27 @@
 {
-  "common": {"fanMade": "Fan-Made Community Wiki", "language": "Language", "openMenu": "Open menu", "closeMenu": "Close menu", "learnMore": "Learn more", "updated": "Updated", "official": "Official", "community": "Community", "skipToContent": "Skip to content", "openSteam": "Open WARDOGS on Steam"},
+  "common": {
+    "fanMade": "Fan-Made Community Wiki",
+    "language": "Language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "learnMore": "Learn more",
+    "updated": "Updated",
+    "official": "Official",
+    "community": "Community",
+    "skipToContent": "Skip to content",
+    "openSteam": "Open WARDOGS on Steam"
+  },
   "liveOps": {
-    "eyebrow": "Launch-day status",
-    "title": "September 10 is here - check Steam availability",
-    "description": "Steam still showed pre-purchase at our latest check. Use the official store for the live unlock; no exact global hour or preload was announced.",
-    "windowLabel": "Official release date",
-    "windowValue": "September 10, 2026",
-    "accessLabel": "Current action",
-    "accessValue": "Check the Steam store and launch the main WARDOGS entry only when it becomes available.",
+    "eyebrow": "Early Access operations",
+    "title": "Early Access is live; Patch 0.11 maintenance is scheduled",
+    "description": "WARDOGS is playable on Steam. Servers are scheduled to go offline on September 14 at 08:00 UTC for about one hour while Patch 0.11 improves the server browser.",
+    "windowLabel": "Next maintenance",
+    "windowValue": "September 14, 08:00 UTC - about 1 hour",
+    "accessLabel": "Patch 0.11 focus",
+    "accessValue": "Separate Official and Community browsers, better search and filters, persistent server IDs, cash and GPU fixes, and more Asia capacity.",
     "closedBetaNote": "The revised Beta 02 server window ended on September 6 at 08:00 UTC. An old Playtest entitlement does not reopen it.",
-    "accessCta": "Launch-day checklist",
-    "issuesCta": "Server status",
+    "accessCta": "Read Patch 0.11",
+    "issuesCta": "Check server status",
     "countdown": {
       "starts": "Beta starts in",
       "ends": "Beta ends in",
@@ -26,15 +37,49 @@
       "seconds": "S"
     }
   },
-  "nav": {"game": "Game", "guides": "Guides", "catalogue": "Catalogue", "playtest": "Playtest", "release": "Release", "releaseDate": "Release Date", "steam": "Steam", "steamEarlyAccess": "Steam and Early Access", "gameplay": "Gameplay", "factions": "Factions", "community": "Community", "beginnerGuide": "Beginner Guide", "crashFix": "Crash Fix", "helicopterGuide": "Helicopter Guide", "gameplayGuide": "Gameplay Guide", "fobLogistics": "FOB and Logistics", "mortarGuide": "Mortar Guide", "allGuides": "All Guides", "catalogueHome": "Catalogue Home", "weapons": "Weapons", "vehicles": "Vehicles", "ammo": "Ammo", "attachments": "Attachments", "gear": "Gear", "equipment": "Equipment", "loadouts": "Loadouts", "systemCheck": "PC Configuration Check", "budgetTool": "Loadout Budget", "videos": "Videos", "items": "Items", "news": "News", "steamCta": "View on Steam", "primaryLabel": "Primary navigation"},
+  "nav": {
+    "game": "Game",
+    "guides": "Guides",
+    "catalogue": "Catalogue",
+    "playtest": "Playtest",
+    "release": "Release",
+    "releaseDate": "Release Date",
+    "steam": "Steam",
+    "steamEarlyAccess": "Steam and Early Access",
+    "gameplay": "Gameplay",
+    "factions": "Factions",
+    "community": "Community",
+    "beginnerGuide": "Beginner Guide",
+    "crashFix": "Crash Fix",
+    "helicopterGuide": "Helicopter Guide",
+    "gameplayGuide": "Gameplay Guide",
+    "fobLogistics": "FOB and Logistics",
+    "mortarGuide": "Mortar Guide",
+    "allGuides": "All Guides",
+    "catalogueHome": "Catalogue Home",
+    "weapons": "Weapons",
+    "vehicles": "Vehicles",
+    "ammo": "Ammo",
+    "attachments": "Attachments",
+    "gear": "Gear",
+    "equipment": "Equipment",
+    "loadouts": "Loadouts",
+    "systemCheck": "PC Configuration Check",
+    "budgetTool": "Loadout Budget",
+    "videos": "Videos",
+    "items": "Items",
+    "news": "News",
+    "steamCta": "View on Steam",
+    "primaryLabel": "Primary navigation"
+  },
   "home": {
     "metaTitle": "WARDOGS Wiki: Weapons, Vehicles, Guides & Database",
     "metaDescription": "Explore the independent WARDOGS Wiki for verified weapons, vehicles, equipment, guides, current access status, controls, known issues, and player tools.",
     "heroTitle": "Weapons, Vehicles, Guides & Game Database",
     "heroDescription": "Use a source-checked WARDOGS reference for equipment, controls, current access, troubleshooting, and practical tactics, with build-sensitive details clearly labeled.",
-    "primaryCta": "Open Launch-Day Checklist",
+    "primaryCta": "Read Patch 0.11",
     "secondaryCta": "Check Server Status",
-    "status": "Early Access date reached - check Steam",
+    "status": "Steam Early Access is live",
     "statsLabel": "Key WARDOGS facts",
     "stats": {
       "earlyAccess": "Early Access Sep 10, 2026",
@@ -46,7 +91,7 @@
     "about": {
       "eyebrow": "Tactical all-out warfare",
       "imageAlt": "Official WARDOGS gameplay view from a helicopter cockpit",
-      "bodyOne": "WARDOGS is BULKHEAD's upcoming tactical all-out warfare FPS, not the 2016 War Dogs movie. Up to 100 players in three teams contest a randomized 2 x 2 km Control Zone using infantry, vehicles, fortifications, and logistics.",
+      "bodyOne": "WARDOGS is BULKHEAD's live Steam Early Access tactical all-out warfare FPS, not the 2016 War Dogs movie. Up to 100 players in three teams contest a randomized 2 x 2 km Control Zone using infantry, vehicles, fortifications, and logistics.",
       "bodyTwo": "Cash persists between matches and funds a new loadout for each life. Combat and support actions can both help the team while sustaining your economy.",
       "officialQuote": "Every player starts their journey with $10,000.",
       "officialQuoteSource": "Official WARDOGS Steam description",
@@ -59,11 +104,11 @@
     "startEyebrow": "Start Here",
     "startTitle": "Your WARDOGS Deployment",
     "start": {
-      "description": "Use these six launch-day guides to check access, install safely, monitor servers, read verified updates, and avoid stale Beta 02 claims.",
+      "description": "Use these six current guides to install safely, check the September 14 maintenance, monitor servers, read verified changes, and avoid outdated Beta advice.",
       "cards": {
         "playtest": {
-          "title": "Patch Notes Tracker",
-          "description": "See whether official launch notes exist and keep Beta history separate from current changes."
+          "title": "Patch 0.11 and Updates",
+          "description": "Read the September 14 maintenance plan, confirmed server-browser changes, live fixes, and clearly separated upcoming work."
         },
         "download": {
           "title": "Download and Install",
@@ -82,8 +127,8 @@
           "description": "Follow the official posting, hashtag, form, deadline, and eligibility rules."
         },
         "launch": {
-          "title": "Launch Checklist",
-          "description": "Verify Steam access, the correct library entry, your PC, squad, settings, and sources today."
+          "title": "First-Week Checklist",
+          "description": "Verify your build, server region, settings, squad plan, current known issues, and official sources before each session."
         }
       }
     },
@@ -91,15 +136,31 @@
       "eyebrow": "Choose your mission",
       "title": "What do you need right now?",
       "description": "Skip the directory and go directly to the task that brought you here. Every destination keeps build-sensitive facts clearly labeled.",
-      "play": {"title": "Check launch access", "description": "Check Steam availability, installation, account entitlement, and the correct library entry.", "imageAlt": "WARDOGS battlefield used for the play and download guide"},
-      "fix": {"title": "Check server status", "description": "Separate official outages and launch queues from account, region, voice, or PC problems.", "imageAlt": "WARDOGS tactical equipment used for troubleshooting"},
-      "gear": {"title": "Browse equipment", "description": "Explore illustrated weapons, vehicles, armor, ammunition, and loadout records.", "imageAlt": "WARDOGS weapons displayed in the illustrated equipment catalogue"},
-      "system": {"title": "Check your PC", "description": "Compare your hardware with confirmed requirements before changing settings.", "imageAlt": "WARDOGS gameplay used for the PC configuration checker"}
+      "play": {
+        "title": "Install and play Early Access",
+        "description": "Open the main WARDOGS Steam app, install the current build, and check maintenance before joining.",
+        "imageAlt": "WARDOGS battlefield used for the play and download guide"
+      },
+      "fix": {
+        "title": "Check server status",
+        "description": "Separate official outages and launch queues from account, region, voice, or PC problems.",
+        "imageAlt": "WARDOGS tactical equipment used for troubleshooting"
+      },
+      "gear": {
+        "title": "Browse equipment",
+        "description": "Explore illustrated weapons, vehicles, armor, ammunition, and loadout records.",
+        "imageAlt": "WARDOGS weapons displayed in the illustrated equipment catalogue"
+      },
+      "system": {
+        "title": "Check your PC",
+        "description": "Compare your hardware with confirmed requirements before changing settings.",
+        "imageAlt": "WARDOGS gameplay used for the PC configuration checker"
+      }
     },
     "priority": {
       "eyebrow": "Priority Intel",
-      "title": "What WARDOGS Players Need on Launch Day",
-      "description": "Start with Steam availability, the launch-day checklist, server status, verified patch notes, safe installation, and controls.",
+      "title": "What WARDOGS Players Need This Weekend",
+      "description": "Start with Patch 0.11 maintenance, live server status, verified changes, safe installation, and current controls.",
       "top": {
         "title": "Top Guides",
         "description": "Six focused guides for new players, Steam searchers, and current access questions."
@@ -117,24 +178,24 @@
         },
         "items": {
           "closedBeta02": {
-            "title": "Launch status requires a live Steam check",
-            "description": "September 10 is official, but availability follows Steam's live release state. Beta 02 remains a historical test record."
+            "title": "Closed Beta 02 has ended",
+            "description": "The September 3-6 test is historical. WARDOGS is now live in Steam Early Access through the main app."
           },
           "clipContest": {
             "title": "$100K clip contest is open",
             "description": "Post a clip of up to two minutes with #WARDOGS100K and @WARDOGS, then submit its link through the official form."
           },
           "paidPrepurchase": {
-            "title": "Pre-purchase guarantees test access",
-            "description": "Free Steam Playtest requests are accepted in waves; a pending request is not an entitlement."
+            "title": "Beta access rules are historical",
+            "description": "Pre-purchase and free Playtest waves described ended tests; the main Steam app is the current Early Access product."
           },
           "steamEarlyAccess": {
-            "title": "Steam Early Access on September 10",
-            "description": "Windows PC Early Access is confirmed through Steam; the exact launch-hour unlock is not published here."
+            "title": "Steam Early Access is live",
+            "description": "The Windows PC Early Access release launched September 10; Steam now supplies the current install and patches."
           },
           "ps5Release": {
-            "title": "PS5 release",
-            "description": "A PlayStation 5 release date and cross-play plan remain unconfirmed."
+            "title": "Console versions are planned for 2028",
+            "description": "The official trailer confirms 2028, but PS5, Xbox, exact dates, cross-play, and cross-progression are not individually confirmed."
           }
         }
       }
@@ -144,12 +205,12 @@
       "publishedModels": "Published model guides",
       "weapons": {
         "title": "Weapons",
-        "count": "{count} pre-release records",
+        "count": "{count} build-labelled records",
         "imageAlt": "WARDOGS weapons catalogue"
       },
       "vehicles": {
         "title": "Vehicles",
-        "count": "{count} pre-release records",
+        "count": "{count} build-labelled records",
         "imageAlt": "WARDOGS vehicles catalogue"
       },
       "ammo": {
@@ -232,7 +293,7 @@
         },
         "release": {
           "question": "When does WARDOGS enter Early Access?",
-          "answer": "WARDOGS is scheduled to enter Steam Early Access on September 10, 2026."
+          "answer": "WARDOGS launched in Steam Early Access on September 10, 2026."
         },
         "controlZone": {
           "question": "How does the Control Zone work?",
@@ -253,13 +314,19 @@
     },
     "heroImageAlt": "WARDOGS soldiers and vehicles fighting across the active Control Zone"
   },
-  "guides": {"metaTitle": "WARDOGS Guides - Launch, Gameplay, Weapons & Fixes", "title": "WARDOGS Guides", "description": "Browse {count} focused guides covering launch, cargo, ammunition, squads, troubleshooting, vehicles, FOB logistics, release, and gameplay.", "count": "{count} Guide Topics", "read": "Read guide"},
+  "guides": {
+    "metaTitle": "WARDOGS Guides - Launch, Gameplay, Weapons & Fixes",
+    "title": "WARDOGS Guides",
+    "description": "Browse {count} focused guides covering launch, cargo, ammunition, squads, troubleshooting, vehicles, FOB logistics, release, and gameplay.",
+    "count": "{count} Guide Topics",
+    "read": "Read guide"
+  },
   "news": {
-    "metaTitle": "WARDOGS News - Beta, Early Access & Steam Updates",
-    "metaDescription": "Track confirmed WARDOGS news, beta dates, Steam Early Access timing, pricing notes, platform status, preload questions, and updated guide links.",
+    "metaTitle": "WARDOGS News - Patch 0.11, Servers & Early Access",
+    "metaDescription": "Track confirmed WARDOGS news, Patch 0.11 maintenance, server fixes, Steam Early Access, console plans, platform status, and updated guide links.",
     "eyebrow": "Latest Updates",
     "title": "WARDOGS News and Confirmed Timeline",
-    "description": "Current, sourced WARDOGS updates for Closed Beta 02, known issues, the clip contest, Steam Early Access, platforms, downloads, and gameplay.",
+    "description": "Current, sourced WARDOGS updates for Patch 0.11, server status, known issues, Steam Early Access, platforms, downloads, and gameplay.",
     "timeline": {
       "title": "Confirmed Timeline",
       "readMore": "Read the full guide",
@@ -277,8 +344,8 @@
           "description": "Players can post a clip of up to two minutes with #WARDOGS100K and @WARDOGS, then submit it through the official form before October 8."
         },
         "steamPreorder": {
-          "title": "Steam pre-purchase and Request Access are live",
-          "description": "Steam remains the official route for pricing, purchase, free Playtest requests, entitlement, and installation."
+          "title": "Steam pre-purchase opened before launch",
+          "description": "Steam was the official pre-launch route for purchase and Beta entitlement. The main WARDOGS app is now live in Early Access."
         },
         "closedBeta": {
           "title": "The August Closed Beta ended August 24",
@@ -289,16 +356,16 @@
           "description": "The recap covers the completed August test and should not be used as the status for Closed Beta 02."
         },
         "earlyAccess": {
-          "title": "Steam Early Access starts September 10, 2026",
-          "description": "Windows PC Early Access is confirmed through Steam; the full-version date and exact unlock hour remain unconfirmed."
+          "title": "WARDOGS Early Access launched September 10",
+          "description": "The Windows PC version is playable on Steam. The official launch trailer also announces console versions for 2028, without naming individual platforms or dates."
         },
         "ps5": {
-          "title": "No PS5 release date is confirmed",
-          "description": "Official product pages currently name Windows PC through Steam; console timing and cross-play remain unconfirmed."
+          "title": "Console versions are planned for 2028",
+          "description": "The launch trailer confirms a 2028 console window, but does not name PS5, Xbox, exact dates, cross-play, or cross-progression."
         },
         "preload": {
-          "title": "Early Access preload is not confirmed",
-          "description": "Steam confirms September 10, but no exact unlock hour or separate preload schedule was published as of September 9."
+          "title": "Official pre-load went live September 9",
+          "description": "Pre-load preceded the September 10 Windows PC Early Access launch. Steam now supplies the current install and patches."
         },
         "twitchDrops": {
           "title": "Beta 02 tested Twitch Drops",
@@ -311,12 +378,24 @@
         "firingRangeTest": {
           "title": "The September 2 Firing Range test is complete",
           "description": "That limited backend and queue check preceded Closed Beta 02 and is retained only as historical context."
+        },
+        "patch011": {
+          "title": "Patch 0.11 maintenance scheduled for September 14",
+          "description": "Servers are scheduled to go offline at 08:00 UTC for about one hour. The update targets server-browser usability, community discovery, cash exploits, GPU crashes, and Asia capacity."
+        },
+        "copiesSold": {
+          "title": "WARDOGS reports 1.25 million copies sold",
+          "description": "The official Steam feed reported the sales milestone after the September 10 Early Access launch; it is a sales figure, not a concurrent-player count."
+        },
+        "launchHotfix": {
+          "title": "Launch Stability Hotfix #1 deployed",
+          "description": "The September 10 client hotfix targeted failed server joins, unexpected kicks, and long login queues. Later official updates said the launch queue had cleared."
         }
       }
     },
     "checklist": {
-      "title": "Pre-Launch Checklist",
-      "description": "Use these pages before September 10 Early Access for Steam status, safe installation, troubleshooting, controls, settings, and verified launch details."
+      "title": "First-Week Checklist",
+      "description": "Use these pages during Early Access for server status, safe installation, troubleshooting, controls, settings, and verified patch details."
     },
     "rules": {
       "title": "How We Label Updates",
@@ -331,18 +410,114 @@
         },
         "refresh": {
           "title": "Refresh before sharing",
-          "description": "WARDOGS is in a fast pre-launch window, so this page points readers to the detailed guide that can be checked and updated."
+          "description": "WARDOGS is in active Early Access, so this page points readers to dated guides that can be checked and updated after each patch."
         }
       }
     }
   },
-  "article": {"sources": "Sources", "related": "Related Guides", "faq": "Frequently Asked Questions", "back": "All Guides", "directAnswer": "Quick answer", "lastChecked": "Last checked", "watch": "Watch video", "videoConsent": "Load privacy-enhanced YouTube video", "byline": "Researched and maintained by", "teamName": "WARDOGS Wiki Editorial Team", "editorialPolicy": "Editorial policy", "imageSource": "Source footage"},
-  "categories": {"access": "Access", "release": "Release", "store": "Store", "platform": "Platform", "video": "Video", "community": "Community", "developer": "Developer", "guide": "Guide"},
-  "footer": {"aboutTitle": "WARDOGS Wiki", "about": "WARDOGS Wiki is an independent fan-made guide created for players. It covers confirmed access, release, gameplay, faction, community, and media information without affiliation to BULKHEAD, Team17, or Steam.", "description": "Independent tactical FPS guides for WARDOGS players.", "guideLinks": "Guide Links", "officialLinks": "Official Links", "officialSite": "Official WARDOGS Site", "revealTrailer": "Reveal Trailer", "legal": "Legal", "privacy": "Privacy Policy", "terms": "Terms of Service", "editorialPolicy": "Editorial Policy", "aboutLink": "About", "contact": "Contact"},
-  "aboutPage": {"metaTitle": "About WARDOGS Wiki: Independent Player Reference", "metaDescription": "Learn who maintains WARDOGS Wiki, how its independent editorial team verifies game information, labels uncertain claims, and keeps player guides current.", "eyebrow": "About This Site", "title": "About WARDOGS Wiki", "intro": "WARDOGS Wiki is an independently operated, unofficial player reference built to make changing game information easier to verify and use.", "identityTitle": "A focused community reference", "identityBody": "The site documents WARDOGS access, equipment, controls, troubleshooting and tactics for players across six languages. It is maintained as a focused publication rather than an open-edit encyclopedia.", "methodTitle": "Source-checked and version-aware", "methodBody": "Official Steam, Team17, BULKHEAD and WARDOGS sources lead factual updates. Creator footage and community reports are used only with clear labels, dates and build caveats.", "independenceTitle": "Independent from the game and advertisers", "independenceBody": "WARDOGS Wiki is not affiliated with BULKHEAD, Team17, Steam or creators. Advertising does not determine rankings, conclusions, source labels or corrections."},
-  "contactPage": {"metaTitle": "Contact WARDOGS Wiki: Corrections and Source Tips", "metaDescription": "Contact the independent WARDOGS Wiki editorial team about factual corrections, broken sources, missing guide evidence, or version-sensitive information.", "eyebrow": "Contact and Corrections", "title": "Contact WARDOGS Wiki", "intro": "Use the public issue tracker for site corrections and evidence. Account, purchase, ban and server support must go to official WARDOGS services.", "correctionsTitle": "Report a factual or site issue", "correctionsBody": "Include the page URL, the disputed statement, a public source and the date or game build involved. Remove account names, tokens, receipts and personal information.", "correctionsCta": "Open the public issue tracker", "gameSupportTitle": "Need official game support?", "gameSupportBody": "This independent guide cannot change game access, payments, moderation decisions or server status. Use Steam or the official WARDOGS Discord for those requests."},
-  "editorial": {"metaTitle": "WARDOGS Wiki Editorial Policy and Research Standards", "metaDescription": "See how WARDOGS Wiki verifies official claims, analyzes creator footage, labels build-sensitive details, corrects errors, and keeps every player guide current.", "eyebrow": "Editorial Standards", "title": "How We Research WARDOGS", "intro": "WARDOGS Wiki is an independent fan publication. Every guide is built to answer a player question clearly while separating official facts, observed footage, community reports, and unresolved claims.", "teamTitle": "Independent, player-first research", "teamBody": "The WARDOGS Wiki Editorial Team maintains this focused game guide without affiliation to BULKHEAD, Team17, Steam, creators, or advertisers. Commercial relationships do not determine our conclusions or source labels.", "methodTitle": "Our verification method", "officialTitle": "Official sources first", "officialBody": "Release dates, prices, platforms, access rules, and feature claims are checked against Steam, Team17, BULKHEAD, or official WARDOGS channels before publication.", "footageTitle": "Footage is evidence, not final documentation", "footageBody": "Creator videos help explain controls, match flow, loadouts, vehicles, and tactics. Alpha and beta numbers remain labeled build-sensitive unless a current official source confirms them.", "statusTitle": "Confirmed and uncertain claims stay separate", "statusBody": "We mark rumors, community observations, and unknown details plainly. A missing answer is never converted into a confident release promise or final balance claim.", "updatesTitle": "Material updates earn a new date", "updatesBody": "Last-checked dates change when sources or guidance are meaningfully reviewed. Pages are not redated merely to appear fresh in search results.", "correctionsTitle": "Corrections remain part of the record", "correctionsBody": "When a source changes or an error is found, we update the affected guide, revise its status language, and preserve links that let readers verify the current conclusion."},
-  "privacy": {"metaTitle": "WARDOGS Wiki Privacy Policy: Cookies, Analytics & Ads", "metaDescription": "Read how WARDOGS Wiki handles cookies, analytics, AdSense advertising, external media and links, and why the site does not collect game account credentials.", "title": "Privacy Policy", "intro": "This fan guide minimizes data collection and explains how external media and links work.", "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.", "advertising": "We use Google AdSense to fund this site. Google may process your IP address, browser and device information, and use cookies or similar technologies to deliver, measure and personalize advertising where consent is required."},
-  "terms": {"metaTitle": "WARDOGS Wiki Terms of Use: Guide Rules & Disclaimers", "metaDescription": "Review the terms for using WARDOGS Wiki, including pre-release accuracy limits, official-source checks, purchase decisions, external links, and account safety.", "title": "Terms of Service", "intro": "Use this independent guide as informational community material.", "content": "Game details can change. Verify purchases, access windows, platform availability, and account actions with official WARDOGS sources."},
-  "notFound": {"title": "Page Not Found", "description": "That route does not exist in the current verified guide library.", "home": "Return Home", "guides": "Browse Guides"}
+  "article": {
+    "sources": "Sources",
+    "related": "Related Guides",
+    "faq": "Frequently Asked Questions",
+    "back": "All Guides",
+    "directAnswer": "Quick answer",
+    "lastChecked": "Last checked",
+    "watch": "Watch video",
+    "videoConsent": "Load privacy-enhanced YouTube video",
+    "byline": "Researched and maintained by",
+    "teamName": "WARDOGS Wiki Editorial Team",
+    "editorialPolicy": "Editorial policy",
+    "imageSource": "Source footage"
+  },
+  "categories": {
+    "access": "Access",
+    "release": "Release",
+    "store": "Store",
+    "platform": "Platform",
+    "video": "Video",
+    "community": "Community",
+    "developer": "Developer",
+    "guide": "Guide"
+  },
+  "footer": {
+    "aboutTitle": "WARDOGS Wiki",
+    "about": "WARDOGS Wiki is an independent fan-made guide created for players. It covers confirmed access, release, gameplay, faction, community, and media information without affiliation to BULKHEAD, Team17, or Steam.",
+    "description": "Independent tactical FPS guides for WARDOGS players.",
+    "guideLinks": "Guide Links",
+    "officialLinks": "Official Links",
+    "officialSite": "Official WARDOGS Site",
+    "revealTrailer": "Reveal Trailer",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "editorialPolicy": "Editorial Policy",
+    "aboutLink": "About",
+    "contact": "Contact"
+  },
+  "aboutPage": {
+    "metaTitle": "About WARDOGS Wiki: Independent Player Reference",
+    "metaDescription": "Learn who maintains WARDOGS Wiki, how its independent editorial team verifies game information, labels uncertain claims, and keeps player guides current.",
+    "eyebrow": "About This Site",
+    "title": "About WARDOGS Wiki",
+    "intro": "WARDOGS Wiki is an independently operated, unofficial player reference built to make changing game information easier to verify and use.",
+    "identityTitle": "A focused community reference",
+    "identityBody": "The site documents WARDOGS access, equipment, controls, troubleshooting and tactics for players across six languages. It is maintained as a focused publication rather than an open-edit encyclopedia.",
+    "methodTitle": "Source-checked and version-aware",
+    "methodBody": "Official Steam, Team17, BULKHEAD and WARDOGS sources lead factual updates. Creator footage and community reports are used only with clear labels, dates and build caveats.",
+    "independenceTitle": "Independent from the game and advertisers",
+    "independenceBody": "WARDOGS Wiki is not affiliated with BULKHEAD, Team17, Steam or creators. Advertising does not determine rankings, conclusions, source labels or corrections."
+  },
+  "contactPage": {
+    "metaTitle": "Contact WARDOGS Wiki: Corrections and Source Tips",
+    "metaDescription": "Contact the independent WARDOGS Wiki editorial team about factual corrections, broken sources, missing guide evidence, or version-sensitive information.",
+    "eyebrow": "Contact and Corrections",
+    "title": "Contact WARDOGS Wiki",
+    "intro": "Use the public issue tracker for site corrections and evidence. Account, purchase, ban and server support must go to official WARDOGS services.",
+    "correctionsTitle": "Report a factual or site issue",
+    "correctionsBody": "Include the page URL, the disputed statement, a public source and the date or game build involved. Remove account names, tokens, receipts and personal information.",
+    "correctionsCta": "Open the public issue tracker",
+    "gameSupportTitle": "Need official game support?",
+    "gameSupportBody": "This independent guide cannot change game access, payments, moderation decisions or server status. Use Steam or the official WARDOGS Discord for those requests."
+  },
+  "editorial": {
+    "metaTitle": "WARDOGS Wiki Editorial Policy and Research Standards",
+    "metaDescription": "See how WARDOGS Wiki verifies official claims, analyzes creator footage, labels build-sensitive details, corrects errors, and keeps every player guide current.",
+    "eyebrow": "Editorial Standards",
+    "title": "How We Research WARDOGS",
+    "intro": "WARDOGS Wiki is an independent fan publication. Every guide is built to answer a player question clearly while separating official facts, observed footage, community reports, and unresolved claims.",
+    "teamTitle": "Independent, player-first research",
+    "teamBody": "The WARDOGS Wiki Editorial Team maintains this focused game guide without affiliation to BULKHEAD, Team17, Steam, creators, or advertisers. Commercial relationships do not determine our conclusions or source labels.",
+    "methodTitle": "Our verification method",
+    "officialTitle": "Official sources first",
+    "officialBody": "Release dates, prices, platforms, access rules, and feature claims are checked against Steam, Team17, BULKHEAD, or official WARDOGS channels before publication.",
+    "footageTitle": "Footage is evidence, not final documentation",
+    "footageBody": "Creator videos help explain controls, match flow, loadouts, vehicles, and tactics. Alpha and beta numbers remain labeled build-sensitive unless a current official source confirms them.",
+    "statusTitle": "Confirmed and uncertain claims stay separate",
+    "statusBody": "We mark rumors, community observations, and unknown details plainly. A missing answer is never converted into a confident release promise or final balance claim.",
+    "updatesTitle": "Material updates earn a new date",
+    "updatesBody": "Last-checked dates change when sources or guidance are meaningfully reviewed. Pages are not redated merely to appear fresh in search results.",
+    "correctionsTitle": "Corrections remain part of the record",
+    "correctionsBody": "When a source changes or an error is found, we update the affected guide, revise its status language, and preserve links that let readers verify the current conclusion."
+  },
+  "privacy": {
+    "metaTitle": "WARDOGS Wiki Privacy Policy: Cookies, Analytics & Ads",
+    "metaDescription": "Read how WARDOGS Wiki handles cookies, analytics, AdSense advertising, external media and links, and why the site does not collect game account credentials.",
+    "title": "Privacy Policy",
+    "intro": "This fan guide minimizes data collection and explains how external media and links work.",
+    "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.",
+    "advertising": "We use Google AdSense to fund this site. Google may process your IP address, browser and device information, and use cookies or similar technologies to deliver, measure and personalize advertising where consent is required."
+  },
+  "terms": {
+    "metaTitle": "WARDOGS Wiki Terms of Use: Guide Rules & Disclaimers",
+    "metaDescription": "Review the terms for using WARDOGS Wiki, including build-sensitive accuracy limits, official-source checks, purchase decisions, external links, and account safety.",
+    "title": "Terms of Service",
+    "intro": "Use this independent guide as informational community material.",
+    "content": "Game details can change. Verify purchases, access windows, platform availability, and account actions with official WARDOGS sources."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "That route does not exist in the current verified guide library.",
+    "home": "Return Home",
+    "guides": "Browse Guides"
+  }
 }

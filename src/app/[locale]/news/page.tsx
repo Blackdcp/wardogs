@@ -71,8 +71,8 @@ export default async function NewsPage({params}: PageProps) {
                   </div>
                   <h3 className="display-font mt-3 text-2xl text-[#f2f5f3]">{t(`timeline.items.${item.titleKey}.title`)}</h3>
                   <p className="mt-2 max-w-2xl text-sm leading-7 text-[#a8b4ae]">{t(`timeline.items.${item.titleKey}.description`)}</p>
-                  <Link href={`/guides/${item.guideSlug}`} className="mt-3 inline-flex text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba]">
-                    {t("timeline.readMore")}
+                  <Link href={`/guides/${item.guideSlug}`} className="mt-3 inline-flex text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba]" aria-label={`${t("timeline.readMore")}: ${t(`timeline.items.${item.titleKey}.title`)}`} title={t(`timeline.items.${item.titleKey}.title`)}>
+                    {t("timeline.readMore")}<span className="sr-only">: {t(`timeline.items.${item.titleKey}.title`)}</span>
                   </Link>
                 </li>
               ))}
@@ -88,7 +88,7 @@ export default async function NewsPage({params}: PageProps) {
             <ul className="mt-6 space-y-3">
               {checklistGuides.map((guide) => (
                 <li key={guide.slug}>
-                  <Link href={`/guides/${guide.slug}`} className="group block border-b border-[#2c3631] pb-3">
+                  <Link href={`/guides/${guide.slug}`} className="group block border-b border-[#2c3631] pb-3" title={guide.title}>
                     <span className="block text-sm font-semibold leading-6 text-[#d7ded9] group-hover:text-[#79d19c]">{guide.title}</span>
                     <span className="mt-1 block text-xs uppercase tracking-[0.14em] text-[#728078]">{formatLocalizedDate(guide.updatedAt, locale)}</span>
                   </Link>

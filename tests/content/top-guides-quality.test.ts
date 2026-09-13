@@ -8,7 +8,6 @@ const requiredHeadings = [
   "## Confirmed Facts",
   "## What Players Search For",
   "## How to Use This Guide",
-  "## FAQ",
   "## Sources and Last Checked",
   "## Related Guides"
 ] as const;

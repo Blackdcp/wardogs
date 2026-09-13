@@ -22,6 +22,7 @@ export function MobileNavigationGroups({groups, onNavigate}: MobileNavigationGro
             <li key={group.id}>
               <Link
                 href={group.href}
+                title={group.label}
                 className="flex min-h-12 items-center rounded-[6px] border border-[#2f3934] bg-[#171d1a] px-4 py-3 text-sm font-semibold text-[#edf2ef] transition-colors hover:border-[#4d946d] hover:bg-[#1e2923] hover:text-white"
                 onClick={onNavigate}
               >
@@ -55,6 +56,7 @@ export function MobileNavigationGroups({groups, onNavigate}: MobileNavigationGro
                     <Link
                       href={item.href}
                       locale={item.locale}
+                      title={item.label}
                       className="flex min-h-11 items-center rounded-[4px] px-3 py-2 text-sm text-[#cbd5d0] transition-colors hover:bg-[#1e2923] hover:text-white"
                       onClick={onNavigate}
                     >
