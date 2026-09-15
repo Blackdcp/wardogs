@@ -3,6 +3,7 @@ import {loadGuideDocument} from "../../src/content/guides";
 import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 import {videoArticles} from "../../src/features/videos/video-library";
 import sitemap from "../../src/app/sitemap";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const newGuideSlugs = [
@@ -148,12 +149,12 @@ describe("Similarweb growth guide cluster", () => {
     for (const [slug, phrases] of expectations) {
       const guide = await loadGuideDocument("en", slug);
       const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}`;
-      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13"]).toContain(guide?.frontmatter.updatedAt);
+      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13", "2026-09-15"]).toContain(guide?.frontmatter.updatedAt);
       for (const phrase of phrases) expect(searchable).toContain(phrase);
     }
 
     const ps5 = await loadGuideDocument("en", "wardogs-ps5");
-    expect(ps5?.frontmatter.updatedAt).toBe("2026-09-13");
+    expect(ps5?.frontmatter.updatedAt).toBe(expectedUpdatedAt("en", "wardogs-ps5"));
     expect(ps5?.frontmatter.title).toBe("Is WARDOGS Coming to PS5 or Xbox? Console Status");
     expect(`${ps5?.frontmatter.description}\n${ps5?.body}`).toMatch(/not (?:individually )?confirmed|unconfirmed/i);
   });

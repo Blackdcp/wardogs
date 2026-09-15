@@ -2,6 +2,7 @@ import {existsSync} from "node:fs";
 import path from "node:path";
 import {pathToFileURL} from "node:url";
 import {describe, expect, it} from "vitest";
+import {CURRENT_REFRESH_DATE} from "../refresh-contract";
 
 type StatusRouteModule = {
   dynamic: string;
@@ -30,7 +31,7 @@ describe("api/status.json", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
     expect(payload).toMatchObject({
       schemaVersion: 2,
-      dataAsOf: "2026-09-13",
+      dataAsOf: CURRENT_REFRESH_DATE,
       game: "WARDOGS",
       currentEvent: {
         id: "early-access-patch-0-11",
@@ -45,10 +46,11 @@ describe("api/status.json", () => {
         launched: true
       },
       maintenance: {
-        status: "scheduled",
+        status: "completed",
         patchVersion: "0.11",
         startsAt: "2026-09-14T08:00:00Z",
-        expectedDurationMinutes: 60
+        expectedDurationMinutes: 60,
+        completedOn: "2026-09-14"
       }
     });
     expect(payload.historicalEvents).toContainEqual(expect.objectContaining({

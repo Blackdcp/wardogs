@@ -4,6 +4,7 @@ import {guideManifest} from "../../src/content/manifest";
 import {NEWS_UPDATES} from "../../src/features/news/news-data";
 import {getLocalizedVideoArticle} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
@@ -83,13 +84,13 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const release = await loadGuideDocument(locale, "wardogs-release-date");
 
-      expect(livestream?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect(livestream?.frontmatter.updatedAt).toBe(expectedUpdatedAt(locale, "wardogs-livestream"));
       expect(livestream?.frontmatter.sources.map(({url}) => url)).toContain("https://www.twitch.tv/thefpsgamesshow");
       expect(livestream?.body).toMatch(/18:00 UTC/);
-      expect(price?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect(price?.frontmatter.updatedAt).toBe(expectedUpdatedAt(locale, "wardogs-price"));
       expect(price?.body).toContain("Beta 02");
       expect(price?.body).toContain("08:00 UTC");
-      expect(release?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect(release?.frontmatter.updatedAt).toBe(expectedUpdatedAt(locale, "wardogs-release-date"));
       expect(release?.body).toContain("Beta 02");
       expect(release?.body).toContain("2028");
     }

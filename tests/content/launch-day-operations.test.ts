@@ -2,6 +2,7 @@ import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 import {getPublicStatus} from "../../src/features/live-ops/public-status";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const launchGuides = ["wardogs-server-status", "wardogs-patch-notes"] as const;
@@ -12,7 +13,7 @@ describe("September 13 Early Access operations", () => {
       for (const slug of launchGuides) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedUpdatedAt(locale, slug));
         expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(12);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeGreaterThanOrEqual(140);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeLessThanOrEqual(160);

@@ -4,6 +4,7 @@ import {guideManifest} from "../../src/content/manifest";
 import {START_GUIDES, TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 import {getLocalizedVideoArticle} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
@@ -25,11 +26,11 @@ describe("2026-08-29 launch and logistics expansion", () => {
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         const expectedDate = ["wardogs-launch-checklist", "wardogs-cargo-guide"].includes(slug)
-          ? "2026-09-13"
+          ? expectedUpdatedAt(locale, slug)
           : locale === "pt-br" && slug === "wardogs-squad-guide"
-            ? "2026-09-13"
+            ? expectedUpdatedAt(locale, slug)
             : locale === "zh-cn" && slug === "wardogs-oil-rig-guide"
-              ? "2026-09-13"
+              ? expectedUpdatedAt(locale, slug)
               : locale === "zh-cn"
                 ? "2026-09-01"
                 : "2026-08-29";
@@ -99,7 +100,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-ps5");
 
-      expect(guide?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect(guide?.frontmatter.updatedAt).toBe(expectedUpdatedAt(locale, "wardogs-ps5"));
       expect(guide?.frontmatter.title).toMatch(/PS5/i);
       expect(guide?.frontmatter.title).toMatch(/Xbox/i);
       expect(guide?.frontmatter.description).toMatch(/PS5/i);

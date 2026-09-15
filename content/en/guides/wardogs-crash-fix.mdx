@@ -74,6 +74,19 @@ First identify what actually failed. A moving login queue is not a crash, and a 
 - Shader preparation can make a first launch or post-update launch take longer than a normal start.
 - Microsoft KB5121003 documents a general Windows issue in which some games may hang, crash, or restart when certain RGB-related components are present.
 - KB5121003 does **not** name WARDOGS. Any link between that Windows issue and a particular WARDOGS machine remains a community correlation until the developer or Microsoft confirms it.
+- Patch 0.11, deployed September 14, added coverage for more GPU crash paths. A crash that survived the patch needs a different diagnosis from one that stopped after updating.
+
+## What Patch 0.11 Changed for Crashes
+
+Patch 0.11 addressed additional GPU crash paths but did not promise to eliminate every crash. Before deep troubleshooting, confirm three things:
+
+1. Steam has actually downloaded Patch 0.11 and the client is not launching an older cached build.
+2. The GPU driver is current from the vendor, not from Windows Update alone.
+3. The crash reproduces after a clean restart of Steam and Windows.
+
+If the crash began before September 14 and stopped after the patch, record the build and stop changing settings. If it began after the patch, treat it as a new report: capture the error text, UTC time, GPU model, driver version, and the last action before the crash, then compare with players on the same GPU family before assuming a hardware fault.
+
+Overlays, capture tools, and unsupported launch options remain the most common local triggers, and they cost nothing to rule out. Never disable anti-cheat or install an unsigned "fix" executable to chase a crash.
 
 ## What Players Search For
 

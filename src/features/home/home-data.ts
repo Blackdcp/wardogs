@@ -71,11 +71,11 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 }
 
 export const CONFIRMED_RUMOR_ITEMS = [
-  {status: "confirmed", titleKey: "closedBeta02", slug: "wardogs-beta"},
-  {status: "confirmed", titleKey: "clipContest", slug: "wardogs-100k-clip-contest"},
-  {status: "confirmed", titleKey: "paidPrepurchase", slug: "wardogs-price"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
-  {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
+  {status: "confirmed", titleKey: "clipContest", slug: "wardogs-100k-clip-contest"},
+  {status: "confirmed", titleKey: "closedBeta02", slug: "wardogs-beta"},
+  {status: "confirmed", titleKey: "paidPrepurchase", slug: "wardogs-price"},
+  {status: "confirmed", titleKey: "ps5Release", slug: "wardogs-ps5"}
 ] as const;
 
 export function getHomePriorityGuides<T extends RecentlyUpdatedGuideInput>(guides: readonly T[]) {

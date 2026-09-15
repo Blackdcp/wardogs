@@ -24,10 +24,12 @@ export function getPublicStatus() {
       storeUrl: CURRENT_EVENT.storeUrl
     },
     maintenance: {
-      status: "scheduled",
+      status: CURRENT_EVENT.maintenanceStatus,
       patchVersion: CURRENT_EVENT.latestPatchVersion,
       startsAt: CURRENT_EVENT.maintenanceStartsAt,
       expectedDurationMinutes: CURRENT_EVENT.maintenanceDurationMinutes,
+      completedOn: CURRENT_EVENT.maintenanceCompletedOn,
+      patchShippedOn: CURRENT_EVENT.latestPatchShippedOn,
       scope: [
         "server-browser",
         "community-server-discoverability",
@@ -36,6 +38,12 @@ export function getPublicStatus() {
         "asia-capacity"
       ],
       officialUrl: CURRENT_EVENT.latestOfficialUrl
+    },
+    sales: {
+      copiesSold: CURRENT_EVENT.salesMilestone.copiesSold,
+      label: CURRENT_EVENT.salesMilestone.label,
+      announcedOn: CURRENT_EVENT.salesMilestone.announcedOn,
+      officialUrl: CURRENT_EVENT.salesMilestone.url
     },
     historicalEvents: [
       {
@@ -58,7 +66,8 @@ export function getPublicStatus() {
       widget: `${origin}/embed/status`
     },
     sources: [
-      {kind: "official", label: "Scheduled maintenance and Patch 0.11", url: CURRENT_EVENT.latestOfficialUrl},
+      {kind: "official", label: "Patch 0.11 maintenance and server-browser update", url: CURRENT_EVENT.latestOfficialUrl},
+      {kind: "official", label: "Official 2,000,000 copies sold announcement", url: CURRENT_EVENT.salesMilestone.url},
       {kind: "official", label: "Steam Early Access store", url: CURRENT_EVENT.storeUrl},
       {kind: "official", label: "Pre-Load Live and Season 1 changelog", url: CURRENT_EVENT.seasonOnePatchUrl},
       {kind: "official", label: "Launch Stability Hotfix #1", url: CURRENT_EVENT.launchHotfixUrl},

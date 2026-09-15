@@ -1,7 +1,7 @@
 export const CURRENT_EVENT = {
   id: "early-access-patch-0-11",
   status: "live",
-  dataAsOf: "2026-09-13",
+  dataAsOf: "2026-09-15",
   phase: "early-access",
   broadcastAt: "2026-09-03T18:00:00Z",
   startsAt: "2026-09-03T19:00:00Z",
@@ -10,7 +10,16 @@ export const CURRENT_EVENT = {
   earlyAccessAt: "2026-09-10",
   maintenanceStartsAt: "2026-09-14T08:00:00Z",
   maintenanceDurationMinutes: 60,
+  maintenanceStatus: "completed",
+  maintenanceCompletedOn: "2026-09-14",
+  latestPatchShippedOn: "2026-09-14",
   latestPatchVersion: "0.11",
+  salesMilestone: {
+    copiesSold: 2000000,
+    label: "2,000,000",
+    announcedOn: "2026-09-15",
+    url: "https://x.com/WARDOGS"
+  },
   latestOfficialUrl: "https://steamcommunity.com/app/1867240/homecontent/",
   seasonOnePatchUrl: "https://store.steampowered.com/news/app/1867240/view/701027323413004455",
   launchHotfixUrl: "https://store.steampowered.com/news/app/1867240/view/701027323413004709",

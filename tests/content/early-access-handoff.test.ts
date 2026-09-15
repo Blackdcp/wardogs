@@ -4,6 +4,7 @@ import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {CURRENT_EVENT} from "../../src/features/live-ops/current-event";
 import {getPublicStatus} from "../../src/features/live-ops/public-status";
+import {CURRENT_REFRESH_DATE, expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const statusGuides = [
@@ -49,7 +50,7 @@ describe("September 13 Early Access operations", () => {
 
     const status = getPublicStatus();
     expect(status.schemaVersion).toBe(2);
-    expect(status.dataAsOf).toBe("2026-09-13");
+    expect(status.dataAsOf).toBe(CURRENT_REFRESH_DATE);
     expect(status.currentEvent).toMatchObject({
       id: "early-access-patch-0-11",
       name: "Early Access - Patch 0.11",
@@ -72,10 +73,11 @@ describe("September 13 Early Access operations", () => {
       launched: true,
     });
     expect(status.maintenance).toMatchObject({
-      status: "scheduled",
+      status: "completed",
       patchVersion: "0.11",
       startsAt: "2026-09-14T08:00:00Z",
       expectedDurationMinutes: 60,
+      completedOn: "2026-09-14",
     });
   });
 
@@ -109,7 +111,7 @@ describe("September 13 Early Access operations", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedUpdatedAt(locale, slug));
         expect(searchable, `${locale}/${slug}`).toContain("Beta 02");
         expect(searchable, `${locale}/${slug}`).toMatch(liveSignals[locale]);
       }

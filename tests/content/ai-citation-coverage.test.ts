@@ -1,6 +1,7 @@
 import {readFile} from "node:fs/promises";
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
@@ -92,7 +93,7 @@ describe("AI citation query coverage", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-early-access");
       const searchable = `${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
-      const expectedDate = "2026-09-13";
+      const expectedDate = expectedUpdatedAt(locale, "wardogs-early-access");
 
       expect(guide?.frontmatter.updatedAt, locale).toBe(expectedDate);
       expect(searchable, `${locale} date`).toMatch(releaseDateSignals[locale]);
@@ -111,7 +112,7 @@ describe("AI citation query coverage", () => {
         const guide = await loadGuideDocument(locale, slug);
         const query = localizedQueries[locale][intent as keyof typeof localizedQueries.en];
 
-        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
+        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13", "2026-09-15"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
         const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question}) => question).join("\n")}`;
         expect(searchable, `${locale}/${slug} missing ${query}`).toContain(query);
       }

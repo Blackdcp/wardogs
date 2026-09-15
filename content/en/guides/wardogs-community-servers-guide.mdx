@@ -5,15 +5,15 @@ keyword: "wardogs community servers guide"
 category: "guide"
 slug: "wardogs-community-servers-guide"
 order: 45
-updatedAt: "2026-09-13"
+updatedAt: "2026-09-15"
 badges:
   - label: "Server Guide"
     tone: "accent"
-  - label: "Launch Scope"
+  - label: "Patch 0.11"
     tone: "warning"
 faq:
-  - question: "Can I self-host a WARDOGS community server?"
-    answer: "Not at launch. The developer says arbitrary server code will not be distributed and launch hosting will run through two approved providers."
+  - question: "What did Patch 0.11 change for community servers?"
+    answer: "Patch 0.11 shipped on September 14 with separate Official and Community browsers, text search, persistent server IDs, a Show Empty/Full control, alphabetical naming rules, and a 5% end-of-match cash bonus for one week."
   - question: "Which companies host WARDOGS servers?"
     answer: "Two launch providers are approved, but their names and final ordering flow should be taken from the official announcement when it is published."
   - question: "Will WARDOGS community servers support RCON?"
@@ -24,7 +24,7 @@ sources:
   - label: "Official Patch 0.11 community-server update"
     url: "https://steamcommunity.com/app/1867240/homecontent/"
     kind: "official"
-    checkedAt: "2026-09-13"
+    checkedAt: "2026-09-15"
   - label: "Developer community-server update and official-channel copy"
     url: "https://www.reddit.com/r/WarDogs/comments/1w1qe66/wardogs_devs_community_servers_update/"
     kind: "community"
@@ -39,11 +39,13 @@ sources:
     checkedAt: "2026-09-01"
 ---
 
-## September 13 update: Patch 0.11
+## September 15 update: Patch 0.11 is live
 
-WARDOGS Early Access is live. Patch 0.11 is scheduled for September 14 at 08:00 UTC and adds separate **Official** and **Community** server browsers, improved filters and search, persistent server IDs, Show Empty/Full controls, a corrected Host link, and normalized sorting. Community-server players are also scheduled to receive a 5% end-of-match cash bonus for the following week.
+WARDOGS Early Access is live and **Patch 0.11 shipped on September 14**. The browser now separates **Official** and **Community** lists, Community servers gained reliable filters and text search, and **server IDs now persist across matches and restarts**, so a community can publish one permanent identifier for direct joins. A **Show Empty/Full** control was added to the quick bar, the Host button points at the correct destination, and server names must now be **alphabetical with no more than one consecutive space**.
 
-Favourites, tiered priority queues, Message of the Day, seeding AFK controls, team switching, and improved warmup activities are announced for later and are not part of Patch 0.11 yet.
+Community-server matches also award a **5% End of Match cash bonus for the week following the patch**. Treat the bonus as time-limited and confirm it in the client before planning an economy grind around it.
+
+Favourites, tiered priority queues, Message of the Day, seeding AFK controls, team switching, and improved warmup activities are announced for later and are not part of Patch 0.11.
 
 WARDOGS community servers use **two approved hosting providers**. The developer does not plan to distribute server code for arbitrary self-hosting. Approved servers can select maps and modes, an RCON administration tool is in development, and more controls may arrive where they do not undermine the persistent economy.
 
@@ -61,6 +63,9 @@ The developer community-server update confirms four practical points:
 - Server code will not be released for arbitrary self-hosting at launch.
 - Approved community servers can choose maps and modes on day one.
 - A dedicated RCON tool is being developed for administration.
+- Patch 0.11 shipped persistent Community server IDs, text search, and a separate Community browser.
+
+Use a persistent server ID as the stable way back to the same community: the old behaviour wiped IDs on map change or restart, so a saved ID is now a reliable join route for a group. Expect the new IDs to be much longer; the developer cites security reasons.
 
 The providers have been tested for performance and security. This helps keep server behavior closer to the supported build, but it does not mean every region, slot count, price, queue feature, or moderation command is already public.
 
@@ -112,6 +117,33 @@ For a stable first weekend:
 - Keep economy and progression settings at supported defaults.
 - Record crashes, queue failures, and performance problems with timestamps and build numbers.
 
+## Joining the Same Server Every Time
+
+Patch 0.11 made Community server IDs persist across map changes and restarts. Before the patch, an ID was wiped whenever the server rotated, so a saved shortcut could point at nothing.
+
+Practical use: publish the server's persistent ID in your community channel rather than a screenshot of the browser row. The new IDs are much longer than the old ones for security reasons, so copy the whole string and verify it once by joining before sharing it widely.
+
+If your group cannot find the server, check the **Community** tab first, then use text search, then confirm whether **Show Empty/Full** is hiding a full server. Only after that should you consider a client or network fault.
+
+## Naming Rules After Patch 0.11
+
+Server names must now be alphabetical and may not contain more than one consecutive space. Names that used spacing or symbols to force a position at the top of the list will need to change. If a rename fails, remove repeated spaces and special characters first, then retype the name rather than pasting it from an older source.
+
+## Using the One-Week 5% Bonus
+
+Community matches award an extra 5% End of Match cash for the week following Patch 0.11. That bonus is an incentive to play normally, not a licence to optimise the economy through exploits.
+
+Grind in a legitimate community server if you want the bonus, and do not chase "cash server" listings that promise abnormal payouts. The same patch notes that introduced the bonus also introduced the enforcement policy below it.
+
+## Server Owner Checklist
+
+- Record the persistent server ID and confirm it survives a restart before advertising the server.
+- Rename to comply with alphabetical ordering and the single-space rule.
+- Publish language, moderation rules, restart window, and expected play style in the server description.
+- Keep economy and progression settings at supported defaults.
+- Assign owner and moderator credentials separately when the RCON tool arrives.
+- Log crashes, queue failures, and performance problems with timestamps and build numbers.
+
 ## Economy and Progression Boundaries
 
 The developer plans to add more controls over time where the persistent economy allows them. This wording matters. A community server may offer custom rotation or moderation without being allowed to grant unlimited cash, instant role XP, permanent unlocks, or transferable rewards.
@@ -126,7 +158,7 @@ If a listing claims official status, save the URL and compare it with the WARDOG
 
 ## Confirmed vs Unknown
 
-**Confirmed:** two approved launch hosts; no arbitrary self-hosted server code at launch; provider testing for performance and security; map and mode selection on day one; RCON in development; additional controls considered later.
+**Confirmed:** two approved launch hosts; no arbitrary self-hosted server code at launch; provider testing for performance and security; map and mode selection on day one; RCON in development; Patch 0.11 browser split, persistent IDs, text search, Show Empty/Full, alphabetical naming, and the one-week 5% cash bonus; additional controls considered later.
 
 **Unknown:** provider names until officially linked, prices, regions, slot tiers, RCON launch date and commands, Linux or SteamCMD support, modding, custom maps, progression settings, and any later self-hosting roadmap.
 
@@ -140,7 +172,9 @@ If a listing claims official status, save the URL and compare it with the WARDOG
 
 ## Sources and Last Checked
 
-The developer community-server statement, its official-channel context, and the Steam product page were checked on September 1, 2026. Provider names, prices, and technical instructions should be added only after a first-party announcement.
+The 5% community bonus is an incentive to play, not permission to farm. BULKHEAD states that it tracks which servers an account joins, that abusing cash exploits brings a timed ban with cash and XP reset to 0, and that being recorded inside an XP-farming server for more than a few minutes can bring a **permanent ban**. Joining a community server to grind normally is intended; joining one built to exploit is not.
+
+The developer community-server statement, its official-channel context, and the Steam product page were checked on September 1, 2026, and the Patch 0.11 changes were rechecked on September 15, 2026. Provider names, prices, and technical instructions should be added only after a first-party announcement.
 
 ## Related Guides
 

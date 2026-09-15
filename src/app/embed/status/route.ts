@@ -44,9 +44,9 @@ export function GET() {
         <span class="badge" id="status-badge">Live</span>
       </div>
       <h1 id="status-title">WARDOGS Early Access is live</h1>
-      <p class="schedule" id="status-schedule">Patch 0.11 maintenance: September 14 at 08:00 UTC</p>
-      <p class="countdown" id="status-countdown" role="status" aria-live="polite">Calculating maintenance time</p>
-      <p class="note" id="status-note">Servers are expected to be offline for about one hour while the server browser is updated. This widget is schedule-based, not live telemetry.</p>
+      <p class="schedule" id="status-schedule">Patch 0.11 shipped September 14 after the 08:00 UTC maintenance window</p>
+      <p class="countdown" id="status-countdown" role="status" aria-live="polite">No further maintenance announced</p>
+      <p class="note" id="status-note">Patch 0.11 rebuilt the server browser, fixed cash exploits and GPU crashes, and added Asia capacity. This widget is schedule-based, not live telemetry.</p>
       <div class="links">
         <a href="${officialSource.url}" target="_blank" rel="noopener noreferrer">Official source</a>
         <span>Powered by <a href="${status.links.home}" target="_blank" rel="noopener noreferrer">WARDOGS Wiki</a></span>
@@ -94,11 +94,11 @@ export function GET() {
           return;
         }
 
-        badge.textContent = "Check status";
-        title.textContent = "Patch 0.11 maintenance window passed";
-        schedule.textContent = "The scheduled one-hour window began September 14 at 08:00 UTC";
-        countdown.textContent = "Check the official source for completion";
-        note.textContent = "This widget does not infer that servers are back online. Confirm the latest official notice before troubleshooting locally.";
+        badge.textContent = "Patch 0.11";
+        title.textContent = "WARDOGS Early Access is live on Patch 0.11";
+        schedule.textContent = "Maintenance ran September 14 at 08:00 UTC and the patch has shipped";
+        countdown.textContent = "No further maintenance announced";
+        note.textContent = "This widget does not run live server telemetry. Check the official source for the next scheduled window.";
       }
 
       updateStatus();

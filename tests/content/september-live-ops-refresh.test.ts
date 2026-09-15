@@ -2,6 +2,7 @@ import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {NEWS_UPDATES} from "../../src/features/news/news-data";
 import {videoArticles} from "../../src/features/videos/video-library";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const eventGuideSlugs = [
@@ -33,7 +34,7 @@ describe("September 2026 live-ops content refresh", () => {
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedUpdatedAt(locale, slug));
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
         expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
@@ -66,7 +67,7 @@ describe("September 2026 live-ops content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedUpdatedAt(locale, slug));
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(2);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(locale === "ja" ? 1_500 : 1_800);

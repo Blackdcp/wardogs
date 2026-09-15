@@ -1,6 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {getItemBySlug} from "../../src/features/items/item-library";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const growthPages = [
@@ -25,7 +26,7 @@ describe("GSC growth page reinforcement", () => {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
         const expectedCheckDate = ["wardogs-beta", "wardogs-playtest"].includes(slug)
-          ? "2026-09-13"
+          ? expectedUpdatedAt(locale, slug)
           : slug === "wardogs-crash-fix"
             ? "2026-09-04"
           : locale === "zh-cn" && ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)

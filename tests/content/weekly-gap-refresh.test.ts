@@ -1,6 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {NEWS_UPDATES} from "../../src/features/news/news-data";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 
@@ -10,7 +11,7 @@ describe("weekly source-gap refresh", () => {
       const guide = await loadGuideDocument(locale, "wardogs-livestream");
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-13");
+      expect(guide?.frontmatter.updatedAt, locale).toBe(expectedUpdatedAt(locale, "wardogs-livestream"));
       expect(guide?.body, locale).toMatch(locale === "zh-cn" ? /FPS Games Show|FPS游戏展|FPS 游戏展/ : /FPS Games Show/);
       expect(guide?.body, locale).toContain("18:00 UTC");
       expect(guide?.body, locale).toContain("19:00 UTC");

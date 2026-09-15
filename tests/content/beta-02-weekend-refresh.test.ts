@@ -7,6 +7,7 @@ import {NEWS_UPDATES} from "../../src/features/news/news-data";
 import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 import {catalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import {catalogueMediaSources} from "../../src/features/catalogue/catalogue-media-sources";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const currentGuideSlugs = [
@@ -58,7 +59,7 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of newGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-known-issues" ? "2026-09-13" : "2026-09-04");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-known-issues" ? expectedUpdatedAt(locale, slug) : "2026-09-04");
         expect(guide?.frontmatter.description.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(140);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(1_200);
@@ -79,7 +80,7 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of currentGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedUpdatedAt(locale, slug));
         expect(sources, `${locale}/${slug}`).toContain(steamUrl);
         expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
         if (["wardogs-beta", "wardogs-playtest", "wardogs-livestream"].includes(slug)) {
@@ -95,7 +96,7 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of refreshedGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const expectedDate = ["wardogs-preload", "wardogs-ps5"].includes(slug)
-          ? "2026-09-13"
+          ? expectedUpdatedAt(locale, slug)
           : slug === "wardogs-twitch-drops"
             ? "2026-09-09"
             : locale === "en" && slug === "wardogs-factions"

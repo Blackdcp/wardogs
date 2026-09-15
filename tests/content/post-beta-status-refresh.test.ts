@@ -3,6 +3,7 @@ import {readdirSync, readFileSync} from "node:fs";
 import {join} from "node:path";
 import {loadGuideDocument} from "../../src/content/guides";
 import {CONFIRMED_RUMOR_ITEMS} from "../../src/features/home/home-data";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const currentSlugs = ["wardogs-beta", "wardogs-playtest", "wardogs-preload", "wardogs-download"] as const;
@@ -27,7 +28,7 @@ describe("WARDOGS current and historical status boundaries", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedUpdatedAt(locale, slug));
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
         expect(searchable, `${locale}/${slug}`).toContain("08:00 UTC");

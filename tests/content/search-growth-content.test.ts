@@ -1,6 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
 
@@ -10,7 +11,7 @@ describe("Search Console growth pages", () => {
       const guide = await loadGuideDocument(locale, "wardogs-preload");
 
       expect(guide, `${locale}/wardogs-preload should exist`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect(guide?.frontmatter.updatedAt).toBe(expectedUpdatedAt(locale, "wardogs-preload"));
       expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
       expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
       expect(guide?.frontmatter.sources.every(({kind}) => kind === "official")).toBe(true);

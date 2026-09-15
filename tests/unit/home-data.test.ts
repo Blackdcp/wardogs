@@ -72,7 +72,7 @@ describe("homepage data", () => {
       "confirmed",
       "confirmed",
       "confirmed",
-      "rumor"
+      "confirmed"
     ]);
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
       status: "confirmed",
@@ -97,9 +97,9 @@ describe("homepage data", () => {
     expect(result.top).toHaveLength(0);
     expect(result.recent).toHaveLength(3);
     expect(result.status).toEqual([
-      expect.objectContaining({titleKey: "closedBeta02", status: "confirmed"}),
+      expect.objectContaining({titleKey: "steamEarlyAccess", status: "confirmed"}),
       expect.objectContaining({titleKey: "clipContest", status: "confirmed"}),
-      expect.objectContaining({titleKey: "ps5Release", status: "rumor"})
+      expect.objectContaining({titleKey: "ps5Release", status: "confirmed"})
     ]);
   });
 

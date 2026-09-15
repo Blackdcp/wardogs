@@ -1,15 +1,15 @@
 export const NEWS_UPDATES = [
   {
-    date: "2026-09-13",
+    date: "2026-09-15",
+    status: "Confirmed",
+    titleKey: "copiesSold",
+    guideSlug: "wardogs-steam"
+  },
+  {
+    date: "2026-09-14",
     status: "Confirmed",
     titleKey: "patch011",
     guideSlug: "wardogs-patch-notes"
-  },
-  {
-    date: "2026-09-10",
-    status: "Confirmed",
-    titleKey: "copiesSold",
-    guideSlug: "wardogs-early-access"
   },
   {
     date: "2026-09-10",

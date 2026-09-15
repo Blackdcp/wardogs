@@ -5,15 +5,17 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-13"
+updatedAt: "2026-09-15"
 badges:
-  - label: "Beta 02"
+  - label: "Patch 0.11"
     tone: "warning"
   - label: "Build-Sensitive"
     tone: "muted"
 faq:
   - question: "Do Beta 02 issues still apply to Early Access?"
-    answer: "WARDOGS is live in Steam Early Access. Patch 0.11 maintenance is scheduled for September 14 at 08:00 UTC for about one hour; verify completion through the official Steam feed."
+    answer: "Not automatically. Treat every Beta 02 workaround as historical. Patch 0.11 shipped on September 14 and fixed cash exploits, addressed more GPU crashes, and rebuilt the server browser."
+  - question: "I was banned at launch and I did nothing wrong. What should I do?"
+    answer: "BULKHEAD confirmed a wave of erroneous launch bans caused by an account-link bug and said they are being reversed centrally, with no action required from players. Do not create a second account or reinstall."
   - question: "How should I troubleshoot a WARDOGS crash?"
     answer: "Restart Steam and Windows, verify game files, remove unsupported launch commands, update the GPU driver, close overlays, and capture the exact error before contacting official support."
   - question: "Why did local voice chat stop working?"
@@ -46,17 +48,21 @@ sources:
     kind: "community"
     checkedAt: "2026-09-09"
 ---
-## September 13 known-issues desk
+## September 15 known-issues desk
 
-WARDOGS is live in Early Access. The developer acknowledged poor server-browser and Community-server discovery and scheduled Patch 0.11 for **September 14 at 08:00 UTC**. The patch also fixes cash exploits, addresses more GPU crashes, and increases capacity in Asia.
+WARDOGS is live in Early Access on **Patch 0.11**. The maintenance window ran on September 14 at 08:00 UTC and shipped the rebuilt server browser, cash-exploit fixes, more GPU crash coverage, and extra Asia capacity.
 
 That does not mean every crash, queue, kick, voice fault, or performance problem is resolved. Hardware-specific reports remain community observations unless the affected build and cause are confirmed. Record region, build, CPU, GPU, driver, RAM, error text, and UTC time.
+
+Two launch-period problems have been officially addressed and should no longer be treated as open: the login queue failure fixed by Launch Stability Hotfix #1, and the wave of **erroneous launch bans** caused by an account-link bug, which BULKHEAD said it is reversing centrally with no action needed from players.
+
+The most discussed unresolved behavior is **mid-match team switching**. Players report teammates switching sides to dismantle FOB defenses from inside, scout, or teamkill. BULKHEAD has confirmed a design fix is being decided; team-switching controls are listed as future work, not as a shipped Patch 0.11 feature.
 
 Do not disable anti-cheat, install unknown network tools, or follow exploit tutorials. The official policy says repeated economy abuse and XP farming can result in resets or bans.
 
 ## Quick Answer
 
-WARDOGS is live in Steam Early Access. Patch 0.11 maintenance is scheduled for September 14 at 08:00 UTC for about one hour; verify completion through the official Steam feed.
+WARDOGS is live in Steam Early Access on Patch 0.11. The September 14 maintenance has completed, launch queue failures and erroneous bans have been addressed, and team switching remains an open issue pending a design fix.
 
 ## Confirmed Facts
 
@@ -83,13 +89,15 @@ Use the Steam Library entry delivered to your account. Do not download replaceme
 
 The developer's known-issues post tells players to select **one server region only**. If more than one region is selected, no servers may appear. Apply that first, refresh once, and then check official status channels before reinstalling anything.
 
-An empty list can also reflect temporary maintenance, capacity, or a session problem. Screenshots from another region do not prove that your account is broken. Record the selected region, local time, Steam entitlement state, and any message shown by the client.
+An empty list can also reflect temporary maintenance, capacity, or a session problem. After Patch 0.11, also check that you are on the expected **Official** or **Community** tab and use **Show Empty/Full**, because full servers can be hidden by default.
 
 ## Crashes and Anti-Cheat
 
 For a repeatable crash, restart Windows and Steam, verify WARDOGS files, remove unofficial launch options, update the GPU driver from its vendor, and temporarily close capture or overlay tools. Keep Windows security and anti-cheat enabled. Never delete security updates or run an unknown repair executable from chat.
 
-If the same failure returns, save the visible reference code, crash time, CPU, GPU, RAM, driver version, and the last action before the crash. That evidence is more useful to support than repeatedly changing unrelated settings.
+Patch 0.11 addressed additional GPU crash paths, so update the game and your GPU driver before applying deeper tweaks. Keep Windows security and anti-cheat enabled. Never delete security updates or run an unknown repair executable from chat.
+
+If you were banned during the launch window without cause, do not create a second account. BULKHEAD attributed a wave of bans to an account-link bug and said they are being reversed centrally.
 
 ## Performance and Memory
 
@@ -107,13 +115,31 @@ The official beta notice said Supporter Pack items were not available during Bet
 
 No page on this wiki promises that Beta 02 cash, XP, unlocks, or statistics will carry into Early Access. Treat test progression as temporary until an official statement says otherwise.
 
+## Mid-Match Team Switching
+
+The most reported unresolved behavior of launch week is players switching between the three teams during a match. Reported uses include dismantling a friendly FOB from inside, scouting for the enemy, and teamkilling at spawn. Matches can last an hour, so one switch can undo a long build.
+
+BULKHEAD has publicly acknowledged the problem and says a design fix is being decided. Team-switching controls are also listed as future work in the Patch 0.11 notes, which means the current behavior is known and unpatched, not intended.
+
+Until it changes, treat FOB access as untrusted: close doors and gates, keep critical structures behind an airlock, watch for teammates loitering at defenses, and record the player name, UTC time, and match ID when reporting. Do not install third-party "spy detection" tools; they offer no protection and can violate anti-cheat.
+
+## Launch Queues, DDoS, and What Was Fixed
+
+Day-one access failed because too many players requested a Steam login ticket at once and the queue could not admit them fast enough; tickets then expired before the player reached the front. BULKHEAD has also said repeated DDoS attacks hit the opening day.
+
+Launch Stability Hotfix #1 changed the flow so a fresh ticket is issued at the front of the queue instead of at client start, and players were then admitted in waves while the team monitored results. If a queue returns, stay in it: restarting sends you to the back and makes the problem harder to diagnose.
+
+## Erroneous Bans
+
+A wave of launch bans was issued in error, including legitimate alpha testers and high-profile streamers. BULKHEAD confirmed the cause as an account-link and manual-review problem and said the bans are being reversed centrally, with no action required from players. Do not create a second account and do not reinstall; either action can complicate the reversal.
+
 ## Escalation Checklist
 
 Before contacting support, capture the exact error, UTC time, selected region, entitlement state, system specifications, driver version, and steps that reproduce the problem. Remove email addresses, account tokens, QR codes, and Steam Guard details from screenshots.
 
 ## Sources and Last Checked
 
-The historical Beta workarounds were checked against the developer's official known-issues thread. Current server-browser, crash, exploit, capacity, and maintenance status was rechecked against the Patch 0.11 Steam notice on **2026-09-13**. Local diagnostic steps remain separated from first-party claims.
+The historical Beta workarounds were checked against the developer's official known-issues thread. Current server-browser, crash, exploit, capacity, enforcement, and maintenance status was rechecked against the Patch 0.11 Steam notice and the official WARDOGS account on **2026-09-15**. Local diagnostic steps remain separated from first-party claims.
 
 ## Related Guides
 

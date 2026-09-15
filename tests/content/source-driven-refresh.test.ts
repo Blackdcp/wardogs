@@ -1,5 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const targetSlugs = [
@@ -21,7 +22,7 @@ describe("source-driven 2026-08-26 content refresh", () => {
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         const expectedDate = ["wardogs-playtest", "wardogs-beta"].includes(slug)
-          ? "2026-09-13"
+          ? expectedUpdatedAt(locale, slug)
           : slug === "wardogs-controls"
             ? "2026-09-04"
           : locale === "zh-cn" && [

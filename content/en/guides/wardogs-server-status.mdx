@@ -1,21 +1,23 @@
 ---
 title: "WARDOGS Server Status, Login Queue and Outage Checks"
-description: "Check WARDOGS server availability, login queues, empty browser fixes, region selection, official notices, and launch-day outage evidence safely."
+description: "Check WARDOGS server availability after Patch 0.11, login queues, empty browser fixes, region selection, official notices, and outage evidence safely."
 keyword: "wardogs server status"
 category: "guide"
 slug: "wardogs-server-status"
 order: 49
-updatedAt: "2026-09-13"
+updatedAt: "2026-09-15"
 badges:
-  - label: "Launch Day"
+  - label: "Patch 0.11"
     tone: "accent"
   - label: "Status Desk"
     tone: "warning"
 faq:
   - question: "Are WARDOGS servers live right now?"
-    answer: "WARDOGS is live in Steam Early Access. Patch 0.11 maintenance is scheduled for September 14 at 08:00 UTC for about one hour; verify completion through the official Steam feed."
+    answer: "WARDOGS is live in Steam Early Access. The Patch 0.11 maintenance window ran on September 14 at 08:00 UTC and the patch has shipped; check the official Steam feed for any later window."
   - question: "Why is the WARDOGS server browser empty?"
-    answer: "Beta guidance said to select exactly one region, refresh once, and then check official notices before reinstalling or changing security software."
+    answer: "Select exactly one region, refresh once, and check official notices first. Patch 0.11 also splits Official and Community browsers, so confirm you are looking at the expected list."
+  - question: "Did the launch login queue get fixed?"
+    answer: "Launch Stability Hotfix #1 refreshed Steam login tickets and moved players through in controlled waves. A later queue can still appear during peak demand or a new incident."
 sources:
   - label: "Official Pre-Load Live and Season 1 changelog"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
@@ -25,10 +27,18 @@ sources:
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
     kind: "official"
     checkedAt: "2026-09-13"
+  - label: "Official Patch 0.11 maintenance announcement"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-15"
+  - label: "Official WARDOGS X account"
+    url: "https://x.com/WARDOGS"
+    kind: "official"
+    checkedAt: "2026-09-15"
   - label: "Official WARDOGS Steam store"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-09-10"
+    checkedAt: "2026-09-15"
   - label: "Official WARDOGS Steam announcements"
     url: "https://steamcommunity.com/app/1867240/homecontent/"
     kind: "official"
@@ -38,17 +48,19 @@ sources:
     kind: "community"
     checkedAt: "2026-09-10"
 ---
-## September 13 server status and next maintenance
+## September 15 server status: Patch 0.11 shipped
 
-WARDOGS Early Access is live. The next confirmed interruption is **September 14 at 08:00 UTC**, when servers are expected to go offline for roughly one hour for Patch 0.11. This site does **not** operate live server telemetry, so Steam and the official feed remain the source of truth.
+WARDOGS Early Access is live. The **September 14 at 08:00 UTC** maintenance window has run and **Patch 0.11 is deployed**: the server browser now separates **Official** and **Community** lists, Community servers gained text search and persistent IDs, cash exploits and GPU crash paths were addressed, and capacity in Asia was increased.
 
-Launch Stability Hotfix #1 targeted failed joins, unexpected kicks, and extended login queues. A later developer update said the launch queue should have passed, but that historical notice is not a guarantee of current uptime in every region.
+No further maintenance window has been announced. This site does **not** operate live server telemetry, so Steam and the official feed remain the source of truth.
 
-Before reinstalling, check for a Steam update, verify the selected region, compare reports from the same region and UTC window, and record the build number and exact error. Patch 0.11 also changes the server browser and increases Asian capacity.
+Launch Stability Hotfix #1 targeted failed joins, unexpected kicks, and extended login queues by refreshing Steam login tickets instead of reusing the one issued at client start. That fix is historical context, not a guarantee of current uptime in every region.
+
+Before reinstalling, check for a Steam update, verify the selected region and the browser tab you are using, compare reports from the same region and UTC window, and record the build number and exact error.
 
 ## Quick Answer
 
-WARDOGS is live in Steam Early Access. Patch 0.11 maintenance is scheduled for September 14 at 08:00 UTC for about one hour; verify completion through the official Steam feed.
+WARDOGS is live in Steam Early Access on Patch 0.11. The September 14 maintenance window has completed; verify current availability through the official Steam feed before troubleshooting your own PC.
 
 ## Fast status check
 
@@ -61,6 +73,8 @@ WARDOGS is live in Steam Early Access. Patch 0.11 maintenance is scheduled for S
 ## Empty server browser or no matches
 
 During Beta 02, official troubleshooting asked players to select exactly one server region. Selecting several regions could leave the browser empty. That instruction is historical until it is rechecked in the Early Access build, but it remains a low-risk first test: choose one region, refresh once, and wait for the list.
+
+Patch 0.11 adds a second cause to check first: the browser is now split into **Official** and **Community** tabs. If one tab looks empty, switch to the other before assuming an outage, and use the new **Show Empty/Full** control to confirm whether hidden servers are simply full.
 
 An empty list can also mean maintenance, capacity limits, a stale Steam session, or a service-side incident. It is not proof that game files are corrupt. Check official notices before reinstalling, disabling security controls, opening ports, or changing DNS.
 
@@ -82,7 +96,7 @@ Community posts are leads, not uptime proof. A screenshot without time, region, 
 
 ## Confirmed Facts
 
-Steam lists September 10 as the Early Access date. Beta 02 ended September 6, and its old Playtest entitlement is not a current server route. No first-party public uptime dashboard was identified at the time of this check.
+Steam lists September 10 as the Early Access date. Beta 02 ended September 6, and its old Playtest entitlement is not a current server route. Patch 0.11 deployed on September 14 after a scheduled one-hour window. No first-party public uptime dashboard was identified at the time of this check.
 
 ## What Players Search For
 
@@ -98,7 +112,7 @@ Provide UTC time, country or selected region, Steam purchase state, exact librar
 
 ## Sources and Last Checked
 
-The Steam store, Season 1 changelog, launch hotfix, and Patch 0.11 announcement were checked on **September 13, 2026**. This is a sourced status desk, not automated uptime telemetry.
+The Steam store, Season 1 changelog, launch hotfix, official WARDOGS account, and Patch 0.11 announcement were checked on **September 15, 2026**. This is a sourced status desk, not automated uptime telemetry.
 
 ## Related Guides
 
