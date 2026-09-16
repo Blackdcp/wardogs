@@ -13,12 +13,12 @@
   },
   "liveOps": {
     "eyebrow": "Operação do Acesso Antecipado",
-    "title": "Acesso Antecipado disponível; manutenção do Patch 0.11 agendada",
-    "description": "WARDOGS está jogável na Steam. Os servidores sairão do ar em 14 de setembro às 08:00 UTC por cerca de uma hora para o Patch 0.11.",
-    "windowLabel": "Próxima manutenção",
-    "windowValue": "14 de setembro, 08:00 UTC - cerca de 1 hora",
-    "accessLabel": "Foco do Patch 0.11",
-    "accessValue": "Navegadores Oficial e Community separados, busca e filtros melhores, IDs persistentes, correções de dinheiro e GPU e mais capacidade na Ásia.",
+    "title": "Acesso Antecipado disponível; Patch 0.11 e 2M de cópias",
+    "description": "WARDOGS está jogável na Steam sob o Patch 0.11. Mais de 2 milhões de cópias foram vendidas e servidores operam normalmente.",
+    "windowLabel": "Status atual",
+    "windowValue": "Patch 0.11 ativo; mais de 2 milhões de cópias vendidas",
+    "accessLabel": "Destaques do Patch 0.11",
+    "accessValue": "Navegadores Oficial e Community separados, IDs persistentes, bônus de 5%, correções de dinheiro e sanções a exploits.",
     "closedBetaNote": "A janela revisada do Beta 02 terminou em 6 de setembro às 08:00 UTC. Uma licença antiga do Playtest não reabre o teste.",
     "accessCta": "Ler Patch 0.11",
     "issuesCta": "Ver status dos servidores",
@@ -104,7 +104,7 @@
     "startEyebrow": "Comece aqui",
     "startTitle": "Sua missão em WARDOGS",
     "start": {
-      "description": "Use estes seis guias atuais para instalar com segurança, conferir a manutenção de 14 de setembro, monitorar servidores e evitar dicas antigas do Beta.",
+      "description": "Use estes seis guias atuais para instalar com segurança, entender o Patch 0.11, monitorar servidores e evitar dicas antigas do Beta.",
       "cards": {
         "playtest": {
           "title": "Patch 0.11 e atualizações",
@@ -160,7 +160,7 @@
     "priority": {
       "eyebrow": "Informação prioritária",
       "title": "O que jogadores de WARDOGS precisam neste fim de semana",
-      "description": "Comece pela manutenção do Patch 0.11, status atual dos servidores, mudanças verificadas, instalação e controles.",
+      "description": "Comece pelo Patch 0.11 implantado, marca de 2 milhões de cópias, status dos servidores, mudanças verificadas e controles.",
       "top": {
         "title": "Top Guides",
         "description": "Seis guias essenciais para novos jogadores, buscas no Steam e dúvidas atuais de acesso."
@@ -195,7 +195,7 @@
           },
           "ps5Release": {
             "title": "Versões para consoles são planejadas para 2028",
-            "description": "O trailer oficial confirma 2028, mas não cita individualmente PS5, Xbox, datas, cross-play ou progressão compartilhada."
+            "description": "Versões para PS5 e Xbox Series X/S foram confirmadas para 2028; datas exatas e cross-play continuam em aberto."
           }
         }
       }
