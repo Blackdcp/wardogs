@@ -67,7 +67,27 @@ export const REFRESHED_SLUGS: Record<string, readonly string[]> = {
     "wardogs-steam",
     "wardogs-twitter"
   ],
-  ru: [],
+  ru: [
+    "wardogs-beta",
+    "wardogs-beginner-guide",
+    "wardogs-community-servers-guide",
+    "wardogs-crash-fix",
+    "wardogs-download",
+    "wardogs-early-access",
+    "wardogs-fob-guide",
+    "wardogs-known-issues",
+    "wardogs-launch-checklist",
+    "wardogs-money-guide",
+    "wardogs-patch-notes",
+    "wardogs-playtest",
+    "wardogs-preload",
+    "wardogs-price",
+    "wardogs-progression-wipes-guide",
+    "wardogs-release-date",
+    "wardogs-server-status",
+    "wardogs-steam",
+    "wardogs-twitter"
+  ],
   "pt-br": [],
   ja: [],
   "zh-cn": [
