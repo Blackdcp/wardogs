@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-13"
+updatedAt: "2026-09-15"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -13,7 +13,7 @@ badges:
     tone: "muted"
 faq:
   - question: "Gelten Beta-02-Probleme auch in Early Access?"
-    answer: "WARDOGS ist im Steam Early Access live. Die Wartung für Patch 0.11 ist am 14. September um 08:00 UTC für etwa eine Stunde geplant; Abschluss offiziell prüfen."
+    answer: "WARDOGS ist im Steam Early Access live und läuft auf Patch 0.11. Die Wartung am 14. September um 08:00 UTC wurde abgeschlossen; Folgewartungen auf Steam prüfen."
   - question: "Wie untersuche ich einen WARDOGS-Absturz sicher?"
     answer: "Starte Steam und Windows neu, prüfe die Dateien, entferne inoffizielle Startparameter, aktualisiere den Grafiktreiber, schließe Overlays und notiere den exakten Fehler."
   - question: "Warum ist der lokale Sprachchat ausgefallen?"
@@ -24,15 +24,15 @@ sources:
   - label: "Offizieller Preload- und Season-1-Changelog"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
     kind: "official"
-    checkedAt: "2026-09-13"
+    checkedAt: "2026-09-15"
   - label: "Offizieller Launch Stability Hotfix #1"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
     kind: "official"
-    checkedAt: "2026-09-13"
+    checkedAt: "2026-09-15"
   - label: "Offizielle Ankündigung zur Wartung für Patch 0.11"
     url: "https://steamcommunity.com/app/1867240/homecontent/"
     kind: "official"
-    checkedAt: "2026-09-13"
+    checkedAt: "2026-09-15"
   - label: "WARDOGS-Entwicklerhinweis zu bekannten Beta-Problemen"
     url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
     kind: "official"
@@ -40,17 +40,21 @@ sources:
   - label: "Offizielle Steam-Seite und Beta-02-Zugang"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-09-09"
+    checkedAt: "2026-09-15"
   - label: "63-Stunden-Community-Feedback zu Beta 02"
     url: "https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/"
     kind: "community"
     checkedAt: "2026-09-09"
 ---
-## Bekannte Probleme am 13. September
+## Bekannte Probleme und Patch 0.11
 
-Der Entwickler bestätigte Schwächen im Serverbrowser und bei Community-Servern. Patch 0.11 ist für **14. September, 08:00 UTC** geplant und behandelt außerdem Cash-Exploits, weitere GPU-Abstürze und die Kapazität in Asien.
+WARDOGS Early Access läuft aktuell unter **Patch 0.11**. Die Wartung vom **14. September um 08:00 UTC** wurde erfolgreich abgeschlossen und brachte Überarbeitungen am Serverbrowser, Schließen von Cash-Exploits, zusätzliche GPU-Absturzbehebungen sowie Serverausbau in Asien.
 
-Damit sind nicht alle Abstürze, Kicks, Voice- oder Leistungsprobleme gelöst. Hardwareberichte bleiben Community-Beobachtungen, bis Build und Ursache bestätigt sind. Anti-Cheat nicht deaktivieren und keine unbekannten Netzwerktools oder Exploit-Anleitungen verwenden.
+Zwei schwerwiegende Startprobleme wurden durch den Entwickler gelöst:
+- **Login-Warteschlangen:** Das Token-Problem beim Steam-Login wurde durch Hotfix #1 und schubweise Freischaltung stabilisiert.
+- **Fälschliche Start-Sperren:** Ein Bug bei der Account-Verknüpfung führte zu ungerechtfertigten Bans. BULKHEAD hat bestätigt, dass diese Sperren direkt im Backend aufgehoben wurden, ohne dass betroffene Spieler Tickets eröffnen mussten.
+
+Das derzeit am meisten diskutierte ungelöste Problem ist der **Teamwechsel während eines laufenden Matches (Mid-Match Team Switching)**. Spieler berichten über Sabotage, bei der Gegner das Team wechseln, um verbündete FOBs von innen abzubauen oder Spawnpunkte auszuspähen. BULKHEAD prüft Designänderungen; eine Blockade des Teamwechsels ist jedoch noch nicht in Patch 0.11 enthalten.
 
 
 ## Von der Community gemeldete Beta-02-Launch-Beobachtung

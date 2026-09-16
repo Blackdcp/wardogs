@@ -13,10 +13,10 @@
   },
   "liveOps": {
     "eyebrow": "Early-Access-Betrieb",
-    "title": "Early Access ist live; Wartung für Patch 0.11 ist geplant",
-    "description": "WARDOGS ist auf Steam spielbar. Am 14. September um 08:00 UTC gehen die Server für etwa eine Stunde offline, während Patch 0.11 den Serverbrowser verbessert.",
-    "windowLabel": "Nächste Wartung",
-    "windowValue": "14. September, 08:00 UTC - etwa 1 Stunde",
+    "title": "Early Access ist live; Patch 0.11 ist veröffentlicht",
+    "description": "WARDOGS ist auf Steam spielbar. Patch 0.11 wurde am 14. September um 08:00 UTC nach etwa einer Stunde Wartung aufgespielt, baute den Serverbrowser um, behob Cash-Exploits und erhöhte die Asien-Kapazität.",
+    "windowLabel": "Letzte Wartung",
+    "windowValue": "14. September, 08:00 UTC - abgeschlossen",
     "accessLabel": "Schwerpunkt von Patch 0.11",
     "accessValue": "Getrennte Browser für offizielle und Community-Server, bessere Suche und Filter, feste Server-IDs, Fehlerbehebungen und mehr Kapazität in Asien.",
     "closedBetaNote": "Das korrigierte Beta-02-Serverfenster endete am 6. September um 08:00 UTC. Ein alter Playtest-Zugang öffnet es nicht erneut.",
@@ -104,11 +104,11 @@
     "startEyebrow": "Hier starten",
     "startTitle": "Dein WARDOGS-Einsatz",
     "start": {
-      "description": "Diese sechs aktuellen Guides helfen bei Installation, Wartung am 14. September, Serverstatus, geprüften Änderungen und veralteten Beta-Hinweisen.",
+      "description": "Diese sechs aktuellen Guides helfen bei Installation, dem veröffentlichten Patch 0.11, Serverstatus, geprüften Änderungen und veralteten Beta-Hinweisen.",
       "cards": {
         "playtest": {
           "title": "Patch 0.11 und Updates",
-          "description": "Wartungsplan, bestätigte Serverbrowser-Änderungen, Live-Fixes und klar getrennte spätere Funktionen."
+          "description": "Lies die Änderungen von Patch 0.11, bestätigte Serverbrowser-Updates, Live-Fixes und klar getrennte spätere Funktionen."
         },
         "download": {
           "title": "Download und Installation",
@@ -138,7 +138,7 @@
       "description": "Überspringe das Verzeichnis und öffne direkt die passende Aufgabe. Versionsabhängige Fakten bleiben klar gekennzeichnet.",
       "play": {
         "title": "Early Access installieren und spielen",
-        "description": "Öffne die WARDOGS-Haupt-App auf Steam, installiere den aktuellen Build und prüfe vor dem Beitritt die Wartung.",
+        "description": "Öffne die WARDOGS-Haupt-App auf Steam, installiere den aktuellen Patch-0.11-Build und prüfe vor dem Beitritt offizielle Hinweise.",
         "imageAlt": "WARDOGS-Schlachtfeld für Spiel- und Downloadanleitungen"
       },
       "fix": {
@@ -160,7 +160,7 @@
     "priority": {
       "eyebrow": "Wichtige Infos",
       "title": "Was WARDOGS-Spieler dieses Wochenende brauchen",
-      "description": "Beginne mit Patch-0.11-Wartung, aktuellem Serverstatus, geprüften Änderungen, Installation und Steuerung.",
+      "description": "Beginne mit dem veröffentlichten Patch 0.11, aktuellem Serverstatus, geprüften Änderungen, Installation und Steuerung.",
       "top": {
         "title": "Top Guides",
         "description": "Sechs gezielte Guides für neue Spieler, Steam-Suchen und aktuelle Zugangsfragen."
@@ -195,7 +195,7 @@
           },
           "ps5Release": {
             "title": "Konsolenversionen sind für 2028 geplant",
-            "description": "Der offizielle Trailer bestätigt 2028, nennt aber PS5, Xbox, genaue Termine, Crossplay und Cross-Progression nicht einzeln."
+            "description": "BULKHEAD kündigte beim Early-Access-Start PS5- und Xbox-Versionen für 2028 an. Genaue Termine, Crossplay und Cross-Progression sind noch nicht bestätigt."
           }
         }
       }
@@ -380,12 +380,12 @@
           "description": "Die begrenzte Backend- und Warteschlangenprüfung ging Closed Beta 02 voraus und bleibt nur als Verlauf erhalten."
         },
         "patch011": {
-          "title": "Patch-0.11-Wartung für den 14. September geplant",
-          "description": "Die Server sollen ab 08:00 UTC etwa eine Stunde offline sein. Das Update verbessert Serverbrowser, Community-Suche, Stabilität und Kapazität in Asien."
+          "title": "Patch 0.11 am 14. September veröffentlicht",
+          "description": "Die Server waren ab 08:00 UTC etwa eine Stunde offline. Der Patch trennt offizielle und Community-Browser, fügt feste Server-IDs und Textsuche hinzu, behebt Cash-Exploits und GPU-Abstürze und erhöht die Asien-Kapazität."
         },
         "copiesSold": {
-          "title": "WARDOGS meldet 1,25 Millionen verkaufte Exemplare",
-          "description": "Der offizielle Steam-Feed meldete den Verkaufsmeilenstein nach dem Early-Access-Start; es ist keine Zahl gleichzeitig aktiver Spieler."
+          "title": "WARDOGS überschreitet 2 Millionen verkaufte Exemplare",
+          "description": "Der offizielle WARDOGS-Account meldete den Meilenstein am 15. September, fünf Tage nach dem Early-Access-Start. Es ist eine Verkaufszahl, keine Zahl gleichzeitig aktiver Spieler."
         },
         "launchHotfix": {
           "title": "Launch Stability Hotfix #1 veröffentlicht",
