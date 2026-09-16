@@ -13,12 +13,12 @@
   },
   "liveOps": {
     "eyebrow": "Early Access 運用情報",
-    "title": "Early Access配信中 - Patch 0.11メンテナンス予定",
-    "description": "WARDOGSはSteamでプレイ可能です。Patch 0.11適用のため、9月14日08:00 UTCから約1時間サーバー停止が予定されています。",
-    "windowLabel": "次回メンテナンス",
-    "windowValue": "9月14日 08:00 UTC - 約1時間",
-    "accessLabel": "Patch 0.11の対象",
-    "accessValue": "公式・Communityブラウザーの分離、検索とフィルター、固定サーバーID、キャッシュとGPU修正、アジア地域の容量増加。",
+    "title": "Early Access配信中 - Patch 0.11稼働中",
+    "description": "WARDOGSはSteamでPatch 0.11にてプレイ可能です。200万本突破が発表され、サーバーは稼働中です。",
+    "windowLabel": "稼働状況",
+    "windowValue": "Patch 0.11適用済み・200万本販売突破",
+    "accessLabel": "Patch 0.11のハイライト",
+    "accessValue": "公式・Communityブラウザー分離、固定サーバーID、5%ボーナス、現金とGPU不具合修正、不正対策。",
     "closedBetaNote": "訂正版Beta 02サーバー期間は9月6日08:00 UTCに終了しました。古いPlaytest権利で再参加はできません。",
     "accessCta": "Patch 0.11を読む",
     "issuesCta": "サーバー状態を確認",
@@ -104,7 +104,7 @@
     "startEyebrow": "ここから開始",
     "startTitle": "WARDOGSへの出撃準備",
     "start": {
-      "description": "安全な導入、9月14日のメンテナンス、サーバー状態、検証済み変更、古いBeta情報の区別に使う6つの最新ガイドです。",
+      "description": "安全な導入、Patch 0.11、サーバー状態、検証済み変更、古いBeta情報の区別に使う6つの最新ガイドです。",
       "cards": {
         "playtest": {
           "title": "Patch 0.11と更新履歴",
@@ -160,7 +160,7 @@
     "priority": {
       "eyebrow": "優先情報",
       "title": "今週末にWARDOGSプレイヤーが必要な情報",
-      "description": "Patch 0.11メンテナンス、現在のサーバー状況、確認済み変更、安全な導入、操作から確認します。",
+      "description": "Patch 0.11適用済み状況、200万本達成、現在のサーバー状況、確認済み変更、操作から確認します。",
       "top": {
         "title": "人気攻略",
         "description": "初心者、Steam利用者、現在の参加方法を探す人向けに厳選した6つのガイドです。"
@@ -195,7 +195,7 @@
           },
           "ps5Release": {
             "title": "コンソール版は2028年予定",
-            "description": "公式Trailerは2028年を確認しましたが、PS5、Xbox、日程、クロスプレイ、クロス進行は個別に発表されていません。"
+            "description": "PS5およびXbox Series X/S版が2028年に予定されていることが確認されました。詳細日程やクロスプレイは未定です。"
           }
         }
       }
