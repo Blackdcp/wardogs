@@ -3,6 +3,7 @@ import path from "node:path";
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {HOME_CATEGORY_GUIDES, TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {expectedUpdatedAt} from "../refresh-contract";
 
 const criticalAccessSlugs = [
   "wardogs-beta",
@@ -98,7 +99,7 @@ describe("Simplified Chinese publishing quality", () => {
       const expectedDate = slug === "wardogs-system-requirements"
         ? "2026-09-05"
         : ["wardogs-early-access", "wardogs-release-date", "wardogs-price"].includes(slug)
-          ? "2026-09-13"
+          ? expectedUpdatedAt("zh-cn", slug)
           : "2026-09-01";
       expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(expectedDate);
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
@@ -169,7 +170,9 @@ describe("Simplified Chinese publishing quality", () => {
         "wardogs-oil-rig-guide",
         "wardogs-twitter",
       ].includes(slug)
-        ? "2026-09-13"
+        ? slug === "wardogs-twitter"
+          ? expectedUpdatedAt("zh-cn", slug)
+          : "2026-09-13"
         : slug === "wardogs-twitch-drops"
           ? "2026-09-09"
           : ["wardogs-best-settings", "wardogs-factions"].includes(slug)

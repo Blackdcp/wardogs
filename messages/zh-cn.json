@@ -13,10 +13,10 @@
   },
   "liveOps": {
     "eyebrow": "抢先体验运营状态",
-    "title": "抢先体验已上线，Patch 0.11 维护已排期",
-    "description": "WARDOGS 已可在 Steam 游玩。服务器计划于 9 月 14 日 08:00 UTC 暂停约一小时，用于上线改善服务器浏览器的 Patch 0.11。",
-    "windowLabel": "下一次维护",
-    "windowValue": "9 月 14 日 08:00 UTC - 约 1 小时",
+    "title": "抢先体验已上线，Patch 0.11 已部署",
+    "description": "WARDOGS 已可在 Steam 游玩。服务器在 9 月 14 日 08:00 UTC 进行了约一小时维护后已成功部署 Patch 0.11，重构了服务器列表、修复了现金 Exploit 并扩充了亚洲服容量。",
+    "windowLabel": "上次维护",
+    "windowValue": "9 月 14 日 08:00 UTC - 已完成",
     "accessLabel": "Patch 0.11 重点",
     "accessValue": "拆分官方与社区服务器列表，改进搜索和筛选，保留服务器 ID，修复现金与 GPU 问题，并增加亚洲容量。",
     "closedBetaNote": "修订后的 Beta 02 服务器窗口已于 9 月 6 日 08:00 UTC 关闭；旧 Playtest 权限不能重新开放测试。",
@@ -104,11 +104,11 @@
     "startEyebrow": "从这里开始",
     "startTitle": "准备你的第一次部署",
     "start": {
-      "description": "使用这六篇当前攻略安全安装、核对 9 月 14 日维护、监控服务器、查看已验证改动，并避开已经过期的 Beta 建议。",
+      "description": "使用这六篇当前攻略安全安装、了解已上线的 Patch 0.11、监控服务器、查看已验证改动，并避开已经过期的 Beta 建议。",
       "cards": {
         "playtest": {
           "title": "Patch 0.11 与更新记录",
-          "description": "核对维护计划、已确认的服务器浏览器改动、当前修复与明确标成尚未上线的后续功能。"
+          "description": "核对已上线的 Patch 0.11 改动、已确认的服务器浏览器更新、当前修复与明确标成尚未上线的后续功能。"
         },
         "download": {
           "title": "下载与安装",
@@ -138,7 +138,7 @@
       "description": "不必翻完整目录，直接进入你当前要完成的事情。所有可能随版本变化的数据都会继续明确标注。",
       "play": {
         "title": "安装并游玩抢先体验",
-        "description": "打开 Steam 中的 WARDOGS 主应用，安装当前版本，并在进入服务器前核对维护状态。",
+        "description": "打开 Steam 中的 WARDOGS 主应用，安装当前 Patch 0.11 版本，并在进入服务器前核对官方公告。",
         "imageAlt": "用于参与和下载攻略的 WARDOGS 战场画面"
       },
       "fix": {
@@ -160,7 +160,7 @@
     "priority": {
       "eyebrow": "优先级信息",
       "title": "WARDOGS 玩家本周末最需要的内容",
-      "description": "优先查看 Patch 0.11 维护、当前服务器状态、已核实改动、安全安装和操作。",
+      "description": "优先查看已上线的 Patch 0.11、当前服务器状态、已核实改动、安全安装和操作。",
       "top": {
         "title": "核心攻略",
         "description": "围绕当前开放状态、Steam 权限、上线准备和高频搜索问题精选核心攻略。"
@@ -195,7 +195,7 @@
           },
           "ps5Release": {
             "title": "主机版计划于 2028 年推出",
-            "description": "官方预告确认 2028 年主机窗口，但没有分别确认 PS5、Xbox、具体日期、跨平台联机或进度。"
+            "description": "BULKHEAD 在抢先体验上线时宣布 PS5 和 Xbox 版定于 2028 年推出。具体日期、跨平台联机与跨平台进度暂未确认。"
           }
         }
       }
@@ -380,12 +380,12 @@
           "description": "该次有限的后台和队列检查发生在 Closed Beta 02 之前，只保留为历史信息。"
         },
         "patch011": {
-          "title": "Patch 0.11 维护定于 9 月 14 日",
-          "description": "服务器计划从 08:00 UTC 起暂停约一小时；更新重点为服务器浏览器、社区服发现、稳定性修复与亚洲容量。"
+          "title": "Patch 0.11 已于 9 月 14 日部署",
+          "description": "服务器在 08:00 UTC 暂停约一小时后已完成部署。更新拆分了官方与社区服列表，添加了持久化服务器 ID 与文本搜索，修复了现金漏洞与 GPU 崩溃，并扩容了亚洲服。"
         },
         "copiesSold": {
-          "title": "WARDOGS 官方宣布销量达到 125 万份",
-          "description": "该数据由 Steam 官方动态在抢先体验上线后公布，代表销量，不是同时在线人数。"
+          "title": "WARDOGS 官方宣布销量突破 200 万份",
+          "description": "WARDOGS 官方账号于 9 月 15 日（抢先体验上线 5 天后）公布了该里程碑。该数据代表累计销量，并非即时同时在线人数。"
         },
         "launchHotfix": {
           "title": "Launch Stability Hotfix #1 已上线",

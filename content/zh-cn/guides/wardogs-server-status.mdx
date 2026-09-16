@@ -1,21 +1,23 @@
 ---
 title: "WARDOGS 服务器状态、登录排队与故障检查指南"
-description: "检查 WARDOGS 服务器是否开放、登录排队、列表为空、地区选择、官方公告和发售日故障证据，区分全局服务异常与本地账号、网络或电脑问题，避免无效重装和不安全操作。同时记录 Steam 解锁状态、库条目、错误码、UTC 时间、版本号与地区，帮助玩家在重装、修改 DNS 或关闭安全防护前，先完成低风险的第一方信息核验。"
+description: "检查 WARDOGS 在 Patch 0.11 后的服务器开放状态、登录排队、空列表排查、官方公告与故障证据，区分全局服务异常与本地账号、网络或电脑问题，避免无效重装和不安全操作。记录 Steam 解锁状态、错误码、UTC 时间、版本号与地区，帮助玩家在排障前先完成低风险的第一方信息核验。"
 keyword: "wardogs server status"
 category: "guide"
 slug: "wardogs-server-status"
 order: 49
-updatedAt: "2026-09-13"
+updatedAt: "2026-09-15"
 badges:
-  - label: "发售日"
+  - label: "Patch 0.11"
     tone: "accent"
   - label: "状态中心"
     tone: "warning"
 faq:
   - question: "WARDOGS 服务器现在开放了吗？"
-    answer: "WARDOGS 抢先体验已经上线。Patch 0.11 维护定于 9 月 14 日 08:00 UTC，预计约一小时；结束状态必须以 Steam 官方动态为准。"
+    answer: "WARDOGS 抢先体验正在进行中。Patch 0.11 维护窗口已于 9 月 14 日 08:00 UTC 顺利完成并上线补丁；任何后续维护时间请以 Steam 官方动态为准。"
   - question: "WARDOGS 服务器列表为什么是空的？"
-    answer: "Beta 02 的官方排查建议是只选择一个地区并刷新一次，然后先看官方通知，不要立刻重装或关闭安全软件。"
+    answer: "首先确保只选择一个地区并刷新一次。Patch 0.11 将列表拆分为官方与社区两个标签页，请确认所在分类，并利用空服/满服开关确认。"
+  - question: "首发期间的登录排队问题解决了吗？"
+    answer: "Launch Stability Hotfix #1 优化了 Steam 登录票据刷新机制并分批放行玩家。在高峰期或新突发状况下仍可能出现正常排队。"
 sources:
   - label: "官方预载与 Season 1 更新日志"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
@@ -25,21 +27,36 @@ sources:
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
     kind: "official"
     checkedAt: "2026-09-13"
+  - label: "Patch 0.11 维护官方公告"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-15"
+  - label: "WARDOGS 官方 X 账号"
+    url: "https://x.com/WARDOGS"
+    kind: "official"
+    checkedAt: "2026-09-15"
   - label: "WARDOGS 官方 Steam 商店"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-09-10"
+    checkedAt: "2026-09-15"
   - label: "WARDOGS 官方 Steam 公告"
     url: "https://steamcommunity.com/app/1867240/homecontent/"
     kind: "official"
     checkedAt: "2026-09-10"
 ---
-## 9 月 13 日服务器状态与下一次维护
+## 9 月 15 日服务器状态：Patch 0.11 已部署上线
 
-WARDOGS 抢先体验已经上线。下一次确认中断是 **9 月 14 日 08:00 UTC** 开始、预计约一小时的 Patch 0.11 维护。本站不运营实时服务器遥测，Steam 与官方公告是最终来源。
+WARDOGS 抢先体验正在进行。**9 月 14 日 08:00 UTC** 开始的维护窗口已结束，**Patch 0.11 现已完成部署**：服务器浏览器拆分为**官方**与**社区**两个独立列表，社区服增加了文本搜索与持久化 ID，修复了现金漏洞与 GPU 崩溃路径，并扩容了亚洲服务器。
 
-Hotfix #1 针对无法加入、意外被踢和长登录队列。重装前先检查 Steam 更新、地区、版本号、完整错误和 UTC 时间。Patch 0.11 还会改变服务器浏览器并增加亚洲容量。
+官方目前未公布新的停机维护计划。本站不运营实时服务器遥测，Steam 与官方动态为权威来源。
 
+Launch Stability Hotfix #1 通过在队列前端刷新 Steam 登录凭证（而非仅在客户端启动时发放一次）解决了无法加入、意外被踢和长登录队列。这一修复属于上线历史背景，不代表所有地区永远不会遇到波动。
+
+在决定重装游戏前，请先检查 Steam 更新、核对选择的服务器地区与浏览器标签页，记录客户端版本号与具体报错代码。
+
+## 快速解答
+
+WARDOGS 抢先体验当前运行 Patch 0.11。9 月 14 日维护已完成，在排查本地电脑前先核对 Steam 官方动态。
 
 ## 一分钟状态检查
 
@@ -52,6 +69,8 @@ Hotfix #1 针对无法加入、意外被踢和长登录队列。重装前先检�
 ## 服务器列表为空
 
 Beta 02 期间，官方排查帖要求玩家只选择一个服务器地区。多选地区可能导致列表为空。这是历史测试说明，在 Early Access 版本验证前不能当成永久规则，但它仍是低风险的第一步：选择一个地区，刷新一次并等待列表返回。
+
+Patch 0.11 引入了另一个必须优先检查的原因：服务器浏览器现已拆分为**官方**与**社区**两个标签。如果一个标签显示为空，请切换到另一标签查看，并使用全新的**显示空服/满服**控件，确认是否仅仅是满人服务器被自动隐藏。
 
 空列表也可能来自维护、容量上限、Steam 会话过期或服务端事故，并不等于游戏文件损坏。看到官方通知前，不要反复重装、关闭安全防护、开放端口或更改 DNS。
 
@@ -67,9 +86,17 @@ Beta 02 期间，官方排查帖要求玩家只选择一个服务器地区。多
 
 **本地问题：** 服务整体可访问，而症状只出现在一个账号、网络或电脑。社区帖子是排查线索，不是全球停服证明。
 
+## 确认事实
+
+Steam 列出 9 月 10 日为抢先体验正式发售日期。Beta 02 已于 9 月 6 日结束，其旧 Playtest 权限不是当前服务器入口。Patch 0.11 于 9 月 14 日完成一小时维护后部署上线。截至本次核查，官方尚未开放公开的自动化服务器健康看板。
+
 ## 提交有效报告
 
 请提供 UTC 时间、国家或地区、Steam 购买状态、库条目、队列位置或错误码、版本号，以及只选一个地区后的结果。截图中删除邮箱、账号、二维码、令牌和 Steam Guard 信息。
+
+## 来源与最近核查
+
+官方 Steam 商店、Season 1 更新日志、首发热修复、WARDOGS 官方账号以及 Patch 0.11 公告已于 **2026 年 9 月 15 日**完成人工核对。本状态指南为基于官方来源的整理，非自动化实时监控。
 
 ## 相关攻略
 
