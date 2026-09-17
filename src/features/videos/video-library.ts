@@ -37,6 +37,7 @@ export type CurrentVideoSource = {
   topic: CurrentVideoTopic;
   internalGuideSlug: string;
   sourceUrl: string;
+  buildLabel: "Season 1 current";
 };
 
 export const CURRENT_VIDEO_SOURCES_REVIEWED_AT = "2026-09-17";
@@ -50,7 +51,8 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     durationMinutes: 30,
     topic: "beginner",
     internalGuideSlug: "wardogs-beginner-guide",
-    sourceUrl: "https://www.youtube.com/watch?v=fUKgHeT0JGY"
+    sourceUrl: "https://www.youtube.com/watch?v=fUKgHeT0JGY",
+    buildLabel: "Season 1 current"
   },
   {
     youtubeId: "4CHoWpu4Imw",
@@ -60,7 +62,8 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     durationMinutes: 17,
     topic: "helicopter",
     internalGuideSlug: "wardogs-helicopter-guide",
-    sourceUrl: "https://www.youtube.com/watch?v=4CHoWpu4Imw"
+    sourceUrl: "https://www.youtube.com/watch?v=4CHoWpu4Imw",
+    buildLabel: "Season 1 current"
   },
   {
     youtubeId: "Tkors4Fenh0",
@@ -70,7 +73,8 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     durationMinutes: 16,
     topic: "mortar",
     internalGuideSlug: "wardogs-mortar-guide",
-    sourceUrl: "https://www.youtube.com/watch?v=Tkors4Fenh0"
+    sourceUrl: "https://www.youtube.com/watch?v=Tkors4Fenh0",
+    buildLabel: "Season 1 current"
   },
   {
     youtubeId: "mYXhZnJ8Eus",
@@ -80,7 +84,8 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     durationMinutes: 17,
     topic: "money",
     internalGuideSlug: "wardogs-money-guide",
-    sourceUrl: "https://www.youtube.com/watch?v=mYXhZnJ8Eus"
+    sourceUrl: "https://www.youtube.com/watch?v=mYXhZnJ8Eus",
+    buildLabel: "Season 1 current"
   },
   {
     youtubeId: "VrtwXz94dQg",
@@ -90,7 +95,8 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     durationMinutes: 12,
     topic: "loadouts",
     internalGuideSlug: "wardogs-best-weapons-loadouts",
-    sourceUrl: "https://www.youtube.com/watch?v=VrtwXz94dQg"
+    sourceUrl: "https://www.youtube.com/watch?v=VrtwXz94dQg",
+    buildLabel: "Season 1 current"
   },
   {
     youtubeId: "XUyP1GLUF5o",
@@ -100,7 +106,8 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     durationMinutes: 10,
     topic: "fob",
     internalGuideSlug: "wardogs-fob-guide",
-    sourceUrl: "https://www.youtube.com/watch?v=XUyP1GLUF5o"
+    sourceUrl: "https://www.youtube.com/watch?v=XUyP1GLUF5o",
+    buildLabel: "Season 1 current"
   },
   {
     youtubeId: "v0V69ZYMlgY",
@@ -110,7 +117,8 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     durationMinutes: 29,
     topic: "settings",
     internalGuideSlug: "wardogs-best-settings",
-    sourceUrl: "https://www.youtube.com/watch?v=v0V69ZYMlgY"
+    sourceUrl: "https://www.youtube.com/watch?v=v0V69ZYMlgY",
+    buildLabel: "Season 1 current"
   },
   {
     youtubeId: "smOE0063KOE",
@@ -120,9 +128,14 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     durationMinutes: 13,
     topic: "progression",
     internalGuideSlug: "wardogs-progression-wipes-guide",
-    sourceUrl: "https://www.youtube.com/watch?v=smOE0063KOE"
+    sourceUrl: "https://www.youtube.com/watch?v=smOE0063KOE",
+    buildLabel: "Season 1 current"
   }
 ] as const;
+
+export function getCurrentVideoSourcesForGuide(slug: string): CurrentVideoSource[] {
+  return currentVideoSources.filter((source) => source.internalGuideSlug === slug);
+}
 
 const historicalVideoSlugs = new Set([
   "wardogs-7-things-you-need-to-know",

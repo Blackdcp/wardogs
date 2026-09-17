@@ -21,6 +21,8 @@ import {JsonLd} from "@/components/seo/json-ld";
 import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker";
 import {formatLocalizedDate} from "@/lib/localized-date";
 import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
+import {GuideTaskPanel} from "@/components/guides/guide-task-panel";
+import {getGuideTaskData} from "@/features/guides/guide-task-data";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -54,6 +56,7 @@ export default async function GuideArticlePage({params}: PageProps) {
   const guide = await loadGuideDocument(locale, slug);
   if (!guide) notFound();
   const discoveryImage = getGuideDiscoveryImage(slug);
+  const taskData = getGuideTaskData(slug, locale);
   setRequestLocale(locale);
   const [t, categoryT, related, compiled] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
@@ -86,6 +89,7 @@ export default async function GuideArticlePage({params}: PageProps) {
       <LiveBetaBanner compact />
 
       <article className="site-container max-w-4xl py-10 md:py-14">
+        {taskData ? <GuideTaskPanel data={taskData} locale={locale} /> : null}
         {discoveryImage ? (
           <figure className="mb-10 overflow-hidden border border-[#2c3631] bg-[#101411]">
             <Image
@@ -103,10 +107,12 @@ export default async function GuideArticlePage({params}: PageProps) {
             </figcaption>
           </figure>
         ) : null}
-        <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
-          <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
-          <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
-        </aside>
+        {!taskData ? (
+          <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
+            <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
+            <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
+          </aside>
+        ) : null}
         <div className="guide-prose">{compiled.content}</div>
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">

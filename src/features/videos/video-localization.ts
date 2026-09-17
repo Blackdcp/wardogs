@@ -1,7 +1,39 @@
 import type {Locale} from "@/config/site";
 import {videoArticles, type VideoArticle} from "./video-library";
+import {getVideoUi} from "./video-ui";
 
 type TranslatedLocale = Exclude<Locale, "en">;
+
+export type ContextualVideoUi = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  published: string;
+  reviewed: string;
+  buildLabel: string;
+  youtubeSource: string;
+  relatedGuide: string;
+  thumbnail: string;
+};
+
+const contextualVideoCopy: Record<Locale, Pick<ContextualVideoUi, "eyebrow" | "title" | "description" | "published" | "reviewed" | "thumbnail">> = {
+  en: {eyebrow: "Reviewed current footage", title: "Watch the workflow in context", description: "Creator footage can demonstrate a workflow, but current menus and official notes remain authoritative for changing values.", published: "Published", reviewed: "Reviewed", thumbnail: "video thumbnail"},
+  de: {eyebrow: "Geprüfte aktuelle Aufnahmen", title: "Ablauf im Kontext ansehen", description: "Creator-Aufnahmen können einen Ablauf zeigen; für veränderliche Werte bleiben aktuelle Menüs und offizielle Hinweise maßgeblich.", published: "Veröffentlicht", reviewed: "Geprüft", thumbnail: "Video-Vorschaubild"},
+  ru: {eyebrow: "Проверенные актуальные видео", title: "Посмотрите процесс в контексте", description: "Видео автора может показать порядок действий, но изменяемые значения нужно сверять с текущим меню и официальными заметками.", published: "Опубликовано", reviewed: "Проверено", thumbnail: "обложка видео"},
+  "pt-br": {eyebrow: "Vídeo atual verificado", title: "Veja o fluxo em contexto", description: "O vídeo de um criador pode demonstrar o fluxo, mas menus atuais e notas oficiais continuam sendo a referência para valores mutáveis.", published: "Publicado", reviewed: "Verificado", thumbnail: "miniatura do vídeo"},
+  ja: {eyebrow: "確認済みの現行映像", title: "手順を映像で確認", description: "クリエイター映像は手順を示せますが、変更される数値は現在のメニューと公式ノートを優先してください。", published: "公開日", reviewed: "確認日", thumbnail: "動画サムネイル"},
+  "zh-cn": {eyebrow: "已复核的当前实机", title: "结合实机理解流程", description: "创作者实机可以展示操作流程；会变化的数值仍以当前菜单和官方更新说明为准。", published: "发布日期", reviewed: "复核日期", thumbnail: "视频缩略图"}
+};
+
+export function getContextualVideoUi(locale: Locale): ContextualVideoUi {
+  const videoUi = getVideoUi(locale);
+  return {
+    ...contextualVideoCopy[locale],
+    buildLabel: videoUi.seasonOneCurrent,
+    youtubeSource: videoUi.youtubeSource,
+    relatedGuide: videoUi.relatedGuide
+  };
+}
 
 const topics: Record<VideoArticle["slug"], Partial<Record<TranslatedLocale, string>>> = {
   "wardogs-10-reasons-not-to-buy": {ru: "официальные доводы разработчиков о спорных особенностях и ожиданиях перед покупкой", de: "die offiziellen Entwicklerargumente zu möglichen Nachteilen und realistischen Erwartungen vor dem Kauf", "pt-br": "os argumentos oficiais dos desenvolvedores sobre limitações e expectativas antes da compra", ja: "開発者が説明した購入前に知るべき弱点と現実的な期待", "zh-cn": "官方开发者列出的购买前风险与适合人群"},

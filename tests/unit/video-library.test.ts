@@ -2,6 +2,7 @@ import {describe, expect, it} from "vitest";
 import {
   CURRENT_VIDEO_SOURCES_REVIEWED_AT,
   currentVideoSources,
+  getCurrentVideoSourcesForGuide,
   getFeaturedVideoArticles,
   getVideoEra,
   videoArticles
@@ -76,7 +77,15 @@ describe("video article library", () => {
       expect(source.channel.length, source.youtubeId).toBeGreaterThan(0);
       expect(source.durationMinutes, source.youtubeId).toBeGreaterThan(0);
       expect(source.internalGuideSlug.length, source.youtubeId).toBeGreaterThan(0);
+      expect(source.buildLabel, source.youtubeId).toBe("Season 1 current");
     }
+  });
+
+  it("returns only reviewed current sources connected to a guide", () => {
+    expect(getCurrentVideoSourcesForGuide("wardogs-beginner-guide").map(({youtubeId}) => youtubeId)).toEqual([
+      "fUKgHeT0JGY"
+    ]);
+    expect(getCurrentVideoSourcesForGuide("wardogs-controls")).toEqual([]);
   });
 
   it("separates reusable beta workflows from historical video evidence", () => {
