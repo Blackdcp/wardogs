@@ -7,7 +7,7 @@ import {SiteSearch} from "../../src/components/home/site-search";
 import {locales} from "../../src/config/site";
 import {listGuideSummaries} from "../../src/content/guides";
 import {itemLibrary} from "../../src/features/items/item-library";
-import {getToolNavigationItems} from "../../src/features/navigation/navigation-data";
+import {buildNavigation} from "../../src/features/navigation/navigation-data";
 import {
   buildSiteSearchIndex,
   getNextSearchSelection,
@@ -36,7 +36,12 @@ describe("site search index", () => {
     const counts = getSiteSearchCounts(index);
     const guides = await listGuideSummaries("en");
     const indexableItems = itemLibrary.filter((item) => item.indexable && item.indexLocales.includes("en"));
-    const toolHrefs = new Set(getToolNavigationItems((key) => key).map((item) => item.href));
+    const toolHrefs = new Set(
+      buildNavigation((key) => key)
+        .flatMap((group) => group.items)
+        .filter((item) => item.searchType === "tool")
+        .map((item) => item.href)
+    );
 
     expect(new Set(index.map((entry) => entry.type))).toEqual(new Set(["guide", "item", "video", "tool"]));
     expect(counts).toEqual({
@@ -100,7 +105,7 @@ describe("site search index", () => {
           empty: "No maintained result found.",
           resultCount: "{count} results",
           openResult: "Open result",
-          types: {guide: "Guide", item: "Item", video: "Video", tool: "Tool"},
+          types: {guide: "Guide", item: "Item", video: "Video", tool: "Tool", map: "Map"},
           counts: {guides: "Guides", items: "Items", videos: "Current videos", tools: "Tools"}
         },
         counts: {guides: 47, items: 12, videos: 8, tools: 2},
@@ -124,7 +129,7 @@ describe("site search index", () => {
       expect(Object.keys(messages.home.actions).sort(), locale).toEqual([
         "controls", "description", "eyebrow", "firstMatch", "logistics", "money", "pcFixes", "progression", "title", "vehicles", "weapons"
       ]);
-      expect(messages.home.search.types, locale).toEqual(expect.objectContaining({guide: expect.any(String), item: expect.any(String), video: expect.any(String), tool: expect.any(String)}));
+      expect(messages.home.search.types, locale).toEqual(expect.objectContaining({guide: expect.any(String), item: expect.any(String), video: expect.any(String), tool: expect.any(String), map: expect.any(String)}));
       expect(messages.home.search.counts, locale).toEqual(expect.objectContaining({guides: expect.any(String), items: expect.any(String), videos: expect.any(String), tools: expect.any(String)}));
       expect(Object.keys(messages.home.buildChanges.entries).sort(), locale).toEqual([
         "artilleryTank", "deagle", "duneBuggy", "fobVendor", "largeHammer", "ural"

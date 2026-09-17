@@ -145,7 +145,7 @@
       "videoSummary": "更新中の攻略に関連付けた、確認済みの現行クリエイター動画です。",
       "videoCategory": "現行動画",
       "toolSummary": "サイト共通ナビゲーションから取得したインタラクティブツールです。",
-      "types": {"guide": "攻略", "item": "装備", "video": "動画", "tool": "ツール"},
+      "types": {"guide": "攻略", "item": "装備", "video": "動画", "tool": "ツール", "map": "マップ"},
       "counts": {"guides": "攻略", "items": "装備ページ", "videos": "現行動画", "tools": "ツール"}
     },
     "actions": {

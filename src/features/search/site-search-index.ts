@@ -9,7 +9,7 @@ import {listGuideSummaries} from "@/content/guides";
 import {getGuideTaskData} from "@/features/guides/guide-task-data";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
 import {itemLibrary, itemTypes} from "@/features/items/item-library";
-import {getToolNavigationItems} from "@/features/navigation/navigation-data";
+import {getSearchNavigationItems} from "@/features/navigation/navigation-data";
 import {currentVideoAnchorId, currentVideoSources} from "@/features/videos/video-library";
 import type {SiteSearchEntry as SearchEntry} from "./site-search-runtime";
 export {
@@ -95,16 +95,16 @@ export async function buildSiteSearchIndex(locale: Locale): Promise<SearchEntry[
   });
 
   const translate = (key: string) => getMessage(locale, key);
-  const toolEntries: SearchEntry[] = getToolNavigationItems(translate).map((tool) => ({
-    id: `tool:${tool.href.replace(/^\/+/, "").replaceAll("/", ":")}`,
-    type: "tool",
-    title: tool.label,
-    aliases: [tool.href.split("/").filter(Boolean).join(" ").replaceAll("-", " ")],
+  const navigationEntries: SearchEntry[] = getSearchNavigationItems(translate).map((item) => ({
+    id: `${item.searchType}:${item.href.replace(/^\/+/, "").replaceAll("/", ":")}`,
+    type: item.searchType,
+    title: item.label,
+    aliases: [item.href.split("/").filter(Boolean).join(" ").replaceAll("-", " ")],
     summary: getMessage(locale, "home.search.toolSummary"),
-    taskIntent: [tool.label],
-    category: tool.category,
-    href: tool.href
+    taskIntent: [item.label],
+    category: item.category,
+    href: item.href
   }));
 
-  return [...guideEntries, ...itemEntries, ...videoEntries, ...toolEntries];
+  return [...guideEntries, ...itemEntries, ...videoEntries, ...navigationEntries];
 }

@@ -1,4 +1,4 @@
-export type SiteSearchType = "guide" | "item" | "video" | "tool";
+export type SiteSearchType = "guide" | "item" | "video" | "tool" | "map";
 
 export type SiteSearchEntry = {
   id: `${SiteSearchType}:${string}`;
@@ -96,6 +96,6 @@ export function getSiteSearchCounts(index: readonly SiteSearchEntry[]): SiteSear
     guides: index.filter((entry) => entry.type === "guide").length,
     items: index.filter((entry) => entry.type === "item").length,
     videos: index.filter((entry) => entry.type === "video").length,
-    tools: index.filter((entry) => entry.type === "tool").length
+    tools: index.filter((entry) => entry.type === "tool" || entry.type === "map").length
   };
 }

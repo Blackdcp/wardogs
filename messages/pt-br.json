@@ -145,7 +145,7 @@
       "videoSummary": "Vídeo atual de criador revisado e ligado a um guia mantido.",
       "videoCategory": "Vídeo atual",
       "toolSummary": "Ferramenta interativa encontrada pela navegação compartilhada do site.",
-      "types": {"guide": "Guia", "item": "Item", "video": "Vídeo", "tool": "Ferramenta"},
+      "types": {"guide": "Guia", "item": "Item", "video": "Vídeo", "tool": "Ferramenta", "map": "Mapa"},
       "counts": {"guides": "Guias", "items": "Páginas de itens", "videos": "Vídeos atuais", "tools": "Ferramentas"}
     },
     "actions": {

@@ -58,7 +58,8 @@ export default async function HomePage({params}: HomePageProps) {
       guide: t("home.search.types.guide"),
       item: t("home.search.types.item"),
       video: t("home.search.types.video"),
-      tool: t("home.search.types.tool")
+      tool: t("home.search.types.tool"),
+      map: t("home.search.types.map")
     },
     counts: {
       guides: t("home.search.counts.guides"),

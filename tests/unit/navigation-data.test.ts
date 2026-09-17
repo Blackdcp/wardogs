@@ -1,5 +1,9 @@
 import {describe, expect, it} from "vitest";
-import {buildNavigation} from "../../src/features/navigation/navigation-data";
+import {
+  buildNavigation,
+  selectSearchNavigationItems,
+  type NavigationGroup
+} from "../../src/features/navigation/navigation-data";
 
 describe("grouped navigation", () => {
   it("exposes five primary destinations with catalogue children", () => {
@@ -34,5 +38,32 @@ describe("grouped navigation", () => {
     expect(items?.find(({label}) => label === "nav.fobLogistics")).toMatchObject({href: "/guides/wardogs-fob-guide"});
     expect(items?.find(({label}) => label === "nav.mortarGuide")).toMatchObject({href: "/guides/wardogs-mortar-guide"});
     expect(items?.every(({locale}) => locale === undefined)).toBe(true);
+  });
+
+  it("classifies shared navigation destinations explicitly", () => {
+    const items = buildNavigation((key) => key).flatMap((group) => group.items);
+    const byHref = new Map(items.map((item) => [item.href, item.searchType]));
+
+    expect(byHref.get("/guides/wardogs-beginner-guide")).toBe("guide");
+    expect(byHref.get("/items/weapons")).toBe("item");
+    expect(byHref.get("/tools/system-check")).toBe("tool");
+    expect(byHref.get("/tools/loadout-budget")).toBe("tool");
+  });
+
+  it("selects tools and maps by explicit type instead of URL shape", () => {
+    const groups: NavigationGroup[] = [{
+      id: "guides",
+      label: "Field reference",
+      items: [
+        {href: "/tools/not-a-tool", label: "Guide with a tool-shaped URL", searchType: "guide"},
+        {href: "/planner", label: "Future planner", searchType: "tool"},
+        {href: "/maps", label: "Operations atlas", searchType: "map"}
+      ]
+    }];
+
+    expect(selectSearchNavigationItems(groups)).toEqual([
+      {href: "/planner", label: "Future planner", searchType: "tool", category: "Field reference"},
+      {href: "/maps", label: "Operations atlas", searchType: "map", category: "Field reference"}
+    ]);
   });
 });

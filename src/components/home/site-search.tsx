@@ -1,7 +1,7 @@
 "use client";
 
 import {ArrowRight, Search} from "lucide-react";
-import {useMemo, useState, type ChangeEvent, type KeyboardEvent} from "react";
+import {useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent} from "react";
 import type {Locale} from "@/config/site";
 import {
   getSearchKeyboardAction,
@@ -43,15 +43,30 @@ function localizedHref(locale: Locale, href: string) {
 export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [isOpen, setIsOpen] = useState(false);
+  const listboxRef = useRef<HTMLUListElement>(null);
   const results = useMemo(() => searchSiteIndex(index, query, 6), [index, query]);
   const selectedIndex = results.length === 0 ? -1 : Math.min(Math.max(activeIndex, 0), results.length - 1);
   const activeResult = selectedIndex >= 0 ? results[selectedIndex] : undefined;
   const hasQuery = query.trim().length > 0;
+  const hasResults = isOpen && hasQuery && results.length > 0;
+
+  useEffect(() => {
+    if (selectedIndex < 0) return;
+    listboxRef.current
+      ?.querySelector<HTMLElement>(`[data-search-index="${selectedIndex}"]`)
+      ?.scrollIntoView({block: "nearest"});
+  }, [selectedIndex]);
+
+  function openResult(href: string) {
+    window.location.assign(localizedHref(locale, href));
+  }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const nextQuery = event.target.value;
     setQuery(nextQuery);
     setActiveIndex(nextQuery.trim() ? 0 : -1);
+    setIsOpen(Boolean(nextQuery.trim()));
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -60,11 +75,14 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
     event.preventDefault();
     if (action.type === "select") {
       setActiveIndex(action.index);
+      setIsOpen(true);
     } else if (action.type === "clear") {
       setQuery("");
       setActiveIndex(-1);
+      setIsOpen(false);
     } else {
-      window.location.assign(localizedHref(locale, action.href));
+      setIsOpen(false);
+      openResult(action.href);
     }
   }
 
@@ -90,14 +108,17 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
           <div className="relative">
             <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[#82938a]" />
             <input
-              aria-activedescendant={activeResult ? `site-search-option-${selectedIndex}` : undefined}
+              aria-activedescendant={hasResults && activeResult ? `site-search-option-${selectedIndex}` : undefined}
               aria-autocomplete="list"
               aria-controls="site-search-results"
-              aria-expanded={hasQuery}
+              aria-expanded={hasResults}
+              aria-haspopup="listbox"
               autoComplete="off"
               className="h-14 w-full border border-[#526159] bg-[#151b18] pl-12 pr-4 text-base text-white outline-none transition placeholder:text-[#75827b] focus:border-[#79d19c] focus:ring-2 focus:ring-[#79d19c]/35"
               id="site-search-input"
+              onBlur={() => setIsOpen(false)}
               onChange={handleChange}
+              onFocus={() => setIsOpen(Boolean(query.trim()))}
               onKeyDown={handleKeyDown}
               placeholder={copy.placeholder}
               role="combobox"
@@ -106,39 +127,42 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
             />
           </div>
 
-          <div aria-live="polite" className="h-[308px] overflow-y-auto border-x border-b border-[#344039] bg-[#111613]" data-site-search-results="stable" id="site-search-results">
-            {!hasQuery ? (
-              <p className="px-5 py-6 text-sm leading-6 text-[#98a69f]">{copy.prompt}</p>
-            ) : results.length === 0 ? (
-              <p className="px-5 py-6 text-sm leading-6 text-[#c4cec8]">{copy.empty}</p>
-            ) : (
-              <>
-                <p className="border-b border-[#26312c] px-5 py-3 text-xs uppercase text-[#82938a]">
-                  {formatCount(copy.resultCount, results.length)}
-                </p>
-                <ul aria-label={copy.resultCount.replace("{count}", String(results.length))} role="listbox">
-                  {results.map((result, resultIndex) => (
-                    <li aria-selected={resultIndex === selectedIndex} id={`site-search-option-${resultIndex}`} key={result.id} role="option">
-                      <a
-                        title={`${copy.openResult}: ${result.title}`}
-                        className={`group grid min-h-[72px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-[#26312c] px-4 py-3 outline-none last:border-b-0 hover:bg-[#1a221e] focus-visible:bg-[#1a221e] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#79d19c] ${resultIndex === selectedIndex ? "bg-[#1a221e]" : ""}`}
-                        href={localizedHref(locale, result.href)}
-                        onMouseEnter={() => setActiveIndex(resultIndex)}
-                      >
-                        <span className="inline-flex min-w-14 justify-center border border-[#4b6255] px-2 py-1 text-[10px] font-semibold uppercase text-[#a9b5af]">
-                          {copy.types[result.type]}
-                        </span>
-                        <span className="min-w-0">
-                          <span className="block truncate text-sm font-semibold text-[#edf2ef] group-hover:text-[#79d19c]">{result.title}</span>
-                          <span className="mt-1 block truncate text-xs text-[#82938a]">{result.category}</span>
-                        </span>
-                        <ArrowRight aria-hidden="true" className="size-4 text-[#82938a] group-hover:text-[#79d19c]" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
+          <div className="h-[308px] overflow-y-auto border-x border-b border-[#344039] bg-[#111613]" data-site-search-results="stable">
+            <p aria-live="polite" className={`px-5 py-3 text-sm leading-6 ${hasResults ? "border-b border-[#26312c] text-xs uppercase text-[#82938a]" : "text-[#98a69f]"}`}>
+              {!hasQuery ? copy.prompt : results.length === 0 ? copy.empty : formatCount(copy.resultCount, results.length)}
+            </p>
+            <ul
+              aria-label={copy.resultCount.replace("{count}", String(results.length))}
+              hidden={!hasResults}
+              id="site-search-results"
+              ref={listboxRef}
+              role="listbox"
+            >
+              {results.map((result, resultIndex) => (
+                <li
+                  aria-selected={resultIndex === selectedIndex}
+                  className={`group grid min-h-[72px] cursor-pointer grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-[#26312c] px-4 py-3 last:border-b-0 hover:bg-[#1a221e] ${resultIndex === selectedIndex ? "bg-[#1a221e] ring-2 ring-inset ring-[#79d19c]" : ""}`}
+                  data-search-href={result.href}
+                  data-search-index={resultIndex}
+                  id={`site-search-option-${resultIndex}`}
+                  key={result.id}
+                  onClick={() => openResult(result.href)}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onMouseEnter={() => setActiveIndex(resultIndex)}
+                  role="option"
+                  title={`${copy.openResult}: ${result.title}`}
+                >
+                  <span className="inline-flex min-w-14 justify-center border border-[#4b6255] px-2 py-1 text-[10px] font-semibold uppercase text-[#a9b5af]">
+                    {copy.types[result.type]}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-semibold text-[#edf2ef] group-hover:text-[#79d19c]">{result.title}</span>
+                    <span className="mt-1 block truncate text-xs text-[#82938a]">{result.category}</span>
+                  </span>
+                  <ArrowRight aria-hidden="true" className="size-4 text-[#82938a] group-hover:text-[#79d19c]" />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

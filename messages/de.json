@@ -145,7 +145,7 @@
       "videoSummary": "Geprüfte aktuelle Creator-Aufnahmen mit Verknüpfung zu einem gepflegten Guide.",
       "videoCategory": "Aktuelles Video",
       "toolSummary": "Interaktives Spieler-Tool aus der gemeinsamen Seitennavigation.",
-      "types": {"guide": "Guide", "item": "Gegenstand", "video": "Video", "tool": "Tool"},
+      "types": {"guide": "Guide", "item": "Gegenstand", "video": "Video", "tool": "Tool", "map": "Karte"},
       "counts": {"guides": "Guides", "items": "Gegenstandsseiten", "videos": "Aktuelle Videos", "tools": "Tools"}
     },
     "actions": {
