@@ -22,6 +22,7 @@ import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker"
 import {formatLocalizedDate} from "@/lib/localized-date";
 import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
 import {GuideTaskPanel} from "@/components/guides/guide-task-panel";
+import {prepareGuideBodyForTaskPanel} from "@/features/guides/guide-task-body";
 import {getGuideTaskData} from "@/features/guides/guide-task-data";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
@@ -57,12 +58,13 @@ export default async function GuideArticlePage({params}: PageProps) {
   if (!guide) notFound();
   const discoveryImage = getGuideDiscoveryImage(slug);
   const taskData = getGuideTaskData(slug, locale);
+  const guideBody = prepareGuideBodyForTaskPanel(guide.body, locale, Boolean(taskData));
   setRequestLocale(locale);
   const [t, categoryT, related, compiled] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "categories"}),
     getRelatedGuides(locale, slug),
-    compileLocalizedGuideBody(guide.body, mdxComponents, locale)
+    compileLocalizedGuideBody(guideBody, mdxComponents, locale)
   ]);
 
   return (

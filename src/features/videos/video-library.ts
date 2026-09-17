@@ -42,6 +42,10 @@ export type CurrentVideoSource = {
 
 export const CURRENT_VIDEO_SOURCES_REVIEWED_AT = "2026-09-17";
 
+export function currentVideoAnchorId(youtubeId: string) {
+  return `current-video-${youtubeId}`;
+}
+
 export const currentVideoSources: readonly CurrentVideoSource[] = [
   {
     youtubeId: "fUKgHeT0JGY",

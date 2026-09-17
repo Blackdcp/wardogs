@@ -1,7 +1,7 @@
 import {ArrowRight, CalendarDays, CheckCircle2, ExternalLink, PlayCircle} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {VideoThumbnailImage} from "@/components/videos/video-thumbnail-image";
-import {CURRENT_VIDEO_SOURCES_REVIEWED_AT, type CurrentVideoSource} from "@/features/videos/video-library";
+import {CURRENT_VIDEO_SOURCES_REVIEWED_AT, currentVideoAnchorId, type CurrentVideoSource} from "@/features/videos/video-library";
 import {getContextualVideoUi} from "@/features/videos/video-localization";
 import {formatLocalizedDate} from "@/lib/localized-date";
 
@@ -38,8 +38,8 @@ export function ContextualVideoEvidence({locale, sources}: {locale: Locale; sour
                 <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">{ui.youtubeSource}<ExternalLink aria-hidden="true" className="size-4" /></span>
               </span>
             </a>
-            <a className="flex min-h-11 items-center justify-between gap-3 border-t border-[#2c3631] px-4 py-3 text-xs font-semibold uppercase text-[#b8c3bd] hover:bg-[#1b241f] hover:text-white" href={`/${locale}/guides/${source.internalGuideSlug}`} title={ui.relatedGuide}>
-              <span className="min-w-0" style={{overflowWrap: "anywhere"}}>{ui.relatedGuide}</span>
+            <a className="flex min-h-11 items-center justify-between gap-3 border-t border-[#2c3631] px-4 py-3 text-xs font-semibold uppercase text-[#b8c3bd] hover:bg-[#1b241f] hover:text-white" href={`/${locale}/videos#${currentVideoAnchorId(source.youtubeId)}`} title={ui.videoHub}>
+              <span className="min-w-0" style={{overflowWrap: "anywhere"}}>{ui.videoHub}</span>
               <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
             </a>
           </article>

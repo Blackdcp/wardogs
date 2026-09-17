@@ -4,7 +4,7 @@ import {ArrowRight, CalendarDays, Clapperboard, Clock3, ExternalLink, PlayCircle
 import {isLocale, locales, type Locale} from "@/config/site";
 import {VideoArticleCard} from "@/components/videos/video-article-card";
 import {VideoThumbnailImage} from "@/components/videos/video-thumbnail-image";
-import {currentVideoSources, videoArticles} from "@/features/videos/video-library";
+import {currentVideoAnchorId, currentVideoSources, videoArticles} from "@/features/videos/video-library";
 import {getLocalizedFeaturedVideoArticles} from "@/features/videos/video-localization";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 import {getVideoUi} from "@/features/videos/video-ui";
@@ -65,7 +65,7 @@ export default async function VideosPage({params}: PageProps) {
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {currentVideoSources.map((source, index) => (
-              <article className="overflow-hidden border border-[#354039] bg-[#111512]" key={source.youtubeId}>
+              <article className="scroll-mt-24 overflow-hidden border border-[#354039] bg-[#111512]" id={currentVideoAnchorId(source.youtubeId)} key={source.youtubeId}>
                 <a
                   className="group block"
                   href={source.sourceUrl}
