@@ -13,13 +13,13 @@
   },
   "liveOps": {
     "eyebrow": "Operação do Acesso Antecipado",
-    "title": "Acesso Antecipado disponível; manutenção do Patch 0.11 agendada",
-    "description": "WARDOGS está jogável na Steam. Os servidores sairão do ar em 14 de setembro às 08:00 UTC por cerca de uma hora para o Patch 0.11.",
-    "windowLabel": "Próxima manutenção",
-    "windowValue": "14 de setembro, 08:00 UTC - cerca de 1 hora",
-    "accessLabel": "Foco do Patch 0.11",
+    "title": "Season 1 em Acesso Antecipado está no Patch 0.11",
+    "description": "A janela de manutenção publicada para 14 de setembro já passou. O Patch 0.11 segue como o anúncio oficial mais recente; consulte o feed oficial da Steam para o status ao vivo.",
+    "windowLabel": "Ponto atual",
+    "windowValue": "Patch 0.11 - revisado em 17 de setembro",
+    "accessLabel": "Mudanças verificadas do Patch 0.11",
     "accessValue": "Navegadores Oficial e Community separados, busca e filtros melhores, IDs persistentes, correções de dinheiro e GPU e mais capacidade na Ásia.",
-    "closedBetaNote": "A janela revisada do Beta 02 terminou em 6 de setembro às 08:00 UTC. Uma licença antiga do Playtest não reabre o teste.",
+    "closedBetaNote": "A BULKHEAD anunciou dois milhões de cópias vendidas em 15 de setembro. É um marco de vendas, não jogadores simultâneos.",
     "accessCta": "Ler Patch 0.11",
     "issuesCta": "Ver status dos servidores",
     "countdown": {
@@ -104,31 +104,31 @@
     "startEyebrow": "Comece aqui",
     "startTitle": "Sua missão em WARDOGS",
     "start": {
-      "description": "Use estes seis guias atuais para instalar com segurança, conferir a manutenção de 14 de setembro, monitorar servidores e evitar dicas antigas do Beta.",
+      "description": "Use estes seis guias atuais para as primeiras horas, dinheiro, progressão, loadouts, servidores da comunidade e solução de problemas da Season 1.",
       "cards": {
-        "playtest": {
-          "title": "Patch 0.11 e atualizações",
-          "description": "Plano de manutenção, mudanças confirmadas no navegador, correções atuais e recursos futuros separados."
+        "beginner": {
+          "title": "Guia de campo para iniciantes",
+          "description": "Entenda objetivo, primeiras vidas, funções, transporte, revives e erros que gastam seu dinheiro."
         },
-        "download": {
-          "title": "Download e instalação",
-          "description": "Use a entrada correta do Steam e evite chaves ou instaladores não oficiais."
+        "money": {
+          "title": "Dinheiro e economia",
+          "description": "Ganhe com consistência, evite servidores de exploit, guarde reserva e compre para uma função."
         },
-        "controls": {
-          "title": "Controles e voz",
-          "description": "Revise infantaria, veículos, helicóptero, mapa e teclas de voz local."
+        "progression": {
+          "title": "Progressão e desbloqueios",
+          "description": "Entenda XP da Season 1, progresso de função, ritmo de desbloqueio e dados sujeitos a mudança."
+        },
+        "loadouts": {
+          "title": "Armas e loadouts",
+          "description": "Monte kits acessíveis para alcance, armadura, munição, utilidade e a função real do esquadrão."
+        },
+        "communityServers": {
+          "title": "Servidores da comunidade",
+          "description": "Use o navegador do Patch 0.11, filtros, IDs persistentes, hosts aprovados e regras seguras."
         },
         "issues": {
-          "title": "Status dos servidores",
-          "description": "Confira Steam, filas, lista vazia, região e avisos oficiais de indisponibilidade."
-        },
-        "contest": {
-          "title": "Concurso de clipes $100K",
-          "description": "Siga plataforma, hashtag, formulário, prazo e regras de elegibilidade."
-        },
-        "launch": {
-          "title": "Checklist da primeira semana",
-          "description": "Confira build, região, ajustes, equipe, problemas conhecidos e fontes oficiais antes de jogar."
+          "title": "Problemas conhecidos",
+          "description": "Separe falha oficial de fila, navegador, crash, voz, conta, região ou PC."
         }
       }
     },
@@ -160,7 +160,7 @@
     "priority": {
       "eyebrow": "Informação prioritária",
       "title": "O que jogadores de WARDOGS precisam neste fim de semana",
-      "description": "Comece pela manutenção do Patch 0.11, status atual dos servidores, mudanças verificadas, instalação e controles.",
+      "description": "Comece pela prática da Season 1: objetivo, dinheiro, progressão, loadouts, servidores da comunidade e correções atuais.",
       "top": {
         "title": "Top Guides",
         "description": "Seis guias essenciais para novos jogadores, buscas no Steam e dúvidas atuais de acesso."
@@ -379,9 +379,13 @@
           "title": "O teste de campo de tiro de 2 de setembro terminou",
           "description": "A verificação limitada de backend e fila antecedeu o Closed Beta 02 e permanece só como histórico."
         },
+        "twoMillionCopies": {
+          "title": "WARDOGS anuncia dois milhões de cópias vendidas",
+          "description": "A BULKHEAD publicou o marco oficial de vendas em 15 de setembro. Não é um total de jogadores simultâneos."
+        },
         "patch011": {
-          "title": "Manutenção do Patch 0.11 marcada para 14 de setembro",
-          "description": "Os servidores sairão do ar às 08:00 UTC por cerca de uma hora. A atualização melhora navegador, busca Community, estabilidade e capacidade na Ásia."
+          "title": "Patch 0.11 melhora navegador e descoberta de servidores",
+          "description": "A janela publicada para 14 de setembro já passou. As mudanças confirmadas incluem listas separadas, filtros, IDs persistentes, correções de dinheiro e GPU e capacidade na Ásia."
         },
         "copiesSold": {
           "title": "WARDOGS anuncia 1,25 milhão de cópias vendidas",

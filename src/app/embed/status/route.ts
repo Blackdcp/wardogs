@@ -25,18 +25,17 @@ export function GET() {
     .badge { flex: none; border: 1px solid #4ed18c; border-radius: 999px; padding: 4px 8px; color: #75e6aa; font-size: 12px; font-weight: 800; }
     h1 { margin: 12px 0 4px; font-size: 24px; line-height: 1.15; letter-spacing: 0; }
     .schedule { margin: 0; color: #c4cec9; font-size: 13px; line-height: 1.5; }
-    .countdown { margin: 18px 0 8px; color: #ffd166; font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: 0; }
-    .note { min-height: 36px; margin: 0; color: #a9b7b0; font-size: 12px; line-height: 1.5; }
+    .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 18px 0 12px; border: 1px solid #303a35; background: #303a35; }
+    .status-item { min-width: 0; background: #111614; padding: 12px; }
+    .status-label { display: block; margin-bottom: 4px; color: #8fa098; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    .status-value { color: #f4f6f5; font-size: 14px; font-weight: 800; }
+    .note { margin: 0; color: #a9b7b0; font-size: 12px; line-height: 1.5; }
     .links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 18px; margin-top: 18px; border-top: 1px solid #303a35; padding-top: 13px; font-size: 12px; }
     a { color: #78d9a7; text-underline-offset: 3px; }
   </style>
 </head>
 <body>
-  <main
-    class="widget"
-    data-maintenance-starts-at="${status.maintenance.startsAt}"
-    data-maintenance-duration-minutes="${status.maintenance.expectedDurationMinutes}"
-  >
+  <main class="widget">
     <div class="accent"></div>
     <div class="content">
       <div class="topline">
@@ -44,67 +43,24 @@ export function GET() {
         <span class="badge" id="status-badge">Live</span>
       </div>
       <h1 id="status-title">WARDOGS Early Access is live</h1>
-      <p class="schedule" id="status-schedule">Patch 0.11 maintenance: September 14 at 08:00 UTC</p>
-      <p class="countdown" id="status-countdown" role="status" aria-live="polite">Calculating maintenance time</p>
-      <p class="note" id="status-note">Servers are expected to be offline for about one hour while the server browser is updated. This widget is schedule-based, not live telemetry.</p>
+      <p class="schedule">Patch 0.11 is the latest official patch announcement.</p>
+      <div class="status-grid">
+        <div class="status-item">
+          <span class="status-label">Current phase</span>
+          <span class="status-value">Season 1 Early Access</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">Last checked</span>
+          <span class="status-value">September 17</span>
+        </div>
+      </div>
+      <p class="note">The published maintenance window has passed. This is not live telemetry; use the official feed for live service status before troubleshooting locally.</p>
       <div class="links">
         <a href="${officialSource.url}" target="_blank" rel="noopener noreferrer">Official source</a>
         <span>Powered by <a href="${status.links.home}" target="_blank" rel="noopener noreferrer">WARDOGS Wiki</a></span>
       </div>
     </div>
   </main>
-  <script>
-    (() => {
-      const widget = document.querySelector(".widget");
-      const badge = document.getElementById("status-badge");
-      const title = document.getElementById("status-title");
-      const schedule = document.getElementById("status-schedule");
-      const countdown = document.getElementById("status-countdown");
-      const note = document.getElementById("status-note");
-      const maintenanceStart = Date.parse(widget.dataset.maintenanceStartsAt);
-      const maintenanceDuration = Number(widget.dataset.maintenanceDurationMinutes) * 60 * 1000;
-      const maintenanceEnd = maintenanceStart + maintenanceDuration;
-
-      function formatDuration(milliseconds) {
-        const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-        return [days + "d", String(hours).padStart(2, "0") + "h", String(minutes).padStart(2, "0") + "m", String(seconds).padStart(2, "0") + "s"].join(" ");
-      }
-
-      function updateStatus() {
-        const nowMs = Date.now();
-
-        if (nowMs < maintenanceStart) {
-          badge.textContent = "Live";
-          title.textContent = "WARDOGS Early Access is live";
-          schedule.textContent = "Patch 0.11 maintenance: September 14 at 08:00 UTC";
-          countdown.textContent = "Maintenance in " + formatDuration(maintenanceStart - nowMs);
-          return;
-        }
-
-        if (nowMs < maintenanceEnd) {
-          badge.textContent = "Maintenance";
-          title.textContent = "Patch 0.11 maintenance window";
-          schedule.textContent = "Scheduled downtime began at 08:00 UTC";
-          countdown.textContent = "Approximate window remaining " + formatDuration(maintenanceEnd - nowMs);
-          note.textContent = "The one-hour duration is an estimate, not live server telemetry. Check the official update before retrying.";
-          return;
-        }
-
-        badge.textContent = "Check status";
-        title.textContent = "Patch 0.11 maintenance window passed";
-        schedule.textContent = "The scheduled one-hour window began September 14 at 08:00 UTC";
-        countdown.textContent = "Check the official source for completion";
-        note.textContent = "This widget does not infer that servers are back online. Confirm the latest official notice before troubleshooting locally.";
-      }
-
-      updateStatus();
-      setInterval(updateStatus, 1000);
-    })();
-  </script>
 </body>
 </html>`;
 

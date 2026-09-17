@@ -13,13 +13,13 @@
   },
   "liveOps": {
     "eyebrow": "Early Access 運用情報",
-    "title": "Early Access配信中 - Patch 0.11メンテナンス予定",
-    "description": "WARDOGSはSteamでプレイ可能です。Patch 0.11適用のため、9月14日08:00 UTCから約1時間サーバー停止が予定されています。",
-    "windowLabel": "次回メンテナンス",
-    "windowValue": "9月14日 08:00 UTC - 約1時間",
-    "accessLabel": "Patch 0.11の対象",
+    "title": "Season 1 Early AccessはPatch 0.11で配信中",
+    "description": "9月14日に告知されたメンテナンス時間は経過しました。最新の公式パッチ告知はPatch 0.11です。稼働状況はSteam公式フィードで確認してください。",
+    "windowLabel": "現在の確認点",
+    "windowValue": "Patch 0.11 - 9月17日確認",
+    "accessLabel": "Patch 0.11の確認済み変更",
     "accessValue": "公式・Communityブラウザーの分離、検索とフィルター、固定サーバーID、キャッシュとGPU修正、アジア地域の容量増加。",
-    "closedBetaNote": "訂正版Beta 02サーバー期間は9月6日08:00 UTCに終了しました。古いPlaytest権利で再参加はできません。",
+    "closedBetaNote": "BULKHEADは9月15日に販売200万本を発表しました。同時接続数ではなく販売本数です。",
     "accessCta": "Patch 0.11を読む",
     "issuesCta": "サーバー状態を確認",
     "countdown": {
@@ -104,31 +104,31 @@
     "startEyebrow": "ここから開始",
     "startTitle": "WARDOGSへの出撃準備",
     "start": {
-      "description": "安全な導入、9月14日のメンテナンス、サーバー状態、検証済み変更、古いBeta情報の区別に使う6つの最新ガイドです。",
+      "description": "Season 1の序盤、資金、進行、ロードアウト、コミュニティサーバー、問題対策をまとめた6つの最新ガイドです。",
       "cards": {
-        "playtest": {
-          "title": "Patch 0.11と更新履歴",
-          "description": "メンテナンス予定、確認済みサーバーブラウザー変更、現在の修正、未実装の計画を分けて確認します。"
+        "beginner": {
+          "title": "初心者フィールドガイド",
+          "description": "目標、最初の動き、分隊役割、輸送、蘇生、資金を失うミスを確認します。"
         },
-        "download": {
-          "title": "ダウンロードと導入",
-          "description": "正しいSteamライブラリ項目を使い、非公式キーやインストーラーを避けます。"
+        "money": {
+          "title": "資金と経済",
+          "description": "安定した稼ぎ方、不正サーバーの回避、予備資金、役割に合う支出を整理します。"
         },
-        "controls": {
-          "title": "操作とボイス",
-          "description": "歩兵、車両、ヘリ、マップ、ローカルボイスの操作を確認します。"
+        "progression": {
+          "title": "進行とアンロック",
+          "description": "Season 1のXP帯、役割進行、アンロック速度、変更され得る情報を確認します。"
+        },
+        "loadouts": {
+          "title": "武器とロードアウト",
+          "description": "距離、防具、弾薬、用途、分隊の仕事に合わせて無理のない装備を組みます。"
+        },
+        "communityServers": {
+          "title": "コミュニティサーバー",
+          "description": "Patch 0.11の一覧、フィルター、固定ID、承認ホスト、安全なルールを確認します。"
         },
         "issues": {
-          "title": "サーバー状況",
-          "description": "Steam、待機列、空の一覧、地域、公式障害告知を確認します。"
-        },
-        "contest": {
-          "title": "10万ドル動画コンテスト",
-          "description": "投稿先、タグ、フォーム、締切、参加条件を公式ルールで確認します。"
-        },
-        "launch": {
-          "title": "配信初週チェックリスト",
-          "description": "ビルド、地域、設定、分隊、既知の問題、公式情報を各セッション前に確認します。"
+          "title": "既知の問題",
+          "description": "公式障害と、待機列、一覧、クラッシュ、音声、アカウント、地域、PC問題を切り分けます。"
         }
       }
     },
@@ -160,7 +160,7 @@
     "priority": {
       "eyebrow": "優先情報",
       "title": "今週末にWARDOGSプレイヤーが必要な情報",
-      "description": "Patch 0.11メンテナンス、現在のサーバー状況、確認済み変更、安全な導入、操作から確認します。",
+      "description": "Season 1の実戦情報として、目標、資金、進行、装備、コミュニティサーバー、現在の対処法から確認します。",
       "top": {
         "title": "人気攻略",
         "description": "初心者、Steam利用者、現在の参加方法を探す人向けに厳選した6つのガイドです。"
@@ -379,9 +379,13 @@
           "title": "9月2日の射撃場テストは終了",
           "description": "限定的なバックエンドと待機列の確認はClosed Beta 02前の履歴です。"
         },
+        "twoMillionCopies": {
+          "title": "WARDOGSが販売200万本を発表",
+          "description": "BULKHEADが9月15日に発表した公式販売記録です。同時接続プレイヤー数ではありません。"
+        },
         "patch011": {
-          "title": "Patch 0.11メンテナンスは9月14日実施予定",
-          "description": "08:00 UTCから約1時間の停止予定です。サーバーブラウザー、Community検索、安定性、アジア地域容量を改善します。"
+          "title": "Patch 0.11でサーバー一覧とCommunity検索を改善",
+          "description": "9月14日に告知された時間は経過しました。公式・Community一覧の分離、フィルター、固定ID、資金とGPUの修正、アジア地域容量が確認済みです。"
         },
         "copiesSold": {
           "title": "WARDOGSが125万本販売を発表",

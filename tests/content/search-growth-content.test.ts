@@ -10,7 +10,7 @@ describe("Search Console growth pages", () => {
       const guide = await loadGuideDocument(locale, "wardogs-preload");
 
       expect(guide, `${locale}/wardogs-preload should exist`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect(guide?.frontmatter.updatedAt).toBe("2026-09-17");
       expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
       expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
       expect(guide?.frontmatter.sources.every(({kind}) => kind === "official")).toBe(true);

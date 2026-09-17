@@ -31,7 +31,7 @@ const liveSignals = {
   ru: /Early Access.*(?:запущен|начал|вышла|доступна)|доступна в Steam Early Access/i,
   "pt-br": /Acesso Antecipado (?:disponível|começou|entrou)|disponível no Acesso Antecipado/i,
   ja: /Early Access.*(?:配信中|開始)/,
-  "zh-cn": /抢先体验.*(?:已上线|已经上线|开启)/,
+  "zh-cn": /(?:已在 Steam 抢先体验上线|抢先体验.*(?:已上线|已经上线|开启))/,
 } as const;
 
 const staleBetaSignals = {
@@ -43,13 +43,13 @@ const staleBetaSignals = {
   "zh-cn": /Beta 02.*正在进行/,
 } as const;
 
-describe("September 13 Early Access operations", () => {
+describe("September 17 Early Access operations", () => {
   it("publishes Early Access as live while preserving ended Beta 02 history", () => {
     expect(CURRENT_EVENT.status).toBe("live");
 
     const status = getPublicStatus();
     expect(status.schemaVersion).toBe(2);
-    expect(status.dataAsOf).toBe("2026-09-13");
+    expect(status.dataAsOf).toBe("2026-09-17");
     expect(status.currentEvent).toMatchObject({
       id: "early-access-patch-0-11",
       name: "Early Access - Patch 0.11",
@@ -72,7 +72,7 @@ describe("September 13 Early Access operations", () => {
       launched: true,
     });
     expect(status.maintenance).toMatchObject({
-      status: "scheduled",
+      status: "window-passed",
       patchVersion: "0.11",
       startsAt: "2026-09-14T08:00:00Z",
       expectedDurationMinutes: 60,
@@ -88,8 +88,8 @@ describe("September 13 Early Access operations", () => {
         messages.home.status,
         messages.home.primaryCta,
         messages.home.start.description,
-        messages.home.start.cards.playtest.title,
-        messages.home.start.cards.playtest.description,
+        messages.home.start.cards.beginner.title,
+        messages.home.start.cards.beginner.description,
         messages.home.priority.status.items.closedBeta02.title,
         messages.home.priority.status.items.closedBeta02.description,
       ].join("\n");
@@ -109,7 +109,7 @@ describe("September 13 Early Access operations", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-17");
         expect(searchable, `${locale}/${slug}`).toContain("Beta 02");
         expect(searchable, `${locale}/${slug}`).toMatch(liveSignals[locale]);
       }

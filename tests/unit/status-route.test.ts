@@ -15,7 +15,7 @@ async function loadStatusRoute(): Promise<StatusRouteModule | null> {
 }
 
 describe("api/status.json", () => {
-  it("publishes the live Early Access event and sourced maintenance window", async () => {
+  it("publishes the live Early Access event and a sourced, elapsed maintenance window", async () => {
     const route = await loadStatusRoute();
 
     expect(route, "src/app/api/status.json/route.ts must exist").not.toBeNull();
@@ -30,7 +30,7 @@ describe("api/status.json", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
     expect(payload).toMatchObject({
       schemaVersion: 2,
-      dataAsOf: "2026-09-13",
+      dataAsOf: "2026-09-17",
       game: "WARDOGS",
       currentEvent: {
         id: "early-access-patch-0-11",
@@ -45,7 +45,7 @@ describe("api/status.json", () => {
         launched: true
       },
       maintenance: {
-        status: "scheduled",
+        status: "window-passed",
         patchVersion: "0.11",
         startsAt: "2026-09-14T08:00:00Z",
         expectedDurationMinutes: 60

@@ -26,13 +26,13 @@ describe("Similarweb growth guide cluster", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug} should exist`).not.toBeNull();
-        const expectedDate = slug === "wardogs-system-requirements"
+        const expectedDate = ["wardogs-map", "wardogs-best-settings"].includes(slug)
+          ? "2026-09-17"
+          : slug === "wardogs-system-requirements"
           ? "2026-09-05"
-          : ["wardogs-controls", "wardogs-best-settings"].includes(slug)
+          : slug === "wardogs-controls"
             ? "2026-09-04"
-            : locale === "zh-cn" && slug === "wardogs-map"
-              ? "2026-09-01"
-              : "2026-08-23";
+            : "2026-08-23";
         expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
         expect(guide?.frontmatter.faq.length).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.faq.length).toBeLessThanOrEqual(5);
@@ -148,7 +148,7 @@ describe("Similarweb growth guide cluster", () => {
     for (const [slug, phrases] of expectations) {
       const guide = await loadGuideDocument("en", slug);
       const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}`;
-      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13"]).toContain(guide?.frontmatter.updatedAt);
+      expect(["2026-08-23", "2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-08-29", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13", "2026-09-17"]).toContain(guide?.frontmatter.updatedAt);
       for (const phrase of phrases) expect(searchable).toContain(phrase);
     }
 
@@ -165,10 +165,13 @@ describe("Similarweb growth guide cluster", () => {
       "wardogs-100k-clip-contest",
       "wardogs-download",
       "wardogs-controls",
-      "wardogs-launch-checklist",
-      "wardogs-playtest",
+      "wardogs-beginner-guide",
+      "wardogs-money-guide",
+      "wardogs-progression-wipes-guide",
+      "wardogs-community-servers-guide",
+      "wardogs-server-status",
+      "wardogs-patch-notes",
       "wardogs-early-access",
-      "wardogs-release-date",
       "wardogs-system-requirements",
       "wardogs-linux-proton",
       "wardogs-best-weapons-loadouts",

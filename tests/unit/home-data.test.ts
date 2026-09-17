@@ -27,34 +27,34 @@ describe("homepage data", () => {
       "2 x 2 km Control Zone"
     ]);
     expect(START_GUIDES).toEqual([
-      {number: "1", slug: "wardogs-launch-checklist", titleKey: "launch"},
-      {number: "2", slug: "wardogs-download", titleKey: "download"},
-      {number: "3", slug: "wardogs-controls", titleKey: "controls"},
-      {number: "4", slug: "wardogs-known-issues", titleKey: "issues"},
-      {number: "5", slug: "wardogs-beta", titleKey: "playtest"},
-      {number: "6", slug: "wardogs-100k-clip-contest", titleKey: "contest"}
+      {number: "1", slug: "wardogs-beginner-guide", titleKey: "beginner"},
+      {number: "2", slug: "wardogs-money-guide", titleKey: "money"},
+      {number: "3", slug: "wardogs-progression-wipes-guide", titleKey: "progression"},
+      {number: "4", slug: "wardogs-best-weapons-loadouts", titleKey: "loadouts"},
+      {number: "5", slug: "wardogs-community-servers-guide", titleKey: "communityServers"},
+      {number: "6", slug: "wardogs-known-issues", titleKey: "issues"}
     ]);
     expect(facts.every((fact) => typeof fact === "string")).toBe(true);
   });
 
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
-      "wardogs-launch-checklist",
-      "wardogs-release-date",
-      "wardogs-preload",
-      "wardogs-download",
-      "wardogs-known-issues",
       "wardogs-server-status",
       "wardogs-patch-notes",
-      "wardogs-controls",
+      "wardogs-beginner-guide",
+      "wardogs-money-guide",
+      "wardogs-progression-wipes-guide",
+      "wardogs-best-weapons-loadouts",
+      "wardogs-community-servers-guide",
+      "wardogs-known-issues",
+      "wardogs-download",
       "wardogs-100k-clip-contest",
-      "wardogs-playtest",
+      "wardogs-controls",
+      "wardogs-map",
       "wardogs-early-access",
       "wardogs-price",
       "wardogs-system-requirements",
       "wardogs-linux-proton",
-      "wardogs-beginner-guide",
-      "wardogs-best-weapons-loadouts",
       "wardogs-fob-guide",
       "wardogs-crash-fix"
     ]);

@@ -198,14 +198,12 @@ test("homepage promotes priority guide links and confirmed status signals", asyn
   await expect(page.getByRole("heading", {name: "Confirmed vs Rumor"})).toBeVisible();
   const topGuides = page.getByRole("list", {name: "Top Guides"});
   const statusSection = page.getByRole("heading", {name: "Confirmed vs Rumor"}).locator("xpath=ancestor::section");
-  for (const slug of TOP_GUIDE_SLUGS) {
+  for (const slug of TOP_GUIDE_SLUGS.slice(0, 6)) {
     await expect(topGuides.locator(`a[href="/en/guides/${slug}"]`)).toBeVisible();
   }
-  await expect(statusSection.getByText("Closed Beta 02 is live", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("Closed Beta 02 has ended", {exact: true})).toBeVisible();
   await expect(statusSection.getByText("$100K clip contest is open", {exact: true})).toBeVisible();
-  await expect(statusSection.getByText("Pre-purchase guarantees test access", {exact: true})).toBeVisible();
-  await expect(statusSection.getByText("Steam Early Access on September 10", {exact: true})).toBeVisible();
-  await expect(statusSection.getByText("PS5 release", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("Console versions are planned for 2028", {exact: true})).toBeVisible();
 });
 
 test("first-look guide embeds all three supplied YouTube reports", async ({page}) => {

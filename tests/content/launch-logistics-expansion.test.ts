@@ -25,7 +25,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         const expectedDate = ["wardogs-launch-checklist", "wardogs-cargo-guide"].includes(slug)
-          ? "2026-09-13"
+          ? "2026-09-17"
           : locale === "pt-br" && slug === "wardogs-squad-guide"
             ? "2026-09-13"
             : locale === "zh-cn" && slug === "wardogs-oil-rig-guide"
@@ -109,14 +109,14 @@ describe("2026-08-29 launch and logistics expansion", () => {
   });
 
   it("promotes Early Access preparation after Beta 02 ends", () => {
-    expect(START_GUIDES[0].slug).toBe("wardogs-launch-checklist");
-    expect(START_GUIDES[1].slug).toBe("wardogs-download");
+    expect(START_GUIDES[0].slug).toBe("wardogs-beginner-guide");
+    expect(START_GUIDES[1].slug).toBe("wardogs-money-guide");
     expect(TOP_GUIDE_SLUGS.slice(0, 5)).toEqual([
-      "wardogs-launch-checklist",
-      "wardogs-release-date",
-      "wardogs-preload",
-      "wardogs-download",
-      "wardogs-known-issues",
+      "wardogs-server-status",
+      "wardogs-patch-notes",
+      "wardogs-beginner-guide",
+      "wardogs-money-guide",
+      "wardogs-progression-wipes-guide",
     ]);
   });
 });

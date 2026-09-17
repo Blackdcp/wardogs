@@ -20,23 +20,23 @@ describe("source-driven 2026-08-26 content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        const expectedDate = ["wardogs-playtest", "wardogs-beta"].includes(slug)
-          ? "2026-09-13"
+        const expectedDate = [
+          "wardogs-playtest",
+          "wardogs-beta",
+          "wardogs-beginner-guide",
+          "wardogs-fob-guide",
+        ].includes(slug)
+          ? "2026-09-17"
           : slug === "wardogs-controls"
             ? "2026-09-04"
           : locale === "zh-cn" && [
-          "wardogs-beginner-guide",
-          "wardogs-fob-guide",
-          "wardogs-towers-guide",
-          "wardogs-mortar-guide",
-          "wardogs-controls",
-          "wardogs-helicopter-guide",
-        ].includes(slug)
+            "wardogs-towers-guide",
+            "wardogs-mortar-guide",
+            "wardogs-helicopter-guide",
+          ].includes(slug)
           ? "2026-09-01"
           : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
             ? "2026-08-29"
-          : slug === "wardogs-beginner-guide"
-            ? "2026-08-28"
             : "2026-08-26";
         expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedDate);
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);

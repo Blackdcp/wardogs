@@ -30,7 +30,7 @@ describe("HomeHero", () => {
 
     expect(html).toMatch(/<h1[^>]*>WARDOGS Wiki<\/h1>/);
     expect(html).toContain('alt="WARDOGS"');
-    expect(html).toContain('href="/guides/wardogs-launch-checklist"');
+    expect(html).toContain('href="/guides/wardogs-patch-notes"');
     expect(html).toContain('href="/guides/wardogs-server-status"');
   });
 });

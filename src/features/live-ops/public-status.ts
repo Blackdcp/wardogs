@@ -24,7 +24,7 @@ export function getPublicStatus() {
       storeUrl: CURRENT_EVENT.storeUrl
     },
     maintenance: {
-      status: "scheduled",
+      status: "window-passed",
       patchVersion: CURRENT_EVENT.latestPatchVersion,
       startsAt: CURRENT_EVENT.maintenanceStartsAt,
       expectedDurationMinutes: CURRENT_EVENT.maintenanceDurationMinutes,
@@ -58,7 +58,8 @@ export function getPublicStatus() {
       widget: `${origin}/embed/status`
     },
     sources: [
-      {kind: "official", label: "Scheduled maintenance and Patch 0.11", url: CURRENT_EVENT.latestOfficialUrl},
+      {kind: "official", label: "Patch 0.11 and the published maintenance window", url: CURRENT_EVENT.latestOfficialUrl},
+      {kind: "official", label: "2 million copies sold milestone", url: CURRENT_EVENT.latestOfficialUrl},
       {kind: "official", label: "Steam Early Access store", url: CURRENT_EVENT.storeUrl},
       {kind: "official", label: "Pre-Load Live and Season 1 changelog", url: CURRENT_EVENT.seasonOnePatchUrl},
       {kind: "official", label: "Launch Stability Hotfix #1", url: CURRENT_EVENT.launchHotfixUrl},

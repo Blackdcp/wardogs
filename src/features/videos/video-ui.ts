@@ -8,6 +8,11 @@ type VideoUi = {
   hubDescription: (count: number) => string;
   officialVideo: string;
   creatorFootage: string;
+  currentSourcesTitle: string;
+  currentSourcesDescription: string;
+  seasonOneCurrent: string;
+  betaWorkflow: string;
+  historicalReference: string;
   readBreakdown: string;
   allVideos: string;
   officialBreakdown: string;
@@ -33,7 +38,7 @@ type VideoUi = {
 
 const copy: Record<Locale, VideoUi> = {
   "zh-cn": {
-    metaTitle: "WARDOGS 视频攻略 - YouTube 实机解析", metaDescription: "独立整理的 WARDOGS 中文视频攻略，覆盖新手、设置、赚钱、直升机、FOB、武器、载具、目标和抢先体验信息。", eyebrow: "WARDOGS 视频情报", hubTitle: "WARDOGS YouTube 攻略", hubDescription: (count) => `${count} 篇独立撰写的视频解析，将官方和创作者实机整理成新手、资金、设置、目标、直升机、FOB、武器、载具与购买判断攻略。`, officialVideo: "官方视频", creatorFootage: "创作者实机", readBreakdown: "阅读视频解析", allVideos: "全部视频攻略", officialBreakdown: "官方视频解析", creatorBreakdown: "创作者视频解析", lastUpdated: "最后更新", quickAnswer: "快速结论", takeaways: "关键要点", connectionTitle: "它与核心攻略的关系", connectionBody: "本页分析一段特定视频。已确认的游戏系统、测试时间、价格和平台信息，请通过链接的核心攻略核对，不要把视频画面当作最终版本。", youtubeSource: "YouTube 来源", relatedGuide: "阅读相关 WARDOGS 攻略", internalGuide: "相关攻略", homeEyebrow: "视频分析", homeTitle: "将 YouTube 实机整理成独立攻略", homeDescription: "从新手、资金、设置、直升机、FOB 后勤和目标视频开始。每篇文章均保留来源、测试版本提示和相关攻略。", stripEyebrow: "视频驱动攻略", stripTitle: "YouTube 独立解析", openHub: "打开视频攻略", official: "官方", creator: "创作者", thumbnail: "缩略图"
+    metaTitle: "WARDOGS 视频攻略 - YouTube 实机解析", metaDescription: "独立整理的 WARDOGS 中文视频攻略，覆盖新手、设置、赚钱、直升机、FOB、武器、载具、目标和抢先体验信息。", eyebrow: "WARDOGS 视频情报", hubTitle: "WARDOGS YouTube 攻略", hubDescription: (count) => `${count} 篇独立撰写的视频解析，将官方和创作者实机整理成新手、资金、设置、目标、直升机、FOB、武器、载具与购买判断攻略。`, officialVideo: "官方视频", creatorFootage: "创作者实机", currentSourcesTitle: "Season 1 当前视频精选", currentSourcesDescription: "已于 2026 年 9 月 17 日核对的外部视频，优先覆盖新手、赚钱、配装、FOB、设置与进度问题。创作者结论仍需对照当前客户端和官方公告。", seasonOneCurrent: "Season 1 当前版本", betaWorkflow: "Beta 流程参考", historicalReference: "历史资料", readBreakdown: "阅读视频解析", allVideos: "全部视频攻略", officialBreakdown: "官方视频解析", creatorBreakdown: "创作者视频解析", lastUpdated: "最后更新", quickAnswer: "快速结论", takeaways: "关键要点", connectionTitle: "它与核心攻略的关系", connectionBody: "本页分析一段特定视频。已确认的游戏系统、测试时间、价格和平台信息，请通过链接的核心攻略核对，不要把视频画面当作最终版本。", youtubeSource: "YouTube 来源", relatedGuide: "阅读相关 WARDOGS 攻略", internalGuide: "相关攻略", homeEyebrow: "视频分析", homeTitle: "将 YouTube 实机整理成独立攻略", homeDescription: "从新手、资金、设置、直升机、FOB 后勤和目标视频开始。每篇文章均保留来源、测试版本提示和相关攻略。", stripEyebrow: "视频驱动攻略", stripTitle: "YouTube 独立解析", openHub: "打开视频攻略", official: "官方", creator: "创作者", thumbnail: "缩略图"
   },
   en: {
     metaTitle: "WARDOGS Videos - YouTube Gameplay Breakdowns",
@@ -43,6 +48,11 @@ const copy: Record<Locale, VideoUi> = {
     hubDescription: (count) => `${count} independently written breakdowns turn useful creator and official footage into practical guides for first matches, money, settings, objectives, helicopters, FOBs, weapons, vehicles, and buying decisions.`,
     officialVideo: "Official video",
     creatorFootage: "Creator footage",
+    currentSourcesTitle: "Current Season 1 video watchlist",
+    currentSourcesDescription: "External videos checked on September 17, 2026, prioritized for beginner, money, loadout, FOB, settings, and progression questions. Verify creator conclusions against the live client and official notes.",
+    seasonOneCurrent: "Season 1 current",
+    betaWorkflow: "Beta workflow",
+    historicalReference: "Historical reference",
     readBreakdown: "Read video breakdown",
     allVideos: "All video guides",
     officialBreakdown: "Official video breakdown",
@@ -73,6 +83,11 @@ const copy: Record<Locale, VideoUi> = {
     hubDescription: (count) => `${count} самостоятельных разборов превращают официальные ролики и записи авторов в практические руководства по первым матчам, деньгам, настройкам, целям, вертолетам, FOB, оружию, технике и покупке игры.`,
     officialVideo: "Официальное видео",
     creatorFootage: "Запись автора",
+    currentSourcesTitle: "Актуальные видео первого сезона",
+    currentSourcesDescription: "Внешние видео проверены 17 сентября 2026 года и отобраны по вопросам новичков, денег, комплектов, FOB, настроек и прогрессии. Выводы авторов сверяйте с текущим клиентом и официальными заметками.",
+    seasonOneCurrent: "Актуально для сезона 1",
+    betaWorkflow: "Процесс из бета-версии",
+    historicalReference: "Историческая справка",
     readBreakdown: "Читать разбор видео",
     allVideos: "Все видео-гайды",
     officialBreakdown: "Разбор официального видео",
@@ -103,6 +118,11 @@ const copy: Record<Locale, VideoUi> = {
     hubDescription: (count) => `${count} eigenständige Analysen machen offizielle Videos und Creator-Aufnahmen zu praktischen Guides über erste Matches, Geld, Einstellungen, Ziele, Helikopter, FOBs, Waffen, Fahrzeuge und Kaufentscheidungen.`,
     officialVideo: "Offizielles Video",
     creatorFootage: "Creator-Aufnahme",
+    currentSourcesTitle: "Aktuelle Videos zu Saison 1",
+    currentSourcesDescription: "Am 17. September 2026 geprüfte externe Videos zu Einstieg, Geld, Loadouts, FOBs, Einstellungen und Fortschritt. Creator-Aussagen sollten mit dem Live-Client und offiziellen Hinweisen abgeglichen werden.",
+    seasonOneCurrent: "Saison 1 aktuell",
+    betaWorkflow: "Beta-Ablauf",
+    historicalReference: "Historische Referenz",
     readBreakdown: "Videoanalyse lesen",
     allVideos: "Alle Video-Guides",
     officialBreakdown: "Analyse eines offiziellen Videos",
@@ -133,6 +153,11 @@ const copy: Record<Locale, VideoUi> = {
     hubDescription: (count) => `${count} análises independentes transformam vídeos oficiais e de criadores em guias práticos sobre primeiras partidas, dinheiro, configurações, objetivos, helicópteros, FOBs, armas, veículos e compra.`,
     officialVideo: "Vídeo oficial",
     creatorFootage: "Vídeo de criador",
+    currentSourcesTitle: "Vídeos atuais da Temporada 1",
+    currentSourcesDescription: "Vídeos externos verificados em 17 de setembro de 2026, priorizando dúvidas sobre iniciantes, dinheiro, kits, FOB, configurações e progressão. Compare as conclusões com o cliente atual e as notas oficiais.",
+    seasonOneCurrent: "Atual na Temporada 1",
+    betaWorkflow: "Fluxo da versão beta",
+    historicalReference: "Referência histórica",
     readBreakdown: "Ler análise do vídeo",
     allVideos: "Todos os guias em vídeo",
     officialBreakdown: "Análise de vídeo oficial",
@@ -163,6 +188,11 @@ const copy: Record<Locale, VideoUi> = {
     hubDescription: (count) => `${count}本の独立解説記事で、公式映像とクリエイター動画を、初戦、資金、設定、目標、ヘリコプター、FOB、武器、車両、購入判断に役立つ実践攻略へ整理しています。`,
     officialVideo: "公式動画",
     creatorFootage: "クリエイター映像",
+    currentSourcesTitle: "シーズン1の最新動画",
+    currentSourcesDescription: "2026年9月17日に確認した外部動画です。初心者、資金、装備、FOB、設定、進行を優先し、制作者の結論は現在のクライアントと公式告知で再確認します。",
+    seasonOneCurrent: "シーズン1現行版",
+    betaWorkflow: "ベータ版の手順参考",
+    historicalReference: "履歴資料",
     readBreakdown: "動画解説を読む",
     allVideos: "動画攻略一覧",
     officialBreakdown: "公式動画の解説",

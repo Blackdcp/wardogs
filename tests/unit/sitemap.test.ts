@@ -32,6 +32,15 @@ function pageAlternates(pathname: string) {
 }
 
 describe("sitemap", () => {
+  it("marks refreshed hubs with the current editorial date", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+
+    for (const path of ["", "/guides", "/news", "/videos", "/items"]) {
+      expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path || "/")
+        .toBe("2026-09-17T00:00:00.000Z");
+    }
+  });
+
   it("publishes every guide in all five locales with reciprocal hreflang", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
@@ -51,9 +60,9 @@ describe("sitemap", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     expect(new Date(entriesByUrl.get(`${origin}/en/guides/wardogs-fob-guide`)!.lastModified!).toISOString())
-      .toBe("2026-08-29T00:00:00.000Z");
+      .toBe("2026-09-17T00:00:00.000Z");
     expect(new Date(entriesByUrl.get(`${origin}/ja/guides/wardogs-money-guide`)!.lastModified!).toISOString())
-      .toBe("2026-08-29T00:00:00.000Z");
+      .toBe("2026-09-17T00:00:00.000Z");
   });
 
   it("includes the video hub and every standalone video article in all five locales", () => {

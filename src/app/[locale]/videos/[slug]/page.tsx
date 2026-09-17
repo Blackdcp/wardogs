@@ -5,7 +5,7 @@ import {isLocale, locales, type Locale} from "@/config/site";
 import {ButtonLink} from "@/components/ui/button-link";
 import {OfficialVideo} from "@/components/mdx/official-video";
 import {JsonLd} from "@/components/seo/json-ld";
-import {videoArticles} from "@/features/videos/video-library";
+import {getVideoEra, videoArticles} from "@/features/videos/video-library";
 import {getLocalizedVideoArticle} from "@/features/videos/video-localization";
 import {buildVideoArticleJsonLd} from "@/features/videos/video-structured-data";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
@@ -40,6 +40,8 @@ export default async function VideoArticlePage({params}: PageProps) {
   const article = getLocalizedVideoArticle(locale, slug);
   if (!article) notFound();
   const ui = getVideoUi(locale);
+  const era = getVideoEra(article);
+  const eraLabel = era === "historical" ? ui.historicalReference : ui.betaWorkflow;
   const [articleT, relatedGuide] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     loadGuideDocument(locale, article.internalGuideSlug)
@@ -57,6 +59,9 @@ export default async function VideoArticlePage({params}: PageProps) {
           <p className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#d9a93a]">
             <PlayCircle aria-hidden="true" className="size-4" />
             {article.kind === "official" ? ui.officialBreakdown : ui.creatorBreakdown}
+          </p>
+          <p className="mt-3 inline-flex border border-[#465149] bg-[#151b18] px-2 py-1 text-[11px] font-semibold uppercase text-[#cbd6d0]">
+            {eraLabel}
           </p>
           <p className="mt-3 text-xs uppercase text-[#8b9992]">
             {ui.lastUpdated} <time dateTime={article.updatedDate}>{article.updatedDate}</time>

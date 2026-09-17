@@ -58,7 +58,7 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of newGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-known-issues" ? "2026-09-13" : "2026-09-04");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-known-issues" ? "2026-09-17" : "2026-09-04");
         expect(guide?.frontmatter.description.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(140);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(1_200);
@@ -79,7 +79,7 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of currentGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-livestream" ? "2026-09-13" : "2026-09-17");
         expect(sources, `${locale}/${slug}`).toContain(steamUrl);
         expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
         if (["wardogs-beta", "wardogs-playtest", "wardogs-livestream"].includes(slug)) {
@@ -94,8 +94,10 @@ describe("Closed Beta 02 weekend release contract", () => {
     for (const locale of locales) {
       for (const slug of refreshedGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedDate = ["wardogs-preload", "wardogs-ps5"].includes(slug)
-          ? "2026-09-13"
+        const expectedDate = ["wardogs-preload", "wardogs-best-settings"].includes(slug)
+          ? "2026-09-17"
+          : slug === "wardogs-ps5"
+            ? "2026-09-13"
           : slug === "wardogs-twitch-drops"
             ? "2026-09-09"
             : locale === "en" && slug === "wardogs-factions"

@@ -1,7 +1,7 @@
 import {ArrowRight, PlayCircle} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {VideoThumbnailImage} from "@/components/videos/video-thumbnail-image";
-import type {VideoArticle} from "@/features/videos/video-library";
+import {getVideoEra, type VideoArticle} from "@/features/videos/video-library";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 import {getVideoUi} from "@/features/videos/video-ui";
 
@@ -13,6 +13,8 @@ export {videoThumbnailUrl};
 
 export function VideoArticleCard({article, locale, eager = false}: {article: VideoArticle; locale: Locale; eager?: boolean}) {
   const ui = getVideoUi(locale);
+  const era = getVideoEra(article);
+  const eraLabel = era === "historical" ? ui.historicalReference : ui.betaWorkflow;
   return (
     <a
       href={videoArticleHref(locale, article.slug)}
@@ -27,6 +29,9 @@ export function VideoArticleCard({article, locale, eager = false}: {article: Vid
           youtubeId={article.youtubeId}
         />
         <span className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
+        <span className="absolute right-3 top-3 border border-white/20 bg-[#111512]/90 px-2 py-1 text-[11px] font-semibold uppercase text-white">
+          {eraLabel}
+        </span>
         <span className="absolute bottom-3 left-3 inline-flex size-10 items-center justify-center bg-[#d9a93a] text-[#111512]" aria-hidden="true">
           <PlayCircle className="size-5" />
         </span>

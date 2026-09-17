@@ -27,7 +27,7 @@ const freshHubPaths = new Set(["", "/guides", "/news", "/videos", "/items"]);
 
 function resolvePageLastModified(pathname: string) {
   if (freshHubPaths.has(pathname) || /^\/items\/[^/]+$/.test(pathname)) {
-    return new Date("2026-09-13T00:00:00.000Z");
+    return new Date("2026-09-17T00:00:00.000Z");
   }
   return new Date("2026-08-16T00:00:00.000Z");
 }

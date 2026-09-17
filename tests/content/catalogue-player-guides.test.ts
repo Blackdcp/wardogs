@@ -29,14 +29,12 @@ describe("source-backed catalogue player guides", () => {
         const searchable = `${guide?.frontmatter.title}\n${guide?.frontmatter.description}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        const reviewedToday = locale === "zh-cn"
-          && [
-            "wardogs-best-weapons-loadouts",
-            "wardogs-armor-damage-ttk-guide",
-            "wardogs-medic-revive-guide",
-            "wardogs-equipment-tools-guide",
-          ].includes(slug);
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(reviewedToday ? "2026-09-01" : "2026-08-30");
+        const expectedDate = slug === "wardogs-best-weapons-loadouts"
+          ? "2026-09-17"
+          : locale === "zh-cn"
+            ? "2026-09-01"
+            : "2026-08-30";
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedDate);
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(1_800);
         expect(searchable, `${locale}/${slug}`).toMatch(languageSignals[locale]);

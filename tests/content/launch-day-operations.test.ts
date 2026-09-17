@@ -6,13 +6,13 @@ import {getPublicStatus} from "../../src/features/live-ops/public-status";
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const launchGuides = ["wardogs-server-status", "wardogs-patch-notes"] as const;
 
-describe("September 13 Early Access operations", () => {
+describe("September 17 Early Access operations", () => {
   it("publishes localized status and patch desks with search-ready metadata", async () => {
     for (const locale of locales) {
       for (const slug of launchGuides) {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-17");
         expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(12);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeGreaterThanOrEqual(140);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeLessThanOrEqual(160);

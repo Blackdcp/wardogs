@@ -24,13 +24,13 @@ describe("GSC growth page reinforcement", () => {
     for (const locale of locales) {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedCheckDate = ["wardogs-beta", "wardogs-playtest"].includes(slug)
-          ? "2026-09-13"
+        const expectedCheckDate = ["wardogs-beta", "wardogs-playtest", "wardogs-fob-guide"].includes(slug)
+          ? "2026-09-17"
           : slug === "wardogs-crash-fix"
             ? "2026-09-04"
-          : locale === "zh-cn" && ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
+          : locale === "zh-cn" && slug === "wardogs-helicopter-guide"
           ? "2026-09-01"
-          : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
+          : slug === "wardogs-helicopter-guide"
             ? "2026-08-29"
             : "2026-08-26";
 

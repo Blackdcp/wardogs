@@ -16,6 +16,100 @@ export type VideoArticle = {
   sections: {heading: string; body: string[]}[];
 };
 
+export type VideoEra = "beta-workflow" | "historical";
+
+export type CurrentVideoTopic = "beginner" | "money" | "loadouts" | "fob" | "settings" | "progression";
+
+export type CurrentVideoSource = {
+  youtubeId: string;
+  title: string;
+  channel: string;
+  publishedDate: string;
+  durationMinutes: number;
+  topic: CurrentVideoTopic;
+  internalGuideSlug: string;
+  sourceUrl: string;
+};
+
+export const CURRENT_VIDEO_SOURCES_REVIEWED_AT = "2026-09-17";
+
+export const currentVideoSources: readonly CurrentVideoSource[] = [
+  {
+    youtubeId: "fUKgHeT0JGY",
+    title: "The Only WARDOGS Guide You Actually Need",
+    channel: "Fallout Plays",
+    publishedDate: "2026-09-15",
+    durationMinutes: 30,
+    topic: "beginner",
+    internalGuideSlug: "wardogs-beginner-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=fUKgHeT0JGY"
+  },
+  {
+    youtubeId: "mYXhZnJ8Eus",
+    title: "WARDOGS: The 14 Best Ways to Make Money Easily",
+    channel: "Espresso",
+    publishedDate: "2026-09-13",
+    durationMinutes: 17,
+    topic: "money",
+    internalGuideSlug: "wardogs-money-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=mYXhZnJ8Eus"
+  },
+  {
+    youtubeId: "VrtwXz94dQg",
+    title: "The Best Loadouts In WARDOGS (Beginners Guide)",
+    channel: "Nova Gaming",
+    publishedDate: "2026-09-14",
+    durationMinutes: 12,
+    topic: "loadouts",
+    internalGuideSlug: "wardogs-best-weapons-loadouts",
+    sourceUrl: "https://www.youtube.com/watch?v=VrtwXz94dQg"
+  },
+  {
+    youtubeId: "XUyP1GLUF5o",
+    title: "Wardogs ULTIMATE FOB Guide For New Players",
+    channel: "Gamers Heroes",
+    publishedDate: "2026-09-15",
+    durationMinutes: 10,
+    topic: "fob",
+    internalGuideSlug: "wardogs-fob-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=XUyP1GLUF5o"
+  },
+  {
+    youtubeId: "v0V69ZYMlgY",
+    title: "ULTIMATE WARDOGS SETTINGS GUIDE! Before & After Comparisons Benchmarked",
+    channel: "IceManIsaac",
+    publishedDate: "2026-09-11",
+    durationMinutes: 29,
+    topic: "settings",
+    internalGuideSlug: "wardogs-best-settings",
+    sourceUrl: "https://www.youtube.com/watch?v=v0V69ZYMlgY"
+  },
+  {
+    youtubeId: "smOE0063KOE",
+    title: "WARDOGS Is Resetting Progress - And the Grind Makes This...",
+    channel: "DrybearGamers",
+    publishedDate: "2026-09-13",
+    durationMinutes: 13,
+    topic: "progression",
+    internalGuideSlug: "wardogs-progression-wipes-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=smOE0063KOE"
+  }
+] as const;
+
+const historicalVideoSlugs = new Set([
+  "wardogs-7-things-you-need-to-know",
+  "wardogs-gameplay-impressions",
+  "wardogs-alpha-gameplay-impressions",
+  "wardogs-first-look-gameplay",
+  "wardogs-is-it-worth-it",
+  "wardogs-huge-news-progression",
+  "wardogs-gameplay-overview-tomographic"
+]);
+
+export function getVideoEra(article: Pick<VideoArticle, "slug">): VideoEra {
+  return historicalVideoSlugs.has(article.slug) ? "historical" : "beta-workflow";
+}
+
 export const videoArticles: readonly VideoArticle[] = [
   {
     slug: "wardogs-10-reasons-not-to-buy",

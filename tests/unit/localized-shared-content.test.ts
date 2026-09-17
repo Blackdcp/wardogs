@@ -107,6 +107,22 @@ describe("localized shared editorial content", () => {
     }
   });
 
+  it("localizes the current-video watchlist and archive lifecycle labels", () => {
+    for (const locale of localizedLocales) {
+      const ui = getVideoUi(locale);
+      const lifecycleText = [
+        ui.currentSourcesTitle,
+        ui.currentSourcesDescription,
+        ui.seasonOneCurrent,
+        ui.betaWorkflow,
+        ui.historicalReference
+      ].join(" ");
+
+      expect(lifecycleText, locale).toMatch(languageSignals[locale]);
+      expect(ui.currentSourcesTitle, locale).not.toBe(getVideoUi("en").currentSourcesTitle);
+    }
+  });
+
   it("localizes new Closed Beta subtypes, fact labels, and build dates on detail pages", () => {
     const m249 = getItemBySlug("m249-saw");
     const talon = getItemBySlug("talon-9k-sam");

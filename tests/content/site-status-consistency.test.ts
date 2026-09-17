@@ -57,7 +57,17 @@ describe("site-wide live status consistency", () => {
         const guide = await loadGuideDocument(locale, slug);
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-13");
+        const expectedDate = ["wardogs-price", "wardogs-release-date", "wardogs-steam"].includes(slug)
+          || (slug === "wardogs-twitter" && ["en", "zh-cn"].includes(locale))
+          || (locale === "zh-cn" && [
+            "wardogs-alpha",
+            "wardogs-alpha-key",
+            "wardogs-discord",
+            "wardogs-discord-account-verification",
+          ].includes(slug))
+          ? "2026-09-17"
+          : "2026-09-13";
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedDate);
         expect(guide?.body, `${locale}/${slug}`).toContain("Beta 02");
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
@@ -71,8 +81,8 @@ describe("site-wide live status consistency", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const searchable = `${steam?.frontmatter.description}\n${steam?.body}\n${price?.frontmatter.description}\n${price?.body}`;
 
-      expect(steam?.frontmatter.updatedAt, `${locale}/wardogs-steam`).toBe("2026-09-13");
-      expect(price?.frontmatter.updatedAt, `${locale}/wardogs-price`).toBe("2026-09-13");
+      expect(steam?.frontmatter.updatedAt, `${locale}/wardogs-steam`).toBe("2026-09-17");
+      expect(price?.frontmatter.updatedAt, `${locale}/wardogs-price`).toBe("2026-09-17");
       expect(searchable, `${locale}/commerce`).toContain("$39.99");
       expect(searchable, `${locale}/commerce`).toContain("$49.99");
       expect(searchable, `${locale}/commerce`).toMatch(currentPurchasePhrases[locale]);

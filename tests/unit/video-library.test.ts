@@ -1,5 +1,11 @@
 import {describe, expect, it} from "vitest";
-import {getFeaturedVideoArticles, videoArticles} from "../../src/features/videos/video-library";
+import {
+  CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+  currentVideoSources,
+  getFeaturedVideoArticles,
+  getVideoEra,
+  videoArticles
+} from "../../src/features/videos/video-library";
 
 describe("video article library", () => {
   it("keeps every collected YouTube source as its own indexable article", () => {
@@ -47,6 +53,34 @@ describe("video article library", () => {
       "wardogs-support-skill-leveling",
       "wardogs-kamikaze-drone-guide"
     ]);
+  });
+
+  it("publishes a current Season 1 source watchlist without duplicating archived breakdowns", () => {
+    expect(CURRENT_VIDEO_SOURCES_REVIEWED_AT).toBe("2026-09-17");
+    expect(currentVideoSources.map(({youtubeId}) => youtubeId)).toEqual([
+      "fUKgHeT0JGY",
+      "mYXhZnJ8Eus",
+      "VrtwXz94dQg",
+      "XUyP1GLUF5o",
+      "v0V69ZYMlgY",
+      "smOE0063KOE"
+    ]);
+    expect(new Set(currentVideoSources.map(({youtubeId}) => youtubeId)).size).toBe(currentVideoSources.length);
+
+    const archivedIds = new Set(videoArticles.map(({youtubeId}) => youtubeId));
+    for (const source of currentVideoSources) {
+      expect(archivedIds.has(source.youtubeId), source.youtubeId).toBe(false);
+      expect(source.publishedDate >= "2026-09-11", source.youtubeId).toBe(true);
+      expect(source.channel.length, source.youtubeId).toBeGreaterThan(0);
+      expect(source.durationMinutes, source.youtubeId).toBeGreaterThan(0);
+      expect(source.internalGuideSlug.length, source.youtubeId).toBeGreaterThan(0);
+    }
+  });
+
+  it("separates reusable beta workflows from historical video evidence", () => {
+    expect(getVideoEra(videoArticles.find(({slug}) => slug === "wardogs-best-settings")!)).toBe("beta-workflow");
+    expect(getVideoEra(videoArticles.find(({slug}) => slug === "wardogs-huge-news-progression")!)).toBe("historical");
+    expect(new Set(videoArticles.map(getVideoEra))).toEqual(new Set(["beta-workflow", "historical"]));
   });
 
   it("treats each video page as a full article instead of a short summary", () => {

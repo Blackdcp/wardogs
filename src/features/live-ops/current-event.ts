@@ -1,7 +1,7 @@
 export const CURRENT_EVENT = {
   id: "early-access-patch-0-11",
   status: "live",
-  dataAsOf: "2026-09-13",
+  dataAsOf: "2026-09-17",
   phase: "early-access",
   broadcastAt: "2026-09-03T18:00:00Z",
   startsAt: "2026-09-03T19:00:00Z",
@@ -11,6 +11,9 @@ export const CURRENT_EVENT = {
   maintenanceStartsAt: "2026-09-14T08:00:00Z",
   maintenanceDurationMinutes: 60,
   latestPatchVersion: "0.11",
+  latestPatchPublishedAt: "2026-09-12",
+  latestMilestone: "2 million copies sold",
+  latestMilestoneAt: "2026-09-15",
   latestOfficialUrl: "https://steamcommunity.com/app/1867240/homecontent/",
   seasonOnePatchUrl: "https://store.steampowered.com/news/app/1867240/view/701027323413004455",
   launchHotfixUrl: "https://store.steampowered.com/news/app/1867240/view/701027323413004709",
