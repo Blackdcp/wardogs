@@ -1,6 +1,7 @@
 import type {Locale} from "@/config/site";
 import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
+import {getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
 import {getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getItemsByType, itemTypes, type ItemTypeId, type WardogsItem} from "@/features/items/item-library";
@@ -38,7 +39,7 @@ function buildItemListEntries(locale: Locale, type: ItemTypeId, url: string) {
     const recordSlugs = new Set(records.map((record) => record.slug));
     const recordEntries = records.map((record) => ({
       name: record.name,
-      url: record.detailStatus === "published" && record.detailHref
+      url: record.detailStatus === "published" && record.detailHref && getIndexableCatalogueItems([record]).length === 1
         ? pageUrl(locale, record.detailHref)
         : `${url}#record-${type}-${record.slug}`,
       ...(record.mediaState === "pending" ? {} : {image: absoluteImageUrl(record.image)})

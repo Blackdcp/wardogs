@@ -2,6 +2,9 @@ import {AlertTriangle, CheckCircle2, ExternalLink} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "./item-route-availability";
 import {publicRoutePath} from "@/lib/public-url";
+import {getCatalogueRecord} from "@/features/catalogue/catalogue-records";
+import {getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
+import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import type {CatalogGuide, CatalogRow} from "./item-catalog-guides";
 import {getCatalogEntryCount} from "./item-catalog-guides";
 import {getItemUi} from "./item-ui";
@@ -15,6 +18,12 @@ export type RecordLinkedCatalogRow = CatalogRow & {
 export type RecordLinkedCatalogGuide = Omit<CatalogGuide, "sections"> & {
   sections: Array<Omit<CatalogGuide["sections"][number], "rows"> & {rows: RecordLinkedCatalogRow[]}>;
 };
+
+function isIndexableGuideDetail(guideId: string, row: RecordLinkedCatalogRow) {
+  if (!row.recordSlug || !["weapons", "vehicles", "ammo", "attachments", "gear"].includes(guideId)) return false;
+  const record = getCatalogueRecord(guideId as CatalogueRecordType, row.recordSlug);
+  return record !== undefined && getIndexableCatalogueItems([record]).length === 1;
+}
 
 type ItemCatalogGuideProps = {
   guide: CatalogGuide;
@@ -78,7 +87,7 @@ export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
                     {section.rows.map((catalogueRow, rowIndex) => {
                       const rowPosition = sectionOffsets[sectionIndex] + rowIndex + 1;
                       const linkedRow = catalogueRow as RecordLinkedCatalogRow;
-                      const firstCellHref = linkedRow.detailStatus === "published"
+                      const firstCellHref = linkedRow.detailStatus === "published" && isIndexableGuideDetail(guide.id, linkedRow)
                         ? linkedRow.detailHref && publicRoutePath(
                           localizedItemRoutePath(resolveItemRouteTarget(locale, linkedRow.detailHref))
                         )

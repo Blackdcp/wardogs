@@ -1,4 +1,4 @@
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import {catalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import {
   getCatalogueFreshness,
@@ -104,5 +104,14 @@ describe("catalogue evidence", () => {
       expect(item?.indexable, authoredItem.slug).toBe(true);
       expect(item?.indexLocales, authoredItem.slug).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn"]);
     }
+  });
+
+  it("returns the full indexable catalogue from an isolated evidence module", async () => {
+    vi.resetModules();
+
+    const {getIndexableCatalogueItems: getIsolatedIndexableCatalogueItems} = await import("../../src/features/catalogue/catalogue-evidence");
+
+    expect(getIsolatedIndexableCatalogueItems().map((record) => `${record.type}/${record.slug}`)).toContain("weapons/a-91");
+    expect(getIsolatedIndexableCatalogueItems()).toHaveLength(34);
   });
 });

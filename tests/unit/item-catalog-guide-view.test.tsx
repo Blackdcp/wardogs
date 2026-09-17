@@ -64,6 +64,21 @@ describe("ItemCatalogGuide", () => {
     expect(html).not.toContain('href="#record-weapons-unknown-prototype"');
   });
 
+  it("does not turn a gated published row into a category self-link", () => {
+    const guide = getCatalogGuide("weapons");
+    expect(guide).toBeDefined();
+    const m4Guide = {
+      ...guide!,
+      sections: [{...guide!.sections[0], rows: [guide!.sections[0].rows[3]]}]
+    };
+    const matchedGuide = matchCatalogueGuideRecords(m4Guide, getCatalogueRecords("weapons"));
+
+    const html = renderToStaticMarkup(<ItemCatalogGuide guide={matchedGuide} locale="en" />);
+
+    expect(html).toContain("M4");
+    expect(html).not.toContain('href="/en/items/weapons"');
+  });
+
   it("uses an exact detail URL when a future matched row is published", () => {
     const guide = getCatalogGuide("weapons");
     const records = getCatalogueRecords("weapons").map((record) => record.slug === "ak74"

@@ -4,6 +4,7 @@ import {afterEach, describe, expect, it, vi} from "vitest";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "../../src/features/catalogue/catalogue-types";
 import {getItemBySlug} from "../../src/features/items/item-library";
+import {itemDetailRouteManifest} from "../../src/features/items/item-route-availability";
 import {buildItemArticleJsonLd, buildItemIndexJsonLd, buildItemTypeJsonLd} from "../../src/lib/item-structured-data";
 
 afterEach(() => {
@@ -136,7 +137,7 @@ describe("item structured data", () => {
       "@type": "ListItem",
       position: 15,
       name: "M4",
-      url: "http://localhost:3000/en/items/weapons/m4",
+      url: "http://localhost:3000/en/items/weapons#record-weapons-m4",
       image: "http://localhost:3000/images/catalogue/weapons/m4.webp"
     });
     expect(entries.at(-1)).toEqual({
@@ -146,8 +147,23 @@ describe("item structured data", () => {
       url: "http://localhost:3000/en/items/weapons/mortar"
     });
     expect(entries.slice(0, 14).every((entry) => entry.image?.startsWith("http://localhost:3000/images/catalogue/weapons/"))).toBe(true);
-    expect(entries.filter((entry) => entry.url.includes("/items/weapons/")).map((entry) => entry.url)).toHaveLength(35);
     expect(new Set(entries.map((entry) => entry.name)).size).toBe(39);
+  });
+
+  it("emits only manifest-backed detail URLs in category ItemList schema", () => {
+    const detailPaths = new Set(itemDetailRouteManifest.map((route) => route.pathname));
+
+    for (const type of ["weapons", "vehicles", "ammo", "attachments", "gear"] as const) {
+      const entries = buildItemTypeJsonLd("en", type)[1].itemListElement as Array<{url: string}>;
+      for (const {url} of entries) {
+        const parsed = new URL(url);
+        const detailPath = parsed.pathname.replace(/^\/en(?=\/)/, "");
+
+        if (!parsed.hash && /^\/items\/[^/]+\/[^/]+$/.test(detailPath)) {
+          expect(detailPaths, url).toContain(detailPath);
+        }
+      }
+    }
   });
 
   it("uses the localized category URL and catalogue imagery in category schema", () => {
@@ -182,7 +198,7 @@ describe("item structured data", () => {
       const records = getCatalogueRecords(type as CatalogueRecordType);
       expect(entries.slice(0, expectedRecords.length).map(({url}) => url)).toEqual(expectedRecords.map(({slug}) => {
         const record = records.find((candidate) => candidate.slug === slug);
-        return record?.detailStatus === "published"
+        return record?.detailStatus === "published" && itemDetailRouteManifest.some((route) => route.pathname === record.detailHref)
           ? `http://localhost:3000/en${record.detailHref}`
           : `http://localhost:3000/en/items/${type}#record-${type}-${slug}`;
       }));

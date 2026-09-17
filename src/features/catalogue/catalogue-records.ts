@@ -1,5 +1,5 @@
 import type {CatalogueFact, CatalogueRecord, CatalogueRecordType} from "./catalogue-types";
-import {getCatalogueChangeHistory, normalizeCatalogueEvidence, registerCatalogueRecords} from "./catalogue-evidence";
+import {getCatalogueChangeHistory, normalizeCatalogueEvidence} from "./catalogue-evidence-data";
 
 const dataAsOf = "Alpha 1 - 7 Aug 2026";
 const betaDataAsOf = "Closed Beta - 21-23 Aug 2026";
@@ -182,8 +182,6 @@ export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((re
   evidence: normalizeCatalogueEvidence(record),
   changeHistory: getCatalogueChangeHistory(record),
 }));
-
-registerCatalogueRecords(catalogueRecords);
 
 export function getCatalogueRecords(type: CatalogueRecordType): readonly CatalogueRecord[] {
   return catalogueRecords.filter((record) => record.type === type);
