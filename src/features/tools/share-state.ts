@@ -26,6 +26,15 @@ export type AmmoMatcherState = {
   ammo: string | null;
 };
 
+export type ProgressionRouteState = {
+  role: string;
+  currentLevel: number | null;
+};
+
+export type LogisticsPlanState = {
+  stages: string[];
+};
+
 export type ToolSearchParams = Record<string, string | string[] | undefined>;
 
 const hardwareTiers = new Set<HardwareTier>(["below", "minimum", "recommended", "unknown"]);
@@ -41,6 +50,12 @@ function readSingleAllowedParam(params: URLSearchParams, key: string, allowed: R
   const values = params.getAll(key);
   if (values.length !== 1 || !allowed.has(values[0])) return null;
   return values[0];
+}
+
+function readSingleBoundedIntegerParam(params: URLSearchParams, key: string, maximum: number) {
+  const values = params.getAll(key);
+  if (values.length !== 1) return null;
+  return parseBoundedInteger(values[0], maximum);
 }
 
 export function serializeToolSearchParams(searchParams: ToolSearchParams) {
@@ -164,4 +179,48 @@ export function decodeAmmoMatcherState(
     weapon: readSingleAllowedParam(params, "weapon", new Set(allowedWeaponSlugs)),
     ammo: readSingleAllowedParam(params, "ammo", new Set(allowedAmmoSlugs)),
   };
+}
+
+export function encodeProgressionRouteState(state: ProgressionRouteState) {
+  const params = new URLSearchParams({pr_role: state.role});
+  if (state.currentLevel !== null) params.set("pr_level", String(state.currentLevel));
+  return params.toString();
+}
+
+export function decodeProgressionRouteState(
+  value: string,
+  allowedRoles: readonly string[],
+): ProgressionRouteState {
+  const params = new URLSearchParams(value.replace(/^\?/, ""));
+  const role = readSingleAllowedParam(params, "pr_role", new Set(allowedRoles)) ?? allowedRoles[0] ?? "";
+  return {
+    role,
+    currentLevel: readSingleBoundedIntegerParam(params, "pr_level", 999),
+  };
+}
+
+export function encodeLogisticsPlanState(state: LogisticsPlanState) {
+  return new URLSearchParams({lp_stages: state.stages.length > 0 ? state.stages.join(",") : "none"}).toString();
+}
+
+export function decodeLogisticsPlanState(
+  value: string,
+  allowedStages: readonly string[],
+): LogisticsPlanState {
+  const params = new URLSearchParams(value.replace(/^\?/, ""));
+  const values = params.getAll("lp_stages");
+  if (values.length === 0) return {stages: [...allowedStages]};
+  if (values.length !== 1) return {stages: [...allowedStages]};
+  if (values[0] === "none") return {stages: []};
+
+  const stages = values[0].split(",").filter(Boolean);
+  const allowed = new Set(allowedStages);
+  if (
+    stages.length === 0
+    || new Set(stages).size !== stages.length
+    || stages.some((stage) => !allowed.has(stage))
+  ) {
+    return {stages: [...allowedStages]};
+  }
+  return {stages};
 }

@@ -16,6 +16,8 @@ const staticPaths = [
   "/tools/loadout-budget",
   "/tools/weapon-compare",
   "/tools/ammo-matcher",
+  "/tools/progression-route",
+  "/tools/logistics-planner",
   "/about",
   "/contact",
   "/editorial-policy",
@@ -33,6 +35,8 @@ const freshHubPaths = new Set([
   "/items",
   "/tools/weapon-compare",
   "/tools/ammo-matcher",
+  "/tools/progression-route",
+  "/tools/logistics-planner",
 ]);
 
 function resolvePageLastModified(pathname: string) {

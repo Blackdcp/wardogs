@@ -52,6 +52,8 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
         {href: "/guides/wardogs-fob-guide", label: t("nav.fobLogistics"), searchType: "guide"},
         {href: "/guides/wardogs-mortar-guide", label: t("nav.mortarGuide"), searchType: "guide"},
         {href: "/tools/system-check", label: t("nav.systemCheck"), searchType: "tool"},
+        {href: "/tools/progression-route", label: t("nav.progressionRoute"), searchType: "tool"},
+        {href: "/tools/logistics-planner", label: t("nav.logisticsPlanner"), searchType: "tool"},
         {href: "/guides", label: t("nav.allGuides"), searchType: "guide"}
       ]
     },

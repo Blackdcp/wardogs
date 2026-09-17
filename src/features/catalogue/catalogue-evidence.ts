@@ -2,7 +2,15 @@ import {catalogueRecords} from "./catalogue-records";
 import type {CatalogueRecord} from "./catalogue-types";
 import {vehicleItems} from "../items/vehicle-items";
 import {weaponItems} from "../items/weapon-items";
-export {getCatalogueChangeHistory, normalizeCatalogueEvidence, seasonOneChanges, type SeasonOneChange} from "./catalogue-evidence-data";
+export {
+  getCatalogueChangeHistory,
+  normalizeCatalogueEvidence,
+  seasonOneChanges,
+  seasonOneSourceUrl,
+  seasonOneVerifiedAt,
+  type ProgressionTrack,
+  type SeasonOneChange,
+} from "./catalogue-evidence-data";
 
 const richDetailKeys = new Set([...weaponItems, ...vehicleItems].map((item) => `${item.type}/${item.slug}`));
 

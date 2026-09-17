@@ -17,6 +17,8 @@ describe("shareable player tools", () => {
       expect(urls.has(`http://localhost:3000/${locale}/tools/loadout-budget`)).toBe(true);
       expect(urls.has(`http://localhost:3000/${locale}/tools/weapon-compare`)).toBe(true);
       expect(urls.has(`http://localhost:3000/${locale}/tools/ammo-matcher`)).toBe(true);
+      expect(urls.has(`http://localhost:3000/${locale}/tools/progression-route`)).toBe(true);
+      expect(urls.has(`http://localhost:3000/${locale}/tools/logistics-planner`)).toBe(true);
     }
   });
 
@@ -83,12 +85,39 @@ describe("shareable player tools", () => {
       .toBe("left=deagle&left=fal&right=amp-9");
   });
 
+  it("round-trips namespaced progression state and safely rejects malformed or repeated values", async () => {
+    const {decodeProgressionRouteState, encodeProgressionRouteState} = await import("../../src/features/tools/share-state");
+    const roles = ["assault", "medic", "recon", "support", "driver", "pilot"];
+    const state = {role: "driver", currentLevel: 18};
+
+    expect(encodeProgressionRouteState(state)).toBe("pr_role=driver&pr_level=18");
+    expect(decodeProgressionRouteState(encodeProgressionRouteState(state), roles)).toEqual(state);
+    expect(decodeProgressionRouteState("pr_role=unknown&pr_level=-1", roles)).toEqual({role: "assault", currentLevel: null});
+    expect(decodeProgressionRouteState("pr_role=medic&pr_role=pilot&pr_level=9&pr_level=10", roles))
+      .toEqual({role: "assault", currentLevel: null});
+  });
+
+  it("round-trips a namespaced ordered logistics plan and repairs duplicates or invalid stages", async () => {
+    const {decodeLogisticsPlanState, encodeLogisticsPlanState} = await import("../../src/features/tools/share-state");
+    const stages = ["spawn", "construction", "supply", "transport", "defense", "recovery"];
+    const state = {stages: ["transport", "supply", "recovery"]};
+
+    expect(encodeLogisticsPlanState(state)).toBe("lp_stages=transport%2Csupply%2Crecovery");
+    expect(decodeLogisticsPlanState(encodeLogisticsPlanState(state), stages)).toEqual(state);
+    expect(decodeLogisticsPlanState("lp_stages=none", stages)).toEqual({stages: []});
+    expect(decodeLogisticsPlanState("lp_stages=supply,supply", stages)).toEqual({stages});
+    expect(decodeLogisticsPlanState("lp_stages=supply,unknown", stages)).toEqual({stages});
+    expect(decodeLogisticsPlanState("lp_stages=supply&lp_stages=transport", stages)).toEqual({stages});
+  });
+
   it("adds both evidence tools to explicit shared navigation", async () => {
     const {buildNavigation} = await import("../../src/features/navigation/navigation-data");
     const items = buildNavigation((key) => key).flatMap((group) => group.items);
 
     expect(items).toContainEqual(expect.objectContaining({href: "/tools/weapon-compare", searchType: "tool"}));
     expect(items).toContainEqual(expect.objectContaining({href: "/tools/ammo-matcher", searchType: "tool"}));
+    expect(items).toContainEqual(expect.objectContaining({href: "/tools/progression-route", searchType: "tool"}));
+    expect(items).toContainEqual(expect.objectContaining({href: "/tools/logistics-planner", searchType: "tool"}));
   });
 
   it("provides readable source-class and confidence labels in all six locales", async () => {
@@ -115,10 +144,14 @@ describe("shareable player tools", () => {
   it("builds localized metadata for both evidence tools in all six locales", async () => {
     const weaponPage = await import("../../src/app/[locale]/tools/weapon-compare/page");
     const ammoPage = await import("../../src/app/[locale]/tools/ammo-matcher/page");
+    const progressionPage = await import("../../src/app/[locale]/tools/progression-route/page");
+    const logisticsPage = await import("../../src/app/[locale]/tools/logistics-planner/page");
 
     for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn"]) {
       const weaponMetadata = await weaponPage.generateMetadata({params: Promise.resolve({locale})});
       const ammoMetadata = await ammoPage.generateMetadata({params: Promise.resolve({locale})});
+      const progressionMetadata = await progressionPage.generateMetadata({params: Promise.resolve({locale})});
+      const logisticsMetadata = await logisticsPage.generateMetadata({params: Promise.resolve({locale})});
 
       expect(weaponMetadata.title).toBeTruthy();
       expect(weaponMetadata.description).toBeTruthy();
@@ -126,6 +159,12 @@ describe("shareable player tools", () => {
       expect(ammoMetadata.title).toBeTruthy();
       expect(ammoMetadata.description).toBeTruthy();
       expect(ammoMetadata.alternates?.canonical).toBe(`http://localhost:3000/${locale}/tools/ammo-matcher`);
+      expect(progressionMetadata.title).toBeTruthy();
+      expect(progressionMetadata.description).toBeTruthy();
+      expect(progressionMetadata.alternates?.canonical).toBe(`http://localhost:3000/${locale}/tools/progression-route`);
+      expect(logisticsMetadata.title).toBeTruthy();
+      expect(logisticsMetadata.description).toBeTruthy();
+      expect(logisticsMetadata.alternates?.canonical).toBe(`http://localhost:3000/${locale}/tools/logistics-planner`);
     }
   });
 });

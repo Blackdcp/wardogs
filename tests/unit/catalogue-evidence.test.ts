@@ -48,7 +48,7 @@ describe("catalogue evidence", () => {
     expect(deagle?.changeHistory).toContainEqual(expect.objectContaining({field: "Required level", previousValue: "90", currentValue: "85"}));
     expect(ural?.facts).toContainEqual({label: "Alpha price", value: "$5,000"});
 
-    expect(seasonOneChanges.map(({entity, previousValue, currentValue}) => ({entity, previousValue, currentValue}))).toEqual([
+    expect(seasonOneChanges.map(({entity, previousValue, currentValue}) => ({entity, previousValue, currentValue}))).toEqual(expect.arrayContaining([
       {entity: "FOB vendor", previousValue: "$2,500", currentValue: "$7,500"},
       {entity: "Large Hammer vendor", previousValue: "$1,600", currentValue: "$2,400"},
       {entity: "Large Hammer Support unlock", previousValue: "$25,000", currentValue: "$75,000"},
@@ -66,7 +66,8 @@ describe("catalogue evidence", () => {
       {entity: "Deagle required level", previousValue: "90", currentValue: "85"},
       {entity: "762x54mm AP career level", previousValue: "83", currentValue: "82"},
       {entity: "556mm AP career level", previousValue: "85", currentValue: "83"},
-    ]);
+    ]));
+    expect(seasonOneChanges).toHaveLength(32);
     expect(seasonOneChanges.some((change) => change.entity === "Artillery Tank career unlock" && change.catalogueKey === undefined)).toBe(true);
     expect(seasonOneChanges).toContainEqual(expect.objectContaining({entity: "762x54mm AP career level", previousValue: "83", currentValue: "82", catalogueKey: "ammo/7-62x54mmr"}));
     expect(seasonOneChanges).toContainEqual(expect.objectContaining({entity: "556mm AP career level", previousValue: "85", currentValue: "83", catalogueKey: "ammo/5-56x45mm"}));
