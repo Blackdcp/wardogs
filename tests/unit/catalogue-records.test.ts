@@ -40,6 +40,39 @@ describe("catalogue records", () => {
     }
   });
 
+  it("keeps equipment, medical, and explosive observations inside the approved creator source scope", () => {
+    const approvedSlugs = [
+      "binoculars",
+      "rangefinder",
+      "fuel-can",
+      "repair-tool",
+      "battery",
+      "stimpen",
+      "enox",
+      "defibrillator",
+      "medical-bag",
+      "improvised-explosive-device",
+      "at-mine",
+      "claymore",
+    ];
+    const records = catalogueRecords.filter((record) => approvedSlugs.includes(record.slug));
+
+    expect(records).toHaveLength(approvedSlugs.length);
+    for (const record of records) {
+      expect(record.evidence.sourceUrl, record.slug).toBe("https://www.youtube.com/watch?v=J5QZXLENLgQ");
+      expect(record.evidence.sourceClass, record.slug).toBe("creator-historical");
+      expect(record.evidence.confidence, record.slug).toBe("observed");
+      expect(record.evidence.current, record.slug).toBe(false);
+      expect(record.dataAsOf, record.slug).toContain("20 Aug 2026");
+      expect(record.sourceNotes.join(" "), record.slug).toMatch(/clip|segment|walkthrough/i);
+      expect(record.facts, record.slug).not.toEqual(expect.arrayContaining([
+        expect.objectContaining({label: "Alpha price"}),
+        expect.objectContaining({label: "Recorded identifier"}),
+      ]));
+      expect(JSON.stringify(record), record.slug).not.toMatch(/\$\d|ATMine|MedKit/);
+    }
+  });
+
   it("publishes every weapon and vehicle model at its exact detail route", () => {
     const published = catalogueRecords.filter((record) => record.detailStatus === "published");
     const planned = catalogueRecords.filter((record) => record.detailStatus === "planned");

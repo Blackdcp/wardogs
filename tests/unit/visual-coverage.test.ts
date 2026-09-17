@@ -1,9 +1,15 @@
 import {describe, expect, it} from "vitest";
 import {
+  auditCatalogueVisualCoverage,
+  auditOperationsAtlasVisualCoverage,
   getIndexableVisualViolations,
   getVisualCoverageEntries,
   getVisualCoverageSummary,
 } from "../../src/features/catalogue/visual-coverage";
+import {catalogueMediaSources} from "../../src/features/catalogue/catalogue-media-sources";
+import {catalogueRecords} from "../../src/features/catalogue/catalogue-records";
+import {getOperationsAtlasCopy, operationsAtlasRecords} from "../../src/features/maps/operations-atlas";
+import {operationsAtlasMediaSources} from "../../src/features/maps/operations-atlas-media";
 
 describe("visual coverage audit", () => {
   it("keeps every indexable detail page on one unique verified object image", () => {
@@ -32,5 +38,67 @@ describe("visual coverage audit", () => {
     const recordEvidence = entries.filter(({scope}) => scope === "catalogue");
     expect(recordEvidence.filter(({state}) => state === "verified").every(({image}) => !image?.includes("/banners/"))).toBe(true);
     expect(recordEvidence.filter(({state}) => state === "pending").every(({image, alt}) => image === undefined && alt === undefined)).toBe(true);
+  });
+
+  it("rejects wrong record state, duplicate images, banners, missing alt, missing files, and unapproved assets", () => {
+    const verified = catalogueRecords.find((record) => record.mediaState === "verified")!;
+    const second = catalogueRecords.find((record) => record.mediaState === "verified" && record.slug !== verified.slug)!;
+    const key = `${verified.type}/${verified.slug}`;
+
+    expect(auditCatalogueVisualCoverage([
+      {...verified, mediaState: "context-only"},
+    ], catalogueMediaSources, () => true)).toContain(`${key}: record media state does not match approved provenance`);
+
+    expect(auditCatalogueVisualCoverage([
+      verified,
+      {...second, image: verified.image},
+    ], catalogueMediaSources, () => true).join(" ")).toMatch(/duplicate object image/);
+
+    const bannerImage = "/images/catalogue/banners/thegame-1280.webp";
+    expect(auditCatalogueVisualCoverage([
+      {...verified, image: bannerImage},
+    ], {
+      ...catalogueMediaSources,
+      [bannerImage]: {...catalogueMediaSources[verified.image!]!, recordKey: key, image: bannerImage},
+    }, () => true).join(" ")).toMatch(/generic banner/);
+
+    expect(auditCatalogueVisualCoverage([{...verified, imageAlt: " "}], catalogueMediaSources, () => true).join(" ")).toMatch(/missing meaningful alt/);
+    expect(auditCatalogueVisualCoverage([{...verified, image: "/images/catalogue/weapons/unapproved.webp"}], catalogueMediaSources, () => true).join(" ")).toMatch(/no approved provenance/);
+
+    const missingImage = "/images/catalogue/weapons/missing-object.webp";
+    expect(auditCatalogueVisualCoverage([
+      {...verified, image: missingImage},
+    ], {
+      ...catalogueMediaSources,
+      [missingImage]: {...catalogueMediaSources[verified.image!]!, recordKey: key, image: missingImage},
+    }, () => false).join(" ")).toMatch(/asset file is missing/);
+  });
+
+  it("derives atlas coverage from provenance and catches visual mutations", () => {
+    const mortar = operationsAtlasRecords.find((record) => record.id === "mortar-support")!;
+    const cargo = operationsAtlasRecords.find((record) => record.id === "cargo-route")!;
+    const copies = [{locale: "en", copy: getOperationsAtlasCopy("en")}];
+
+    expect(auditOperationsAtlasVisualCoverage([
+      {...mortar, visual: {...mortar.visual, state: "contextual"}},
+    ], operationsAtlasMediaSources, copies, () => true).join(" ")).toMatch(/visual state does not match approved provenance/);
+
+    expect(auditOperationsAtlasVisualCoverage([
+      mortar,
+      {...cargo, visual: {...cargo.visual, image: mortar.visual.image}},
+    ], operationsAtlasMediaSources, copies, () => true).join(" ")).toMatch(/duplicate atlas image/);
+
+    const missingAltCopy = structuredClone(getOperationsAtlasCopy("en"));
+    missingAltCopy.entries["mortar-support"].imageAlt = "";
+    expect(auditOperationsAtlasVisualCoverage(
+      [mortar],
+      operationsAtlasMediaSources,
+      [{locale: "en", copy: missingAltCopy}],
+      () => true,
+    ).join(" ")).toMatch(/missing meaningful alt/);
+
+    expect(auditOperationsAtlasVisualCoverage([
+      {...mortar, visual: {...mortar.visual, image: "/images/catalogue/vehicles/unapproved.webp"}},
+    ], operationsAtlasMediaSources, copies, () => true).join(" ")).toMatch(/no approved provenance/);
   });
 });

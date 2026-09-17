@@ -154,8 +154,9 @@
       "videoSummary": "Reviewed current-build creator footage linked to a maintained guide.",
       "videoCategory": "Current video",
       "toolSummary": "Interactive player tool discovered from the shared site navigation.",
+      "mapSummary": "Task-focused operations map linking sourced battlefield, objective, logistics, mortar, and air-operation guidance.",
       "types": {"guide": "Guide", "item": "Item", "video": "Video", "tool": "Tool", "map": "Map"},
-      "counts": {"guides": "Guides", "items": "Item pages", "videos": "Current videos", "tools": "Tools"}
+      "counts": {"guides": "Guides", "items": "Item pages", "videos": "Current videos", "tools": "Tools", "maps": "Maps"}
     },
     "actions": {
       "eyebrow": "Choose your mission",

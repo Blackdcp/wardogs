@@ -3,6 +3,9 @@
 import Image from "next/image";
 import {useState} from "react";
 import {ArrowUpRight, BookOpen, CalendarCheck2, ImageOff, MapPinned} from "lucide-react";
+import type {Locale} from "@/config/site";
+import {formatCatalogueVerifiedAt, localizeCatalogueBuild, localizeCatalogueFact} from "@/features/catalogue/catalogue-localization";
+import {getItemUi} from "@/features/items/item-ui";
 import {
   filterOperationsAtlas,
   operationsAtlasRecords,
@@ -16,6 +19,7 @@ import {assetPath} from "@/lib/assets";
 type OperationsAtlasProps = {
   copy: OperationsAtlasCopy;
   guideTitles: Record<string, string>;
+  locale: Locale;
   toolLabels: Record<string, string>;
 };
 
@@ -27,9 +31,10 @@ function visualLabel(copy: OperationsAtlasCopy, state: "verified" | "contextual"
   return copy.visualPending;
 }
 
-export function OperationsAtlas({copy, guideTitles, toolLabels}: OperationsAtlasProps) {
+export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: OperationsAtlasProps) {
   const [filter, setFilter] = useState<OperationsAtlasFilter>("all");
   const visibleRecords = filterOperationsAtlas(operationsAtlasRecords, filter);
+  const itemUi = getItemUi(locale);
 
   return (
     <section aria-labelledby="operations-atlas-heading" className="border-y border-[#303b35] bg-[#101512]">
@@ -71,6 +76,7 @@ export function OperationsAtlas({copy, guideTitles, toolLabels}: OperationsAtlas
           {visibleRecords.map((record) => {
             const entry = copy.entries[record.id];
             const sourceUrl = record.evidence.sourceUrl;
+            const localizedFacts = record.facts.map((fact) => localizeCatalogueFact(fact, locale));
             return (
               <li className="grid gap-6 border-b border-[#303b35] py-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-10" data-atlas-entry={record.id} key={record.id}>
                 <div className="min-w-0">
@@ -79,44 +85,65 @@ export function OperationsAtlas({copy, guideTitles, toolLabels}: OperationsAtlas
                     <span className="text-xs text-[#849189]">{visualLabel(copy, record.visual.state)}</span>
                   </div>
                   <h2 className="display-font mt-3 text-3xl leading-tight text-white">{entry.title}</h2>
-                  <dl className="mt-5 grid gap-4 sm:grid-cols-2">
-                    <div className="border-l-2 border-[#4d695a] pl-4">
-                      <dt className="text-xs font-semibold uppercase text-[#849189]">{copy.objectiveLabel}</dt>
-                      <dd className="mt-1 text-sm leading-6 text-[#e1e7e3]">{entry.objective}</dd>
-                    </div>
-                    <div className="border-l-2 border-[#4d695a] pl-4">
-                      <dt className="text-xs font-semibold uppercase text-[#849189]">{copy.contextLabel}</dt>
-                      <dd className="mt-1 text-sm leading-6 text-[#e1e7e3]">{entry.context}</dd>
-                    </div>
-                  </dl>
-                  <p className="mt-5 max-w-3xl text-sm leading-7 text-[#aeb9b3]">{entry.summary}</p>
+                  <section className="mt-5 border-l-2 border-[#4d695a] pl-4" data-atlas-editorial-workflow>
+                    <h3 className="text-xs font-semibold uppercase text-[#d9a93a]">{copy.workflowLabel}</h3>
+                    <p className="mt-2 max-w-3xl text-xs leading-5 text-[#849189]">{copy.workflowNote}</p>
+                    <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <dt className="text-xs font-semibold uppercase text-[#849189]">{copy.objectiveLabel}</dt>
+                        <dd className="mt-1 text-sm leading-6 text-[#e1e7e3]">{entry.objective}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-xs font-semibold uppercase text-[#849189]">{copy.contextLabel}</dt>
+                        <dd className="mt-1 text-sm leading-6 text-[#e1e7e3]">{entry.context}</dd>
+                      </div>
+                    </dl>
+                    <p className="mt-4 max-w-3xl text-sm leading-7 text-[#aeb9b3]">{entry.summary}</p>
+                  </section>
 
-                  <dl className="mt-6 grid gap-x-6 gap-y-3 border-y border-[#28322d] py-4 text-xs sm:grid-cols-3">
-                    <div>
-                      <dt className="uppercase text-[#7f8d86]">{copy.evidenceLabel}</dt>
-                      <dd className="mt-1 text-[#d9e1dc]">{record.evidence.sourceClass} · {record.evidence.confidence}</dd>
+                  <section className="mt-6 border-y border-[#28322d] py-4" data-atlas-sourced-facts>
+                    <h3 className="text-xs font-semibold uppercase text-[#d9a93a]">{copy.sourcedFactsLabel}</h3>
+                    <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#d9e1dc] sm:grid-cols-2">
+                      {localizedFacts.map((fact) => (
+                        <li className="border-l border-[#4d695a] pl-3" key={`${fact.label}:${fact.value}`}>
+                          <span className="block text-[11px] uppercase text-[#7f8d86]">{fact.label}</span>
+                          <span className="mt-0.5 block">{fact.value}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <dl className="mt-4 grid gap-x-6 gap-y-3 border-t border-[#28322d] pt-4 text-xs sm:grid-cols-3">
+                      <div>
+                        <dt className="uppercase text-[#7f8d86]">{copy.evidenceLabel}</dt>
+                        <dd className="mt-1 text-[#d9e1dc]">{itemUi.sourceClassLabels[record.evidence.sourceClass]} · {itemUi.confidenceLabels[record.evidence.confidence]}</dd>
+                      </div>
+                      <div>
+                        <dt className="inline-flex items-center gap-1 uppercase text-[#7f8d86]"><CalendarCheck2 aria-hidden="true" className="size-3.5" />{copy.checkedLabel}</dt>
+                        <dd className="mt-1 text-[#d9e1dc]">{formatCatalogueVerifiedAt(record.evidence.verifiedAt, locale)}</dd>
+                      </div>
+                      <div>
+                        <dt className="uppercase text-[#7f8d86]">{copy.buildLabel}</dt>
+                        <dd className="mt-1 text-[#d9e1dc]">{localizeCatalogueBuild(record.evidence.build, locale)}</dd>
+                      </div>
+                    </dl>
+                    <div className="mt-4 border-t border-[#28322d] pt-4">
+                      <p className="text-[11px] font-semibold uppercase text-[#7f8d86]">{copy.sourceScopeLabel}</p>
+                      <ul className="mt-2 space-y-1 text-xs leading-5 text-[#aeb9b3]">
+                        {record.sourceNotes.map((note) => <li key={note}>{note}</li>)}
+                      </ul>
+                      {sourceUrl ? (
+                        <a className="mt-3 inline-flex min-h-11 items-center gap-2 border border-[#405047] px-4 py-2 text-sm font-semibold text-[#d4ded8] hover:border-[#69c78f] hover:text-white" href={sourceUrl} rel="noreferrer" target="_blank" title={`${copy.sourceLabel}: ${record.sourceLabel}`}>
+                          {copy.sourceLabel}: {record.sourceLabel}
+                          <ArrowUpRight aria-hidden="true" className="size-4" />
+                        </a>
+                      ) : null}
                     </div>
-                    <div>
-                      <dt className="inline-flex items-center gap-1 uppercase text-[#7f8d86]"><CalendarCheck2 aria-hidden="true" className="size-3.5" />{copy.checkedLabel}</dt>
-                      <dd className="mt-1 text-[#d9e1dc]">{record.evidence.verifiedAt}</dd>
-                    </div>
-                    <div>
-                      <dt className="uppercase text-[#7f8d86]">{copy.buildLabel}</dt>
-                      <dd className="mt-1 text-[#d9e1dc]">{record.evidence.build}</dd>
-                    </div>
-                  </dl>
+                  </section>
 
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link className="inline-flex min-h-11 items-center gap-2 bg-[#2f7d50] px-4 py-2 text-sm font-semibold text-white hover:bg-[#3a9360]" href={`/guides/${record.guideSlug}`} title={`${copy.openGuide}: ${entry.title}`}>
                       <BookOpen aria-hidden="true" className="size-4" />
                       {copy.openGuide}
                     </Link>
-                    {sourceUrl ? (
-                      <a className="inline-flex min-h-11 items-center gap-2 border border-[#405047] px-4 py-2 text-sm font-semibold text-[#d4ded8] hover:border-[#69c78f] hover:text-white" href={sourceUrl} rel="noreferrer" target="_blank" title={`${copy.sourceLabel}: ${record.sourceLabel}`}>
-                        {copy.sourceLabel}: {record.sourceLabel}
-                        <ArrowUpRight aria-hidden="true" className="size-4" />
-                      </a>
-                    ) : null}
                   </div>
 
                   {(record.relatedGuideSlugs.length > 0 || record.relatedToolHrefs.length > 0) ? (

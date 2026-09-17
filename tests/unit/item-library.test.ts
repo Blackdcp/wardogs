@@ -13,6 +13,8 @@ import {
   type IndexableItemPath
 } from "../../src/features/items/item-library";
 import {vehicleItems} from "../../src/features/items/vehicle-items";
+import {formatCatalogueIndexCount, getItemUi} from "../../src/features/items/item-ui";
+import {locales} from "../../src/config/site";
 
 const weaponSlugs = [
   "a-91",
@@ -283,6 +285,15 @@ describe("item library", () => {
       "mechanics",
       "loadouts"
     ]);
+  });
+
+  it("describes all eleven field indexes in every locale without a stale hard-coded seven", () => {
+    for (const locale of locales) {
+      const ui = getItemUi(locale);
+      expect(formatCatalogueIndexCount(locale, itemTypes.length), locale).toContain("11");
+      expect(ui.indexesEyebrow, locale).not.toMatch(/\b7\b|Seven|Sieben|Sete|七/);
+      expect(`${ui.hubMetaDescription} ${ui.hubDescription}`, locale).not.toMatch(/Seven field|Sieben Feld|Sete índices|七类|7つ/);
+    }
   });
 
   it("keeps published catalogue models out of the standalone weapon list", () => {

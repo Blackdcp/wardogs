@@ -16,6 +16,7 @@ export type SiteSearchCounts = {
   items: number;
   videos: number;
   tools: number;
+  maps: number;
 };
 
 export type SearchNavigationKey = "ArrowDown" | "ArrowUp" | "Home" | "End";
@@ -96,6 +97,7 @@ export function getSiteSearchCounts(index: readonly SiteSearchEntry[]): SiteSear
     guides: index.filter((entry) => entry.type === "guide").length,
     items: index.filter((entry) => entry.type === "item").length,
     videos: index.filter((entry) => entry.type === "video").length,
-    tools: index.filter((entry) => entry.type === "tool" || entry.type === "map").length
+    tools: index.filter((entry) => entry.type === "tool").length,
+    maps: index.filter((entry) => entry.type === "map").length
   };
 }

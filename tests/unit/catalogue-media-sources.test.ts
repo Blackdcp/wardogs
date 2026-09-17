@@ -1,7 +1,7 @@
 import {existsSync} from "node:fs";
 import {join} from "node:path";
 import {describe, expect, it} from "vitest";
-import {catalogueMediaSources} from "../../src/features/catalogue/catalogue-media-sources";
+import {catalogueMediaSources, getCatalogueMediaSource} from "../../src/features/catalogue/catalogue-media-sources";
 import {catalogueRecords} from "../../src/features/catalogue/catalogue-records";
 
 describe("catalogue media provenance", () => {
@@ -51,18 +51,22 @@ describe("catalogue media provenance", () => {
     }
   });
 
-  it("reserves verified media state for first-party assets and labels creator captures as context", () => {
+  it("requires explicit object-matching provenance for every verified record image", () => {
     const verifiedRecordImages = catalogueRecords
       .filter((record) => record.mediaState === "verified")
       .map((record) => record.image)
       .filter((image): image is string => Boolean(image));
-    const creatorContext = catalogueRecords.filter((record) => record.mediaState === "context-only");
 
-    expect(verifiedRecordImages).toEqual([
-      "/images/catalogue/weapons/m4.webp",
-      "/images/catalogue/weapons/super-45.webp",
-    ]);
-    expect(creatorContext.length).toBeGreaterThan(0);
-    expect(creatorContext.every((record) => record.image && catalogueMediaSources[record.image]?.sourceUrl.includes("youtube.com"))).toBe(true);
+    expect(verifiedRecordImages).toHaveLength(124);
+    expect(new Set(verifiedRecordImages)).toHaveLength(verifiedRecordImages.length);
+    for (const record of catalogueRecords.filter((candidate) => candidate.mediaState === "verified")) {
+      const source = getCatalogueMediaSource(record);
+      const key = `${record.type}/${record.slug}`;
+      expect(source, key).toBeDefined();
+      expect(source?.assetKind, key).toBe("object");
+      expect(source?.approvedState, key).toBe(record.mediaState);
+      expect(source?.recordKey === key || source?.additionalRecordKeys?.includes(key), key).toBe(true);
+    }
+    expect(catalogueRecords.filter((record) => record.mediaState === "context-only")).toHaveLength(0);
   });
 });

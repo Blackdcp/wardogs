@@ -54,7 +54,8 @@ describe("site search index", () => {
       guides: guides.length,
       items: indexableItems.length,
       videos: currentVideoSources.length,
-      tools: toolHrefs.size + mapHrefs.size
+      tools: toolHrefs.size,
+      maps: mapHrefs.size
     });
     expect(new Set(index.filter((entry) => entry.type === "tool").map((entry) => entry.href))).toEqual(toolHrefs);
     expect(new Set(index.filter((entry) => entry.type === "map").map((entry) => entry.href))).toEqual(mapHrefs);
@@ -113,9 +114,9 @@ describe("site search index", () => {
           resultCount: "{count} results",
           openResult: "Open result",
           types: {guide: "Guide", item: "Item", video: "Video", tool: "Tool", map: "Map"},
-          counts: {guides: "Guides", items: "Items", videos: "Current videos", tools: "Tools"}
+          counts: {guides: "Guides", items: "Items", videos: "Current videos", tools: "Tools", maps: "Maps"}
         },
-        counts: {guides: 47, items: 12, videos: 8, tools: 2},
+        counts: {guides: 47, items: 12, videos: 8, tools: 2, maps: 1},
         index: [],
         locale: "en"
       })
@@ -137,10 +138,23 @@ describe("site search index", () => {
         "controls", "description", "eyebrow", "firstMatch", "logistics", "money", "pcFixes", "progression", "title", "vehicles", "weapons"
       ]);
       expect(messages.home.search.types, locale).toEqual(expect.objectContaining({guide: expect.any(String), item: expect.any(String), video: expect.any(String), tool: expect.any(String), map: expect.any(String)}));
-      expect(messages.home.search.counts, locale).toEqual(expect.objectContaining({guides: expect.any(String), items: expect.any(String), videos: expect.any(String), tools: expect.any(String)}));
+      expect(messages.home.search.counts, locale).toEqual(expect.objectContaining({guides: expect.any(String), items: expect.any(String), videos: expect.any(String), tools: expect.any(String), maps: expect.any(String)}));
+      expect(messages.home.search.mapSummary, locale).toEqual(expect.any(String));
       expect(Object.keys(messages.home.buildChanges.entries).sort(), locale).toEqual([
         "artilleryTank", "deagle", "duneBuggy", "fobVendor", "largeHammer", "ural"
       ]);
+    }
+  });
+
+  it("uses map-specific localized summaries instead of tool copy", async () => {
+    for (const locale of locales) {
+      const index = await buildSiteSearchIndex(locale);
+      const mapEntries = index.filter((entry) => entry.type === "map");
+      const toolEntries = index.filter((entry) => entry.type === "tool");
+
+      expect(mapEntries.length, locale).toBeGreaterThan(0);
+      expect(toolEntries.length, locale).toBeGreaterThan(0);
+      expect(new Set(mapEntries.map((entry) => entry.summary)), locale).not.toEqual(new Set(toolEntries.map((entry) => entry.summary)));
     }
   });
 });

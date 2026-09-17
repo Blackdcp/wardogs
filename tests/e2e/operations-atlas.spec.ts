@@ -8,6 +8,15 @@ async function expectNoHorizontalOverflow(page: Page) {
   expect(metrics.documentWidth).toBeLessThanOrEqual(metrics.viewportWidth);
 }
 
+async function expectAtlasImagesLoaded(page: Page) {
+  const figures = page.locator("[data-atlas-visual]:not([data-atlas-visual='pending'])");
+  for (let index = 0; index < await figures.count(); index += 1) {
+    const image = figures.nth(index).locator("img");
+    await figures.nth(index).scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
+  }
+}
+
 test("operations atlas filters sourced workflows without inventing a tactical map", async ({page}) => {
   await page.setViewportSize({width: 375, height: 812});
   await page.goto("/en/maps");
@@ -28,6 +37,7 @@ test("operations atlas filters sourced workflows without inventing a tactical ma
   const sourceLinks = page.getByRole("link", {name: /Source:/});
   await expect(sourceLinks).toHaveCount(3);
   expect(await sourceLinks.evaluateAll((links) => links.every((link) => link.getAttribute("href")?.startsWith("https://")))).toBe(true);
+  await expectAtlasImagesLoaded(page);
   await expectNoHorizontalOverflow(page);
   await expect(page.locator("main")).not.toContainText(/latitude|longitude|grid reference/i);
   await page.screenshot({animations: "disabled", fullPage: true, path: "test-results/task7-atlas-mobile.png"});
@@ -41,5 +51,7 @@ test("Simplified Chinese atlas keeps localized navigation and exact guide target
   await expect(page.locator("[data-atlas-entry]")).toHaveCount(1);
   await expect(page.locator('[data-atlas-entry="mortar-support"]')).toBeVisible();
   await expect(page.getByRole("link", {name: /打开对应攻略/})).toHaveAttribute("href", "/zh-cn/guides/wardogs-mortar-guide");
+  await expect(page.locator('[data-atlas-entry="mortar-support"]')).toContainText("历史创作者证据");
+  await expectAtlasImagesLoaded(page);
   await page.screenshot({animations: "disabled", fullPage: true, path: "test-results/task7-atlas-desktop-zh.png"});
 });

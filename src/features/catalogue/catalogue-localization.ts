@@ -3,6 +3,7 @@ import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import {getCatalogEntryCount} from "@/features/items/item-catalog-guides";
 import {getLocalizedItemType} from "@/features/items/item-localization";
 import {getItemType} from "@/features/items/item-library";
+import {getCatalogueFreshness} from "./catalogue-evidence";
 import type {CatalogueGroup, CatalogueRecord} from "./catalogue-types";
 
 const sectionNames: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -22,32 +23,62 @@ const localeText = {
 } as const;
 
 const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> = {
-  "zh-cn": {"Alpha 1 - 7 Aug 2026":"Alpha 1 — 2026年8月7日", "Closed Beta - 21-23 Aug 2026":"封闭测试 — 2026年8月21日至23日", "Alpha 1 and Closed Beta - 7-23 Aug 2026":"Alpha 1 与封闭测试 — 2026年8月7日至23日"},
+  "zh-cn": {"Alpha 1 - 7 Aug 2026":"Alpha 1 — 2026年8月7日", "Closed Beta - 21-23 Aug 2026":"封闭测试 — 2026年8月21日至23日", "Alpha 1 and Closed Beta - 7-23 Aug 2026":"Alpha 1 与封闭测试 — 2026年8月7日至23日", "Season 1":"第 1 赛季", "Season 1 Early Access":"第 1 赛季抢先体验", "Official pre-release mode explanation":"官方预发布模式说明", "Pre-release catalogue walkthrough - 20 Aug 2026":"预发布图鉴演示 — 2026年8月20日"},
   ru: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 августа 2026",
     "Closed Beta - 21-23 Aug 2026": "Закрытая бета — 21–23 августа 2026",
     "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 и закрытая бета — 7–23 августа 2026",
+    "Season 1": "Сезон 1",
+    "Season 1 Early Access": "Ранний доступ, сезон 1",
+    "Official pre-release mode explanation": "Официальное предрелизное объяснение режима",
+    "Pre-release catalogue walkthrough - 20 Aug 2026": "Предрелизный обзор каталога — 20 августа 2026",
   },
   de: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7. August 2026",
     "Closed Beta - 21-23 Aug 2026": "Closed Beta — 21.–23. August 2026",
     "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 und Closed Beta — 7.–23. August 2026",
+    "Season 1": "Saison 1",
+    "Season 1 Early Access": "Saison 1 im Early Access",
+    "Official pre-release mode explanation": "Offizielle Moduserklärung vor Release",
+    "Pre-release catalogue walkthrough - 20 Aug 2026": "Katalog-Rundgang vor Release — 20. August 2026",
   },
   "pt-br": {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 de agosto de 2026",
     "Closed Beta - 21-23 Aug 2026": "Beta Fechado — 21–23 de agosto de 2026",
     "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 e Beta Fechado — 7–23 de agosto de 2026",
+    "Season 1": "Temporada 1",
+    "Season 1 Early Access": "Temporada 1 do Acesso Antecipado",
+    "Official pre-release mode explanation": "Explicação oficial do modo antes do lançamento",
+    "Pre-release catalogue walkthrough - 20 Aug 2026": "Visão do catálogo antes do lançamento — 20 de agosto de 2026",
   },
   ja: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 2026年8月7日",
     "Closed Beta - 21-23 Aug 2026": "クローズドベータ — 2026年8月21日～23日",
     "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1・クローズドベータ — 2026年8月7日～23日",
+    "Season 1": "シーズン1",
+    "Season 1 Early Access": "早期アクセス・シーズン1",
+    "Official pre-release mode explanation": "公式リリース前モード解説",
+    "Pre-release catalogue walkthrough - 20 Aug 2026": "リリース前カタログ解説 — 2026年8月20日",
   },
 };
 
-function localizeDataAsOf(value: string, locale: Exclude<Locale, "en">): string {
-  return localizedDataAsOf[locale][value] ?? value;
+export function localizeCatalogueBuild(value: string, locale: Locale): string {
+  return locale === "en" ? value : localizedDataAsOf[locale][value] ?? value;
 }
+
+export function formatCatalogueVerifiedAt(value: string, locale: Locale): string {
+  const localeTags: Record<Locale, string> = {en: "en-US", de: "de-DE", ru: "ru-RU", "pt-br": "pt-BR", ja: "ja-JP", "zh-cn": "zh-CN"};
+  return new Intl.DateTimeFormat(localeTags[locale], {year: "numeric", month: "short", day: "numeric", timeZone: "UTC"})
+    .format(new Date(`${value}T00:00:00Z`));
+}
+
+const evidenceBoundaryText: Record<Exclude<Locale, "en">, {current: string; historical: string; unknown: string}> = {
+  "zh-cn": {current: "这是当前官方资料；仅来源明确支持的事实可视为已确认。", historical: "这是历史预发布记录；价格、解锁、平衡和可用性不得视为当前版本事实。", unknown: "该资料的当前适用性尚未确认；请按标注来源与版本范围使用。"},
+  ru: {current: "Это актуальный официальный источник; подтверждены только прямо указанные в нём факты.", historical: "Это историческая предрелизная запись; цены, доступ, баланс и наличие не считаются актуальными.", unknown: "Актуальность не подтверждена; используйте запись только в пределах указанного источника и сборки."},
+  de: {current: "Dies ist eine aktuelle offizielle Quelle; bestätigt sind nur die dort ausdrücklich belegten Fakten.", historical: "Dies ist ein historischer Vorabstand; Preise, Freischaltungen, Balance und Verfügbarkeit gelten nicht als aktuell.", unknown: "Die aktuelle Gültigkeit ist ungeklärt; nutze den Eintrag nur im angegebenen Quellen- und Build-Rahmen."},
+  "pt-br": {current: "Esta é uma fonte oficial atual; apenas os fatos expressamente sustentados por ela estão confirmados.", historical: "Este é um registro histórico de pré-lançamento; preços, desbloqueios, equilíbrio e disponibilidade não são atuais.", unknown: "A validade atual não foi confirmada; use o registro somente no escopo da fonte e da build indicadas."},
+  ja: {current: "現行の公式情報です。出典が明示的に裏付ける事実だけを確認済みとして扱います。", historical: "過去のリリース前記録です。価格、解除条件、バランス、入手可否を現行情報として扱いません。", unknown: "現行ビルドでの有効性は未確認です。記載された出典とビルドの範囲内で参照してください。"},
+};
 
 const expandedLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
   "zh-cn": {LMG:"轻机枪", Shotgun:"霰弹枪", Launcher:"发射器", "Identifier only":"仅记录标识", "Stationary system":"固定式系统", "Closed Beta price":"封闭测试价格", Build:"版本", Verification:"验证", "Anti-air launcher":"防空发射器", "Anti-vehicle launcher":"反载具发射器", "Grenade launcher":"榴弹发射器", "Stationary support":"固定式支援", "Stationary anti-air":"固定式防空", "Stationary artillery":"固定式火炮", "Stationary defense":"固定式防御", "Stationary weapon":"固定式武器"},
@@ -147,19 +178,37 @@ const expandedSectionNames: Record<Exclude<Locale, "en">, Record<string, string>
 
 const fieldReferenceLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
   "zh-cn": {
-    "Vehicle support":"载具支援", "Personal recovery":"个人恢复", "Squad recovery":"小队救治", Supplies:"补给物资", Fuel:"燃料", Mechanical:"机械补给", "Route denial":"路线封锁", "FOB asset":"FOB 设施", "Objective support":"目标支援", Objective:"目标", Economy:"经济", Support:"支援", Orientation:"地图判读", Construction:"建造", Logistics:"后勤", "Fire support":"火力支援", "Air operations":"空中行动", "Observed role":"已观察用途", "Observed form":"已观察形态", "Observed dependency":"已观察依赖", "Primary task":"主要任务", Context:"适用场景", "Supply Types":"补给类型", "Route Denial":"路线封锁", "FOB and Objective Assets":"FOB 与目标设施", "Objective and Economy Systems":"目标与经济系统", "Medical item":"医疗物品", Supply:"补给", Deployable:"部署物", Mechanic:"机制", System:"系统", "Confirmed fact":"已确认事实", "Evidence state":"证据状态", "Evidence window":"证据时期"
+    "Vehicle support":"载具支援", "Personal recovery":"个人恢复", "Squad recovery":"小队救治", Supplies:"补给物资", Fuel:"燃料", Mechanical:"机械补给", "Route denial":"路线封锁", "FOB asset":"FOB 设施", "Objective support":"目标支援", Objective:"目标", Economy:"经济", Support:"支援", Orientation:"地图判读", Construction:"建造", Logistics:"后勤", "Fire support":"火力支援", "Air operations":"空中行动", "Observed role":"已观察用途", "Observed form":"已观察形态", "Observed dependency":"已观察依赖", "Observed family":"已观察类别", "Evidence scope":"证据范围", "Primary task":"主要任务", Context:"适用场景", "Supply Types":"补给类型", "Route Denial":"路线封锁", "FOB and Objective Assets":"FOB 与目标设施", "Objective and Economy Systems":"目标与经济系统", "Medical item":"医疗物品", Supply:"补给", Deployable:"部署物", Mechanic:"机制", System:"系统", "Confirmed fact":"已确认事实", "Evidence state":"证据状态", "Evidence window":"证据时期"
   },
   ru: {
-    "Vehicle support":"Поддержка транспорта", "Personal recovery":"Личное восстановление", "Squad recovery":"Помощь отряду", Supplies:"Снабжение", Fuel:"Топливо", Mechanical:"Механическое снабжение", "Route denial":"Блокирование маршрута", "FOB asset":"Объект FOB", "Objective support":"Поддержка цели", Objective:"Цель", Economy:"Экономика", Support:"Поддержка", Orientation:"Ориентирование", Construction:"Строительство", Logistics:"Логистика", "Fire support":"Огневая поддержка", "Air operations":"Воздушные операции", "Observed role":"Наблюдаемая роль", "Observed form":"Наблюдаемая форма", "Observed dependency":"Наблюдаемая зависимость", "Primary task":"Основная задача", Context:"Контекст", "Supply Types":"Типы снабжения", "Route Denial":"Блокирование маршрута", "FOB and Objective Assets":"Объекты FOB и цели", "Objective and Economy Systems":"Системы целей и экономики", "Medical item":"Медицинский предмет", Supply:"Снабжение", Deployable:"Развёртываемый объект", Mechanic:"Механика", System:"Система", "Confirmed fact":"Подтверждённый факт", "Evidence state":"Статус доказательства", "Evidence window":"Период доказательства"
+    "Vehicle support":"Поддержка транспорта", "Personal recovery":"Личное восстановление", "Squad recovery":"Помощь отряду", Supplies:"Снабжение", Fuel:"Топливо", Mechanical:"Механическое снабжение", "Route denial":"Блокирование маршрута", "FOB asset":"Объект FOB", "Objective support":"Поддержка цели", Objective:"Цель", Economy:"Экономика", Support:"Поддержка", Orientation:"Ориентирование", Construction:"Строительство", Logistics:"Логистика", "Fire support":"Огневая поддержка", "Air operations":"Воздушные операции", "Observed role":"Наблюдаемая роль", "Observed form":"Наблюдаемая форма", "Observed dependency":"Наблюдаемая зависимость", "Observed family":"Наблюдаемая категория", "Evidence scope":"Границы доказательства", "Primary task":"Основная задача", Context:"Контекст", "Supply Types":"Типы снабжения", "Route Denial":"Блокирование маршрута", "FOB and Objective Assets":"Объекты FOB и цели", "Objective and Economy Systems":"Системы целей и экономики", "Medical item":"Медицинский предмет", Supply:"Снабжение", Deployable:"Развёртываемый объект", Mechanic:"Механика", System:"Система", "Confirmed fact":"Подтверждённый факт", "Evidence state":"Статус доказательства", "Evidence window":"Период доказательства"
   },
   de: {
-    "Vehicle support":"Fahrzeugunterstützung", "Personal recovery":"Eigene Regeneration", "Squad recovery":"Trupprettung", Supplies:"Versorgung", Fuel:"Treibstoff", Mechanical:"Mechanisch", "Route denial":"Wegsperre", "FOB asset":"FOB-Anlage", "Objective support":"Zielunterstützung", Objective:"Ziel", Economy:"Wirtschaft", Support:"Unterstützung", Orientation:"Orientierung", Construction:"Bau", Logistics:"Logistik", "Fire support":"Feuerunterstützung", "Air operations":"Luftoperationen", "Observed role":"Beobachtete Rolle", "Observed form":"Beobachtete Form", "Observed dependency":"Beobachtete Abhängigkeit", "Primary task":"Hauptaufgabe", Context:"Kontext", "Supply Types":"Versorgungsarten", "Route Denial":"Wegsperre", "FOB and Objective Assets":"FOB- und Zielanlagen", "Objective and Economy Systems":"Ziel- und Wirtschaftssysteme", "Medical item":"Medizinischer Gegenstand", Supply:"Versorgung", Deployable:"Platzierbares System", Mechanic:"Mechanik", System:"System", "Confirmed fact":"Bestätigte Tatsache", "Evidence state":"Belegstatus", "Evidence window":"Belegzeitraum"
+    "Vehicle support":"Fahrzeugunterstützung", "Personal recovery":"Eigene Regeneration", "Squad recovery":"Trupprettung", Supplies:"Versorgung", Fuel:"Treibstoff", Mechanical:"Mechanisch", "Route denial":"Wegsperre", "FOB asset":"FOB-Anlage", "Objective support":"Zielunterstützung", Objective:"Ziel", Economy:"Wirtschaft", Support:"Unterstützung", Orientation:"Orientierung", Construction:"Bau", Logistics:"Logistik", "Fire support":"Feuerunterstützung", "Air operations":"Luftoperationen", "Observed role":"Beobachtete Rolle", "Observed form":"Beobachtete Form", "Observed dependency":"Beobachtete Abhängigkeit", "Observed family":"Beobachtete Kategorie", "Evidence scope":"Belegumfang", "Primary task":"Hauptaufgabe", Context:"Kontext", "Supply Types":"Versorgungsarten", "Route Denial":"Wegsperre", "FOB and Objective Assets":"FOB- und Zielanlagen", "Objective and Economy Systems":"Ziel- und Wirtschaftssysteme", "Medical item":"Medizinischer Gegenstand", Supply:"Versorgung", Deployable:"Platzierbares System", Mechanic:"Mechanik", System:"System", "Confirmed fact":"Bestätigte Tatsache", "Evidence state":"Belegstatus", "Evidence window":"Belegzeitraum"
   },
   "pt-br": {
-    "Vehicle support":"Suporte a veículos", "Personal recovery":"Recuperação pessoal", "Squad recovery":"Recuperação do esquadrão", Supplies:"Suprimentos", Fuel:"Combustível", Mechanical:"Mecânico", "Route denial":"Bloqueio de rota", "FOB asset":"Recurso de FOB", "Objective support":"Suporte ao objetivo", Objective:"Objetivo", Economy:"Economia", Support:"Suporte", Orientation:"Orientação", Construction:"Construção", Logistics:"Logística", "Fire support":"Apoio de fogo", "Air operations":"Operações aéreas", "Observed role":"Função observada", "Observed form":"Forma observada", "Observed dependency":"Dependência observada", "Primary task":"Tarefa principal", Context:"Contexto", "Supply Types":"Tipos de suprimento", "Route Denial":"Bloqueio de rota", "FOB and Objective Assets":"Recursos de FOB e objetivo", "Objective and Economy Systems":"Sistemas de objetivo e economia", "Medical item":"Item médico", Supply:"Suprimento", Deployable:"Item posicionável", Mechanic:"Mecânica", System:"Sistema", "Confirmed fact":"Fato confirmado", "Evidence state":"Estado da evidência", "Evidence window":"Período da evidência"
+    "Vehicle support":"Suporte a veículos", "Personal recovery":"Recuperação pessoal", "Squad recovery":"Recuperação do esquadrão", Supplies:"Suprimentos", Fuel:"Combustível", Mechanical:"Mecânico", "Route denial":"Bloqueio de rota", "FOB asset":"Recurso de FOB", "Objective support":"Suporte ao objetivo", Objective:"Objetivo", Economy:"Economia", Support:"Suporte", Orientation:"Orientação", Construction:"Construção", Logistics:"Logística", "Fire support":"Apoio de fogo", "Air operations":"Operações aéreas", "Observed role":"Função observada", "Observed form":"Forma observada", "Observed dependency":"Dependência observada", "Observed family":"Categoria observada", "Evidence scope":"Escopo da evidência", "Primary task":"Tarefa principal", Context:"Contexto", "Supply Types":"Tipos de suprimento", "Route Denial":"Bloqueio de rota", "FOB and Objective Assets":"Recursos de FOB e objetivo", "Objective and Economy Systems":"Sistemas de objetivo e economia", "Medical item":"Item médico", Supply:"Suprimento", Deployable:"Item posicionável", Mechanic:"Mecânica", System:"Sistema", "Confirmed fact":"Fato confirmado", "Evidence state":"Estado da evidência", "Evidence window":"Período da evidência"
   },
   ja: {
-    "Vehicle support":"車両支援", "Personal recovery":"自己回復", "Squad recovery":"分隊救護", Supplies:"補給物資", Fuel:"燃料", Mechanical:"整備", "Route denial":"経路阻止", "FOB asset":"FOB施設", "Objective support":"目標支援", Objective:"目標", Economy:"経済", Support:"支援", Orientation:"状況把握", Construction:"建設", Logistics:"兵站", "Fire support":"火力支援", "Air operations":"航空作戦", "Observed role":"確認済み用途", "Observed form":"確認済み形態", "Observed dependency":"確認済み依存関係", "Primary task":"主要任務", Context:"状況", "Supply Types":"補給物資の種類", "Route Denial":"経路阻止", "FOB and Objective Assets":"FOB・目標施設", "Objective and Economy Systems":"目標・経済システム", "Medical item":"医療アイテム", Supply:"補給物資", Deployable:"設置物", Mechanic:"システム", System:"分類", "Confirmed fact":"確認済み事実", "Evidence state":"証拠状態", "Evidence window":"証拠の時期"
+    "Vehicle support":"車両支援", "Personal recovery":"自己回復", "Squad recovery":"分隊救護", Supplies:"補給物資", Fuel:"燃料", Mechanical:"整備", "Route denial":"経路阻止", "FOB asset":"FOB施設", "Objective support":"目標支援", Objective:"目標", Economy:"経済", Support:"支援", Orientation:"状況把握", Construction:"建設", Logistics:"兵站", "Fire support":"火力支援", "Air operations":"航空作戦", "Observed role":"確認済み用途", "Observed form":"確認済み形態", "Observed dependency":"確認済み依存関係", "Observed family":"確認済み分類", "Evidence scope":"証拠の範囲", "Primary task":"主要任務", Context:"状況", "Supply Types":"補給物資の種類", "Route Denial":"経路阻止", "FOB and Objective Assets":"FOB・目標施設", "Objective and Economy Systems":"目標・経済システム", "Medical item":"医療アイテム", Supply:"補給物資", Deployable:"設置物", Mechanic:"システム", System:"分類", "Confirmed fact":"確認済み事実", "Evidence state":"証拠状態", "Evidence window":"証拠の時期"
+  },
+};
+
+const fieldReferenceValues: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  "zh-cn": {
+    "Recon observation":"侦察观察", "Name and catalogue category":"名称与图鉴分类", "Distance and bearing observation":"距离与方位观察", "Item label only":"仅确认物品名称", "Portable fuel container":"便携燃料容器", "Fuel container segment, 01:03-02:16":"燃料容器片段 01:03-02:16", "Repair equipment":"维修器材", "Battery-powered in the walkthrough":"演示中由电池供电", "Portable power source":"便携电源", "Personal recovery":"个人恢复", "Medical segment, 02:16-03:23":"医疗片段 02:16-03:23", "Squad recovery":"小队救治", "Improvised explosive":"简易爆炸物", "Explosives segment, 01:03-02:16":"爆炸物片段 01:03-02:16", "Anti-vehicle mine":"反载具地雷", "Directional mine":"定向地雷", "Three teams fight across a 16 km² battlefield":"三支队伍在 16 平方公里战场中作战", "Randomized 2 x 2 km Control Zone":"随机生成的 2×2 公里控制区", "Tower terminals appear in the official pre-release mode explanation":"官方预发布模式说明展示了塔楼终端", "Official pre-release footage checked 26 Aug 2026":"官方预发布画面于 2026 年 8 月 26 日核查", "FOB-built objective support structure":"由 FOB 建造的目标支援设施", "Construction supplies and fuel in Closed Beta":"封闭测试中需要建造补给与燃料", "The official description includes base building":"官方说明包含基地建造", "The official description includes logistics and transport":"官方说明包含后勤与运输", "Vehicles carry supply pallets to field destinations":"载具将补给托盘运往战场目的地", "Closed Beta creator walkthrough":"封闭测试创作者演示", "Crew-operated indirect-fire emplacement":"由乘员操作的间接火力阵地", "Closed Beta creator demonstration":"封闭测试创作者演示", "Helicopter transport of players or supplies":"直升机运输玩家或补给", "Closed Beta creator guide":"封闭测试创作者攻略"
+  },
+  ru: {
+    "Recon observation":"Разведывательное наблюдение", "Name and catalogue category":"Название и категория каталога", "Distance and bearing observation":"Определение дальности и направления", "Item label only":"Подтверждено только название", "Portable fuel container":"Переносная ёмкость для топлива", "Fuel container segment, 01:03-02:16":"Фрагмент о топливе, 01:03-02:16", "Repair equipment":"Ремонтное оборудование", "Battery-powered in the walkthrough":"В демонстрации работает от батареи", "Portable power source":"Переносной источник питания", "Personal recovery":"Личное восстановление", "Medical segment, 02:16-03:23":"Медицинский фрагмент, 02:16-03:23", "Squad recovery":"Помощь отряду", "Improvised explosive":"Самодельное взрывное устройство", "Explosives segment, 01:03-02:16":"Фрагмент о взрывчатке, 01:03-02:16", "Anti-vehicle mine":"Противотранспортная мина", "Directional mine":"Мина направленного действия", "Three teams fight across a 16 km² battlefield":"Три команды сражаются на поле боя площадью 16 км²", "Randomized 2 x 2 km Control Zone":"Случайная зона контроля 2 × 2 км", "Tower terminals appear in the official pre-release mode explanation":"Терминалы башен показаны в официальном предрелизном описании режима", "Official pre-release footage checked 26 Aug 2026":"Официальные предрелизные кадры проверены 26 августа 2026 года", "FOB-built objective support structure":"Построенный на FOB объект поддержки цели", "Construction supplies and fuel in Closed Beta":"Стройматериалы и топливо в закрытой бете", "The official description includes base building":"Официальное описание включает строительство баз", "The official description includes logistics and transport":"Официальное описание включает логистику и транспорт", "Vehicles carry supply pallets to field destinations":"Транспорт доставляет паллеты снабжения в полевые точки", "Closed Beta creator walkthrough":"Авторское прохождение закрытой беты", "Crew-operated indirect-fire emplacement":"Расчётная позиция непрямого огня", "Closed Beta creator demonstration":"Авторская демонстрация закрытой беты", "Helicopter transport of players or supplies":"Перевозка игроков или припасов вертолётом", "Closed Beta creator guide":"Авторский гайд по закрытой бете"
+  },
+  de: {
+    "Recon observation":"Aufklärungsbeobachtung", "Name and catalogue category":"Name und Katalogkategorie", "Distance and bearing observation":"Entfernungs- und Richtungsbeobachtung", "Item label only":"Nur Gegenstandsname bestätigt", "Portable fuel container":"Tragbarer Treibstoffbehälter", "Fuel container segment, 01:03-02:16":"Treibstoffbehälter-Segment, 01:03-02:16", "Repair equipment":"Reparaturgerät", "Battery-powered in the walkthrough":"In der Demonstration batteriebetrieben", "Portable power source":"Tragbare Stromquelle", "Personal recovery":"Eigene Regeneration", "Medical segment, 02:16-03:23":"Medizin-Segment, 02:16-03:23", "Squad recovery":"Trupprettung", "Improvised explosive":"Improvisierter Sprengsatz", "Explosives segment, 01:03-02:16":"Sprengstoff-Segment, 01:03-02:16", "Anti-vehicle mine":"Panzerabwehrmine", "Directional mine":"Richtmine", "Three teams fight across a 16 km² battlefield":"Drei Teams kämpfen auf einem 16 km² großen Schlachtfeld", "Randomized 2 x 2 km Control Zone":"Zufällige 2 × 2 km große Control Zone", "Tower terminals appear in the official pre-release mode explanation":"Turmterminals erscheinen in der offiziellen Vorab-Erklärung des Modus", "Official pre-release footage checked 26 Aug 2026":"Offizielles Vorabmaterial am 26. August 2026 geprüft", "FOB-built objective support structure":"An einer FOB gebaute Zielunterstützungsanlage", "Construction supplies and fuel in Closed Beta":"Baumaterial und Treibstoff in der Closed Beta", "The official description includes base building":"Die offizielle Beschreibung nennt Basisbau", "The official description includes logistics and transport":"Die offizielle Beschreibung nennt Logistik und Transport", "Vehicles carry supply pallets to field destinations":"Fahrzeuge bringen Versorgungspaletten zu Feldzielen", "Closed Beta creator walkthrough":"Creator-Demonstration aus der Closed Beta", "Crew-operated indirect-fire emplacement":"Von einer Besatzung bediente indirekte Feuerstellung", "Closed Beta creator demonstration":"Creator-Demonstration aus der Closed Beta", "Helicopter transport of players or supplies":"Helikoptertransport von Spielern oder Versorgung", "Closed Beta creator guide":"Creator-Guide aus der Closed Beta"
+  },
+  "pt-br": {
+    "Recon observation":"Observação de reconhecimento", "Name and catalogue category":"Nome e categoria do catálogo", "Distance and bearing observation":"Observação de distância e direção", "Item label only":"Apenas o nome do item", "Portable fuel container":"Recipiente portátil de combustível", "Fuel container segment, 01:03-02:16":"Trecho do recipiente de combustível, 01:03-02:16", "Repair equipment":"Equipamento de reparo", "Battery-powered in the walkthrough":"Alimentado por bateria na demonstração", "Portable power source":"Fonte de energia portátil", "Personal recovery":"Recuperação pessoal", "Medical segment, 02:16-03:23":"Trecho médico, 02:16-03:23", "Squad recovery":"Recuperação do esquadrão", "Improvised explosive":"Explosivo improvisado", "Explosives segment, 01:03-02:16":"Trecho de explosivos, 01:03-02:16", "Anti-vehicle mine":"Mina antiveículo", "Directional mine":"Mina direcional", "Three teams fight across a 16 km² battlefield":"Três equipes lutam em um campo de batalha de 16 km²", "Randomized 2 x 2 km Control Zone":"Control Zone aleatória de 2 × 2 km", "Tower terminals appear in the official pre-release mode explanation":"Terminais de torre aparecem na explicação oficial do modo antes do lançamento", "Official pre-release footage checked 26 Aug 2026":"Material oficial de pré-lançamento verificado em 26 de agosto de 2026", "FOB-built objective support structure":"Estrutura de suporte ao objetivo construída em FOB", "Construction supplies and fuel in Closed Beta":"Suprimentos de construção e combustível no Beta Fechado", "The official description includes base building":"A descrição oficial inclui construção de bases", "The official description includes logistics and transport":"A descrição oficial inclui logística e transporte", "Vehicles carry supply pallets to field destinations":"Veículos levam paletes de suprimentos a destinos no campo", "Closed Beta creator walkthrough":"Demonstração de criador no Beta Fechado", "Crew-operated indirect-fire emplacement":"Posição de fogo indireto operada por equipe", "Closed Beta creator demonstration":"Demonstração de criador no Beta Fechado", "Helicopter transport of players or supplies":"Transporte de jogadores ou suprimentos por helicóptero", "Closed Beta creator guide":"Guia de criador do Beta Fechado"
+  },
+  ja: {
+    "Recon observation":"偵察観測", "Name and catalogue category":"名称とカタログ分類", "Distance and bearing observation":"距離と方位の観測", "Item label only":"アイテム名のみ確認", "Portable fuel container":"携行燃料容器", "Fuel container segment, 01:03-02:16":"燃料容器の区間 01:03-02:16", "Repair equipment":"修理器材", "Battery-powered in the walkthrough":"映像内ではバッテリー駆動", "Portable power source":"携行電源", "Personal recovery":"自己回復", "Medical segment, 02:16-03:23":"医療区間 02:16-03:23", "Squad recovery":"分隊救護", "Improvised explosive":"即製爆発物", "Explosives segment, 01:03-02:16":"爆発物の区間 01:03-02:16", "Anti-vehicle mine":"対車両地雷", "Directional mine":"指向性地雷", "Three teams fight across a 16 km² battlefield":"3チームが16 km²の戦場で交戦", "Randomized 2 x 2 km Control Zone":"ランダムな2×2 kmのControl Zone", "Tower terminals appear in the official pre-release mode explanation":"公式発売前モード解説にタワー端末が登場", "Official pre-release footage checked 26 Aug 2026":"公式発売前映像を2026年8月26日に確認", "FOB-built objective support structure":"FOBで建設する目標支援施設", "Construction supplies and fuel in Closed Beta":"クローズドベータでの建設物資と燃料", "The official description includes base building":"公式説明に基地建設を記載", "The official description includes logistics and transport":"公式説明に兵站と輸送を記載", "Vehicles carry supply pallets to field destinations":"車両が補給パレットを現地へ輸送", "Closed Beta creator walkthrough":"クローズドベータのクリエイター解説", "Crew-operated indirect-fire emplacement":"班員が操作する間接射撃陣地", "Closed Beta creator demonstration":"クローズドベータのクリエイター実演", "Helicopter transport of players or supplies":"ヘリによるプレイヤーまたは物資の輸送", "Closed Beta creator guide":"クローズドベータのクリエイター攻略"
   },
 };
 
@@ -228,7 +277,7 @@ const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
 };
 
 function translateValue(value: string, locale: Exclude<Locale, "en">): string {
-  const direct = valueMaps[locale][value] ?? expandedLabels[locale][value] ?? fieldReferenceLabels[locale][value];
+  const direct = valueMaps[locale][value] ?? expandedLabels[locale][value] ?? fieldReferenceLabels[locale][value] ?? fieldReferenceValues[locale][value];
   if (direct) return direct;
 
   const rounds = value.match(/^(\d+) rounds$/);
@@ -260,6 +309,11 @@ function translateValue(value: string, locale: Exclude<Locale, "en">): string {
     .replace(/\brounds\b/g, locale === "zh-cn" ? "发" : locale === "ru" ? "патронов" : locale === "de" ? "Schuss" : locale === "pt-br" ? "projéteis" : "発");
 }
 
+export function localizeCatalogueFact(fact: CatalogueRecord["facts"][number], locale: Locale): CatalogueRecord["facts"][number] {
+  if (locale === "en") return fact;
+  return {label: translateValue(fact.label, locale), value: translateValue(fact.value, locale)};
+}
+
 export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): CatalogGuide {
   if (locale === "en") return guide;
   const baseType = getItemType(guide.id);
@@ -272,7 +326,7 @@ export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): C
     title: `WARDOGS ${type.label}`,
     description: text.description(type.label),
     countLabel: text.count(count, type.label),
-    dataAsOf: localizeDataAsOf(guide.dataAsOf, locale),
+    dataAsOf: localizeCatalogueBuild(guide.dataAsOf, locale),
     heroImageAlt: type.imageAlt,
     disclaimer: text.disclaimer,
     columns: guide.columns.map((column) => translateValue(column, locale)),
@@ -288,13 +342,13 @@ export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): C
 
 export function getLocalizedCatalogueRecords(records: readonly CatalogueRecord[], locale: Locale): CatalogueRecord[] {
   if (locale === "en") return [...records];
-  const text = localeText[locale];
   return records.map((record) => {
     const type = getItemType(record.type);
     const label = type ? getLocalizedItemType(type, locale).label : record.type;
     const facts = record.facts.map((fact) => ({label: translateValue(fact.label, locale), value: translateValue(fact.value, locale)}));
     const factText = facts.map((fact) => `${fact.label}: ${fact.value}`).join("; ");
-    return {...record, subtype: translateValue(record.subtype, locale), imageAlt: record.image ? `${record.name} — WARDOGS ${label}` : undefined, summary: `${record.name} — ${label} WARDOGS. ${factText}. ${text.disclaimer}`, facts, dataAsOf: localizeDataAsOf(record.dataAsOf, locale)};
+    const freshness = getCatalogueFreshness(record);
+    return {...record, subtype: translateValue(record.subtype, locale), imageAlt: record.image ? `${record.name} — WARDOGS ${label}` : undefined, summary: `${record.name} — ${label} WARDOGS. ${factText}. ${evidenceBoundaryText[locale][freshness]}`, facts, dataAsOf: localizeCatalogueBuild(record.dataAsOf, locale)};
   });
 }
 

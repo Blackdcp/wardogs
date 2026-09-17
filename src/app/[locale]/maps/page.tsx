@@ -61,6 +61,7 @@ export default async function MapsPage({params}: PageProps) {
       <OperationsAtlas
         copy={copy}
         guideTitles={guideTitles}
+        locale={locale}
         toolLabels={{"/tools/logistics-planner": t("logisticsPlanner")}}
       />
     </main>

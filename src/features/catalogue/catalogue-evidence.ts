@@ -31,7 +31,7 @@ export function getIndexableCatalogueItems(records: readonly CatalogueRecord[] =
   return records.filter((record) =>
     record.detailStatus === "published"
     && record.evidenceTier !== "identifier-only"
-    && record.mediaState !== "pending"
+    && record.mediaState === "verified"
     && Boolean(record.image)
     && Boolean(record.imageAlt?.trim())
     && !record.image?.includes("/banners/")

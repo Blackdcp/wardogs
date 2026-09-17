@@ -100,7 +100,7 @@ export async function buildSiteSearchIndex(locale: Locale): Promise<SearchEntry[
     type: item.searchType,
     title: item.label,
     aliases: [item.href.split("/").filter(Boolean).join(" ").replaceAll("-", " ")],
-    summary: getMessage(locale, "home.search.toolSummary"),
+    summary: getMessage(locale, item.searchType === "map" ? "home.search.mapSummary" : "home.search.toolSummary"),
     taskIntent: [item.label],
     category: item.category,
     href: item.href

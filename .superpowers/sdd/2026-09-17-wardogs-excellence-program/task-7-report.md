@@ -2,30 +2,41 @@
 
 ## Status
 
-DONE
+DONE, including the independent-review fix round.
 
-## Base And Commit
+## Base And Commits
 
 - Base: `fbbd920`
-- Feature commit: this report is included in `feat: expand the field reference`.
+- Feature commit: `62152fb` (`feat: expand the field reference`)
+- Independent-review fix: included in `fix: harden the field reference evidence`
 
 ## Implemented Behavior
 
-- Expanded the normalized catalogue from the existing five groups to include `equipment`, `medical`, `supplies`, `deployables`, `mechanics`, and `maps`.
-- Added 29 source-backed category records: 5 equipment, 4 medical, 4 supplies, 5 deployables, 4 mechanics, and 7 maps records. The complete normalized catalogue now contains 160 records.
-- Kept every new record inside category/task views. Task 7 creates no thin detail route; a detail remains indexable only when it has authored content, approved provenance, a unique object-matching image, and meaningful alt text.
-- Removed generic banner fallback behavior from record cards. A record without an approved unique asset now renders an explicit localized `image not yet verified` state.
-- Added a six-language `/{locale}/maps` operations atlas built from the existing battlefield, tower, oil-rig, FOB, cargo, mortar, and helicopter evidence. Each entry exposes its task, context, evidence state, checked date, build/version, source, exact guide destination, and related tools.
-- Added deterministic atlas filters for orientation, objective, construction, logistics, fire support, and air operations. The atlas does not publish inferred coordinates, grid references, or invented routes.
-- Added localized navigation, metadata, canonicals, structured data, six sitemap URLs, and a homepage-search entry with explicit `searchType: "map"`.
-- Preserved all Task 1-6 message keys, routes, query-state contracts, evidence records, and search classifications.
+- Expanded the normalized catalogue with `equipment`, `medical`, `supplies`, `deployables`, `mechanics`, and `maps`, while preserving the established weapon, vehicle, ammo, attachment, gear, and loadout contracts.
+- Kept every new breadth record inside category/task views. Task 7 creates no thin detail route; indexability still requires authored content, sufficient evidence, and a unique verified object image with meaningful alt text.
+- Added a six-language `/{locale}/maps` operations atlas for battlefield orientation, tower terminals, oil rigs, FOBs, cargo, mortars, and helicopter transport.
+- Added task filters, exact maintained-guide destinations, evidence/version/date/source fields, localized metadata, structured data, navigation, homepage search discovery, and six sitemap routes.
+- The catalogue homepage now derives its visible `11`-index count from the actual category array and names equipment, medical, supplies, deployables, and mechanics in all six locale descriptions.
+- Homepage search now gives `searchType="map"` a map-specific summary and a separate maps count instead of counting maps as tools.
+
+## Independent-Review Fixes
+
+1. Corrected all 12 equipment, medical, and deployable evidence records to the approved catalogue walkthrough at `https://www.youtube.com/watch?v=J5QZXLENLgQ`. They now use `creator-historical` / `observed` provenance, and unsupported prices and internal IDs were removed.
+2. Rebuilt catalogue and atlas visual provenance as explicit record-to-asset approvals. Record state is derived from the matching approval, not from a type-wide default or a hand-authored claim.
+3. Added deterministic audits for record state, exact record/image provenance, meaningful alt text, on-disk files, generic banners, duplicate object images, and unapproved assets. Mutation tests prove each failure is detected.
+4. Added normalized evidence to inline catalogue cards: build, localized checked date, source class, confidence, source URL, and source scope notes remain visible even when no detail route exists.
+5. Split Atlas editorial workflow guidance from sourced facts and provenance. Official/confirmed labels occur only inside the sourced-facts section; source scope is displayed beside the exact source link.
+6. Localized current/historical evidence boundaries, dates, builds, evidence labels, Atlas fact labels/values, all seven Atlas titles, and map-search copy across English, German, Russian, Brazilian Portuguese, Japanese, and Simplified Chinese.
+7. Locked Atlas meta descriptions to 120-160 characters for Latin locales and 60-110 characters for CJK locales.
+8. Preserved all Task 1-6 routes, message keys, evidence gates, query-state contracts, and navigation classifications.
 
 ## Evidence And Asset Boundaries
 
-- All new breadth uses the existing approved WARDOGS evidence registry and previously accepted guide/source URLs. No competitor text, competitor asset, unsupported value, or inferred tactical coordinate was added.
-- Current claims remain restricted to official evidence. Historical creator/Beta observations retain their historical build and evidence labels.
-- Contextual atlas art is explicitly labelled as context rather than object evidence. Records without a reliable approved asset remain visibly pending and cannot acquire indexability through a fallback banner.
-- `getIndexableVisualViolations()` deterministically rejects missing/empty alt text, generic banners, duplicate detail images, and images without approved provenance. Its current result is empty.
+- No competitor text or asset was added. New facts come only from the already approved source registry.
+- Current official facts are not given the historical pre-Early-Access disclaimer. Historical creator and Beta observations retain their original build, date, source class, confidence, and non-current boundary.
+- Object images require explicit per-record provenance. Context images remain separately labelled and cannot satisfy the detail-page evidence gate.
+- Unsupported records render a localized `image not yet verified` state instead of a generic banner or borrowed image.
+- `getIndexableVisualViolations()` currently returns no violations.
 
 ## Deterministic Visual Coverage
 
@@ -44,55 +55,33 @@ DONE
 | maps | 7 | 0 | 0 | 7 |
 | operations-atlas | 7 | 1 | 4 | 2 |
 
-The pending counts are intentional evidence gaps, not broken assets. They are rendered and tested as pending instead of being hidden behind generic imagery.
+Pending counts are intentional evidence gaps. They are visible and tested as pending rather than hidden behind fallback art.
 
 ## TDD Evidence
 
-The initial Task 7 focused run failed before implementation for the intended missing behavior:
-
-- the six required catalogue groups and their records did not exist;
-- the operations-atlas module, route, filters, metadata, navigation entry, and sitemap URLs did not exist;
-- no deterministic visual-coverage helper or indexable-image violation audit existed.
-
-After implementation, the same focused assertions pass. Additional regression assertions cover catalogue evidence, category rendering, media provenance, item-library indexability, structured data, navigation, search, and preserved content contracts.
+The review tests were written before the fixes. The RED run caught the wrong 12-record source, missing inline provenance, stale seven-index copy, map/tool count mixing, incomplete locale boundaries, missing Atlas provenance audit, and the prior Atlas workflow/source presentation. The final focused review run passed 8 files and 56 tests.
 
 ## Verification
 
-Brief command:
-
-```powershell
-npx vitest run tests/unit/catalogue-records.test.ts tests/unit/operations-atlas.test.ts tests/unit/sitemap.test.ts
-```
-
-Result: 3 files passed, 24 tests passed.
-
-Related regression command:
-
-```powershell
-npx vitest run tests/unit/visual-coverage.test.ts tests/unit/navigation-data.test.ts tests/unit/site-search.test.ts tests/unit/catalogue-evidence.test.ts tests/unit/catalogue-explorer.test.tsx tests/unit/catalogue-media-sources.test.ts tests/unit/item-catalog-guides.test.ts tests/unit/item-library.test.ts tests/unit/item-structured-data.test.ts tests/content/beta-02-weekend-refresh.test.ts
-```
-
-Result: 10 files passed, 75 tests passed.
-
-Real-browser atlas command:
-
-```powershell
-$env:PLAYWRIGHT_EXECUTABLE_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'
-npx playwright test tests/e2e/operations-atlas.spec.ts --reporter=line --timeout=60000
-```
-
-Result: 2 Chromium tests passed. Coverage includes 375 px horizontal containment, deterministic logistics filtering, verified/contextual/pending media counts, HTTPS sources, absence of coordinate fields, Simplified Chinese navigation, and exact mortar-guide routing. Mobile and desktop screenshots were visually inspected after the run.
-
+- Brief command: 3 files, 26 tests passed.
+  - `tests/unit/catalogue-records.test.ts`
+  - `tests/unit/operations-atlas.test.ts`
+  - `tests/unit/sitemap.test.ts`
+- Task 1-6 related regression: 25 files, 170 tests passed.
+- Full Vitest: 108 files, 438 tests passed.
 - `npm run typecheck`: passed.
-- `npm run lint`: passed with zero errors and the one pre-existing unused-import warning in `src/features/items/item-library.ts`.
-- Full Vitest run: 108 files and 430 tests passed.
-- `npm run build`: passed; 37 content files / 127 content tests passed, production compilation succeeded, all six atlas pages were generated, and 874 static pages were emitted.
-- `git diff --check`: passed; Git reported only the repository's existing LF-to-CRLF checkout notices.
-- `next-env.d.ts`: matches `HEAD` and is not part of the Task 7 diff.
+- `npm run lint`: zero errors; one pre-existing unused-import warning remains in `src/features/items/item-library.ts`.
+- Atlas Playwright with installed Chrome: 2 tests passed.
+  - 375 px mobile filtering and horizontal containment.
+  - Simplified Chinese desktop labels and exact mortar-guide destination.
+  - Verified/contextual images are scrolled into view and must decode with non-zero natural width.
+  - Mobile and desktop screenshots were visually inspected.
+- `git diff --check`: passed; output contains only the repository's LF-to-CRLF checkout notices.
+- `next-env.d.ts`: unchanged from `HEAD` and excluded from this fix.
 
 ## Risks
 
-- Thirty-six catalogue records and two atlas entries still lack approved unique art. They are intentionally non-indexable or explicitly marked pending until a licensable, object-matching source is approved.
-- Four atlas entries use approved contextual images. Their labels must remain contextual; they must not be promoted to object-verified evidence without a new asset review.
-- Historical Beta and creator observations may become stale as WARDOGS changes. Their build labels and checked dates must be preserved during future refreshes.
-- Atlas source and destination integrity is tested against the current internal route registry; new guide renames must update the normalized atlas links and tests together.
+- Thirty-six catalogue records and two Atlas entries still lack approved unique art. This is an explicit evidence gap, not a rendering failure; they remain pending until an object-matching source is approved.
+- Four Atlas entries use approved contextual images. They must not be promoted to object-verified evidence without a new per-record asset review.
+- Historical creator observations remain build-sensitive. Future refreshes must preserve their build/date boundary unless a new approved source re-verifies the fact.
+- Source titles and source-scope notes remain tied to their approved source records; guide renames or source replacements must update the normalized registry and tests together.

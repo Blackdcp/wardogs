@@ -107,6 +107,27 @@ describe("localized shared editorial content", () => {
     }
   });
 
+  it("localizes current and historical evidence boundaries without overwriting official facts", () => {
+    const current = getCatalogueRecords("deployables").find((record) => record.slug === "fob-vendor");
+    const historical = getCatalogueRecords("equipment").find((record) => record.slug === "binoculars");
+    expect(current).toBeDefined();
+    expect(historical).toBeDefined();
+
+    for (const locale of localizedLocales) {
+      const [localizedCurrent] = getLocalizedCatalogueRecords([current!], locale);
+      const [localizedHistorical] = getLocalizedCatalogueRecords([historical!], locale);
+
+      expect(localizedCurrent.dataAsOf, locale).not.toBe("Season 1");
+      expect(localizedHistorical.dataAsOf, locale).not.toBe("Pre-release catalogue walkthrough - 20 Aug 2026");
+      expect(localizedCurrent.summary, locale).toMatch(languageSignals[locale]);
+      expect(localizedHistorical.summary, locale).toMatch(languageSignals[locale]);
+      expect(localizedCurrent.summary, `${locale} current`).not.toContain("Alpha");
+      expect(localizedCurrent.summary, `${locale} current`).not.toMatch(/before Early Access|vor dem Early Access|до раннего доступа|antes do Acesso Antecipado|早期アクセス前|抢先体验前/i);
+      expect(localizedCurrent.evidence).toEqual(current!.evidence);
+      expect(localizedHistorical.evidence).toEqual(historical!.evidence);
+    }
+  });
+
   it("localizes the current-video watchlist and archive lifecycle labels", () => {
     for (const locale of localizedLocales) {
       const ui = getVideoUi(locale);

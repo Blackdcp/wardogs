@@ -13,7 +13,7 @@ import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {getLocalizedCatalogGuide, getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getFeaturedItems, itemTypes, type ItemTypeId} from "@/features/items/item-library";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
-import {getItemUi} from "@/features/items/item-ui";
+import {formatCatalogueIndexCount, getItemUi} from "@/features/items/item-ui";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
@@ -186,7 +186,7 @@ export default async function ItemsPage({params}: PageProps) {
 
       <section className="site-container py-12 md:py-16" aria-labelledby="catalogue-categories-title">
         <div className="max-w-3xl">
-          <p className="font-mono text-xs uppercase text-[#68bd8d]">{ui.indexesEyebrow}</p>
+          <p className="font-mono text-xs uppercase text-[#68bd8d]">{formatCatalogueIndexCount(locale, categories.length)}</p>
           <h2 className="display-font mt-2 text-3xl leading-tight text-white md:text-4xl" id="catalogue-categories-title">{ui.browseTitle}</h2>
           <p className="mt-4 text-sm leading-6 text-[#a8b4ae] md:text-base">{ui.browseDescription}</p>
         </div>

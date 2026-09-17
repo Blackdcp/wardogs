@@ -93,9 +93,9 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
           <p className="text-xs font-semibold uppercase text-[#79d19c]">{copy.eyebrow}</p>
           <h2 className="display-font mt-3 text-3xl leading-tight text-white sm:text-4xl" id="site-search-title">{copy.title}</h2>
           <p className="mt-4 max-w-xl text-sm leading-7 text-[#a9b5af] sm:text-base">{copy.description}</p>
-          <dl className="mt-7 grid grid-cols-2 border-y border-[#344039] sm:grid-cols-4 lg:grid-cols-2">
+          <dl className="mt-7 grid grid-cols-2 border-y border-[#344039] sm:grid-cols-5 lg:grid-cols-5">
             {(Object.keys(counts) as (keyof SiteSearchCounts)[]).map((key) => (
-              <div className="min-h-20 border-[#344039] py-4 pr-4 odd:border-r sm:not-last:border-r lg:even:border-r-0" key={key}>
+              <div className="min-h-20 border-[#344039] px-3 py-4 not-last:border-r" key={key}>
                 <dt className="text-[11px] uppercase text-[#82938a]">{copy.counts[key]}</dt>
                 <dd className="display-font mt-1 text-2xl text-[#edf2ef]">{counts[key]}</dd>
               </div>

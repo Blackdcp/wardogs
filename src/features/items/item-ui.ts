@@ -111,8 +111,9 @@ const ui: Record<Locale, ItemUi> = {
 
 const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
   en: {
-    hubMetaDescription: "Browse WARDOGS Early Access weapons, vehicles, ammunition, attachments, gear and loadouts with source dates and build labels.",
-    hubDescription: "Compare WARDOGS equipment with clear Early Access, official, and historical Alpha evidence labels instead of mixing builds.",
+    hubMetaDescription: "Browse 11 WARDOGS indexes for weapons, vehicles, ammo, attachments, gear, equipment, medical, supplies, deployables, mechanics, and loadouts.",
+    hubDescription: "Compare all 11 field indexes: weapons, vehicles, ammunition, attachments, gear, equipment, medical, supplies, deployables, mechanics, and loadouts, with source and build labels.",
+    indexesEyebrow: "Field indexes",
     alphaSnapshot: "Historical Alpha 1 baseline",
     preRelease: "Historical test record",
     preReleaseDescription: "Observed before Early Access; values, unlocks, and balance require a current-build recheck.",
@@ -121,8 +122,9 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
     unconfirmedRelease: "Not reverified in the current Early Access build"
   },
   de: {
-    hubMetaDescription: "WARDOGS-Waffen, Fahrzeuge, Munition, Aufsätze, Ausrüstung und Loadouts mit Quellen, Datum und Build-Kennzeichnung.",
-    hubDescription: "Vergleiche WARDOGS-Ausrüstung mit klaren Kennzeichnungen für Early Access, offizielle Angaben und historische Alpha-Belege.",
+    hubMetaDescription: "Durchsuche 11 WARDOGS-Indizes: Waffen, Fahrzeuge, Munition, Aufsätze, Ausrüstung, Geräte, Medizin, Vorräte, Platzierbares, Mechaniken und Loadouts.",
+    hubDescription: "Vergleiche alle 11 Feldindizes mit Quellen- und Build-Kennzeichnung: Waffen, Fahrzeuge, Munition, Aufsätze, Ausrüstung, Geräte, Medizin, Vorräte, Platzierbares, Mechaniken und Loadouts.",
+    indexesEyebrow: "Feldindizes",
     alphaSnapshot: "Historischer Alpha-1-Stand",
     preRelease: "Historischer Teststand",
     preReleaseDescription: "Vor Early Access beobachtet; Werte, Freischaltungen und Balance müssen im aktuellen Build erneut geprüft werden.",
@@ -131,8 +133,9 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
     unconfirmedRelease: "Im aktuellen Early-Access-Build nicht erneut bestätigt"
   },
   ru: {
-    hubMetaDescription: "Каталог оружия, транспорта, боеприпасов, модификаций, экипировки и комплектов WARDOGS с датами источников и метками сборки.",
-    hubDescription: "Сравнивайте снаряжение WARDOGS, разделяя данные Early Access, официальные сведения и исторические наблюдения Alpha.",
+    hubMetaDescription: "Откройте 11 разделов WARDOGS: оружие, транспорт, боеприпасы, модули, снаряжение, оборудование, медицина, припасы, устройства, механики и комплекты.",
+    hubDescription: "Сравнивайте все 11 полевых разделов с метками источника и сборки: оружие, транспорт, боеприпасы, модули, снаряжение, оборудование, медицина, припасы, устройства, механики и комплекты.",
+    indexesEyebrow: "Полевые разделы",
     alphaSnapshot: "Исторический снимок Alpha 1",
     preRelease: "Историческая тестовая запись",
     preReleaseDescription: "Наблюдалось до Early Access; значения, разблокировки и баланс нужно перепроверить в текущей сборке.",
@@ -141,8 +144,9 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
     unconfirmedRelease: "Не перепроверено в текущей сборке Early Access"
   },
   "pt-br": {
-    hubMetaDescription: "Veja armas, veículos, munições, acessórios, equipamentos e kits de WARDOGS com data das fontes e identificação da build.",
-    hubDescription: "Compare equipamentos de WARDOGS separando claramente dados do Acesso Antecipado, fontes oficiais e registros históricos do Alpha.",
+    hubMetaDescription: "Consulte 11 índices de WARDOGS: armas, veículos, munição, acessórios, equipamento, utilitários, medicina, suprimentos, implantáveis, mecânicas e kits.",
+    hubDescription: "Compare os 11 índices de campo com fonte e build: armas, veículos, munição, acessórios, equipamento, utilitários, medicina, suprimentos, implantáveis, mecânicas e kits.",
+    indexesEyebrow: "Índices de campo",
     alphaSnapshot: "Base histórica do Alpha 1",
     preRelease: "Registro histórico de teste",
     preReleaseDescription: "Observado antes do Acesso Antecipado; valores, desbloqueios e balanceamento exigem nova verificação na build atual.",
@@ -151,8 +155,9 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
     unconfirmedRelease: "Ainda não verificado na build atual do Acesso Antecipado"
   },
   ja: {
-    hubMetaDescription: "WARDOGSの武器、車両、弾薬、アタッチメント、装備、ロードアウトを、出典日とビルド区分付きで確認できます。",
-    hubDescription: "Early Access、公式情報、過去のAlpha観測を明確に分けてWARDOGS装備を比較します。",
+    hubMetaDescription: "WARDOGSの11索引で、武器、車両、弾薬、アタッチメント、装備、器材、医療、補給品、設置物、システム、ロードアウトを確認できます。",
+    hubDescription: "武器、車両、弾薬、アタッチメント、装備、器材、医療、補給品、設置物、システム、ロードアウトの全11索引を出典とビルド区分付きで比較します。",
+    indexesEyebrow: "フィールド索引",
     alphaSnapshot: "過去のAlpha 1基準",
     preRelease: "過去テストの記録",
     preReleaseDescription: "Early Access前の観測です。数値、解除条件、バランスは現行ビルドで再確認が必要です。",
@@ -161,8 +166,9 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
     unconfirmedRelease: "現行Early Accessビルドでは未再確認"
   },
   "zh-cn": {
-    hubMetaDescription: "查看 WARDOGS 抢先体验版武器、载具、弹药、配件、装备和配装，包含来源日期与版本证据标记。",
-    hubDescription: "按抢先体验、官方资料和历史 Alpha 证据分层比较 WARDOGS 装备，避免把不同版本的数据混在一起。",
+    hubMetaDescription: "浏览 WARDOGS 11 类图鉴：武器、载具、弹药、配件、装备、器材、医疗、补给、部署物、机制与配装，并核对来源和版本。",
+    hubDescription: "比较全部 11 类战地索引：武器、载具、弹药、配件、装备、器材、医疗、补给、部署物、机制与配装；每类均保留来源和版本标记。",
+    indexesEyebrow: "战地索引",
     alphaSnapshot: "历史 Alpha 1 基线",
     preRelease: "历史测试记录",
     preReleaseDescription: "该数据在抢先体验前观察；数值、解锁和平衡仍需在当前版本重新核验。",
@@ -174,4 +180,17 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
 
 export function getItemUi(locale: Locale) {
   return {...ui[locale], ...earlyAccessOverrides[locale]};
+}
+
+export function formatCatalogueIndexCount(locale: Locale, count: number): string {
+  const labels: Record<Locale, string> = {
+    en: `${count} field indexes`,
+    de: `${count} Feldindizes`,
+    ru: `${count} полевых разделов`,
+    "pt-br": `${count} índices de campo`,
+    ja: `${count}件のフィールド索引`,
+    "zh-cn": `${count} 类战地索引`,
+  };
+
+  return labels[locale];
 }

@@ -4,6 +4,7 @@ import {StatusBadge} from "@/components/ui/status-badge";
 import type {Locale} from "@/config/site";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {getCatalogueFreshness, getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
+import {formatCatalogueVerifiedAt, localizeCatalogueBuild} from "@/features/catalogue/catalogue-localization";
 import {getItemUi} from "@/features/items/item-ui";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {assetPath} from "@/lib/assets";
@@ -76,6 +77,40 @@ function CardContent({locale, record, linked, eagerImage}: {locale: Locale; reco
             </div>
           ))}
         </dl>
+        <div className="mt-5 border-t border-[#303b35] pt-4" data-catalogue-evidence={`${record.type}/${record.slug}`}>
+          <dl className="grid grid-cols-2 gap-x-4 gap-y-3">
+            <div className="min-w-0">
+              <dt className="text-[11px] font-semibold uppercase leading-4 text-[#7f8e87]">{ui.observedBuild}</dt>
+              <dd className="mt-1 [overflow-wrap:anywhere] text-xs leading-5 text-[#d6ded9]">{localizeCatalogueBuild(record.evidence.build, locale)}</dd>
+            </div>
+            <div className="min-w-0">
+              <dt className="text-[11px] font-semibold uppercase leading-4 text-[#7f8e87]">{ui.verifiedAt}</dt>
+              <dd className="mt-1 text-xs leading-5 text-[#d6ded9]">{formatCatalogueVerifiedAt(record.evidence.verifiedAt, locale)}</dd>
+            </div>
+            <div className="min-w-0">
+              <dt className="text-[11px] font-semibold uppercase leading-4 text-[#7f8e87]">{ui.sourceClass}</dt>
+              <dd className="mt-1 text-xs leading-5 text-[#d6ded9]">{ui.sourceClassLabels[record.evidence.sourceClass]}</dd>
+            </div>
+            <div className="min-w-0">
+              <dt className="text-[11px] font-semibold uppercase leading-4 text-[#7f8e87]">{ui.confidence}</dt>
+              <dd className="mt-1 text-xs leading-5 text-[#d6ded9]">{ui.confidenceLabels[record.evidence.confidence]}</dd>
+            </div>
+          </dl>
+          <p className="mt-4 text-[11px] font-semibold uppercase leading-4 text-[#7f8e87]">{ui.sources}</p>
+          <ul className="mt-2 space-y-1.5 text-xs leading-5 text-[#9eaaa4]">
+            {record.sourceNotes.map((note) => <li key={note}>{note}</li>)}
+          </ul>
+          {record.evidence.sourceUrl ? (
+            linked ? (
+              <span className="mt-3 block break-all text-xs text-[#79d19c]">{record.evidence.sourceUrl}</span>
+            ) : (
+              <a className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#79d19c] hover:text-white" href={record.evidence.sourceUrl} rel="noreferrer" target="_blank" title={`${ui.evidenceSource}: ${record.name}`}>
+                {ui.evidenceSource}
+                <ArrowUpRight aria-hidden="true" className="size-3.5" />
+              </a>
+            )
+          ) : null}
+        </div>
         <span className="mt-auto block pt-5 font-mono text-[11px] uppercase leading-4 text-[#82938a]">{record.dataAsOf}</span>
       </div>
     </>

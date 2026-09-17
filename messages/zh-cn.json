@@ -154,8 +154,9 @@
       "videoSummary": "已复核的当前版本创作者实机，并关联持续维护的攻略。",
       "videoCategory": "当前视频",
       "toolSummary": "从全站共享导航自动发现的交互式玩家工具。",
+      "mapSummary": "按任务整理的行动地图，串联有来源的战场、目标、后勤、迫击炮和空中行动攻略。",
       "types": {"guide": "攻略", "item": "道具", "video": "视频", "tool": "工具", "map": "地图"},
-      "counts": {"guides": "攻略", "items": "道具页", "videos": "当前视频", "tools": "工具"}
+      "counts": {"guides": "攻略", "items": "道具页", "videos": "当前视频", "tools": "工具", "maps": "地图"}
     },
     "actions": {
       "eyebrow": "选择你的任务",

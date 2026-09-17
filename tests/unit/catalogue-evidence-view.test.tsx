@@ -121,4 +121,21 @@ describe("catalogue evidence views", () => {
     expect(noticeHtml).toContain("data-catalogue-freshness-summary");
     expect(noticeHtml).toMatch(/Historical: \d+/);
   });
+
+  it("keeps normalized provenance visible on inline catalogue cards", () => {
+    const binoculars = getCatalogueRecords("equipment").find((record) => record.slug === "binoculars");
+    expect(binoculars).toBeDefined();
+
+    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={binoculars!} />);
+
+    expect(html).toContain('data-catalogue-evidence="equipment/binoculars"');
+    expect(html).toContain("Observed build");
+    expect(html).toContain("Verified on");
+    expect(html).toContain("Source class");
+    expect(html).toContain("Confidence");
+    expect(html).toContain("Historical creator evidence");
+    expect(html).toContain("Observed");
+    expect(html).toContain('href="https://www.youtube.com/watch?v=J5QZXLENLgQ"');
+    expect(html).toMatch(/clip|segment|walkthrough/i);
+  });
 });
