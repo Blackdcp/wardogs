@@ -413,41 +413,35 @@ export const catalogGuides: readonly CatalogGuide[] = [
   {
     id: "equipment",
     title: "WARDOGS Equipment Guide",
-    description: "Observed recon, ranging, vehicle-support, and utility equipment from the Alpha build.",
+    description: "Five candidate equipment labels retained for record-specific verification without unsupported roles, prices, identifiers, or behavior.",
     countLabel: "5 equipment items",
-    dataAsOf: "Alpha 1 - 7 Aug 2026",
+    dataAsOf: "Record-specific evidence pending - checked 17 Sep 2026",
     heroImage: "/images/items/catalog-equipment.jpg",
     heroImageAlt: "WARDOGS tactical equipment and support tools",
-    disclaimer: "Community-observed pre-release equipment data. Reconstructed names and vendor prices are clearly identified and may change.",
-    columns: ["Equipment", "Role", "Alpha price", "Recorded identifier"],
+    disclaimer: "Unverified candidate labels only. No record-specific source currently supports a role, price, identifier, or current behavior.",
+    columns: ["Equipment", "Evidence state", "Evidence scope", "Current behavior"],
     sections: [
       {
-        title: "Recon and Vehicle Support",
-        description: "Observation, ranging, fueling, and repair tools that create non-fragging roles.",
+        title: "Pending Verification",
+        description: "These labels remain non-observational until an approved source shows each object in a locatable segment.",
         rows: [
-          row("Binoculars", "Recon", "$75", "Binoculars"),
-          row("Rangefinder", "Recon", "$150", "RangeFinder"),
-          row("Fuel Can", "Vehicle", "$150", "FuelCan"),
-          row("Repair Tool", "Vehicle", "$150", "RepairTool")
-        ]
-      },
-      {
-        title: "Building and Utility",
-        description: "Low-cost tools that support construction, concealment, and field systems.",
-        rows: [
-          row("Battery", "Utility", "$150", "Battery")
+          row("Binoculars", "Unverified", "No approved object-level source", "Not claimed"),
+          row("Rangefinder", "Unverified", "No approved object-level source", "Not claimed"),
+          row("Fuel Can", "Unverified", "No approved object-level source", "Not claimed"),
+          row("Repair Tool", "Unverified", "No approved object-level source", "Not claimed"),
+          row("Battery", "Unverified", "No approved object-level source", "Not claimed")
         ]
       }
     ],
     insights: [
-      "Recon, repair, and vehicle-support equipment lets a player earn value without focusing only on kills.",
-      "Range and observation tools are most useful when their information is shared with the squad.",
-      "Low-cost recon and support tools can protect a persistent balance better than an expensive all-purpose kit."
+      "A retained label is a research lead, not proof that an object, role, or current behavior exists in the live build.",
+      "A future upgrade requires a source URL plus a timestamp or reviewed segment where the named object is visible.",
+      "Until that evidence exists, these rows must not drive loadout, economy, or role recommendations."
     ],
     unknowns: [
-      "Several display names were reconstructed from identifiers and need in-game confirmation.",
-      "Charges, cooldowns, placement limits, and final effects were not confirmed.",
-      "Medical items, supplies, and deployables are separated into their own sourced field references."
+      "The five labels have no approved object-level source in the current evidence registry.",
+      "Roles, prices, identifiers, charges, effects, and current availability are not claimed.",
+      "Medical items, supplies, and deployables remain separate and retain only their own sourced evidence."
     ],
     officialSources
   },

@@ -5,6 +5,7 @@ import {EvidencePanel} from "../../src/components/catalogue/evidence-panel";
 import {ItemChangeHistory} from "../../src/components/catalogue/item-change-history";
 import {CatalogueBuildNotice} from "../../src/components/catalogue/catalogue-build-notice";
 import {CatalogueCard} from "../../src/components/catalogue/catalogue-card";
+import {getLocalizedCatalogueRecords} from "../../src/features/catalogue/catalogue-localization";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import type {CatalogueChangeHistory, CatalogueEvidence} from "../../src/features/catalogue/catalogue-types";
 import {getItemUi} from "../../src/features/items/item-ui";
@@ -120,9 +121,10 @@ describe("catalogue evidence views", () => {
     expect(cardHtml).toContain("Historical");
     expect(noticeHtml).toContain("data-catalogue-freshness-summary");
     expect(noticeHtml).toMatch(/Historical: \d+/);
+    expect(noticeHtml).toContain("101");
   });
 
-  it("keeps normalized provenance visible on inline catalogue cards", () => {
+  it("keeps downgraded equipment provenance visible without a borrowed source", () => {
     const binoculars = getCatalogueRecords("equipment").find((record) => record.slug === "binoculars");
     expect(binoculars).toBeDefined();
 
@@ -133,9 +135,33 @@ describe("catalogue evidence views", () => {
     expect(html).toContain("Verified on");
     expect(html).toContain("Source class");
     expect(html).toContain("Confidence");
-    expect(html).toContain("Historical creator evidence");
-    expect(html).toContain("Observed");
-    expect(html).toContain('href="https://www.youtube.com/watch?v=J5QZXLENLgQ"');
-    expect(html).toMatch(/clip|segment|walkthrough/i);
+    expect(html).toContain("Unverified");
+    expect(html).toContain("Unknown");
+    expect(html).not.toContain('href="https://www.youtube.com/watch?v=J5QZXLENLgQ"');
+    expect(html).not.toMatch(/equipment sequence/i);
+  });
+
+  it("renders localized current, historical, and unknown evidence status plus source notes in all six locales", () => {
+    const records = [
+      getCatalogueRecords("mechanics").find((record) => record.slug === "persistent-cash")!,
+      getCatalogueRecords("deployables").find((record) => record.slug === "at-mine")!,
+      getCatalogueRecords("equipment").find((record) => record.slug === "binoculars")!,
+    ];
+
+    for (const locale of ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const) {
+      const ui = getItemUi(locale);
+      const localized = getLocalizedCatalogueRecords(records, locale);
+      const html = localized.map((record) => renderToStaticMarkup(
+        <CatalogueCard locale={locale} record={record} />
+      )).join(" ");
+
+      expect(html, `${locale} current`).toContain(ui.current);
+      expect(html, `${locale} historical`).toContain(ui.historical);
+      expect(html, `${locale} unknown`).toContain(ui.unknown);
+      expect(html, `${locale} unverified`).toContain(ui.confidenceLabels.unverified);
+      for (const record of localized) {
+        for (const note of record.sourceNotes) expect(html, `${locale}/${record.slug}`).toContain(note);
+      }
+    }
   });
 });

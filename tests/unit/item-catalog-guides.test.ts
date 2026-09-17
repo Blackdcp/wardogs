@@ -1,7 +1,8 @@
 import {describe, expect, it} from "vitest";
 import {
   catalogGuides,
-  getCatalogEntryCount
+  getCatalogEntryCount,
+  getCatalogGuide,
 } from "../../src/features/items/item-catalog-guides";
 import {isApprovedSourceUrl} from "../../src/content/source-policy";
 
@@ -48,8 +49,8 @@ describe("WARDOGS item catalog guides", () => {
 
   it("keeps every row aligned with its guide columns and labels pre-release evidence", () => {
     for (const guide of catalogGuides) {
-      expect(guide.dataAsOf).toMatch(/Alpha 1|Closed Beta|Season 1/);
-      expect(guide.disclaimer).toMatch(/pre-release|historical|build-sensitive|Official current/i);
+      expect(guide.dataAsOf).toMatch(/Alpha 1|Closed Beta|Season 1|evidence pending/);
+      expect(guide.disclaimer).toMatch(/pre-release|historical|build-sensitive|Official current|unverified/i);
       expect(guide.sections.length).toBeGreaterThan(0);
       expect(guide.insights.length).toBeGreaterThanOrEqual(3);
       expect(guide.unknowns.length).toBeGreaterThanOrEqual(2);
@@ -60,6 +61,18 @@ describe("WARDOGS item catalog guides", () => {
         }
       }
     }
+  });
+
+  it("removes unsupported equipment roles, prices, and identifiers from the field table", () => {
+    const equipment = getCatalogGuide("equipment");
+    expect(equipment).toBeDefined();
+    expect(equipment?.disclaimer).toMatch(/unverified|record-specific/i);
+
+    const unsupported = equipment?.sections.flatMap((section) => section.rows)
+      .flatMap((catalogueRow) => catalogueRow.cells.slice(1))
+      .join(" ");
+    expect(unsupported).not.toMatch(/\$\d|Recon|Vehicle|Utility|RangeFinder|FuelCan|RepairTool/i);
+    expect(unsupported).toMatch(/unverified/i);
   });
 
   it("does not expose competitor URLs as public sources", () => {

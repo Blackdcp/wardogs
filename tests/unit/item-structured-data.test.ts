@@ -182,7 +182,7 @@ describe("item structured data", () => {
     expect(JSON.stringify(weapons)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
-  it("keeps all 99 image-backed records ordered, anchored, and backed by filesystem images", () => {
+  it("keeps all 99 records ordered and anchors images only to approved object provenance", () => {
     const expected = {
       weapons: "a-91:A-91|ak74:AK74|amp-9:AMP-9|amr-50:AMR 50|bmr-308:BMR-308|bushmaster-m17s:Bushmaster M17S|compound-bow:Compound Bow|deagle:Deagle|fal:FAL|galil:Galil|ggx-17:GGX 17|ggx-18:GGX 18|judge:Judge|kh-2002:KH-2002",
       vehicles: "ah-6m-miniguns:AH-6M Miniguns|ah-6r-rockets:AH-6R Rockets|bobcat:Bobcat|dune-buggy:Dune Buggy|flakpanzer-gepard:Flakpanzer Gepard|havoc:Havoc|humvee-m249:Humvee M249|humvee-minigun:Humvee Minigun|humvee:Humvee|kodiak-m249:Kodiak M249|kodiak-pickup:Kodiak Pickup|kodiak:Kodiak|l2a6:L2A6|mh-6:MH-6|sph-2:SPH-2|uh-1y-miniguns:UH-1Y Miniguns|uh-1y:UH-1Y|ural-defender-m249:Ural Defender M249|ural-defender:Ural Defender|ural:Ural",
@@ -206,9 +206,14 @@ describe("item structured data", () => {
           ? `http://localhost:3000/en${record.detailHref}`
           : `http://localhost:3000/en/items/${type}#record-${type}-${slug}`;
       }));
-      for (const entry of entries.slice(0, expectedRecords.length)) {
-        expect(entry.image).toMatch(/^http:\/\/localhost:3000\/images\/catalogue\//);
-        expect(existsSync(join(process.cwd(), "public", new URL(entry.image!).pathname))).toBe(true);
+      for (const [index, entry] of entries.slice(0, expectedRecords.length).entries()) {
+        const record = records.find((candidate) => candidate.slug === expectedRecords[index].slug)!;
+        if (record.mediaState === "pending") {
+          expect(entry.image, `${type}/${record.slug}`).toBeUndefined();
+        } else {
+          expect(entry.image, `${type}/${record.slug}`).toMatch(/^http:\/\/localhost:3000\/images\/catalogue\//);
+          expect(existsSync(join(process.cwd(), "public", new URL(entry.image!).pathname))).toBe(true);
+        }
       }
     }
   });

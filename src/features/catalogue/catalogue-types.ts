@@ -27,7 +27,7 @@ export type CatalogueMediaState = "verified" | "context-only" | "pending";
 export type CatalogueEvidence = {
   build: string;
   verifiedAt: string;
-  sourceClass: "official" | "live-client" | "creator-current" | "creator-historical" | "community-report";
+  sourceClass: "official" | "live-client" | "creator-current" | "creator-historical" | "community-report" | "unverified";
   confidence: "confirmed" | "observed" | "corroborated" | "unverified";
   current: boolean;
   sourceUrl?: string;
@@ -55,7 +55,7 @@ export type CatalogueRecord = {
   filterValues: readonly string[];
   detailStatus: "inline" | "planned" | "published";
   detailHref?: `/items/${"weapons" | "vehicles"}/${string}`;
-  evidenceStatus: "official" | "verified-in-game" | "pre-release-build" | "community-report";
+  evidenceStatus: "official" | "verified-in-game" | "pre-release-build" | "community-report" | "unverified";
   evidenceTier: CatalogueEvidenceTier;
   mediaState: CatalogueMediaState;
   sourceNotes: readonly string[];

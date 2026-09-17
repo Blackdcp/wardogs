@@ -11,8 +11,8 @@ export type AmmoMatcherOption = {
   slug: string;
   name: string;
   subtype: string;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
   summary: string;
   href?: string;
   state: "current" | "historical" | "unknown";
@@ -55,15 +55,13 @@ function explicitAmmoValue(record: CatalogueRecord) {
 }
 
 function toOption(base: CatalogueRecord, localized: CatalogueRecord, href?: string): AmmoMatcherOption {
-  if (!base.image || !localized.imageAlt) {
-    throw new Error(`Ammo matcher requires verified media: ${base.type}/${base.slug}`);
-  }
   return {
     slug: base.slug,
     name: localized.name,
     subtype: localized.subtype,
-    image: base.image,
-    imageAlt: localized.imageAlt,
+    ...(base.mediaState !== "pending" && base.image && localized.imageAlt
+      ? {image: base.image, imageAlt: localized.imageAlt}
+      : {}),
     summary: localized.summary,
     href,
     state: getCatalogueFreshness(base),

@@ -4,6 +4,7 @@ import {getCatalogEntryCount} from "@/features/items/item-catalog-guides";
 import {getLocalizedItemType} from "@/features/items/item-localization";
 import {getItemType} from "@/features/items/item-library";
 import {getCatalogueFreshness} from "./catalogue-evidence";
+import {getCatalogueRecords} from "./catalogue-records";
 import type {CatalogueGroup, CatalogueRecord} from "./catalogue-types";
 
 const sectionNames: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -23,42 +24,70 @@ const localeText = {
 } as const;
 
 const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> = {
-  "zh-cn": {"Alpha 1 - 7 Aug 2026":"Alpha 1 — 2026年8月7日", "Closed Beta - 21-23 Aug 2026":"封闭测试 — 2026年8月21日至23日", "Alpha 1 and Closed Beta - 7-23 Aug 2026":"Alpha 1 与封闭测试 — 2026年8月7日至23日", "Season 1":"第 1 赛季", "Season 1 Early Access":"第 1 赛季抢先体验", "Official pre-release mode explanation":"官方预发布模式说明", "Pre-release catalogue walkthrough - 20 Aug 2026":"预发布图鉴演示 — 2026年8月20日"},
+  "zh-cn": {
+    "Alpha 1 - 7 Aug 2026":"Alpha 1 — 2026年8月7日",
+    "Closed Beta - 21-23 Aug 2026":"封闭测试 — 2026年8月21日至23日",
+    "Closed Beta - 29 Aug 2026":"封闭测试 — 2026年8月29日",
+    "Alpha 1 and Closed Beta - 7-23 Aug 2026":"Alpha 1 与封闭测试 — 2026年8月7日至23日",
+    "Alpha 1 to Season 1 - checked 17 Sep 2026":"Alpha 1 至第 1 赛季 — 2026年9月17日核查",
+    "Season 1":"第 1 赛季",
+    "Season 1 Early Access":"第 1 赛季抢先体验",
+    "Season 1 Early Access - checked 17 Sep 2026":"第 1 赛季抢先体验 — 2026年9月17日核查",
+    "Official pre-release mode explanation":"官方预发布模式说明",
+    "Pre-release catalogue walkthrough - 20 Aug 2026":"预发布图鉴演示 — 2026年8月20日",
+    "Record-specific evidence pending - checked 17 Sep 2026":"逐项证据待核验 — 2026年9月17日检查",
+  },
   ru: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 августа 2026",
     "Closed Beta - 21-23 Aug 2026": "Закрытая бета — 21–23 августа 2026",
+    "Closed Beta - 29 Aug 2026": "Закрытая бета — 29 августа 2026",
     "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 и закрытая бета — 7–23 августа 2026",
+    "Alpha 1 to Season 1 - checked 17 Sep 2026": "От Alpha 1 до сезона 1 — проверено 17 сентября 2026",
     "Season 1": "Сезон 1",
     "Season 1 Early Access": "Ранний доступ, сезон 1",
+    "Season 1 Early Access - checked 17 Sep 2026": "Ранний доступ, сезон 1 — проверено 17 сентября 2026",
     "Official pre-release mode explanation": "Официальное предрелизное объяснение режима",
     "Pre-release catalogue walkthrough - 20 Aug 2026": "Предрелизный обзор каталога — 20 августа 2026",
+    "Record-specific evidence pending - checked 17 Sep 2026": "Ожидается проверка записи — проверено 17 сентября 2026",
   },
   de: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7. August 2026",
     "Closed Beta - 21-23 Aug 2026": "Closed Beta — 21.–23. August 2026",
+    "Closed Beta - 29 Aug 2026": "Closed Beta — 29. August 2026",
     "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 und Closed Beta — 7.–23. August 2026",
+    "Alpha 1 to Season 1 - checked 17 Sep 2026": "Alpha 1 bis Saison 1 — geprüft am 17. September 2026",
     "Season 1": "Saison 1",
     "Season 1 Early Access": "Saison 1 im Early Access",
+    "Season 1 Early Access - checked 17 Sep 2026": "Saison 1 im Early Access — geprüft am 17. September 2026",
     "Official pre-release mode explanation": "Offizielle Moduserklärung vor Release",
     "Pre-release catalogue walkthrough - 20 Aug 2026": "Katalog-Rundgang vor Release — 20. August 2026",
+    "Record-specific evidence pending - checked 17 Sep 2026": "Einzelnachweis ausstehend — geprüft am 17. September 2026",
   },
   "pt-br": {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 de agosto de 2026",
     "Closed Beta - 21-23 Aug 2026": "Beta Fechado — 21–23 de agosto de 2026",
+    "Closed Beta - 29 Aug 2026": "Beta Fechado — 29 de agosto de 2026",
     "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 e Beta Fechado — 7–23 de agosto de 2026",
+    "Alpha 1 to Season 1 - checked 17 Sep 2026": "Do Alpha 1 à Temporada 1 — verificado em 17 de setembro de 2026",
     "Season 1": "Temporada 1",
     "Season 1 Early Access": "Temporada 1 do Acesso Antecipado",
+    "Season 1 Early Access - checked 17 Sep 2026": "Temporada 1 do Acesso Antecipado — verificado em 17 de setembro de 2026",
     "Official pre-release mode explanation": "Explicação oficial do modo antes do lançamento",
     "Pre-release catalogue walkthrough - 20 Aug 2026": "Visão do catálogo antes do lançamento — 20 de agosto de 2026",
+    "Record-specific evidence pending - checked 17 Sep 2026": "Evidência específica pendente — verificado em 17 de setembro de 2026",
   },
   ja: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 2026年8月7日",
     "Closed Beta - 21-23 Aug 2026": "クローズドベータ — 2026年8月21日～23日",
+    "Closed Beta - 29 Aug 2026": "クローズドベータ — 2026年8月29日",
     "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1・クローズドベータ — 2026年8月7日～23日",
+    "Alpha 1 to Season 1 - checked 17 Sep 2026": "Alpha 1～シーズン1 — 2026年9月17日確認",
     "Season 1": "シーズン1",
     "Season 1 Early Access": "早期アクセス・シーズン1",
+    "Season 1 Early Access - checked 17 Sep 2026": "早期アクセス・シーズン1 — 2026年9月17日確認",
     "Official pre-release mode explanation": "公式リリース前モード解説",
     "Pre-release catalogue walkthrough - 20 Aug 2026": "リリース前カタログ解説 — 2026年8月20日",
+    "Record-specific evidence pending - checked 17 Sep 2026": "個別証拠を確認中 — 2026年9月17日確認",
   },
 };
 
@@ -79,6 +108,93 @@ const evidenceBoundaryText: Record<Exclude<Locale, "en">, {current: string; hist
   "pt-br": {current: "Esta é uma fonte oficial atual; apenas os fatos expressamente sustentados por ela estão confirmados.", historical: "Este é um registro histórico de pré-lançamento; preços, desbloqueios, equilíbrio e disponibilidade não são atuais.", unknown: "A validade atual não foi confirmada; use o registro somente no escopo da fonte e da build indicadas."},
   ja: {current: "現行の公式情報です。出典が明示的に裏付ける事実だけを確認済みとして扱います。", historical: "過去のリリース前記録です。価格、解除条件、バランス、入手可否を現行情報として扱いません。", unknown: "現行ビルドでの有効性は未確認です。記載された出典とビルドの範囲内で参照してください。"},
 };
+
+export type CatalogueGuideEvidenceState = "current" | "historical" | "mixed";
+
+const catalogueEvidenceDisclaimers: Record<Locale, Record<CatalogueGuideEvidenceState, string>> = {
+  en: {
+    current: "Current official evidence only. A fact is treated as confirmed only when the cited source states it directly; unlisted values are not inferred.",
+    historical: "Historical or unverified records only. Values and availability are not current unless a newer cited source explicitly revalidates them.",
+    mixed: "Mixed current and historical evidence. Current official facts are labelled separately; older or unverified records remain limited to their stated build.",
+  },
+  de: {
+    current: "Nur aktuelle offizielle Belege. Eine Angabe gilt nur dann als bestätigt, wenn die zitierte Quelle sie ausdrücklich nennt; fehlende Werte werden nicht ergänzt.",
+    historical: "Nur historische oder ungeprüfte Einträge. Werte und Verfügbarkeit gelten erst nach ausdrücklicher Bestätigung durch eine neuere Quelle als aktuell.",
+    mixed: "Gemischte aktuelle und historische Belege. Aktuelle offizielle Fakten sind getrennt markiert; ältere oder ungeprüfte Einträge gelten nur für den genannten Build.",
+  },
+  ru: {
+    current: "Только актуальные официальные доказательства. Факт считается подтверждённым лишь тогда, когда он прямо указан в источнике; пропущенные значения не дополняются.",
+    historical: "Только исторические или непроверенные записи. Значения и доступность не считаются актуальными без прямого подтверждения в более новом источнике.",
+    mixed: "Смешанные актуальные и исторические доказательства. Текущие официальные факты отмечены отдельно; старые или непроверенные записи ограничены указанной сборкой.",
+  },
+  "pt-br": {
+    current: "Somente evidência oficial atual. Um fato só é confirmado quando a fonte citada o declara diretamente; valores ausentes não são inferidos.",
+    historical: "Somente registros históricos ou não verificados. Valores e disponibilidade não são atuais sem revalidação explícita por uma fonte mais recente.",
+    mixed: "Evidência atual e histórica combinada. Fatos oficiais atuais são marcados separadamente; registros antigos ou não verificados ficam limitados à build indicada.",
+  },
+  ja: {
+    current: "現行の公式証拠のみです。引用元が直接示す事実だけを確認済みとし、記載のない数値は推測しません。",
+    historical: "過去または未検証の記録のみです。新しい引用元で明示的に再確認されない限り、数値と入手可否を現行情報として扱いません。",
+    mixed: "現行情報と過去情報が混在しています。現行の公式事実は個別に表示し、古い記録や未検証記録は記載ビルドの範囲に限定します。",
+  },
+  "zh-cn": {
+    current: "仅使用当前官方证据。只有引用来源直接说明的事实才视为已确认，不补写来源未提供的数值。",
+    historical: "仅包含历史记录或未验证记录。除非较新的引用来源明确复核，否则数值和可用性均不视为当前信息。",
+    mixed: "当前证据与历史证据并存。当前官方事实会单独标记；旧记录或未验证记录只适用于其标注版本。",
+  },
+};
+
+export function getLocalizedCatalogueEvidenceDisclaimer(state: CatalogueGuideEvidenceState, locale: Locale): string {
+  return catalogueEvidenceDisclaimers[locale][state];
+}
+
+function getGuideEvidenceState(guide: CatalogGuide): CatalogueGuideEvidenceState {
+  if (guide.id === "loadouts") return "historical";
+  const records = getCatalogueRecords(guide.id);
+  const currentCount = records.filter((record) => record.evidence.current).length;
+  if (currentCount === records.length && records.length > 0) return "current";
+  return currentCount === 0 ? "historical" : "mixed";
+}
+
+const sourceNoteTemplates: Record<Exclude<Locale, "en">, {current: string; historical: string; unknown: string; segment: (scope: string) => string}> = {
+  de: {
+    current: "Die zitierte aktuelle Quelle belegt nur die aufgeführten Fakten; nicht genannte Werte werden nicht ergänzt.",
+    historical: "Die zitierte historische Quelle belegt nur die aufgeführten Fakten im markierten Build; aktuelle Werte und nicht genannte Details bleiben ungeprüft.",
+    unknown: "Für diesen Eintrag fehlt ein freigegebener objektbezogener Nachweis; Rolle, Werte, Kennung und aktuelles Verhalten bleiben ungeprüft.",
+    segment: (scope) => `Geprüfter Quellenausschnitt: ${scope}.`,
+  },
+  ru: {
+    current: "Указанный актуальный источник подтверждает только перечисленные факты; отсутствующие значения не дополняются.",
+    historical: "Указанный исторический источник подтверждает только перечисленные факты для отмеченной сборки; текущие значения и прочие детали не проверены.",
+    unknown: "Для этой записи нет одобренного доказательства с видимым объектом; роль, значения, идентификатор и текущее поведение не проверены.",
+    segment: (scope) => `Проверенный фрагмент источника: ${scope}.`,
+  },
+  "pt-br": {
+    current: "A fonte atual citada sustenta apenas os fatos listados; valores ausentes não são inferidos.",
+    historical: "A fonte histórica citada sustenta apenas os fatos listados na build marcada; valores atuais e detalhes ausentes continuam não verificados.",
+    unknown: "Não há evidência aprovada e específica do objeto para este registro; função, valores, identificador e comportamento atual continuam não verificados.",
+    segment: (scope) => `Trecho verificado da fonte: ${scope}.`,
+  },
+  ja: {
+    current: "引用した現行ソースが裏付けるのは記載済みの事実だけであり、未記載の数値は推測しません。",
+    historical: "引用した過去ソースが裏付けるのは表示ビルド内の記載事実だけです。現行値と未記載の詳細は未検証です。",
+    unknown: "この記録には対象物を特定できる承認済み証拠がありません。役割、数値、識別子、現行動作は未検証です。",
+    segment: (scope) => `確認済みソース区間：${scope}。`,
+  },
+  "zh-cn": {
+    current: "引用的当前来源只支持已列出的事实，不补写来源未说明的数值。",
+    historical: "引用的历史来源只支持标注版本中的已列事实；当前数值和未列细节仍未验证。",
+    unknown: "该记录没有可定位到具体对象的已批准证据；用途、数值、标识和当前行为均未验证。",
+    segment: (scope) => `已核验来源片段：${scope}。`,
+  },
+};
+
+function localizeCatalogueSourceNotes(record: CatalogueRecord, locale: Exclude<Locale, "en">): readonly string[] {
+  const freshness = getCatalogueFreshness(record);
+  const copy = sourceNoteTemplates[locale];
+  const scopes = [...new Set(record.sourceNotes.flatMap((note) => note.match(/\b\d{2}:\d{2}(?:-\d{2}:\d{2})?\b/g) ?? []))];
+  return [copy[freshness], ...scopes.map(copy.segment)];
+}
 
 const expandedLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
   "zh-cn": {LMG:"轻机枪", Shotgun:"霰弹枪", Launcher:"发射器", "Identifier only":"仅记录标识", "Stationary system":"固定式系统", "Closed Beta price":"封闭测试价格", Build:"版本", Verification:"验证", "Anti-air launcher":"防空发射器", "Anti-vehicle launcher":"反载具发射器", "Grenade launcher":"榴弹发射器", "Stationary support":"固定式支援", "Stationary anti-air":"固定式防空", "Stationary artillery":"固定式火炮", "Stationary defense":"固定式防御", "Stationary weapon":"固定式武器"},
@@ -276,8 +392,16 @@ const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
   }
 };
 
+const evidenceTermTranslations: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  de: {Unverified: "Ungeprüft", "Record-specific source pending": "Einzelnachweis ausstehend", "No observed object facts retained": "Keine beobachteten Objektfakten beibehalten", "No approved object-level source": "Keine freigegebene objektbezogene Quelle", "Not claimed": "Nicht behauptet", "Current behavior": "Aktuelles Verhalten", "Pending Verification": "Prüfung ausstehend"},
+  ru: {Unverified: "Не проверено", "Record-specific source pending": "Ожидается проверка отдельного источника", "No observed object facts retained": "Наблюдаемые факты об объекте не сохранены", "No approved object-level source": "Нет одобренного источника с видимым объектом", "Not claimed": "Не заявлено", "Current behavior": "Текущее поведение", "Pending Verification": "Ожидает проверки"},
+  "pt-br": {Unverified: "Não verificado", "Record-specific source pending": "Fonte específica pendente", "No observed object facts retained": "Nenhum fato observado do objeto foi mantido", "No approved object-level source": "Sem fonte aprovada e específica do objeto", "Not claimed": "Não afirmado", "Current behavior": "Comportamento atual", "Pending Verification": "Verificação pendente"},
+  ja: {Unverified: "未検証", "Record-specific source pending": "個別ソースを確認中", "No observed object facts retained": "観察済みの対象物情報は保持していません", "No approved object-level source": "承認済みの対象物ソースなし", "Not claimed": "未主張", "Current behavior": "現行動作", "Pending Verification": "検証待ち"},
+  "zh-cn": {Unverified: "未验证", "Record-specific source pending": "逐项来源待核验", "No observed object facts retained": "未保留已观察对象事实", "No approved object-level source": "没有已批准的对象级来源", "Not claimed": "不作声明", "Current behavior": "当前行为", "Pending Verification": "待核验"},
+};
+
 function translateValue(value: string, locale: Exclude<Locale, "en">): string {
-  const direct = valueMaps[locale][value] ?? expandedLabels[locale][value] ?? fieldReferenceLabels[locale][value] ?? fieldReferenceValues[locale][value];
+  const direct = evidenceTermTranslations[locale][value] ?? valueMaps[locale][value] ?? expandedLabels[locale][value] ?? fieldReferenceLabels[locale][value] ?? fieldReferenceValues[locale][value];
   if (direct) return direct;
 
   const rounds = value.match(/^(\d+) rounds$/);
@@ -315,9 +439,10 @@ export function localizeCatalogueFact(fact: CatalogueRecord["facts"][number], lo
 }
 
 export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): CatalogGuide {
-  if (locale === "en") return guide;
+  const disclaimer = getLocalizedCatalogueEvidenceDisclaimer(getGuideEvidenceState(guide), locale);
+  if (locale === "en") return {...guide, disclaimer};
   const baseType = getItemType(guide.id);
-  if (!baseType) return guide;
+  if (!baseType) return {...guide, disclaimer, dataAsOf: localizeCatalogueBuild(guide.dataAsOf, locale)};
   const type = getLocalizedItemType(baseType, locale);
   const text = localeText[locale];
   const count = getCatalogEntryCount(guide.id);
@@ -328,10 +453,10 @@ export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): C
     countLabel: text.count(count, type.label),
     dataAsOf: localizeCatalogueBuild(guide.dataAsOf, locale),
     heroImageAlt: type.imageAlt,
-    disclaimer: text.disclaimer,
+    disclaimer,
     columns: guide.columns.map((column) => translateValue(column, locale)),
     sections: guide.sections.map((section) => {
-      const title = sectionNames[locale][section.title] ?? expandedSectionNames[locale][section.title] ?? fieldReferenceLabels[locale][section.title] ?? section.title;
+      const title = sectionNames[locale][section.title] ?? expandedSectionNames[locale][section.title] ?? fieldReferenceLabels[locale][section.title] ?? translateValue(section.title, locale);
       return {...section, title, description: text.section(title, type.label), rows: section.rows.map((row) => ({cells: row.cells.map((cell, index) => index === 0 ? cell : translateValue(cell, locale))}))};
     }),
     insights: text.insight(type.label),
@@ -348,7 +473,15 @@ export function getLocalizedCatalogueRecords(records: readonly CatalogueRecord[]
     const facts = record.facts.map((fact) => ({label: translateValue(fact.label, locale), value: translateValue(fact.value, locale)}));
     const factText = facts.map((fact) => `${fact.label}: ${fact.value}`).join("; ");
     const freshness = getCatalogueFreshness(record);
-    return {...record, subtype: translateValue(record.subtype, locale), imageAlt: record.image ? `${record.name} — WARDOGS ${label}` : undefined, summary: `${record.name} — ${label} WARDOGS. ${factText}. ${evidenceBoundaryText[locale][freshness]}`, facts, dataAsOf: localizeCatalogueBuild(record.dataAsOf, locale)};
+    return {
+      ...record,
+      subtype: translateValue(record.subtype, locale),
+      imageAlt: record.image ? `${record.name} — WARDOGS ${label}` : undefined,
+      summary: `${record.name} — ${label} WARDOGS. ${factText}. ${evidenceBoundaryText[locale][freshness]}`,
+      facts,
+      sourceNotes: localizeCatalogueSourceNotes(record, locale),
+      dataAsOf: localizeCatalogueBuild(record.dataAsOf, locale),
+    };
   });
 }
 

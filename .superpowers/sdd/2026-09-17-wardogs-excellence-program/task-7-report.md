@@ -85,3 +85,58 @@ The review tests were written before the fixes. The RED run caught the wrong 12-
 - Four Atlas entries use approved contextual images. They must not be promoted to object-verified evidence without a new per-record asset review.
 - Historical creator observations remain build-sensitive. Future refreshes must preserve their build/date boundary unless a new approved source re-verifies the fact.
 - Source titles and source-scope notes remain tied to their approved source records; guide renames or source replacements must update the normalized registry and tests together.
+
+## Fix Round 2 (2026-09-17)
+
+### Status
+
+DONE. The second independent-review findings were resolved without expanding Task 7.
+
+### Evidence Corrections
+
+- Downgraded `binoculars`, `rangefinder`, `fuel-can`, `repair-tool`, and `battery` to explicit `unverified` / `identifier-only` records. Their generic equipment-video citation, inferred roles, prices, internal identifiers, and current-behavior claims were removed. Each record now states that a record-specific source segment is pending and exposes no source URL.
+- Removed all 65 ammo, attachment, and gear object-image approvals that depended on the general `-k6IV0ITLDo` overview. The files remain in the repository as unpublished candidates, but the records expose no image or alt text and remain `pending` until an object-matching source is approved.
+- Added an explicit object-provenance guard that rejects the general overview URL even when a structurally complete registry entry is injected. The visual audit continues to derive state from approved provenance instead of trusting record-authored state.
+- Preserved the ammo matcher when ammunition art is pending: relationship evidence remains available, media fields are omitted, and the UI renders a localized `image not verified` state. Category JSON-LD likewise keeps pending records discoverable without emitting an unsupported `image` property.
+- Localized evidence dates, source notes, unverified labels, evidence states, and current/historical/mixed category disclaimers across English, German, Russian, Brazilian Portuguese, Japanese, and Simplified Chinese. Current official records no longer inherit a pre-Early-Access disclaimer.
+- Made freshness classification independent of translated display strings: verified non-current evidence remains historical, while unverified evidence remains unknown.
+
+### Mutation And Locale Coverage
+
+- Equipment tests fail if any downgraded record regains a generic source, observed status, inferred object fact, unsupported filter, or non-pending media state.
+- Media tests fail if any of the 65 records regains an image/alt pair or if the generic overview re-enters the approved provenance registry.
+- Visual mutation tests reject wrong state, duplicate object art, generic banners, missing alt text, missing files, unapproved assets, and the explicitly denied overview source.
+- Locale-matrix tests cover all six disclaimer states and all five translated locales for every guide date, record source note, and rendered current/historical/unknown evidence label.
+
+### Updated Deterministic Coverage
+
+| Group | Total | Verified | Contextual | Pending |
+| --- | ---: | ---: | ---: | ---: |
+| weapons | 38 | 34 | 0 | 4 |
+| vehicles | 28 | 25 | 0 | 3 |
+| ammo | 14 | 0 | 0 | 14 |
+| attachments | 40 | 0 | 0 | 40 |
+| gear | 11 | 0 | 0 | 11 |
+| equipment | 5 | 0 | 0 | 5 |
+| medical | 4 | 0 | 0 | 4 |
+| supplies | 4 | 0 | 0 | 4 |
+| deployables | 5 | 0 | 0 | 5 |
+| mechanics | 4 | 0 | 0 | 4 |
+| maps | 7 | 0 | 0 | 7 |
+| operations-atlas | 7 | 1 | 4 | 2 |
+
+Catalogue total: 59 verified object images and 101 explicit pending states.
+
+### TDD And Verification
+
+- RED: the six focused Round 2 files initially produced 12 intended failures and 33 passes, covering unsupported equipment evidence, generic media provenance, and incomplete locale semantics.
+- GREEN focused run: 6 files, 45 tests passed.
+- Task 7 coverage regression: 17 files, 135 tests passed.
+- Full Vitest regression: 108 files, 445 tests passed.
+- `npm run typecheck`: passed.
+- `git diff --check`: passed with only the repository's LF-to-CRLF checkout notices.
+
+### Remaining Concerns
+
+- The five equipment labels remain research leads, not observed object facts. They require an approved, locatable source segment before any role, price, identifier, behavior, or image can be restored.
+- The 65 local ammo, attachment, and gear image files are intentionally unpublished. They require individual record-to-asset provenance; file presence alone must never promote them.

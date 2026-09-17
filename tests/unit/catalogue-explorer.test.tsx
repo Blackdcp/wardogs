@@ -95,9 +95,10 @@ describe("CatalogueCard", () => {
   });
 
   it("can eagerly load a card image reused by the category hero", () => {
-    const ammo = getCatalogueRecords("ammo").find((record) => record.slug === "5-56x45mm");
+    const weapon = getCatalogueRecords("weapons").find((record) => record.slug === "ak74");
+    expect(weapon?.mediaState).toBe("verified");
 
-    const html = renderToStaticMarkup(<CatalogueCard eagerImage locale="en" record={ammo!} />);
+    const html = renderToStaticMarkup(<CatalogueCard eagerImage locale="en" record={weapon!} />);
 
     expect(html).toContain('loading="eager"');
   });
@@ -122,9 +123,9 @@ describe("CatalogueBuildNotice", () => {
     const chineseHtml = renderToStaticMarkup(<CatalogueBuildNotice locale="zh-cn" />);
 
     expect(englishHtml).toContain("Alpha 1 and August Closed Beta");
-    expect(englishHtml.toLowerCase()).toContain("seven identifier-only records");
+    expect(englishHtml).toContain("101 records remain behind a media-verification notice");
     expect(chineseHtml).toContain("Alpha 1 与 8 月封闭测试");
-    expect(chineseHtml).toContain("7 个仅有标识的条目");
+    expect(chineseHtml).toContain("101 个条目继续显示图片待核验");
     expect(chineseHtml).toContain("抢先体验版本重新验证");
     expect(englishHtml).not.toContain("final launch data");
   });

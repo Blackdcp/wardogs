@@ -59,9 +59,7 @@ export const catalogueGroups: readonly CatalogueGroup[] = [
     type: "equipment",
     label: "Field Equipment",
     filters: [
-      {label: "Recon", value: "recon"},
-      {label: "Vehicle support", value: "vehicle-support"},
-      {label: "Utility", value: "utility"}
+      {label: "Unverified", value: "unverified"}
     ]
   },
   {

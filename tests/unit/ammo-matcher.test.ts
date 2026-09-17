@@ -13,6 +13,8 @@ describe("ammo matcher data", () => {
       sourceClass: "live-client",
       confidence: "observed",
     });
+    expect(result.ammoMatches[0].image).toBeUndefined();
+    expect(result.ammoMatches[0].imageAlt).toBeUndefined();
   });
 
   it("matches ammunition back to all and only weapons with the exact recorded value", () => {
@@ -23,6 +25,9 @@ describe("ammo matcher data", () => {
     expect(names).toContain("ggx-17");
     expect(names).not.toContain("deagle");
     expect(result.weaponMatches.every(({relationshipValue}) => relationshipValue === "9x19mm")).toBe(true);
+    expect(result.selectedAmmo?.slug).toBe("9x19mm");
+    expect(result.selectedAmmo).not.toHaveProperty("image");
+    expect(result.selectedAmmo).not.toHaveProperty("imageAlt");
   });
 
   it("keeps creator-historical relationship provenance distinct from live-client evidence", () => {

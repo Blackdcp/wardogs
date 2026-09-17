@@ -20,9 +20,9 @@ describe("visual coverage audit", () => {
     expect(getVisualCoverageSummary()).toEqual([
       {group: "weapons", total: 38, verified: 34, contextual: 0, pending: 4},
       {group: "vehicles", total: 28, verified: 25, contextual: 0, pending: 3},
-      {group: "ammo", total: 14, verified: 14, contextual: 0, pending: 0},
-      {group: "attachments", total: 40, verified: 40, contextual: 0, pending: 0},
-      {group: "gear", total: 11, verified: 11, contextual: 0, pending: 0},
+      {group: "ammo", total: 14, verified: 0, contextual: 0, pending: 14},
+      {group: "attachments", total: 40, verified: 0, contextual: 0, pending: 40},
+      {group: "gear", total: 11, verified: 0, contextual: 0, pending: 11},
       {group: "equipment", total: 5, verified: 0, contextual: 0, pending: 5},
       {group: "medical", total: 4, verified: 0, contextual: 0, pending: 4},
       {group: "supplies", total: 4, verified: 0, contextual: 0, pending: 4},
@@ -72,6 +72,24 @@ describe("visual coverage audit", () => {
       ...catalogueMediaSources,
       [missingImage]: {...catalogueMediaSources[verified.image!]!, recordKey: key, image: missingImage},
     }, () => false).join(" ")).toMatch(/asset file is missing/);
+  });
+
+  it("rejects a structurally complete provenance mutation that points at the generic overview video", () => {
+    const verified = catalogueRecords.find((record) => record.mediaState === "verified")!;
+    const key = `${verified.type}/${verified.slug}`;
+    const source = catalogueMediaSources[verified.image!]!;
+
+    const violations = auditCatalogueVisualCoverage([verified], {
+      ...catalogueMediaSources,
+      [verified.image!]: {
+        ...source,
+        sourceUrl: "https://www.youtube.com/watch?v=-k6IV0ITLDo",
+        sourceLabel: "General WARDOGS overview",
+        capturedAt: "Item-specific catalogue sequence",
+      },
+    }, () => true);
+
+    expect(violations).toContain(`${key}: source is not approved for object-level provenance`);
   });
 
   it("derives atlas coverage from provenance and catches visual mutations", () => {

@@ -5,7 +5,7 @@ import {useState} from "react";
 import {ArrowUpRight, BookOpen, CalendarCheck2, ImageOff, MapPinned} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {formatCatalogueVerifiedAt, localizeCatalogueBuild, localizeCatalogueFact} from "@/features/catalogue/catalogue-localization";
-import {getItemUi} from "@/features/items/item-ui";
+import {getCatalogueSourceClassLabel, getItemUi} from "@/features/items/item-ui";
 import {
   filterOperationsAtlas,
   operationsAtlasRecords,
@@ -114,7 +114,7 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: Operati
                     <dl className="mt-4 grid gap-x-6 gap-y-3 border-t border-[#28322d] pt-4 text-xs sm:grid-cols-3">
                       <div>
                         <dt className="uppercase text-[#7f8d86]">{copy.evidenceLabel}</dt>
-                        <dd className="mt-1 text-[#d9e1dc]">{itemUi.sourceClassLabels[record.evidence.sourceClass]} · {itemUi.confidenceLabels[record.evidence.confidence]}</dd>
+                        <dd className="mt-1 text-[#d9e1dc]">{getCatalogueSourceClassLabel(locale, record.evidence.sourceClass)} · {itemUi.confidenceLabels[record.evidence.confidence]}</dd>
                       </div>
                       <div>
                         <dt className="inline-flex items-center gap-1 uppercase text-[#7f8d86]"><CalendarCheck2 aria-hidden="true" className="size-3.5" />{copy.checkedLabel}</dt>

@@ -166,7 +166,12 @@ describe("Closed Beta 02 weekend release contract", () => {
         expect(existsSync(path.resolve("public", record.image!.replace(/^\//, ""))), record.image).toBe(true);
         expect(catalogueMediaSources[record.image!], record.image).toBeDefined();
       }
-      expect(record.dataAsOf, record.slug).toMatch(/Alpha|Closed Beta|Season 1|pre-release/i);
+      if (record.evidence.sourceClass === "unverified") {
+        expect(record.dataAsOf, record.slug).toMatch(/record-specific evidence pending/i);
+        expect(record.evidence.sourceUrl, record.slug).toBeUndefined();
+      } else {
+        expect(record.dataAsOf, record.slug).toMatch(/Alpha|Closed Beta|Season 1|pre-release/i);
+      }
     }
   });
 

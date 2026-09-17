@@ -14,6 +14,7 @@ import {
 } from "@/features/maps/operations-atlas-media";
 import {
   catalogueMediaSources,
+  isCatalogueMediaSourceApprovedForRecord,
   type CatalogueMediaSource,
 } from "./catalogue-media-sources";
 import {catalogueRecords} from "./catalogue-records";
@@ -67,7 +68,7 @@ function meaningfulAlt(value: string | undefined): boolean {
 }
 
 function sourceApprovesRecord(source: CatalogueMediaSource | undefined, recordKey: string): boolean {
-  return source?.recordKey === recordKey || Boolean(source?.additionalRecordKeys?.includes(recordKey));
+  return isCatalogueMediaSourceApprovedForRecord(source, recordKey);
 }
 
 function catalogueCoverageEntries(records: readonly CatalogueRecord[]): VisualCoverageEntry[] {
@@ -119,7 +120,9 @@ export function auditCatalogueVisualCoverage(
     if (!assetExists(record.image)) violations.push(`${recordKey}: asset file is missing`);
 
     const source = mediaSources[record.image];
-    if (!source || !sourceApprovesRecord(source, recordKey) || source.assetKind !== "object") {
+    if (source?.sourceUrl === "https://www.youtube.com/watch?v=-k6IV0ITLDo") {
+      violations.push(`${recordKey}: source is not approved for object-level provenance`);
+    } else if (!source || !sourceApprovesRecord(source, recordKey) || source.assetKind !== "object") {
       violations.push(`${recordKey}: image has no approved provenance`);
     } else {
       if (source.image !== record.image) violations.push(`${recordKey}: provenance image does not match record image`);

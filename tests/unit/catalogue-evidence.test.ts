@@ -17,7 +17,7 @@ function isCalendarDate(value: string) {
   return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
 }
 
-const sourceClasses = new Set(["official", "live-client", "creator-current", "creator-historical", "community-report"]);
+const sourceClasses = new Set(["official", "live-client", "creator-current", "creator-historical", "community-report", "unverified"]);
 const confidenceLevels = new Set(["confirmed", "observed", "corroborated", "unverified"]);
 
 const expectedSeasonOneChanges = [
@@ -65,7 +65,10 @@ describe("catalogue evidence", () => {
       expect(sourceClasses.has(record.evidence.sourceClass), record.slug).toBe(true);
       expect(confidenceLevels.has(record.evidence.confidence), record.slug).toBe(true);
       expect(record.evidence.sourceUrl === undefined || isApprovedSourceUrl(record.evidence.sourceUrl), record.slug).toBe(true);
-      if (/Alpha|Beta|pre-release/i.test(`${record.dataAsOf} ${record.evidence.build}`)) {
+      if (record.evidence.confidence === "unverified" || record.evidence.sourceClass === "unverified") {
+        expect(getCatalogueFreshness(record), record.slug).toBe("unknown");
+        expect(isCurrentDecisionSafe(record), record.slug).toBe(false);
+      } else if (/Alpha|Beta|pre-release/i.test(`${record.dataAsOf} ${record.evidence.build}`)) {
         expect(record.evidence.current, record.slug).toBe(false);
         expect(getCatalogueFreshness(record), record.slug).toBe("historical");
         expect(isCurrentDecisionSafe(record), record.slug).toBe(false);

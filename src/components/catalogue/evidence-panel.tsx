@@ -2,7 +2,7 @@ import {CalendarCheck, ExternalLink, ShieldCheck, ShieldQuestion, TriangleAlert}
 import type {Locale} from "@/config/site";
 import {getCatalogueFreshness, isCurrentDecisionSafe} from "@/features/catalogue/catalogue-evidence";
 import type {CatalogueEvidence} from "@/features/catalogue/catalogue-types";
-import {getItemUi} from "@/features/items/item-ui";
+import {getCatalogueSourceClassLabel, getItemUi} from "@/features/items/item-ui";
 import {StatusBadge} from "@/components/ui/status-badge";
 
 type EvidencePanelProps = {
@@ -64,7 +64,7 @@ export function EvidencePanel({locale, evidence, dataAsOf, sourceUrl}: EvidenceP
         </div>
         <div>
           <dt className="text-xs font-semibold uppercase text-[#7f8e87]">{ui.sourceClass}</dt>
-          <dd className="mt-1 text-sm leading-6 text-[#d8dfdb]">{ui.sourceClassLabels[evidence.sourceClass]}</dd>
+          <dd className="mt-1 text-sm leading-6 text-[#d8dfdb]">{getCatalogueSourceClassLabel(locale, evidence.sourceClass)}</dd>
         </div>
         <div>
           <dt className="text-xs font-semibold uppercase text-[#7f8e87]">{ui.confidence}</dt>

@@ -35,18 +35,42 @@ describe("catalogue records", () => {
       expect(getCatalogueGroup(type)?.filters.length, type).toBeGreaterThan(0);
       expect(records.every((record) => record.detailStatus === "inline"), type).toBe(true);
       expect(records.every((record) => record.detailHref === undefined), type).toBe(true);
-      expect(records.every((record) => record.evidence.sourceUrl?.startsWith("https://")), type).toBe(true);
+      if (type === "equipment") {
+        expect(records.every((record) => record.evidence.sourceUrl === undefined), type).toBe(true);
+      } else {
+        expect(records.every((record) => record.evidence.sourceUrl?.startsWith("https://")), type).toBe(true);
+      }
       expect(getIndexableCatalogueItems(records), type).toEqual([]);
     }
   });
 
-  it("keeps equipment, medical, and explosive observations inside the approved creator source scope", () => {
+  it("downgrades equipment labels without object-level source scope to unverified records", () => {
+    const equipmentSlugs = ["binoculars", "rangefinder", "fuel-can", "repair-tool", "battery"];
+    const records = getCatalogueRecords("equipment");
+
+    expect(records.map((record) => record.slug)).toEqual(equipmentSlugs);
+    for (const record of records) {
+      expect(record.evidence.sourceUrl, record.slug).toBeUndefined();
+      expect(record.evidence.sourceClass, record.slug).toBe("unverified");
+      expect(record.evidence.confidence, record.slug).toBe("unverified");
+      expect(record.evidence.current, record.slug).toBe(false);
+      expect(record.evidenceStatus, record.slug).toBe("unverified");
+      expect(record.evidenceTier, record.slug).toBe("identifier-only");
+      expect(record.mediaState, record.slug).toBe("pending");
+      expect(record.subtype, record.slug).toBe("Unverified");
+      expect(record.filterValues, record.slug).toEqual(["unverified"]);
+      expect(record.facts, record.slug).toEqual([
+        {label: "Evidence state", value: "Record-specific source pending"},
+        {label: "Evidence scope", value: "No observed object facts retained"},
+      ]);
+      expect(`${record.summary} ${record.sourceNotes.join(" ")}`, record.slug).not.toMatch(
+        /recon observation|range finding|vehicle fueling|vehicle repair|field utility|equipment sequence/i
+      );
+    }
+  });
+
+  it("keeps medical and explosive observations inside the approved timestamped creator scope", () => {
     const approvedSlugs = [
-      "binoculars",
-      "rangefinder",
-      "fuel-can",
-      "repair-tool",
-      "battery",
       "stimpen",
       "enox",
       "defibrillator",
@@ -65,6 +89,7 @@ describe("catalogue records", () => {
       expect(record.evidence.current, record.slug).toBe(false);
       expect(record.dataAsOf, record.slug).toContain("20 Aug 2026");
       expect(record.sourceNotes.join(" "), record.slug).toMatch(/clip|segment|walkthrough/i);
+      expect(record.sourceNotes.join(" "), record.slug).toMatch(/\d{2}:\d{2}-\d{2}:\d{2}/);
       expect(record.facts, record.slug).not.toEqual(expect.arrayContaining([
         expect.objectContaining({label: "Alpha price"}),
         expect.objectContaining({label: "Recorded identifier"}),
@@ -103,7 +128,7 @@ describe("catalogue records", () => {
       expect(record.summary).not.toBe("Not captured");
       expect(record.facts.length).toBeGreaterThanOrEqual(2);
       expect(record.filterValues.length).toBeGreaterThan(0);
-      expect(["official", "verified-in-game", "pre-release-build", "community-report"]).toContain(record.evidenceStatus);
+      expect(["official", "verified-in-game", "pre-release-build", "community-report", "unverified"]).toContain(record.evidenceStatus);
       expect(record.sourceNotes.length).toBeGreaterThan(0);
     }
   });

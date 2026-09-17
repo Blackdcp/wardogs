@@ -23,6 +23,7 @@ const officialSteamUrl = "https://store.steampowered.com/app/1867240/WARDOGS/";
 const officialModeVideoUrl = "https://www.youtube.com/watch?v=cSn5IGknapM";
 const equipmentWalkthroughUrl = "https://www.youtube.com/watch?v=J5QZXLENLgQ";
 const equipmentWalkthroughBuild = "Pre-release catalogue walkthrough - 20 Aug 2026";
+const equipmentVerificationPending = "Record-specific evidence pending - checked 17 Sep 2026";
 const cargoCaptureUrl = "https://www.youtube.com/watch?v=2aU4OB0duYg";
 const buildingCaptureUrl = "https://www.youtube.com/watch?v=kg46BZ1H2W0";
 const mortarCaptureUrl = "https://www.youtube.com/watch?v=utnQT_Jmd5w";
@@ -225,15 +226,22 @@ const equipmentWalkthroughEvidence: CatalogueEvidence = {
   current: false,
   sourceUrl: equipmentWalkthroughUrl,
 };
+const unverifiedEquipmentEvidence: CatalogueEvidence = {
+  build: equipmentVerificationPending,
+  verifiedAt: "2026-09-17",
+  sourceClass: "unverified",
+  confidence: "unverified",
+  current: false,
+};
 const betaCargoEvidence = creatorEvidence(betaDataAsOf, "2026-08-29", cargoCaptureUrl);
 const betaBuildingEvidence = creatorEvidence(betaDataAsOf, "2026-08-29", buildingCaptureUrl);
 
 const equipmentRecords: readonly CatalogueRecordInput[] = [
-  sourcedInlineRecord({slug: "binoculars", name: "Binoculars", type: "equipment", subtype: "Recon", summary: "Observation equipment shown in an approved pre-release catalogue walkthrough.", facts: [fact("Observed role", "Recon observation"), fact("Evidence scope", "Name and catalogue category")], filterValues: ["recon"], dataAsOf: equipmentWalkthroughBuild, evidence: equipmentWalkthroughEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved pre-release catalogue walkthrough shows the item in the equipment sequence; no price, unlock, or current behavior is claimed."}),
-  sourcedInlineRecord({slug: "rangefinder", name: "Rangefinder", type: "equipment", subtype: "Recon", summary: "Ranging equipment shown in an approved pre-release catalogue walkthrough.", facts: [fact("Observed role", "Range finding"), fact("Evidence scope", "Name and catalogue category")], filterValues: ["recon"], dataAsOf: equipmentWalkthroughBuild, evidence: equipmentWalkthroughEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved pre-release catalogue walkthrough shows the item in the equipment sequence; no price, unlock, or current behavior is claimed."}),
-  sourcedInlineRecord({slug: "fuel-can", name: "Fuel Can", type: "equipment", subtype: "Vehicle support", summary: "Vehicle-support fuel equipment shown in an approved pre-release catalogue walkthrough.", facts: [fact("Observed role", "Vehicle fueling"), fact("Evidence scope", "Name and catalogue category")], filterValues: ["vehicle-support"], dataAsOf: equipmentWalkthroughBuild, evidence: equipmentWalkthroughEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved pre-release catalogue walkthrough shows the item in the equipment sequence; capacity, price, and current behavior are not claimed."}),
-  sourcedInlineRecord({slug: "repair-tool", name: "Repair Tool", type: "equipment", subtype: "Vehicle support", summary: "Vehicle-support repair equipment shown in an approved pre-release catalogue walkthrough.", facts: [fact("Observed role", "Vehicle repair"), fact("Evidence scope", "Name and catalogue category")], filterValues: ["vehicle-support"], dataAsOf: equipmentWalkthroughBuild, evidence: equipmentWalkthroughEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved pre-release catalogue walkthrough shows the item in the equipment sequence; repair rate, price, and current behavior are not claimed."}),
-  sourcedInlineRecord({slug: "battery", name: "Battery", type: "equipment", subtype: "Utility", summary: "Utility equipment shown in an approved pre-release catalogue walkthrough.", facts: [fact("Observed role", "Field utility"), fact("Evidence scope", "Name and catalogue category")], filterValues: ["utility"], dataAsOf: equipmentWalkthroughBuild, evidence: equipmentWalkthroughEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved pre-release catalogue walkthrough shows batteries in the equipment sequence; charges, price, and exact current use are not claimed."}),
+  sourcedInlineRecord({slug: "binoculars", name: "Binoculars", type: "equipment", subtype: "Unverified", summary: "Candidate equipment label retained while record-specific evidence is pending.", facts: [fact("Evidence state", "Record-specific source pending"), fact("Evidence scope", "No observed object facts retained")], filterValues: ["unverified"], dataAsOf: equipmentVerificationPending, evidence: unverifiedEquipmentEvidence, evidenceTier: "identifier-only", evidenceStatus: "unverified", sourceNote: "No approved source currently locates this object by timestamp or reviewed segment. Role, price, identifier, and current behavior are not claimed."}),
+  sourcedInlineRecord({slug: "rangefinder", name: "Rangefinder", type: "equipment", subtype: "Unverified", summary: "Candidate equipment label retained while record-specific evidence is pending.", facts: [fact("Evidence state", "Record-specific source pending"), fact("Evidence scope", "No observed object facts retained")], filterValues: ["unverified"], dataAsOf: equipmentVerificationPending, evidence: unverifiedEquipmentEvidence, evidenceTier: "identifier-only", evidenceStatus: "unverified", sourceNote: "No approved source currently locates this object by timestamp or reviewed segment. Role, price, identifier, and current behavior are not claimed."}),
+  sourcedInlineRecord({slug: "fuel-can", name: "Fuel Can", type: "equipment", subtype: "Unverified", summary: "Candidate equipment label retained while record-specific evidence is pending.", facts: [fact("Evidence state", "Record-specific source pending"), fact("Evidence scope", "No observed object facts retained")], filterValues: ["unverified"], dataAsOf: equipmentVerificationPending, evidence: unverifiedEquipmentEvidence, evidenceTier: "identifier-only", evidenceStatus: "unverified", sourceNote: "No approved source currently locates this object by timestamp or reviewed segment. Role, price, identifier, and current behavior are not claimed."}),
+  sourcedInlineRecord({slug: "repair-tool", name: "Repair Tool", type: "equipment", subtype: "Unverified", summary: "Candidate equipment label retained while record-specific evidence is pending.", facts: [fact("Evidence state", "Record-specific source pending"), fact("Evidence scope", "No observed object facts retained")], filterValues: ["unverified"], dataAsOf: equipmentVerificationPending, evidence: unverifiedEquipmentEvidence, evidenceTier: "identifier-only", evidenceStatus: "unverified", sourceNote: "No approved source currently locates this object by timestamp or reviewed segment. Role, price, identifier, and current behavior are not claimed."}),
+  sourcedInlineRecord({slug: "battery", name: "Battery", type: "equipment", subtype: "Unverified", summary: "Candidate equipment label retained while record-specific evidence is pending.", facts: [fact("Evidence state", "Record-specific source pending"), fact("Evidence scope", "No observed object facts retained")], filterValues: ["unverified"], dataAsOf: equipmentVerificationPending, evidence: unverifiedEquipmentEvidence, evidenceTier: "identifier-only", evidenceStatus: "unverified", sourceNote: "No approved source currently locates this object by timestamp or reviewed segment. Role, price, identifier, and current behavior are not claimed."}),
 ];
 
 const medicalRecords: readonly CatalogueRecordInput[] = [
@@ -289,12 +297,17 @@ const recordInputs: readonly CatalogueRecordInput[] = [
   ...mapRecords,
 ];
 
-export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((record) => ({
-  ...record,
-  evidenceTier: record.evidenceTier ?? "build-capture",
-  mediaState: (getCatalogueMediaSource(record)?.approvedState ?? "pending") as CatalogueRecord["mediaState"],
-  sourceNotes: record.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
-})).map((record) => ({
+export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((record) => {
+  const mediaSource = getCatalogueMediaSource(record);
+  return {
+    ...record,
+    image: mediaSource ? record.image : undefined,
+    imageAlt: mediaSource ? record.imageAlt : undefined,
+    evidenceTier: record.evidenceTier ?? "build-capture",
+    mediaState: (mediaSource?.approvedState ?? "pending") as CatalogueRecord["mediaState"],
+    sourceNotes: record.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
+  };
+}).map((record) => ({
   ...record,
   evidence: record.evidence ?? normalizeCatalogueEvidence(record),
   changeHistory: getCatalogueChangeHistory(record),

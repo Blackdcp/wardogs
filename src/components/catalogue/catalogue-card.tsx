@@ -5,7 +5,7 @@ import type {Locale} from "@/config/site";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {getCatalogueFreshness, getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
 import {formatCatalogueVerifiedAt, localizeCatalogueBuild} from "@/features/catalogue/catalogue-localization";
-import {getItemUi} from "@/features/items/item-ui";
+import {getCatalogueSourceClassLabel, getItemUi} from "@/features/items/item-ui";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
@@ -89,7 +89,7 @@ function CardContent({locale, record, linked, eagerImage}: {locale: Locale; reco
             </div>
             <div className="min-w-0">
               <dt className="text-[11px] font-semibold uppercase leading-4 text-[#7f8e87]">{ui.sourceClass}</dt>
-              <dd className="mt-1 text-xs leading-5 text-[#d6ded9]">{ui.sourceClassLabels[record.evidence.sourceClass]}</dd>
+              <dd className="mt-1 text-xs leading-5 text-[#d6ded9]">{getCatalogueSourceClassLabel(locale, record.evidence.sourceClass)}</dd>
             </div>
             <div className="min-w-0">
               <dt className="text-[11px] font-semibold uppercase leading-4 text-[#7f8e87]">{ui.confidence}</dt>

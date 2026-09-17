@@ -1,7 +1,11 @@
 import {describe, expect, it} from "vitest";
-import {getLocalizedCatalogGuide, getLocalizedCatalogueRecords} from "../../src/features/catalogue/catalogue-localization";
+import {
+  getLocalizedCatalogGuide,
+  getLocalizedCatalogueEvidenceDisclaimer,
+  getLocalizedCatalogueRecords,
+} from "../../src/features/catalogue/catalogue-localization";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
-import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
+import {catalogGuides, getCatalogGuide} from "../../src/features/items/item-catalog-guides";
 import {getItemBySlug, itemLibrary} from "../../src/features/items/item-library";
 import {getLocalizedItem} from "../../src/features/items/item-localization";
 import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
@@ -9,6 +13,7 @@ import {videoArticles} from "../../src/features/videos/video-library";
 import {getVideoUi} from "../../src/features/videos/video-ui";
 
 const localizedLocales = ["ru", "de", "pt-br", "ja", "zh-cn"] as const;
+const allLocales = ["en", ...localizedLocales] as const;
 
 const languageSignals = {
   ru: /[А-Яа-яЁё]/,
@@ -16,6 +21,14 @@ const languageSignals = {
   "pt-br": /\b(?:o|a|de|do|da|para|com|jogo|acesso|guia)\b/i,
   ja: /[\u3040-\u30ff\u3400-\u9fff]/,
   "zh-cn": /[\u3400-\u9fff]/
+} as const;
+
+const localizedDateSignals = {
+  ru: /(?:августа|сентября|сезон|бета)/i,
+  de: /(?:August|September|Saison|Beta)/i,
+  "pt-br": /(?:agosto|setembro|temporada|beta)/i,
+  ja: /(?:年|月|日|シーズン|ベータ)/,
+  "zh-cn": /(?:年|月|日|赛季|测试)/
 } as const;
 
 describe("localized shared editorial content", () => {
@@ -125,6 +138,47 @@ describe("localized shared editorial content", () => {
       expect(localizedCurrent.summary, `${locale} current`).not.toMatch(/before Early Access|vor dem Early Access|до раннего доступа|antes do Acesso Antecipado|早期アクセス前|抢先体验前/i);
       expect(localizedCurrent.evidence).toEqual(current!.evidence);
       expect(localizedHistorical.evidence).toEqual(historical!.evidence);
+    }
+  });
+
+  it("uses distinct current, historical, and mixed category disclaimers in every locale", () => {
+    for (const locale of allLocales) {
+      const states = (["current", "historical", "mixed"] as const).map((state) =>
+        getLocalizedCatalogueEvidenceDisclaimer(state, locale)
+      );
+
+      expect(new Set(states).size, locale).toBe(3);
+      expect(states.every((value) => value.trim().length > 30), locale).toBe(true);
+      expect(states[0], `${locale} current`).not.toMatch(/before Early Access|vor dem Early Access|до раннего доступа|antes do Acesso Antecipado|早期アクセス前|抢先体验前/i);
+      if (locale !== "en") expect(states.join(" "), locale).toMatch(languageSignals[locale]);
+    }
+
+    for (const locale of allLocales) {
+      const historical = getLocalizedCatalogGuide(getCatalogGuide("weapons")!, locale);
+      const mixed = getLocalizedCatalogGuide(getCatalogGuide("mechanics")!, locale);
+      expect(historical.disclaimer, `${locale} historical`).toBe(getLocalizedCatalogueEvidenceDisclaimer("historical", locale));
+      expect(mixed.disclaimer, `${locale} mixed`).toBe(getLocalizedCatalogueEvidenceDisclaimer("mixed", locale));
+    }
+  });
+
+  it("localizes every guide date and every record source note across the locale matrix", () => {
+    for (const locale of localizedLocales) {
+      for (const guide of catalogGuides) {
+        const localizedGuide = getLocalizedCatalogGuide(guide, locale);
+        expect(localizedGuide.dataAsOf, `${locale}/${guide.id}`).not.toBe(guide.dataAsOf);
+        expect(localizedGuide.dataAsOf, `${locale}/${guide.id}`).toMatch(localizedDateSignals[locale]);
+      }
+
+      for (const record of getCatalogueRecords("equipment").concat(
+        getCatalogueRecords("deployables"),
+        getCatalogueRecords("mechanics")
+      )) {
+        const [localized] = getLocalizedCatalogueRecords([record], locale);
+        const notes = localized.sourceNotes.join(" ");
+        expect(notes, `${locale}/${record.type}/${record.slug}`).not.toBe(record.sourceNotes.join(" "));
+        expect(notes, `${locale}/${record.type}/${record.slug}`).toMatch(languageSignals[locale]);
+        expect(localized.dataAsOf, `${locale}/${record.type}/${record.slug}`).not.toBe(record.dataAsOf);
+      }
     }
   });
 

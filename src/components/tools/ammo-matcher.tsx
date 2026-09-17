@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {ArrowRight, Copy} from "lucide-react";
+import {ArrowRight, Copy, ImageOff} from "lucide-react";
 import {useMemo, useState} from "react";
 import type {AmmoMatch, AmmoMatcherDataset} from "@/features/tools/ammo-matcher-data";
 import {matchAmmoDataset} from "@/features/tools/ammo-matcher-runtime";
@@ -22,9 +22,17 @@ function MatchItem({copy, match}: {copy: ToolCopy; match: AmmoMatch}) {
     : match.state === "historical"
       ? "border-[#806629] bg-[#2a2414] text-[#e4c35f]"
       : "border-[#46534d] bg-[#1a211e] text-[#a8b4ae]";
+  const hasVerifiedMedia = Boolean(match.image && match.imageAlt);
   return (
     <article className="grid min-w-0 grid-cols-[5rem_minmax(0,1fr)] gap-4 border-t border-[#354039] py-4">
-      <Image alt={match.imageAlt} className="aspect-square w-20 object-contain" height={96} src={assetPath(match.image)} width={96} />
+      {hasVerifiedMedia ? (
+        <Image alt={match.imageAlt!} className="aspect-square w-20 object-contain" height={96} src={assetPath(match.image!)} width={96} />
+      ) : (
+        <div className="flex aspect-square w-20 flex-col items-center justify-center border border-[#354039] bg-[#0c100e] px-1 text-center text-[#8fa098]" data-media-state="pending">
+          <ImageOff aria-hidden="true" size={20} />
+          <span className="mt-1 text-[10px] leading-3">{copy.imagePending}</span>
+        </div>
+      )}
       <div className="min-w-0">
         <h3 className="break-words text-base font-bold text-white">{match.name}</h3>
         <p className="mt-1 break-words text-xs uppercase text-[#8fa098]">{match.relationshipValue}</p>

@@ -22,10 +22,23 @@ describe("catalogue media provenance", () => {
     const visibleRecords = catalogueRecords.filter((record) => record.mediaState !== "pending");
     const visibleImages = visibleRecords.map((record) => record.image).filter((image): image is string => Boolean(image));
 
-    expect(pendingRecords).toHaveLength(36);
+    expect(pendingRecords).toHaveLength(101);
     expect(pendingRecords.every((record) => record.image === undefined && record.imageAlt === undefined)).toBe(true);
     expect(new Set(visibleImages)).toHaveLength(visibleImages.length);
     expect(visibleImages.every((image) => !image.includes("/banners/"))).toBe(true);
+  });
+
+  it("keeps all 65 ammo, attachment, and gear assets pending without record-level provenance", () => {
+    const records = catalogueRecords.filter((record) => ["ammo", "attachments", "gear"].includes(record.type));
+
+    expect(records).toHaveLength(65);
+    for (const record of records) {
+      expect(record.mediaState, `${record.type}/${record.slug}`).toBe("pending");
+      expect(record.image, `${record.type}/${record.slug}`).toBeUndefined();
+      expect(record.imageAlt, `${record.type}/${record.slug}`).toBeUndefined();
+      expect(getCatalogueMediaSource(record), `${record.type}/${record.slug}`).toBeUndefined();
+    }
+    expect(JSON.stringify(catalogueMediaSources)).not.toContain("-k6IV0ITLDo");
   });
 
   it("contains no competitor asset or watermark-removal source", () => {
@@ -57,7 +70,7 @@ describe("catalogue media provenance", () => {
       .map((record) => record.image)
       .filter((image): image is string => Boolean(image));
 
-    expect(verifiedRecordImages).toHaveLength(124);
+    expect(verifiedRecordImages).toHaveLength(59);
     expect(new Set(verifiedRecordImages)).toHaveLength(verifiedRecordImages.length);
     for (const record of catalogueRecords.filter((candidate) => candidate.mediaState === "verified")) {
       const source = getCatalogueMediaSource(record);

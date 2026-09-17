@@ -15,10 +15,10 @@ export {
 const richDetailKeys = new Set([...weaponItems, ...vehicleItems].map((item) => `${item.type}/${item.slug}`));
 
 export function getCatalogueFreshness(record: Pick<CatalogueRecord, "dataAsOf" | "evidence">): "current" | "historical" | "unknown" {
+  if (record.evidence.confidence === "unverified" || record.evidence.sourceClass === "unverified") return "unknown";
   if (/Alpha|Beta/.test(`${record.dataAsOf} ${record.evidence.build}`)) return "historical";
   if (record.evidence.current) return "current";
-  if (record.evidence.build === record.dataAsOf) return "historical";
-  return "unknown";
+  return "historical";
 }
 
 export function isCurrentDecisionSafe(record: Pick<CatalogueRecord, "dataAsOf" | "evidence">): boolean {

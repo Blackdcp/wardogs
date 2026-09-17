@@ -84,7 +84,7 @@ export type ItemUi = {
   confirmedFacts: string;
   unknownFacts: string;
   itemActions: string;
-  sourceClassLabels: Record<CatalogueEvidence["sourceClass"], string>;
+  sourceClassLabels: Record<Exclude<CatalogueEvidence["sourceClass"], "unverified">, string>;
   confidenceLabels: Record<CatalogueEvidence["confidence"], string>;
 };
 
@@ -180,6 +180,19 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
 
 export function getItemUi(locale: Locale) {
   return {...ui[locale], ...earlyAccessOverrides[locale]};
+}
+
+const unverifiedSourceLabels: Record<Locale, string> = {
+  en: "Unverified source",
+  de: "Ungeprüfte Quelle",
+  ru: "Источник не проверен",
+  "pt-br": "Fonte não verificada",
+  ja: "未検証の情報源",
+  "zh-cn": "来源未验证",
+};
+
+export function getCatalogueSourceClassLabel(locale: Locale, sourceClass: CatalogueEvidence["sourceClass"]): string {
+  return sourceClass === "unverified" ? unverifiedSourceLabels[locale] : getItemUi(locale).sourceClassLabels[sourceClass];
 }
 
 export function formatCatalogueIndexCount(locale: Locale, count: number): string {
