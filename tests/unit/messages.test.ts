@@ -29,9 +29,10 @@ describe("localized messages", () => {
         metaDescription: string;
         heroTitle: string;
       };
+      const cjk = locale === "ja" || locale === "zh-cn";
       expect(home.metaTitle.length, `${locale} title`).toBeLessThanOrEqual(60);
-      expect(home.metaDescription.length, `${locale} description`).toBeGreaterThanOrEqual(140);
-      expect(home.metaDescription.length, `${locale} description`).toBeLessThanOrEqual(160);
+      expect(home.metaDescription.length, `${locale} description`).toBeGreaterThanOrEqual(cjk ? 60 : 140);
+      expect(home.metaDescription.length, `${locale} description`).toBeLessThanOrEqual(cjk ? 110 : 160);
       expect(home.metaTitle, `${locale} site name`).toMatch(/^WARDOGS Wiki/);
       expect(home.metaTitle, `${locale} evergreen title`).not.toContain("Closed Beta");
       expect(home.heroTitle, `${locale} evergreen heading`).not.toContain("Closed Beta");
