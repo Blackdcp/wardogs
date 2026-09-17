@@ -30,4 +30,12 @@ describe("ContextualVideoEvidence", () => {
   it("renders nothing when a guide has no reviewed current source", () => {
     expect(renderToStaticMarkup(<ContextualVideoEvidence locale="en" sources={[]} />)).toBe("");
   });
+
+  it("renders the review date carried by each source record", () => {
+    const source = {...getGuideTaskData("wardogs-beginner-guide", "en")!.videos[0], reviewedAt: "2026-09-16"};
+    const html = renderToStaticMarkup(<ContextualVideoEvidence locale="en" sources={[source]} />);
+
+    expect(html).toContain('dateTime="2026-09-16"');
+    expect(html).not.toContain(`dateTime="${CURRENT_VIDEO_SOURCES_REVIEWED_AT}"`);
+  });
 });

@@ -1,11 +1,10 @@
 import {ArrowRight, Clapperboard} from "lucide-react";
 import type {Locale} from "@/config/site";
-import {getLocalizedFeaturedVideoArticles} from "@/features/videos/video-localization";
+import {CurrentVideoSourceGrid} from "@/components/videos/current-video-source-grid";
+import {currentVideoSources} from "@/features/videos/video-library";
 import {getVideoUi} from "@/features/videos/video-ui";
-import {VideoArticleCard} from "@/components/videos/video-article-card";
 
 export function VideoIntelligence({locale}: {locale: Locale}) {
-  const articles = getLocalizedFeaturedVideoArticles(locale, 6);
   const ui = getVideoUi(locale);
 
   return (
@@ -18,10 +17,10 @@ export function VideoIntelligence({locale}: {locale: Locale}) {
               {ui.homeEyebrow}
             </p>
             <h2 id="video-intelligence-title" className="display-font mt-3 text-3xl leading-tight text-[#f2f5f3] sm:text-4xl">
-              {ui.homeTitle}
+              {ui.currentSourcesTitle}
             </h2>
             <p className="mt-4 text-sm leading-7 text-[#a8b4ae] sm:text-base">
-              {ui.homeDescription}
+              {ui.currentSourcesDescription}
             </p>
           </div>
           <a href={`/${locale}/videos`} className="inline-flex min-h-11 items-center gap-2 self-start rounded-[6px] border border-[#46534d] px-5 py-2.5 text-sm font-semibold text-[#f2f5f3] hover:border-[#5e7168] hover:bg-[#202723] md:self-auto" title={ui.allVideos}>
@@ -30,11 +29,7 @@ export function VideoIntelligence({locale}: {locale: Locale}) {
           </a>
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {articles.map((article) => (
-            <VideoArticleCard article={article} locale={locale} key={article.slug} />
-          ))}
-        </div>
+        <div className="mt-10"><CurrentVideoSourceGrid limit={6} locale={locale} sources={currentVideoSources} /></div>
       </div>
     </section>
   );

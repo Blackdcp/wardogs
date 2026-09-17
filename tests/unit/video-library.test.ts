@@ -7,6 +7,8 @@ import {
   getVideoEra,
   videoArticles
 } from "../../src/features/videos/video-library";
+import {locales} from "../../src/config/site";
+import {getCurrentVideoUi} from "../../src/features/videos/current-video-localization";
 
 describe("video article library", () => {
   it("keeps every collected YouTube source as its own indexable article", () => {
@@ -66,26 +68,84 @@ describe("video article library", () => {
       "VrtwXz94dQg",
       "XUyP1GLUF5o",
       "v0V69ZYMlgY",
-      "smOE0063KOE"
+      "smOE0063KOE",
+      "7W0KgoBf-wM",
+      "BrTNezWMpuk",
+      "ZO7H54kLhqM",
+      "3T64Rn9fWsI",
+      "oLaGhUlixpE",
+      "Cuq8Sk5hn1E",
+      "eR3U1uR6Wn8",
+      "-o6VKUgLq88",
+      "W3Wi0osDVuE",
+      "4lqHgQKIl50",
+      "KL_gNxXL4ng",
+      "dvWT0OcB1dY",
+      "lcU4KJ_8iXc",
+      "kUGJcZK1ivI",
+      "HJl7kzBIaNU",
+      "To3wwc0p3Y8",
+      "cKFK1F0ZP6I"
     ]);
     expect(new Set(currentVideoSources.map(({youtubeId}) => youtubeId)).size).toBe(currentVideoSources.length);
 
     const archivedIds = new Set(videoArticles.map(({youtubeId}) => youtubeId));
     for (const source of currentVideoSources) {
       expect(archivedIds.has(source.youtubeId), source.youtubeId).toBe(false);
-      expect(source.publishedDate >= "2026-09-11", source.youtubeId).toBe(true);
+      expect(source.publishedDate >= "2026-09-10", source.youtubeId).toBe(true);
       expect(source.channel.length, source.youtubeId).toBeGreaterThan(0);
       expect(source.durationMinutes, source.youtubeId).toBeGreaterThan(0);
       expect(source.internalGuideSlug.length, source.youtubeId).toBeGreaterThan(0);
       expect(source.buildLabel, source.youtubeId).toBe("Season 1 current");
+      expect(source.reviewedAt, source.youtubeId).toBe(CURRENT_VIDEO_SOURCES_REVIEWED_AT);
+      expect(source.sourceClass, source.youtubeId).toBe("creator-current");
     }
+
+    expect(new Set(currentVideoSources.map(({topic}) => topic))).toEqual(new Set([
+      "beginner",
+      "money",
+      "loadouts",
+      "fob",
+      "settings",
+      "progression",
+      "helicopter",
+      "mortar",
+      "vehicles",
+      "building",
+      "drones",
+      "teamplay",
+      "patches",
+      "cargo"
+    ]));
+
+    const rejectedIds = new Set([
+      "5CsJz4KC9dQ", "seNduUq_8Ck", "PcAN0SsADHc", "6V3u3lVWO-s", "rulxPPYyYIs",
+      "bCcib9y8rws", "t6gSe28Ndzs", "F5YU7eaQHBU", "nD5bxC38pRI", "V8Qx9D9vYm4",
+      "I9rkQ7U-Tzk", "OiN7xeWUFYE", "NN-aksZAjT4", "Ldhp6UMFSfc", "M0dhrSMKfLs"
+    ]);
+    expect(currentVideoSources.some(({youtubeId}) => rejectedIds.has(youtubeId))).toBe(false);
   });
 
   it("returns only reviewed current sources connected to a guide", () => {
     expect(getCurrentVideoSourcesForGuide("wardogs-beginner-guide").map(({youtubeId}) => youtubeId)).toEqual([
-      "fUKgHeT0JGY"
+      "fUKgHeT0JGY",
+      "BrTNezWMpuk",
+      "eR3U1uR6Wn8"
     ]);
-    expect(getCurrentVideoSourcesForGuide("wardogs-controls")).toEqual([]);
+    expect(getCurrentVideoSourcesForGuide("wardogs-controls").map(({youtubeId}) => youtubeId)).toEqual([
+      "cKFK1F0ZP6I"
+    ]);
+  });
+
+  it("localizes every current-video task label and creator-guidance summary", () => {
+    for (const locale of locales) {
+      const ui = getCurrentVideoUi(locale);
+      expect(ui.creatorGuidance, locale).not.toHaveLength(0);
+      for (const source of currentVideoSources) {
+        expect(ui.topics[source.topic].label, `${locale}:${source.topic}`).not.toHaveLength(0);
+        expect(ui.topics[source.topic].summary, `${locale}:${source.topic}`).not.toHaveLength(0);
+      }
+    }
   });
 
   it("separates reusable beta workflows from historical video evidence", () => {

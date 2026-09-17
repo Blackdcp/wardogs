@@ -26,7 +26,13 @@ export type CurrentVideoTopic =
   | "settings"
   | "progression"
   | "helicopter"
-  | "mortar";
+  | "mortar"
+  | "vehicles"
+  | "building"
+  | "drones"
+  | "teamplay"
+  | "patches"
+  | "cargo";
 
 export type CurrentVideoSource = {
   youtubeId: string;
@@ -38,9 +44,28 @@ export type CurrentVideoSource = {
   internalGuideSlug: string;
   sourceUrl: string;
   buildLabel: "Season 1 current";
+  reviewedAt: string;
+  sourceClass: "creator-current";
 };
 
 export const CURRENT_VIDEO_SOURCES_REVIEWED_AT = "2026-09-17";
+
+export const currentVideoTopics: readonly CurrentVideoTopic[] = [
+  "beginner",
+  "money",
+  "progression",
+  "loadouts",
+  "fob",
+  "cargo",
+  "vehicles",
+  "helicopter",
+  "building",
+  "drones",
+  "settings",
+  "teamplay",
+  "patches",
+  "mortar"
+];
 
 export function currentVideoAnchorId(youtubeId: string) {
   return `current-video-${youtubeId}`;
@@ -56,7 +81,9 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "beginner",
     internalGuideSlug: "wardogs-beginner-guide",
     sourceUrl: "https://www.youtube.com/watch?v=fUKgHeT0JGY",
-    buildLabel: "Season 1 current"
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
   },
   {
     youtubeId: "4CHoWpu4Imw",
@@ -67,7 +94,9 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "helicopter",
     internalGuideSlug: "wardogs-helicopter-guide",
     sourceUrl: "https://www.youtube.com/watch?v=4CHoWpu4Imw",
-    buildLabel: "Season 1 current"
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
   },
   {
     youtubeId: "Tkors4Fenh0",
@@ -78,7 +107,9 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "mortar",
     internalGuideSlug: "wardogs-mortar-guide",
     sourceUrl: "https://www.youtube.com/watch?v=Tkors4Fenh0",
-    buildLabel: "Season 1 current"
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
   },
   {
     youtubeId: "mYXhZnJ8Eus",
@@ -89,7 +120,9 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "money",
     internalGuideSlug: "wardogs-money-guide",
     sourceUrl: "https://www.youtube.com/watch?v=mYXhZnJ8Eus",
-    buildLabel: "Season 1 current"
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
   },
   {
     youtubeId: "VrtwXz94dQg",
@@ -100,7 +133,9 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "loadouts",
     internalGuideSlug: "wardogs-best-weapons-loadouts",
     sourceUrl: "https://www.youtube.com/watch?v=VrtwXz94dQg",
-    buildLabel: "Season 1 current"
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
   },
   {
     youtubeId: "XUyP1GLUF5o",
@@ -111,7 +146,9 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "fob",
     internalGuideSlug: "wardogs-fob-guide",
     sourceUrl: "https://www.youtube.com/watch?v=XUyP1GLUF5o",
-    buildLabel: "Season 1 current"
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
   },
   {
     youtubeId: "v0V69ZYMlgY",
@@ -122,7 +159,9 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "settings",
     internalGuideSlug: "wardogs-best-settings",
     sourceUrl: "https://www.youtube.com/watch?v=v0V69ZYMlgY",
-    buildLabel: "Season 1 current"
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
   },
   {
     youtubeId: "smOE0063KOE",
@@ -133,9 +172,232 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "progression",
     internalGuideSlug: "wardogs-progression-wipes-guide",
     sourceUrl: "https://www.youtube.com/watch?v=smOE0063KOE",
-    buildLabel: "Season 1 current"
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "7W0KgoBf-wM",
+    title: "Wardogs - Best Start Easy FAST Money & XP Levels - ALL Classes Early Progression Guide & 39 OP Tips!",
+    channel: "RageGamingVideos",
+    publishedDate: "2026-09-10",
+    durationMinutes: 18,
+    topic: "progression",
+    internalGuideSlug: "wardogs-progression-wipes-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=7W0KgoBf-wM",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "BrTNezWMpuk",
+    title: "I Wish I Knew THIS Before Playing Wardogs (Ultimate Guide)",
+    channel: "TheTacticalBrit",
+    publishedDate: "2026-09-10",
+    durationMinutes: 29,
+    topic: "teamplay",
+    internalGuideSlug: "wardogs-beginner-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=BrTNezWMpuk",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "ZO7H54kLhqM",
+    title: "WARDOGS Day One Patch Update ► All The Important Changes",
+    channel: "GhostGaming",
+    publishedDate: "2026-09-10",
+    durationMinutes: 11,
+    topic: "patches",
+    internalGuideSlug: "wardogs-patch-notes",
+    sourceUrl: "https://www.youtube.com/watch?v=ZO7H54kLhqM",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "3T64Rn9fWsI",
+    title: "WARDOGS Leveling Guide: The Smartest Route to LVL 100",
+    channel: "Mr Loony Lemon",
+    publishedDate: "2026-09-15",
+    durationMinutes: 9,
+    topic: "progression",
+    internalGuideSlug: "wardogs-progression-wipes-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=3T64Rn9fWsI",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "oLaGhUlixpE",
+    title: "WARDOGS Season 1 UPDATE - The Progression TRAP Nobody Noticed",
+    channel: "EUTOPIA",
+    publishedDate: "2026-09-11",
+    durationMinutes: 10,
+    topic: "progression",
+    internalGuideSlug: "wardogs-progression-wipes-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=oLaGhUlixpE",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "Cuq8Sk5hn1E",
+    title: "Wardogs - This Strategy is OP - Easy FAST Money On ALL Roles & Classes - Best XP Money Farm Guide!",
+    channel: "RageGamingVideos",
+    publishedDate: "2026-09-11",
+    durationMinutes: 19,
+    topic: "money",
+    internalGuideSlug: "wardogs-money-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=Cuq8Sk5hn1E",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "eR3U1uR6Wn8",
+    title: "24 Tips I Wish I Knew Sooner in WARDOGS (Tips & Tricks)",
+    channel: "IceManIsaac",
+    publishedDate: "2026-09-10",
+    durationMinutes: 19,
+    topic: "beginner",
+    internalGuideSlug: "wardogs-beginner-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=eR3U1uR6Wn8",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "-o6VKUgLq88",
+    title: "WARDOGS - Base Raiding Guide",
+    channel: "Liltenhead",
+    publishedDate: "2026-09-16",
+    durationMinutes: 15,
+    topic: "fob",
+    internalGuideSlug: "wardogs-fob-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=-o6VKUgLq88",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "W3Wi0osDVuE",
+    title: "How to Build a GOD FOB in WARDOGS - Full MEGA FOB Build!!!",
+    channel: "Mattzila 999",
+    publishedDate: "2026-09-14",
+    durationMinutes: 58,
+    topic: "building",
+    internalGuideSlug: "wardogs-fob-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=W3Wi0osDVuE",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "4lqHgQKIl50",
+    title: "Stingrays - No more Enemy Spawn Vehicles or Artillery",
+    channel: "RadioGLHF",
+    publishedDate: "2026-09-14",
+    durationMinutes: 14,
+    topic: "drones",
+    internalGuideSlug: "wardogs-equipment-tools-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=4lqHgQKIl50",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "KL_gNxXL4ng",
+    title: "WARDOGS Simple Best Settings Guide (Visibility, FPS, Keybinds)",
+    channel: "Strider",
+    publishedDate: "2026-09-10",
+    durationMinutes: 8,
+    topic: "settings",
+    internalGuideSlug: "wardogs-best-settings",
+    sourceUrl: "https://www.youtube.com/watch?v=KL_gNxXL4ng",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "dvWT0OcB1dY",
+    title: "How to Fly in WARDOGS - Mouse & Keyboard Guide made EASY!",
+    channel: "MFx47",
+    publishedDate: "2026-09-12",
+    durationMinutes: 3,
+    topic: "helicopter",
+    internalGuideSlug: "wardogs-helicopter-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=dvWT0OcB1dY",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "lcU4KJ_8iXc",
+    title: "How To Run Logistics in Wardogs",
+    channel: "Quick Tips",
+    publishedDate: "2026-09-11",
+    durationMinutes: 2,
+    topic: "cargo",
+    internalGuideSlug: "wardogs-cargo-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=lcU4KJ_8iXc",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "kUGJcZK1ivI",
+    title: "How to Unlock TANK FAST in Wardogs",
+    channel: "Hot Kittenz",
+    publishedDate: "2026-09-13",
+    durationMinutes: 5,
+    topic: "vehicles",
+    internalGuideSlug: "wardogs-progression-wipes-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=kUGJcZK1ivI",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "HJl7kzBIaNU",
+    title: "WARDOGS: Don't Waste Your Time Leveling Wrong... (Recon Class Guide)",
+    channel: "Espresso",
+    publishedDate: "2026-09-11",
+    durationMinutes: 12,
+    topic: "loadouts",
+    internalGuideSlug: "wardogs-best-weapons-loadouts",
+    sourceUrl: "https://www.youtube.com/watch?v=HJl7kzBIaNU",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "To3wwc0p3Y8",
+    title: "WARDOGS: HOW TO SEE WHAT YOUR FOB NEEDS",
+    channel: "Gotsubb Gaming",
+    publishedDate: "2026-09-13",
+    durationMinutes: 2,
+    topic: "cargo",
+    internalGuideSlug: "wardogs-cargo-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=To3wwc0p3Y8",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
+  },
+  {
+    youtubeId: "cKFK1F0ZP6I",
+    title: "WARDOGS: Tips & Mechanics You Might Not Know",
+    channel: "LifeofKino",
+    publishedDate: "2026-09-16",
+    durationMinutes: 4,
+    topic: "teamplay",
+    internalGuideSlug: "wardogs-controls",
+    sourceUrl: "https://www.youtube.com/watch?v=cKFK1F0ZP6I",
+    buildLabel: "Season 1 current",
+    reviewedAt: CURRENT_VIDEO_SOURCES_REVIEWED_AT,
+    sourceClass: "creator-current"
   }
-] as const;
+];
 
 export function getCurrentVideoSourcesForGuide(slug: string): CurrentVideoSource[] {
   return currentVideoSources.filter((source) => source.internalGuideSlug === slug);

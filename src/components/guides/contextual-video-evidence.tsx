@@ -1,7 +1,7 @@
 import {ArrowRight, CalendarDays, CheckCircle2, ExternalLink, PlayCircle} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {VideoThumbnailImage} from "@/components/videos/video-thumbnail-image";
-import {CURRENT_VIDEO_SOURCES_REVIEWED_AT, currentVideoAnchorId, type CurrentVideoSource} from "@/features/videos/video-library";
+import {currentVideoAnchorId, type CurrentVideoSource} from "@/features/videos/video-library";
 import {getContextualVideoUi} from "@/features/videos/video-localization";
 import {formatLocalizedDate} from "@/lib/localized-date";
 
@@ -33,7 +33,7 @@ export function ContextualVideoEvidence({locale, sources}: {locale: Locale; sour
                 <span className="mt-2 block text-base font-semibold leading-6 text-white">{source.title}</span>
                 <span className="mt-4 grid gap-2 text-xs text-[#8b9992] sm:grid-cols-2">
                   <span className="inline-flex min-w-0 items-start gap-1.5"><CalendarDays aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{ui.published} <time dateTime={source.publishedDate}>{formatLocalizedDate(source.publishedDate, locale)}</time></span></span>
-                  <span className="inline-flex min-w-0 items-start gap-1.5"><CheckCircle2 aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{ui.reviewed} <time dateTime={CURRENT_VIDEO_SOURCES_REVIEWED_AT}>{formatLocalizedDate(CURRENT_VIDEO_SOURCES_REVIEWED_AT, locale)}</time></span></span>
+                  <span className="inline-flex min-w-0 items-start gap-1.5"><CheckCircle2 aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{ui.reviewed} <time dateTime={source.reviewedAt}>{formatLocalizedDate(source.reviewedAt, locale)}</time></span></span>
                 </span>
                 <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">{ui.youtubeSource}<ExternalLink aria-hidden="true" className="size-4" /></span>
               </span>
