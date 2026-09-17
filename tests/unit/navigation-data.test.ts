@@ -17,6 +17,10 @@ describe("grouped navigation", () => {
       "/items/attachments",
       "/items/gear",
       "/items/equipment",
+      "/items/medical",
+      "/items/supplies",
+      "/items/deployables",
+      "/items/mechanics",
       "/items/loadouts",
       "/tools/loadout-budget",
       "/tools/weapon-compare",
@@ -52,6 +56,7 @@ describe("grouped navigation", () => {
     expect(byHref.get("/tools/loadout-budget")).toBe("tool");
     expect(byHref.get("/tools/weapon-compare")).toBe("tool");
     expect(byHref.get("/tools/ammo-matcher")).toBe("tool");
+    expect(byHref.get("/maps")).toBe("map");
   });
 
   it("selects tools and maps by explicit type instead of URL shape", () => {

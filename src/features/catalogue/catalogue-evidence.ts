@@ -32,6 +32,9 @@ export function getIndexableCatalogueItems(records: readonly CatalogueRecord[] =
     record.detailStatus === "published"
     && record.evidenceTier !== "identifier-only"
     && record.mediaState !== "pending"
+    && Boolean(record.image)
+    && Boolean(record.imageAlt?.trim())
+    && !record.image?.includes("/banners/")
     && richDetailKeys.has(`${record.type}/${record.slug}`)
   );
 }

@@ -251,9 +251,9 @@ describe("item library", () => {
 
     const itemWithRelatedModels = {...mortar!, relatedItems: ["mobile-fob", "amp-9", "m4"]};
 
-    expect(getRelatedItems(itemWithRelatedModels, "en").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
-    expect(getRelatedItems(itemWithRelatedModels, "ru").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
-    expect(getRelatedItems(itemWithRelatedModels, "ja").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
+    expect(getRelatedItems(itemWithRelatedModels, "en").map((item) => item.slug)).toEqual(["amp-9"]);
+    expect(getRelatedItems(itemWithRelatedModels, "ru").map((item) => item.slug)).toEqual(["amp-9"]);
+    expect(getRelatedItems(itemWithRelatedModels, "ja").map((item) => item.slug)).toEqual(["amp-9"]);
   });
 
   it("indexes every authored item detail in all supported locales", () => {
@@ -261,7 +261,7 @@ describe("item library", () => {
 
     expect(paths).toHaveLength(itemLibrary.filter((item) => item.indexable).length * 6);
     expect(paths).toContainEqual({locale: "en", type: "weapons", slug: "mortar"});
-    expect(paths).toContainEqual({locale: "ru", type: "vehicles", slug: "littlebird"});
+    expect(paths).not.toContainEqual({locale: "ru", type: "vehicles", slug: "littlebird"});
     expect(paths).toContainEqual({locale: "de", type: "weapons", slug: "mortar"});
     expect(paths).toContainEqual({locale: "pt-br", type: "vehicles", slug: "bobcat"});
     expect(paths).toContainEqual({locale: "ja", type: "weapons", slug: "ak74"});
@@ -269,7 +269,7 @@ describe("item library", () => {
     expect(paths).not.toContainEqual({locale: "en", type: "weapons", slug: "m4"});
   });
 
-  it("exposes all seven catalogue guide categories", () => {
+  it("exposes all eleven catalogue guide categories", () => {
     expect(itemTypes.map((itemType) => itemType.id)).toEqual([
       "weapons",
       "vehicles",
@@ -277,6 +277,10 @@ describe("item library", () => {
       "attachments",
       "gear",
       "equipment",
+      "medical",
+      "supplies",
+      "deployables",
+      "mechanics",
       "loadouts"
     ]);
   });
@@ -286,11 +290,6 @@ describe("item library", () => {
   });
 
   it("keeps published vehicle models out of the standalone legacy vehicle list", () => {
-    expect(getStandaloneItemsByType("vehicles").map((item) => item.slug)).toEqual([
-      "littlebird",
-      "tank",
-      "attack-helicopter",
-      "armored-transport"
-    ]);
+    expect(getStandaloneItemsByType("vehicles").map((item) => item.slug)).toEqual([]);
   });
 });

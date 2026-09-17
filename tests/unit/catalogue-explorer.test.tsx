@@ -109,7 +109,7 @@ describe("CatalogueCard", () => {
     const englishHtml = renderToStaticMarkup(<CatalogueCard locale="en" record={pending!} />);
     const japaneseHtml = renderToStaticMarkup(<CatalogueCard locale="ja" record={pending!} />);
 
-    expect(englishHtml).toContain("Media verification pending");
+    expect(englishHtml).toContain("Image not yet verified");
     expect(japaneseHtml).toContain("画像を検証中");
     expect(englishHtml).toContain('data-media-state="pending"');
     expect(englishHtml).not.toContain("/_next/image");

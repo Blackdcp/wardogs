@@ -42,15 +42,22 @@ describe("site search index", () => {
         .filter((item) => item.searchType === "tool")
         .map((item) => item.href)
     );
+    const mapHrefs = new Set(
+      buildNavigation((key) => key)
+        .flatMap((group) => group.items)
+        .filter((item) => item.searchType === "map")
+        .map((item) => item.href)
+    );
 
-    expect(new Set(index.map((entry) => entry.type))).toEqual(new Set(["guide", "item", "video", "tool"]));
+    expect(new Set(index.map((entry) => entry.type))).toEqual(new Set(["guide", "item", "video", "tool", "map"]));
     expect(counts).toEqual({
       guides: guides.length,
       items: indexableItems.length,
       videos: currentVideoSources.length,
-      tools: toolHrefs.size
+      tools: toolHrefs.size + mapHrefs.size
     });
     expect(new Set(index.filter((entry) => entry.type === "tool").map((entry) => entry.href))).toEqual(toolHrefs);
+    expect(new Set(index.filter((entry) => entry.type === "map").map((entry) => entry.href))).toEqual(mapHrefs);
   });
 
   it("never exposes a generic or gated item detail route", async () => {

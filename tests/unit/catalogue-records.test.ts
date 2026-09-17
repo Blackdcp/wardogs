@@ -6,17 +6,38 @@ import {
   getCatalogueRecord,
   getCatalogueRecords
 } from "../../src/features/catalogue/catalogue-records";
+import {getIndexableCatalogueItems} from "../../src/features/catalogue/catalogue-evidence";
 import {getCatalogueGroup} from "../../src/features/catalogue/catalogue-groups";
 
 describe("catalogue records", () => {
   it("exposes the expanded record inventory", () => {
-    expect(catalogueRecords).toHaveLength(131);
+    expect(catalogueRecords).toHaveLength(160);
     expect(getCatalogueRecords("weapons")).toHaveLength(38);
     expect(getCatalogueRecords("vehicles")).toHaveLength(28);
     expect(getCatalogueRecords("ammo")).toHaveLength(14);
     expect(getCatalogueRecords("attachments")).toHaveLength(40);
     expect(getCatalogueRecords("gear")).toHaveLength(11);
+    expect(getCatalogueRecords("equipment")).toHaveLength(5);
+    expect(getCatalogueRecords("medical")).toHaveLength(4);
+    expect(getCatalogueRecords("supplies")).toHaveLength(4);
+    expect(getCatalogueRecords("deployables")).toHaveLength(5);
+    expect(getCatalogueRecords("mechanics")).toHaveLength(4);
+    expect(getCatalogueRecords("maps")).toHaveLength(7);
     expect(catalogueRecords.every((record) => record.evidence.verifiedAt.match(/^\d{4}-\d{2}-\d{2}$/))).toBe(true);
+  });
+
+  it("keeps every new sourced group useful without creating thin detail routes", () => {
+    const requiredGroups = ["equipment", "medical", "supplies", "deployables", "mechanics", "maps"] as const;
+
+    for (const type of requiredGroups) {
+      const records = getCatalogueRecords(type);
+      expect(records.length, type).toBeGreaterThan(0);
+      expect(getCatalogueGroup(type)?.filters.length, type).toBeGreaterThan(0);
+      expect(records.every((record) => record.detailStatus === "inline"), type).toBe(true);
+      expect(records.every((record) => record.detailHref === undefined), type).toBe(true);
+      expect(records.every((record) => record.evidence.sourceUrl?.startsWith("https://")), type).toBe(true);
+      expect(getIndexableCatalogueItems(records), type).toEqual([]);
+    }
   });
 
   it("publishes every weapon and vehicle model at its exact detail route", () => {
@@ -38,12 +59,18 @@ describe("catalogue records", () => {
 
   it("keeps each record grounded in an approved image and observed catalogue data", () => {
     for (const record of catalogueRecords) {
-      expect(existsSync(join(process.cwd(), "public", record.image))).toBe(true);
+      if (record.mediaState === "pending") {
+        expect(record.image, `${record.type}/${record.slug}`).toBeUndefined();
+        expect(record.imageAlt, `${record.type}/${record.slug}`).toBeUndefined();
+      } else {
+        expect(record.image, `${record.type}/${record.slug}`).toBeTruthy();
+        expect(existsSync(join(process.cwd(), "public", record.image!)), record.image).toBe(true);
+        expect(record.imageAlt?.trim().length, `${record.type}/${record.slug}`).toBeGreaterThan(4);
+      }
       expect(record.summary).not.toBe("Not captured");
       expect(record.facts.length).toBeGreaterThanOrEqual(2);
       expect(record.filterValues.length).toBeGreaterThan(0);
-      expect(record.evidenceStatus).toBe("pre-release-build");
-      expect(record.dataAsOf).toMatch(/Alpha|Beta/);
+      expect(["official", "verified-in-game", "pre-release-build", "community-report"]).toContain(record.evidenceStatus);
       expect(record.sourceNotes.length).toBeGreaterThan(0);
     }
   });
@@ -54,5 +81,11 @@ describe("catalogue records", () => {
     expect(getCatalogueGroup("ammo")?.filters.length).toBeGreaterThan(0);
     expect(getCatalogueGroup("attachments")?.filters.length).toBeGreaterThan(0);
     expect(getCatalogueGroup("gear")?.filters.length).toBeGreaterThan(0);
+    expect(getCatalogueGroup("equipment")?.filters.length).toBeGreaterThan(0);
+    expect(getCatalogueGroup("medical")?.filters.length).toBeGreaterThan(0);
+    expect(getCatalogueGroup("supplies")?.filters.length).toBeGreaterThan(0);
+    expect(getCatalogueGroup("deployables")?.filters.length).toBeGreaterThan(0);
+    expect(getCatalogueGroup("mechanics")?.filters.length).toBeGreaterThan(0);
+    expect(getCatalogueGroup("maps")?.filters.length).toBeGreaterThan(0);
   });
 });

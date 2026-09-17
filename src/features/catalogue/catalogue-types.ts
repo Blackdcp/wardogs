@@ -1,4 +1,15 @@
-export type CatalogueRecordType = "weapons" | "vehicles" | "ammo" | "attachments" | "gear";
+export type CatalogueRecordType =
+  | "weapons"
+  | "vehicles"
+  | "ammo"
+  | "attachments"
+  | "gear"
+  | "equipment"
+  | "medical"
+  | "supplies"
+  | "deployables"
+  | "mechanics"
+  | "maps";
 
 export type CatalogueFact = {
   label: string;
@@ -37,8 +48,8 @@ export type CatalogueRecord = {
   name: string;
   type: CatalogueRecordType;
   subtype: string;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
   summary: string;
   facts: readonly CatalogueFact[];
   filterValues: readonly string[];

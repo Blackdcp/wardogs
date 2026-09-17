@@ -157,15 +157,16 @@ describe("Closed Beta 02 weekend release contract", () => {
 
   it("keeps every catalogue image present, described, sourced, and build-labeled", () => {
     for (const record of catalogueRecords) {
-      expect(existsSync(path.resolve("public", record.image.replace(/^\//, ""))), record.image).toBe(true);
-      expect(record.imageAlt.trim().length, record.slug).toBeGreaterThanOrEqual(5);
       if (record.mediaState === "pending") {
-        expect(record.imageAlt.toLowerCase(), record.slug).toContain("pending");
-        expect(catalogueMediaSources[record.image], record.image).toBeUndefined();
+        expect(record.image, record.slug).toBeUndefined();
+        expect(record.imageAlt, record.slug).toBeUndefined();
       } else {
-        expect(catalogueMediaSources[record.image], record.image).toBeDefined();
+        expect(record.image, record.slug).toBeTruthy();
+        expect(record.imageAlt?.trim().length, record.slug).toBeGreaterThanOrEqual(5);
+        expect(existsSync(path.resolve("public", record.image!.replace(/^\//, ""))), record.image).toBe(true);
+        expect(catalogueMediaSources[record.image!], record.image).toBeDefined();
       }
-      expect(record.dataAsOf, record.slug).toMatch(/Alpha|Closed Beta/i);
+      expect(record.dataAsOf, record.slug).toMatch(/Alpha|Closed Beta|Season 1|pre-release/i);
     }
   });
 

@@ -145,6 +145,24 @@ const expandedSectionNames: Record<Exclude<Locale, "en">, Record<string, string>
   },
 };
 
+const fieldReferenceLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
+  "zh-cn": {
+    "Vehicle support":"载具支援", "Personal recovery":"个人恢复", "Squad recovery":"小队救治", Supplies:"补给物资", Fuel:"燃料", Mechanical:"机械补给", "Route denial":"路线封锁", "FOB asset":"FOB 设施", "Objective support":"目标支援", Objective:"目标", Economy:"经济", Support:"支援", Orientation:"地图判读", Construction:"建造", Logistics:"后勤", "Fire support":"火力支援", "Air operations":"空中行动", "Observed role":"已观察用途", "Observed form":"已观察形态", "Observed dependency":"已观察依赖", "Primary task":"主要任务", Context:"适用场景", "Supply Types":"补给类型", "Route Denial":"路线封锁", "FOB and Objective Assets":"FOB 与目标设施", "Objective and Economy Systems":"目标与经济系统", "Medical item":"医疗物品", Supply:"补给", Deployable:"部署物", Mechanic:"机制", System:"系统", "Confirmed fact":"已确认事实", "Evidence state":"证据状态", "Evidence window":"证据时期"
+  },
+  ru: {
+    "Vehicle support":"Поддержка транспорта", "Personal recovery":"Личное восстановление", "Squad recovery":"Помощь отряду", Supplies:"Снабжение", Fuel:"Топливо", Mechanical:"Механическое снабжение", "Route denial":"Блокирование маршрута", "FOB asset":"Объект FOB", "Objective support":"Поддержка цели", Objective:"Цель", Economy:"Экономика", Support:"Поддержка", Orientation:"Ориентирование", Construction:"Строительство", Logistics:"Логистика", "Fire support":"Огневая поддержка", "Air operations":"Воздушные операции", "Observed role":"Наблюдаемая роль", "Observed form":"Наблюдаемая форма", "Observed dependency":"Наблюдаемая зависимость", "Primary task":"Основная задача", Context:"Контекст", "Supply Types":"Типы снабжения", "Route Denial":"Блокирование маршрута", "FOB and Objective Assets":"Объекты FOB и цели", "Objective and Economy Systems":"Системы целей и экономики", "Medical item":"Медицинский предмет", Supply:"Снабжение", Deployable:"Развёртываемый объект", Mechanic:"Механика", System:"Система", "Confirmed fact":"Подтверждённый факт", "Evidence state":"Статус доказательства", "Evidence window":"Период доказательства"
+  },
+  de: {
+    "Vehicle support":"Fahrzeugunterstützung", "Personal recovery":"Eigene Regeneration", "Squad recovery":"Trupprettung", Supplies:"Versorgung", Fuel:"Treibstoff", Mechanical:"Mechanisch", "Route denial":"Wegsperre", "FOB asset":"FOB-Anlage", "Objective support":"Zielunterstützung", Objective:"Ziel", Economy:"Wirtschaft", Support:"Unterstützung", Orientation:"Orientierung", Construction:"Bau", Logistics:"Logistik", "Fire support":"Feuerunterstützung", "Air operations":"Luftoperationen", "Observed role":"Beobachtete Rolle", "Observed form":"Beobachtete Form", "Observed dependency":"Beobachtete Abhängigkeit", "Primary task":"Hauptaufgabe", Context:"Kontext", "Supply Types":"Versorgungsarten", "Route Denial":"Wegsperre", "FOB and Objective Assets":"FOB- und Zielanlagen", "Objective and Economy Systems":"Ziel- und Wirtschaftssysteme", "Medical item":"Medizinischer Gegenstand", Supply:"Versorgung", Deployable:"Platzierbares System", Mechanic:"Mechanik", System:"System", "Confirmed fact":"Bestätigte Tatsache", "Evidence state":"Belegstatus", "Evidence window":"Belegzeitraum"
+  },
+  "pt-br": {
+    "Vehicle support":"Suporte a veículos", "Personal recovery":"Recuperação pessoal", "Squad recovery":"Recuperação do esquadrão", Supplies:"Suprimentos", Fuel:"Combustível", Mechanical:"Mecânico", "Route denial":"Bloqueio de rota", "FOB asset":"Recurso de FOB", "Objective support":"Suporte ao objetivo", Objective:"Objetivo", Economy:"Economia", Support:"Suporte", Orientation:"Orientação", Construction:"Construção", Logistics:"Logística", "Fire support":"Apoio de fogo", "Air operations":"Operações aéreas", "Observed role":"Função observada", "Observed form":"Forma observada", "Observed dependency":"Dependência observada", "Primary task":"Tarefa principal", Context:"Contexto", "Supply Types":"Tipos de suprimento", "Route Denial":"Bloqueio de rota", "FOB and Objective Assets":"Recursos de FOB e objetivo", "Objective and Economy Systems":"Sistemas de objetivo e economia", "Medical item":"Item médico", Supply:"Suprimento", Deployable:"Item posicionável", Mechanic:"Mecânica", System:"Sistema", "Confirmed fact":"Fato confirmado", "Evidence state":"Estado da evidência", "Evidence window":"Período da evidência"
+  },
+  ja: {
+    "Vehicle support":"車両支援", "Personal recovery":"自己回復", "Squad recovery":"分隊救護", Supplies:"補給物資", Fuel:"燃料", Mechanical:"整備", "Route denial":"経路阻止", "FOB asset":"FOB施設", "Objective support":"目標支援", Objective:"目標", Economy:"経済", Support:"支援", Orientation:"状況把握", Construction:"建設", Logistics:"兵站", "Fire support":"火力支援", "Air operations":"航空作戦", "Observed role":"確認済み用途", "Observed form":"確認済み形態", "Observed dependency":"確認済み依存関係", "Primary task":"主要任務", Context:"状況", "Supply Types":"補給物資の種類", "Route Denial":"経路阻止", "FOB and Objective Assets":"FOB・目標施設", "Objective and Economy Systems":"目標・経済システム", "Medical item":"医療アイテム", Supply:"補給物資", Deployable:"設置物", Mechanic:"システム", System:"分類", "Confirmed fact":"確認済み事実", "Evidence state":"証拠状態", "Evidence window":"証拠の時期"
+  },
+};
+
 const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
   "zh-cn": {Weapon:"武器", Vehicle:"载具", Calibre:"口径", Attachment:"配件", Gear:"个人装备", Equipment:"战术装备", Band:"预算档位", "Alpha price":"Alpha 测试价格", Ammunition:"弹药", "Fire modes":"射击模式", Weight:"重量", Progression:"进度", Role:"定位", "Observed gate":"已观察解锁条件", Track:"进度路线", "Base damage":"基础伤害", Loads:"弹种", "Standard per round":"标准单发价格", "Box price":"弹药箱价格", Weapons:"适用武器", Kind:"类型", "Zoom or capacity":"倍率或容量", "Weight or calibre":"重量或口径", Slot:"栏位", Tier:"等级", "Recorded identifier":"已记录标识", "Spending rule":"花费原则", "Best use":"最佳用途", "Main risk":"主要风险", "Not captured":"未记录", "Gate unread":"条件无法辨认", "Open purchase":"可直接购买", Variable:"可变", fixed:"固定", "Semi / Full Auto":"半自动 / 全自动", "Semi / Burst":"半自动 / 点射", "Semi automatic":"半自动", "Break-action":"折开式", "Single-shot":"单发", "Bolt action":"栓动", "Bolt-action / Magazine":"栓动 / 弹匣", "Pull and Release":"拉弓并释放", "Assault XP":"突击经验", "Medic XP":"医疗经验", "Support XP":"支援经验", "Recon XP":"侦察经验", "Driver XP":"驾驶经验", "Pilot XP":"飞行经验", Driver:"驾驶员", Pilot:"飞行员", Wardog:"战士", Optic:"瞄具", Magazine:"弹匣", Helmet:"头盔", Armor:"护甲", Backpack:"背包", Special:"特殊", Lightest:"最轻", Offensive:"进攻", Medical:"医疗", Recon:"侦察", Building:"建造", Utility:"通用", "Building / Offensive":"建造 / 进攻", "Assault rifle":"突击步枪", SMG:"冲锋枪", "Marksman rifle":"精确射手步枪", "Sniper rifle":"狙击步枪", Bow:"弓", Sidearm:"副武器", "Light transport":"轻型运输", "Fast transport":"快速运输", "Utility transport":"通用运输", "Cargo transport":"货运载具", "Protected transport":"防护运输", "Armed transport":"武装运输", "Heavy armed transport":"重型武装运输", "Logistics truck":"后勤卡车", "Protected logistics":"防护后勤", "Armed logistics":"武装后勤", "Anti-air armor":"防空装甲载具", "Main battle tank":"主战坦克", "Self-propelled artillery":"自行火炮", "Combat helicopter":"战斗直升机", "Armed utility helicopter":"武装通用直升机", "Rocket helicopter":"火箭直升机", "Attack helicopter":"攻击直升机", "Light air transport":"轻型空运", "Air transport":"空中运输", Budget:"低预算", Standard:"标准", "Full Budget":"全额投入"},
   ru: {
@@ -210,7 +228,7 @@ const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
 };
 
 function translateValue(value: string, locale: Exclude<Locale, "en">): string {
-  const direct = valueMaps[locale][value] ?? expandedLabels[locale][value];
+  const direct = valueMaps[locale][value] ?? expandedLabels[locale][value] ?? fieldReferenceLabels[locale][value];
   if (direct) return direct;
 
   const rounds = value.match(/^(\d+) rounds$/);
@@ -259,7 +277,7 @@ export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): C
     disclaimer: text.disclaimer,
     columns: guide.columns.map((column) => translateValue(column, locale)),
     sections: guide.sections.map((section) => {
-      const title = sectionNames[locale][section.title] ?? expandedSectionNames[locale][section.title] ?? section.title;
+      const title = sectionNames[locale][section.title] ?? expandedSectionNames[locale][section.title] ?? fieldReferenceLabels[locale][section.title] ?? section.title;
       return {...section, title, description: text.section(title, type.label), rows: section.rows.map((row) => ({cells: row.cells.map((cell, index) => index === 0 ? cell : translateValue(cell, locale))}))};
     }),
     insights: text.insight(type.label),
@@ -276,7 +294,7 @@ export function getLocalizedCatalogueRecords(records: readonly CatalogueRecord[]
     const label = type ? getLocalizedItemType(type, locale).label : record.type;
     const facts = record.facts.map((fact) => ({label: translateValue(fact.label, locale), value: translateValue(fact.value, locale)}));
     const factText = facts.map((fact) => `${fact.label}: ${fact.value}`).join("; ");
-    return {...record, subtype: translateValue(record.subtype, locale), imageAlt: `${record.name} — WARDOGS ${label}`, summary: `${record.name} — ${label} WARDOGS. ${factText}. ${text.disclaimer}`, facts, dataAsOf: localizeDataAsOf(record.dataAsOf, locale)};
+    return {...record, subtype: translateValue(record.subtype, locale), imageAlt: record.image ? `${record.name} — WARDOGS ${label}` : undefined, summary: `${record.name} — ${label} WARDOGS. ${factText}. ${text.disclaimer}`, facts, dataAsOf: localizeDataAsOf(record.dataAsOf, locale)};
   });
 }
 

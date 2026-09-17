@@ -19,7 +19,7 @@ type ItemLocaleProfile = {
 
 const profiles: Record<TranslatedLocale, ItemLocaleProfile> = {
   ru: {
-    typeNames: {weapons: "оружие", vehicles: "транспорт", ammo: "боеприпасы", attachments: "модификация", gear: "экипировка", equipment: "тактическое оборудование", loadouts: "комплект"},
+    typeNames: {weapons: "оружие", vehicles: "транспорт", ammo: "боеприпасы", attachments: "модификация", gear: "экипировка", equipment: "тактическое оборудование", medical: "медицинское оснащение", supplies: "снабжение", deployables: "развёртываемые объекты", mechanics: "игровая механика", loadouts: "комплект"},
     status: {official: "Официально", "verified-in-game": "Проверено в игре", "pre-release-build": "Предрелизная сборка", "community-report": "Сообщение сообщества"},
     buildPrefix: "Проверено для сборки",
     summary: (item, typeName) => `${item.name} — это ${typeName} в WARDOGS. Страница объединяет подтвержденную роль, практическое применение, ограничения сборки и источники, не выдавая данные Alpha за окончательные характеристики раннего доступа.`,
@@ -32,7 +32,7 @@ const profiles: Record<TranslatedLocale, ItemLocaleProfile> = {
     imageAlt: (item, typeName) => `${item.name}, ${typeName} в WARDOGS`
   },
   de: {
-    typeNames: {weapons: "Waffe", vehicles: "Fahrzeug", ammo: "Munition", attachments: "Aufsatz", gear: "Ausrüstung", equipment: "taktisches Gerät", loadouts: "Loadout"},
+    typeNames: {weapons: "Waffe", vehicles: "Fahrzeug", ammo: "Munition", attachments: "Aufsatz", gear: "Ausrüstung", equipment: "taktisches Gerät", medical: "Medizin", supplies: "Versorgung", deployables: "platzierbare Systeme", mechanics: "Spielmechanik", loadouts: "Loadout"},
     status: {official: "Offiziell", "verified-in-game": "Im Spiel bestätigt", "pre-release-build": "Vorabversion", "community-report": "Community-Bericht"},
     buildPrefix: "Geprüft für den Stand",
     summary: (item, typeName) => `${item.name} ist ein ${typeName} in WARDOGS. Diese Seite bündelt die bestätigte Rolle, den praktischen Einsatz, versionsabhängige Grenzen und Quellen, ohne Alpha-Werte als endgültige Early-Access-Daten darzustellen.`,
@@ -45,7 +45,7 @@ const profiles: Record<TranslatedLocale, ItemLocaleProfile> = {
     imageAlt: (item, typeName) => `${item.name}, ${typeName} in WARDOGS`
   },
   "pt-br": {
-    typeNames: {weapons: "arma", vehicles: "veículo", ammo: "munição", attachments: "acessório", gear: "equipamento pessoal", equipment: "equipamento tático", loadouts: "kit"},
+    typeNames: {weapons: "arma", vehicles: "veículo", ammo: "munição", attachments: "acessório", gear: "equipamento pessoal", equipment: "equipamento tático", medical: "equipamento médico", supplies: "suprimentos", deployables: "itens posicionáveis", mechanics: "mecânica", loadouts: "kit"},
     status: {official: "Oficial", "verified-in-game": "Verificado no jogo", "pre-release-build": "Build de pré-lançamento", "community-report": "Relato da comunidade"},
     buildPrefix: "Verificado para a build",
     summary: (item, typeName) => `${item.name} é um item da categoria ${typeName} em WARDOGS. Esta página reúne função confirmada, uso prático, limites da build e fontes sem tratar valores do Alpha como estatísticas finais do Acesso Antecipado.`,
@@ -58,7 +58,7 @@ const profiles: Record<TranslatedLocale, ItemLocaleProfile> = {
     imageAlt: (item, typeName) => `${item.name}, ${typeName} em WARDOGS`
   },
   ja: {
-    typeNames: {weapons: "武器", vehicles: "車両", ammo: "弾薬", attachments: "アタッチメント", gear: "個人装備", equipment: "特殊装備", loadouts: "ロードアウト"},
+    typeNames: {weapons: "武器", vehicles: "車両", ammo: "弾薬", attachments: "アタッチメント", gear: "個人装備", equipment: "特殊装備", medical: "医療装備", supplies: "補給物資", deployables: "設置物", mechanics: "ゲームシステム", loadouts: "ロードアウト"},
     status: {official: "公式", "verified-in-game": "ゲーム内確認済み", "pre-release-build": "発売前ビルド", "community-report": "コミュニティ報告"},
     buildPrefix: "確認対象ビルド",
     summary: (item, typeName) => `${item.name}はWARDOGSの${typeName}です。このページでは、確認された役割、実戦での使い方、ビルド依存の制限、情報源をまとめ、アルファ版の数値を早期アクセス版の最終仕様として扱わないよう整理しています。`,
@@ -71,7 +71,7 @@ const profiles: Record<TranslatedLocale, ItemLocaleProfile> = {
     imageAlt: (item, typeName) => `WARDOGSの${typeName}、${item.name}`
   },
   "zh-cn": {
-    typeNames: {weapons: "武器", vehicles: "载具", ammo: "弹药", attachments: "配件", gear: "个人装备", equipment: "战术装备", loadouts: "配装"},
+    typeNames: {weapons: "武器", vehicles: "载具", ammo: "弹药", attachments: "配件", gear: "个人装备", equipment: "战术装备", medical: "医疗物品", supplies: "补给物资", deployables: "部署物", mechanics: "玩法机制", loadouts: "配装"},
     status: {official: "官方信息", "verified-in-game": "游戏内已验证", "pre-release-build": "预发布版本", "community-report": "社区报告"},
     buildPrefix: "验证版本",
     summary: (item, typeName) => `${item.name} 是 WARDOGS 中的${typeName}。本页汇总已确认的定位、实战用法、版本限制和来源，不会把 Alpha 测试数据当作抢先体验版的最终数值。`,

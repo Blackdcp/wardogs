@@ -159,6 +159,16 @@ describe("sitemap", () => {
     }
   });
 
+  it("includes each localized operations atlas exactly once", () => {
+    const urls = sitemap().map((entry) => entry.url);
+
+    for (const locale of locales) {
+      const url = `${origin}/${locale}/maps`;
+      expect(urls.filter((candidate) => candidate === url), url).toHaveLength(1);
+      expect(sitemap().find((entry) => entry.url === url)?.alternates?.languages).toEqual(pageAlternates("/maps"));
+    }
+  });
+
   it("uses the same trailing-slash form in a Pages export", () => {
     const previous = process.env.GITHUB_PAGES;
     process.env.GITHUB_PAGES = "true";

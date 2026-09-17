@@ -305,7 +305,7 @@ test("every English vehicle model route renders complete evidence", async ({page
     await expect(page.getByRole("heading", {level: 1, name: `WARDOGS ${record!.name}`, exact: true})).toBeVisible();
     const image = page.locator("main header figure img");
     await expect(image, `${slug} detail image`).toHaveCount(1);
-    await expect(image).toHaveAttribute("alt", record!.imageAlt);
+    await expect(image).toHaveAttribute("alt", record!.imageAlt!);
     const renderedSrc = await image.getAttribute("src");
     expect(renderedSrc, `${slug} image src`).toBeTruthy();
     const renderedImageUrl = new URL(renderedSrc!, page.url());

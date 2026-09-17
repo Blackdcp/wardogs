@@ -32,6 +32,8 @@ type CategoryMedia = {
 type PublishedPreviewRecord = CatalogueRecord & {
   detailStatus: "published";
   detailHref: NonNullable<CatalogueRecord["detailHref"]>;
+  image: string;
+  imageAlt: string;
 };
 
 const categoryMedia: Record<ItemTypeId, CategoryMedia> = {
@@ -41,6 +43,10 @@ const categoryMedia: Record<ItemTypeId, CategoryMedia> = {
   attachments: {image: "/images/catalogue/banners/attachments-1280.webp", imageAlt: "WARDOGS attachments catalogue banner"},
   gear: {image: "/images/catalogue/gear/heavy-armor.webp", imageAlt: "WARDOGS heavy armor", imageFit: "contain"},
   equipment: {image: "/images/catalogue/banners/meta-1280.webp", imageAlt: "WARDOGS tactical equipment catalogue banner"},
+  medical: {image: "/images/guide-discovery/medic-revive.webp", imageAlt: "WARDOGS field medical support"},
+  supplies: {image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: "WARDOGS field logistics and supplies"},
+  deployables: {image: "/images/guide-discovery/equipment-tools.webp", imageAlt: "WARDOGS deployable field equipment"},
+  mechanics: {image: "/images/catalogue/banners/thegame-1280.webp", imageAlt: "WARDOGS objective and support systems"},
   loadouts: {image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: "WARDOGS loadout planning catalogue banner"}
 };
 
@@ -65,7 +71,7 @@ function getPreviewRecords(type: "weapons" | "vehicles", locale: Locale): readon
   const records = getLocalizedCatalogueRecords(getCatalogueRecords(type), locale);
   return previewSlugs[type].map((slug) => {
     const record = records.find((candidate) => candidate.slug === slug);
-    if (!record || record.detailStatus !== "published" || !record.detailHref) {
+    if (!record || record.detailStatus !== "published" || !record.detailHref || !record.image || !record.imageAlt) {
       throw new Error(`Missing published ${type} catalogue preview: ${slug}`);
     }
     return record as PublishedPreviewRecord;
@@ -121,7 +127,7 @@ function catalogueCategories(locale: Locale) {
   const groupedTypes = new Set<CatalogueRecordType>(catalogueGroups.map((group) => group.type));
 
   return itemTypes.map((itemType) => {
-    if (itemType.id !== "equipment" && itemType.id !== "loadouts" && !groupedTypes.has(itemType.id)) {
+    if (itemType.id !== "loadouts" && !groupedTypes.has(itemType.id)) {
       throw new Error(`Missing catalogue group for ${itemType.id}`);
     }
     const guide = getCatalogGuide(itemType.id);

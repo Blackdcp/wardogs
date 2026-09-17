@@ -27,12 +27,14 @@ function absoluteImageUrl(pathname: string) {
   return publicAssetUrl(pathname);
 }
 
-function hasImageExplorer(type: ItemTypeId): type is CatalogueRecordType {
-  return type === "weapons" || type === "vehicles" || type === "ammo" || type === "attachments" || type === "gear";
+type CatalogueItemType = Exclude<CatalogueRecordType, "maps">;
+
+function hasImageExplorer(type: ItemTypeId): type is CatalogueItemType {
+  return type !== "loadouts";
 }
 
 function buildItemListEntries(locale: Locale, type: ItemTypeId, url: string) {
-  const indexableItems = getItemsByType(type);
+  const indexableItems = getItemsByType(type).filter((item) => item.indexable);
 
   if (hasImageExplorer(type)) {
     const records = getLocalizedCatalogueRecords(getCatalogueRecords(type), locale);
@@ -42,7 +44,7 @@ function buildItemListEntries(locale: Locale, type: ItemTypeId, url: string) {
       url: record.detailStatus === "published" && record.detailHref && getIndexableCatalogueItems([record]).length === 1
         ? pageUrl(locale, record.detailHref)
         : `${url}#record-${type}-${record.slug}`,
-      ...(record.mediaState === "pending" ? {} : {image: absoluteImageUrl(record.image)})
+      ...(record.mediaState === "pending" || !record.image ? {} : {image: absoluteImageUrl(record.image)})
     }));
     return [...recordEntries, ...indexableItems.filter((item) => !recordSlugs.has(item.slug)).map((item) => ({
       name: item.name,

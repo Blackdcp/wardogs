@@ -55,6 +55,9 @@ function explicitAmmoValue(record: CatalogueRecord) {
 }
 
 function toOption(base: CatalogueRecord, localized: CatalogueRecord, href?: string): AmmoMatcherOption {
+  if (!base.image || !localized.imageAlt) {
+    throw new Error(`Ammo matcher requires verified media: ${base.type}/${base.slug}`);
+  }
   return {
     slug: base.slug,
     name: localized.name,

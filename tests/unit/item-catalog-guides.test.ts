@@ -14,6 +14,10 @@ describe("WARDOGS item catalog guides", () => {
       "attachments",
       "gear",
       "equipment",
+      "medical",
+      "supplies",
+      "deployables",
+      "mechanics",
       "loadouts"
     ]);
   });
@@ -24,7 +28,11 @@ describe("WARDOGS item catalog guides", () => {
     expect(getCatalogEntryCount("ammo")).toBe(14);
     expect(getCatalogEntryCount("attachments")).toBe(55);
     expect(getCatalogEntryCount("gear")).toBe(11);
-    expect(getCatalogEntryCount("equipment")).toBe(13);
+    expect(getCatalogEntryCount("equipment")).toBe(5);
+    expect(getCatalogEntryCount("medical")).toBe(4);
+    expect(getCatalogEntryCount("supplies")).toBe(4);
+    expect(getCatalogEntryCount("deployables")).toBe(5);
+    expect(getCatalogEntryCount("mechanics")).toBe(4);
     expect(getCatalogEntryCount("loadouts")).toBe(3);
   });
 
@@ -40,8 +48,8 @@ describe("WARDOGS item catalog guides", () => {
 
   it("keeps every row aligned with its guide columns and labels pre-release evidence", () => {
     for (const guide of catalogGuides) {
-      expect(guide.dataAsOf).toContain("Alpha 1");
-      expect(guide.disclaimer).toContain("pre-release");
+      expect(guide.dataAsOf).toMatch(/Alpha 1|Closed Beta|Season 1/);
+      expect(guide.disclaimer).toMatch(/pre-release|historical|build-sensitive|Official current/i);
       expect(guide.sections.length).toBeGreaterThan(0);
       expect(guide.insights.length).toBeGreaterThanOrEqual(3);
       expect(guide.unknowns.length).toBeGreaterThanOrEqual(2);

@@ -21,7 +21,7 @@ const sourceClasses = new Set(["official", "live-client", "creator-current", "cr
 const confidenceLevels = new Set(["confirmed", "observed", "corroborated", "unverified"]);
 
 const expectedSeasonOneChanges = [
-  {entity: "FOB vendor", field: "Vendor price", previousValue: "$2,500", currentValue: "$7,500", progressionTrack: null, catalogueKey: null},
+  {entity: "FOB vendor", field: "Vendor price", previousValue: "$2,500", currentValue: "$7,500", progressionTrack: null, catalogueKey: "deployables/fob-vendor"},
   {entity: "Large Hammer vendor", field: "Vendor price", previousValue: "$1,600", currentValue: "$2,400", progressionTrack: null, catalogueKey: null},
   {entity: "Large Hammer Support unlock", field: "Support unlock", previousValue: "$25,000", currentValue: "$75,000", progressionTrack: "support", catalogueKey: null},
   {entity: "Artillery Tank career unlock", field: "Career unlock", previousValue: "$400,000", currentValue: "$500,000", progressionTrack: "career", catalogueKey: null},
@@ -57,7 +57,7 @@ const expectedSeasonOneChanges = [
 
 describe("catalogue evidence", () => {
   it("normalizes evidence for every catalogue record without promoting Alpha or Closed Beta observations", () => {
-    expect(catalogueRecords).toHaveLength(131);
+    expect(catalogueRecords).toHaveLength(160);
 
     for (const record of catalogueRecords) {
       expect(isCalendarDate(record.evidence.verifiedAt), record.slug).toBe(true);
@@ -65,9 +65,14 @@ describe("catalogue evidence", () => {
       expect(sourceClasses.has(record.evidence.sourceClass), record.slug).toBe(true);
       expect(confidenceLevels.has(record.evidence.confidence), record.slug).toBe(true);
       expect(record.evidence.sourceUrl === undefined || isApprovedSourceUrl(record.evidence.sourceUrl), record.slug).toBe(true);
-      expect(record.evidence.current, record.slug).toBe(false);
-      expect(getCatalogueFreshness(record), record.slug).toBe("historical");
-      expect(isCurrentDecisionSafe(record), record.slug).toBe(false);
+      if (/Alpha|Beta|pre-release/i.test(`${record.dataAsOf} ${record.evidence.build}`)) {
+        expect(record.evidence.current, record.slug).toBe(false);
+        expect(getCatalogueFreshness(record), record.slug).toBe("historical");
+        expect(isCurrentDecisionSafe(record), record.slug).toBe(false);
+      } else if (record.evidence.current) {
+        expect(getCatalogueFreshness(record), record.slug).toBe("current");
+        expect(["official", "live-client"], record.slug).toContain(record.evidence.sourceClass);
+      }
     }
   });
 

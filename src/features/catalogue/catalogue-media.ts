@@ -8,5 +8,9 @@ export const catalogueMetadataImages: Record<ItemTypeId | "hub", string> = {
   attachments: "/images/catalogue/banners/attachments-1280.webp",
   gear: "/images/catalogue/gear/heavy-armor.webp",
   equipment: "/images/catalogue/banners/meta-1280.webp",
+  medical: "/images/guide-discovery/medic-revive.webp",
+  supplies: "/images/catalogue/banners/vehicles-1280.webp",
+  deployables: "/images/guide-discovery/equipment-tools.webp",
+  mechanics: "/images/catalogue/banners/thegame-1280.webp",
   loadouts: "/images/catalogue/banners/loadouts-1280.webp"
 };

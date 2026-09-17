@@ -413,33 +413,14 @@ export const catalogGuides: readonly CatalogGuide[] = [
   {
     id: "equipment",
     title: "WARDOGS Equipment Guide",
-    description: "Observed offensive, medical, recon, vehicle, building, and utility equipment from the Alpha build.",
-    countLabel: "13 equipment items",
+    description: "Observed recon, ranging, vehicle-support, and utility equipment from the Alpha build.",
+    countLabel: "5 equipment items",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
     heroImage: "/images/items/catalog-equipment.jpg",
     heroImageAlt: "WARDOGS tactical equipment and support tools",
     disclaimer: "Community-observed pre-release equipment data. Reconstructed names and vendor prices are clearly identified and may change.",
     columns: ["Equipment", "Role", "Alpha price", "Recorded identifier"],
     sections: [
-      {
-        title: "Offensive",
-        description: "Deployable explosives for route denial and vehicle pressure.",
-        rows: [
-          row("Improvised Explosive Device", "Offensive", "$300", "IED"),
-          row("AT Mine", "Offensive", "$650", "ATMine"),
-          row("Claymore", "Offensive", "$900", "Claymore")
-        ]
-      },
-      {
-        title: "Medical",
-        description: "Personal recovery and squad support tools.",
-        rows: [
-          row("Stimpen", "Medical", "$250", "StimPen"),
-          row("Enox", "Medical", "$450", "Enox"),
-          row("Defibrillator", "Medical", "$1,600", "Defibrillator"),
-          row("Medical Bag", "Medical", "$2,000", "MedKit")
-        ]
-      },
       {
         title: "Recon and Vehicle Support",
         description: "Observation, ranging, fueling, and repair tools that create non-fragging roles.",
@@ -454,20 +435,152 @@ export const catalogGuides: readonly CatalogGuide[] = [
         title: "Building and Utility",
         description: "Low-cost tools that support construction, concealment, and field systems.",
         rows: [
-          row("M18 Smoke Grenade: White", "Building / Offensive", "$100", "SmokeGrenade"),
           row("Battery", "Utility", "$150", "Battery")
         ]
       }
     ],
     insights: [
-      "Medical, repair, and logistics equipment lets a player earn value without focusing only on kills.",
-      "Mines and explosives are most useful when paired with scouting and predictable vehicle routes.",
+      "Recon, repair, and vehicle-support equipment lets a player earn value without focusing only on kills.",
+      "Range and observation tools are most useful when their information is shared with the squad.",
       "Low-cost recon and support tools can protect a persistent balance better than an expensive all-purpose kit."
     ],
     unknowns: [
       "Several display names were reconstructed from identifiers and need in-game confirmation.",
       "Charges, cooldowns, placement limits, and final effects were not confirmed.",
-      "Mobile FOB upgrades and deployable defenses are covered separately because they were not all visible in the vendor table."
+      "Medical items, supplies, and deployables are separated into their own sourced field references."
+    ],
+    officialSources
+  },
+  {
+    id: "medical",
+    title: "WARDOGS Medical Equipment Reference",
+    description: "Compare the four personal and squad recovery items recorded in the approved Alpha equipment capture.",
+    countLabel: "4 medical items",
+    dataAsOf: "Alpha 1 - 7 Aug 2026",
+    heroImage: "/images/guide-discovery/medic-revive.webp",
+    heroImageAlt: "WARDOGS squad member receiving field medical support",
+    disclaimer: "Historical vendor observations only. Charges, healing values, timings, and current availability remain unverified.",
+    columns: ["Medical item", "Role", "Alpha price", "Recorded identifier"],
+    sections: [{
+      title: "Medical",
+      description: "Personal recovery and squad recovery items are kept separate from general utility equipment.",
+      rows: [
+        row("Stimpen", "Personal recovery", "$250", "StimPen"),
+        row("Enox", "Personal recovery", "$450", "Enox"),
+        row("Defibrillator", "Squad recovery", "$1,600", "Defibrillator"),
+        row("Medical Bag", "Squad recovery", "$2,000", "MedKit")
+      ]
+    }],
+    insights: [
+      "Choose a medical item for a defined recovery job rather than treating every tool as interchangeable.",
+      "The observed vendor prices compare replacement cost in Alpha 1; they do not establish a current value ranking.",
+      "Squad recovery tools matter most when positioning and communication make a recovery attempt possible."
+    ],
+    unknowns: [
+      "Current effects, charges, use times, prices, and availability are not confirmed.",
+      "The capture does not establish whether personal recovery and squad recovery share cooldowns or inventory rules."
+    ],
+    officialSources
+  },
+  {
+    id: "supplies",
+    title: "WARDOGS Supply Pallets Reference",
+    description: "Identify the four supply categories observed in the Closed Beta cargo workflow before planning a delivery.",
+    countLabel: "4 supply categories",
+    dataAsOf: "Closed Beta - 29 Aug 2026",
+    heroImage: "/images/catalogue/banners/vehicles-1280.webp",
+    heroImageAlt: "WARDOGS logistics vehicles supporting a field supply route",
+    disclaimer: "Creator-observed Closed Beta workflow. Capacity, price, controls, and current availability remain build-sensitive.",
+    columns: ["Supply", "Role", "Observed form", "Build"],
+    sections: [{
+      title: "Supply Types",
+      description: "Match the cargo category to the receiving FOB or vehicle need before loading.",
+      rows: [
+        row("Build Supply Pallet", "FOB construction", "Cargo pallet", "Closed Beta"),
+        row("Ammo Supply Pallet", "Ammunition resupply", "Cargo pallet", "Closed Beta"),
+        row("Fuel Supply Pallet", "Fuel delivery", "Cargo pallet", "Closed Beta"),
+        row("Mechanical Supply Pallet", "Mechanical support", "Cargo pallet", "Closed Beta")
+      ]
+    }],
+    insights: [
+      "A supply run begins by confirming what the destination needs, not by loading the first available pallet.",
+      "Purchase, loading, escort, unloading, and the return route form one logistics cycle.",
+      "The four observed categories should be treated as functions, not as proof of fixed present-day capacities."
+    ],
+    unknowns: [
+      "Current pallet capacity, purchase price, loading controls, and delivery rewards are not confirmed.",
+      "The Closed Beta capture does not prove that every vehicle can carry every supply category in the current build."
+    ],
+    officialSources
+  },
+  {
+    id: "deployables",
+    title: "WARDOGS Deployables Reference",
+    description: "Separate route-denial explosives from FOB and objective assets using only approved vendor and guide evidence.",
+    countLabel: "5 deployable records",
+    dataAsOf: "Alpha 1 to Season 1 - checked 17 Sep 2026",
+    heroImage: "/images/guide-discovery/equipment-tools.webp",
+    heroImageAlt: "WARDOGS field position used as contextual deployables reference",
+    disclaimer: "Mixed historical and official evidence. No damage, radius, placement limit, or current build cost is inferred.",
+    columns: ["Deployable", "Role", "Observed fact", "Evidence window"],
+    sections: [
+      {
+        title: "Route Denial",
+        description: "Historical vendor identifiers and prices for three route-denial tools.",
+        rows: [
+          row("Improvised Explosive Device", "Route denial", "$300", "Alpha 1"),
+          row("AT Mine", "Route denial", "$650", "Alpha 1"),
+          row("Claymore", "Route denial", "$900", "Alpha 1")
+        ]
+      },
+      {
+        title: "FOB and Objective Assets",
+        description: "FOB-linked assets whose current workflow must be checked in the live build.",
+        rows: [
+          row("FOB Vendor", "FOB asset", "$7,500 Season 1 vendor price", "Official Season 1"),
+          row("Oil Rig / Drill Rig", "Objective support", "FOB supplies and fuel", "Closed Beta")
+        ]
+      }
+    ],
+    insights: [
+      "Deployables are useful only when placement supports a known route, objective, or squad plan.",
+      "Route-denial items and FOB assets solve different jobs and should not be compared by price alone.",
+      "The Season 1 FOB vendor change is current evidence; Alpha explosive prices remain historical observations."
+    ],
+    unknowns: [
+      "Damage, radius, placement limits, cooldowns, and most current costs remain unconfirmed.",
+      "The historical Oil Rig workflow does not prove current availability, timing, or Hot Zone effects."
+    ],
+    officialSources
+  },
+  {
+    id: "mechanics",
+    title: "WARDOGS Objective, Economy, and Support Mechanics",
+    description: "A sourced reference for Control Zone scoring, persistent cash, support rewards, and the historical Hot Zone bonus.",
+    countLabel: "4 mechanics",
+    dataAsOf: "Season 1 Early Access - checked 17 Sep 2026",
+    heroImage: "/images/catalogue/banners/thegame-1280.webp",
+    heroImageAlt: "WARDOGS combined-arms objective battle",
+    disclaimer: "Official current rules are labeled only where the source supports them; historical mode material remains explicitly build-sensitive.",
+    columns: ["Mechanic", "System", "Confirmed fact", "Evidence state"],
+    sections: [{
+      title: "Objective and Economy Systems",
+      description: "Use these rules to understand the match loop without inventing hidden payout values.",
+      rows: [
+        row("Control Zone Scoring", "Objective", "First team to 100 points", "Official current"),
+        row("Persistent Cash", "Economy", "$10,000 starting balance", "Official current"),
+        row("Support Rewards", "Support", "Revive, transport, supply, objective", "Official current"),
+        row("Hot Zone Bonus", "Economy", "Bonus cash", "Official historical")
+      ]
+    }],
+    insights: [
+      "The main win condition remains Control Zone scoring; support and economy systems shape how a team sustains that pressure.",
+      "Persistent cash makes every purchase part of a longer budget decision rather than an isolated spawn choice.",
+      "Officially named support actions explain useful roles without requiring unverified payout figures."
+    ],
+    unknowns: [
+      "Exact support payouts and any current Hot Zone bonus values are not confirmed.",
+      "Server settings and future balance changes may alter pacing without changing the documented core objective."
     ],
     officialSources
   },

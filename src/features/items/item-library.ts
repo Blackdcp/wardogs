@@ -17,7 +17,18 @@ import {
 import {vehicleItems} from "./vehicle-items";
 import {weaponItems} from "./weapon-items";
 
-export type ItemTypeId = "weapons" | "vehicles" | "ammo" | "attachments" | "gear" | "equipment" | "loadouts";
+export type ItemTypeId =
+  | "weapons"
+  | "vehicles"
+  | "ammo"
+  | "attachments"
+  | "gear"
+  | "equipment"
+  | "medical"
+  | "supplies"
+  | "deployables"
+  | "mechanics"
+  | "loadouts";
 export type ItemStatus = "official" | "verified-in-game" | "pre-release-build" | "community-report";
 export type EvidenceLevel = "Official" | "Creator Footage" | "Pre-release Build";
 
@@ -126,6 +137,38 @@ export const itemTypes: readonly ItemType[] = [
     href: "/items/equipment",
     image: "/images/items/catalog-equipment.jpg",
     imageAlt: "WARDOGS support equipment"
+  },
+  {
+    id: "medical",
+    label: "Medical",
+    description: "Observed personal and squad recovery tools, with historical build limits kept visible.",
+    href: "/items/medical",
+    image: "/images/guide-discovery/medic-revive.webp",
+    imageAlt: "WARDOGS medical support in the field"
+  },
+  {
+    id: "supplies",
+    label: "Supplies",
+    description: "Build, ammunition, fuel, and mechanical supply categories used by the logistics loop.",
+    href: "/items/supplies",
+    image: "/images/catalogue/banners/vehicles-1280.webp",
+    imageAlt: "WARDOGS field logistics and supplies"
+  },
+  {
+    id: "deployables",
+    label: "Deployables",
+    description: "Sourced route-denial, FOB, and objective assets without invented placement statistics.",
+    href: "/items/deployables",
+    image: "/images/guide-discovery/equipment-tools.webp",
+    imageAlt: "WARDOGS deployable field equipment"
+  },
+  {
+    id: "mechanics",
+    label: "Mechanics",
+    description: "Objective, cash, and support systems that connect individual actions to team progress.",
+    href: "/items/mechanics",
+    image: "/images/catalogue/banners/thegame-1280.webp",
+    imageAlt: "WARDOGS objective and support systems"
   },
   {
     id: "loadouts",
@@ -366,6 +409,9 @@ const evidenceByTier: Record<CatalogueRecord["evidenceTier"], EvidenceLevel[]> =
 };
 
 function catalogueRecordToItem(record: CatalogueRecord, priority: number): WardogsItemInput {
+  if (record.type !== "weapons" && record.type !== "vehicles") {
+    throw new Error(`Cannot create a detail item from inline catalogue group: ${record.type}/${record.slug}`);
+  }
   const facts = record.facts.map((fact) => ({...fact, evidence: evidenceByTier[record.evidenceTier]}));
   const knownFacts = record.facts.filter((fact) => !/Not captured|Identifier only/.test(fact.value));
   const relatedItems = getCatalogueRecords(record.type)
@@ -446,6 +492,10 @@ export const itemLibrary: readonly WardogsItem[] = [
     ...(item.type === "attachments" ? ["wardogs-best-weapons-loadouts", "wardogs-equipment-tools-guide"] : []),
     ...(item.type === "gear" ? ["wardogs-armor-damage-ttk-guide", "wardogs-medic-revive-guide"] : []),
     ...(item.type === "equipment" ? ["wardogs-equipment-tools-guide"] : []),
+    ...(item.type === "medical" ? ["wardogs-medic-revive-guide"] : []),
+    ...(item.type === "supplies" ? ["wardogs-cargo-guide", "wardogs-fob-guide"] : []),
+    ...(item.type === "deployables" ? ["wardogs-equipment-tools-guide", "wardogs-fob-guide"] : []),
+    ...(item.type === "mechanics" ? ["wardogs-gameplay", "wardogs-money-guide"] : []),
     ...(item.type === "loadouts" ? ["wardogs-best-weapons-loadouts"] : []),
     ...item.relatedGuides,
   ])].slice(0, 5),
@@ -484,7 +534,13 @@ function getItemChangeHistory(item: WardogsItemInput): readonly CatalogueChangeH
 function isItemIndexable(item: WardogsItemInput): boolean {
   const record = getMatchingCatalogueRecord(item);
   if (record) return getIndexableCatalogueItems([record]).length === 1;
-  return item.sources.length > 0 && item.role.length > 0 && item.strengths.length > 0 && item.cautions.length > 0;
+  return item.sources.length > 0
+    && item.role.length > 0
+    && item.strengths.length > 0
+    && item.cautions.length > 0
+    && Boolean(item.detailImage)
+    && Boolean(item.detailImageAlt?.trim())
+    && !item.detailImage?.includes("/banners/");
 }
 
 export function getItemType(type: string): ItemType | undefined {
@@ -496,7 +552,9 @@ export function getItemsByType(type: ItemTypeId): WardogsItem[] {
 }
 
 export function getStandaloneItemsByType(type: ItemTypeId): WardogsItem[] {
-  if (type === "equipment" || type === "loadouts") return getItemsByType(type);
+  if (type === "equipment" || type === "medical" || type === "supplies" || type === "deployables" || type === "mechanics" || type === "loadouts") {
+    return getItemsByType(type).filter((item) => item.indexable);
+  }
 
   const publishedSlugs = new Set(
     getCatalogueRecords(type)
@@ -504,7 +562,7 @@ export function getStandaloneItemsByType(type: ItemTypeId): WardogsItem[] {
       .map((record) => record.slug)
   );
 
-  return getItemsByType(type).filter((item) => !publishedSlugs.has(item.slug));
+  return getItemsByType(type).filter((item) => item.indexable && !publishedSlugs.has(item.slug));
 }
 
 export function getItemBySlug(slug: string): WardogsItem | undefined {
@@ -518,7 +576,7 @@ export function getItemByTypeAndSlug(type: string, slug: string): WardogsItem | 
 }
 
 export function getFeaturedItems(limit = 6): WardogsItem[] {
-  return itemLibrary.filter((item) => item.indexLocales.length > 0).sort((a, b) => a.priority - b.priority).slice(0, limit);
+  return itemLibrary.filter((item) => item.indexable && item.indexLocales.length > 0).sort((a, b) => a.priority - b.priority).slice(0, limit);
 }
 
 export function getRelatedItems(item: WardogsItem, locale: Locale): WardogsItem[] {

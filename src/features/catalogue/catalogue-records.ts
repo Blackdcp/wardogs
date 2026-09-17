@@ -1,5 +1,5 @@
-import type {CatalogueFact, CatalogueRecord, CatalogueRecordType} from "./catalogue-types";
-import {getCatalogueChangeHistory, normalizeCatalogueEvidence} from "./catalogue-evidence-data";
+import type {CatalogueEvidence, CatalogueFact, CatalogueRecord, CatalogueRecordType} from "./catalogue-types";
+import {getCatalogueChangeHistory, normalizeCatalogueEvidence, seasonOneSourceUrl, seasonOneVerifiedAt} from "./catalogue-evidence-data";
 
 const dataAsOf = "Alpha 1 - 7 Aug 2026";
 const betaDataAsOf = "Closed Beta - 21-23 Aug 2026";
@@ -14,9 +14,69 @@ const weaponCaptureNotes = (capturedAt: string) =>
   creatorCaptureNotes("Every Weapon Tested in WARDOGS", capturedAt);
 
 type CatalogueRecordInput = Omit<CatalogueRecord, "evidenceTier" | "mediaState" | "sourceNotes" | "evidence" | "changeHistory"> &
-  Partial<Pick<CatalogueRecord, "evidenceTier" | "mediaState" | "sourceNotes">>;
+  Partial<Pick<CatalogueRecord, "evidenceTier" | "mediaState" | "sourceNotes" | "evidence">>;
 
 const fact = (label: string, value: string): CatalogueFact => ({label, value});
+
+const officialSteamUrl = "https://store.steampowered.com/app/1867240/WARDOGS/";
+const officialModeVideoUrl = "https://www.youtube.com/watch?v=cSn5IGknapM";
+const equipmentCaptureUrl = "https://www.youtube.com/watch?v=-k6IV0ITLDo";
+const cargoCaptureUrl = "https://www.youtube.com/watch?v=2aU4OB0duYg";
+const buildingCaptureUrl = "https://www.youtube.com/watch?v=kg46BZ1H2W0";
+const mortarCaptureUrl = "https://www.youtube.com/watch?v=utnQT_Jmd5w";
+const helicopterCaptureUrl = "https://www.youtube.com/watch?v=wcsY2EeIlyc";
+
+const observedEvidence = (build: string, verifiedAt: string, sourceUrl: string): CatalogueEvidence => ({
+  build,
+  verifiedAt,
+  sourceClass: "live-client",
+  confidence: "observed",
+  current: false,
+  sourceUrl,
+});
+
+const creatorEvidence = (build: string, verifiedAt: string, sourceUrl: string): CatalogueEvidence => ({
+  build,
+  verifiedAt,
+  sourceClass: "creator-historical",
+  confidence: "corroborated",
+  current: false,
+  sourceUrl,
+});
+
+const officialEvidence = (build: string, verifiedAt: string, sourceUrl: string, current: boolean): CatalogueEvidence => ({
+  build,
+  verifiedAt,
+  sourceClass: "official",
+  confidence: "confirmed",
+  current,
+  sourceUrl,
+});
+
+type SourcedInlineRecord = {
+  slug: string;
+  name: string;
+  type: CatalogueRecordType;
+  subtype: string;
+  summary: string;
+  facts: readonly CatalogueFact[];
+  filterValues: readonly string[];
+  dataAsOf: string;
+  evidence: CatalogueEvidence;
+  evidenceTier: CatalogueRecord["evidenceTier"];
+  evidenceStatus: CatalogueRecord["evidenceStatus"];
+  sourceNote: string;
+};
+
+function sourcedInlineRecord(input: SourcedInlineRecord): CatalogueRecordInput {
+  const {sourceNote, ...record} = input;
+  return {
+    ...record,
+    detailStatus: "inline",
+    mediaState: "pending",
+    sourceNotes: [sourceNote],
+  };
+}
 
 const weaponRecords: readonly CatalogueRecordInput[] = [
   {slug: "a-91", name: "A-91", type: "weapons", subtype: "Assault rifle", image: "/images/catalogue/weapons/a-91.webp", imageAlt: "A-91 assault rifle", summary: "Assault XP rifle using 5.56x45mm with semi and burst fire.", facts: [fact("Alpha price", "Not captured"), fact("Ammunition", "5.56x45mm"), fact("Fire modes", "Semi / Burst"), fact("Weight", "3.17 kg"), fact("Progression", "Assault XP")], filterValues: ["assault-rifle", "assault-xp", "5-56x45mm"], detailStatus: "published", detailHref: "/items/weapons/a-91", evidenceStatus, dataAsOf},
@@ -53,10 +113,10 @@ const weaponRecords: readonly CatalogueRecordInput[] = [
   {slug: "maaws", name: "MAAWS", type: "weapons", subtype: "Launcher", image: "/images/catalogue/weapons/maaws.webp", imageAlt: "MAAWS launcher shown in WARDOGS gameplay", summary: "84mm specialist launcher observed in pre-release catalogue coverage.", facts: [fact("Alpha price", "Not captured"), fact("Ammunition", "84mm"), fact("Role", "Anti-vehicle launcher")], filterValues: ["launcher", "anti-vehicle", "84mm"], detailStatus: "published", detailHref: "/items/weapons/maaws", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: weaponCaptureNotes("18:24"), dataAsOf: betaDataAsOf},
   {slug: "mgl-40", name: "MGL-40", type: "weapons", subtype: "Launcher", image: "/images/catalogue/weapons/mgl-40.webp", imageAlt: "MGL-40 launcher shown in WARDOGS gameplay", summary: "40mm multiple grenade launcher observed in pre-release catalogue coverage.", facts: [fact("Alpha price", "Not captured"), fact("Ammunition", "40mm"), fact("Role", "Grenade launcher")], filterValues: ["launcher", "grenade-launcher", "40mm"], detailStatus: "published", detailHref: "/items/weapons/mgl-40", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: weaponCaptureNotes("19:12"), dataAsOf: betaDataAsOf},
   {slug: "rpg-7", name: "RPG-7", type: "weapons", subtype: "Launcher", image: "/images/catalogue/weapons/rpg-7.webp", imageAlt: "RPG-7 launcher shown in WARDOGS gameplay", summary: "93mm specialist launcher observed in the Alpha catalogue.", facts: [fact("Alpha price", "$2,000"), fact("Ammunition", "93mm"), fact("Role", "Anti-vehicle launcher")], filterValues: ["launcher", "anti-vehicle", "93mm"], detailStatus: "published", detailHref: "/items/weapons/rpg-7", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: weaponCaptureNotes("18:00"), dataAsOf: betaDataAsOf},
-  {slug: "m12g", name: "M12G", type: "weapons", subtype: "Identifier only", image: "/images/catalogue/banners/weapons-1280.webp", imageAlt: "M12G image verification pending", summary: "M12G appears as a pre-release weapon identifier, but reliable role and numeric fields were not captured.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
-  {slug: "at4", name: "AT4", type: "weapons", subtype: "Identifier only", image: "/images/catalogue/banners/weapons-1280.webp", imageAlt: "AT4 image verification pending", summary: "AT4 appears as a pre-release weapon identifier, but reliable role and numeric fields were not captured.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
-  {slug: "browning-mg", name: "Browning MG", type: "weapons", subtype: "Identifier only", image: "/images/catalogue/banners/weapons-1280.webp", imageAlt: "Browning MG image verification pending", summary: "Browning MG appears as a pre-release weapon identifier, but reliable role and numeric fields were not captured.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
-  {slug: "g60", name: "G60", type: "weapons", subtype: "Identifier only", image: "/images/catalogue/banners/weapons-1280.webp", imageAlt: "G60 image verification pending", summary: "G60 appears as a pre-release weapon identifier, but reliable role and numeric fields were not captured.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf}
+  {slug: "m12g", name: "M12G", type: "weapons", subtype: "Identifier only", summary: "M12G appears as a pre-release weapon identifier, but reliable role and numeric fields were not captured.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
+  {slug: "at4", name: "AT4", type: "weapons", subtype: "Identifier only", summary: "AT4 appears as a pre-release weapon identifier, but reliable role and numeric fields were not captured.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
+  {slug: "browning-mg", name: "Browning MG", type: "weapons", subtype: "Identifier only", summary: "Browning MG appears as a pre-release weapon identifier, but reliable role and numeric fields were not captured.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
+  {slug: "g60", name: "G60", type: "weapons", subtype: "Identifier only", summary: "G60 appears as a pre-release weapon identifier, but reliable role and numeric fields were not captured.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf}
 ];
 
 const vehicleRecords: readonly CatalogueRecordInput[] = [
@@ -80,9 +140,9 @@ const vehicleRecords: readonly CatalogueRecordInput[] = [
   {slug: "ural-defender-m249", name: "Ural Defender M249", type: "vehicles", subtype: "Armed logistics", image: "/images/catalogue/vehicles/ural-defender-m249.webp", imageAlt: "Ural Defender M249 armed logistics truck", summary: "Armed logistics vehicle listed at $6,750 with a Driver Level 40 gate.", facts: [fact("Role", "Armed logistics"), fact("Alpha price", "$6,750"), fact("Observed gate", "Driver Level 40"), fact("Track", "Driver")], filterValues: ["land-transport", "armed-logistics", "driver"], detailStatus: "published", detailHref: "/items/vehicles/ural-defender-m249", evidenceStatus, dataAsOf},
   {slug: "ural-defender", name: "Ural Defender", type: "vehicles", subtype: "Protected logistics", image: "/images/catalogue/vehicles/ural-defender.webp", imageAlt: "Ural Defender protected logistics truck", summary: "Protected logistics vehicle listed at $6,000 with a Driver Level 30 gate.", facts: [fact("Role", "Protected logistics"), fact("Alpha price", "$6,000"), fact("Observed gate", "Driver Level 30"), fact("Track", "Driver")], filterValues: ["land-transport", "protected-logistics", "driver"], detailStatus: "published", detailHref: "/items/vehicles/ural-defender", evidenceStatus, dataAsOf},
   {slug: "ural", name: "Ural", type: "vehicles", subtype: "Logistics truck", image: "/images/catalogue/vehicles/ural.webp", imageAlt: "Ural logistics truck", summary: "Logistics truck listed at $5,000 with a $60,000 unlock observed.", facts: [fact("Role", "Logistics truck"), fact("Alpha price", "$5,000"), fact("Observed gate", "$60,000 unlock"), fact("Track", "-")], filterValues: ["land-transport", "logistics-truck", "60-000-unlock"], detailStatus: "published", detailHref: "/items/vehicles/ural", evidenceStatus, dataAsOf},
-  {slug: "m113-apc-sv-variant-1", name: "M113 APC SV - Variant 1", type: "vehicles", subtype: "Identifier only", image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: "M113 APC SV Variant 1 image verification pending", summary: "One of three M113 APC SV identifiers observed in pre-release catalogue coverage; variant details were not readable.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only", "tracked"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
-  {slug: "m113-apc-sv-variant-2", name: "M113 APC SV - Variant 2", type: "vehicles", subtype: "Identifier only", image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: "M113 APC SV Variant 2 image verification pending", summary: "One of three M113 APC SV identifiers observed in pre-release catalogue coverage; variant details were not readable.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only", "tracked"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
-  {slug: "m113-apc-sv-variant-3", name: "M113 APC SV - Variant 3", type: "vehicles", subtype: "Identifier only", image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: "M113 APC SV Variant 3 image verification pending", summary: "One of three M113 APC SV identifiers observed in pre-release catalogue coverage; variant details were not readable.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only", "tracked"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
+  {slug: "m113-apc-sv-variant-1", name: "M113 APC SV - Variant 1", type: "vehicles", subtype: "Identifier only", summary: "One of three M113 APC SV identifiers observed in pre-release catalogue coverage; variant details were not readable.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only", "tracked"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
+  {slug: "m113-apc-sv-variant-2", name: "M113 APC SV - Variant 2", type: "vehicles", subtype: "Identifier only", summary: "One of three M113 APC SV identifiers observed in pre-release catalogue coverage; variant details were not readable.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only", "tracked"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
+  {slug: "m113-apc-sv-variant-3", name: "M113 APC SV - Variant 3", type: "vehicles", subtype: "Identifier only", summary: "One of three M113 APC SV identifiers observed in pre-release catalogue coverage; variant details were not readable.", facts: [fact("Build", "Closed Beta"), fact("Verification", "Identifier only")], filterValues: ["identifier-only", "tracked"], detailStatus: "inline", evidenceStatus, evidenceTier: "identifier-only", mediaState: "pending", sourceNotes: identifierOnlyNotes, dataAsOf: betaDataAsOf},
   {slug: "loudspeaker", name: "Loudspeaker", type: "vehicles", subtype: "Stationary support", image: "/images/catalogue/vehicles/loudspeaker.webp", imageAlt: "Climbable Loudspeaker tower shown in WARDOGS gameplay", summary: "Stationary support-system identifier observed in Closed Beta catalogue coverage; exact function and cost remain build-sensitive.", facts: [fact("Role", "Stationary support"), fact("Closed Beta price", "Not captured"), fact("Observed gate", "Not captured")], filterValues: ["stationary-system", "support"], detailStatus: "published", detailHref: "/items/vehicles/loudspeaker", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: creatorCaptureNotes("WARDOGS Beta live gameplay", "01:39:26"), dataAsOf: betaDataAsOf},
   {slug: "talon-9k-sam", name: "Talon 9K-SAM", type: "vehicles", subtype: "Stationary anti-air", image: "/images/catalogue/vehicles/talon-9k-sam.webp", imageAlt: "Talon 9K-SAM emplacement shown in WARDOGS gameplay", summary: "Stationary anti-air system identified in Closed Beta catalogue coverage; cost and deployment rules remain unconfirmed.", facts: [fact("Role", "Stationary anti-air"), fact("Closed Beta price", "Not captured"), fact("Observed gate", "Not captured")], filterValues: ["stationary-system", "anti-air"], detailStatus: "published", detailHref: "/items/vehicles/talon-9k-sam", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: creatorCaptureNotes("WARDOGS Building 101", "15:30"), dataAsOf: betaDataAsOf},
   {slug: "l81-mortar", name: "L81 Mortar", type: "vehicles", subtype: "Stationary artillery", image: "/images/catalogue/vehicles/l81-mortar.webp", imageAlt: "Deployed L81 Mortar shown in a WARDOGS sandbag pit", summary: "Stationary mortar system identified in Closed Beta catalogue coverage; range, ammunition, and cost remain unconfirmed.", facts: [fact("Role", "Stationary artillery"), fact("Closed Beta price", "Not captured"), fact("Observed gate", "Not captured")], filterValues: ["stationary-system", "artillery"], detailStatus: "published", detailHref: "/items/vehicles/l81-mortar", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: creatorCaptureNotes("WARDOGS Building 101", "01:16"), dataAsOf: betaDataAsOf},
@@ -164,12 +224,69 @@ const gearRecords: readonly CatalogueRecordInput[] = [
   {slug: "scout-backpack", name: "Scout Backpack", type: "gear", subtype: "Backpack", image: "/images/catalogue/gear/scout-backpack.webp", imageAlt: "Scout Backpack", summary: "Lightest backpack listed at $350 in the observed Alpha gear vendor.", facts: [fact("Slot", "Backpack"), fact("Tier", "Lightest"), fact("Alpha price", "$350")], filterValues: ["backpack", "lightest"], detailStatus: "inline", evidenceStatus, dataAsOf}
 ];
 
+const alphaEquipmentEvidence = observedEvidence(dataAsOf, "2026-08-07", equipmentCaptureUrl);
+const betaCargoEvidence = creatorEvidence(betaDataAsOf, "2026-08-29", cargoCaptureUrl);
+const betaBuildingEvidence = creatorEvidence(betaDataAsOf, "2026-08-29", buildingCaptureUrl);
+
+const equipmentRecords: readonly CatalogueRecordInput[] = [
+  sourcedInlineRecord({slug: "binoculars", name: "Binoculars", type: "equipment", subtype: "Recon", summary: "Low-cost observation equipment recorded in the Alpha vendor capture.", facts: [fact("Observed role", "Recon observation"), fact("Alpha price", "$75")], filterValues: ["recon"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "Name, role, and price were recorded in the approved Alpha equipment catalogue capture."}),
+  sourcedInlineRecord({slug: "rangefinder", name: "Rangefinder", type: "equipment", subtype: "Recon", summary: "Ranging equipment recorded for reconnaissance and coordinated fire support.", facts: [fact("Observed role", "Range finding"), fact("Alpha price", "$150")], filterValues: ["recon"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "Name, role, and price were recorded in the approved Alpha equipment catalogue capture."}),
+  sourcedInlineRecord({slug: "fuel-can", name: "Fuel Can", type: "equipment", subtype: "Vehicle support", summary: "Portable vehicle-support fuel equipment recorded in the Alpha vendor capture.", facts: [fact("Observed role", "Vehicle fueling"), fact("Alpha price", "$150")], filterValues: ["vehicle-support"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "Name, role, and price were recorded in the approved Alpha equipment catalogue capture."}),
+  sourcedInlineRecord({slug: "repair-tool", name: "Repair Tool", type: "equipment", subtype: "Vehicle support", summary: "Vehicle-support repair equipment recorded in the Alpha vendor capture.", facts: [fact("Observed role", "Vehicle repair"), fact("Alpha price", "$150")], filterValues: ["vehicle-support"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "Name, role, and price were recorded in the approved Alpha equipment catalogue capture."}),
+  sourcedInlineRecord({slug: "battery", name: "Battery", type: "equipment", subtype: "Utility", summary: "Utility equipment recorded by name and price in the Alpha vendor capture.", facts: [fact("Observed role", "Field utility"), fact("Alpha price", "$150")], filterValues: ["utility"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "Name and price were recorded in the approved Alpha equipment catalogue capture; charges and exact use remain unconfirmed."}),
+];
+
+const medicalRecords: readonly CatalogueRecordInput[] = [
+  sourcedInlineRecord({slug: "stimpen", name: "Stimpen", type: "medical", subtype: "Personal recovery", summary: "Personal medical equipment recorded in the Alpha vendor capture.", facts: [fact("Observed role", "Personal recovery"), fact("Alpha price", "$250")], filterValues: ["personal-recovery"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The displayed name and price were recorded in the approved Alpha equipment catalogue capture."}),
+  sourcedInlineRecord({slug: "enox", name: "Enox", type: "medical", subtype: "Personal recovery", summary: "Personal recovery equipment recorded by name and price in the Alpha vendor capture.", facts: [fact("Observed role", "Personal recovery"), fact("Alpha price", "$450")], filterValues: ["personal-recovery"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The displayed name and price were recorded in the approved Alpha equipment catalogue capture."}),
+  sourcedInlineRecord({slug: "defibrillator", name: "Defibrillator", type: "medical", subtype: "Squad recovery", summary: "Squad recovery equipment recorded in the Alpha vendor capture.", facts: [fact("Observed role", "Squad recovery"), fact("Alpha price", "$1,600")], filterValues: ["squad-recovery"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The displayed name, role category, and price were recorded in the approved Alpha equipment catalogue capture."}),
+  sourcedInlineRecord({slug: "medical-bag", name: "Medical Bag", type: "medical", subtype: "Squad recovery", summary: "Medical support equipment whose MedKit identifier was recorded in the Alpha vendor capture.", facts: [fact("Recorded identifier", "MedKit"), fact("Alpha price", "$2,000")], filterValues: ["squad-recovery"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved Alpha capture showed the MedKit identifier and price; the readable display name is retained with that caveat."}),
+];
+
+const supplyRecords: readonly CatalogueRecordInput[] = [
+  sourcedInlineRecord({slug: "build-supply-pallet", name: "Build Supply Pallet", type: "supplies", subtype: "Build", summary: "A construction-supply pallet shown in the recorded Closed Beta cargo workflow.", facts: [fact("Observed role", "FOB construction"), fact("Observed form", "Cargo pallet")], filterValues: ["build"], dataAsOf: betaDataAsOf, evidence: betaCargoEvidence, evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The pallet category was visible in the approved vehicle cargo walkthrough; price and capacity remain build-sensitive."}),
+  sourcedInlineRecord({slug: "ammo-supply-pallet", name: "Ammo Supply Pallet", type: "supplies", subtype: "Ammo", summary: "An ammunition-supply pallet shown in the recorded Closed Beta cargo workflow.", facts: [fact("Observed role", "Ammunition resupply"), fact("Observed form", "Cargo pallet")], filterValues: ["ammo"], dataAsOf: betaDataAsOf, evidence: betaCargoEvidence, evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The pallet category was visible in the approved vehicle cargo walkthrough; price and capacity remain build-sensitive."}),
+  sourcedInlineRecord({slug: "fuel-supply-pallet", name: "Fuel Supply Pallet", type: "supplies", subtype: "Fuel", summary: "A fuel-supply pallet shown in the recorded Closed Beta cargo workflow.", facts: [fact("Observed role", "Fuel delivery"), fact("Observed form", "Cargo pallet")], filterValues: ["fuel"], dataAsOf: betaDataAsOf, evidence: betaCargoEvidence, evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The pallet category was visible in the approved vehicle cargo walkthrough; price and capacity remain build-sensitive."}),
+  sourcedInlineRecord({slug: "mechanical-supply-pallet", name: "Mechanical Supply Pallet", type: "supplies", subtype: "Mechanical", summary: "A mechanical-supply pallet shown in the recorded Closed Beta cargo workflow.", facts: [fact("Observed role", "Mechanical support"), fact("Observed form", "Cargo pallet")], filterValues: ["mechanical"], dataAsOf: betaDataAsOf, evidence: betaCargoEvidence, evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The pallet category was visible in the approved vehicle cargo walkthrough; price and capacity remain build-sensitive."}),
+];
+
+const deployableRecords: readonly CatalogueRecordInput[] = [
+  sourcedInlineRecord({slug: "improvised-explosive-device", name: "Improvised Explosive Device", type: "deployables", subtype: "Route denial", summary: "An offensive deployable recorded in the Alpha equipment vendor capture.", facts: [fact("Recorded identifier", "IED"), fact("Alpha price", "$300")], filterValues: ["route-denial"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved Alpha equipment capture recorded the IED identifier and vendor price; placement limits remain unknown."}),
+  sourcedInlineRecord({slug: "at-mine", name: "AT Mine", type: "deployables", subtype: "Route denial", summary: "An anti-vehicle mine recorded in the Alpha equipment vendor capture.", facts: [fact("Recorded identifier", "ATMine"), fact("Alpha price", "$650")], filterValues: ["route-denial"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved Alpha equipment capture recorded the ATMine identifier and vendor price; damage and placement limits remain unknown."}),
+  sourcedInlineRecord({slug: "claymore", name: "Claymore", type: "deployables", subtype: "Route denial", summary: "A directional explosive recorded in the Alpha equipment vendor capture.", facts: [fact("Recorded identifier", "Claymore"), fact("Alpha price", "$900")], filterValues: ["route-denial"], dataAsOf, evidence: alphaEquipmentEvidence, evidenceTier: "build-capture", evidenceStatus, sourceNote: "The approved Alpha equipment capture recorded the Claymore name and vendor price; damage and placement limits remain unknown."}),
+  sourcedInlineRecord({slug: "fob-vendor", name: "FOB Vendor", type: "deployables", subtype: "FOB asset", summary: "The official Season 1 changelog increased the FOB vendor price from $2,500 to $7,500.", facts: [fact("Season 1 vendor price", "$7,500"), fact("Previous vendor price", "$2,500")], filterValues: ["fob-asset"], dataAsOf: "Season 1", evidence: officialEvidence("Season 1", seasonOneVerifiedAt, seasonOneSourceUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "Both values are stated in the official Season 1 changelog; no unstated build cost or placement rule is inferred."}),
+  sourcedInlineRecord({slug: "oil-rig-hot-zone", name: "Oil Rig / Drill Rig", type: "deployables", subtype: "Objective support", summary: "A Closed Beta FOB structure associated with fuel delivery and Hot Zone influence.", facts: [fact("Observed role", "Hot Zone influence"), fact("Observed dependency", "FOB supplies and fuel")], filterValues: ["fob-asset", "objective-support"], dataAsOf: betaDataAsOf, evidence: betaBuildingEvidence, evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The approved Building 101 capture and the maintained Oil Rig guide support the workflow; all costs and timings remain historical."}),
+];
+
+const mechanicRecords: readonly CatalogueRecordInput[] = [
+  sourcedInlineRecord({slug: "control-zone-scoring", name: "Control Zone Scoring", type: "mechanics", subtype: "Objective", summary: "Three teams contest a randomized 2 x 2 km Control Zone, with the first team to 100 points winning.", facts: [fact("Active objective", "Randomized 2 x 2 km Control Zone"), fact("Win condition", "First team to 100 points")], filterValues: ["objective"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The scale, three-team format, and scoring target come from the official Steam description."}),
+  sourcedInlineRecord({slug: "persistent-cash", name: "Persistent Cash", type: "mechanics", subtype: "Economy", summary: "Players begin with $10,000 and use persistent cash to buy a loadout for each life.", facts: [fact("Starting balance", "$10,000"), fact("Persistence", "Cash carries between matches")], filterValues: ["economy"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The starting balance and persistent-economy description are stated on the official Steam page."}),
+  sourcedInlineRecord({slug: "support-rewards", name: "Support Rewards", type: "mechanics", subtype: "Support", summary: "Official descriptions identify reviving, transporting, supplying, and objective play as rewarded team actions.", facts: [fact("Rewarded support", "Revive, transport, and supply"), fact("Objective contribution", "Control Zone presence")], filterValues: ["support", "objective"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "Only support actions named in official descriptions are listed; no payout values are inferred."}),
+  sourcedInlineRecord({slug: "hot-zone-bonus", name: "Hot Zone Bonus", type: "mechanics", subtype: "Economy", summary: "Official mode material associates the smaller Hot Zone with bonus cash, separate from the main Control Zone win condition.", facts: [fact("Observed reward", "Bonus cash"), fact("Win condition", "Still determined by Control Zone scoring")], filterValues: ["economy", "objective"], dataAsOf: "Official pre-release mode explanation", evidence: officialEvidence("Official pre-release mode explanation", "2026-08-23", officialModeVideoUrl, false), evidenceTier: "official", evidenceStatus: "pre-release-build", sourceNote: "The official mode explanation is retained as build-sensitive context; current payout values are not claimed."}),
+];
+
+const mapRecords: readonly CatalogueRecordInput[] = [
+  sourcedInlineRecord({slug: "battlefield-control-zone", name: "Battlefield and Control Zone", type: "maps", subtype: "Orientation", summary: "Start by locating the live randomized Control Zone and comparing routes, cover, transport, and supply access.", facts: [fact("Primary task", "Read the active objective"), fact("Context", "Whole battlefield and active Control Zone")], filterValues: ["orientation", "objective"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The official Steam description confirms the randomized objective model; no coordinates or fixed route are asserted."}),
+  sourcedInlineRecord({slug: "tower-terminal", name: "Tower Terminal", type: "maps", subtype: "Objective", summary: "Treat tower terminals as exposed sub-objectives whose prompts and interaction flow must be read in the live build.", facts: [fact("Primary task", "Secure and read the terminal"), fact("Context", "Tower inside the active objective flow")], filterValues: ["objective"], dataAsOf: "Official pre-release mode explanation", evidence: officialEvidence("Official pre-release mode explanation", "2026-08-26", officialModeVideoUrl, false), evidenceTier: "official", evidenceStatus: "pre-release-build", sourceNote: "The maintained tower guide separates observed terminal behavior from the broader Control Zone scoring rule."}),
+  sourcedInlineRecord({slug: "oil-rig-hot-zone", name: "Oil Rig and Hot Zone", type: "maps", subtype: "Construction", summary: "Use the historical Oil Rig workflow only as a checklist for FOB construction, fuel delivery, activation, and defense.", facts: [fact("Primary task", "Build and supply the rig"), fact("Context", "Valid FOB area near the intended operation")], filterValues: ["construction", "objective"], dataAsOf: betaDataAsOf, evidence: betaBuildingEvidence, evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The source demonstrates a Closed Beta workflow; numeric costs, cooldowns, and current availability remain unverified."}),
+  sourcedInlineRecord({slug: "fob-network", name: "FOB Network", type: "maps", subtype: "Logistics", summary: "Choose a forward site by reinforcement value, delivery access, cover, unloading room, and defensibility.", facts: [fact("Primary task", "Place, supply, and defend a FOB"), fact("Context", "Forward position linked to the active objective")], filterValues: ["construction", "logistics"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The official game description confirms building and logistics; the maintained guide marks spawn and upgrade details as build-sensitive."}),
+  sourcedInlineRecord({slug: "cargo-route", name: "Cargo Route", type: "maps", subtype: "Logistics", summary: "Plan a cargo loop from purchase and loading through escort, unloading, and the return route.", facts: [fact("Primary task", "Deliver the requested supply"), fact("Context", "Main base, transport route, and destination FOB")], filterValues: ["logistics"], dataAsOf: betaDataAsOf, evidence: betaCargoEvidence, evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The approved cargo walkthrough demonstrates the Closed Beta sequence; controls, capacity, and prices remain historical."}),
+  sourcedInlineRecord({slug: "mortar-support", name: "Mortar Support", type: "maps", subtype: "Fire support", summary: "Connect a supplied firing position with a current spotter call, correction cycle, cease-fire call, and relocation plan.", facts: [fact("Primary task", "Coordinate indirect fire"), fact("Context", "Protected firing site and observed target area")], filterValues: ["fire-support"], dataAsOf: betaDataAsOf, evidence: creatorEvidence(betaDataAsOf, "2026-08-26", mortarCaptureUrl), evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The approved mortar demonstration supports the communication workflow; range, damage, and ammunition values are not promoted as current."}),
+  sourcedInlineRecord({slug: "helicopter-transport", name: "Helicopter Transport", type: "maps", subtype: "Air operations", summary: "Plan takeoff, terrain-covered routing, landing or supply delivery, and a safe exit before committing the aircraft.", facts: [fact("Primary task", "Transport players or supplies"), fact("Context", "Departure, route, landing zone, and exit")], filterValues: ["air-operations", "logistics"], dataAsOf: betaDataAsOf, evidence: creatorEvidence(betaDataAsOf, "2026-08-29", helicopterCaptureUrl), evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The approved helicopter guide supports the workflow; handling, bindings, durability, and rewards remain build-sensitive."}),
+];
+
 const recordInputs: readonly CatalogueRecordInput[] = [
   ...weaponRecords,
   ...vehicleRecords,
   ...ammoRecords,
   ...attachmentRecords,
-  ...gearRecords
+  ...gearRecords,
+  ...equipmentRecords,
+  ...medicalRecords,
+  ...supplyRecords,
+  ...deployableRecords,
+  ...mechanicRecords,
+  ...mapRecords,
 ];
 
 export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((record) => ({
@@ -179,7 +296,7 @@ export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((re
   sourceNotes: record.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
 })).map((record) => ({
   ...record,
-  evidence: normalizeCatalogueEvidence(record),
+  evidence: record.evidence ?? normalizeCatalogueEvidence(record),
   changeHistory: getCatalogueChangeHistory(record),
 }));
 

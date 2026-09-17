@@ -160,7 +160,7 @@ export async function CatalogueHomeBand({locale}: {locale: Locale}) {
     {type: "vehicles" as const, slug: "l2a6"}
   ].map(({type, slug}) => {
     const record = getCatalogueRecords(type).find((candidate) => candidate.slug === slug);
-    if (!record || record.detailStatus !== "published" || !record.detailHref) {
+    if (!record || record.detailStatus !== "published" || !record.detailHref || !record.image || !record.imageAlt) {
       throw new Error(`Missing published homepage model: ${type}/${slug}`);
     }
     return {

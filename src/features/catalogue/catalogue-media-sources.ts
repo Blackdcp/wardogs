@@ -9,7 +9,7 @@ export type CatalogueMediaSource = {
   usageNote: string;
 };
 
-const sourceByType: Record<CatalogueRecordType, CatalogueMediaSource> = {
+const sourceByType: Partial<Record<CatalogueRecordType, CatalogueMediaSource>> = {
   weapons: {
     sourceUrl: "https://www.youtube.com/watch?v=9mSvZyAk62E",
     sourceLabel: "Every Weapon Tested in WARDOGS - source-linked catalogue footage",
@@ -161,8 +161,8 @@ const explicitMediaSources: Record<string, CatalogueMediaSource> = {
 export const catalogueMediaSources: Readonly<Record<string, CatalogueMediaSource>> = {
   ...Object.fromEntries(
     catalogueRecords
-      .filter((record) => record.mediaState !== "pending")
-      .map((record) => [record.image, sourceByType[record.type]]),
+      .filter((record) => record.mediaState !== "pending" && Boolean(record.image) && Boolean(sourceByType[record.type]))
+      .map((record) => [record.image!, sourceByType[record.type]!]),
   ),
   ...explicitMediaSources,
 };

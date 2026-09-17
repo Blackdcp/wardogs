@@ -19,7 +19,7 @@ type CatalogueCardProps = {
 const cardImageSizes = "(min-width: 1280px) 370px, (min-width: 640px) calc(50vw - 44px), calc(100vw - 32px)";
 
 const pendingMediaCopy: Record<Locale, {label: string; description: string}> = {
-  en: {label: "Media verification pending", description: "Identifier recorded; item-specific art is not yet verified."},
+  en: {label: "Image not yet verified", description: "Identifier recorded; item-specific art is not yet verified."},
   de: {label: "Bildprüfung ausstehend", description: "Kennung erfasst; das genaue Gegenstandsbild ist noch nicht bestätigt."},
   ru: {label: "Изображение проверяется", description: "Название записано; точное изображение предмета пока не подтверждено."},
   "pt-br": {label: "Mídia em verificação", description: "Identificador registrado; a imagem exata do item ainda não foi confirmada."},
@@ -28,7 +28,7 @@ const pendingMediaCopy: Record<Locale, {label: string; description: string}> = {
 };
 
 function CardContent({locale, record, linked, eagerImage}: {locale: Locale; record: CatalogueRecord; linked: boolean; eagerImage: boolean}) {
-  const pendingMedia = record.mediaState === "pending";
+  const pendingMedia = record.mediaState === "pending" || !record.image || !record.imageAlt;
   const freshness = getCatalogueFreshness(record);
   const ui = getItemUi(locale);
 
@@ -43,12 +43,12 @@ function CardContent({locale, record, linked, eagerImage}: {locale: Locale; reco
           </div>
         ) : (
           <Image
-            alt={record.imageAlt}
+            alt={record.imageAlt!}
             className={`object-contain p-4 ${linked ? "transition-transform duration-300 group-hover:scale-[1.025]" : ""}`}
             fill
             loading={eagerImage ? "eager" : "lazy"}
             sizes={cardImageSizes}
-            src={assetPath(record.image)}
+            src={assetPath(record.image!)}
           />
         )}
       </div>

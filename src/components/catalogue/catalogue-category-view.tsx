@@ -32,6 +32,10 @@ export const categoryHeroes: Record<ItemTypeId, CategoryHero> = {
   attachments: {image: "/images/catalogue/banners/attachments-1280.webp", imageAlt: "WARDOGS weapon attachments", imageFit: "cover"},
   gear: {image: "/images/catalogue/gear/heavy-armor.webp", imageAlt: "WARDOGS heavy armor", imageFit: "contain"},
   equipment: {image: "/images/catalogue/banners/meta-1280.webp", imageAlt: "WARDOGS tactical equipment", imageFit: "cover"},
+  medical: {image: "/images/guide-discovery/medic-revive.webp", imageAlt: "WARDOGS field medical support", imageFit: "cover"},
+  supplies: {image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: "WARDOGS field logistics and supplies", imageFit: "cover"},
+  deployables: {image: "/images/guide-discovery/equipment-tools.webp", imageAlt: "WARDOGS deployable field equipment", imageFit: "cover"},
+  mechanics: {image: "/images/catalogue/banners/thegame-1280.webp", imageAlt: "WARDOGS objective and support systems", imageFit: "cover"},
   loadouts: {image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: "WARDOGS squad loadout", imageFit: "cover"}
 };
 
@@ -70,8 +74,10 @@ export function matchCatalogueGuideRecords(
   };
 }
 
-function hasImageExplorer(type: ItemTypeId): type is CatalogueRecordType {
-  return type === "weapons" || type === "vehicles" || type === "ammo" || type === "attachments" || type === "gear";
+type CatalogueItemType = Exclude<CatalogueRecordType, "maps">;
+
+function hasImageExplorer(type: ItemTypeId): type is CatalogueItemType {
+  return type !== "loadouts";
 }
 
 export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProps) {

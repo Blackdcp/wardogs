@@ -81,7 +81,7 @@ describe("item structured data", () => {
     expect(jsonLd[0]["@type"]).toBe("CollectionPage");
     expect(jsonLd[0].name).toBe("WARDOGS Catalogue");
     expect(jsonLd[1]["@type"]).toBe("ItemList");
-    expect(jsonLd[1].itemListElement).toHaveLength(7);
+    expect(jsonLd[1].itemListElement).toHaveLength(11);
     expect(jsonLd[2].itemListElement).toEqual([
       {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: "http://localhost:3000/en"},
       {"@type": "ListItem", position: 2, name: "WARDOGS Catalogue", item: "http://localhost:3000/en/items"}
@@ -99,7 +99,11 @@ describe("item structured data", () => {
       {"@type": "ListItem", position: 4, name: "WARDOGS Aufsatz", url: "http://localhost:3000/de/items/attachments", image: "http://localhost:3000/images/catalogue/banners/attachments-1280.webp"},
       {"@type": "ListItem", position: 5, name: "WARDOGS Ausrüstung", url: "http://localhost:3000/de/items/gear", image: "http://localhost:3000/images/catalogue/gear/heavy-armor.webp"},
       {"@type": "ListItem", position: 6, name: "WARDOGS taktisches Gerät", url: "http://localhost:3000/de/items/equipment", image: "http://localhost:3000/images/catalogue/banners/meta-1280.webp"},
-      {"@type": "ListItem", position: 7, name: "WARDOGS Loadout", url: "http://localhost:3000/de/items/loadouts", image: "http://localhost:3000/images/catalogue/banners/loadouts-1280.webp"}
+      {"@type": "ListItem", position: 7, name: "WARDOGS Medizin", url: "http://localhost:3000/de/items/medical", image: "http://localhost:3000/images/guide-discovery/medic-revive.webp"},
+      {"@type": "ListItem", position: 8, name: "WARDOGS Versorgung", url: "http://localhost:3000/de/items/supplies", image: "http://localhost:3000/images/catalogue/banners/vehicles-1280.webp"},
+      {"@type": "ListItem", position: 9, name: "WARDOGS platzierbare Systeme", url: "http://localhost:3000/de/items/deployables", image: "http://localhost:3000/images/guide-discovery/equipment-tools.webp"},
+      {"@type": "ListItem", position: 10, name: "WARDOGS Spielmechanik", url: "http://localhost:3000/de/items/mechanics", image: "http://localhost:3000/images/catalogue/banners/thegame-1280.webp"},
+      {"@type": "ListItem", position: 11, name: "WARDOGS Loadout", url: "http://localhost:3000/de/items/loadouts", image: "http://localhost:3000/images/catalogue/banners/loadouts-1280.webp"}
     ]);
     expect(jsonLd[2].itemListElement).toEqual([
       {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: "http://localhost:3000/de"},

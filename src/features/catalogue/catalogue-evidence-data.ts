@@ -12,7 +12,7 @@ export type SeasonOneChange = CatalogueChangeHistory & {
 };
 
 export const seasonOneChanges: readonly SeasonOneChange[] = [
-  {entity: "FOB vendor", field: "Vendor price", previousValue: "$2,500", currentValue: "$7,500", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl},
+  {entity: "FOB vendor", field: "Vendor price", previousValue: "$2,500", currentValue: "$7,500", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl, catalogueKey: "deployables/fob-vendor"},
   {entity: "Large Hammer vendor", field: "Vendor price", previousValue: "$1,600", currentValue: "$2,400", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl},
   {entity: "Large Hammer Support unlock", field: "Support unlock", previousValue: "$25,000", currentValue: "$75,000", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl, progressionTrack: "support"},
   {entity: "Artillery Tank career unlock", field: "Career unlock", previousValue: "$400,000", currentValue: "$500,000", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl, progressionTrack: "career"},

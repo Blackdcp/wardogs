@@ -92,6 +92,9 @@ function changeValue(change: CatalogueChangeHistory): WeaponComparisonValue {
 }
 
 function buildComparableWeapon(base: CatalogueRecord, localized: CatalogueRecord, locale: Locale): ComparableWeapon {
+  if (!base.image || !localized.imageAlt) {
+    throw new Error(`Weapon comparison requires verified media: ${base.slug}`);
+  }
   const item = getItemByTypeAndSlug("weapons", base.slug);
   const localizedItem = item ? getLocalizedItem(item, locale) : null;
   const localizedFactByBaseLabel = new Map(
