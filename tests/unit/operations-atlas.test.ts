@@ -7,6 +7,7 @@ import {OperationsAtlas} from "../../src/components/maps/operations-atlas";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import {
   filterOperationsAtlas,
+  getLocalizedOperationsAtlasRecords,
   getOperationsAtlasCopy,
   operationsAtlasRecords,
   operationsAtlasTaskOrder,
@@ -82,6 +83,80 @@ describe("operations atlas", () => {
         expect(entry.objective.trim().length, locale).toBeGreaterThan(5);
         expect(entry.context.trim().length, locale).toBeGreaterThan(5);
         expect(entry.summary.trim().length, locale).toBeGreaterThan(20);
+      }
+    }
+  });
+
+  it("localizes current, historical, contextual, and pending source scope without translating source titles", () => {
+    const sourceScopeMatrix = {
+      en: {
+        "battlefield-control-zone": "The official Steam description confirms the randomized objective model and battlefield scale; no fixed route is asserted.",
+        "oil-rig-hot-zone": "The creator source demonstrates the Closed Beta construction, delivery, and activation sequence; numeric costs, cooldowns, and current availability remain unverified.",
+        "cargo-route": "The approved cargo walkthrough demonstrates a Closed Beta purchase, loading, transport, and unloading sequence; controls, capacity, prices, and routes remain historical.",
+      },
+      de: {
+        "battlefield-control-zone": "Die offizielle Steam-Beschreibung bestätigt das zufällige Zielmodell und die Größe des Schlachtfelds; eine feste Route wird nicht behauptet.",
+        "oil-rig-hot-zone": "Die Creator-Quelle zeigt den Bau-, Liefer- und Aktivierungsablauf der Closed Beta; Zahlenwerte für Kosten und Abklingzeiten sowie die aktuelle Verfügbarkeit bleiben unbestätigt.",
+        "cargo-route": "Der freigegebene Fracht-Walkthrough zeigt den Kauf-, Belade-, Transport- und Entladeablauf der Closed Beta; Steuerung, Kapazität, Preise und Routen bleiben historische Angaben.",
+      },
+      ru: {
+        "battlefield-control-zone": "Официальное описание в Steam подтверждает случайную модель цели и масштаб поля боя; фиксированный маршрут не заявляется.",
+        "oil-rig-hot-zone": "Источник автора показывает последовательность строительства, доставки и активации в Closed Beta; числовые значения стоимости и перезарядки, а также текущая доступность остаются неподтверждёнными.",
+        "cargo-route": "Одобренное руководство по грузам показывает последовательность покупки, погрузки, перевозки и разгрузки в Closed Beta; управление, вместимость, цены и маршруты остаются историческими данными.",
+      },
+      "pt-br": {
+        "battlefield-control-zone": "A descrição oficial na Steam confirma o modelo de objetivo aleatório e a escala do campo de batalha; nenhuma rota fixa é afirmada.",
+        "oil-rig-hot-zone": "A fonte do criador demonstra a sequência de construção, entrega e ativação da Closed Beta; custos numéricos, tempos de recarga e disponibilidade atual continuam não verificados.",
+        "cargo-route": "O guia aprovado de carga demonstra a sequência de compra, carregamento, transporte e descarregamento da Closed Beta; controles, capacidade, preços e rotas permanecem históricos.",
+      },
+      ja: {
+        "battlefield-control-zone": "Steam の公式説明は、目標がランダムに決まる仕組みと戦場規模のみを確認しており、固定ルートがあるとはしていません。",
+        "oil-rig-hot-zone": "クリエイターの資料は Closed Beta における建設、配送、起動の手順を示していますが、費用やクールダウンの数値、現在の利用可否は未確認です。",
+        "cargo-route": "承認済みの貨物解説は Closed Beta における購入、積載、輸送、荷下ろしの手順を示していますが、操作、容量、価格、ルートは過去ビルドの情報です。",
+      },
+      "zh-cn": {
+        "battlefield-control-zone": "Steam 官方说明仅确认了随机目标机制与战场规模，并未确认任何固定路线。",
+        "oil-rig-hot-zone": "创作者来源展示了 Closed Beta 中建造、运输与启动的流程；具体成本、冷却时间及当前可用性仍未核验。",
+        "cargo-route": "已批准的货运讲解展示了 Closed Beta 中购买、装载、运输与卸载的流程；按键、容量、价格和路线均属于历史版本信息。",
+      },
+    } as const;
+    const cases = [
+      {id: "battlefield-control-zone", current: true, sourceClass: "official", visual: "contextual"},
+      {id: "oil-rig-hot-zone", current: false, sourceClass: "creator-historical", visual: "pending"},
+      {id: "cargo-route", current: false, sourceClass: "creator-historical", visual: "contextual"},
+    ] as const;
+
+    for (const locale of locales) {
+      const localizedRecords = getLocalizedOperationsAtlasRecords(locale);
+      const copy = getOperationsAtlasCopy(locale);
+      const html = renderToStaticMarkup(
+        React.createElement(OperationsAtlas, {copy, guideTitles: {}, locale, toolLabels: {}}),
+      );
+
+      expect(html, locale).toContain(copy.sourceScopeLabel);
+      expect(localizedRecords.map(({id}) => id), locale).toEqual(operationsAtlasRecords.map(({id}) => id));
+      for (const localized of localizedRecords) {
+        const original = operationsAtlasRecords.find(({id}) => id === localized.id)!;
+        expect(localized.sourceNotes.length, `${locale}/${localized.id}`).toBeGreaterThan(0);
+        expect(localized.sourceLabel, `${locale}/${localized.id}`).toBe(original.sourceLabel);
+        if (locale !== "en") {
+          expect(localized.sourceNotes, `${locale}/${localized.id}`).not.toEqual(original.sourceNotes);
+          expect(html, `${locale}/${localized.id}`).not.toContain(original.sourceNotes[0]);
+        }
+      }
+      for (const evidenceCase of cases) {
+        const original = operationsAtlasRecords.find(({id}) => id === evidenceCase.id)!;
+        const localized = localizedRecords.find(({id}) => id === evidenceCase.id)!;
+        const expectedNote = sourceScopeMatrix[locale][evidenceCase.id];
+
+        expect(localized.sourceNotes, `${locale}/${evidenceCase.id}`).toEqual([expectedNote]);
+        expect(localized.evidence, `${locale}/${evidenceCase.id}`).toEqual(original.evidence);
+        expect(localized.evidence.current, `${locale}/${evidenceCase.id}`).toBe(evidenceCase.current);
+        expect(localized.evidence.sourceClass, `${locale}/${evidenceCase.id}`).toBe(evidenceCase.sourceClass);
+        expect(localized.visual.state, `${locale}/${evidenceCase.id}`).toBe(evidenceCase.visual);
+        expect(localized.sourceLabel, `${locale}/${evidenceCase.id}`).toBe(original.sourceLabel);
+        expect(html, `${locale}/${evidenceCase.id}`).toContain(expectedNote);
+        expect(html, `${locale}/${evidenceCase.id}`).toContain(original.sourceLabel);
       }
     }
   });

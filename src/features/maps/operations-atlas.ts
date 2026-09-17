@@ -79,7 +79,7 @@ export const operationsAtlasTaskOrder: readonly OperationsAtlasFilter[] = [
 
 type AtlasDefinition = Omit<OperationsAtlasRecord, "evidence" | "facts" | "sourceNotes" | "visual">;
 
-const definitions: readonly AtlasDefinition[] = [
+const definitions = [
   {
     id: "battlefield-control-zone",
     tasks: ["orientation", "objective"],
@@ -136,7 +136,9 @@ const definitions: readonly AtlasDefinition[] = [
     relatedToolHrefs: ["/tools/logistics-planner"],
     sourceLabel: "WARDOGS helicopter basic guide",
   },
-];
+] as const satisfies readonly AtlasDefinition[];
+
+type OperationsAtlasRecordId = (typeof definitions)[number]["id"];
 
 export const operationsAtlasRecords: readonly OperationsAtlasRecord[] = definitions.map((definition) => {
   const record = getCatalogueRecord("maps", definition.id);
@@ -150,6 +152,66 @@ export const operationsAtlasRecords: readonly OperationsAtlasRecord[] = definiti
     visual: media ? {state: media.state, image: media.image} : {state: "pending"},
   };
 });
+
+const localizedSourceNotesByLocale: Record<
+  Exclude<Locale, "en">,
+  Record<OperationsAtlasRecordId, readonly string[]>
+> = {
+  de: {
+    "battlefield-control-zone": ["Die offizielle Steam-Beschreibung bestätigt das zufällige Zielmodell und die Größe des Schlachtfelds; eine feste Route wird nicht behauptet."],
+    "tower-terminal": ["Die offizielle Quelle belegt nur das Terminalziel; aktuelle Hinweise, Codes, Zeiten und Auswirkungen auf die Wertung werden nicht behauptet."],
+    "oil-rig-hot-zone": ["Die Creator-Quelle zeigt den Bau-, Liefer- und Aktivierungsablauf der Closed Beta; Zahlenwerte für Kosten und Abklingzeiten sowie die aktuelle Verfügbarkeit bleiben unbestätigt."],
+    "fob-network": ["Die offizielle Spielbeschreibung bestätigt nur Basisbau und Logistik; Standortwahl, Spawn-Verhalten, Verbesserungen und Liefertaktiken sind redaktionelle Hinweise oder buildabhängige Beobachtungen."],
+    "cargo-route": ["Der freigegebene Fracht-Walkthrough zeigt den Kauf-, Belade-, Transport- und Entladeablauf der Closed Beta; Steuerung, Kapazität, Preise und Routen bleiben historische Angaben."],
+    "mortar-support": ["Die freigegebene Mörserdemonstration zeigt die Stellung und Bedienerinteraktion; der Kommunikationsablauf ist redaktionelle Anleitung, während Reichweite, Schaden und Munitionswerte nicht als aktuell dargestellt werden."],
+    "helicopter-transport": ["Der freigegebene Hubschrauber-Guide zeigt den Transporteinsatz; die Routenplanung ist redaktionelle Anleitung, während Flugverhalten, Tastenbelegung, Haltbarkeit, Treibstoff und Belohnungen buildabhängig bleiben."],
+  },
+  ru: {
+    "battlefield-control-zone": ["Официальное описание в Steam подтверждает случайную модель цели и масштаб поля боя; фиксированный маршрут не заявляется."],
+    "tower-terminal": ["Официальный источник подтверждает только цель с терминалом; текущие подсказки, коды, время и влияние на счёт не заявляются."],
+    "oil-rig-hot-zone": ["Источник автора показывает последовательность строительства, доставки и активации в Closed Beta; числовые значения стоимости и перезарядки, а также текущая доступность остаются неподтверждёнными."],
+    "fob-network": ["Официальное описание игры подтверждает только строительство баз и логистику; выбор места, поведение точек возрождения, улучшения и тактика доставки являются редакционными рекомендациями или зависящими от сборки наблюдениями."],
+    "cargo-route": ["Одобренное руководство по грузам показывает последовательность покупки, погрузки, перевозки и разгрузки в Closed Beta; управление, вместимость, цены и маршруты остаются историческими данными."],
+    "mortar-support": ["Одобренная демонстрация миномёта показывает установку и взаимодействие расчёта; порядок связи является редакционной рекомендацией, а дальность, урон и значения боеприпасов не выдаются за актуальные."],
+    "helicopter-transport": ["Одобренное руководство по вертолёту показывает транспортное применение; планирование маршрута является редакционной рекомендацией, а управление, привязки клавиш, прочность, топливо и награды зависят от сборки."],
+  },
+  "pt-br": {
+    "battlefield-control-zone": ["A descrição oficial na Steam confirma o modelo de objetivo aleatório e a escala do campo de batalha; nenhuma rota fixa é afirmada."],
+    "tower-terminal": ["A fonte oficial sustenta apenas o objetivo do terminal; instruções, códigos, tempos e efeitos de pontuação atuais não são afirmados."],
+    "oil-rig-hot-zone": ["A fonte do criador demonstra a sequência de construção, entrega e ativação da Closed Beta; custos numéricos, tempos de recarga e disponibilidade atual continuam não verificados."],
+    "fob-network": ["A descrição oficial do jogo confirma apenas construção de bases e logística; escolha do local, comportamento de spawn, melhorias e táticas de entrega são orientação editorial ou observações dependentes da versão."],
+    "cargo-route": ["O guia aprovado de carga demonstra a sequência de compra, carregamento, transporte e descarregamento da Closed Beta; controles, capacidade, preços e rotas permanecem históricos."],
+    "mortar-support": ["A demonstração aprovada do morteiro mostra a instalação e a interação da equipe; a sequência de comunicação é orientação editorial, enquanto alcance, dano e valores de munição não são apresentados como atuais."],
+    "helicopter-transport": ["O guia aprovado de helicóptero demonstra o uso para transporte; o planejamento de rota é orientação editorial, enquanto pilotagem, comandos, durabilidade, combustível e recompensas continuam dependentes da versão."],
+  },
+  ja: {
+    "battlefield-control-zone": ["Steam の公式説明は、目標がランダムに決まる仕組みと戦場規模のみを確認しており、固定ルートがあるとはしていません。"],
+    "tower-terminal": ["公式資料が裏付けるのはターミナル目標のみで、現在の表示、コード、時間、スコアへの影響は確認していません。"],
+    "oil-rig-hot-zone": ["クリエイターの資料は Closed Beta における建設、配送、起動の手順を示していますが、費用やクールダウンの数値、現在の利用可否は未確認です。"],
+    "fob-network": ["ゲームの公式説明が確認しているのは基地建設と兵站のみです。設置場所の選定、スポーン挙動、アップグレード、配送戦術は編集上の助言またはビルド依存の観察です。"],
+    "cargo-route": ["承認済みの貨物解説は Closed Beta における購入、積載、輸送、荷下ろしの手順を示していますが、操作、容量、価格、ルートは過去ビルドの情報です。"],
+    "mortar-support": ["承認済みの迫撃砲デモは陣地と操作員のやり取りを示しています。通信手順は編集上の助言であり、射程、ダメージ、弾薬値を現行値として扱っていません。"],
+    "helicopter-transport": ["承認済みのヘリコプターガイドは輸送用途を示しています。ルート計画は編集上の助言であり、操縦特性、キー設定、耐久性、燃料、報酬はビルド依存です。"],
+  },
+  "zh-cn": {
+    "battlefield-control-zone": ["Steam 官方说明仅确认了随机目标机制与战场规模，并未确认任何固定路线。"],
+    "tower-terminal": ["官方来源仅支持“终端目标”这一事实；当前提示、代码、计时及计分影响均未确认。"],
+    "oil-rig-hot-zone": ["创作者来源展示了 Closed Beta 中建造、运输与启动的流程；具体成本、冷却时间及当前可用性仍未核验。"],
+    "fob-network": ["官方游戏说明仅确认了基地建造与后勤系统；选址、复活机制、升级和运输战术属于编辑建议或受版本影响的观察。"],
+    "cargo-route": ["已批准的货运讲解展示了 Closed Beta 中购买、装载、运输与卸载的流程；按键、容量、价格和路线均属于历史版本信息。"],
+    "mortar-support": ["已批准的迫击炮演示展示了炮位及炮组交互；通信流程属于编辑建议，射程、伤害和弹药数值不作为当前值发布。"],
+    "helicopter-transport": ["已批准的直升机指南展示了运输用途；航线规划属于编辑建议，操控、按键、耐久、燃料和奖励仍受版本影响。"],
+  },
+};
+
+export function getLocalizedOperationsAtlasRecords(locale: Locale): readonly OperationsAtlasRecord[] {
+  if (locale === "en") return operationsAtlasRecords;
+  const sourceNotesById = localizedSourceNotesByLocale[locale];
+  return operationsAtlasRecords.map((record) => ({
+    ...record,
+    sourceNotes: sourceNotesById[record.id as OperationsAtlasRecordId],
+  }));
+}
 
 export function filterOperationsAtlas(
   records: readonly OperationsAtlasRecord[],

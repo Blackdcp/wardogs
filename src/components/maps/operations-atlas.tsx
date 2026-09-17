@@ -8,7 +8,7 @@ import {formatCatalogueVerifiedAt, localizeCatalogueBuild, localizeCatalogueFact
 import {getCatalogueSourceClassLabel, getItemUi} from "@/features/items/item-ui";
 import {
   filterOperationsAtlas,
-  operationsAtlasRecords,
+  getLocalizedOperationsAtlasRecords,
   operationsAtlasTaskOrder,
   type OperationsAtlasCopy,
   type OperationsAtlasFilter,
@@ -33,7 +33,7 @@ function visualLabel(copy: OperationsAtlasCopy, state: "verified" | "contextual"
 
 export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: OperationsAtlasProps) {
   const [filter, setFilter] = useState<OperationsAtlasFilter>("all");
-  const visibleRecords = filterOperationsAtlas(operationsAtlasRecords, filter);
+  const visibleRecords = filterOperationsAtlas(getLocalizedOperationsAtlasRecords(locale), filter);
   const itemUi = getItemUi(locale);
 
   return (

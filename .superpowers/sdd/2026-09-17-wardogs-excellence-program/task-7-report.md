@@ -140,3 +140,28 @@ Catalogue total: 59 verified object images and 101 explicit pending states.
 
 - The five equipment labels remain research leads, not observed object facts. They require an approved, locatable source segment before any role, price, identifier, behavior, or image can be restored.
 - The 65 local ammo, attachment, and gear image files are intentionally unpublished. They require individual record-to-asset provenance; file presence alone must never promote them.
+
+## Fix Round 3 (2026-09-17)
+
+### Status
+
+DONE. The final scoped review finding was resolved without changing Atlas facts, evidence classifications, visuals, routes, or source titles.
+
+### Atlas Source-Scope Localization
+
+- Added source-scope translations for all seven Operations Atlas records in German, Russian, Brazilian Portuguese, Japanese, and Simplified Chinese; English continues to use the normalized catalogue notes as the canonical source.
+- Keyed every translation by the stable Atlas record ID. Rendering does not inspect or branch on an English display string.
+- Updated the Atlas component to consume locale-specific records while preserving each record's facts, evidence object, visual state, source URL, and original proprietary source title.
+- Preserved the factual boundary in every translation: official current claims remain narrow, historical creator observations remain build-bound, and editorial guidance is not presented as sourced fact.
+
+### TDD And Verification
+
+- RED: the new all-six-locale matrix test initially failed because `getLocalizedOperationsAtlasRecords` did not exist; the original four Atlas tests still passed.
+- GREEN: the Atlas test file passed all 5 tests after the stable-ID localization path was implemented.
+- Related Atlas, shared-localization, visual-coverage, catalogue-record, and catalogue-evidence regression: 5 files, 36 tests passed.
+- TypeScript `--noEmit`: passed.
+- `git diff --check`: passed with only the repository's LF-to-CRLF checkout notices.
+
+### Remaining Concern
+
+- A future Atlas record or source-scope rewrite must add or revise the matching locale entries. The record-ID-derived TypeScript matrix prevents a newly added Atlas ID from silently shipping without all five translations, while the locale test prevents non-English rendering from falling back to the English note.
