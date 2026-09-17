@@ -38,6 +38,15 @@ describe("item structured data", () => {
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
+  it("uses the latest verified Deagle change for Article freshness", () => {
+    const deagle = getItemBySlug("deagle");
+    expect(deagle).toBeDefined();
+
+    const jsonLd = buildItemArticleJsonLd("en", deagle!);
+
+    expect(jsonLd[0].dateModified).toBe("2026-09-09");
+  });
+
   it("uses Article schema and the exact image for a published vehicle model", () => {
     const l2a6 = getItemBySlug("l2a6");
     expect(l2a6).toBeDefined();
@@ -93,17 +102,17 @@ describe("item structured data", () => {
 
     expect(jsonLd[0].url).toBe("http://localhost:3000/de/items");
     expect(jsonLd[1].itemListElement).toEqual([
-      {"@type": "ListItem", position: 1, name: "WARDOGS Waffe", url: "http://localhost:3000/de/items/weapons", image: "http://localhost:3000/images/catalogue/banners/weapons-1280.webp"},
-      {"@type": "ListItem", position: 2, name: "WARDOGS Fahrzeug", url: "http://localhost:3000/de/items/vehicles", image: "http://localhost:3000/images/catalogue/banners/vehicles-1280.webp"},
-      {"@type": "ListItem", position: 3, name: "WARDOGS Munition", url: "http://localhost:3000/de/items/ammo", image: "http://localhost:3000/images/catalogue/ammo/556x45mm.webp"},
-      {"@type": "ListItem", position: 4, name: "WARDOGS Aufsatz", url: "http://localhost:3000/de/items/attachments", image: "http://localhost:3000/images/catalogue/banners/attachments-1280.webp"},
-      {"@type": "ListItem", position: 5, name: "WARDOGS Ausrüstung", url: "http://localhost:3000/de/items/gear", image: "http://localhost:3000/images/catalogue/gear/heavy-armor.webp"},
-      {"@type": "ListItem", position: 6, name: "WARDOGS taktisches Gerät", url: "http://localhost:3000/de/items/equipment", image: "http://localhost:3000/images/catalogue/banners/meta-1280.webp"},
+      {"@type": "ListItem", position: 1, name: "WARDOGS Waffe", url: "http://localhost:3000/de/items/weapons", image: "http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp"},
+      {"@type": "ListItem", position: 2, name: "WARDOGS Fahrzeug", url: "http://localhost:3000/de/items/vehicles", image: "http://localhost:3000/images/guide-discovery/armor-damage-ttk.webp"},
+      {"@type": "ListItem", position: 3, name: "WARDOGS Munition", url: "http://localhost:3000/de/items/ammo", image: "http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp"},
+      {"@type": "ListItem", position: 4, name: "WARDOGS Aufsatz", url: "http://localhost:3000/de/items/attachments", image: "http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp"},
+      {"@type": "ListItem", position: 5, name: "WARDOGS Ausrüstung", url: "http://localhost:3000/de/items/gear", image: "http://localhost:3000/images/guide-discovery/armor-damage-ttk.webp"},
+      {"@type": "ListItem", position: 6, name: "WARDOGS taktisches Gerät", url: "http://localhost:3000/de/items/equipment", image: "http://localhost:3000/images/guide-discovery/equipment-tools.webp"},
       {"@type": "ListItem", position: 7, name: "WARDOGS Medizin", url: "http://localhost:3000/de/items/medical", image: "http://localhost:3000/images/guide-discovery/medic-revive.webp"},
-      {"@type": "ListItem", position: 8, name: "WARDOGS Versorgung", url: "http://localhost:3000/de/items/supplies", image: "http://localhost:3000/images/catalogue/banners/vehicles-1280.webp"},
+      {"@type": "ListItem", position: 8, name: "WARDOGS Versorgung", url: "http://localhost:3000/de/items/supplies", image: "http://localhost:3000/images/guide-discovery/equipment-tools.webp"},
       {"@type": "ListItem", position: 9, name: "WARDOGS platzierbare Systeme", url: "http://localhost:3000/de/items/deployables", image: "http://localhost:3000/images/guide-discovery/equipment-tools.webp"},
-      {"@type": "ListItem", position: 10, name: "WARDOGS Spielmechanik", url: "http://localhost:3000/de/items/mechanics", image: "http://localhost:3000/images/catalogue/banners/thegame-1280.webp"},
-      {"@type": "ListItem", position: 11, name: "WARDOGS Loadout", url: "http://localhost:3000/de/items/loadouts", image: "http://localhost:3000/images/catalogue/banners/loadouts-1280.webp"}
+      {"@type": "ListItem", position: 10, name: "WARDOGS Spielmechanik", url: "http://localhost:3000/de/items/mechanics", image: "http://localhost:3000/images/guide-discovery/armor-damage-ttk.webp"},
+      {"@type": "ListItem", position: 11, name: "WARDOGS Loadout", url: "http://localhost:3000/de/items/loadouts", image: "http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp"}
     ]);
     expect(jsonLd[2].itemListElement).toEqual([
       {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: "http://localhost:3000/de"},
@@ -116,7 +125,7 @@ describe("item structured data", () => {
     const weapons = buildItemTypeJsonLd("en", "weapons");
     const ammo = buildItemTypeJsonLd("en", "ammo");
 
-    expect(weapons[1].itemListElement).toHaveLength(39);
+    expect(weapons[1].itemListElement).toHaveLength(getCatalogueRecords("weapons").length);
     expect(ammo[1].itemListElement).toHaveLength(14);
     expect((weapons[2].itemListElement as Array<{name: string}>)[1].name).toBe("WARDOGS Catalogue");
   });
@@ -146,12 +155,12 @@ describe("item structured data", () => {
     });
     expect(entries.at(-1)).toEqual({
       "@type": "ListItem",
-      position: 39,
-      name: "Mortar",
-      url: "http://localhost:3000/en/items/weapons/mortar"
+      position: 38,
+      name: "G60",
+      url: "http://localhost:3000/en/items/weapons#record-weapons-g60"
     });
     expect(entries.slice(0, 14).every((entry) => entry.image?.startsWith("http://localhost:3000/images/catalogue/weapons/"))).toBe(true);
-    expect(new Set(entries.map((entry) => entry.name)).size).toBe(39);
+    expect(new Set(entries.map((entry) => entry.name)).size).toBe(getCatalogueRecords("weapons").length);
   });
 
   it("emits only manifest-backed detail URLs in category ItemList schema", () => {
@@ -176,7 +185,7 @@ describe("item structured data", () => {
     expect(weapons[0]).toMatchObject({
       "@type": "CollectionPage",
       url: "http://localhost:3000/de/items/weapons",
-      image: "http://localhost:3000/images/catalogue/banners/weapons-1280.webp"
+      image: "http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp"
     });
     expect(JSON.stringify(weapons)).toContain("http://localhost:3000/de/items/weapons");
     expect(JSON.stringify(weapons)).not.toMatch(/Product|Offer|AggregateRating|Rating/);

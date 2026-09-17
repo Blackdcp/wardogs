@@ -96,14 +96,21 @@ describe("visual coverage audit", () => {
     const mortar = operationsAtlasRecords.find((record) => record.id === "mortar-support")!;
     const cargo = operationsAtlasRecords.find((record) => record.id === "cargo-route")!;
     const copies = [{locale: "en", copy: getOperationsAtlasCopy("en")}];
+    expect(mortar.visual.state).not.toBe("pending");
+    expect(cargo.visual.state).not.toBe("pending");
+    if (mortar.visual.state === "pending" || cargo.visual.state === "pending") {
+      throw new Error("Atlas visual mutation fixtures require approved media");
+    }
+    const mortarVisual = mortar.visual;
+    const cargoVisual = cargo.visual;
 
     expect(auditOperationsAtlasVisualCoverage([
-      {...mortar, visual: {...mortar.visual, state: "contextual"}},
+      {...mortar, visual: {...mortarVisual, state: "contextual"}},
     ], operationsAtlasMediaSources, copies, () => true).join(" ")).toMatch(/visual state does not match approved provenance/);
 
     expect(auditOperationsAtlasVisualCoverage([
       mortar,
-      {...cargo, visual: {...cargo.visual, image: mortar.visual.image}},
+      {...cargo, visual: {...cargoVisual, image: mortarVisual.image}},
     ], operationsAtlasMediaSources, copies, () => true).join(" ")).toMatch(/duplicate atlas image/);
 
     const missingAltCopy = structuredClone(getOperationsAtlasCopy("en"));
@@ -116,7 +123,7 @@ describe("visual coverage audit", () => {
     ).join(" ")).toMatch(/missing meaningful alt/);
 
     expect(auditOperationsAtlasVisualCoverage([
-      {...mortar, visual: {...mortar.visual, image: "/images/catalogue/vehicles/unapproved.webp"}},
+      {...mortar, visual: {...mortarVisual, image: "/images/catalogue/vehicles/unapproved.webp"}},
     ], operationsAtlasMediaSources, copies, () => true).join(" ")).toMatch(/no approved provenance/);
   });
 });

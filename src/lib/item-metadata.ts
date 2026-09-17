@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import type {Locale} from "@/config/site";
 import {getCatalogueFreshness} from "@/features/catalogue/catalogue-evidence";
-import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
+import {getCatalogueCategoryMedia} from "@/features/catalogue/catalogue-media";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import type {WardogsItem} from "@/features/items/item-library";
 import {getLocalizedItem} from "@/features/items/item-localization";
@@ -216,7 +216,7 @@ export function buildCatalogGuideMetadata(locale: Locale, guide: CatalogGuide): 
     `/items/${guide.id}`,
     guide.title,
     guide.description,
-    catalogueMetadataImages[guide.id]
+    getCatalogueCategoryMedia(guide.id)?.image
   );
 }
 
@@ -227,23 +227,23 @@ export function buildItemHubMetadata(locale: Locale): Metadata {
     "/items",
     ui.hubMetaTitle,
     ui.hubMetaDescription,
-    catalogueMetadataImages.hub
+    getCatalogueCategoryMedia("hub")?.image
   );
 }
 
-function buildLocalizedItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath: string): Metadata {
+function buildLocalizedItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath?: string): Metadata {
   const metadata = buildPageMetadata(locale, pathname, title, description);
-  const image = publicAssetUrl(imagePath);
+  const image = imagePath ? publicAssetUrl(imagePath) : undefined;
 
   return {
     ...metadata,
     openGraph: {
       ...metadata.openGraph,
-      images: [{url: image, alt: title}]
+      images: image ? [{url: image, alt: title}] : []
     },
     twitter: {
       ...metadata.twitter,
-      images: [image]
+      images: image ? [image] : []
     },
     robots: undefined
   };

@@ -28,7 +28,7 @@ describe("catalogue evidence views", () => {
     expect(html).toContain('data-evidence-state="historical"');
     expect(html).toContain("Historical");
     expect(html).toContain("Closed Beta - 21-23 Aug 2026");
-    expect(html).toContain("2026-08-23");
+    expect(html).toContain("Aug 23, 2026");
     expect(html).toContain("Live client");
     expect(html).toContain("Observed");
     expect(html).toContain("Not safe for current Season 1 decisions");
@@ -56,6 +56,7 @@ describe("catalogue evidence views", () => {
   it("renders official changes chronologically with old and new values", () => {
     const changes: readonly CatalogueChangeHistory[] = [
       {
+        id: "deagle-level",
         field: "Required level",
         previousValue: "90",
         currentValue: "85",
@@ -65,6 +66,7 @@ describe("catalogue evidence views", () => {
         note: "Current official change"
       },
       {
+        id: "historical-price",
         field: "Price",
         previousValue: "$700",
         currentValue: "$900",
@@ -82,7 +84,7 @@ describe("catalogue evidence views", () => {
     expect(html).toContain("$900");
     expect(html).toContain("90");
     expect(html).toContain("85");
-    expect(html.indexOf("2026-08-23")).toBeLessThan(html.indexOf("2026-09-09"));
+    expect(html.indexOf("Aug 23, 2026")).toBeLessThan(html.indexOf("Sep 9, 2026"));
   });
 
   it("provides non-empty evidence and action labels in every locale", () => {

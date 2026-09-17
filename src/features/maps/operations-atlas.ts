@@ -14,6 +14,17 @@ export type OperationsAtlasTask =
 export type OperationsAtlasFilter = "all" | OperationsAtlasTask;
 export type AtlasVisualState = "verified" | "contextual" | "pending";
 
+type AtlasVisual =
+  | {state: "pending"; image?: undefined; sourceUrl?: undefined; sourceLabel?: undefined; retrievedAt?: undefined; usageNote?: undefined}
+  | {
+    state: Exclude<AtlasVisualState, "pending">;
+    image: string;
+    sourceUrl: string;
+    sourceLabel: string;
+    retrievedAt: string;
+    usageNote: string;
+  };
+
 export type OperationsAtlasRecord = {
   id: string;
   tasks: readonly OperationsAtlasTask[];
@@ -24,10 +35,7 @@ export type OperationsAtlasRecord = {
   relatedGuideSlugs: readonly string[];
   relatedToolHrefs: readonly `/tools/${string}`[];
   sourceLabel: string;
-  visual: {
-    state: AtlasVisualState;
-    image?: string;
-  };
+  visual: AtlasVisual;
 };
 
 export type OperationsAtlasEntryCopy = {
@@ -64,6 +72,9 @@ export type OperationsAtlasCopy = {
   visualContextual: string;
   visualPending: string;
   visualPendingDescription: string;
+  visualSourceLabel: string;
+  visualUsageLabel: string;
+  visualRetrievedLabel: string;
   entries: Record<string, OperationsAtlasEntryCopy>;
 };
 
@@ -149,7 +160,14 @@ export const operationsAtlasRecords: readonly OperationsAtlasRecord[] = definiti
     evidence: record.evidence,
     facts: record.facts,
     sourceNotes: record.sourceNotes,
-    visual: media ? {state: media.state, image: media.image} : {state: "pending"},
+    visual: media ? {
+      state: media.state,
+      image: media.image,
+      sourceUrl: media.sourceUrl,
+      sourceLabel: media.sourceLabel,
+      retrievedAt: media.retrievedAt,
+      usageNote: media.usageNote,
+    } : {state: "pending"},
   };
 });
 
@@ -204,12 +222,58 @@ const localizedSourceNotesByLocale: Record<
   },
 };
 
+const localizedVisualUsageByLocale: Record<
+  Exclude<Locale, "en">,
+  Partial<Record<OperationsAtlasRecordId, string>>
+> = {
+  de: {
+    "battlefield-control-zone": "Ein Banner auf Kategorieebene, das nur der Orientierung dient; es wird weder als Objektbild noch als feste taktische Karte dargestellt.",
+    "fob-network": "Offizielles Gefechtsbild nur als Kontext für die FOB-Planung; es zeigt keinen verifizierten FOB-Aufbau.",
+    "cargo-route": "Der Ural ist dem Objekt zugeordnet, wird hier aber nur als Routenkontext verwendet und bestätigt weder Route noch Kapazität.",
+    "mortar-support": "Das zitierte Bild bei 01:16 zeigt den L81-Mörser, die Sandsackstellung und die Interaktion ENTER Mortar gemeinsam.",
+    "helicopter-transport": "Cockpitbild nur als Transportkontext; es bestätigt keine Route, Landezone, Flugeigenschaft oder aktuelle Tastenbelegung.",
+  },
+  ru: {
+    "battlefield-control-zone": "Баннер категории используется только для ориентирования; он не считается изображением объекта или фиксированной тактической картой.",
+    "fob-network": "Официальный кадр боя используется только как контекст планирования FOB и не показывает проверенную схему FOB.",
+    "cargo-route": "Ural сопоставлен с объектом, но здесь используется только как контекст маршрута и не подтверждает конкретный маршрут или вместимость.",
+    "mortar-support": "Кадр на 01:16 показывает миномёт L81, позицию с мешками и взаимодействие ENTER Mortar.",
+    "helicopter-transport": "Кадр из кабины используется только как контекст перевозки и не подтверждает маршрут, посадочную зону, управление или актуальные клавиши.",
+  },
+  "pt-br": {
+    "battlefield-control-zone": "Banner de categoria usado somente como contexto de orientação; não é apresentado como imagem de objeto nem mapa tático fixo.",
+    "fob-network": "Cena oficial de combate usada apenas como contexto para planejar a FOB; não mostra uma disposição de FOB verificada.",
+    "cargo-route": "O Ural foi associado ao objeto, mas aqui serve apenas de contexto para a rota e não confirma rota ou capacidade específicas.",
+    "mortar-support": "O quadro citado em 01:16 mostra o morteiro L81, a posição de sacos de areia e a interação ENTER Mortar.",
+    "helicopter-transport": "Cena da cabine usada apenas como contexto de transporte; não confirma rota, pouso, manuseio ou comando atual.",
+  },
+  ja: {
+    "battlefield-control-zone": "カテゴリ用バナーを状況把握の参考としてのみ使用し、対象画像や固定戦術マップとしては扱いません。",
+    "fob-network": "FOB計画の参考に限って使う公式戦闘画像であり、確認済みのFOB配置を示すものではありません。",
+    "cargo-route": "Ural自体は対象確認済みですが、ここでは経路の参考にのみ使い、特定ルートや容量を裏付けません。",
+    "mortar-support": "出典の01:16では、L81迫撃砲、土嚢陣地、ENTER Mortar操作が同時に確認できます。",
+    "helicopter-transport": "操縦席画像を輸送の参考としてのみ使い、経路、着陸地点、操縦値、現行キー設定は裏付けません。",
+  },
+  "zh-cn": {
+    "battlefield-control-zone": "该分类横幅仅用于地图判读场景，不作为具体对象图片或固定战术地图发布。",
+    "fob-network": "该官方战斗画面仅作为 FOB 规划的场景参考，不代表已核验的 FOB 布局。",
+    "cargo-route": "Ural 对象本身已匹配，但此处仅作路线场景参考，不证明任何特定路线或容量。",
+    "mortar-support": "来源 01:16 画面同时清楚显示 L81 迫击炮、沙袋炮位和 ENTER Mortar 交互。",
+    "helicopter-transport": "驾驶舱画面仅作运输场景参考，不证明路线、降落区、操控参数或当前按键。",
+  },
+};
+
 export function getLocalizedOperationsAtlasRecords(locale: Locale): readonly OperationsAtlasRecord[] {
   if (locale === "en") return operationsAtlasRecords;
   const sourceNotesById = localizedSourceNotesByLocale[locale];
+  const visualUsageById = localizedVisualUsageByLocale[locale];
   return operationsAtlasRecords.map((record) => ({
     ...record,
     sourceNotes: sourceNotesById[record.id as OperationsAtlasRecordId],
+    visual: record.visual.state === "pending" ? record.visual : {
+      ...record.visual,
+      usageNote: visualUsageById[record.id as OperationsAtlasRecordId] ?? record.visual.usageNote,
+    },
   }));
 }
 
@@ -248,6 +312,9 @@ const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
     visualContextual: "Context image",
     visualPending: "Image not yet verified",
     visualPendingDescription: "No approved object-matching image is available. The workflow remains documented without a borrowed or generic substitute.",
+    visualSourceLabel: "Visual source",
+    visualUsageLabel: "Usage scope",
+    visualRetrievedLabel: "Retrieved",
     entries: {
       "battlefield-control-zone": {title: "Battlefield and Control Zone", objective: "Read the live objective before choosing a route", context: "Whole battlefield and the active randomized Control Zone", summary: "Locate the active Control Zone, compare safe transport and supply approaches, then choose a route for this match instead of memorizing one fixed path.", imageAlt: "Context image for the WARDOGS battlefield and active objective flow"},
       "tower-terminal": {title: "Tower Terminal", objective: "Secure the approach and read the live terminal prompt", context: "Tower objective inside the current Control Zone flow", summary: "Clear immediate threats, identify the correct terminal interaction, communicate it, and return attention to team scoring. Beta codes and timings are not presented as current constants."},
@@ -261,7 +328,7 @@ const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
   de: {
     metaTitle: "WARDOGS Einsatzatlas: Karten, FOBs, Fracht und Ziele",
     metaDescription: "Der belegte WARDOGS-Einsatzatlas verbindet Control Zone, Turmziele, FOB-Bau, Fracht, Mörser und Hubschraubertransport ohne erfundene Routen.",
-    eyebrow: "Aufgabenorientierte Feldreferenz", title: "WARDOGS Einsatzatlas", description: "Wähle die Aufgabe deines Trupps, prüfe Kontext und Beleg und öffne dann den passenden gepflegten Guide. Dies ist ein Arbeitsablauf, keine erfundene taktische Karte; unbestätigte Koordinaten und feste Routen fehlen bewusst.", workflowLabel: "Redaktioneller Ablauf", workflowNote: "Die Schritte sind redaktionelle Hinweise der Website. Beleglabels gelten nur für die unten aufgeführten Quellenfakten.", sourcedFactsLabel: "Belegte Fakten", sourceScopeLabel: "Quellenumfang", filtersLabel: "Einsätze nach Aufgabe filtern", filters: {all: "Alle Einsätze", orientation: "Orientierung", objective: "Ziele", construction: "Bau", logistics: "Logistik", "fire-support": "Feuerunterstützung", "air-operations": "Lufteinsätze"}, showing: "Abläufe angezeigt", objectiveLabel: "Aufgabe", contextLabel: "Kontext", evidenceLabel: "Beleg", sourceLabel: "Quelle", checkedLabel: "Geprüft", buildLabel: "Build", openGuide: "Passenden Guide öffnen", relatedGuides: "Verwandte Guides", relatedTools: "Verwandte Tools", visualVerified: "Objektbild verifiziert", visualContextual: "Kontextbild", visualPending: "Bild noch nicht verifiziert", visualPendingDescription: "Es gibt noch kein freigegebenes, objektgenaues Bild. Der Ablauf bleibt ohne fremden oder generischen Ersatz dokumentiert.",
+    eyebrow: "Aufgabenorientierte Feldreferenz", title: "WARDOGS Einsatzatlas", description: "Wähle die Aufgabe deines Trupps, prüfe Kontext und Beleg und öffne dann den passenden gepflegten Guide. Dies ist ein Arbeitsablauf, keine erfundene taktische Karte; unbestätigte Koordinaten und feste Routen fehlen bewusst.", workflowLabel: "Redaktioneller Ablauf", workflowNote: "Die Schritte sind redaktionelle Hinweise der Website. Beleglabels gelten nur für die unten aufgeführten Quellenfakten.", sourcedFactsLabel: "Belegte Fakten", sourceScopeLabel: "Quellenumfang", filtersLabel: "Einsätze nach Aufgabe filtern", filters: {all: "Alle Einsätze", orientation: "Orientierung", objective: "Ziele", construction: "Bau", logistics: "Logistik", "fire-support": "Feuerunterstützung", "air-operations": "Lufteinsätze"}, showing: "Abläufe angezeigt", objectiveLabel: "Aufgabe", contextLabel: "Kontext", evidenceLabel: "Beleg", sourceLabel: "Quelle", checkedLabel: "Geprüft", buildLabel: "Build", openGuide: "Passenden Guide öffnen", relatedGuides: "Verwandte Guides", relatedTools: "Verwandte Tools", visualVerified: "Objektbild verifiziert", visualContextual: "Kontextbild", visualPending: "Bild noch nicht verifiziert", visualPendingDescription: "Es gibt noch kein freigegebenes, objektgenaues Bild. Der Ablauf bleibt ohne fremden oder generischen Ersatz dokumentiert.", visualSourceLabel: "Bildquelle", visualUsageLabel: "Nutzungsumfang", visualRetrievedLabel: "Abgerufen",
     entries: {
       "battlefield-control-zone": {title: "Schlachtfeld und Control Zone", objective: "Aktives Ziel vor der Routenwahl lesen", context: "Gesamtes Schlachtfeld und aktive zufällige Control Zone", summary: "Finde die aktive Control Zone, vergleiche sichere Transport- und Versorgungswege und wähle für diese Runde eine Route statt einen festen Pfad auswendig zu lernen.", imageAlt: "Kontextbild für Schlachtfeld und aktiven Zielablauf in WARDOGS"},
       "tower-terminal": {title: "Turmterminal", objective: "Zugang sichern und aktuellen Terminalhinweis lesen", context: "Turmziel im aktuellen Control-Zone-Ablauf", summary: "Sichere den Nahbereich, erkenne die richtige Interaktion, teile sie mit und beachte wieder die Teamwertung. Beta-Codes und Zeiten gelten nicht als aktuelle Konstanten."},
@@ -275,7 +342,7 @@ const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
   ru: {
     metaTitle: "Оперативный атлас WARDOGS: карты, FOB, грузы и цели",
     metaDescription: "Оперативный атлас WARDOGS связывает Control Zone, башни, FOB, грузы, миномёты и вертолёты с источниками, без выдуманных координат и маршрутов.",
-    eyebrow: "Справочник по задачам", title: "Оперативный атлас WARDOGS", description: "Выберите нужную отряду задачу, проверьте контекст и источник, затем откройте точное руководство. Это указатель рабочих процессов, а не выдуманная тактическая карта: неподтверждённые координаты и постоянные маршруты не публикуются.", workflowLabel: "Редакционный порядок действий", workflowNote: "Шаги составлены редакцией сайта. Метки доказательств относятся только к перечисленным ниже фактам из источников.", sourcedFactsLabel: "Факты из источников", sourceScopeLabel: "Границы источника", filtersLabel: "Фильтр операций по задаче", filters: {all: "Все операции", orientation: "Ориентирование", objective: "Цели", construction: "Строительство", logistics: "Логистика", "fire-support": "Огневая поддержка", "air-operations": "Воздушные операции"}, showing: "процессов показано", objectiveLabel: "Задача", contextLabel: "Контекст", evidenceLabel: "Доказательство", sourceLabel: "Источник", checkedLabel: "Проверено", buildLabel: "Сборка", openGuide: "Открыть точное руководство", relatedGuides: "Связанные руководства", relatedTools: "Связанные инструменты", visualVerified: "Изображение объекта проверено", visualContextual: "Контекстное изображение", visualPending: "Изображение ещё не проверено", visualPendingDescription: "Одобренного изображения именно этого объекта пока нет. Процесс описан без чужой или общей картинки-замены.",
+    eyebrow: "Справочник по задачам", title: "Оперативный атлас WARDOGS", description: "Выберите нужную отряду задачу, проверьте контекст и источник, затем откройте точное руководство. Это указатель рабочих процессов, а не выдуманная тактическая карта: неподтверждённые координаты и постоянные маршруты не публикуются.", workflowLabel: "Редакционный порядок действий", workflowNote: "Шаги составлены редакцией сайта. Метки доказательств относятся только к перечисленным ниже фактам из источников.", sourcedFactsLabel: "Факты из источников", sourceScopeLabel: "Границы источника", filtersLabel: "Фильтр операций по задаче", filters: {all: "Все операции", orientation: "Ориентирование", objective: "Цели", construction: "Строительство", logistics: "Логистика", "fire-support": "Огневая поддержка", "air-operations": "Воздушные операции"}, showing: "процессов показано", objectiveLabel: "Задача", contextLabel: "Контекст", evidenceLabel: "Доказательство", sourceLabel: "Источник", checkedLabel: "Проверено", buildLabel: "Сборка", openGuide: "Открыть точное руководство", relatedGuides: "Связанные руководства", relatedTools: "Связанные инструменты", visualVerified: "Изображение объекта проверено", visualContextual: "Контекстное изображение", visualPending: "Изображение ещё не проверено", visualPendingDescription: "Одобренного изображения именно этого объекта пока нет. Процесс описан без чужой или общей картинки-замены.", visualSourceLabel: "Источник изображения", visualUsageLabel: "Область использования", visualRetrievedLabel: "Получено",
     entries: {
       "battlefield-control-zone": {title: "Поле боя и Control Zone", objective: "Найти активную цель до выбора маршрута", context: "Всё поле боя и активная случайная Control Zone", summary: "Найдите активную Control Zone, сравните безопасные пути транспорта и снабжения и выберите маршрут для текущего матча, а не заучивайте одну дорогу.", imageAlt: "Контекстное изображение поля боя и активной цели WARDOGS"},
       "tower-terminal": {title: "Терминал башни", objective: "Защитить подход и прочитать текущую подсказку терминала", context: "Башенная цель внутри текущей Control Zone", summary: "Уберите ближайшие угрозы, определите нужное действие, сообщите его отряду и вернитесь к командному счёту. Коды и тайминги беты не считаются текущими."},
@@ -289,7 +356,7 @@ const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
   "pt-br": {
     metaTitle: "Atlas de Operações WARDOGS: mapas, FOBs, carga e objetivos",
     metaDescription: "Use o atlas de operações WARDOGS com fontes para Control Zone, torres, FOBs, carga, morteiros e helicópteros, sem inventar coordenadas ou rotas.",
-    eyebrow: "Referência de campo por tarefa", title: "Atlas de Operações WARDOGS", description: "Escolha a tarefa do esquadrão, confira o contexto e a fonte e abra o guia exato. Este é um índice de fluxo de trabalho, não um mapa tático inventado; coordenadas e rotas fixas sem documentação ficam de fora.", workflowLabel: "Fluxo editorial", workflowNote: "A sequência foi escrita pela equipe editorial do site. Os rótulos de evidência valem apenas para os fatos citados abaixo.", sourcedFactsLabel: "Fatos com fonte", sourceScopeLabel: "Escopo da fonte", filtersLabel: "Filtrar operações por tarefa", filters: {all: "Todas", orientation: "Orientação", objective: "Objetivos", construction: "Construção", logistics: "Logística", "fire-support": "Apoio de fogo", "air-operations": "Operações aéreas"}, showing: "fluxos exibidos", objectiveLabel: "Tarefa", contextLabel: "Contexto", evidenceLabel: "Evidência", sourceLabel: "Fonte", checkedLabel: "Verificado", buildLabel: "Build", openGuide: "Abrir guia exato", relatedGuides: "Guias relacionados", relatedTools: "Ferramentas relacionadas", visualVerified: "Imagem do objeto verificada", visualContextual: "Imagem de contexto", visualPending: "Imagem ainda não verificada", visualPendingDescription: "Ainda não há uma imagem aprovada que corresponda ao objeto. O fluxo continua documentado sem usar imagem genérica ou emprestada.",
+    eyebrow: "Referência de campo por tarefa", title: "Atlas de Operações WARDOGS", description: "Escolha a tarefa do esquadrão, confira o contexto e a fonte e abra o guia exato. Este é um índice de fluxo de trabalho, não um mapa tático inventado; coordenadas e rotas fixas sem documentação ficam de fora.", workflowLabel: "Fluxo editorial", workflowNote: "A sequência foi escrita pela equipe editorial do site. Os rótulos de evidência valem apenas para os fatos citados abaixo.", sourcedFactsLabel: "Fatos com fonte", sourceScopeLabel: "Escopo da fonte", filtersLabel: "Filtrar operações por tarefa", filters: {all: "Todas", orientation: "Orientação", objective: "Objetivos", construction: "Construção", logistics: "Logística", "fire-support": "Apoio de fogo", "air-operations": "Operações aéreas"}, showing: "fluxos exibidos", objectiveLabel: "Tarefa", contextLabel: "Contexto", evidenceLabel: "Evidência", sourceLabel: "Fonte", checkedLabel: "Verificado", buildLabel: "Build", openGuide: "Abrir guia exato", relatedGuides: "Guias relacionados", relatedTools: "Ferramentas relacionadas", visualVerified: "Imagem do objeto verificada", visualContextual: "Imagem de contexto", visualPending: "Imagem ainda não verificada", visualPendingDescription: "Ainda não há uma imagem aprovada que corresponda ao objeto. O fluxo continua documentado sem usar imagem genérica ou emprestada.", visualSourceLabel: "Fonte visual", visualUsageLabel: "Escopo de uso", visualRetrievedLabel: "Obtido em",
     entries: {
       "battlefield-control-zone": {title: "Campo de batalha e Control Zone", objective: "Ler o objetivo ativo antes de escolher a rota", context: "Campo inteiro e Control Zone aleatória ativa", summary: "Localize a Control Zone, compare acessos seguros para transporte e suprimento e escolha a rota desta partida em vez de decorar um único caminho.", imageAlt: "Imagem de contexto do campo de batalha e do objetivo ativo de WARDOGS"},
       "tower-terminal": {title: "Terminal da torre", objective: "Proteger a aproximação e ler o prompt atual do terminal", context: "Objetivo de torre dentro do fluxo da Control Zone", summary: "Elimine ameaças próximas, identifique a interação correta, comunique-a e volte a observar a pontuação. Códigos e tempos do beta não são constantes atuais."},
@@ -303,7 +370,7 @@ const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
   ja: {
     metaTitle: "WARDOGS 作戦アトラス：マップ・FOB・輸送・目標",
     metaDescription: "出典付きWARDOGS作戦アトラスで、Control Zone、タワー、FOB、物資輸送、迫撃砲、ヘリ輸送を確認し、架空の座標や固定ルートを避けて詳細ガイドへ進めます。",
-    eyebrow: "任務から引けるフィールド資料", title: "WARDOGS 作戦アトラス", description: "分隊に必要な任務を選び、状況と出典を確認して、該当する詳細ガイドへ進みます。これは架空の戦術マップではなく作業手順の索引です。出典のない座標や固定ルートは意図的に除外しています。", workflowLabel: "編集部作成の手順", workflowNote: "手順はサイト編集部による実用提案です。証拠ラベルは、下に列挙した出典付き事実だけに適用されます。", sourcedFactsLabel: "出典付き事実", sourceScopeLabel: "出典の範囲", filtersLabel: "任務で絞り込む", filters: {all: "すべて", orientation: "状況把握", objective: "目標", construction: "建設", logistics: "兵站", "fire-support": "火力支援", "air-operations": "航空作戦"}, showing: "件の手順を表示", objectiveLabel: "任務", contextLabel: "状況", evidenceLabel: "証拠", sourceLabel: "出典", checkedLabel: "確認日", buildLabel: "ビルド", openGuide: "詳細ガイドを開く", relatedGuides: "関連ガイド", relatedTools: "関連ツール", visualVerified: "対象画像を確認済み", visualContextual: "参考画像", visualPending: "画像は未確認", visualPendingDescription: "対象と一致する承認済み画像はまだありません。借用画像や汎用画像で代用せず、手順だけを掲載しています。",
+    eyebrow: "任務から引けるフィールド資料", title: "WARDOGS 作戦アトラス", description: "分隊に必要な任務を選び、状況と出典を確認して、該当する詳細ガイドへ進みます。これは架空の戦術マップではなく作業手順の索引です。出典のない座標や固定ルートは意図的に除外しています。", workflowLabel: "編集部作成の手順", workflowNote: "手順はサイト編集部による実用提案です。証拠ラベルは、下に列挙した出典付き事実だけに適用されます。", sourcedFactsLabel: "出典付き事実", sourceScopeLabel: "出典の範囲", filtersLabel: "任務で絞り込む", filters: {all: "すべて", orientation: "状況把握", objective: "目標", construction: "建設", logistics: "兵站", "fire-support": "火力支援", "air-operations": "航空作戦"}, showing: "件の手順を表示", objectiveLabel: "任務", contextLabel: "状況", evidenceLabel: "証拠", sourceLabel: "出典", checkedLabel: "確認日", buildLabel: "ビルド", openGuide: "詳細ガイドを開く", relatedGuides: "関連ガイド", relatedTools: "関連ツール", visualVerified: "対象画像を確認済み", visualContextual: "参考画像", visualPending: "画像は未確認", visualPendingDescription: "対象と一致する承認済み画像はまだありません。借用画像や汎用画像で代用せず、手順だけを掲載しています。", visualSourceLabel: "画像の出典", visualUsageLabel: "使用範囲", visualRetrievedLabel: "取得日",
     entries: {
       "battlefield-control-zone": {title: "戦場とControl Zone", objective: "ルートを決める前に現在の目標を確認する", context: "戦場全体とランダムに選ばれたControl Zone", summary: "現在のControl Zoneを探し、安全な輸送路と補給路を比較して、その試合に合うルートを選びます。固定ルートの暗記は前提にしません。", imageAlt: "WARDOGSの戦場と現在の目標フローを示す参考画像"},
       "tower-terminal": {title: "タワー端末", objective: "進入路を確保して現在の端末表示を読む", context: "Control Zone内のタワー目標", summary: "周囲の脅威を排除し、正しい操作を確認して共有し、チームの得点状況へ注意を戻します。ベータ時のコードや時間は現在値として扱いません。"},
@@ -317,7 +384,7 @@ const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
   "zh-cn": {
     metaTitle: "WARDOGS 行动地图：地图、FOB、货运与目标任务",
     metaDescription: "使用带来源的 WARDOGS 行动地图，查找控制区、塔楼、FOB、货运、迫击炮与直升机运输攻略；每项均标注版本、核查日期和来源，不编造坐标、固定路线或当前数值。",
-    eyebrow: "按任务查找的战场参考", title: "WARDOGS 行动地图", description: "先选择小队当前需要完成的任务，再核对适用场景、版本与来源，最后进入对应的完整攻略。这里是行动流程索引，不是虚构战术地图；没有可靠来源的坐标、网格和固定路线不会被发布。", workflowLabel: "编辑流程建议", workflowNote: "行动步骤由本站编辑整理；官方、已确认等证据标签仅适用于下方逐条列出的来源事实。", sourcedFactsLabel: "有来源的事实", sourceScopeLabel: "来源范围", filtersLabel: "按任务筛选行动", filters: {all: "全部行动", orientation: "地图判读", objective: "目标任务", construction: "建造", logistics: "后勤", "fire-support": "火力支援", "air-operations": "空中行动"}, showing: "项流程", objectiveLabel: "任务", contextLabel: "适用场景", evidenceLabel: "证据", sourceLabel: "来源", checkedLabel: "核查日期", buildLabel: "版本", openGuide: "打开对应攻略", relatedGuides: "相关攻略", relatedTools: "相关工具", visualVerified: "对象图片已核验", visualContextual: "场景参考图", visualPending: "图片尚未核验", visualPendingDescription: "目前没有与该对象准确对应且已获批准的图片。页面保留流程信息，不使用竞品素材、借用图片或通用横幅冒充实体图。",
+    eyebrow: "按任务查找的战场参考", title: "WARDOGS 行动地图", description: "先选择小队当前需要完成的任务，再核对适用场景、版本与来源，最后进入对应的完整攻略。这里是行动流程索引，不是虚构战术地图；没有可靠来源的坐标、网格和固定路线不会被发布。", workflowLabel: "编辑流程建议", workflowNote: "行动步骤由本站编辑整理；官方、已确认等证据标签仅适用于下方逐条列出的来源事实。", sourcedFactsLabel: "有来源的事实", sourceScopeLabel: "来源范围", filtersLabel: "按任务筛选行动", filters: {all: "全部行动", orientation: "地图判读", objective: "目标任务", construction: "建造", logistics: "后勤", "fire-support": "火力支援", "air-operations": "空中行动"}, showing: "项流程", objectiveLabel: "任务", contextLabel: "适用场景", evidenceLabel: "证据", sourceLabel: "来源", checkedLabel: "核查日期", buildLabel: "版本", openGuide: "打开对应攻略", relatedGuides: "相关攻略", relatedTools: "相关工具", visualVerified: "对象图片已核验", visualContextual: "场景参考图", visualPending: "图片尚未核验", visualPendingDescription: "目前没有与该对象准确对应且已获批准的图片。页面保留流程信息，不使用竞品素材、借用图片或通用横幅冒充实体图。", visualSourceLabel: "视觉来源", visualUsageLabel: "使用范围", visualRetrievedLabel: "获取日期",
     entries: {
       "battlefield-control-zone": {title: "战场与控制区", objective: "选路线前先确认本局实时目标", context: "完整战场与本局随机生成的控制区", summary: "先定位当前控制区，再比较运输、补给、掩体和撤离条件，按本局局势选择路线，而不是死记一条每局都不变的路径。", imageAlt: "WARDOGS 战场与当前目标流程的场景参考图"},
       "tower-terminal": {title: "塔楼终端", objective: "控制入口并读取当前终端提示", context: "控制区流程中的塔楼目标", summary: "清理近距离威胁，确认本版本实际要求的交互，及时告知队友，然后重新关注全队得分。测试版代码和计时不会被当作现行固定值。"},

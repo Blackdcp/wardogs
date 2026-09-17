@@ -1,8 +1,21 @@
 import {existsSync} from "node:fs";
 import {join} from "node:path";
+import React from "react";
+import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
-import {catalogueMediaSources, getCatalogueMediaSource} from "../../src/features/catalogue/catalogue-media-sources";
+import {CatalogueCategoryView} from "../../src/components/catalogue/catalogue-category-view";
+import {itemTypes} from "../../src/features/items/item-library";
+import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
+import {getCatalogueCategoryMedia} from "../../src/features/catalogue/catalogue-media";
+import {
+  catalogueMediaSources,
+  getCatalogueCategoryMediaSource,
+  getCatalogueMediaSource,
+  type CatalogueMediaSource,
+} from "../../src/features/catalogue/catalogue-media-sources";
 import {catalogueRecords} from "../../src/features/catalogue/catalogue-records";
+import {buildCatalogGuideMetadata} from "../../src/lib/item-metadata";
+import {buildItemTypeJsonLd} from "../../src/lib/item-structured-data";
 
 describe("catalogue media provenance", () => {
   it("documents every record image that the UI may present as verified", () => {
@@ -81,5 +94,48 @@ describe("catalogue media provenance", () => {
       expect(source?.recordKey === key || source?.additionalRecordKeys?.includes(key), key).toBe(true);
     }
     expect(catalogueRecords.filter((record) => record.mediaState === "context-only")).toHaveLength(0);
+  });
+
+  it("publishes category hero, metadata, and JSON-LD images only through contextual approvals", () => {
+    for (const {id} of itemTypes) {
+      const media = getCatalogueCategoryMedia(id);
+      const source = getCatalogueCategoryMediaSource(id);
+      const guide = getCatalogGuide(id);
+
+      expect(media, id).toBeDefined();
+      expect(source, id).toBeDefined();
+      expect(source?.assetKind, id).toBe("contextual");
+      expect(source?.categoryKeys, id).toContain(id);
+      expect(media?.image, id).toBe(source?.image);
+      expect(media?.image, id).not.toMatch(/556x45mm|heavy-armor/);
+      expect(guide, id).toBeDefined();
+
+      const metadata = buildCatalogGuideMetadata("en", guide!);
+      const collection = buildItemTypeJsonLd("en", id)[0];
+      expect(metadata.openGraph?.images, `${id} metadata`).toEqual([
+        expect.objectContaining({url: `http://localhost:3000${media?.image}`}),
+      ]);
+      expect(collection.image, `${id} JSON-LD`).toBe(`http://localhost:3000${media?.image}`);
+    }
+  });
+
+  it("removes an unregistered category image from hero, metadata, and JSON-LD together", () => {
+    const guide = getCatalogGuide("ammo")!;
+    const approved = getCatalogueCategoryMedia("ammo")!;
+    const mutableRegistry = catalogueMediaSources as Record<string, CatalogueMediaSource>;
+    const source = mutableRegistry[approved.image];
+
+    delete mutableRegistry[approved.image];
+    try {
+      const html = renderToStaticMarkup(React.createElement(CatalogueCategoryView, {guide, locale: "en"}));
+      const metadata = buildCatalogGuideMetadata("en", guide);
+      const collection = buildItemTypeJsonLd("en", "ammo")[0];
+
+      expect(html).not.toContain(approved.image);
+      expect(metadata.openGraph?.images ?? []).toEqual([]);
+      expect(collection).not.toHaveProperty("image");
+    } finally {
+      mutableRegistry[approved.image] = source;
+    }
   });
 });

@@ -1,4 +1,7 @@
 import type {CatalogueMediaState, CatalogueRecord} from "./catalogue-types";
+import type {ItemTypeId} from "@/features/items/item-library";
+
+export type CatalogueCategoryMediaKey = ItemTypeId | "hub";
 
 export type CatalogueMediaSource = {
   recordKey?: string;
@@ -11,6 +14,7 @@ export type CatalogueMediaSource = {
   capturedAt?: string;
   retrievedAt: string;
   usageNote: string;
+  categoryKeys?: readonly CatalogueCategoryMediaKey[];
 };
 
 type ObjectSourceBase = Omit<CatalogueMediaSource, "recordKey" | "image" | "approvedState" | "assetKind" | "usageNote">;
@@ -128,15 +132,15 @@ const exactObjectOverrides: CatalogueMediaSource[] = [
   objectOverride("vehicles/stingray", "/images/catalogue/vehicles/stingray.webp", "https://www.youtube.com/watch?v=kg46BZ1H2W0", "WARDOGS Building 101", "03:56", "2026-09-01", "The Stingray launcher tube and handheld control unit are clearly visible."),
 ];
 
-function contextualSource(image: string, filename: string, usageNote: string): CatalogueMediaSource {
-  return {image, approvedState: "context-only", assetKind: "contextual", sourceUrl: pressKitUrl, sourceLabel: "Team17 WARDOGS Press Kit (Aug 2026)", capturedAt: filename, retrievedAt: "2026-08-30", usageNote};
+function contextualSource(image: string, filename: string, usageNote: string, categoryKeys: readonly CatalogueCategoryMediaKey[]): CatalogueMediaSource {
+  return {image, approvedState: "context-only", assetKind: "contextual", sourceUrl: pressKitUrl, sourceLabel: "Team17 WARDOGS Press Kit (Aug 2026)", capturedAt: filename, retrievedAt: "2026-08-30", usageNote, categoryKeys};
 }
 
 const contextualApprovals = [
-  contextualSource("/images/guide-discovery/best-weapons-loadouts.webp", "WD_Screenshot_ResidentialStreet_1_WD2.jpg", "Official street-combat frame used only as contextual discovery art for the weapons and loadouts guide."),
-  contextualSource("/images/guide-discovery/armor-damage-ttk.webp", "WD_Screenshot_Tank_1_WD2.jpg", "Official combined-arms frame used only as contextual discovery art for the armor and survivability guide."),
-  contextualSource("/images/guide-discovery/medic-revive.webp", "WD_Screenshot_Tank_1_WD2.jpg", "Official frame showing a downed-player interaction, used only as contextual discovery art for the medic guide."),
-  contextualSource("/images/guide-discovery/equipment-tools.webp", "WD_Screenshot_Foundry_1_WD2.jpg", "Official indoor-combat frame used only as contextual discovery art for the equipment and tools guide."),
+  contextualSource("/images/guide-discovery/best-weapons-loadouts.webp", "WD_Screenshot_ResidentialStreet_1_WD2.jpg", "Official street-combat frame approved only as contextual category and guide art; it does not verify any weapon, ammunition, attachment, or loadout object.", ["weapons", "ammo", "attachments", "loadouts"]),
+  contextualSource("/images/guide-discovery/armor-damage-ttk.webp", "WD_Screenshot_Tank_1_WD2.jpg", "Official combined-arms frame approved only as contextual category and guide art; it does not verify a vehicle, armor object, or mechanic.", ["hub", "vehicles", "gear", "mechanics"]),
+  contextualSource("/images/guide-discovery/medic-revive.webp", "WD_Screenshot_Tank_1_WD2.jpg", "Official downed-player interaction frame approved only as medical context; it does not verify a specific medical object or effect.", ["medical"]),
+  contextualSource("/images/guide-discovery/equipment-tools.webp", "WD_Screenshot_Foundry_1_WD2.jpg", "Official indoor-combat frame approved only as equipment, supply, and deployable context; it does not verify a specific object.", ["equipment", "supplies", "deployables"]),
 ];
 
 const approvedMedia = [...weaponApprovals, ...vehicleApprovals, ...exactObjectOverrides, ...contextualApprovals];
@@ -161,4 +165,10 @@ export function getCatalogueMediaSource(record: Pick<CatalogueRecord, "type" | "
   const source = catalogueMediaSources[record.image];
   const recordKey = `${record.type}/${record.slug}`;
   return isCatalogueMediaSourceApprovedForRecord(source, recordKey) ? source : undefined;
+}
+
+export function getCatalogueCategoryMediaSource(category: CatalogueCategoryMediaKey): CatalogueMediaSource | undefined {
+  return Object.values(catalogueMediaSources).find((source) =>
+    source.assetKind === "contextual" && source.categoryKeys?.includes(category)
+  );
 }

@@ -12,6 +12,7 @@ import {
   operationsAtlasRecords,
   operationsAtlasTaskOrder,
 } from "../../src/features/maps/operations-atlas";
+import {getOperationsAtlasMediaSource} from "../../src/features/maps/operations-atlas-media";
 
 vi.mock("@/i18n/navigation", () => ({
   Link: ({children, href, ...props}: React.AnchorHTMLAttributes<HTMLAnchorElement> & {href: string}) =>
@@ -173,5 +174,49 @@ describe("operations atlas", () => {
     expect(html).toContain(copy.sourceScopeLabel);
     expect(html).toContain("The official Steam description confirms the randomized objective model");
     expect(html).toContain("Randomized 2 x 2 km Control Zone");
+  });
+
+  it("retains and separately renders complete localized visual provenance", () => {
+    const englishRecords = getLocalizedOperationsAtlasRecords("en");
+
+    for (const record of englishRecords) {
+      const registrySource = getOperationsAtlasMediaSource(record.id);
+      if (!registrySource) {
+        expect(record.visual.state, record.id).toBe("pending");
+        continue;
+      }
+      expect(record.visual, record.id).toMatchObject({
+        state: registrySource.state,
+        image: registrySource.image,
+        sourceUrl: registrySource.sourceUrl,
+        sourceLabel: registrySource.sourceLabel,
+        retrievedAt: registrySource.retrievedAt,
+        usageNote: registrySource.usageNote,
+      });
+    }
+
+    const mortar = englishRecords.find(({id}) => id === "mortar-support")!;
+    expect(mortar.visual.sourceUrl).toBe("https://www.youtube.com/watch?v=kg46BZ1H2W0");
+    expect(mortar.visual.sourceUrl).not.toBe(mortar.evidence.sourceUrl);
+
+    for (const locale of locales) {
+      const records = getLocalizedOperationsAtlasRecords(locale);
+      const copy = getOperationsAtlasCopy(locale);
+      const html = renderToStaticMarkup(
+        React.createElement(OperationsAtlas, {copy, guideTitles: {}, locale, toolLabels: {}}),
+      );
+
+      expect(html, `${locale} visual source label`).toContain(copy.visualSourceLabel);
+      expect(html, `${locale} visual usage label`).toContain(copy.visualUsageLabel);
+      for (const record of records.filter(({visual}) => visual.state !== "pending")) {
+        const english = englishRecords.find(({id}) => id === record.id)!;
+        expect(record.visual.sourceLabel, `${locale}/${record.id} source title`).toBe(english.visual.sourceLabel);
+        expect(record.visual.sourceUrl, `${locale}/${record.id} source URL`).toBe(english.visual.sourceUrl);
+        expect(record.visual.retrievedAt, `${locale}/${record.id} retrieved`).toBe(english.visual.retrievedAt);
+        expect(record.visual.usageNote?.trim().length, `${locale}/${record.id} usage note`).toBeGreaterThan(20);
+        expect(html, `${locale}/${record.id} usage render`).toContain(record.visual.usageNote);
+        if (locale !== "en") expect(record.visual.usageNote, `${locale}/${record.id} localized usage`).not.toBe(english.visual.usageNote);
+      }
+    }
   });
 });

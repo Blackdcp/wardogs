@@ -237,12 +237,12 @@ describe("item metadata", () => {
     const category = buildCatalogGuideMetadata("en", guide!);
 
     expect(hub.openGraph?.images).toEqual([
-      expect.objectContaining({url: "http://localhost:3000/images/catalogue/banners/thegame-1280.webp"})
+      expect.objectContaining({url: "http://localhost:3000/images/guide-discovery/armor-damage-ttk.webp"})
     ]);
     expect(category.openGraph?.images).toEqual([
-      expect.objectContaining({url: "http://localhost:3000/images/catalogue/banners/weapons-1280.webp"})
+      expect.objectContaining({url: "http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp"})
     ]);
-    expect(category.twitter?.images).toEqual(["http://localhost:3000/images/catalogue/banners/weapons-1280.webp"]);
+    expect(category.twitter?.images).toEqual(["http://localhost:3000/images/guide-discovery/best-weapons-loadouts.webp"]);
   });
 
   it("uses the Pages production URL form consistently for canonical and social URLs", () => {

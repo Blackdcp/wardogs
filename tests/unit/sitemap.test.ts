@@ -124,17 +124,26 @@ describe("sitemap", () => {
     }
   });
 
-  it("uses each item's editorial publication date instead of the Alpha observation date", () => {
+  it("uses each item's latest detail, evidence, or change-history verification date", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const locale of locales) {
       for (const item of itemLibrary.filter((item) => item.indexable)) {
         const url = `${origin}/${locale}/items/${item.type}/${item.slug}`;
         expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url)
-          .toBe(new Date(`${item.detailUpdatedAt ?? "2026-08-16"}T00:00:00.000Z`).toISOString());
+          .toBe(resolveItemLastModified(item).toISOString());
         expect(entriesByUrl.get(url)?.changeFrequency, url).toBe("weekly");
       }
     }
+  });
+
+  it("locks Deagle freshness to its latest official change", () => {
+    const deagle = itemLibrary.find((item) => item.slug === "deagle");
+
+    expect(deagle).toBeDefined();
+    expect(resolveItemLastModified(deagle).toISOString()).toBe("2026-09-09T00:00:00.000Z");
+    expect(new Date(sitemap().find((entry) => entry.url === `${origin}/en/items/weapons/deagle`)!.lastModified!).toISOString())
+      .toBe("2026-09-09T00:00:00.000Z");
   });
 
   it("resolves distinct supplied detail dates", () => {

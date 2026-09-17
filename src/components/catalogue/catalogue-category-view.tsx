@@ -13,30 +13,11 @@ import {CatalogueExplorer} from "./catalogue-explorer";
 import {CatalogueBuildNotice} from "./catalogue-build-notice";
 import {getLocalizedCatalogueGroup, getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getItemUi} from "@/features/items/item-ui";
+import {getCatalogueCategoryMedia} from "@/features/catalogue/catalogue-media";
 
 type CatalogueCategoryViewProps = {
   guide: CatalogGuide;
   locale: Locale;
-};
-
-type CategoryHero = {
-  image: string;
-  imageAlt: string;
-  imageFit: "cover" | "contain";
-};
-
-export const categoryHeroes: Record<ItemTypeId, CategoryHero> = {
-  weapons: {image: "/images/catalogue/banners/weapons-1280.webp", imageAlt: "WARDOGS weapons on the battlefield", imageFit: "cover"},
-  vehicles: {image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: "WARDOGS vehicles in combat", imageFit: "cover"},
-  ammo: {image: "/images/catalogue/ammo/556x45mm.webp", imageAlt: "5.56x45mm ammunition box", imageFit: "contain"},
-  attachments: {image: "/images/catalogue/banners/attachments-1280.webp", imageAlt: "WARDOGS weapon attachments", imageFit: "cover"},
-  gear: {image: "/images/catalogue/gear/heavy-armor.webp", imageAlt: "WARDOGS heavy armor", imageFit: "contain"},
-  equipment: {image: "/images/catalogue/banners/meta-1280.webp", imageAlt: "WARDOGS tactical equipment", imageFit: "cover"},
-  medical: {image: "/images/guide-discovery/medic-revive.webp", imageAlt: "WARDOGS field medical support", imageFit: "cover"},
-  supplies: {image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: "WARDOGS field logistics and supplies", imageFit: "cover"},
-  deployables: {image: "/images/guide-discovery/equipment-tools.webp", imageAlt: "WARDOGS deployable field equipment", imageFit: "cover"},
-  mechanics: {image: "/images/catalogue/banners/thegame-1280.webp", imageAlt: "WARDOGS objective and support systems", imageFit: "cover"},
-  loadouts: {image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: "WARDOGS squad loadout", imageFit: "cover"}
 };
 
 function normalizedRecordName(value: string) {
@@ -81,7 +62,7 @@ function hasImageExplorer(type: ItemTypeId): type is CatalogueItemType {
 }
 
 export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProps) {
-  const hero = categoryHeroes[guide.id];
+  const hero = getCatalogueCategoryMedia(guide.id);
   const records = hasImageExplorer(guide.id) ? getLocalizedCatalogueRecords(getCatalogueRecords(guide.id), locale) : [];
   const baseGroup = hasImageExplorer(guide.id) ? getCatalogueGroup(guide.id) : undefined;
   const group = baseGroup ? getLocalizedCatalogueGroup(baseGroup, locale) : undefined;
@@ -91,14 +72,16 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
   return (
     <>
       <section className="relative min-h-[28rem] overflow-hidden border-b border-[#2c3631] bg-[#090c0a] md:min-h-[34rem]" data-catalogue-category-hero>
-        <Image
-          alt={guide.heroImageAlt ?? hero.imageAlt}
-          className={hero.imageFit === "contain" ? "object-contain p-8 opacity-65 md:p-14" : "object-cover opacity-60"}
-          fill
-          priority
-          sizes="100vw"
-          src={assetPath(hero.image)}
-        />
+        {hero ? (
+          <Image
+            alt={hero.imageAlt}
+            className="object-cover opacity-60"
+            fill
+            priority
+            sizes="100vw"
+            src={assetPath(hero.image)}
+          />
+        ) : null}
         <div aria-hidden="true" className="absolute inset-0 bg-[#080b09]/60" />
         <div className="site-container relative flex min-h-[28rem] flex-col justify-end py-12 md:min-h-[34rem] md:py-16">
           <a className="mb-auto inline-flex min-h-11 w-fit items-center gap-2 text-sm text-[#9bd1b3] hover:text-white" href={publicRoutePath(`/${locale}/items`)} title={ui.allItems}>
@@ -117,7 +100,7 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
 
       {group && records.length > 0 ? (
         <CatalogueExplorer
-          featuredImage={hero.image}
+          featuredImage={hero?.image}
           filters={group.filters}
           labels={{
             heading: `${ui.explore}: ${group.label}`,

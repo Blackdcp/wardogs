@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import {guideManifest} from "@/content/manifest";
 import {locales} from "@/config/site";
 import {getIndexableItemPaths, getItemByTypeAndSlug, itemTypes} from "@/features/items/item-library";
+import {getItemLatestVerifiedAt, type ItemFreshnessSource} from "@/features/items/item-freshness";
 import {videoArticles} from "@/features/videos/video-library";
 import {buildAlternates} from "@/lib/metadata";
 
@@ -48,8 +49,8 @@ function resolvePageLastModified(pathname: string) {
   return new Date("2026-08-16T00:00:00.000Z");
 }
 
-export function resolveItemLastModified(item: {detailUpdatedAt?: string} | undefined) {
-  return new Date(item?.detailUpdatedAt ?? "2026-08-16T00:00:00.000Z");
+export function resolveItemLastModified(item: ItemFreshnessSource | undefined) {
+  return new Date(`${getItemLatestVerifiedAt(item)}T00:00:00.000Z`);
 }
 
 function resolveGuideLastModified(locale: string, slug: string) {

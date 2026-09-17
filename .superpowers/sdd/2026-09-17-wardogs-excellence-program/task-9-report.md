@@ -183,3 +183,67 @@ No production-success claim is made from this local report.
 ## Concerns
 
 None blocking local integration. External YouTube thumbnail loading required a network-enabled Chrome rerun; the visible current-filter thumbnails decoded successfully. Publication and production-only verification remain intentionally outstanding.
+
+## Final Whole-Branch Review Fix Wave (2026-09-18)
+
+### Review Findings And Repairs
+
+1. **Record-backed catalogue tables and counts**
+   - Red tests exposed published guide rows and JSON-LD counts that could not map one-to-one to the 40 evidence records (including unsupported medical/deployment prices and labels).
+   - Published category tables are now generated from `catalogueRecords`; each row carries its unique record slug and only record-supported facts. Explorer, table, and JSON-LD counts share the same record source.
+   - Cross-layer invariants verify unique record mapping, field-subset fidelity, and count consistency.
+
+2. **Catalogue visual provenance**
+   - Red cross-layer and mutation tests showed that category Hero, metadata, and JSON-LD images could bypass the media registry.
+   - Category image publication now resolves exclusively through approved contextual registry entries. Contextual banners remain category context and are never promoted to object evidence.
+   - Hero, metadata, and structured-data tests all fail closed when registry approval is removed.
+
+3. **Six-locale evidence facts**
+   - Red render-matrix tests found raw English change fields, entities, notes, build labels, level labels, and planner roles in translated locales.
+   - Season 1 changes now use stable IDs. Presentation-layer dictionaries localize the required evidence vocabulary for `en`, `de`, `ru`, `pt-br`, `ja`, and `zh-cn`; numeric and currency facts remain shared, and source titles remain verbatim.
+   - EvidencePanel reuses localized build/date formatting. A final real-browser check caught `Driver`/`Pilot` remnants; the test matrix was strengthened before those role terms were localized.
+
+4. **Atlas visual provenance**
+   - Red tests exposed missing public visual provenance fields and the Mortar visual incorrectly inheriting its fact-video source.
+   - Atlas records now preserve `sourceUrl`, `sourceLabel`, `retrievedAt`, and `usageNote` for visuals and render localized visual-source and usage-scope blocks separately from factual sources.
+   - Mortar's building image has its own visual source and no longer points to the factual video.
+
+5. **Item freshness**
+   - Red tests showed Deagle Article `dateModified` and sitemap `lastmod` stopping at the detail date instead of the later official change verification.
+   - Both surfaces now use the maximum of `detailUpdatedAt`, `evidence.verifiedAt`, and every `changeHistory.verifiedAt`. Deagle is locked at `2026-09-09` as the representative regression.
+
+### Final Verification
+
+Commands were run from `E:\游戏海外站` on the final source state:
+
+- `npx.cmd vitest run tests/unit/item-catalog-guides.test.ts tests/unit/item-catalog-guide-view.test.tsx tests/unit/item-structured-data.test.ts tests/unit/item-metadata.test.ts tests/unit/catalogue-media-sources.test.ts tests/unit/catalogue-evidence-view.test.tsx tests/unit/evidence-localization-render.test.tsx tests/unit/progression-route.test.ts tests/unit/logistics-planner.test.ts tests/unit/operations-atlas.test.ts tests/unit/visual-coverage.test.ts tests/unit/sitemap.test.ts`: 12 files, 104 tests passed.
+- `npm.cmd run content:validate`: 37 files, 127 checks passed.
+- `npm.cmd test`: 109 files, 456 tests passed.
+- `npm.cmd run typecheck`: passed with exit code 0.
+- `npm.cmd run lint`: passed with exit code 0 and zero warnings.
+- `npm.cmd run build`: the first attempt reached 655/874 static pages and terminated with Windows worker code `3221226505` because an older `next start` process still held the previous `.next`; after stopping that local process, the exact command completed 874/874 pages with exit code 0.
+- `$env:PLAYWRIGHT_EXECUTABLE_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'; npx.cmd playwright test tests/e2e/operations-atlas.spec.ts tests/e2e/task6-tools.spec.ts tests/e2e/accessibility.spec.ts`: 12 tests passed in system Chrome, without snapshot-update mode.
+- `git diff --check`: passed; checkout line-ending notices only.
+
+Local route checks returned HTTP 200 for `/sitemap.xml`, `/feed.xml`, `/api/status.json`, `/robots.txt`, and `/ads.txt`. Parsed output confirmed Deagle Article `dateModified` and sitemap `lastmod` use `2026-09-09`, and the weapons/gear CollectionPage images use approved contextual registry assets rather than direct object images.
+
+### Final Browser Review
+
+The broader ignored real-browser harness produced 38 captures and 34 screenshots with no overflow, broken local image, page exception, serious accessibility, or hydration failures. The final locale evidence screenshots were manually inspected at:
+
+- `E:\游戏海外站\.superpowers\scratch\task-9\screenshots\final-review\ru-progression-evidence.png`
+- `E:\游戏海外站\.superpowers\scratch\task-9\screenshots\final-review\ptbr-logistics-evidence.png`
+
+They show localized Russian and Portuguese level/role evidence without the English leakage caught in the preceding red test. Earlier manual inspection also covered desktop/mobile category Heroes and record-backed tables, German/Japanese/Chinese evidence, and Mortar's separate Atlas visual provenance.
+
+### Snapshot And Generated-File Decision
+
+The catalogue UI corrections legitimately changed numerous segmented visual snapshots, but the entire baseline set was not individually reviewed. Per controller instruction, every file created or modified in `tests/e2e/visual.spec.ts-snapshots` during this wave was restored or removed, and `next-env.d.ts` was restored. No visual baseline or Next-generated noise is included in the commit. Focused non-snapshot Playwright coverage and manually inspected scratch screenshots provide the final visual evidence for these five findings.
+
+### Remaining External Steps
+
+No push, Vercel deployment, production verification, or IndexNow submission was performed. Those remain controller-owned after independent whole-branch approval.
+
+### Final Concern
+
+Tracked visual baselines intentionally remain unchanged under the controller's explicit instruction; a future separately reviewed baseline refresh may be appropriate. This does not affect the focused system-Chrome interaction/accessibility run or the manually reviewed scratch captures.

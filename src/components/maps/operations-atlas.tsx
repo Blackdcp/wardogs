@@ -181,6 +181,24 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: Operati
                         <Image alt={entry.imageAlt ?? entry.title} className="object-cover" fill sizes={visualSizes} src={assetPath(record.visual.image)} />
                       </div>
                       <figcaption className="mt-2 text-xs leading-5 text-[#849189]">{visualLabel(copy, record.visual.state)}</figcaption>
+                      <dl className="mt-3 space-y-3 border-t border-[#28322d] pt-3 text-xs leading-5" data-atlas-visual-provenance>
+                        <div>
+                          <dt className="font-semibold uppercase text-[#7f8d86]">{copy.visualSourceLabel}</dt>
+                          <dd className="mt-1">
+                            <a className="text-[#79d19c] hover:text-white" href={record.visual.sourceUrl} rel="noreferrer" target="_blank" title={`${copy.visualSourceLabel}: ${record.visual.sourceLabel}`}>
+                              {record.visual.sourceLabel}<ArrowUpRight aria-hidden="true" className="ml-1 inline size-3.5" />
+                            </a>
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="font-semibold uppercase text-[#7f8d86]">{copy.visualRetrievedLabel}</dt>
+                          <dd className="mt-1 text-[#aeb9b3]">{formatCatalogueVerifiedAt(record.visual.retrievedAt, locale)}</dd>
+                        </div>
+                        <div>
+                          <dt className="font-semibold uppercase text-[#7f8d86]">{copy.visualUsageLabel}</dt>
+                          <dd className="mt-1 text-[#aeb9b3]">{record.visual.usageNote}</dd>
+                        </div>
+                      </dl>
                     </figure>
                   )}
                 </div>

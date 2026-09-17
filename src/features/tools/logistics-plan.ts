@@ -6,6 +6,7 @@ import {
   type SeasonOneChange,
 } from "@/features/catalogue/catalogue-evidence";
 import {getToolCopy} from "./tool-copy";
+import {localizeSeasonOneChange} from "@/features/catalogue/catalogue-change-localization";
 
 export const logisticsStageIds = ["spawn", "construction", "supply", "transport", "defense", "recovery"] as const;
 
@@ -22,7 +23,7 @@ export type LogisticsStageWithOfficialChanges = LogisticsStageBase & {
   changes: readonly [SeasonOneChange, ...SeasonOneChange[]];
   sourceUrl: string;
   checkedAt: string;
-  build: "Season 1";
+  build: string;
   sourceClass: "official";
   confidence: "confirmed";
 };
@@ -40,24 +41,24 @@ export type UnknownLogisticsStage = LogisticsStageBase & {
 export type LogisticsStage = LogisticsStageWithOfficialChanges | UnknownLogisticsStage;
 export type LogisticsEvidenceState = LogisticsStage["evidenceState"];
 
-const changesByStage: Record<LogisticsStageId, readonly string[]> = {
-  spawn: ["FOB vendor"],
-  construction: ["Large Hammer vendor", "Large Hammer Support unlock", "Large Hammer Support required level"],
-  supply: ["Small Armored Supply Crate Pilot unlock", "Large Supply Crate required level"],
+const changeIdsByStage: Record<LogisticsStageId, readonly string[]> = {
+  spawn: ["fob-vendor-price"],
+  construction: ["large-hammer-vendor-price", "large-hammer-support-unlock", "large-hammer-support-level"],
+  supply: ["small-armored-crate-pilot-unlock", "large-supply-crate-level"],
   transport: [
-    "URAL unlock",
-    "Dune Buggy unlock",
-    "Kodiak Flatbed unlock",
-    "Music Tape H Driver unlock",
-    "URAL required level",
-    "Kodiak Assault required level",
-    "Dune Buggy required level",
-    "Kodiak Flatbed required level",
-    "URAL Covered required level",
-    "Music Tape H progression track",
-    "URAL Attack required level",
-    "Humvee with minigun required level",
-    "Heavy Tank progression track",
+    "ural-unlock",
+    "dune-buggy-unlock",
+    "kodiak-flatbed-unlock",
+    "music-tape-h-driver-unlock",
+    "ural-level",
+    "kodiak-assault-level",
+    "dune-buggy-level",
+    "kodiak-flatbed-level",
+    "ural-covered-level",
+    "music-tape-h-track",
+    "ural-attack-level",
+    "humvee-minigun-level",
+    "heavy-tank-track",
   ],
   defense: [],
   recovery: [],
@@ -76,8 +77,10 @@ export function getLogisticsStages(locale: Locale = "en"): LogisticsStage[] {
 
   return logisticsStageIds.map((id): LogisticsStage => {
     const localized = copy.logisticsStages[id];
-    const entities = new Set(changesByStage[id]);
-    const changes = seasonOneChanges.filter((change) => entities.has(change.entity));
+    const changeIds = new Set(changeIdsByStage[id]);
+    const changes = seasonOneChanges
+      .filter((change) => changeIds.has(change.id))
+      .map((change) => localizeSeasonOneChange(change, locale));
 
     if (!hasSeasonOneChanges(changes)) {
       return {

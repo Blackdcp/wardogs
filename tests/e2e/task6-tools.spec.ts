@@ -18,7 +18,7 @@ test("mobile progression and logistics tools keep ordered share state", async ({
   await expectNoHorizontalOverflow(page);
   await expect(page.getByRole("combobox", {name: "Role track"})).toHaveValue("driver");
   await expect(page.getByRole("spinbutton", {name: "Current level shown in your client"})).toHaveValue("18");
-  await expect(page.getByText("Verified: 2026-09-09").first()).toBeVisible();
+  await expect(page.getByText("Verified: Sep 9, 2026").first()).toBeVisible();
   await expect(page.getByRole("link", {name: "Open official Season 1 source"})).toHaveAttribute("href", /store\.steampowered\.com/);
 
   await page.getByRole("combobox", {name: "Role track"}).selectOption("pilot");

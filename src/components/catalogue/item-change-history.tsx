@@ -3,12 +3,16 @@ import type {Locale} from "@/config/site";
 import type {CatalogueChangeHistory} from "@/features/catalogue/catalogue-types";
 import {getItemUi} from "@/features/items/item-ui";
 import {StatusBadge} from "@/components/ui/status-badge";
+import {localizeCatalogueChange} from "@/features/catalogue/catalogue-change-localization";
+import {formatCatalogueVerifiedAt} from "@/features/catalogue/catalogue-localization";
 
 export function ItemChangeHistory({locale, changes}: {locale: Locale; changes: readonly CatalogueChangeHistory[]}) {
   if (changes.length === 0) return null;
 
   const ui = getItemUi(locale);
-  const chronologicalChanges = [...changes].sort((left, right) => left.verifiedAt.localeCompare(right.verifiedAt));
+  const chronologicalChanges = [...changes]
+    .sort((left, right) => left.verifiedAt.localeCompare(right.verifiedAt))
+    .map((change) => localizeCatalogueChange(change, locale));
 
   return (
     <section className="mt-10" aria-labelledby="item-change-history-title" data-item-change-history>
@@ -16,7 +20,7 @@ export function ItemChangeHistory({locale, changes}: {locale: Locale; changes: r
       <h2 className="display-font mt-2 text-3xl text-white" id="item-change-history-title">{ui.changeHistory}</h2>
       <ol className="mt-5 divide-y divide-[#303b35] border-y border-[#303b35]">
         {chronologicalChanges.map((change) => (
-          <li className="py-5" key={`${change.verifiedAt}-${change.field}-${change.currentValue}`}>
+          <li className="py-5" key={change.id}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <h3 className="text-base font-semibold text-white">{change.field}</h3>
               <StatusBadge tone="accent">{change.effectiveBuild}</StatusBadge>
@@ -32,7 +36,7 @@ export function ItemChangeHistory({locale, changes}: {locale: Locale; changes: r
               </div>
               <div>
                 <dt className="text-xs font-semibold uppercase text-[#7f8e87]">{ui.effectiveBuild}</dt>
-                <dd className="mt-1 text-sm text-[#d8dfdb]">{change.effectiveBuild} · {change.verifiedAt}</dd>
+                <dd className="mt-1 text-sm text-[#d8dfdb]">{change.effectiveBuild} · {formatCatalogueVerifiedAt(change.verifiedAt, locale)}</dd>
               </div>
             </dl>
             {change.note ? <p className="mt-4 text-sm leading-6 text-[#aab7b0]">{change.note}</p> : null}

@@ -34,6 +34,7 @@ export type CatalogueEvidence = {
 };
 
 export type CatalogueChangeHistory = {
+  id: string;
   field: string;
   previousValue: string;
   currentValue: string;

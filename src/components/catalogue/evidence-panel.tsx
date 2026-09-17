@@ -4,6 +4,7 @@ import {getCatalogueFreshness, isCurrentDecisionSafe} from "@/features/catalogue
 import type {CatalogueEvidence} from "@/features/catalogue/catalogue-types";
 import {getCatalogueSourceClassLabel, getItemUi} from "@/features/items/item-ui";
 import {StatusBadge} from "@/components/ui/status-badge";
+import {formatCatalogueVerifiedAt, localizeCatalogueBuild} from "@/features/catalogue/catalogue-localization";
 
 type EvidencePanelProps = {
   locale: Locale;
@@ -54,12 +55,12 @@ export function EvidencePanel({locale, evidence, dataAsOf, sourceUrl}: EvidenceP
       <dl className="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-2">
         <div>
           <dt className="text-xs font-semibold uppercase text-[#7f8e87]">{ui.observedBuild}</dt>
-          <dd className="mt-1 text-sm leading-6 text-[#d8dfdb]">{evidence.build}</dd>
+          <dd className="mt-1 text-sm leading-6 text-[#d8dfdb]">{localizeCatalogueBuild(evidence.build, locale)}</dd>
         </div>
         <div>
           <dt className="text-xs font-semibold uppercase text-[#7f8e87]">{ui.verifiedAt}</dt>
           <dd className="mt-1 inline-flex items-center gap-2 text-sm leading-6 text-[#d8dfdb]">
-            <CalendarCheck aria-hidden="true" size={15} />{evidence.verifiedAt}
+            <CalendarCheck aria-hidden="true" size={15} />{formatCatalogueVerifiedAt(evidence.verifiedAt, locale)}
           </dd>
         </div>
         <div>

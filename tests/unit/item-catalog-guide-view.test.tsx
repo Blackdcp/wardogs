@@ -67,9 +67,11 @@ describe("ItemCatalogGuide", () => {
   it("does not turn a gated published row into a category self-link", () => {
     const guide = getCatalogGuide("weapons");
     expect(guide).toBeDefined();
+    const m4Row = guide!.sections.flatMap((section) => section.rows).find((row) => row.cells[0] === "M4");
+    expect(m4Row).toBeDefined();
     const m4Guide = {
       ...guide!,
-      sections: [{...guide!.sections[0], rows: [guide!.sections[0].rows[3]]}]
+      sections: [{...guide!.sections[0], rows: [m4Row!]}]
     };
     const matchedGuide = matchCatalogueGuideRecords(m4Guide, getCatalogueRecords("weapons"));
 
@@ -95,12 +97,30 @@ describe("ItemCatalogGuide", () => {
 
   it("matches launcher aliases to their canonical catalogue records", () => {
     const guide = getCatalogGuide("weapons");
-    const matchedGuide = matchCatalogueGuideRecords(guide!, getCatalogueRecords("weapons"));
+    const aliases = new Map([
+      ["RPG-7", "RPG7"],
+      ["MAAWS", "MAWS"],
+      ["MGL-40", "MGL40"]
+    ]);
+    const aliasGuide = {
+      ...guide!,
+      sections: guide!.sections.map((section) => ({
+        ...section,
+        rows: section.rows.map((row) => aliases.has(row.cells[0])
+          ? {...row, cells: [aliases.get(row.cells[0])!, ...row.cells.slice(1)]}
+          : row)
+      }))
+    };
+    const matchedGuide = matchCatalogueGuideRecords(aliasGuide, getCatalogueRecords("weapons"));
     const launchers = matchedGuide.sections
       .flatMap((section) => section.rows)
       .filter((row) => ["RPG7", "MAWS", "MGL40"].includes(row.cells[0]));
 
-    expect(launchers.map((row) => row.recordSlug)).toEqual(["rpg-7", "maaws", "mgl-40"]);
+    expect(Object.fromEntries(launchers.map((row) => [row.cells[0], row.recordSlug]))).toEqual({
+      RPG7: "rpg-7",
+      MAWS: "maaws",
+      MGL40: "mgl-40"
+    });
     expect(launchers.every((row) => row.detailStatus === "published" && row.detailHref)).toBe(true);
   });
 

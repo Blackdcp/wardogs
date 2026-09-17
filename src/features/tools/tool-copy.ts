@@ -414,8 +414,44 @@ const plannerToolCopy = {
   },
 } as const;
 
+function localizePlannerTerms<T>(value: T, locale: Locale): T {
+  const terms: Record<Locale, string> = {
+    en: "Season 1",
+    de: "Saison 1",
+    ru: "Сезон 1",
+    "pt-br": "Temporada 1",
+    ja: "シーズン1",
+    "zh-cn": "第 1 赛季",
+  };
+  const roleTerms: Record<Locale, Record<string, string>> = {
+    en: {},
+    de: {Assault: "Angriff", Medic: "Sanitäter", Recon: "Aufklärung", Support: "Unterstützung", Driver: "Fahrer", Pilot: "Pilot"},
+    ru: {Assault: "Штурмовик", Medic: "Медик", Recon: "Разведчик", Support: "Поддержка", Driver: "Водитель", Pilot: "Пилот"},
+    "pt-br": {Assault: "Assalto", Medic: "Médico", Recon: "Reconhecimento", Support: "Suporte", Driver: "Motorista", Pilot: "Piloto"},
+    ja: {Assault: "強襲", Medic: "衛生兵", Recon: "偵察", Support: "支援", Driver: "ドライバー", Pilot: "パイロット"},
+    "zh-cn": {Assault: "突击", Medic: "医疗", Recon: "侦察", Support: "支援", Driver: "驾驶员", Pilot: "飞行员"},
+  };
+  if (typeof value === "string") {
+    let localized = value.replace(/Season[- ]1/g, terms[locale]);
+    for (const [source, target] of Object.entries(roleTerms[locale])) {
+      localized = localized.replace(new RegExp(`\\b${source}\\b`, "g"), target);
+    }
+    return localized as T;
+  }
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(
+    Object.entries(value).map(([key, nested]) => [key, localizePlannerTerms(nested, locale)]),
+  ) as T;
+}
+
 export function getToolCopy(locale: Locale) {
-  return {...copy[locale], ...evidenceToolCopy[locale], ...evidenceProvenanceCopy[locale], ...plannerToolCopy[locale]};
+  return {
+    locale,
+    ...localizePlannerTerms(
+      {...copy[locale], ...evidenceToolCopy[locale], ...evidenceProvenanceCopy[locale], ...plannerToolCopy[locale]},
+      locale,
+    ),
+  };
 }
 
 export type ToolCopy = ReturnType<typeof getToolCopy>;

@@ -3,6 +3,9 @@ import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 
 export type CatalogRow = {
   cells: string[];
+  recordSlug?: string;
+  detailStatus?: "inline" | "planned" | "published";
+  detailHref?: `/items/${"weapons" | "vehicles"}/${string}`;
 };
 
 export type CatalogSection = {
@@ -37,7 +40,7 @@ const row = (...cells: string[]): CatalogRow => ({cells});
 const weaponCount = getCatalogueRecords("weapons").length;
 const vehicleCount = getCatalogueRecords("vehicles").length;
 
-export const catalogGuides: readonly CatalogGuide[] = [
+const catalogGuideDefinitions: readonly CatalogGuide[] = [
   {
     id: "weapons",
       title: `WARDOGS Weapons List: All ${weaponCount} Documented Weapons`,
@@ -612,6 +615,56 @@ export const catalogGuides: readonly CatalogGuide[] = [
     officialSources
   }
 ] as const;
+
+const recordBackedGuideIds = new Set<ItemTypeId>([
+  "weapons",
+  "vehicles",
+  "ammo",
+  "attachments",
+  "gear",
+  "equipment",
+  "medical",
+  "supplies",
+  "deployables",
+  "mechanics",
+]);
+
+function buildRecordBackedGuide(guide: CatalogGuide): CatalogGuide {
+  if (!recordBackedGuideIds.has(guide.id) || guide.id === "loadouts") return guide;
+
+  const records = getCatalogueRecords(guide.id);
+  const factLabels = [...new Set(records.flatMap((record) => record.facts.map(({label}) => label)))];
+  const recordsBySubtype = new Map<string, typeof records>();
+
+  for (const record of records) {
+    const grouped = recordsBySubtype.get(record.subtype) ?? [];
+    recordsBySubtype.set(record.subtype, [...grouped, record]);
+  }
+
+  return {
+    ...guide,
+    description: guide.id === "weapons"
+      ? `Browse all ${records.length} documented WARDOGS pre-release weapon records, including rifles, SMGs, shotguns, launchers, sidearms, and incomplete identifiers with explicit evidence notes.`
+      : `${records.length} evidence-backed WARDOGS ${guide.id} records from the normalized catalogue. Empty cells mean that the matching record does not support that field.`,
+    countLabel: guide.id === "weapons" ? `${records.length} weapons` : `${records.length} records`,
+    columns: [guide.columns[0], ...factLabels],
+    sections: [...recordsBySubtype].map(([subtype, sectionRecords]) => ({
+      title: subtype,
+      description: `Every row in this ${subtype.toLocaleLowerCase("en-US")} table is generated from one normalized catalogue record.`,
+      rows: sectionRecords.map((record) => ({
+        cells: [
+          record.name,
+          ...factLabels.map((label) => record.facts.find((fact) => fact.label === label)?.value ?? ""),
+        ],
+        recordSlug: record.slug,
+        detailStatus: record.detailStatus,
+        detailHref: record.detailHref,
+      })),
+    })),
+  };
+}
+
+export const catalogGuides: readonly CatalogGuide[] = catalogGuideDefinitions.map(buildRecordBackedGuide);
 
 export function getCatalogGuide(id: string): CatalogGuide | undefined {
   return catalogGuides.find((guide) => guide.id === id);

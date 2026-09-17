@@ -65,9 +65,16 @@ describe("progression route tool", () => {
       expect(routes).toHaveLength(6);
       expect(routes.every((route) => route.roleLabel.trim() && route.goal.trim() && route.nextAction.trim()), locale)
         .toBe(true);
-      expect(routes.flatMap(({changes}) => changes)).toEqual(
-        getProgressionRoutes("en").flatMap(({changes}) => changes),
-      );
+      const localizedChanges = routes.flatMap(({changes}) => changes);
+      const englishChanges = getProgressionRoutes("en").flatMap(({changes}) => changes);
+      expect(localizedChanges.map(({id, sourceUrl, verifiedAt}) => ({id, sourceUrl, verifiedAt})))
+        .toEqual(englishChanges.map(({id, sourceUrl, verifiedAt}) => ({id, sourceUrl, verifiedAt})));
+      for (const change of englishChanges.filter(({previousValue, currentValue}) => /^[$\d,]+$/.test(previousValue) && /^[$\d,]+$/.test(currentValue))) {
+        expect(localizedChanges.find(({id}) => id === change.id)).toMatchObject({
+          previousValue: change.previousValue,
+          currentValue: change.currentValue,
+        });
+      }
     }
   });
 });

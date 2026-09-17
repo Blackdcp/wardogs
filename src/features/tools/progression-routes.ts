@@ -6,6 +6,7 @@ import {
   type SeasonOneChange,
 } from "@/features/catalogue/catalogue-evidence";
 import {getToolCopy} from "./tool-copy";
+import {localizeSeasonOneChange} from "@/features/catalogue/catalogue-change-localization";
 
 export const progressionRoleIds = ["assault", "medic", "recon", "support", "driver", "pilot"] as const;
 
@@ -24,7 +25,7 @@ export type ProgressionRoleRoute = {
   checkedAt: string;
   sourceClass: "official";
   confidence: "confirmed";
-  build: "Season 1";
+  build: string;
 };
 
 export type ProgressionRouteResult = ProgressionRoleRoute & {
@@ -46,7 +47,9 @@ export function getProgressionRoutes(locale: Locale = "en"): ProgressionRoleRout
       goal: localized.goal,
       duty: localized.duty,
       nextAction: localized.nextAction,
-      changes: seasonOneChanges.filter((change) => change.progressionTrack === id),
+      changes: seasonOneChanges
+        .filter((change) => change.progressionTrack === id)
+        .map((change) => localizeSeasonOneChange(change, locale)),
       duration: null,
       durationLabel: copy.unknownDuration,
       sourceUrl: seasonOneSourceUrl,

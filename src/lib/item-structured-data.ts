@@ -1,10 +1,11 @@
 import type {Locale} from "@/config/site";
-import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
+import {getCatalogueCategoryMedia} from "@/features/catalogue/catalogue-media";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import {getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
 import {getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getItemsByType, itemTypes, type ItemTypeId, type WardogsItem} from "@/features/items/item-library";
+import {getItemLatestVerifiedAt} from "@/features/items/item-freshness";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {getLocalizedItemType} from "@/features/items/item-localization";
 import {getItemUi} from "@/features/items/item-ui";
@@ -38,18 +39,13 @@ function buildItemListEntries(locale: Locale, type: ItemTypeId, url: string) {
 
   if (hasImageExplorer(type)) {
     const records = getLocalizedCatalogueRecords(getCatalogueRecords(type), locale);
-    const recordSlugs = new Set(records.map((record) => record.slug));
-    const recordEntries = records.map((record) => ({
+    return records.map((record) => ({
       name: record.name,
       url: record.detailStatus === "published" && record.detailHref && getIndexableCatalogueItems([record]).length === 1
         ? pageUrl(locale, record.detailHref)
         : `${url}#record-${type}-${record.slug}`,
       ...(record.mediaState === "pending" || !record.image ? {} : {image: absoluteImageUrl(record.image)})
     }));
-    return [...recordEntries, ...indexableItems.filter((item) => !recordSlugs.has(item.slug)).map((item) => ({
-      name: item.name,
-      url: pageUrl(locale, `/items/${item.type}/${item.slug}`)
-    }))];
   }
 
   const catalogueRows = getCatalogGuide(type)?.sections.flatMap((section) => section.rows) ?? [];
@@ -62,18 +58,22 @@ function buildItemListEntries(locale: Locale, type: ItemTypeId, url: string) {
 export function buildItemIndexJsonLd(locale: Locale): JsonLd[] {
   const url = pageUrl(locale, "/items");
   const ui = getItemUi(locale);
+  const hubMedia = getCatalogueCategoryMedia("hub");
   return [
-    {"@context": "https://schema.org", "@type": "CollectionPage", name: ui.hubTitle, url, image: absoluteImageUrl(catalogueMetadataImages.hub)},
+    {"@context": "https://schema.org", "@type": "CollectionPage", name: ui.hubTitle, url, ...(hubMedia ? {image: absoluteImageUrl(hubMedia.image)} : {})},
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      itemListElement: itemTypes.map((itemType, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: `WARDOGS ${getLocalizedItemType(itemType, locale).label}`,
-        url: pageUrl(locale, itemType.href),
-        image: absoluteImageUrl(catalogueMetadataImages[itemType.id])
-      }))
+      itemListElement: itemTypes.map((itemType, index) => {
+        const media = getCatalogueCategoryMedia(itemType.id);
+        return {
+          "@type": "ListItem",
+          position: index + 1,
+          name: `WARDOGS ${getLocalizedItemType(itemType, locale).label}`,
+          url: pageUrl(locale, itemType.href),
+          ...(media ? {image: absoluteImageUrl(media.image)} : {})
+        };
+      })
     },
     {
       "@context": "https://schema.org",
@@ -91,8 +91,9 @@ export function buildItemTypeJsonLd(locale: Locale, type: ItemTypeId): JsonLd[] 
   const url = pageUrl(locale, `/items/${type}`);
   const itemListEntries = buildItemListEntries(locale, type, url);
   const ui = getItemUi(locale);
+  const media = getCatalogueCategoryMedia(type);
   return [
-    {"@context": "https://schema.org", "@type": "CollectionPage", name: `WARDOGS ${label}`, url, image: absoluteImageUrl(catalogueMetadataImages[type])},
+    {"@context": "https://schema.org", "@type": "CollectionPage", name: `WARDOGS ${label}`, url, ...(media ? {image: absoluteImageUrl(media.image)} : {})},
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
@@ -121,7 +122,7 @@ export function buildItemArticleJsonLd(locale: Locale, item: WardogsItem): JsonL
       "@type": "Article",
       headline: `WARDOGS ${item.name}`,
       description: item.summary,
-      dateModified: item.detailUpdatedAt ?? "2026-08-16",
+      dateModified: getItemLatestVerifiedAt(item),
       mainEntityOfPage: url,
       author: {"@type": "Organization", name: "WARDOGS Wiki"},
       image: publicAssetUrl(item.detailImage ?? "/images/og-wardogs.jpg"),

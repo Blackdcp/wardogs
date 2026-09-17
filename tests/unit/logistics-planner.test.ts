@@ -88,7 +88,15 @@ describe("logistics planner", () => {
       expect(localized.map(({id}) => id), locale).toEqual(logisticsStageIds);
       expect(localized.every(({title, action, evidenceNote}) => title.trim() && action.trim() && evidenceNote.trim()), locale)
         .toBe(true);
-      expect(localized.map(({changes}) => changes), locale).toEqual(english.map(({changes}) => changes));
+      expect(localized.map(({changes}) => changes.map(({id, sourceUrl, verifiedAt}) => ({id, sourceUrl, verifiedAt}))), locale)
+        .toEqual(english.map(({changes}) => changes.map(({id, sourceUrl, verifiedAt}) => ({id, sourceUrl, verifiedAt}))));
+      const localizedChanges = localized.flatMap(({changes}) => changes);
+      for (const change of english.flatMap(({changes}) => changes).filter(({previousValue, currentValue}) => /^[$\d,]+$/.test(previousValue) && /^[$\d,]+$/.test(currentValue))) {
+        expect(localizedChanges.find(({id}) => id === change.id)).toMatchObject({
+          previousValue: change.previousValue,
+          currentValue: change.currentValue,
+        });
+      }
     }
   });
 });
