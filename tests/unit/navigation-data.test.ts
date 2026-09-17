@@ -18,7 +18,9 @@ describe("grouped navigation", () => {
       "/items/gear",
       "/items/equipment",
       "/items/loadouts",
-      "/tools/loadout-budget"
+      "/tools/loadout-budget",
+      "/tools/weapon-compare",
+      "/tools/ammo-matcher"
     ]);
     expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.beginnerGuide")?.href)
       .toBe("/guides/wardogs-beginner-guide");
@@ -48,6 +50,8 @@ describe("grouped navigation", () => {
     expect(byHref.get("/items/weapons")).toBe("item");
     expect(byHref.get("/tools/system-check")).toBe("tool");
     expect(byHref.get("/tools/loadout-budget")).toBe("tool");
+    expect(byHref.get("/tools/weapon-compare")).toBe("tool");
+    expect(byHref.get("/tools/ammo-matcher")).toBe("tool");
   });
 
   it("selects tools and maps by explicit type instead of URL shape", () => {

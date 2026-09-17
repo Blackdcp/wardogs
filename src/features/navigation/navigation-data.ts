@@ -67,7 +67,9 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
         {href: "/items/gear", label: t("nav.gear"), searchType: "item"},
         {href: "/items/equipment", label: t("nav.equipment"), searchType: "item"},
         {href: "/items/loadouts", label: t("nav.loadouts"), searchType: "item"},
-        {href: "/tools/loadout-budget", label: t("nav.budgetTool"), searchType: "tool"}
+        {href: "/tools/loadout-budget", label: t("nav.budgetTool"), searchType: "tool"},
+        {href: "/tools/weapon-compare", label: t("nav.weaponCompare"), searchType: "tool"},
+        {href: "/tools/ammo-matcher", label: t("nav.ammoMatcher"), searchType: "tool"}
       ]
     },
     {id: "videos", label: t("nav.videos"), href: "/videos", items: []},

@@ -16,6 +16,18 @@ export type BudgetState = {
   reserve: number;
 };
 
+export type WeaponCompareState = {
+  left: string | null;
+  right: string | null;
+};
+
+export type AmmoMatcherState = {
+  weapon: string | null;
+  ammo: string | null;
+};
+
+export type ToolSearchParams = Record<string, string | string[] | undefined>;
+
 const hardwareTiers = new Set<HardwareTier>(["below", "minimum", "recommended", "unknown"]);
 const windowsVersions = new Set<WindowsVersion>(["windows-10", "windows-11", "unsupported"]);
 
@@ -23,6 +35,21 @@ function parseBoundedInteger(value: string | null, maximum = 1_000_000) {
   if (value === null || !/^\d+$/.test(value)) return null;
   const parsed = Number(value);
   return Number.isSafeInteger(parsed) && parsed >= 0 && parsed <= maximum ? parsed : null;
+}
+
+function readSingleAllowedParam(params: URLSearchParams, key: string, allowed: ReadonlySet<string>) {
+  const values = params.getAll(key);
+  if (values.length !== 1 || !allowed.has(values[0])) return null;
+  return values[0];
+}
+
+export function serializeToolSearchParams(searchParams: ToolSearchParams) {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(searchParams)) {
+    if (Array.isArray(value)) value.forEach((entry) => params.append(key, entry));
+    else if (value !== undefined) params.set(key, value);
+  }
+  return params.toString();
 }
 
 export function encodeSystemCheckState(state: SystemCheckState) {
@@ -98,4 +125,43 @@ export function calculateBudget(state: BudgetState) {
   const spent = state.loadout + state.vehicle;
   const remaining = state.cash - spent;
   return {spent, remaining, reserveMet: remaining >= state.reserve};
+}
+
+export function encodeWeaponCompareState(state: WeaponCompareState) {
+  const params = new URLSearchParams();
+  if (state.left) params.set("left", state.left);
+  if (state.right) params.set("right", state.right);
+  return params.toString();
+}
+
+export function decodeWeaponCompareState(value: string, allowedSlugs: readonly string[]): WeaponCompareState {
+  const params = new URLSearchParams(value.replace(/^\?/, ""));
+  const allowed = new Set(allowedSlugs);
+  const requestedLeft = readSingleAllowedParam(params, "left", allowed);
+  const requestedRight = readSingleAllowedParam(params, "right", allowed);
+  const left = requestedLeft ?? allowedSlugs[0] ?? null;
+  const right = requestedRight && requestedRight !== left
+    ? requestedRight
+    : allowedSlugs.find((slug) => slug !== left) ?? null;
+
+  return {left, right};
+}
+
+export function encodeAmmoMatcherState(state: AmmoMatcherState) {
+  const params = new URLSearchParams();
+  if (state.weapon) params.set("weapon", state.weapon);
+  if (state.ammo) params.set("ammo", state.ammo);
+  return params.toString();
+}
+
+export function decodeAmmoMatcherState(
+  value: string,
+  allowedWeaponSlugs: readonly string[],
+  allowedAmmoSlugs: readonly string[],
+): AmmoMatcherState {
+  const params = new URLSearchParams(value.replace(/^\?/, ""));
+  return {
+    weapon: readSingleAllowedParam(params, "weapon", new Set(allowedWeaponSlugs)),
+    ammo: readSingleAllowedParam(params, "ammo", new Set(allowedAmmoSlugs)),
+  };
 }

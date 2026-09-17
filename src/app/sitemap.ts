@@ -14,6 +14,8 @@ const staticPaths = [
   "/news",
   "/tools/system-check",
   "/tools/loadout-budget",
+  "/tools/weapon-compare",
+  "/tools/ammo-matcher",
   "/about",
   "/contact",
   "/editorial-policy",
@@ -23,7 +25,15 @@ const staticPaths = [
 
 export const dynamic = "force-static";
 
-const freshHubPaths = new Set(["", "/guides", "/news", "/videos", "/items"]);
+const freshHubPaths = new Set([
+  "",
+  "/guides",
+  "/news",
+  "/videos",
+  "/items",
+  "/tools/weapon-compare",
+  "/tools/ammo-matcher",
+]);
 
 function resolvePageLastModified(pathname: string) {
   if (freshHubPaths.has(pathname) || /^\/items\/[^/]+$/.test(pathname)) {

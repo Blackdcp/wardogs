@@ -1,7 +1,10 @@
 import {existsSync, readFileSync} from "node:fs";
 import path from "node:path";
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import sitemap from "../../src/app/sitemap";
+
+vi.mock("@/i18n/navigation", () => ({Link: () => null}));
+vi.mock("next/navigation", () => ({notFound: () => { throw new Error("NEXT_NOT_FOUND"); }}));
 
 const helperPath = path.join(process.cwd(), "src", "features", "tools", "share-state.ts");
 
@@ -12,6 +15,8 @@ describe("shareable player tools", () => {
     for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn"]) {
       expect(urls.has(`http://localhost:3000/${locale}/tools/system-check`)).toBe(true);
       expect(urls.has(`http://localhost:3000/${locale}/tools/loadout-budget`)).toBe(true);
+      expect(urls.has(`http://localhost:3000/${locale}/tools/weapon-compare`)).toBe(true);
+      expect(urls.has(`http://localhost:3000/${locale}/tools/ammo-matcher`)).toBe(true);
     }
   });
 
@@ -47,10 +52,66 @@ describe("shareable player tools", () => {
     expect(calculateBudget(state)).toEqual({spent: 4_700, remaining: 5_300, reserveMet: true});
   });
 
+  it("round-trips distinct weapon selections and repairs missing, unknown, or duplicate values", async () => {
+    const {decodeWeaponCompareState, encodeWeaponCompareState} = await import("../../src/features/tools/share-state");
+    const allowed = ["amp-9", "deagle", "fal"];
+
+    const selected = {left: "deagle", right: "fal"};
+    expect(decodeWeaponCompareState(encodeWeaponCompareState(selected), allowed)).toEqual(selected);
+    expect(decodeWeaponCompareState("", allowed)).toEqual({left: "amp-9", right: "deagle"});
+    expect(decodeWeaponCompareState("left=unknown&right=fal", allowed)).toEqual({left: "amp-9", right: "fal"});
+    expect(decodeWeaponCompareState("left=deagle&right=deagle", allowed)).toEqual({left: "deagle", right: "amp-9"});
+    expect(decodeWeaponCompareState("left=deagle&left=fal&right=amp-9", allowed)).toEqual({left: "amp-9", right: "deagle"});
+  });
+
+  it("round-trips matcher state while rejecting repeated and unknown parameters", async () => {
+    const {decodeAmmoMatcherState, encodeAmmoMatcherState} = await import("../../src/features/tools/share-state");
+    const weapons = ["amp-9", "deagle"];
+    const ammo = ["9x19mm", "50-ae"];
+    const state = {weapon: "amp-9", ammo: "9x19mm"};
+
+    expect(decodeAmmoMatcherState(encodeAmmoMatcherState(state), weapons, ammo)).toEqual(state);
+    expect(decodeAmmoMatcherState("weapon=unknown&ammo=50-ae", weapons, ammo)).toEqual({weapon: null, ammo: "50-ae"});
+    expect(decodeAmmoMatcherState("weapon=amp-9&ammo=9x19mm&ammo=50-ae", weapons, ammo)).toEqual({weapon: "amp-9", ammo: null});
+    expect(decodeAmmoMatcherState("", weapons, ammo)).toEqual({weapon: null, ammo: null});
+  });
+
+  it("preserves repeated server search parameters so validation can reject them", async () => {
+    const {serializeToolSearchParams} = await import("../../src/features/tools/share-state");
+
+    expect(serializeToolSearchParams({left: ["deagle", "fal"], right: "amp-9", empty: undefined}))
+      .toBe("left=deagle&left=fal&right=amp-9");
+  });
+
+  it("adds both evidence tools to explicit shared navigation", async () => {
+    const {buildNavigation} = await import("../../src/features/navigation/navigation-data");
+    const items = buildNavigation((key) => key).flatMap((group) => group.items);
+
+    expect(items).toContainEqual(expect.objectContaining({href: "/tools/weapon-compare", searchType: "tool"}));
+    expect(items).toContainEqual(expect.objectContaining({href: "/tools/ammo-matcher", searchType: "tool"}));
+  });
+
   it("balances long localized tool headings on narrow screens", () => {
-    for (const route of ["system-check", "loadout-budget"]) {
+    for (const route of ["system-check", "loadout-budget", "weapon-compare", "ammo-matcher"]) {
       const source = readFileSync(path.join(process.cwd(), "src", "app", "[locale]", "tools", route, "page.tsx"), "utf8");
       expect(source, route).toContain("text-balance");
+    }
+  });
+
+  it("builds localized metadata for both evidence tools in all six locales", async () => {
+    const weaponPage = await import("../../src/app/[locale]/tools/weapon-compare/page");
+    const ammoPage = await import("../../src/app/[locale]/tools/ammo-matcher/page");
+
+    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn"]) {
+      const weaponMetadata = await weaponPage.generateMetadata({params: Promise.resolve({locale})});
+      const ammoMetadata = await ammoPage.generateMetadata({params: Promise.resolve({locale})});
+
+      expect(weaponMetadata.title).toBeTruthy();
+      expect(weaponMetadata.description).toBeTruthy();
+      expect(weaponMetadata.alternates?.canonical).toBe(`http://localhost:3000/${locale}/tools/weapon-compare`);
+      expect(ammoMetadata.title).toBeTruthy();
+      expect(ammoMetadata.description).toBeTruthy();
+      expect(ammoMetadata.alternates?.canonical).toBe(`http://localhost:3000/${locale}/tools/ammo-matcher`);
     }
   });
 });
