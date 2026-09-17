@@ -2,11 +2,11 @@ import type {Locale} from "@/config/site";
 
 const quickAnswerHeadings: Record<Locale, ReadonlySet<string>> = {
   en: new Set(["Quick Answer", "Season 1 Quick Answer"]),
-  de: new Set(["Kurzantwort"]),
-  ru: new Set(["Краткий ответ"]),
-  "pt-br": new Set(["Resposta rápida"]),
-  ja: new Set(["まず覚えること"]),
-  "zh-cn": new Set(["快速结论"])
+  de: new Set(["Kurzantwort", "Direkte Antwort"]),
+  ru: new Set(["Краткий ответ", "Короткий ответ"]),
+  "pt-br": new Set(["Resposta rápida", "Resposta direta"]),
+  ja: new Set(["まず覚えること", "先に結論", "最初の結論", "結論", "現在の結論"]),
+  "zh-cn": new Set(["快速结论", "直接结论"])
 };
 
 export function prepareGuideBodyForTaskPanel(body: string, locale: Locale, hasTaskData: boolean) {
