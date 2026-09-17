@@ -1,8 +1,11 @@
 import type {Metadata} from "next";
 import Image from "next/image";
 import {notFound} from "next/navigation";
-import {ArrowLeft, CalendarDays, ExternalLink} from "lucide-react";
+import {ArrowLeft, ArrowRight, CalendarDays, ExternalLink, GitCompareArrows, PackageSearch} from "lucide-react";
+import {EvidencePanel} from "@/components/catalogue/evidence-panel";
+import {ItemChangeHistory} from "@/components/catalogue/item-change-history";
 import {isLocale, type Locale} from "@/config/site";
+import {getCatalogueFreshness} from "@/features/catalogue/catalogue-evidence";
 import {
   getIndexableItemPaths,
   getItemByTypeAndSlug,
@@ -32,7 +35,6 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const item = getItemByTypeAndSlug(type, slug);
   if (!item) return {};
-  if (!item.indexable) return {robots: {index: false, follow: false}};
   return buildItemMetadata(locale, item);
 }
 
@@ -57,20 +59,18 @@ export default async function ItemDetailPage({params}: PageProps) {
     item.relatedGuides.map((guideSlug) => loadGuideDocument(locale, guideSlug))
   );
   const ui = getItemUi(locale);
-  const quickFacts = item.detailImage
-    ? [
-      ...(item.observedPrice ? [{label: ui.observedPrice, value: item.observedPrice}] : []),
-      ...(item.observedProgressionOrGate ? [{label: item.type === "weapons" ? ui.observedProgression : ui.observedGate, value: item.observedProgressionOrGate}] : []),
-      ...(item.observedAmmoOrVehicleClass ? [{label: item.type === "weapons" ? ui.observedAmmo : ui.observedVehicleClass, value: item.observedAmmoOrVehicleClass}] : [])
-    ]
-    : item.facts.map(({label, value}) => ({label, value}));
-  const observedHeading = item.detailImage ? ui.observedAlpha : ui.observedPreRelease;
+  const quickFacts = item.facts.map(({label, value}) => ({label, value}));
+  const freshness = getCatalogueFreshness({dataAsOf: baseItem.build, evidence: baseItem.evidence});
+  const factsHeading = freshness === "historical" ? ui.historicalSnapshot : ui[freshness];
   const confirmedFacts = item.confirmedFacts ?? item.facts
     .filter((fact) => fact.value !== "Not confirmed")
     .map((fact) => `${fact.label}: ${fact.value}`);
   const unconfirmedFacts = item.unconfirmedFacts ?? item.facts
     .filter((fact) => fact.value === "Not confirmed")
     .map((fact) => `${fact.label} is not confirmed.`);
+  const hasObservedAmmunition = baseItem.type === "weapons" && baseItem.facts.some((fact) =>
+    fact.label === "Ammunition" && !/Not captured|Not confirmed/.test(fact.value)
+  );
 
   return (
     <main>
@@ -109,8 +109,18 @@ export default async function ItemDetailPage({params}: PageProps) {
           <p className="mt-3 text-base leading-7 text-white">{item.summary}</p>
         </aside>
 
-        <section aria-labelledby="facts-title">
-          <h2 className="display-font text-3xl text-white" id="facts-title">{ui.quickFacts}</h2>
+        <EvidencePanel
+          dataAsOf={baseItem.build}
+          evidence={baseItem.evidence}
+          locale={locale}
+          sourceUrl={baseItem.evidence.sourceUrl}
+        />
+
+        <ItemChangeHistory changes={baseItem.changeHistory} locale={locale} />
+
+        <section className="mt-12" aria-labelledby="facts-title" data-fact-freshness={freshness}>
+          <p className="text-xs font-semibold uppercase text-[#d9b455]">{baseItem.evidence.build}</p>
+          <h2 className="display-font mt-2 text-3xl text-white" id="facts-title">{factsHeading}</h2>
           <dl className="mt-5 grid gap-px bg-[#2c3631] sm:grid-cols-2">
             {quickFacts.map((fact) => (
               <div className="bg-[#151b18] p-4" key={fact.label}>
@@ -121,15 +131,39 @@ export default async function ItemDetailPage({params}: PageProps) {
           </dl>
         </section>
 
+        {baseItem.indexable && baseItem.type === "weapons" ? (
+          <nav className="mt-10 border-y border-[#2c3631] py-6" aria-label={ui.itemActions}>
+            <h2 className="text-sm font-semibold uppercase text-[#9ba9a2]">{ui.itemActions}</h2>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Link
+                className="inline-flex min-h-11 items-center gap-2 rounded-[4px] border border-[#4d946d] bg-[#193124] px-4 py-2 font-semibold text-[#d8f4e4] hover:bg-[#244332]"
+                href={`/tools/weapon-compare?left=${encodeURIComponent(baseItem.slug)}`}
+                title={ui.compare}
+              >
+                <GitCompareArrows aria-hidden="true" size={17} />{ui.compare}<ArrowRight aria-hidden="true" size={15} />
+              </Link>
+              {hasObservedAmmunition ? (
+                <Link
+                  className="inline-flex min-h-11 items-center gap-2 rounded-[4px] border border-[#46534d] px-4 py-2 font-semibold text-[#d6ded9] hover:border-[#6c8176] hover:text-white"
+                  href={`/tools/ammo-matcher?weapon=${encodeURIComponent(baseItem.slug)}`}
+                  title={ui.ammoMatcher}
+                >
+                  <PackageSearch aria-hidden="true" size={17} />{ui.ammoMatcher}<ArrowRight aria-hidden="true" size={15} />
+                </Link>
+              ) : null}
+            </div>
+          </nav>
+        ) : null}
+
         <section className="mt-12 grid gap-6 md:grid-cols-2" aria-label={ui.evidenceTitle}>
           <div>
-            <h2 className="display-font text-3xl text-white">{observedHeading}</h2>
+            <h2 className="display-font text-3xl text-white">{ui.confirmedFacts}</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
               {confirmedFacts.map((fact) => <li className="border-l border-[#4d946d] pl-4" key={fact}>{fact}</li>)}
             </ul>
           </div>
           <div>
-            <h2 className="display-font text-3xl text-white">{ui.unconfirmedRelease}</h2>
+            <h2 className="display-font text-3xl text-white">{ui.unknownFacts}</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-[#c5d0ca]">
               {unconfirmedFacts.map((fact) => <li className="border-l border-[#927328] pl-4" key={fact}>{fact}</li>)}
             </ul>

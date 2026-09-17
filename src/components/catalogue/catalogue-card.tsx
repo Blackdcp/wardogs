@@ -1,8 +1,10 @@
 import Image from "next/image";
 import {ArrowUpRight, ImageOff} from "lucide-react";
+import {StatusBadge} from "@/components/ui/status-badge";
 import type {Locale} from "@/config/site";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
-import {getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
+import {getCatalogueFreshness, getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
+import {getItemUi} from "@/features/items/item-ui";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
@@ -27,6 +29,8 @@ const pendingMediaCopy: Record<Locale, {label: string; description: string}> = {
 
 function CardContent({locale, record, linked, eagerImage}: {locale: Locale; record: CatalogueRecord; linked: boolean; eagerImage: boolean}) {
   const pendingMedia = record.mediaState === "pending";
+  const freshness = getCatalogueFreshness(record);
+  const ui = getItemUi(locale);
 
   return (
     <>
@@ -59,6 +63,11 @@ function CardContent({locale, record, linked, eagerImage}: {locale: Locale; reco
           {linked ? <ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-[#728078] group-hover:text-[#79d19c]" /> : null}
         </div>
         <span className="mt-3 block text-sm leading-6 text-[#a8b4ae]">{record.summary}</span>
+        <span className="mt-4 block" data-catalogue-freshness={freshness}>
+          <StatusBadge tone={freshness === "current" ? "accent" : freshness === "historical" ? "warning" : "muted"}>
+            {ui[freshness]}
+          </StatusBadge>
+        </span>
         <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-[#303b35] pt-4">
           {record.facts.map((fact) => (
             <div className="min-w-0" key={fact.label}>

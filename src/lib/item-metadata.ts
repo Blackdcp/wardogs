@@ -1,5 +1,6 @@
 import type {Metadata} from "next";
 import type {Locale} from "@/config/site";
+import {getCatalogueFreshness} from "@/features/catalogue/catalogue-evidence";
 import {catalogueMetadataImages} from "@/features/catalogue/catalogue-media";
 import type {CatalogGuide} from "@/features/items/item-catalog-guides";
 import type {WardogsItem} from "@/features/items/item-library";
@@ -18,7 +19,43 @@ export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Local
 }
 
 function searchTitle(locale: Locale, item: WardogsItem): string {
+  const freshness = getCatalogueFreshness({dataAsOf: item.build, evidence: item.evidence});
   let candidates: string[];
+  if (freshness === "historical") {
+    if (locale === "zh-cn") {
+      candidates = item.type === "vehicles"
+        ? [`WARDOGS ${item.name} 历史载具攻略`]
+        : [`WARDOGS ${item.name} 历史武器攻略`];
+    } else if (locale === "ja") {
+      candidates = item.type === "vehicles"
+        ? [`WARDOGS ${item.name} 過去ビルド車両攻略`]
+        : [`WARDOGS ${item.name} 過去ビルド武器攻略`];
+    } else if (locale === "ru") {
+      candidates = item.type === "vehicles"
+        ? [`WARDOGS ${item.name}: исторический гайд по технике`]
+        : [`WARDOGS ${item.name}: исторический гайд по оружию`];
+    } else if (locale === "de") {
+      candidates = item.type === "vehicles"
+        ? [`WARDOGS ${item.name}: Historischer Fahrzeug-Guide`]
+        : [`WARDOGS ${item.name}: Historischer Waffen-Guide`];
+    } else if (locale === "pt-br") {
+      candidates = item.type === "vehicles"
+        ? [`WARDOGS ${item.name}: guia histórico do veículo`]
+        : [`WARDOGS ${item.name}: guia histórico da arma`];
+    } else {
+      candidates = item.type === "vehicles"
+        ? [
+          `WARDOGS ${item.name} Historical Vehicle Guide & Evidence`,
+          `WARDOGS ${item.name} Historical Vehicle Guide`
+        ]
+        : [
+          `WARDOGS ${item.name} Historical Weapon Guide & Evidence`,
+          `WARDOGS ${item.name} Historical Weapon Guide`
+        ];
+    }
+    return candidates.find((candidate) => candidate.length <= 60) ?? candidates.at(-1)!;
+  }
+
   if (locale === "zh-cn") {
     candidates = item.type === "vehicles"
       ? [`WARDOGS ${item.name} 载具攻略：价格、定位与解锁`, `WARDOGS ${item.name} 载具攻略`]
@@ -90,13 +127,40 @@ function clampSearchDescription(value: string, locale: Locale = "en"): string {
 }
 
 function searchDescription(locale: Locale, item: WardogsItem): string {
+  const freshness = getCatalogueFreshness({dataAsOf: item.build, evidence: item.evidence});
+  const historicalPrefixes: Record<Locale, string> = {
+    en: "Historical snapshot:",
+    ru: "Исторический снимок:",
+    de: "Historischer Datenstand:",
+    "pt-br": "Registro histórico:",
+    ja: "過去ビルドの記録：",
+    "zh-cn": "历史版本快照："
+  };
+
   if (locale !== "en") {
-    return clampSearchDescription(`WARDOGS ${item.name}: ${item.description}`, locale);
+    const prefix = freshness === "historical" ? `${historicalPrefixes[locale]} ` : "";
+    return clampSearchDescription(`${prefix}WARDOGS ${item.name}: ${item.description}`, locale);
   }
 
   const price = item.observedPrice ?? "an unconfirmed price";
   const gate = item.observedProgressionOrGate ?? "an unconfirmed unlock";
   const classOrAmmo = item.observedAmmoOrVehicleClass ?? item.subtype;
+
+  if (freshness === "historical" && item.type === "weapons") {
+    return clampSearchDescription(
+      `Historical snapshot for WARDOGS ${item.name}: ${item.subtype} observed at ${price} with ${classOrAmmo} and ${gate} progression. Review role, cautions, sources, and build limits.`
+    );
+  }
+  if (freshness === "historical" && item.type === "vehicles") {
+    return clampSearchDescription(
+      `Historical snapshot for WARDOGS ${item.name}: ${classOrAmmo} observed at ${price} with ${gate}. Review its role, cautions, sources, and build limits.`
+    );
+  }
+  if (freshness === "historical") {
+    return clampSearchDescription(
+      `Historical snapshot for WARDOGS ${item.name}: ${item.subtype} observed at ${price} with ${gate}. Review its role, cautions, sources, and build limits.`
+    );
+  }
 
   if (item.type === "weapons") {
     return clampSearchDescription(
@@ -141,7 +205,8 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
       description,
       images: [{url: image, width: 1200, height: 630, alt: imageAlt}]
     },
-    twitter: {card: "summary_large_image", title, description, images: [image]}
+    twitter: {card: "summary_large_image", title, description, images: [image]},
+    robots: localizedItem.indexable ? undefined : {index: false, follow: true}
   };
 }
 

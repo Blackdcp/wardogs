@@ -1,5 +1,9 @@
 import {CircleAlert} from "lucide-react";
+import {StatusBadge} from "@/components/ui/status-badge";
 import type {Locale} from "@/config/site";
+import {getCatalogueFreshness} from "@/features/catalogue/catalogue-evidence";
+import {catalogueRecords} from "@/features/catalogue/catalogue-records";
+import {getItemUi} from "@/features/items/item-ui";
 
 const copy: Record<Locale, {title: string; description: string; pending: string}> = {
   en: {
@@ -36,6 +40,14 @@ const copy: Record<Locale, {title: string; description: string; pending: string}
 
 export function CatalogueBuildNotice({locale}: {locale: Locale}) {
   const text = copy[locale];
+  const ui = getItemUi(locale);
+  const freshnessCounts = catalogueRecords.reduce<Record<"current" | "historical" | "unknown", number>>(
+    (counts, record) => {
+      counts[getCatalogueFreshness(record)] += 1;
+      return counts;
+    },
+    {current: 0, historical: 0, unknown: 0}
+  );
 
   return (
     <section className="border-b border-[#35423b] bg-[#161d19]" data-catalogue-build-notice>
@@ -45,6 +57,16 @@ export function CatalogueBuildNotice({locale}: {locale: Locale}) {
           <h2 className="text-sm font-semibold text-white">{text.title}</h2>
           <p className="mt-1 max-w-5xl text-sm leading-6 text-[#b6c1bb]">{text.description}</p>
           <p className="mt-1 max-w-5xl text-xs leading-5 text-[#8f9d95]">{text.pending}</p>
+          <div className="mt-4 flex flex-wrap gap-2" data-catalogue-freshness-summary>
+            {(["current", "historical", "unknown"] as const).map((freshness) => freshnessCounts[freshness] > 0 ? (
+              <StatusBadge
+                key={freshness}
+                tone={freshness === "current" ? "accent" : freshness === "historical" ? "warning" : "muted"}
+              >
+                {ui[freshness]}: {freshnessCounts[freshness]}
+              </StatusBadge>
+            ) : null)}
+          </div>
         </div>
       </div>
     </section>

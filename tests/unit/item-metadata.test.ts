@@ -55,6 +55,19 @@ describe("item metadata", () => {
     expect(description).toContain("$900");
     expect(description).toContain("9x19mm");
     expect(description).toContain("Medic XP");
+    expect(description.toLowerCase()).toContain("historical snapshot");
+    expect(description.toLowerCase()).not.toContain("season 1 price");
+  });
+
+  it("adds noindex,follow without dropping canonical alternates for gated records", () => {
+    const generated = getItemBySlug("m4");
+    expect(generated?.indexable).toBe(false);
+
+    const metadata = buildItemMetadata("en", generated!);
+
+    expect(metadata.robots).toEqual({index: false, follow: true});
+    expect(metadata.alternates?.canonical).toBe("http://localhost:3000/en/items/weapons/m4");
+    expect(metadata.alternates?.languages).toEqual(allItemAlternates("/items/weapons/m4"));
   });
 
   it("publishes a vehicle model in every locale with its exact committed image", () => {
