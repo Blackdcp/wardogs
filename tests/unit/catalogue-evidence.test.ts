@@ -9,16 +9,27 @@ import {
 import {getItemBySlug, getIndexableItemPaths, itemLibrary} from "../../src/features/items/item-library";
 import {vehicleItems} from "../../src/features/items/vehicle-items";
 import {weaponItems} from "../../src/features/items/weapon-items";
+import {isApprovedSourceUrl} from "../../src/content/source-policy";
 
-const isoDate = /^\d{4}-\d{2}-\d{2}$/;
+function isCalendarDate(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
+}
+
+const sourceClasses = new Set(["official", "live-client", "creator-current", "creator-historical", "community-report"]);
+const confidenceLevels = new Set(["confirmed", "observed", "corroborated", "unverified"]);
 
 describe("catalogue evidence", () => {
   it("normalizes evidence for every catalogue record without promoting Alpha or Closed Beta observations", () => {
     expect(catalogueRecords).toHaveLength(131);
 
     for (const record of catalogueRecords) {
-      expect(record.evidence.verifiedAt, record.slug).toMatch(isoDate);
+      expect(isCalendarDate(record.evidence.verifiedAt), record.slug).toBe(true);
       expect(record.evidence.build, record.slug).toBe(record.dataAsOf);
+      expect(sourceClasses.has(record.evidence.sourceClass), record.slug).toBe(true);
+      expect(confidenceLevels.has(record.evidence.confidence), record.slug).toBe(true);
+      expect(record.evidence.sourceUrl === undefined || isApprovedSourceUrl(record.evidence.sourceUrl), record.slug).toBe(true);
       expect(record.evidence.current, record.slug).toBe(false);
       expect(getCatalogueFreshness(record), record.slug).toBe("historical");
       expect(isCurrentDecisionSafe(record), record.slug).toBe(false);
@@ -53,8 +64,23 @@ describe("catalogue evidence", () => {
       {entity: "Sports Parachute required level", previousValue: "36", currentValue: "35"},
       {entity: "Large Backpack required level", previousValue: "56", currentValue: "55"},
       {entity: "Deagle required level", previousValue: "90", currentValue: "85"},
+      {entity: "762x54mm AP career level", previousValue: "83", currentValue: "82"},
+      {entity: "556mm AP career level", previousValue: "85", currentValue: "83"},
     ]);
     expect(seasonOneChanges.some((change) => change.entity === "Artillery Tank career unlock" && change.catalogueKey === undefined)).toBe(true);
+    expect(seasonOneChanges).toContainEqual(expect.objectContaining({entity: "762x54mm AP career level", previousValue: "83", currentValue: "82", catalogueKey: "ammo/7-62x54mmr"}));
+    expect(seasonOneChanges).toContainEqual(expect.objectContaining({entity: "556mm AP career level", previousValue: "85", currentValue: "83", catalogueKey: "ammo/5-56x45mm"}));
+    expect(catalogueRecords.find((record) => record.slug === "7-62x54mmr")?.changeHistory).toContainEqual(expect.objectContaining({previousValue: "83", currentValue: "82"}));
+    expect(catalogueRecords.find((record) => record.slug === "5-56x45mm")?.changeHistory).toContainEqual(expect.objectContaining({previousValue: "85", currentValue: "83"}));
+    expect(seasonOneChanges.every((change) => isCalendarDate(change.verifiedAt) && isApprovedSourceUrl(change.sourceUrl))).toBe(true);
+  });
+
+  it("keeps Alpha and Beta builds historical when evidence is incorrectly marked current", () => {
+    const alphaRecord = catalogueRecords.find((record) => record.slug === "a-91");
+    const betaRecord = catalogueRecords.find((record) => record.slug === "m4");
+
+    expect(getCatalogueFreshness({...alphaRecord!, evidence: {...alphaRecord!.evidence, current: true}})).toBe("historical");
+    expect(getCatalogueFreshness({...betaRecord!, evidence: {...betaRecord!.evidence, current: true}})).toBe("historical");
   });
 
   it("indexes only authored weapon and vehicle detail pages", () => {

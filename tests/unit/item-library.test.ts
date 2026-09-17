@@ -249,7 +249,7 @@ describe("item library", () => {
     const mortar = getItemBySlug("mortar");
     expect(mortar).toBeDefined();
 
-    const itemWithRelatedModels = {...mortar!, relatedItems: ["mobile-fob", "amp-9"]};
+    const itemWithRelatedModels = {...mortar!, relatedItems: ["mobile-fob", "amp-9", "m4"]};
 
     expect(getRelatedItems(itemWithRelatedModels, "en").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
     expect(getRelatedItems(itemWithRelatedModels, "ru").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);

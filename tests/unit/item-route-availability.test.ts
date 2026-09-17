@@ -28,13 +28,13 @@ async function loadRouteAvailability() {
 }
 
 describe("item detail route availability", () => {
-  it("publishes one five-locale manifest for every item article", async () => {
+  it("publishes one six-locale manifest for every indexable item article", async () => {
     const routeAvailability = await loadRouteAvailability();
 
     expect(routeAvailability).not.toBeNull();
     if (!routeAvailability) return;
 
-    expect(routeAvailability.itemDetailRouteManifest).toHaveLength(itemLibrary.length);
+    expect(routeAvailability.itemDetailRouteManifest).toHaveLength(itemLibrary.filter((item) => item.indexable).length);
     expect(routeAvailability.itemDetailRouteManifest.every(({locales}) =>
       JSON.stringify(locales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja", "zh-cn"])
     )).toBe(true);
@@ -46,7 +46,7 @@ describe("item detail route availability", () => {
     if (!routeAvailability) return;
 
     expect(routeAvailability.itemDetailRouteManifest.map(({pathname, locales}) => ({pathname, locales}))).toEqual(
-      itemLibrary.map((item) => ({
+      itemLibrary.filter((item) => item.indexable).map((item) => ({
         pathname: `/items/${item.type}/${item.slug}`,
         locales: item.indexLocales
       }))
@@ -63,6 +63,11 @@ describe("item detail route availability", () => {
     expect(routeAvailability.isItemDetailRouteAvailable("de", "/items/vehicles/bobcat")).toBe(true);
     expect(routeAvailability.isItemDetailRouteAvailable("pt-br", "/items/vehicles/bobcat")).toBe(true);
     expect(routeAvailability.isItemDetailRouteAvailable("ja", "/items/vehicles/bobcat")).toBe(true);
+    expect(routeAvailability.isItemDetailRouteAvailable("en", "/items/weapons/m4")).toBe(false);
+    expect(routeAvailability.resolveItemRouteTarget("en", "/items/weapons/m4")).toEqual({
+      locale: "en",
+      pathname: "/items/weapons"
+    });
     expect(routeAvailability.resolveItemRouteTarget("ru", "/items/vehicles/bobcat")).toEqual({
       locale: "ru",
       pathname: "/items/vehicles/bobcat"

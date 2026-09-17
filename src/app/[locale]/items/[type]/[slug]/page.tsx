@@ -32,6 +32,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const item = getItemByTypeAndSlug(type, slug);
   if (!item) return {};
+  if (!item.indexable) return {robots: {index: false, follow: false}};
   return buildItemMetadata(locale, item);
 }
 

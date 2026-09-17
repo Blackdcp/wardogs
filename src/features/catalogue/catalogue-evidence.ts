@@ -1,5 +1,4 @@
 import type {CatalogueChangeHistory, CatalogueEvidence, CatalogueRecord} from "./catalogue-types";
-import {catalogueRecords} from "./catalogue-records";
 import {vehicleItems} from "../items/vehicle-items";
 import {weaponItems} from "../items/weapon-items";
 
@@ -8,7 +7,7 @@ const seasonOneVerifiedAt = "2026-09-09";
 
 export type SeasonOneChange = CatalogueChangeHistory & {
   entity: string;
-  catalogueKey?: `${"weapons" | "vehicles"}/${string}`;
+  catalogueKey?: `${CatalogueRecord["type"]}/${string}`;
 };
 
 export const seasonOneChanges: readonly SeasonOneChange[] = [
@@ -27,9 +26,16 @@ export const seasonOneChanges: readonly SeasonOneChange[] = [
   {entity: "Sports Parachute required level", field: "Required level", previousValue: "36", currentValue: "35", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl},
   {entity: "Large Backpack required level", field: "Required level", previousValue: "56", currentValue: "55", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl},
   {entity: "Deagle required level", field: "Required level", previousValue: "90", currentValue: "85", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl, catalogueKey: "weapons/deagle"},
+  {entity: "762x54mm AP career level", field: "AP career level", previousValue: "83", currentValue: "82", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl, catalogueKey: "ammo/7-62x54mmr"},
+  {entity: "556mm AP career level", field: "AP career level", previousValue: "85", currentValue: "83", effectiveBuild: "Season 1", verifiedAt: seasonOneVerifiedAt, sourceUrl: seasonOneSourceUrl, catalogueKey: "ammo/5-56x45mm"},
 ];
 
 const richDetailKeys = new Set([...weaponItems, ...vehicleItems].map((item) => `${item.type}/${item.slug}`));
+let defaultCatalogueRecords: readonly CatalogueRecord[] = [];
+
+export function registerCatalogueRecords(records: readonly CatalogueRecord[]) {
+  defaultCatalogueRecords = records;
+}
 
 export function normalizeCatalogueEvidence(record: Pick<CatalogueRecord, "dataAsOf" | "evidenceTier">): CatalogueEvidence {
   const verifiedAt = record.dataAsOf.includes("Closed Beta") ? "2026-08-23" : "2026-08-07";
@@ -50,8 +56,9 @@ export function getCatalogueChangeHistory(record: Pick<CatalogueRecord, "type" |
 }
 
 export function getCatalogueFreshness(record: Pick<CatalogueRecord, "dataAsOf" | "evidence">): "current" | "historical" | "unknown" {
+  if (/Alpha|Beta/.test(`${record.dataAsOf} ${record.evidence.build}`)) return "historical";
   if (record.evidence.current) return "current";
-  if (/Alpha|Beta/.test(record.dataAsOf) || record.evidence.build === record.dataAsOf) return "historical";
+  if (record.evidence.build === record.dataAsOf) return "historical";
   return "unknown";
 }
 
@@ -61,7 +68,7 @@ export function isCurrentDecisionSafe(record: Pick<CatalogueRecord, "dataAsOf" |
     && (record.evidence.sourceClass === "official" || record.evidence.sourceClass === "live-client");
 }
 
-export function getIndexableCatalogueItems(records: readonly CatalogueRecord[] = catalogueRecords): CatalogueRecord[] {
+export function getIndexableCatalogueItems(records: readonly CatalogueRecord[] = defaultCatalogueRecords): CatalogueRecord[] {
   return records.filter((record) =>
     record.detailStatus === "published"
     && record.evidenceTier !== "identifier-only"

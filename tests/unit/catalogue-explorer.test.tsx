@@ -45,20 +45,24 @@ describe("CatalogueCard", () => {
     expect(html).not.toContain('href="/en/items/vehicles/bobcat"');
   });
 
-  it("links only published records that supply an exact detail URL", () => {
-    const planned = getCatalogueRecords("weapons")[0];
-    const published = {
-      ...planned,
-      slug: "mortar",
-      name: "Mortar",
-      detailStatus: "published" as const,
-      detailHref: "/items/weapons/mortar" as const
-    };
+  it("links only published records that pass the detail quality gate", () => {
+    const published = getCatalogueRecords("weapons").find((record) => record.slug === "a-91");
+    expect(published).toBeDefined();
 
-    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={published} />);
+    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={published!} />);
 
-    expect(html).toContain('href="/en/items/weapons/mortar"');
-    expect(html).not.toContain('href="/items/weapons/mortar"');
+    expect(html).toContain('href="/en/items/weapons/a-91"');
+    expect(html).not.toContain('href="/items/weapons/a-91"');
+  });
+
+  it("does not link generated published records as detail pages", () => {
+    const generated = getCatalogueRecords("weapons").find((record) => record.slug === "m4");
+    expect(generated?.detailStatus).toBe("published");
+
+    const html = renderToStaticMarkup(<CatalogueCard locale="en" record={generated!} />);
+
+    expect(html).not.toContain('href="/en/items/weapons/m4"');
+    expect(html).not.toContain("href=");
   });
 
   it("uses the matching locale route from every localized category card", () => {

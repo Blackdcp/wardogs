@@ -2,6 +2,7 @@ import Image from "next/image";
 import {ArrowUpRight, ImageOff} from "lucide-react";
 import type {Locale} from "@/config/site";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
+import {getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
@@ -73,7 +74,7 @@ function CardContent({locale, record, linked, eagerImage}: {locale: Locale; reco
 }
 
 export function CatalogueCard({locale, record, eagerImage = false, hidden = false}: CatalogueCardProps) {
-  const detailHref = record.detailStatus === "published" && record.detailHref
+  const detailHref = record.detailStatus === "published" && record.detailHref && getIndexableCatalogueItems([record]).length === 1
     ? publicRoutePath(localizedItemRoutePath(resolveItemRouteTarget(locale, record.detailHref)))
     : undefined;
   const className = "flex h-full min-h-[34rem] min-w-0 flex-col border border-[#303b35] bg-[#151b18]";

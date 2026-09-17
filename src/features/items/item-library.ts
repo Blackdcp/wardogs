@@ -524,7 +524,7 @@ export function getFeaturedItems(limit = 6): WardogsItem[] {
 export function getRelatedItems(item: WardogsItem, locale: Locale): WardogsItem[] {
   return item.relatedItems
     .map((slug) => getItemBySlug(slug))
-    .filter((related): related is WardogsItem => related !== undefined && related.indexLocales.includes(locale));
+    .filter((related): related is WardogsItem => related !== undefined && related.indexable && related.indexLocales.includes(locale));
 }
 
 export function getIndexableItemPaths(): IndexableItemPath[] {

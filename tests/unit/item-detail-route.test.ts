@@ -44,4 +44,13 @@ describe("item detail route entry", () => {
 
     expect(metadata).toEqual({});
   });
+
+  it("marks a generated item page noindex and rejects its direct route", async () => {
+    const generatedParams = {
+      params: Promise.resolve({locale: "en", type: "weapons", slug: "m4"})
+    };
+
+    await expect(generateMetadata(generatedParams)).resolves.toEqual({robots: {index: false, follow: false}});
+    await expect(ItemDetailPage(generatedParams)).rejects.toMatchObject({digest: "NEXT_HTTP_ERROR_FALLBACK;404"});
+  });
 });

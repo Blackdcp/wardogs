@@ -14,7 +14,7 @@ export type ItemRouteTarget = {
   pathname: string;
 };
 
-export const itemDetailRouteManifest: readonly ItemDetailRouteAvailability[] = itemLibrary.map((item) => ({
+export const itemDetailRouteManifest: readonly ItemDetailRouteAvailability[] = itemLibrary.filter((item) => item.indexable).map((item) => ({
   pathname: `/items/${item.type}/${item.slug}`,
   locales: item.indexLocales
 }));
@@ -47,6 +47,8 @@ export function resolveItemRouteTarget(
 ): ItemRouteTarget {
   const {normalized, suffix} = splitPathname(pathname);
   const route = routeAvailability.get(normalized as ItemDetailRoutePath);
+  const gatedItem = itemLibrary.find((item) => `/items/${item.type}/${item.slug}` === normalized && !item.indexable);
+  if (gatedItem) return {locale, pathname: `/items/${gatedItem.type}`};
   if (!route) return {locale, pathname};
   if (route.locales.includes(locale)) return {locale, pathname: `${route.pathname}${suffix}`};
 
