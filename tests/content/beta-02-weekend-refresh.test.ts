@@ -47,12 +47,13 @@ describe("Closed Beta 02 weekend release contract", () => {
     expect(source).toContain('maintenanceStartsAt: "2026-09-14T08:00:00Z"');
   });
 
-  it("publishes the contest and known-issues guides in every language", async () => {
+  it("publishes the contest and known-issues guides in every language while promoting only current help", async () => {
     expect(guideManifest).toHaveLength(50);
     for (const slug of newGuideSlugs) {
       expect(guideManifest.some((entry) => entry.slug === slug), slug).toBe(true);
-      expect(TOP_GUIDE_SLUGS, slug).toContain(slug);
     }
+    expect(TOP_GUIDE_SLUGS).toContain("wardogs-known-issues");
+    expect(TOP_GUIDE_SLUGS).not.toContain("wardogs-100k-clip-contest");
 
     for (const locale of locales) {
       for (const slug of newGuideSlugs) {

@@ -73,8 +73,8 @@
     "primaryLabel": "Navegação principal"
   },
   "home": {
-    "metaTitle": "WARDOGS Wiki: armas, veículos, guias e banco de dados",
-    "metaDescription": "A WARDOGS Wiki independente reúne informações verificadas sobre armas, veículos, equipamentos, controles, acesso atual, problemas e guias práticos.",
+    "metaTitle": "WARDOGS Wiki: pesquise guias, armas, veículos e ferramentas",
+    "metaDescription": "Pesquise na WARDOGS Wiki independente guias da Season 1 com fontes, armas, veículos, vídeos atuais, controles, correções de PC, logística e ferramentas.",
     "heroTitle": "Armas, veículos, guias e banco de dados",
     "heroDescription": "Use uma referência de WARDOGS verificada por fontes para equipamentos, controles, acesso, solução de problemas e táticas, com detalhes de build sinalizados.",
     "primaryCta": "Ler Patch 0.11",
@@ -132,29 +132,73 @@
         }
       }
     },
+    "search": {
+      "eyebrow": "Pesquise a referência de campo",
+      "title": "Encontre a resposta, item ou ferramenta",
+      "description": "Pesquise guias mantidos, páginas de itens com evidências, vídeos atuais revisados e todas as ferramentas em um índice acessível pelo teclado.",
+      "label": "Pesquisar na WARDOGS Wiki",
+      "placeholder": "Tente dinheiro, helicóptero, FOB, controles ou AMP-9",
+      "prompt": "Digite uma tarefa, item, função, problema ou criador. Use as setas para navegar e Enter para abrir.",
+      "empty": "Nenhum conteúdo mantido corresponde a essa busca. Tente uma tarefa ou categoria mais ampla.",
+      "resultCount": "{count} resultados",
+      "openResult": "Abrir resultado",
+      "videoSummary": "Vídeo atual de criador revisado e ligado a um guia mantido.",
+      "videoCategory": "Vídeo atual",
+      "toolSummary": "Ferramenta interativa encontrada pela navegação compartilhada do site.",
+      "types": {"guide": "Guia", "item": "Item", "video": "Vídeo", "tool": "Ferramenta"},
+      "counts": {"guides": "Guias", "items": "Páginas de itens", "videos": "Vídeos atuais", "tools": "Ferramentas"}
+    },
     "actions": {
       "eyebrow": "Escolha sua missão",
       "title": "O que você precisa agora?",
       "description": "Ignore o diretório e vá direto à tarefa certa. Fatos que mudam conforme a versão continuam claramente marcados.",
-      "play": {
-        "title": "Instalar e jogar o Acesso Antecipado",
-        "description": "Abra o aplicativo principal de WARDOGS na Steam, instale a build atual e confira a manutenção antes de entrar.",
-        "imageAlt": "Campo de batalha de WARDOGS para o guia de acesso e download"
+      "firstMatch": {
+        "title": "Jogar a primeira partida",
+        "description": "Aprenda o deploy, o objetivo ativo, o movimento do esquadrão e um ciclo útil de suporte."
       },
-      "fix": {
-        "title": "Resolver um problema",
-        "description": "Veja soluções atuais para travamentos, servidores, voz, desempenho e acesso.",
-        "imageAlt": "Equipamento tático de WARDOGS usado na solução de problemas"
+      "money": {
+        "title": "Ganhar e proteger dinheiro",
+        "description": "Escolha uma função repetível, defina um limite de perda e confira o resultado líquido."
       },
-      "gear": {
-        "title": "Explorar equipamentos",
-        "description": "Consulte armas, veículos, armaduras, munições e equipamentos ilustrados.",
-        "imageAlt": "Armas de WARDOGS no catálogo ilustrado de equipamentos"
+      "progression": {
+        "title": "Planejar a progressão da função",
+        "description": "Escolha uma meta de função e separe mudanças confirmadas da Season 1 de valores antigos."
       },
-      "system": {
-        "title": "Verificar o PC",
-        "description": "Compare seu hardware com os requisitos confirmados antes de alterar configurações.",
-        "imageAlt": "Cena de WARDOGS usada no verificador de configuração do PC"
+      "weapons": {
+        "title": "Escolher armas e munição",
+        "description": "Monte um kit acessível por alcance, blindagem, munição e atualidade das evidências."
+      },
+      "logistics": {
+        "title": "Operar FOBs e logística",
+        "description": "Crie spawns úteis, leve suprimentos, proteja rotas e recupere o ciclo de suporte."
+      },
+      "vehicles": {
+        "title": "Identificar veículos",
+        "description": "Consulte transporte, blindados, aeronaves e a build em que cada registro foi observado."
+      },
+      "controls": {
+        "title": "Aprender os controles",
+        "description": "Confira comandos atuais de teclado, mouse, controle, veículos e helicópteros."
+      },
+      "pcFixes": {
+        "title": "Corrigir travamentos e desempenho",
+        "description": "Diagnostique estabilidade, drivers, gráficos, filas e requisitos do sistema."
+      }
+    },
+    "buildChanges": {
+      "eyebrow": "Evidência oficial da Season 1",
+      "title": "Mudanças importantes antes de gastar",
+      "description": "Estes valores anteriores e atuais vêm da atualização oficial da Season 1. Valores não alterados continuam históricos até nova verificação.",
+      "buildLabel": "Build",
+      "verifiedLabel": "Verificado",
+      "sourceCta": "Ler a atualização oficial da Season 1",
+      "entries": {
+        "fobVendor": {"title": "Vendedor de FOB", "field": "Preço no vendedor"},
+        "largeHammer": {"title": "Large Hammer", "field": "Preço no vendedor"},
+        "artilleryTank": {"title": "Artillery Tank", "field": "Desbloqueio de carreira"},
+        "ural": {"title": "URAL", "field": "Desbloqueio"},
+        "duneBuggy": {"title": "Dune Buggy", "field": "Desbloqueio"},
+        "deagle": {"title": "Deagle", "field": "Nível necessário"}
       }
     },
     "priority": {
@@ -192,6 +236,10 @@
           "steamEarlyAccess": {
             "title": "O Acesso Antecipado da Steam está disponível",
             "description": "A versão para Windows PC foi lançada em 10 de setembro; a Steam agora fornece instalação e patches atuais."
+          },
+          "patch011": {
+            "title": "O Patch 0.11 é o ponto oficial atual",
+            "description": "A manutenção de 14 de setembro já passou; consulte as notas e o feed oficial da Steam para mudanças e avisos atuais."
           },
           "ps5Release": {
             "title": "Versões para consoles são planejadas para 2028",
@@ -238,7 +286,7 @@
       "eyebrow": "Todas as áreas",
       "title": "Encontre a informação certa",
       "description": "Explore oito áreas que cobrem toda a biblioteca independente de guias de WARDOGS.",
-      "allGuides": "Ver todos os 47 guias",
+      "allGuides": "Ver todos os {count} guias",
       "items": {
         "access": "Testes, histórico do beta, status do alpha e chaves",
         "release": "Data de lançamento e detalhes do Acesso Antecipado",

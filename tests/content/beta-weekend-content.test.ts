@@ -43,21 +43,16 @@ describe("WARDOGS Closed Beta reference content", () => {
     expect(TOP_GUIDE_SLUGS).toContain("wardogs-download");
     expect(START_GUIDES[0].slug).toBe("wardogs-beginner-guide");
     expect(START_GUIDES[1].slug).toBe("wardogs-money-guide");
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
-      status: "confirmed",
-      titleKey: "closedBeta02",
-      slug: "wardogs-beta",
-    }));
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
-      status: "confirmed",
-      titleKey: "paidPrepurchase",
-      slug: "wardogs-price",
-    }));
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
-      status: "confirmed",
-      titleKey: "clipContest",
-      slug: "wardogs-100k-clip-contest",
-    }));
+    expect(CONFIRMED_RUMOR_ITEMS).toEqual(expect.arrayContaining([
+      expect.objectContaining({status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"}),
+      expect.objectContaining({status: "confirmed", titleKey: "patch011", slug: "wardogs-patch-notes"}),
+      expect.objectContaining({status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}),
+    ]));
+    expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toEqual(expect.arrayContaining([
+      "closedBeta02",
+      "paidPrepurchase",
+      "clipContest",
+    ]));
     expect(NEWS_CHECKLIST_SLUGS).toContain("wardogs-twitch-drops");
     expect(NEWS_UPDATES).toContainEqual(expect.objectContaining({
       date: "2026-08-20",

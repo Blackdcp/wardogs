@@ -73,8 +73,8 @@
     "primaryLabel": "Primary navigation"
   },
   "home": {
-    "metaTitle": "WARDOGS Wiki: Weapons, Vehicles, Guides & Database",
-    "metaDescription": "Explore the independent WARDOGS Wiki for verified weapons, vehicles, equipment, guides, current access status, controls, known issues, and player tools.",
+    "metaTitle": "WARDOGS Wiki: Search Guides, Weapons, Vehicles & Tools",
+    "metaDescription": "Search the independent WARDOGS Wiki for sourced Season 1 guides, indexable weapons and vehicles, current videos, controls, PC fixes, logistics, and player tools.",
     "heroTitle": "Weapons, Vehicles, Guides & Game Database",
     "heroDescription": "Use a source-checked WARDOGS reference for equipment, controls, current access, troubleshooting, and practical tactics, with build-sensitive details clearly labeled.",
     "primaryCta": "Read Patch 0.11",
@@ -132,29 +132,73 @@
         }
       }
     },
+    "search": {
+      "eyebrow": "Search the field reference",
+      "title": "Find the answer, item, or tool",
+      "description": "Search maintained guides, evidence-backed item pages, reviewed current videos, and every player tool from one keyboard-friendly index.",
+      "label": "Search WARDOGS Wiki",
+      "placeholder": "Try money, helicopter, FOB, controls, or AMP-9",
+      "prompt": "Type a task, item, role, problem, or creator name. Use arrow keys to move and Enter to open a result.",
+      "empty": "No maintained result matches that search. Try a broader task or category.",
+      "resultCount": "{count} results",
+      "openResult": "Open result",
+      "videoSummary": "Reviewed current-build creator footage linked to a maintained guide.",
+      "videoCategory": "Current video",
+      "toolSummary": "Interactive player tool discovered from the shared site navigation.",
+      "types": {"guide": "Guide", "item": "Item", "video": "Video", "tool": "Tool"},
+      "counts": {"guides": "Guides", "items": "Item pages", "videos": "Current videos", "tools": "Tools"}
+    },
     "actions": {
       "eyebrow": "Choose your mission",
       "title": "What do you need right now?",
       "description": "Skip the directory and go directly to the task that brought you here. Every destination keeps build-sensitive facts clearly labeled.",
-      "play": {
-        "title": "Install and play Early Access",
-        "description": "Open the main WARDOGS Steam app, install the current build, and check maintenance before joining.",
-        "imageAlt": "WARDOGS battlefield used for the play and download guide"
+      "firstMatch": {
+        "title": "Run your first match",
+        "description": "Learn deployment, the active objective, squad movement, and one useful support loop."
       },
-      "fix": {
-        "title": "Check server status",
-        "description": "Separate official outages and launch queues from account, region, voice, or PC problems.",
-        "imageAlt": "WARDOGS tactical equipment used for troubleshooting"
+      "money": {
+        "title": "Protect and earn cash",
+        "description": "Choose a repeatable team job, set a loss limit, and check the real net result."
       },
-      "gear": {
-        "title": "Browse equipment",
-        "description": "Explore illustrated weapons, vehicles, armor, ammunition, and loadout records.",
-        "imageAlt": "WARDOGS weapons displayed in the illustrated equipment catalogue"
+      "progression": {
+        "title": "Plan role progression",
+        "description": "Choose a role goal and separate confirmed Season 1 changes from older values."
       },
-      "system": {
-        "title": "Check your PC",
-        "description": "Compare your hardware with confirmed requirements before changing settings.",
-        "imageAlt": "WARDOGS gameplay used for the PC configuration checker"
+      "weapons": {
+        "title": "Choose weapons and ammo",
+        "description": "Build an affordable loadout around range, armor, ammunition, and evidence freshness."
+      },
+      "logistics": {
+        "title": "Run FOBs and logistics",
+        "description": "Place useful spawns, move supplies, protect routes, and recover the support loop."
+      },
+      "vehicles": {
+        "title": "Identify vehicles",
+        "description": "Browse transport, armor, aircraft, and the build in which each record was observed."
+      },
+      "controls": {
+        "title": "Learn the controls",
+        "description": "Check current keyboard, mouse, controller, vehicle, and helicopter inputs."
+      },
+      "pcFixes": {
+        "title": "Fix crashes and performance",
+        "description": "Diagnose stability, drivers, graphics settings, queues, and system requirements."
+      }
+    },
+    "buildChanges": {
+      "eyebrow": "Official Season 1 evidence",
+      "title": "Material changes worth checking before you spend",
+      "description": "These before-and-after values come from the official Season 1 update. Unchanged catalogue values remain historical until independently rechecked.",
+      "buildLabel": "Build",
+      "verifiedLabel": "Verified",
+      "sourceCta": "Read the official Season 1 update",
+      "entries": {
+        "fobVendor": {"title": "FOB vendor", "field": "Vendor price"},
+        "largeHammer": {"title": "Large Hammer", "field": "Vendor price"},
+        "artilleryTank": {"title": "Artillery Tank", "field": "Career unlock"},
+        "ural": {"title": "URAL", "field": "Unlock"},
+        "duneBuggy": {"title": "Dune Buggy", "field": "Unlock"},
+        "deagle": {"title": "Deagle", "field": "Required level"}
       }
     },
     "priority": {
@@ -192,6 +236,10 @@
           "steamEarlyAccess": {
             "title": "Steam Early Access is live",
             "description": "The Windows PC Early Access release launched September 10; Steam now supplies the current install and patches."
+          },
+          "patch011": {
+            "title": "Patch 0.11 is the current official checkpoint",
+            "description": "The September 14 maintenance window has passed; use the patch notes and official Steam feed for current changes and live-service notices."
           },
           "ps5Release": {
             "title": "Console versions are planned for 2028",
@@ -238,7 +286,7 @@
       "eyebrow": "All guide areas",
       "title": "Find the Intel You Need",
       "description": "Browse eight focused areas covering every topic in the independent WARDOGS guide library.",
-      "allGuides": "View all 47 guides",
+      "allGuides": "View all {count} guides",
       "items": {
         "access": "Playtests, beta history, alpha status, and keys",
         "release": "Release date and Early Access details",

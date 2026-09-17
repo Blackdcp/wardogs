@@ -7,6 +7,7 @@ import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import type {Locale} from "@/config/site";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
+import {getItemsByType} from "@/features/items/item-library";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
 
@@ -150,7 +151,7 @@ export async function CatalogueHomeBand({locale}: {locale: Locale}) {
     {key: "ammo", title: t("ammo.title"), count: t("ammo.count", {count: observedCount("ammo")}), href: "/items/ammo", image: "/images/catalogue/ammo/556x45mm.webp", imageAlt: t("ammo.imageAlt"), layout: "compact", imageFit: "contain"},
     {key: "attachments", title: t("attachments.title"), count: t("attachments.count", {count: observedCount("attachments")}), href: "/items/attachments", image: "/images/catalogue/banners/attachments-1280.webp", imageAlt: t("attachments.imageAlt"), layout: "compact", imageFit: "cover"},
     {key: "gear", title: t("gear.title"), count: t("gear.count", {count: observedCount("gear")}), href: "/items/gear", image: "/images/catalogue/gear/heavy-armor.webp", imageAlt: t("gear.imageAlt"), layout: "compact", imageFit: "contain"},
-    {key: "loadouts", title: t("loadouts.title"), count: t("loadouts.count", {count: 3}), href: "/items/loadouts", image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: t("loadouts.imageAlt"), layout: "compact", imageFit: "cover"}
+    {key: "loadouts", title: t("loadouts.title"), count: t("loadouts.count", {count: getItemsByType("loadouts").length}), href: "/items/loadouts", image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: t("loadouts.imageAlt"), layout: "compact", imageFit: "cover"}
   ];
   const modelEntries: CatalogueHomeModelEntry[] = [
     {type: "weapons" as const, slug: "a-91"},

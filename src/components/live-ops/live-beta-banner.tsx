@@ -9,6 +9,7 @@ type LiveBetaBannerProps = {
 
 export async function LiveBetaBanner({compact = false}: LiveBetaBannerProps) {
   const t = await getTranslations("liveOps");
+  const Heading = compact ? "h2" : "h1";
 
   return (
     <section
@@ -26,12 +27,12 @@ export async function LiveBetaBanner({compact = false}: LiveBetaBannerProps) {
               <Radio aria-hidden="true" className="size-4" />
               {t("eyebrow")}
             </p>
-            <h2
+            <Heading
               className={`${compact ? "text-2xl" : "text-3xl"} display-font mt-2 leading-tight text-white`}
               id={compact ? "guide-live-beta-title" : "home-live-beta-title"}
             >
               {t("title")}
-            </h2>
+            </Heading>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-[#c6d6cc]">{t("description")}</p>
           </div>
 

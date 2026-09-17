@@ -1,3 +1,5 @@
+import {seasonOneChanges, type SeasonOneChange} from "@/features/catalogue/catalogue-evidence";
+
 export const HOME_FACT_KEYS = ["earlyAccess", "players", "teams", "controlZone"] as const;
 export type HomeFactKey = (typeof HOME_FACT_KEYS)[number];
 
@@ -15,10 +17,14 @@ export const START_GUIDES = [
 ] as const;
 
 export const HOME_ACTIONS = [
-  {key: "play", href: "/guides/wardogs-download", image: "/images/wardogs-hero.jpg"},
-  {key: "fix", href: "/guides/wardogs-known-issues", image: "/images/guide-discovery/equipment-tools.webp"},
-  {key: "gear", href: "/items", image: "/images/catalogue/banners/weapons-1280.webp"},
-  {key: "system", href: "/tools/system-check", image: "/images/catalogue/banners/thegame-1280.webp"}
+  {key: "firstMatch", href: "/guides/wardogs-beginner-guide"},
+  {key: "money", href: "/guides/wardogs-money-guide"},
+  {key: "progression", href: "/guides/wardogs-progression-wipes-guide"},
+  {key: "weapons", href: "/guides/wardogs-best-weapons-loadouts"},
+  {key: "logistics", href: "/guides/wardogs-fob-guide"},
+  {key: "vehicles", href: "/items/vehicles"},
+  {key: "controls", href: "/guides/wardogs-controls"},
+  {key: "pcFixes", href: "/guides/wardogs-crash-fix"}
 ] as const;
 
 export const HOME_CATEGORY_GUIDES = [
@@ -42,7 +48,6 @@ export const TOP_GUIDE_SLUGS = [
   "wardogs-community-servers-guide",
   "wardogs-known-issues",
   "wardogs-download",
-  "wardogs-100k-clip-contest",
   "wardogs-controls",
   "wardogs-map",
   "wardogs-early-access",
@@ -71,10 +76,8 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 }
 
 export const CONFIRMED_RUMOR_ITEMS = [
-  {status: "confirmed", titleKey: "closedBeta02", slug: "wardogs-beta"},
-  {status: "confirmed", titleKey: "clipContest", slug: "wardogs-100k-clip-contest"},
-  {status: "confirmed", titleKey: "paidPrepurchase", slug: "wardogs-price"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
+  {status: "confirmed", titleKey: "patch011", slug: "wardogs-patch-notes"},
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
 ] as const;
 
@@ -88,8 +91,29 @@ export function getHomePriorityGuides<T extends RecentlyUpdatedGuideInput>(guide
   return {
     top,
     recent: getRecentlyUpdatedGuides(guides, 3),
-    status: [CONFIRMED_RUMOR_ITEMS[0], CONFIRMED_RUMOR_ITEMS[1], CONFIRMED_RUMOR_ITEMS[4]]
+    status: CONFIRMED_RUMOR_ITEMS
   } as const;
+}
+
+const homeBuildChangeEntities = [
+  ["fobVendor", "FOB vendor"],
+  ["largeHammer", "Large Hammer vendor"],
+  ["artilleryTank", "Artillery Tank career unlock"],
+  ["ural", "URAL unlock"],
+  ["duneBuggy", "Dune Buggy unlock"],
+  ["deagle", "Deagle required level"]
+] as const;
+
+export type HomeBuildChange = SeasonOneChange & {
+  key: (typeof homeBuildChangeEntities)[number][0];
+};
+
+export function getHomeCurrentBuildChanges(): HomeBuildChange[] {
+  return homeBuildChangeEntities.map(([key, entity]) => {
+    const change = seasonOneChanges.find((candidate) => candidate.entity === entity);
+    if (!change) throw new Error(`Missing approved Season 1 evidence for ${entity}`);
+    return {...change, key};
+  });
 }
 
 export const BEGINNER_TIP_KEYS = ["objective", "economy", "support", "mobility"] as const;

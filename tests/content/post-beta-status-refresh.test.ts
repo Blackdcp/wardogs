@@ -116,9 +116,11 @@ describe("WARDOGS current and historical status boundaries", () => {
     }
   });
 
-  it("keeps Beta 02 history and the clip contest on the homepage", () => {
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({status: "confirmed", titleKey: "closedBeta02", slug: "wardogs-beta"}));
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({status: "confirmed", titleKey: "clipContest", slug: "wardogs-100k-clip-contest"}));
+  it("keeps Beta 02 and contest history reachable without presenting them as current homepage status", async () => {
+    expect(await loadGuideDocument("en", "wardogs-beta")).not.toBeNull();
+    expect(await loadGuideDocument("en", "wardogs-100k-clip-contest")).not.toBeNull();
+    expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toContain("closedBeta02");
+    expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toContain("clipContest");
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"}));
   });
 });

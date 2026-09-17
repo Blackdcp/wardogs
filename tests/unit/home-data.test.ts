@@ -2,6 +2,7 @@ import {describe, expect, it} from "vitest";
 import {
   CONFIRMED_RUMOR_ITEMS,
   HOME_ACTIONS,
+  getHomeCurrentBuildChanges,
   getHomeFacts,
   getHomePriorityGuides,
   getRecentlyUpdatedGuides,
@@ -48,7 +49,6 @@ describe("homepage data", () => {
       "wardogs-community-servers-guide",
       "wardogs-known-issues",
       "wardogs-download",
-      "wardogs-100k-clip-contest",
       "wardogs-controls",
       "wardogs-map",
       "wardogs-early-access",
@@ -67,23 +67,14 @@ describe("homepage data", () => {
     ], 2);
 
     expect(latest.map((guide) => guide.slug)).toEqual(["newest", "middle"]);
-    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.status)).toEqual([
-      "confirmed",
-      "confirmed",
-      "confirmed",
-      "confirmed",
-      "rumor"
-    ]);
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({
-      status: "confirmed",
-      titleKey: "closedBeta02",
-      slug: "wardogs-beta"
-    }));
+    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.status)).toEqual(["confirmed", "confirmed", "rumor"]);
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual({
       status: "confirmed",
-      titleKey: "paidPrepurchase",
-      slug: "wardogs-price"
+      titleKey: "steamEarlyAccess",
+      slug: "wardogs-early-access"
     });
+    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.titleKey)).not.toContain("closedBeta02");
+    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.titleKey)).not.toContain("clipContest");
   });
 
   it("keeps the homepage intel panel concise while preserving confirmed and rumor states", () => {
@@ -97,21 +88,44 @@ describe("homepage data", () => {
     expect(result.top).toHaveLength(0);
     expect(result.recent).toHaveLength(3);
     expect(result.status).toEqual([
-      expect.objectContaining({titleKey: "closedBeta02", status: "confirmed"}),
-      expect.objectContaining({titleKey: "clipContest", status: "confirmed"}),
+      expect.objectContaining({titleKey: "steamEarlyAccess", status: "confirmed"}),
+      expect.objectContaining({titleKey: "patch011", status: "confirmed"}),
       expect.objectContaining({titleKey: "ps5Release", status: "rumor"})
     ]);
   });
 
-  it("defines four task-first homepage actions with visual assets", () => {
+  it("defines exactly eight task-first homepage actions with valid internal destinations", () => {
     expect(HOME_ACTIONS).toEqual([
-      expect.objectContaining({key: "play", href: "/guides/wardogs-download"}),
-      expect.objectContaining({key: "fix", href: "/guides/wardogs-known-issues"}),
-      expect.objectContaining({key: "gear", href: "/items"}),
-      expect.objectContaining({key: "system", href: "/tools/system-check"})
+      {key: "firstMatch", href: "/guides/wardogs-beginner-guide"},
+      {key: "money", href: "/guides/wardogs-money-guide"},
+      {key: "progression", href: "/guides/wardogs-progression-wipes-guide"},
+      {key: "weapons", href: "/guides/wardogs-best-weapons-loadouts"},
+      {key: "logistics", href: "/guides/wardogs-fob-guide"},
+      {key: "vehicles", href: "/items/vehicles"},
+      {key: "controls", href: "/guides/wardogs-controls"},
+      {key: "pcFixes", href: "/guides/wardogs-crash-fix"}
     ]);
-    expect(HOME_ACTIONS).toHaveLength(4);
-    expect(HOME_ACTIONS.every((action) => action.image.startsWith("/images/"))).toBe(true);
-    expect(new Set(HOME_ACTIONS.map((action) => action.image)).size).toBe(4);
+    expect(HOME_ACTIONS).toHaveLength(8);
+    expect(HOME_ACTIONS.every((action) => action.href.startsWith("/"))).toBe(true);
+  });
+
+  it("builds the current-change band only from dated official Season 1 evidence", () => {
+    const changes = getHomeCurrentBuildChanges();
+
+    expect(changes).toHaveLength(6);
+    expect(changes.map((change) => change.key)).toEqual([
+      "fobVendor",
+      "largeHammer",
+      "artilleryTank",
+      "ural",
+      "duneBuggy",
+      "deagle"
+    ]);
+    for (const change of changes) {
+      expect(change.effectiveBuild).toBe("Season 1");
+      expect(change.verifiedAt).toBe("2026-09-09");
+      expect(change.sourceUrl).toBe("https://store.steampowered.com/news/app/1867240/view/701027323413004455");
+      expect(change.previousValue).not.toBe(change.currentValue);
+    }
   });
 });

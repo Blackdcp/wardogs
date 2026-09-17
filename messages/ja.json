@@ -73,8 +73,8 @@
     "primaryLabel": "メインナビゲーション"
   },
   "home": {
-    "metaTitle": "WARDOGS Wiki：武器・車両・攻略・ゲームデータベース",
-    "metaDescription": "独立運営の WARDOGS Wiki で、武器、車両、装備、操作、現在の参加状況、既知の問題、設定、実戦向け攻略を確認できます。一次情報と公開資料を照合し、出典、更新日、対象ビルドを明記して、変わりやすい数値と未確認情報を区別。初心者向け導入、ダウンロード、機体操作、分隊連携、プレイヤーツールも整理しています。",
+    "metaTitle": "WARDOGS Wiki：攻略・武器・車両・ツールを検索",
+    "metaDescription": "独立運営の WARDOGS Wiki で、出典付きSeason 1攻略、武器、車両、現行動画、操作、PC対策、兵站、プレイヤーツールをまとめて検索できます。",
     "heroTitle": "武器・車両・攻略・ゲームデータベース",
     "heroDescription": "装備、操作、現在の参加状況、不具合対策、実戦戦術を出典付きで確認できます。ビルド依存の情報は明確に区別しています。",
     "primaryCta": "Patch 0.11を読む",
@@ -132,29 +132,73 @@
         }
       }
     },
+    "search": {
+      "eyebrow": "フィールド資料を検索",
+      "title": "答え・装備・ツールをすぐ見つける",
+      "description": "更新中の攻略、根拠付き装備ページ、確認済みの現行動画、すべてのプレイヤーツールをキーボード対応の索引から検索できます。",
+      "label": "WARDOGS Wikiを検索",
+      "placeholder": "資金、ヘリ、FOB、操作、AMP-9などを検索",
+      "prompt": "任務、装備、役割、問題、制作者名を入力してください。矢印キーで移動し、Enterで開けます。",
+      "empty": "該当する更新対象コンテンツがありません。より広い任務名やカテゴリーで検索してください。",
+      "resultCount": "{count}件の結果",
+      "openResult": "結果を開く",
+      "videoSummary": "更新中の攻略に関連付けた、確認済みの現行クリエイター動画です。",
+      "videoCategory": "現行動画",
+      "toolSummary": "サイト共通ナビゲーションから取得したインタラクティブツールです。",
+      "types": {"guide": "攻略", "item": "装備", "video": "動画", "tool": "ツール"},
+      "counts": {"guides": "攻略", "items": "装備ページ", "videos": "現行動画", "tools": "ツール"}
+    },
     "actions": {
       "eyebrow": "目的を選択",
       "title": "今、何をしたいですか？",
       "description": "一覧を探し回らず、必要な作業へ直接進めます。ビルドによって変わる情報は引き続き明確に表示します。",
-      "play": {
-        "title": "Early Accessをインストールして遊ぶ",
-        "description": "SteamのWARDOGSメインアプリから現行ビルドを導入し、参加前にメンテナンス情報を確認します。",
-        "imageAlt": "参加・ダウンロードガイド用のWARDOGS戦場画面"
+      "firstMatch": {
+        "title": "最初の試合を進める",
+        "description": "出撃、現行目標、分隊移動、役立つ支援ループを一つずつ覚えます。"
       },
-      "fix": {
-        "title": "問題を解決",
-        "description": "クラッシュ、サーバー、ボイス、性能、参加権の対処法を確認します。",
-        "imageAlt": "トラブル対処用のWARDOGS戦術装備"
+      "money": {
+        "title": "資金を稼いで守る",
+        "description": "繰り返せるチーム任務を選び、損失上限と純利益を確認します。"
       },
-      "gear": {
-        "title": "装備を見る",
-        "description": "画像付きの武器、車両、防具、弾薬、ロードアウトを調べます。",
-        "imageAlt": "画像付き装備カタログに掲載されたWARDOGSの武器"
+      "progression": {
+        "title": "役割進行を計画する",
+        "description": "役割目標を決め、確認済みSeason 1変更と旧数値を分けて確認します。"
       },
-      "system": {
-        "title": "PCを確認",
-        "description": "設定変更前に、PCを確認済み動作要件と比較します。",
-        "imageAlt": "PC構成チェック用のWARDOGSゲーム画面"
+      "weapons": {
+        "title": "武器と弾薬を選ぶ",
+        "description": "距離、防御、弾薬、証拠の新しさから無理のない装備を組みます。"
+      },
+      "logistics": {
+        "title": "FOBと兵站を運用する",
+        "description": "有効な出撃点、補給輸送、経路防衛、支援ループの復旧を進めます。"
+      },
+      "vehicles": {
+        "title": "車両を識別する",
+        "description": "輸送、装甲車、航空機と、各記録を確認したビルドを調べます。"
+      },
+      "controls": {
+        "title": "操作を覚える",
+        "description": "キーボード、マウス、コントローラー、車両、ヘリの現行操作を確認します。"
+      },
+      "pcFixes": {
+        "title": "クラッシュと性能を直す",
+        "description": "安定性、ドライバー、画質設定、待機列、動作要件を切り分けます。"
+      }
+    },
+    "buildChanges": {
+      "eyebrow": "Season 1公式根拠",
+      "title": "購入前に確認したい重要変更",
+      "description": "変更前後の数値はSeason 1公式アップデートに基づきます。変更対象外のカタログ値は、再確認されるまで過去情報として扱います。",
+      "buildLabel": "ビルド",
+      "verifiedLabel": "確認日",
+      "sourceCta": "Season 1公式アップデートを読む",
+      "entries": {
+        "fobVendor": {"title": "FOBベンダー", "field": "販売価格"},
+        "largeHammer": {"title": "Large Hammer", "field": "販売価格"},
+        "artilleryTank": {"title": "Artillery Tank", "field": "キャリア解除"},
+        "ural": {"title": "URAL", "field": "解除条件"},
+        "duneBuggy": {"title": "Dune Buggy", "field": "解除条件"},
+        "deagle": {"title": "Deagle", "field": "必要レベル"}
       }
     },
     "priority": {
@@ -192,6 +236,10 @@
           "steamEarlyAccess": {
             "title": "Steam Early Accessは配信中",
             "description": "Windows PC版は9月10日に開始され、現在のインストールとパッチはSteamから提供されます。"
+          },
+          "patch011": {
+            "title": "現在の公式確認点はPatch 0.11",
+            "description": "9月14日のメンテナンス時間は終了済みです。現在の変更と運用告知はパッチノートとSteam公式フィードで確認してください。"
           },
           "ps5Release": {
             "title": "コンソール版は2028年予定",
@@ -238,7 +286,7 @@
       "eyebrow": "攻略カテゴリー",
       "title": "必要な情報を探す",
       "description": "独立系WARDOGS攻略ライブラリを8つの分野から閲覧できます。",
-      "allGuides": "全47ガイドを見る",
+      "allGuides": "全{count}件の攻略を見る",
       "items": {
         "access": "プレイテスト、ベータ、アルファ、キー",
         "release": "発売日と早期アクセス",

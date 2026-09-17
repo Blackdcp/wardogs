@@ -73,8 +73,8 @@
     "primaryLabel": "主导航"
   },
   "home": {
-    "metaTitle": "WARDOGS Wiki：武器、载具、攻略与游戏资料库",
-    "metaDescription": "独立运营的 WARDOGS Wiki 提供经过核实的武器、载具、装备、操作、当前参与状态、已知问题、设置与实战攻略。我们会交叉检查官方来源和公开资料，标注出处、更新时间与适用版本，明确区分容易变化的数值和未经确认的信息，并整理新手入门、下载、飞行操作、小队协作及实用玩家工具，帮助玩家快速找到可靠答案。",
+    "metaTitle": "WARDOGS Wiki：搜索攻略、武器、载具与实用工具",
+    "metaDescription": "在独立运营的 WARDOGS Wiki 搜索有来源的 Season 1 攻略、武器、载具、当前视频、操作、电脑修复、后勤流程与玩家工具。",
     "heroTitle": "武器、载具、攻略与游戏资料库",
     "heroDescription": "这里整理经过来源核实的装备、操作、当前参与状态、故障排查与实战策略，并明确标注所有受版本影响的信息。",
     "primaryCta": "查看 Patch 0.11",
@@ -132,29 +132,73 @@
         }
       }
     },
+    "search": {
+      "eyebrow": "搜索战地资料库",
+      "title": "直接找到答案、道具或工具",
+      "description": "一次搜索持续维护的攻略、有证据的道具页面、已复核当前视频和全部玩家工具，并完整支持键盘操作。",
+      "label": "搜索 WARDOGS Wiki",
+      "placeholder": "试试资金、直升机、FOB、操作或 AMP-9",
+      "prompt": "输入任务、道具、兵种、问题或创作者名称；使用方向键移动，按 Enter 打开结果。",
+      "empty": "没有匹配的持续维护内容，请尝试更宽泛的任务或分类。",
+      "resultCount": "找到 {count} 项结果",
+      "openResult": "打开结果",
+      "videoSummary": "已复核的当前版本创作者实机，并关联持续维护的攻略。",
+      "videoCategory": "当前视频",
+      "toolSummary": "从全站共享导航自动发现的交互式玩家工具。",
+      "types": {"guide": "攻略", "item": "道具", "video": "视频", "tool": "工具"},
+      "counts": {"guides": "攻略", "items": "道具页", "videos": "当前视频", "tools": "工具"}
+    },
     "actions": {
       "eyebrow": "选择你的任务",
       "title": "你现在最需要做什么？",
       "description": "不必翻完整目录，直接进入你当前要完成的事情。所有可能随版本变化的数据都会继续明确标注。",
-      "play": {
-        "title": "安装并游玩抢先体验",
-        "description": "打开 Steam 中的 WARDOGS 主应用，安装当前版本，并在进入服务器前核对维护状态。",
-        "imageAlt": "用于参与和下载攻略的 WARDOGS 战场画面"
+      "firstMatch": {
+        "title": "打好第一局",
+        "description": "先学会部署、识别当前目标、跟随小队并完成一个有效支援循环。"
       },
-      "fix": {
-        "title": "检查服务器状态",
-        "description": "区分官方故障、登录排队与账号、地区、语音或电脑问题。",
-        "imageAlt": "用于故障排查的 WARDOGS 战术装备画面"
+      "money": {
+        "title": "赚钱并保护资金",
+        "description": "选择可重复的团队任务，设定亏损上限，并核对真实净收益。"
       },
-      "gear": {
-        "title": "浏览武器与装备",
-        "description": "查看带图的武器、载具、护甲、弹药和配装资料。",
-        "imageAlt": "WARDOGS 带图武器与装备图鉴"
+      "progression": {
+        "title": "规划兵种进度",
+        "description": "确定兵种目标，并区分已确认的 Season 1 改动与历史数值。"
       },
-      "system": {
-        "title": "检测你的电脑",
-        "description": "调整设置前，先把你的硬件与已确认配置要求进行比较。",
-        "imageAlt": "用于电脑配置检测的 WARDOGS 游戏画面"
+      "weapons": {
+        "title": "选择武器与弹药",
+        "description": "围绕射程、护甲、弹药和证据新鲜度配置可负担的装备。"
+      },
+      "logistics": {
+        "title": "执行 FOB 与后勤任务",
+        "description": "建立有效出生点、运输补给、保护路线并恢复完整支援循环。"
+      },
+      "vehicles": {
+        "title": "识别与选择载具",
+        "description": "查看运输、装甲与航空载具，以及每条记录对应的实测版本。"
+      },
+      "controls": {
+        "title": "掌握操作",
+        "description": "核对当前键鼠、手柄、地面载具和直升机操作。"
+      },
+      "pcFixes": {
+        "title": "修复崩溃与性能问题",
+        "description": "排查稳定性、驱动、画面设置、排队和电脑配置要求。"
+      }
+    },
+    "buildChanges": {
+      "eyebrow": "Season 1 官方证据",
+      "title": "花钱或升级前应核对的重要改动",
+      "description": "以下新旧数值直接来自 Season 1 官方更新；没有被该公告改动的图鉴数值，在重新实测前仍标记为历史资料。",
+      "buildLabel": "版本",
+      "verifiedLabel": "核对日期",
+      "sourceCta": "查看 Season 1 官方更新",
+      "entries": {
+        "fobVendor": {"title": "FOB 商人", "field": "商店价格"},
+        "largeHammer": {"title": "大型锤", "field": "商店价格"},
+        "artilleryTank": {"title": "火炮坦克", "field": "生涯解锁价格"},
+        "ural": {"title": "URAL 卡车", "field": "解锁价格"},
+        "duneBuggy": {"title": "沙丘越野车", "field": "解锁价格"},
+        "deagle": {"title": "Deagle", "field": "所需等级"}
       }
     },
     "priority": {
@@ -192,6 +236,10 @@
           "steamEarlyAccess": {
             "title": "Steam 抢先体验已经上线",
             "description": "Windows PC 版已于 9 月 10 日上线；当前安装与补丁均由 Steam 主应用提供。"
+          },
+          "patch011": {
+            "title": "Patch 0.11 是当前官方核对点",
+            "description": "9 月 14 日维护窗口已经结束；当前改动和在线服务公告请查看补丁说明与 Steam 官方动态。"
           },
           "ps5Release": {
             "title": "主机版计划于 2028 年推出",
@@ -238,7 +286,7 @@
       "eyebrow": "攻略分类",
       "title": "找到你需要的信息",
       "description": "按测试资格、发布日期、商店、平台、视频、社区、开发团队和玩法系统浏览攻略。",
-      "allGuides": "查看全部 47 篇攻略",
+      "allGuides": "查看全部 {count} 篇攻略",
       "items": {
         "access": "测试资格、历史测试和访问权限",
         "release": "发布日期与抢先体验信息",

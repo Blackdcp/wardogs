@@ -26,7 +26,7 @@ const categoryTones: Record<(typeof HOME_CATEGORY_GUIDES)[number]["key"], string
   guide: "border-[#4d946d] bg-[#244332] text-[#d8f4e4]"
 };
 
-export async function CategoryGrid() {
+export async function CategoryGrid({guideCount}: {guideCount: number}) {
   const t = await getTranslations();
 
   return (
@@ -40,8 +40,8 @@ export async function CategoryGrid() {
             </h2>
             <p className="mt-4 text-sm leading-7 text-[#a8b4ae] sm:text-base">{t("home.categories.description")}</p>
           </div>
-          <Link href="/guides" className="inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba] md:self-auto" title={t("home.categories.allGuides")}>
-            {t("home.categories.allGuides")}
+          <Link href="/guides" className="inline-flex min-h-11 items-center gap-2 self-start text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba] md:self-auto" title={t("home.categories.allGuides", {count: guideCount})}>
+            {t("home.categories.allGuides", {count: guideCount})}
             <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
         </div>

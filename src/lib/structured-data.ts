@@ -50,7 +50,7 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
       url: localizedHomeUrl,
       inLanguage: locale,
       datePublished: "2026-08-13",
-      dateModified: "2026-09-10",
+      dateModified: "2026-09-17",
       author: {"@type": "Organization", name: "WARDOGS Wiki Editorial Team", url: pageUrl(locale, "/editorial-policy")},
       publisher: {"@type": "Organization", name: "WARDOGS Wiki", url: pageUrl(locale, "/about")},
       isPartOf: {"@type": "WebSite", name: "WARDOGS Wiki", url: siteUrl},

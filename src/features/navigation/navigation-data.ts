@@ -13,6 +13,10 @@ export type NavigationGroup = {
   items: readonly NavigationItem[];
 };
 
+export type ToolNavigationItem = NavigationItem & {
+  category: string;
+};
+
 type Translate = (key: string) => string;
 
 export function buildNavigation(t: Translate): NavigationGroup[] {
@@ -61,4 +65,19 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
     {id: "videos", label: t("nav.videos"), href: "/videos", items: []},
     {id: "news", label: t("nav.news"), href: "/news", items: []}
   ];
+}
+
+export function getToolNavigationItems(t: Translate): ToolNavigationItem[] {
+  const seen = new Set<string>();
+
+  return buildNavigation(t).flatMap((group) => group.items
+    .filter((item) => !item.href.startsWith("/guides")
+      && !item.href.startsWith("/items")
+      && !item.href.startsWith("/videos")
+      && !item.href.startsWith("/news")
+      && !seen.has(item.href))
+    .map((item) => {
+      seen.add(item.href);
+      return {...item, category: group.label};
+    }));
 }

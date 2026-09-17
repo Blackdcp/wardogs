@@ -73,8 +73,8 @@
     "primaryLabel": "Hauptnavigation"
   },
   "home": {
-    "metaTitle": "WARDOGS Wiki: Waffen, Fahrzeuge, Guides & Datenbank",
-    "metaDescription": "Die unabhängige WARDOGS Wiki bietet geprüfte Infos zu Waffen, Fahrzeugen, Ausrüstung, Steuerung, aktuellem Zugang, Problemen und praktischen Guides.",
+    "metaTitle": "WARDOGS Wiki: Guides, Waffen, Fahrzeuge & Tools durchsuchen",
+    "metaDescription": "Durchsuche die unabhängige WARDOGS Wiki nach belegten Season-1-Guides, Waffen, Fahrzeugen, aktuellen Videos, Steuerung, PC-Lösungen, Logistik und Tools.",
     "heroTitle": "Waffen, Fahrzeuge, Guides & Spieldatenbank",
     "heroDescription": "Nutze ein quellengeprüftes WARDOGS-Nachschlagewerk für Ausrüstung, Steuerung, Zugang, Problemlösungen und Taktiken mit klaren Build-Hinweisen.",
     "primaryCta": "Patch 0.11 lesen",
@@ -132,29 +132,73 @@
         }
       }
     },
+    "search": {
+      "eyebrow": "Feldhandbuch durchsuchen",
+      "title": "Antwort, Gegenstand oder Tool finden",
+      "description": "Durchsuche gepflegte Guides, belegte Gegenstandsseiten, geprüfte aktuelle Videos und alle Spieler-Tools in einem tastaturfreundlichen Index.",
+      "label": "WARDOGS Wiki durchsuchen",
+      "placeholder": "Zum Beispiel Geld, Helikopter, FOB, Steuerung oder AMP-9",
+      "prompt": "Gib eine Aufgabe, einen Gegenstand, eine Rolle, ein Problem oder einen Creator ein. Mit Pfeiltasten wählen, mit Enter öffnen.",
+      "empty": "Keine gepflegte Seite passt zu dieser Suche. Versuche eine allgemeinere Aufgabe oder Kategorie.",
+      "resultCount": "{count} Ergebnisse",
+      "openResult": "Ergebnis öffnen",
+      "videoSummary": "Geprüfte aktuelle Creator-Aufnahmen mit Verknüpfung zu einem gepflegten Guide.",
+      "videoCategory": "Aktuelles Video",
+      "toolSummary": "Interaktives Spieler-Tool aus der gemeinsamen Seitennavigation.",
+      "types": {"guide": "Guide", "item": "Gegenstand", "video": "Video", "tool": "Tool"},
+      "counts": {"guides": "Guides", "items": "Gegenstandsseiten", "videos": "Aktuelle Videos", "tools": "Tools"}
+    },
     "actions": {
       "eyebrow": "Wähle deine Aufgabe",
       "title": "Was brauchst du gerade?",
       "description": "Überspringe das Verzeichnis und öffne direkt die passende Aufgabe. Versionsabhängige Fakten bleiben klar gekennzeichnet.",
-      "play": {
-        "title": "Early Access installieren und spielen",
-        "description": "Öffne die WARDOGS-Haupt-App auf Steam, installiere den aktuellen Build und prüfe vor dem Beitritt die Wartung.",
-        "imageAlt": "WARDOGS-Schlachtfeld für Spiel- und Downloadanleitungen"
+      "firstMatch": {
+        "title": "Erstes Match spielen",
+        "description": "Lerne Einstieg, aktives Ziel, Truppbewegung und einen nützlichen Support-Ablauf."
       },
-      "fix": {
-        "title": "Problem beheben",
-        "description": "Aktuelle Lösungen für Abstürze, Server, Sprache, Leistung und Zugang prüfen.",
-        "imageAlt": "Taktische WARDOGS-Ausrüstung für die Fehlerbehebung"
+      "money": {
+        "title": "Geld verdienen und schützen",
+        "description": "Wähle eine wiederholbare Teamaufgabe, setze ein Verlustlimit und prüfe den Nettoertrag."
       },
-      "gear": {
-        "title": "Ausrüstung ansehen",
-        "description": "Bebilderte Waffen, Fahrzeuge, Rüstung, Munition und Loadouts durchsuchen.",
-        "imageAlt": "WARDOGS-Waffen im bebilderten Ausrüstungskatalog"
+      "progression": {
+        "title": "Rollenfortschritt planen",
+        "description": "Wähle ein Rollenziel und trenne bestätigte Season-1-Änderungen von älteren Werten."
       },
-      "system": {
-        "title": "PC prüfen",
-        "description": "Hardware mit bestätigten Anforderungen vergleichen, bevor Einstellungen geändert werden.",
-        "imageAlt": "WARDOGS-Spielszene für den PC-Konfigurationscheck"
+      "weapons": {
+        "title": "Waffen und Munition wählen",
+        "description": "Plane ein bezahlbares Loadout nach Reichweite, Panzerung, Munition und Aktualität der Belege."
+      },
+      "logistics": {
+        "title": "FOBs und Logistik betreiben",
+        "description": "Setze sinnvolle Spawnpunkte, bewege Nachschub, sichere Routen und stelle den Ablauf wieder her."
+      },
+      "vehicles": {
+        "title": "Fahrzeuge erkennen",
+        "description": "Durchsuche Transport, Panzerung, Luftfahrzeuge und den jeweils beobachteten Build."
+      },
+      "controls": {
+        "title": "Steuerung lernen",
+        "description": "Prüfe aktuelle Eingaben für Tastatur, Maus, Controller, Fahrzeuge und Helikopter."
+      },
+      "pcFixes": {
+        "title": "Abstürze und Leistung beheben",
+        "description": "Prüfe Stabilität, Treiber, Grafikoptionen, Warteschlangen und Systemanforderungen."
+      }
+    },
+    "buildChanges": {
+      "eyebrow": "Offizielle Season-1-Belege",
+      "title": "Wichtige Änderungen vor dem nächsten Kauf",
+      "description": "Diese Vorher-Nachher-Werte stammen aus dem offiziellen Season-1-Update. Unveränderte Katalogwerte bleiben historisch, bis sie erneut geprüft sind.",
+      "buildLabel": "Build",
+      "verifiedLabel": "Geprüft",
+      "sourceCta": "Offizielles Season-1-Update lesen",
+      "entries": {
+        "fobVendor": {"title": "FOB-Händler", "field": "Händlerpreis"},
+        "largeHammer": {"title": "Large Hammer", "field": "Händlerpreis"},
+        "artilleryTank": {"title": "Artillery Tank", "field": "Karriere-Freischaltung"},
+        "ural": {"title": "URAL", "field": "Freischaltung"},
+        "duneBuggy": {"title": "Dune Buggy", "field": "Freischaltung"},
+        "deagle": {"title": "Deagle", "field": "Benötigtes Level"}
       }
     },
     "priority": {
@@ -192,6 +236,10 @@
           "steamEarlyAccess": {
             "title": "Steam Early Access ist live",
             "description": "Der Windows-PC-Early-Access startete am 10. September; Steam liefert jetzt Installation und Patches."
+          },
+          "patch011": {
+            "title": "Patch 0.11 ist der aktuelle offizielle Stand",
+            "description": "Das Wartungsfenster vom 14. September ist vorbei; aktuelle Änderungen und Live-Hinweise stehen in den Patchnotes und im offiziellen Steam-Feed."
           },
           "ps5Release": {
             "title": "Konsolenversionen sind für 2028 geplant",
@@ -238,7 +286,7 @@
       "eyebrow": "Alle Guide-Bereiche",
       "title": "Finde die richtigen Infos",
       "description": "Acht fokussierte Bereiche decken die gesamte unabhängige WARDOGS-Guide-Bibliothek ab.",
-      "allGuides": "Alle 47 Guides ansehen",
+      "allGuides": "Alle {count} Guides ansehen",
       "items": {
         "access": "Playtests, Beta-Verlauf, Alpha-Status und Keys",
         "release": "Release-Termin und Early-Access-Details",
