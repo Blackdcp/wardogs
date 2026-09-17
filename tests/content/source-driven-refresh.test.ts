@@ -29,6 +29,12 @@ describe("source-driven 2026-08-26 content refresh", () => {
           ? "2026-09-17"
           : slug === "wardogs-controls"
             ? "2026-09-04"
+          : locale === "ja" && [
+            "wardogs-towers-guide",
+            "wardogs-mortar-guide",
+            "wardogs-helicopter-guide",
+          ].includes(slug)
+          ? "2026-09-17"
           : locale === "zh-cn" && [
             "wardogs-towers-guide",
             "wardogs-mortar-guide",

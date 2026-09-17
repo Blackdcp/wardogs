@@ -28,6 +28,8 @@ describe("GSC growth page reinforcement", () => {
           ? "2026-09-17"
           : slug === "wardogs-crash-fix"
             ? "2026-09-04"
+          : locale === "ja" && slug === "wardogs-helicopter-guide"
+          ? "2026-09-17"
           : locale === "zh-cn" && slug === "wardogs-helicopter-guide"
           ? "2026-09-01"
           : slug === "wardogs-helicopter-guide"

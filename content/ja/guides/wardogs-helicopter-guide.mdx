@@ -1,15 +1,15 @@
 ---
 title: "WARDOGS ヘリコプター操作ガイド：離陸、着陸、輸送、HOTAS"
-description: "WARDOGSのヘリコプターを安全に扱うため、現在の入力確認、ホバリング、離陸、旋回、着陸、歩兵と補給の輸送、燃料と弾薬、対空脅威からの離脱を段階的に解説します。HOTASなど未確定の入力対応を公式仕様と混同せず、高価な機体と分隊を失わない日本語パイロット攻略です。各更新でも再確認します。"
+description: "WARDOGSのヘリ操作を日本語で解説します。Season 1の入力ダンピングとZ20 Lakota修正、マウス・キーボード・HOTAS、ホバリング、離着陸、歩兵輸送、対空回避、燃料管理を公式Patch 0.11と9月13日の現役パイロット動画に分け、古いBeta設定を固定値として使わないための攻略です。"
 keyword: "wardogs helicopter guide"
 category: "guide"
 slug: "wardogs-helicopter-guide"
 order: 28
-updatedAt: "2026-08-29"
+updatedAt: "2026-09-17"
 badges:
   - label: "操縦ガイド"
     tone: "accent"
-  - label: "ビルド依存"
+  - label: "Season 1"
     tone: "warning"
 faq:
   - question: "WARDOGSのヘリはどこで練習しますか？"
@@ -21,6 +21,14 @@ faq:
   - question: "対空兵器から生き残るには？"
     answer: "地形で隠れる経路を選び、予測可能なホバリングを短くし、同じ進入を繰り返さず、脱出用の高度と燃料を残します。"
 sources:
+  - label: "公式Patch 0.11：ヘリ入力とZ20 Lakota修正"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413005176"
+    kind: "official"
+    checkedAt: "2026-09-17"
+  - label: "SilkのSeason 1ヘリコプター総合ガイド"
+    url: "https://www.youtube.com/watch?v=4CHoWpu4Imw"
+    kind: "creator"
+    checkedAt: "2026-09-17"
   - label: "Closed Betaのヘリ操作議論"
     url: "https://www.reddit.com/r/WarDogs/comments/1vxp0dt/helicopters/"
     kind: "community"
@@ -54,6 +62,12 @@ sources:
     kind: "creator"
     checkedAt: "2026-08-29"
 ---
+
+## Season 1 / Patch 0.11の変更点
+
+公式Patch 0.11では、**ヘリコプターの入力ダンピングがすべての入力デバイスへ適用**され、Z20 Lakotaの鈍いピッチ挙動が修正されました。Z20の追跡カメラで発生していた回転音も6 dB下げられています。古いClosed Beta動画と同じ感度や反応を前提にせず、現在の機体でホバリングと小さなピッチ入力から再調整してください。
+
+9月13日のSilkの実戦ガイドは、マウスで機首を向ける方法、キーボードでヨーを取る方法、デュアルスティックとペダル、HOTASという複数の構成を比較しています。これは熟練プレイヤーの運用例で、公式の唯一の推奨設定ではありません。数値や感度をそのままコピーするより、同じ着陸コースで少しずつ試してください。
 
 ## まず覚えること
 
@@ -91,7 +105,7 @@ sources:
 
 ## HOTASについて
 
-コミュニティにはHOTAS利用報告がありますが、検出されたことと、公式に全軸、ボタン表示、デッドゾーン、車両切替が保証されることは別です。歩兵と車両のプロファイルが自動で切り替わるとは限らないため、必要なら手動で再割り当てし、Steam Inputや外部割り当てを使う場合もキーボードとマウスを手元に残して、現在ビルドで必須操作を一つずつ検証します。
+Season 1の現役パイロット映像でもHOTASとペダルを使う構成が確認できますが、利用例があることと、公式に全軸、ボタン表示、デッドゾーン、車両切替が保証されることは別です。歩兵と車両のプロファイルが自動で切り替わるとは限らないため、必要なら手動で再割り当てし、Steam Inputや外部割り当てを使う場合もキーボードとマウスを手元に残して、現在ビルドで必須操作を一つずつ検証します。
 
 ## ビルド依存の初期設定とゴーアラウンド
 

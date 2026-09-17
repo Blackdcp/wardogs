@@ -26,6 +26,9 @@ describe("2026-08-29 launch and logistics expansion", () => {
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         const expectedDate = ["wardogs-launch-checklist", "wardogs-cargo-guide"].includes(slug)
           ? "2026-09-17"
+          : (locale === "en" && slug === "wardogs-ammo-reload-guide") ||
+              (locale === "ja" && slug === "wardogs-squad-guide")
+            ? "2026-09-17"
           : locale === "pt-br" && slug === "wardogs-squad-guide"
             ? "2026-09-13"
             : locale === "zh-cn" && slug === "wardogs-oil-rig-guide"

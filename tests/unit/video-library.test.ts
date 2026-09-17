@@ -59,6 +59,8 @@ describe("video article library", () => {
     expect(CURRENT_VIDEO_SOURCES_REVIEWED_AT).toBe("2026-09-17");
     expect(currentVideoSources.map(({youtubeId}) => youtubeId)).toEqual([
       "fUKgHeT0JGY",
+      "4CHoWpu4Imw",
+      "Tkors4Fenh0",
       "mYXhZnJ8Eus",
       "VrtwXz94dQg",
       "XUyP1GLUF5o",

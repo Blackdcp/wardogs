@@ -19,7 +19,9 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(guide, `${locale}/wardogs-artillery-guide`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt).toBe(locale === "zh-cn" ? "2026-09-01" : "2026-08-28");
+      expect(guide?.frontmatter.updatedAt).toBe(
+        locale === "ja" ? "2026-09-17" : locale === "zh-cn" ? "2026-09-01" : "2026-08-28",
+      );
       expect(sourceUrls).toContain("https://www.youtube.com/watch?v=oP9RelmWk6A");
       expect(sourceUrls).toContain("https://www.youtube.com/watch?v=ZFRrDSru7Kg");
       expect(guide?.body).toMatch(/SPH-?2/i);

@@ -18,7 +18,15 @@ export type VideoArticle = {
 
 export type VideoEra = "beta-workflow" | "historical";
 
-export type CurrentVideoTopic = "beginner" | "money" | "loadouts" | "fob" | "settings" | "progression";
+export type CurrentVideoTopic =
+  | "beginner"
+  | "money"
+  | "loadouts"
+  | "fob"
+  | "settings"
+  | "progression"
+  | "helicopter"
+  | "mortar";
 
 export type CurrentVideoSource = {
   youtubeId: string;
@@ -43,6 +51,26 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     topic: "beginner",
     internalGuideSlug: "wardogs-beginner-guide",
     sourceUrl: "https://www.youtube.com/watch?v=fUKgHeT0JGY"
+  },
+  {
+    youtubeId: "4CHoWpu4Imw",
+    title: "The ULTIMATE WARDOGS Helicopter Guide (From #1 PILOT!)",
+    channel: "Silk",
+    publishedDate: "2026-09-13",
+    durationMinutes: 17,
+    topic: "helicopter",
+    internalGuideSlug: "wardogs-helicopter-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=4CHoWpu4Imw"
+  },
+  {
+    youtubeId: "Tkors4Fenh0",
+    title: "WARDOGS Mortar Emplacement Build Guide",
+    channel: "NaiWo",
+    publishedDate: "2026-09-15",
+    durationMinutes: 16,
+    topic: "mortar",
+    internalGuideSlug: "wardogs-mortar-guide",
+    sourceUrl: "https://www.youtube.com/watch?v=Tkors4Fenh0"
   },
   {
     youtubeId: "mYXhZnJ8Eus",
