@@ -1,4 +1,5 @@
 import type {Locale} from "@/config/site";
+import type {CatalogueEvidence} from "@/features/catalogue/catalogue-types";
 
 const copy = {
   en: {
@@ -179,8 +180,104 @@ const evidenceToolCopy = {
   },
 } as const;
 
+const evidenceProvenanceCopy = {
+  en: {
+    sourceClass: "Source class",
+    confidence: "Confidence",
+    sourceOfficial: "Official",
+    sourceLiveClient: "Live client",
+    sourceCreatorCurrent: "Current creator source",
+    sourceCreatorHistorical: "Historical creator source",
+    sourceCommunityReport: "Community report",
+    confidenceConfirmed: "Confirmed",
+    confidenceObserved: "Observed",
+    confidenceCorroborated: "Corroborated",
+    confidenceUnverified: "Unverified",
+  },
+  de: {
+    sourceClass: "Quellenklasse",
+    confidence: "Vertrauensniveau",
+    sourceOfficial: "Offiziell",
+    sourceLiveClient: "Live-Client",
+    sourceCreatorCurrent: "Aktuelle Creator-Quelle",
+    sourceCreatorHistorical: "Historische Creator-Quelle",
+    sourceCommunityReport: "Community-Bericht",
+    confidenceConfirmed: "Bestätigt",
+    confidenceObserved: "Beobachtet",
+    confidenceCorroborated: "Gegengeprüft",
+    confidenceUnverified: "Unbestätigt",
+  },
+  ru: {
+    sourceClass: "Класс источника",
+    confidence: "Уверенность",
+    sourceOfficial: "Официальный",
+    sourceLiveClient: "Текущий клиент",
+    sourceCreatorCurrent: "Актуальный материал автора",
+    sourceCreatorHistorical: "Исторический материал автора",
+    sourceCommunityReport: "Сообщение сообщества",
+    confidenceConfirmed: "Подтверждено",
+    confidenceObserved: "Наблюдалось",
+    confidenceCorroborated: "Сверено",
+    confidenceUnverified: "Не проверено",
+  },
+  "pt-br": {
+    sourceClass: "Classe da fonte",
+    confidence: "Confiança",
+    sourceOfficial: "Oficial",
+    sourceLiveClient: "Cliente ao vivo",
+    sourceCreatorCurrent: "Criador atual",
+    sourceCreatorHistorical: "Criador histórico",
+    sourceCommunityReport: "Relato da comunidade",
+    confidenceConfirmed: "Confirmado",
+    confidenceObserved: "Observado",
+    confidenceCorroborated: "Corroborado",
+    confidenceUnverified: "Não verificado",
+  },
+  ja: {
+    sourceClass: "出典区分",
+    confidence: "信頼度",
+    sourceOfficial: "公式",
+    sourceLiveClient: "現行クライアント",
+    sourceCreatorCurrent: "現行クリエイター資料",
+    sourceCreatorHistorical: "過去クリエイター資料",
+    sourceCommunityReport: "コミュニティ報告",
+    confidenceConfirmed: "確認済み",
+    confidenceObserved: "観測済み",
+    confidenceCorroborated: "裏付けあり",
+    confidenceUnverified: "未検証",
+  },
+  "zh-cn": {
+    sourceClass: "来源类别",
+    confidence: "可信度",
+    sourceOfficial: "官方",
+    sourceLiveClient: "当前客户端",
+    sourceCreatorCurrent: "当前创作者资料",
+    sourceCreatorHistorical: "历史创作者资料",
+    sourceCommunityReport: "社区报告",
+    confidenceConfirmed: "已确认",
+    confidenceObserved: "已观察",
+    confidenceCorroborated: "已交叉验证",
+    confidenceUnverified: "未验证",
+  },
+} as const;
+
 export function getToolCopy(locale: Locale) {
-  return {...copy[locale], ...evidenceToolCopy[locale]};
+  return {...copy[locale], ...evidenceToolCopy[locale], ...evidenceProvenanceCopy[locale]};
 }
 
 export type ToolCopy = ReturnType<typeof getToolCopy>;
+
+export function getSourceClassLabel(sourceClass: CatalogueEvidence["sourceClass"], copy: ToolCopy) {
+  if (sourceClass === "official") return copy.sourceOfficial;
+  if (sourceClass === "live-client") return copy.sourceLiveClient;
+  if (sourceClass === "creator-current") return copy.sourceCreatorCurrent;
+  if (sourceClass === "creator-historical") return copy.sourceCreatorHistorical;
+  return copy.sourceCommunityReport;
+}
+
+export function getConfidenceLabel(confidence: CatalogueEvidence["confidence"], copy: ToolCopy) {
+  if (confidence === "confirmed") return copy.confidenceConfirmed;
+  if (confidence === "observed") return copy.confidenceObserved;
+  if (confidence === "corroborated") return copy.confidenceCorroborated;
+  return copy.confidenceUnverified;
+}

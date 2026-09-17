@@ -10,6 +10,8 @@ describe("ammo matcher data", () => {
     expect(result.ammoMatches[0]).toMatchObject({
       relationshipValue: "9x19mm",
       state: "historical",
+      sourceClass: "live-client",
+      confidence: "observed",
     });
   });
 
@@ -21,6 +23,16 @@ describe("ammo matcher data", () => {
     expect(names).toContain("ggx-17");
     expect(names).not.toContain("deagle");
     expect(result.weaponMatches.every(({relationshipValue}) => relationshipValue === "9x19mm")).toBe(true);
+  });
+
+  it("keeps creator-historical relationship provenance distinct from live-client evidence", () => {
+    const result = getAmmoMatches({weapon: "mp5"});
+
+    expect(result.ammoMatches[0]).toMatchObject({
+      relationshipValue: "9x19mm",
+      sourceClass: "creator-historical",
+      confidence: "corroborated",
+    });
   });
 
   it("keeps non-indexable records unlinked and returns an honest empty match", () => {

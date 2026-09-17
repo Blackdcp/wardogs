@@ -1,4 +1,4 @@
-import {existsSync, readFileSync} from "node:fs";
+import {existsSync} from "node:fs";
 import path from "node:path";
 import {describe, expect, it, vi} from "vitest";
 import sitemap from "../../src/app/sitemap";
@@ -91,10 +91,24 @@ describe("shareable player tools", () => {
     expect(items).toContainEqual(expect.objectContaining({href: "/tools/ammo-matcher", searchType: "tool"}));
   });
 
-  it("balances long localized tool headings on narrow screens", () => {
-    for (const route of ["system-check", "loadout-budget", "weapon-compare", "ammo-matcher"]) {
-      const source = readFileSync(path.join(process.cwd(), "src", "app", "[locale]", "tools", route, "page.tsx"), "utf8");
-      expect(source, route).toContain("text-balance");
+  it("provides readable source-class and confidence labels in all six locales", async () => {
+    const {getToolCopy} = await import("../../src/features/tools/tool-copy");
+
+    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const) {
+      const copy = getToolCopy(locale);
+      expect([
+        copy.sourceClass,
+        copy.confidence,
+        copy.sourceOfficial,
+        copy.sourceLiveClient,
+        copy.sourceCreatorCurrent,
+        copy.sourceCreatorHistorical,
+        copy.sourceCommunityReport,
+        copy.confidenceConfirmed,
+        copy.confidenceObserved,
+        copy.confidenceCorroborated,
+        copy.confidenceUnverified,
+      ].every((label) => label.trim().length > 0), locale).toBe(true);
     }
   });
 

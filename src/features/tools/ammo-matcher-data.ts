@@ -19,6 +19,7 @@ export type AmmoMatcherOption = {
   build: string;
   verifiedAt: string;
   sourceClass: CatalogueEvidence["sourceClass"];
+  confidence: CatalogueEvidence["confidence"];
 };
 
 export type AmmoRelationship = {
@@ -29,6 +30,7 @@ export type AmmoRelationship = {
   build: string;
   verifiedAt: string;
   sourceClass: CatalogueEvidence["sourceClass"];
+  confidence: CatalogueEvidence["confidence"];
 };
 
 export type AmmoMatcherDataset = {
@@ -65,6 +67,7 @@ function toOption(base: CatalogueRecord, localized: CatalogueRecord, href?: stri
     build: base.evidence.build,
     verifiedAt: base.evidence.verifiedAt,
     sourceClass: base.evidence.sourceClass,
+    confidence: base.evidence.confidence,
   };
 }
 
@@ -95,6 +98,7 @@ export function getAmmoMatcherDataset(locale: Locale = "en"): AmmoMatcherDataset
       build: weapon.evidence.build,
       verifiedAt: weapon.evidence.verifiedAt,
       sourceClass: weapon.evidence.sourceClass,
+      confidence: weapon.evidence.confidence,
     }];
   });
 

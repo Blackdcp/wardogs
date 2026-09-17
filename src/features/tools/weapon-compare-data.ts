@@ -13,9 +13,10 @@ export type ToolEvidenceState = "current" | "historical" | "unknown";
 export type WeaponComparisonValue = {
   value: string | null;
   state: ToolEvidenceState;
-  build: string;
-  verifiedAt: string;
+  build: string | null;
+  verifiedAt: string | null;
   sourceClass: CatalogueEvidence["sourceClass"] | null;
+  confidence: CatalogueEvidence["confidence"] | null;
   sourceUrl?: string;
 };
 
@@ -73,6 +74,7 @@ function evidenceValue(
     build: evidence.build,
     verifiedAt: evidence.verifiedAt,
     sourceClass: evidence.sourceClass,
+    confidence: evidence.confidence,
     sourceUrl: evidence.sourceUrl,
   };
 }
@@ -84,6 +86,7 @@ function changeValue(change: CatalogueChangeHistory): WeaponComparisonValue {
     build: change.effectiveBuild,
     verifiedAt: change.verifiedAt,
     sourceClass: "official",
+    confidence: "confirmed",
     sourceUrl: change.sourceUrl,
   };
 }

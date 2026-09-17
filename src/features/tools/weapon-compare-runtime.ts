@@ -4,8 +4,15 @@ import type {
   WeaponComparisonValue,
 } from "./weapon-compare-data";
 
-function unknownValue(build: string, verifiedAt: string): WeaponComparisonValue {
-  return {value: null, state: "unknown", build, verifiedAt, sourceClass: null};
+function unknownValue(): WeaponComparisonValue {
+  return {
+    value: null,
+    state: "unknown",
+    build: null,
+    verifiedAt: null,
+    sourceClass: null,
+    confidence: null,
+  };
 }
 
 export function compareWeaponOptions(
@@ -25,8 +32,8 @@ export function compareWeaponOptions(
     return {
       key,
       label: leftField?.label ?? rightField?.label ?? key,
-      left: leftField ?? unknownValue(rightField?.build ?? "Unknown", rightField?.verifiedAt ?? "Unknown"),
-      right: rightField ?? unknownValue(leftField?.build ?? "Unknown", leftField?.verifiedAt ?? "Unknown"),
+      left: leftField ?? unknownValue(),
+      right: rightField ?? unknownValue(),
     };
   });
 

@@ -9,6 +9,7 @@ import {encodeAmmoMatcherState, type AmmoMatcherState} from "@/features/tools/sh
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
+import {EvidenceProvenance} from "./evidence-provenance";
 
 function MatchItem({copy, match}: {copy: ToolCopy; match: AmmoMatch}) {
   const label = match.state === "current"
@@ -28,7 +29,13 @@ function MatchItem({copy, match}: {copy: ToolCopy; match: AmmoMatch}) {
         <h3 className="break-words text-base font-bold text-white">{match.name}</h3>
         <p className="mt-1 break-words text-xs uppercase text-[#8fa098]">{match.relationshipValue}</p>
         <span className={`mt-2 inline-flex border px-2 py-1 text-[11px] font-semibold uppercase ${tone}`}>{label}</span>
-        <p className="mt-2 text-xs leading-5 text-[#819087]">{copy.build}: {match.build}<br />{copy.verified}: {match.verifiedAt}</p>
+        <EvidenceProvenance
+          build={match.build}
+          confidence={match.confidence}
+          copy={copy}
+          sourceClass={match.sourceClass}
+          verifiedAt={match.verifiedAt}
+        />
         {match.href ? (
           <Link className="mt-2 inline-flex min-h-9 items-center gap-1 text-sm font-semibold text-[#7fd0a1] hover:text-white" href={match.href} title={`${copy.openItem}: ${match.name}`}>
             {copy.openItem}<ArrowRight aria-hidden="true" size={13} />

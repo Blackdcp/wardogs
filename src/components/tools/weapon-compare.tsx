@@ -9,6 +9,7 @@ import {encodeWeaponCompareState, type WeaponCompareState} from "@/features/tool
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
+import {EvidenceProvenance} from "./evidence-provenance";
 
 function stateLabel(state: ToolEvidenceState, copy: ToolCopy) {
   if (state === "current") return copy.currentEvidence;
@@ -42,9 +43,13 @@ function FieldValue({copy, value}: {copy: ToolCopy; value: WeaponComparisonValue
       <span className={`mt-2 inline-flex border px-2 py-1 text-[11px] font-semibold uppercase ${stateClass(value.state)}`}>
         {stateLabel(value.state, copy)}
       </span>
-      <p className="mt-2 break-words text-xs leading-5 text-[#819087]">
-        {copy.build}: {value.build}<br />{copy.verified}: {value.verifiedAt}
-      </p>
+      <EvidenceProvenance
+        build={value.build}
+        confidence={value.confidence}
+        copy={copy}
+        sourceClass={value.sourceClass}
+        verifiedAt={value.verifiedAt}
+      />
       {value.sourceUrl ? (
         <a className="mt-2 inline-flex min-h-8 items-center gap-1 text-xs font-semibold text-[#7fd0a1] hover:text-white" href={value.sourceUrl} rel="noreferrer" target="_blank" title={copy.openItem}>
           {copy.openItem}<ExternalLink aria-hidden="true" size={13} />

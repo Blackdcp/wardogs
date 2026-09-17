@@ -24,12 +24,50 @@ describe("weapon comparison data", () => {
       state: "current",
       build: "Season 1",
       sourceClass: "official",
+      confidence: "confirmed",
     });
     expect(requiredLevel?.right).toMatchObject({value: null, state: "unknown"});
-    expect(price?.left.state).toBe("historical");
-    expect(price?.right.state).toBe("historical");
-    expect(weight?.left).toMatchObject({value: null, state: "unknown"});
+    expect(price?.left).toMatchObject({
+      state: "historical",
+      sourceClass: "live-client",
+      confidence: "observed",
+    });
+    expect(price?.right).toMatchObject({
+      state: "historical",
+      sourceClass: "live-client",
+      confidence: "observed",
+    });
+    expect(weight?.left).toMatchObject({
+      value: null,
+      state: "unknown",
+      build: "Alpha 1 - 7 Aug 2026",
+      verifiedAt: "2026-08-07",
+      sourceClass: "live-client",
+      confidence: "observed",
+    });
     expect(weight?.right.state).toBe("historical");
+  });
+
+  it("does not borrow Deagle evidence for AMP-9's missing Required level field", () => {
+    const comparison = compareWeapons("amp-9", "deagle");
+    const requiredLevel = comparison?.rows.find(({key}) => key === "change:Required level");
+
+    expect(requiredLevel?.left).toEqual({
+      value: null,
+      state: "unknown",
+      build: null,
+      verifiedAt: null,
+      sourceClass: null,
+      confidence: null,
+    });
+    expect(requiredLevel?.right).toMatchObject({
+      value: "85",
+      state: "current",
+      build: "Season 1",
+      verifiedAt: "2026-09-09",
+      sourceClass: "official",
+      confidence: "confirmed",
+    });
   });
 
   it("rejects unknown or duplicate weapon selections", () => {
