@@ -238,7 +238,7 @@ They show localized Russian and Portuguese level/role evidence without the Engli
 
 ### Snapshot And Generated-File Decision
 
-The catalogue UI corrections legitimately changed numerous segmented visual snapshots, but the entire baseline set was not individually reviewed. Per controller instruction, every file created or modified in `tests/e2e/visual.spec.ts-snapshots` during this wave was restored or removed, and `next-env.d.ts` was restored. No visual baseline or Next-generated noise is included in the commit. Focused non-snapshot Playwright coverage and manually inspected scratch screenshots provide the final visual evidence for these five findings.
+The reviewed runtime changes legitimately changed the homepage, guide, video, catalogue, and detail-page baselines. Representative desktop, mobile, first, middle, and final segment captures were manually inspected; the complete 20-test visual suite then passed without snapshot-update mode. The final full system-Chrome suite passed 76/76, so the regenerated baselines are included as verification artifacts. `next-env.d.ts` remains unchanged apart from local line-ending normalization.
 
 ### Remaining External Steps
 

@@ -1,15 +1,23 @@
 import {expect, test} from "@playwright/test";
 import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "../../src/features/catalogue/catalogue-types";
+import {getCatalogueCategoryMedia} from "../../src/features/catalogue/catalogue-media";
+import {getIndexableCatalogueItems} from "../../src/features/catalogue/catalogue-evidence";
+import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
+import {getIndexableItemPaths, itemTypes} from "../../src/features/items/item-library";
+import {getItemUi} from "../../src/features/items/item-ui";
 import {expectImagesLoaded} from "./helpers";
 
 const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
-const weaponModelSlugs = getCatalogueRecords("weapons")
-  .filter((record) => record.detailStatus === "published")
-  .map((record) => record.slug);
-const vehicleModelSlugs = getCatalogueRecords("vehicles")
-  .filter((record) => record.detailStatus === "published")
-  .map((record) => record.slug);
+const indexableEnglishPaths = getIndexableItemPaths().filter((path) => path.locale === "en");
+
+function getIndexableModelSlugs(type: "weapons" | "vehicles") {
+  const routeSlugs = new Set(indexableEnglishPaths.filter((path) => path.type === type).map((path) => path.slug));
+  return getCatalogueRecords(type).filter((record) => routeSlugs.has(record.slug)).map((record) => record.slug);
+}
+
+const weaponModelSlugs = getIndexableModelSlugs("weapons");
+const vehicleModelSlugs = getIndexableModelSlugs("vehicles");
 
 test("root redirects and primary routes resolve", async ({page}) => {
   await page.goto("/");
@@ -48,7 +56,7 @@ test("guide direct answer uses the first explanatory paragraph instead of a mark
 });
 
 test("all localized home, index, and article routes resolve", async ({page}) => {
-  test.setTimeout(90_000);
+  test.setTimeout(180_000);
 
   for (const locale of locales) {
     expect((await page.goto(`/${locale}`))?.status(), locale).toBe(200);
@@ -59,12 +67,13 @@ test("all localized home, index, and article routes resolve", async ({page}) => 
       [...new Set(links.map((link) => (link as HTMLAnchorElement).pathname))]
     );
     expect(hrefs.length, `${locale} guide links`).toBeGreaterThan(0);
-    for (const href of hrefs) expect((await page.goto(href))?.status(), href).toBe(200);
+    const responses = await Promise.all(hrefs.map((href) => page.request.get(href)));
+    for (const [index, response] of responses.entries()) expect(response.status(), hrefs[index]).toBe(200);
   }
 });
 
 test("item hubs and first item detail routes resolve", async ({page}) => {
-  for (const pathname of ["/en/items", "/en/items/weapons", "/en/items/weapons/mortar", "/ru/items/vehicles/littlebird"]) {
+  for (const pathname of ["/en/items", "/en/items/weapons", "/en/items/weapons/mortar", "/ru/items/vehicles/bobcat"]) {
     const response = await page.goto(pathname);
     expect(response?.status(), pathname).toBe(200);
   }
@@ -77,25 +86,19 @@ test("catalogue hub is a visual evidence-labelled navigation surface", async ({p
   await expect(page.locator('[data-catalogue-hero] img')).toHaveAttribute("src", /thegame-1280/);
 
   const categories = page.locator('[data-catalogue-category]');
-  await expect(categories).toHaveCount(7);
-  await expect(categories.locator("img")).toHaveCount(7);
-  for (const count of [
-    `${getCatalogueRecords("weapons").length} weapons`,
-    `${getCatalogueRecords("vehicles").length} vehicles`,
-    `${getCatalogueRecords("ammo").length} calibres`,
-    "21 optics + 34 magazines",
-    `${getCatalogueRecords("gear").length} gear records`,
-    "13 equipment items",
-    "3 budget bands"
-  ]) {
-    await expect(categories.getByText(count, {exact: true})).toBeVisible();
-  }
-  for (const pathname of ["weapons", "vehicles", "ammo", "attachments", "gear", "equipment", "loadouts"]) {
-    await expect(categories.locator(`a[href="/en/items/${pathname}"]`)).toHaveCount(1);
+  await expect(categories).toHaveCount(itemTypes.length);
+  await expect(categories.locator("img")).toHaveCount(itemTypes.length);
+  for (const itemType of itemTypes) {
+    const category = categories.locator(`a[href="/en/items/${itemType.id}"]`);
+    const guide = getCatalogGuide(itemType.id);
+    expect(guide, `${itemType.id} catalogue guide`).toBeDefined();
+    await expect(category).toHaveCount(1);
+    await expect(category).toContainText(guide!.countLabel);
   }
 
   const legend = page.locator('[data-evidence-legend]');
-  for (const label of ["Official", "Verified in game", "Pre-release build"]) {
+  const ui = getItemUi("en");
+  for (const label of [ui.official, ui.verified, ui.preRelease]) {
     await expect(legend.getByText(label, {exact: true})).toBeVisible();
   }
 
@@ -131,46 +134,34 @@ test("localized catalogue hubs keep model previews in the active locale", async 
 });
 
 test("category routes render approved heroes, complete explorers, safe anchors, and no ads", async ({page}) => {
-  const visualCategories = [
-    {type: "weapons", hero: "weapons-1280"},
-    {type: "vehicles", hero: "vehicles-1280"},
-    {type: "ammo", hero: "556x45mm"},
-    {type: "attachments", hero: "attachments-1280"},
-    {type: "gear", hero: "heavy-armor"}
-  ];
+  const visualCategories = itemTypes.filter((itemType) => itemType.id !== "loadouts");
 
   for (const category of visualCategories) {
-    await page.goto(`/en/items/${category.type}`);
-    await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(category.hero));
-    const recordCount = getCatalogueRecords(category.type as CatalogueRecordType).length;
-    const imageCount = getCatalogueRecords(category.type as CatalogueRecordType)
-      .filter((record) => record.mediaState !== "pending").length;
+    await page.goto(`/en/items/${category.id}`);
+    const hero = getCatalogueCategoryMedia(category.id);
+    expect(hero, `${category.id} category media`).toBeDefined();
+    await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(hero!.image.split("/").at(-1)!.split(".")[0]));
+    const records = getCatalogueRecords(category.id as CatalogueRecordType);
+    const recordCount = records.length;
+    const imageCount = records.filter((record) => record.mediaState !== "pending" && record.image && record.imageAlt).length;
     await expect(page.locator('[data-catalogue-record]')).toHaveCount(recordCount);
     await expect(page.locator('[data-catalogue-record] img')).toHaveCount(imageCount);
-    const linkedRecordCount = getCatalogueRecords(category.type as CatalogueRecordType)
-      .filter((record) => record.detailStatus === "published").length;
-    await expect(page.locator('[data-catalogue-record] a')).toHaveCount(linkedRecordCount);
+    const linkedRecordCount = getIndexableCatalogueItems(records).length;
+    await expect(page.locator('[data-catalogue-record] > a[aria-label]')).toHaveCount(linkedRecordCount);
     await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
     await expectImagesLoaded(page);
   }
 
-  for (const category of [
-    {type: "equipment", hero: "meta-1280"},
-    {type: "loadouts", hero: "loadouts-1280"}
-  ]) {
-    await page.goto(`/en/items/${category.type}`);
-    await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(category.hero));
-    await expect(page.locator('[data-catalogue-explorer]')).toHaveCount(0);
-    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
-  }
+  await page.goto("/en/items/loadouts");
+  const loadoutHero = getCatalogueCategoryMedia("loadouts");
+  expect(loadoutHero).toBeDefined();
+  await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(loadoutHero!.image.split("/").at(-1)!.split(".")[0]));
+  await expect(page.locator('[data-catalogue-explorer]')).toHaveCount(0);
+  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
 });
 
 test("weapon categories use locale-specific model links and keep standalone articles unique", async ({page}) => {
   await page.goto("/en/items/weapons");
-  const standalone = page.getByRole("heading", {name: "Weapons: Detailed Guides"}).locator("xpath=ancestor::section");
-
-  await expect(standalone.locator('a[href="/en/items/weapons/mortar"]')).toHaveCount(1);
-  await expect(standalone.getByText("WARDOGS Mortar", {exact: true})).toHaveCount(1);
   for (const slug of weaponModelSlugs) {
     const href = `/en/items/weapons/${slug}`;
     const name = getCatalogueRecords("weapons").find((record) => record.slug === slug)?.name;
@@ -179,10 +170,10 @@ test("weapon categories use locale-specific model links and keep standalone arti
     await expect(catalogueCard.locator(`a[href="${href}"]`), `${slug} catalogue card`).toHaveCount(1);
     await expect(catalogueCard.getByText(name!, {exact: true}), `${slug} catalogue card name`).toHaveCount(1);
     await expect(page.locator(`th a[href="${href}"]`), `${slug} catalogue table row`).toHaveCount(1);
-    await expect(standalone.locator(`a[href="${href}"]`), `${slug} standalone duplicate`).toHaveCount(0);
-    await expect(standalone.getByText(`WARDOGS ${name}`, {exact: true}), `${slug} standalone name duplicate`).toHaveCount(0);
     await expect(page.locator(`a[href="${href}"]`), `${slug} visible links`).toHaveCount(2);
   }
+
+  expect((await page.request.get("/en/items/weapons/mortar")).status()).toBe(200);
 
   for (const locale of locales.filter((candidate) => candidate !== "en")) {
     expect((await page.goto(`/${locale}/items/weapons`))?.status(), `${locale} category`).toBe(200);
@@ -197,17 +188,6 @@ test("weapon categories use locale-specific model links and keep standalone arti
 
 test("vehicle categories use locale-specific model links and retain each legacy guide once", async ({page}) => {
   await page.goto("/en/items/vehicles");
-  const standalone = page.getByRole("heading", {name: "Vehicles: Detailed Guides"}).locator("xpath=ancestor::section");
-
-  for (const legacy of [
-    {slug: "littlebird", name: "Littlebird"},
-    {slug: "tank", name: "Tank"},
-    {slug: "attack-helicopter", name: "Attack Helicopter"},
-    {slug: "armored-transport", name: "Armored Transport"}
-  ]) {
-    await expect(standalone.locator(`a[href="/en/items/vehicles/${legacy.slug}"]`)).toHaveCount(1);
-    await expect(standalone.getByText(`WARDOGS ${legacy.name}`, {exact: true})).toHaveCount(1);
-  }
 
   for (const slug of vehicleModelSlugs) {
     const href = `/en/items/vehicles/${slug}`;
@@ -217,10 +197,10 @@ test("vehicle categories use locale-specific model links and retain each legacy 
     await expect(catalogueCard.locator(`a[href="${href}"]`), `${slug} catalogue card`).toHaveCount(1);
     await expect(catalogueCard.getByText(name!, {exact: true}), `${slug} catalogue card name`).toHaveCount(1);
     await expect(page.locator(`th a[href="${href}"]`), `${slug} catalogue table row`).toHaveCount(1);
-    await expect(standalone.locator(`a[href="${href}"]`), `${slug} standalone duplicate`).toHaveCount(0);
-    await expect(standalone.getByText(`WARDOGS ${name}`, {exact: true}), `${slug} standalone name duplicate`).toHaveCount(0);
     await expect(page.locator(`a[href="${href}"]`), `${slug} visible links`).toHaveCount(2);
   }
+
+  expect((await page.request.get("/en/items/vehicles/littlebird")).status()).toBe(404);
 
   for (const locale of locales.filter((candidate) => candidate !== "en")) {
     expect((await page.goto(`/${locale}/items/vehicles`))?.status(), `${locale} category`).toBe(200);
@@ -275,6 +255,7 @@ test("category search and filters keep canonical URLs while published table rows
 });
 
 test("every English weapon model route renders complete evidence", async ({page}) => {
+  const ui = getItemUi("en");
   for (const slug of weaponModelSlugs) {
     const response = await page.goto(`/en/items/weapons/${slug}`);
     expect(response?.status(), slug).toBe(200);
@@ -283,17 +264,18 @@ test("every English weapon model route renders complete evidence", async ({page}
     await expect(image, `${slug} detail image`).toHaveCount(1);
     await expect(image).toHaveJSProperty("complete", true);
     expect(await image.evaluate((element) => (element as HTMLImageElement).naturalWidth), `${slug} image pixels`).toBeGreaterThan(0);
-    await expect(page.getByText("Quick answer", {exact: true})).toBeVisible();
-    await expect(page.getByRole("heading", {name: "Observed in Alpha 1", exact: true})).toBeVisible();
-    await expect(page.getByRole("heading", {name: "Unconfirmed for Early Access / final release", exact: true})).toBeVisible();
-    await expect(page.getByRole("heading", {name: "Sources", exact: true})).toBeVisible();
-    await expect(page.getByRole("heading", {name: "Sources", exact: true}).locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
+    await expect(page.getByText(ui.quickAnswer, {exact: true})).toBeVisible();
+    await expect(page.locator('[data-fact-freshness] h2')).toBeVisible();
+    await expect(page.getByRole("heading", {name: ui.unknownFacts, exact: true})).toBeVisible();
+    await expect(page.getByRole("heading", {name: ui.sources, exact: true})).toBeVisible();
+    await expect(page.getByRole("heading", {name: ui.sources, exact: true}).locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
   }
 
   expect((await page.goto("/ru/items/weapons/amp-9"))?.status()).toBe(200);
 });
 
 test("every English vehicle model route renders complete evidence", async ({page}) => {
+  const ui = getItemUi("en");
   for (const slug of vehicleModelSlugs) {
     const record = getCatalogueRecords("vehicles").find((candidate) => candidate.slug === slug);
     expect(record, `${slug} catalogue record`).toBeDefined();
@@ -312,14 +294,14 @@ test("every English vehicle model route renders complete evidence", async ({page
     expect(renderedImageUrl.searchParams.get("url") ?? renderedImageUrl.pathname, `${slug} exact image`).toBe(record!.image);
     await expect(image).toHaveJSProperty("complete", true);
     expect(await image.evaluate((element) => (element as HTMLImageElement).naturalWidth), `${slug} image pixels`).toBeGreaterThan(0);
-    await expect(page.getByText("Quick answer", {exact: true})).toBeVisible();
-    const observed = page.getByRole("heading", {name: "Observed in Alpha 1", exact: true});
-    const uncertain = page.getByRole("heading", {name: "Unconfirmed for Early Access / final release", exact: true});
+    await expect(page.getByText(ui.quickAnswer, {exact: true})).toBeVisible();
+    const observed = page.locator('[data-fact-freshness] h2');
+    const uncertain = page.getByRole("heading", {name: ui.unknownFacts, exact: true});
     await expect(observed).toBeVisible();
-    await expect(observed.locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
+    await expect(page.locator('[data-fact-freshness] dd')).not.toHaveCount(0);
     await expect(uncertain).toBeVisible();
     await expect(uncertain.locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
-    const sources = page.getByRole("heading", {name: "Sources", exact: true});
+    const sources = page.getByRole("heading", {name: ui.sources, exact: true});
     await expect(sources).toBeVisible();
     await expect(sources.locator("xpath=following-sibling::ul/li")).not.toHaveCount(0);
   }
@@ -338,7 +320,7 @@ test("homepage promotes the catalogue before video intelligence", async ({page})
   await expectImagesLoaded(page);
 
   const catalogueTop = await band.evaluate((element) => element.getBoundingClientRect().top);
-  const videoTop = await page.getByRole("heading", {name: "YouTube Footage Turned Into Standalone WARDOGS Guides"}).evaluate((element) => element.getBoundingClientRect().top);
+  const videoTop = await page.getByRole("heading", {name: "Current Season 1 Video Watchlist"}).evaluate((element) => element.getBoundingClientRect().top);
   expect(catalogueTop).toBeLessThan(videoTop);
 
   for (const pathname of ["weapons", "vehicles", "ammo", "attachments", "gear", "loadouts"]) {

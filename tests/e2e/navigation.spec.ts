@@ -48,10 +48,11 @@ test("mobile menu is keyboard operable and returns focus on Escape", async ({pag
 
 test("desktop grouped navigation supports pointer and keyboard dismissal", async ({page}) => {
   await page.goto("/en");
-  const catalogue = page.getByRole("button", {name: "Catalogue"});
+  const navigation = page.getByRole("navigation", {name: /primary/i});
+  const catalogue = navigation.getByRole("button", {name: "Catalogue"});
 
   await catalogue.hover();
-  const weapons = page.getByRole("link", {name: "Weapons", exact: true});
+  const weapons = navigation.getByRole("link", {name: "Weapons", exact: true});
   await expect(weapons).toBeVisible();
   await expect(weapons).toHaveAttribute("href", "/en/items/weapons");
   await expect(catalogue).toHaveAttribute("aria-expanded", "true");
@@ -72,7 +73,8 @@ test("desktop disclosure stays open after a fresh pointer entry and click", asyn
   await page.goto("/en");
   await page.mouse.move(1, 700);
 
-  const catalogue = page.getByRole("button", {name: "Catalogue"});
+  const navigation = page.getByRole("navigation", {name: /primary/i});
+  const catalogue = navigation.getByRole("button", {name: "Catalogue"});
   const box = await catalogue.boundingBox();
   expect(box).not.toBeNull();
   await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
@@ -81,7 +83,7 @@ test("desktop disclosure stays open after a fresh pointer entry and click", asyn
   await page.mouse.up();
 
   await expect(catalogue).toHaveAttribute("aria-expanded", "true");
-  await expect(page.getByRole("link", {name: "Weapons", exact: true})).toBeVisible();
+  await expect(navigation.getByRole("link", {name: "Weapons", exact: true})).toBeVisible();
 
   await page.mouse.down();
   await page.mouse.up();
@@ -93,8 +95,8 @@ test("desktop disclosure stays open after a fresh pointer entry and click", asyn
   await page.keyboard.press("Space");
   await expect(catalogue).toHaveAttribute("aria-expanded", "false");
 
-  const game = page.getByRole("button", {name: "Game"});
-  const guides = page.getByRole("button", {name: "Guides"});
+  const game = navigation.getByRole("button", {name: "Game"});
+  const guides = navigation.getByRole("button", {name: "Guides"});
   await game.hover();
   await expect(game).toHaveAttribute("aria-expanded", "true");
   await guides.hover();
@@ -107,11 +109,12 @@ test("mobile menu expands grouped catalogue links", async ({page}) => {
   await page.goto("/en");
   await page.getByRole("button", {name: "Open menu"}).click();
 
-  const catalogue = page.getByRole("button", {name: "Catalogue"});
+  const navigation = page.getByRole("navigation", {name: /primary/i});
+  const catalogue = navigation.getByRole("button", {name: "Catalogue"});
   await expect(catalogue).toHaveAttribute("aria-expanded", "false");
   await catalogue.click();
   await expect(catalogue).toHaveAttribute("aria-expanded", "true");
-  const weapons = page.getByRole("link", {name: "Weapons", exact: true});
+  const weapons = navigation.getByRole("link", {name: "Weapons", exact: true});
   await expect(weapons).toHaveAttribute("href", "/en/items/weapons");
   await weapons.click();
   await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
@@ -144,7 +147,14 @@ test("mobile focus trap includes expanded links and wraps in both directions", a
     "Attachments",
     "Gear",
     "Equipment",
-    "Loadouts"
+    "Medical",
+    "Supplies",
+    "Deployables",
+    "Mechanics",
+    "Loadouts",
+    "Loadout Budget",
+    "Weapon Compare",
+    "Ammo Matcher"
   ]) {
     await page.keyboard.press("Tab");
     await expect(navigation.getByRole("link", {name: linkName, exact: true})).toBeFocused();
@@ -201,8 +211,8 @@ test("homepage promotes priority guide links and confirmed status signals", asyn
   for (const slug of TOP_GUIDE_SLUGS.slice(0, 6)) {
     await expect(topGuides.locator(`a[href="/en/guides/${slug}"]`)).toBeVisible();
   }
-  await expect(statusSection.getByText("Closed Beta 02 has ended", {exact: true})).toBeVisible();
-  await expect(statusSection.getByText("$100K clip contest is open", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("Steam Early Access is live", {exact: true})).toBeVisible();
+  await expect(statusSection.getByText("Patch 0.11 is the current official checkpoint", {exact: true})).toBeVisible();
   await expect(statusSection.getByText("Console versions are planned for 2028", {exact: true})).toBeVisible();
 });
 
