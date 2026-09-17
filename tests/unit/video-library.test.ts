@@ -9,6 +9,7 @@ import {
 } from "../../src/features/videos/video-library";
 import {locales} from "../../src/config/site";
 import {getCurrentVideoUi} from "../../src/features/videos/current-video-localization";
+import {EXPECTED_CURRENT_VIDEO_LEDGER, REJECTED_CURRENT_VIDEO_IDS} from "../fixtures/current-video-expected-ledger";
 
 describe("video article library", () => {
   it("keeps every collected YouTube source as its own indexable article", () => {
@@ -60,33 +61,7 @@ describe("video article library", () => {
 
   it("publishes a current Season 1 source watchlist without duplicating archived breakdowns", () => {
     expect(CURRENT_VIDEO_SOURCES_REVIEWED_AT).toBe("2026-09-17");
-    expect(currentVideoSources.map(({youtubeId}) => youtubeId)).toEqual([
-      "fUKgHeT0JGY",
-      "4CHoWpu4Imw",
-      "Tkors4Fenh0",
-      "mYXhZnJ8Eus",
-      "VrtwXz94dQg",
-      "XUyP1GLUF5o",
-      "v0V69ZYMlgY",
-      "smOE0063KOE",
-      "7W0KgoBf-wM",
-      "BrTNezWMpuk",
-      "ZO7H54kLhqM",
-      "3T64Rn9fWsI",
-      "oLaGhUlixpE",
-      "Cuq8Sk5hn1E",
-      "eR3U1uR6Wn8",
-      "-o6VKUgLq88",
-      "W3Wi0osDVuE",
-      "4lqHgQKIl50",
-      "KL_gNxXL4ng",
-      "dvWT0OcB1dY",
-      "lcU4KJ_8iXc",
-      "kUGJcZK1ivI",
-      "HJl7kzBIaNU",
-      "To3wwc0p3Y8",
-      "cKFK1F0ZP6I"
-    ]);
+    expect(currentVideoSources.map(({youtubeId, title, channel, publishedDate, sourceUrl, topic, internalGuideSlug, reviewedAt, buildLabel, sourceClass}) => ({youtubeId, title, channel, publishedDate, sourceUrl, topic, internalGuideSlug, reviewedAt, buildLabel, sourceClass}))).toEqual(EXPECTED_CURRENT_VIDEO_LEDGER);
     expect(new Set(currentVideoSources.map(({youtubeId}) => youtubeId)).size).toBe(currentVideoSources.length);
 
     const archivedIds = new Set(videoArticles.map(({youtubeId}) => youtubeId));
@@ -115,14 +90,11 @@ describe("video article library", () => {
       "drones",
       "teamplay",
       "patches",
-      "cargo"
+      "cargo",
+      "controls"
     ]));
 
-    const rejectedIds = new Set([
-      "5CsJz4KC9dQ", "seNduUq_8Ck", "PcAN0SsADHc", "6V3u3lVWO-s", "rulxPPYyYIs",
-      "bCcib9y8rws", "t6gSe28Ndzs", "F5YU7eaQHBU", "nD5bxC38pRI", "V8Qx9D9vYm4",
-      "I9rkQ7U-Tzk", "OiN7xeWUFYE", "NN-aksZAjT4", "Ldhp6UMFSfc", "M0dhrSMKfLs"
-    ]);
+    const rejectedIds = new Set<string>(REJECTED_CURRENT_VIDEO_IDS);
     expect(currentVideoSources.some(({youtubeId}) => rejectedIds.has(youtubeId))).toBe(false);
   });
 

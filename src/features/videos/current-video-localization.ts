@@ -34,6 +34,7 @@ const copy: Record<Locale, CurrentVideoUi> = {
       drones: {label: "Drones", summary: "Drone operation observations; supply, cost, and effectiveness are version-sensitive."},
       settings: {label: "Settings and performance", summary: "Visibility, FPS, and keybind guidance that depends on hardware and the current build."},
       teamplay: {label: "Teamplay", summary: "Teamwork and practical systems guidance from current creator footage."},
+      controls: {label: "Controls", summary: "Hidden controls and interaction mechanics; verify shortcuts in the current client."},
       patches: {label: "Season 1 changes", summary: "Creator interpretation of a patch; official notes remain the authoritative record."},
       mortar: {label: "Mortars", summary: "Current mortar-operation guidance; ranges and damage require a live-client check."}
     }
@@ -58,6 +59,7 @@ const copy: Record<Locale, CurrentVideoUi> = {
       drones: {label: "Drohnen", summary: "Beobachtungen zur Drohnennutzung; Nachschub, Kosten und Wirkung sind versionsabhängig."},
       settings: {label: "Einstellungen und Leistung", summary: "Hinweise zu Sicht, FPS und Tasten, abhängig von Hardware und aktuellem Build."},
       teamplay: {label: "Teamspiel", summary: "Teamarbeit und praktische Systeme aus aktuellem Creator-Material."},
+      controls: {label: "Steuerung", summary: "Versteckte Steuerung und Interaktionsmechaniken; Tastenkürzel im aktuellen Client prüfen."},
       patches: {label: "Season-1-Änderungen", summary: "Creator-Interpretation eines Patches; offizielle Hinweise bleiben maßgeblich."},
       mortar: {label: "Mörser", summary: "Aktuelle Mörser-Anleitung; Reichweite und Schaden im Live-Client prüfen."}
     }
@@ -82,6 +84,7 @@ const copy: Record<Locale, CurrentVideoUi> = {
       drones: {label: "Дроны", summary: "Наблюдения за дронами; снабжение, стоимость и эффективность зависят от версии."},
       settings: {label: "Настройки и производительность", summary: "Советы по видимости, FPS и клавишам зависят от железа и текущего билда."},
       teamplay: {label: "Командная игра", summary: "Командные и практические системы из актуального материала автора."},
+      controls: {label: "Управление", summary: "Скрытые элементы управления и механики взаимодействия; проверяйте сочетания в текущем клиенте."},
       patches: {label: "Изменения первого сезона", summary: "Интерпретация патча автором; официальные заметки остаются главным источником."},
       mortar: {label: "Минометы", summary: "Актуальная работа с минометом; дальность и урон проверяйте в клиенте."}
     }
@@ -106,6 +109,7 @@ const copy: Record<Locale, CurrentVideoUi> = {
       drones: {label: "Drones", summary: "Observações sobre drones; suprimento, custo e eficácia dependem da versão."},
       settings: {label: "Configurações e desempenho", summary: "Dicas de visibilidade, FPS e teclas dependem do hardware e da build atual."},
       teamplay: {label: "Jogo em equipe", summary: "Trabalho em equipe e sistemas práticos em material atual de criador."},
+      controls: {label: "Controles", summary: "Controles ocultos e mecânicas de interação; confirme atalhos no cliente atual."},
       patches: {label: "Mudanças da Temporada 1", summary: "Interpretação de patch por criador; as notas oficiais continuam sendo o registro principal."},
       mortar: {label: "Morteiros", summary: "Orientação atual de morteiro; confirme alcance e dano no cliente ao vivo."}
     }
@@ -130,6 +134,7 @@ const copy: Record<Locale, CurrentVideoUi> = {
       drones: {label: "ドローン", summary: "ドローン運用の観察。補給、コスト、効果はバージョン依存です。"},
       settings: {label: "設定と性能", summary: "視認性、FPS、キー設定のガイドで、ハードウェアと現行ビルドに依存します。"},
       teamplay: {label: "チームプレイ", summary: "現行クリエイター映像によるチームワークと実用システム。"},
+      controls: {label: "操作", summary: "隠れた操作とインタラクションの仕組み。ショートカットは現行クライアントで確認します。"},
       patches: {label: "Season 1の変更", summary: "クリエイターによるパッチ解釈であり、公式ノートが正式な記録です。"},
       mortar: {label: "迫撃砲", summary: "現行の迫撃砲ガイド。射程とダメージはライブクライアントで確認します。"}
     }
@@ -154,6 +159,7 @@ const copy: Record<Locale, CurrentVideoUi> = {
       drones: {label: "无人机", summary: "无人机操作观察；补给、成本和效果均与版本相关。"},
       settings: {label: "设置和性能", summary: "可见度、FPS 与按键建议取决于硬件和当前版本。"},
       teamplay: {label: "团队协作", summary: "来自当前创作者视频的团队协作和实用系统指导。"},
+      controls: {label: "操作", summary: "隐藏操作和交互机制；请在当前客户端复核快捷键。"},
       patches: {label: "Season 1 改动", summary: "创作者对补丁的解读；官方说明仍是权威记录。"},
       mortar: {label: "迫击炮", summary: "当前迫击炮操作指导；射程和伤害必须在客户端复核。"}
     }

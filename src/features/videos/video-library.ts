@@ -31,6 +31,7 @@ export type CurrentVideoTopic =
   | "building"
   | "drones"
   | "teamplay"
+  | "controls"
   | "patches"
   | "cargo";
 
@@ -63,6 +64,7 @@ export const currentVideoTopics: readonly CurrentVideoTopic[] = [
   "drones",
   "settings",
   "teamplay",
+  "controls",
   "patches",
   "mortar"
 ];
@@ -195,7 +197,7 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     channel: "TheTacticalBrit",
     publishedDate: "2026-09-10",
     durationMinutes: 29,
-    topic: "teamplay",
+    topic: "beginner",
     internalGuideSlug: "wardogs-beginner-guide",
     sourceUrl: "https://www.youtube.com/watch?v=BrTNezWMpuk",
     buildLabel: "Season 1 current",
@@ -260,7 +262,7 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     channel: "IceManIsaac",
     publishedDate: "2026-09-10",
     durationMinutes: 19,
-    topic: "beginner",
+    topic: "teamplay",
     internalGuideSlug: "wardogs-beginner-guide",
     sourceUrl: "https://www.youtube.com/watch?v=eR3U1uR6Wn8",
     buildLabel: "Season 1 current",
@@ -390,7 +392,7 @@ export const currentVideoSources: readonly CurrentVideoSource[] = [
     channel: "LifeofKino",
     publishedDate: "2026-09-16",
     durationMinutes: 4,
-    topic: "teamplay",
+    topic: "controls",
     internalGuideSlug: "wardogs-controls",
     sourceUrl: "https://www.youtube.com/watch?v=cKFK1F0ZP6I",
     buildLabel: "Season 1 current",

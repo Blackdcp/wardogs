@@ -48,3 +48,28 @@ Result: type checking completed successfully and `git diff --check` reported no 
 ## Concerns
 
 `npm run lint` retains one pre-existing, out-of-scope unused-import warning in `src/features/items/item-library.ts`. Creator guidance is deliberately not promoted into official gameplay facts, and every rejected research ID remains excluded from the current Season 1 source set.
+
+## Fix Round 1
+
+### Scope
+
+- Reclassified `BrTNezWMpuk` as broad beginner fundamentals, `eR3U1uR6Wn8` as teamplay, and `cKFK1F0ZP6I` as controls, matching the reviewed source ledger.
+- Added the `controls` current-video topic with six-locale labels and source-limitation summaries.
+- Added an independent 25-source expected ledger that locks every accepted source's exact ID, title, channel, publication date, canonical URL, topic, related guide, review date, build label, and source class. The rejected-ID ledger remains independent and locked.
+- Added a real Chromium interaction regression for the hub's creator caveat, newest-first ordering, same-day ID tie rule, Controls and Teamplay filters, result counts, and All reset.
+
+### TDD Evidence
+
+The independent ledger test failed before the data fix with the expected three topic mismatches: `BrTNezWMpuk`, `eR3U1uR6Wn8`, and `cKFK1F0ZP6I`.
+
+### Verification
+
+```powershell
+npx vitest run tests/unit/video-library.test.ts tests/unit/video-card-lifecycle.test.tsx tests/unit/video-sitemap.test.ts tests/unit/contextual-video-evidence.test.tsx tests/unit/homepage-composition.test.ts
+$env:PLAYWRIGHT_EXECUTABLE_PATH = 'C:\Program Files\Google\Chrome\Application\chrome.exe'; npx playwright test tests/e2e/current-video-grid.spec.ts
+npm run typecheck
+npm run lint
+git diff --check
+```
+
+Result: focused unit and Chromium interaction regressions passed. Type checking and diff checking passed. Lint retains only the existing, out-of-scope `normalizeCatalogueEvidence` unused-import warning in `src/features/items/item-library.ts`.
