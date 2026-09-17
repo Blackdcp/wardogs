@@ -96,7 +96,7 @@ describe("sitemap", () => {
       for (const {id} of itemTypes) {
         expect(urls.has(`${origin}/${locale}/items/${id}`), `${locale}/${id}`).toBe(true);
       }
-      for (const item of itemLibrary) {
+      for (const item of itemLibrary.filter((item) => item.indexable)) {
         expect(urls.has(`${origin}/${locale}/items/${item.type}/${item.slug}`), `${locale}/${item.slug}`).toBe(true);
       }
     }
@@ -106,7 +106,7 @@ describe("sitemap", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const locale of locales) {
-      for (const item of itemLibrary) {
+      for (const item of itemLibrary.filter((item) => item.indexable)) {
         const pathname = `/items/${item.type}/${item.slug}`;
         const url = `${origin}/${locale}${pathname}`;
         expect(entriesByUrl.get(url)?.alternates?.languages, url).toEqual(itemAlternates(pathname));
@@ -128,7 +128,7 @@ describe("sitemap", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const locale of locales) {
-      for (const item of itemLibrary) {
+      for (const item of itemLibrary.filter((item) => item.indexable)) {
         const url = `${origin}/${locale}/items/${item.type}/${item.slug}`;
         expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url)
           .toBe(new Date(`${item.detailUpdatedAt ?? "2026-08-16"}T00:00:00.000Z`).toISOString());

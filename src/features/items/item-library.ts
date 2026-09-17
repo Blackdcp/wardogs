@@ -1,6 +1,8 @@
 import type {Locale} from "@/config/site";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
+import {getIndexableCatalogueItems, normalizeCatalogueEvidence} from "@/features/catalogue/catalogue-evidence";
+import type {CatalogueChangeHistory, CatalogueEvidence} from "@/features/catalogue/catalogue-types";
 import {
   buildingMortarVideo,
   gameplayVideo,
@@ -63,7 +65,12 @@ export type WardogsItem = {
   imageAlt?: string;
   priority: number;
   indexLocales: readonly Locale[];
+  evidence: CatalogueEvidence;
+  changeHistory: readonly CatalogueChangeHistory[];
+  indexable: boolean;
 };
+
+export type WardogsItemInput = Omit<WardogsItem, "evidence" | "changeHistory" | "indexable">;
 
 export type IndexableItemPath = {
   locale: Locale;
@@ -130,7 +137,7 @@ export const itemTypes: readonly ItemType[] = [
   }
 ] as const;
 
-const legacyItemLibrary: readonly WardogsItem[] = [
+const legacyItemLibrary: readonly WardogsItemInput[] = [
   {
     slug: "mortar",
     name: "Mortar",
@@ -341,7 +348,7 @@ const legacyItemLibrary: readonly WardogsItem[] = [
   }
 ] as const;
 
-const detailedCatalogueItems: readonly WardogsItem[] = [...weaponItems, ...vehicleItems];
+const detailedCatalogueItems: readonly WardogsItemInput[] = [...weaponItems, ...vehicleItems];
 const detailedCatalogueSlugs = new Set(detailedCatalogueItems.map((item) => `${item.type}/${item.slug}`));
 
 const statusByEvidenceTier: Record<CatalogueRecord["evidenceTier"], ItemStatus> = {
@@ -358,7 +365,7 @@ const evidenceByTier: Record<CatalogueRecord["evidenceTier"], EvidenceLevel[]> =
   "identifier-only": ["Pre-release Build"],
 };
 
-function catalogueRecordToItem(record: CatalogueRecord, priority: number): WardogsItem {
+function catalogueRecordToItem(record: CatalogueRecord, priority: number): WardogsItemInput {
   const facts = record.facts.map((fact) => ({...fact, evidence: evidenceByTier[record.evidenceTier]}));
   const knownFacts = record.facts.filter((fact) => !/Not captured|Identifier only/.test(fact.value));
   const relatedItems = getCatalogueRecords(record.type)
@@ -428,6 +435,9 @@ export const itemLibrary: readonly WardogsItem[] = [
   ...generatedCatalogueItems,
 ].map((item) => ({
   ...item,
+  evidence: getItemEvidence(item),
+  changeHistory: getItemChangeHistory(item),
+  indexable: isItemIndexable(item),
   indexLocales: ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const,
   relatedGuides: [...new Set([
     ...(item.type === "weapons" ? ["wardogs-best-weapons-loadouts", "wardogs-armor-damage-ttk-guide"] : []),
@@ -440,6 +450,42 @@ export const itemLibrary: readonly WardogsItem[] = [
     ...item.relatedGuides,
   ])].slice(0, 5),
 }));
+
+function getMatchingCatalogueRecord(item: WardogsItemInput) {
+  return getCatalogueRecords(item.type as CatalogueRecord["type"]).find((record) => record.slug === item.slug);
+}
+
+function getItemEvidence(item: WardogsItemInput): CatalogueEvidence {
+  const record = getMatchingCatalogueRecord(item);
+  if (record) return record.evidence;
+
+  const sourceClass = item.status === "official"
+    ? "official"
+    : item.status === "verified-in-game"
+      ? "live-client"
+      : item.status === "community-report"
+        ? "community-report"
+        : "creator-historical";
+  const confidence = item.status === "official"
+    ? "confirmed"
+    : item.status === "verified-in-game"
+      ? "observed"
+      : item.status === "community-report"
+        ? "corroborated"
+        : "observed";
+  const verifiedAt = item.sources[0]?.lastChecked ?? item.detailUpdatedAt ?? "2026-08-16";
+  return {build: item.build, verifiedAt, sourceClass, confidence, current: false, sourceUrl: item.sources[0]?.url};
+}
+
+function getItemChangeHistory(item: WardogsItemInput): readonly CatalogueChangeHistory[] {
+  return getMatchingCatalogueRecord(item)?.changeHistory ?? [];
+}
+
+function isItemIndexable(item: WardogsItemInput): boolean {
+  const record = getMatchingCatalogueRecord(item);
+  if (record) return getIndexableCatalogueItems([record]).length === 1;
+  return item.sources.length > 0 && item.role.length > 0 && item.strengths.length > 0 && item.cautions.length > 0;
+}
 
 export function getItemType(type: string): ItemType | undefined {
   return itemTypes.find((itemType) => itemType.id === type);
@@ -482,5 +528,7 @@ export function getRelatedItems(item: WardogsItem, locale: Locale): WardogsItem[
 }
 
 export function getIndexableItemPaths(): IndexableItemPath[] {
-  return itemLibrary.flatMap((item) => item.indexLocales.map((locale) => ({locale, type: item.type, slug: item.slug})));
+  return itemLibrary
+    .filter((item) => item.indexable)
+    .flatMap((item) => item.indexLocales.map((locale) => ({locale, type: item.type, slug: item.slug})));
 }

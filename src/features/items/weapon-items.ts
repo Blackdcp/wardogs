@@ -1,4 +1,4 @@
-import type {WardogsItem} from "./item-library";
+import type {WardogsItemInput} from "./item-library";
 import {gameplayVideo, officialSteam, officialTeam17, sevenThingsVideo} from "./item-sources";
 
 export const weaponItems = [
@@ -716,4 +716,4 @@ export const weaponItems = [
     priority: 113,
     indexLocales: ["en"]
   }
-] satisfies readonly WardogsItem[];
+] satisfies readonly WardogsItemInput[];

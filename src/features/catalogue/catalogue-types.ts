@@ -13,6 +13,25 @@ export type CatalogueEvidenceTier =
 
 export type CatalogueMediaState = "verified" | "context-only" | "pending";
 
+export type CatalogueEvidence = {
+  build: string;
+  verifiedAt: string;
+  sourceClass: "official" | "live-client" | "creator-current" | "creator-historical" | "community-report";
+  confidence: "confirmed" | "observed" | "corroborated" | "unverified";
+  current: boolean;
+  sourceUrl?: string;
+};
+
+export type CatalogueChangeHistory = {
+  field: string;
+  previousValue: string;
+  currentValue: string;
+  effectiveBuild: string;
+  verifiedAt: string;
+  sourceUrl: string;
+  note?: string;
+};
+
 export type CatalogueRecord = {
   slug: string;
   name: string;
@@ -30,6 +49,8 @@ export type CatalogueRecord = {
   mediaState: CatalogueMediaState;
   sourceNotes: readonly string[];
   dataAsOf: string;
+  evidence: CatalogueEvidence;
+  changeHistory: readonly CatalogueChangeHistory[];
 };
 
 export type CatalogueFilterOption = {

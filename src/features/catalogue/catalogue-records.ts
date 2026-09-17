@@ -1,4 +1,5 @@
 import type {CatalogueFact, CatalogueRecord, CatalogueRecordType} from "./catalogue-types";
+import {getCatalogueChangeHistory, normalizeCatalogueEvidence} from "./catalogue-evidence";
 
 const dataAsOf = "Alpha 1 - 7 Aug 2026";
 const betaDataAsOf = "Closed Beta - 21-23 Aug 2026";
@@ -12,7 +13,7 @@ const creatorCaptureNotes = (sourceLabel: string, capturedAt: string) => [
 const weaponCaptureNotes = (capturedAt: string) =>
   creatorCaptureNotes("Every Weapon Tested in WARDOGS", capturedAt);
 
-type CatalogueRecordInput = Omit<CatalogueRecord, "evidenceTier" | "mediaState" | "sourceNotes"> &
+type CatalogueRecordInput = Omit<CatalogueRecord, "evidenceTier" | "mediaState" | "sourceNotes" | "evidence" | "changeHistory"> &
   Partial<Pick<CatalogueRecord, "evidenceTier" | "mediaState" | "sourceNotes">>;
 
 const fact = (label: string, value: string): CatalogueFact => ({label, value});
@@ -176,6 +177,10 @@ export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((re
   evidenceTier: record.evidenceTier ?? "build-capture",
   mediaState: record.mediaState ?? "context-only",
   sourceNotes: record.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
+})).map((record) => ({
+  ...record,
+  evidence: normalizeCatalogueEvidence(record),
+  changeHistory: getCatalogueChangeHistory(record),
 }));
 
 export function getCatalogueRecords(type: CatalogueRecordType): readonly CatalogueRecord[] {

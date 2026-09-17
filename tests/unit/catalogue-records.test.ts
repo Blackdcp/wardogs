@@ -16,6 +16,7 @@ describe("catalogue records", () => {
     expect(getCatalogueRecords("ammo")).toHaveLength(14);
     expect(getCatalogueRecords("attachments")).toHaveLength(40);
     expect(getCatalogueRecords("gear")).toHaveLength(11);
+    expect(catalogueRecords.every((record) => record.evidence.verifiedAt.match(/^\d{4}-\d{2}-\d{2}$/))).toBe(true);
   });
 
   it("publishes every weapon and vehicle model at its exact detail route", () => {

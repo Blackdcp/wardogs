@@ -87,6 +87,8 @@ describe("item library", () => {
     const mortar = getItemBySlug("mortar");
 
     expect(mortar?.status).toBe("pre-release-build");
+    expect(mortar?.evidence.current).toBe(false);
+    expect(mortar?.indexable).toBe(true);
     expect(mortar?.facts.some((fact) => fact.label === "Final damage")).toBe(false);
     expect(mortar?.facts.every((fact) => fact.evidence.length > 0)).toBe(true);
   });
@@ -254,16 +256,17 @@ describe("item library", () => {
     expect(getRelatedItems(itemWithRelatedModels, "ja").map((item) => item.slug)).toEqual(["mobile-fob", "amp-9"]);
   });
 
-  it("indexes every item detail in all supported locales", () => {
+  it("indexes every authored item detail in all supported locales", () => {
     const paths = getIndexableItemPaths();
 
-    expect(paths).toHaveLength(itemLibrary.length * 6);
+    expect(paths).toHaveLength(itemLibrary.filter((item) => item.indexable).length * 6);
     expect(paths).toContainEqual({locale: "en", type: "weapons", slug: "mortar"});
     expect(paths).toContainEqual({locale: "ru", type: "vehicles", slug: "littlebird"});
     expect(paths).toContainEqual({locale: "de", type: "weapons", slug: "mortar"});
     expect(paths).toContainEqual({locale: "pt-br", type: "vehicles", slug: "bobcat"});
     expect(paths).toContainEqual({locale: "ja", type: "weapons", slug: "ak74"});
     expect(paths).toContainEqual({locale: "zh-cn", type: "weapons", slug: "ak74"});
+    expect(paths).not.toContainEqual({locale: "en", type: "weapons", slug: "m4"});
   });
 
   it("exposes all seven catalogue guide categories", () => {

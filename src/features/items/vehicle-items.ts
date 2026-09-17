@@ -1,4 +1,4 @@
-import type {WardogsItem} from "./item-library";
+import type {WardogsItemInput} from "./item-library";
 import {
   artilleryGuideVideo,
   gameplayVideo,
@@ -8,7 +8,7 @@ import {
   vehiclesExplainedVideo
 } from "./item-sources";
 
-export const vehicleItems: readonly WardogsItem[] = [
+export const vehicleItems: readonly WardogsItemInput[] = [
   {
     slug: "ah-6m-miniguns",
     name: "AH-6M Miniguns",
