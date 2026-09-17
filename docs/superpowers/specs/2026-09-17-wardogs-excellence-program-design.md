@@ -84,4 +84,3 @@ The current source set expands from eight to at least twenty reviewed videos acr
 - Prefer official announcements, official media, independently captured client evidence, and reviewed public creator demonstrations.
 - Build, content validation, type checking, linting, and focused interaction tests must pass before publication.
 - Publish in independently useful commits. Submit changed canonical URLs through the existing IndexNow integration after production verification.
-

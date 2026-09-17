@@ -127,7 +127,7 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
             />
           </div>
 
-          <div className="h-[308px] overflow-y-auto border-x border-b border-[#344039] bg-[#111613]" data-site-search-results="stable">
+          <div className="h-[308px] overflow-y-auto border-x border-b border-[#344039] bg-[#111613]" data-site-search-results="stable" tabIndex={-1}>
             <p aria-live="polite" className={`px-5 py-3 text-sm leading-6 ${hasResults ? "border-b border-[#26312c] text-xs uppercase text-[#82938a]" : "text-[#98a69f]"}`}>
               {!hasQuery ? copy.prompt : results.length === 0 ? copy.empty : formatCount(copy.resultCount, results.length)}
             </p>

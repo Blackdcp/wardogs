@@ -1,7 +1,7 @@
 import type {Locale} from "@/config/site";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
-import {getIndexableCatalogueItems, normalizeCatalogueEvidence} from "@/features/catalogue/catalogue-evidence";
+import {getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
 import type {CatalogueChangeHistory, CatalogueEvidence} from "@/features/catalogue/catalogue-types";
 import {
   buildingMortarVideo,

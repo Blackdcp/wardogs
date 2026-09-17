@@ -48,19 +48,19 @@ export async function LiveBetaBanner({compact = false}: LiveBetaBannerProps) {
 
         {!compact ? (
           <dl className="mt-5 grid gap-4 border-t border-[#31543f] pt-4 md:grid-cols-2 md:gap-8" data-live-detail-row>
-            <div className="flex min-w-0 items-start gap-3">
-              <CalendarClock aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-[#8ba99a]" />
-              <div className="min-w-0">
-                <dt className="text-[11px] uppercase text-[#8ba99a]">{t("windowLabel")}</dt>
-                <dd className="mt-1 text-sm font-semibold leading-5 text-white">{t("windowValue")}</dd>
-              </div>
+            <div className="min-w-0">
+              <dt className="flex items-center gap-3 text-[11px] uppercase text-[#8ba99a]">
+                <CalendarClock aria-hidden="true" className="size-4 shrink-0" />
+                {t("windowLabel")}
+              </dt>
+              <dd className="ml-7 mt-1 text-sm font-semibold leading-5 text-white">{t("windowValue")}</dd>
             </div>
-            <div className="flex min-w-0 items-start gap-3">
-              <Server aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-[#8ba99a]" />
-              <div className="min-w-0">
-                <dt className="text-[11px] uppercase text-[#8ba99a]">{t("accessLabel")}</dt>
-                <dd className="mt-1 text-sm leading-5 text-[#d8e3dc]">{t("accessValue")}</dd>
-              </div>
+            <div className="min-w-0">
+              <dt className="flex items-center gap-3 text-[11px] uppercase text-[#8ba99a]">
+                <Server aria-hidden="true" className="size-4 shrink-0" />
+                {t("accessLabel")}
+              </dt>
+              <dd className="ml-7 mt-1 text-sm leading-5 text-[#d8e3dc]">{t("accessValue")}</dd>
             </div>
           </dl>
         ) : null}

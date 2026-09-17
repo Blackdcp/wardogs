@@ -244,4 +244,3 @@
 - [ ] **Step 5: Run `git diff --check`, inspect the complete diff, and dispatch a whole-branch review.**
 - [ ] **Step 6: Push the existing branch and verify the production homepage, representative item pages, all tool routes, atlas, sitemap, feed, status API, and `ads.txt`.**
 - [ ] **Step 7: Submit changed canonical URLs through `scripts/submit-indexnow.mjs` and record the accepted count.**
-
