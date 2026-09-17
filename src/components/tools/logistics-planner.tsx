@@ -9,13 +9,11 @@ import {EvidenceProvenance} from "./evidence-provenance";
 
 function stateLabel(state: LogisticsEvidenceState, copy: ToolCopy) {
   if (state === "current") return copy.currentEvidence;
-  if (state === "historical") return copy.historicalEvidence;
   return copy.unknownEvidence;
 }
 
 function stateClass(state: LogisticsEvidenceState) {
   if (state === "current") return "border-[#397b59] bg-[#173021] text-[#84d5a5]";
-  if (state === "historical") return "border-[#806629] bg-[#2a2414] text-[#e4c35f]";
   return "border-[#46534d] bg-[#1a211e] text-[#a8b4ae]";
 }
 
@@ -112,10 +110,14 @@ export function LogisticsPlanner({
                         ))}
                       </ul>
                     ) : null}
-                    <EvidenceProvenance build={stage.build} confidence={stage.confidence} copy={copy} sourceClass={stage.sourceClass} verifiedAt={stage.checkedAt} />
-                    <a className="mt-2 inline-flex min-h-9 items-center gap-1 text-xs font-semibold text-[#7fd0a1] hover:text-white" href={stage.sourceUrl} rel="noreferrer" target="_blank" title={copy.officialSource}>
-                      {copy.officialSource}<ExternalLink aria-hidden="true" size={13} />
-                    </a>
+                    {stage.evidenceState === "current" ? (
+                      <>
+                        <EvidenceProvenance build={stage.build} confidence={stage.confidence} copy={copy} sourceClass={stage.sourceClass} verifiedAt={stage.checkedAt} />
+                        <a className="mt-2 inline-flex min-h-9 items-center gap-1 text-xs font-semibold text-[#7fd0a1] hover:text-white" href={stage.sourceUrl} rel="noreferrer" target="_blank" title={copy.officialSource}>
+                          {copy.officialSource}<ExternalLink aria-hidden="true" size={13} />
+                        </a>
+                      </>
+                    ) : null}
                   </div>
                   <div className="grid content-start gap-2">
                     <button aria-label={`${copy.moveEarlier}: ${stage.title}`} className="grid h-11 w-11 place-items-center border border-[#46534d] text-[#c5d0ca] enabled:hover:border-[#69c78f] enabled:hover:text-white disabled:opacity-35" disabled={index === 0} onClick={() => move(index, -1)} title={`${copy.moveEarlier}: ${stage.title}`} type="button">

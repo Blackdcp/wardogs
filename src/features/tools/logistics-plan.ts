@@ -10,21 +10,35 @@ import {getToolCopy} from "./tool-copy";
 export const logisticsStageIds = ["spawn", "construction", "supply", "transport", "defense", "recovery"] as const;
 
 export type LogisticsStageId = (typeof logisticsStageIds)[number];
-export type LogisticsEvidenceState = "current" | "historical" | "unknown";
-
-export type LogisticsStage = {
+type LogisticsStageBase = {
   id: LogisticsStageId;
   title: string;
   action: string;
   evidenceNote: string;
-  evidenceState: LogisticsEvidenceState;
-  changes: readonly SeasonOneChange[];
+};
+
+export type LogisticsStageWithOfficialChanges = LogisticsStageBase & {
+  evidenceState: "current";
+  changes: readonly [SeasonOneChange, ...SeasonOneChange[]];
   sourceUrl: string;
   checkedAt: string;
-  build: "Season 1" | null;
+  build: "Season 1";
   sourceClass: "official";
   confidence: "confirmed";
 };
+
+export type UnknownLogisticsStage = LogisticsStageBase & {
+  evidenceState: "unknown";
+  changes: readonly [];
+  sourceUrl: null;
+  checkedAt: null;
+  build: null;
+  sourceClass: null;
+  confidence: null;
+};
+
+export type LogisticsStage = LogisticsStageWithOfficialChanges | UnknownLogisticsStage;
+export type LogisticsEvidenceState = LogisticsStage["evidenceState"];
 
 const changesByStage: Record<LogisticsStageId, readonly string[]> = {
   spawn: ["FOB vendor"],
@@ -53,24 +67,44 @@ export function isLogisticsStageId(value: string): value is LogisticsStageId {
   return logisticsStageIds.includes(value as LogisticsStageId);
 }
 
+function hasSeasonOneChanges(changes: SeasonOneChange[]): changes is [SeasonOneChange, ...SeasonOneChange[]] {
+  return changes.length > 0;
+}
+
 export function getLogisticsStages(locale: Locale = "en"): LogisticsStage[] {
   const copy = getToolCopy(locale);
 
-  return logisticsStageIds.map((id) => {
+  return logisticsStageIds.map((id): LogisticsStage => {
     const localized = copy.logisticsStages[id];
     const entities = new Set(changesByStage[id]);
     const changes = seasonOneChanges.filter((change) => entities.has(change.entity));
-    const evidenceState: LogisticsEvidenceState = changes.length > 0 ? "current" : "unknown";
+
+    if (!hasSeasonOneChanges(changes)) {
+      return {
+        id,
+        title: localized.title,
+        action: localized.action,
+        evidenceNote: localized.evidenceNote,
+        evidenceState: "unknown",
+        changes: [],
+        sourceUrl: null,
+        checkedAt: null,
+        build: null,
+        sourceClass: null,
+        confidence: null,
+      };
+    }
+
     return {
       id,
       title: localized.title,
       action: localized.action,
       evidenceNote: localized.evidenceNote,
-      evidenceState,
+      evidenceState: "current",
       changes,
       sourceUrl: seasonOneSourceUrl,
       checkedAt: seasonOneVerifiedAt,
-      build: evidenceState === "current" ? "Season 1" : null,
+      build: "Season 1",
       sourceClass: "official",
       confidence: "confirmed",
     };

@@ -32,6 +32,10 @@ test("mobile progression and logistics tools keep ordered share state", async ({
   await expectNoHorizontalOverflow(page);
   const stageNames = () => page.locator("ol > li > div h3").allTextContents();
   expect(await stageNames()).toEqual(["Transport", "Supply", "Recovery"]);
+  const recoveryStage = page.locator("ol > li").filter({has: page.getByRole("heading", {name: "Recovery"})});
+  await expect(recoveryStage.getByText("Unknown")).toBeVisible();
+  await expect(recoveryStage.getByRole("link", {name: "Open official Season 1 source"})).toHaveCount(0);
+  await expect(recoveryStage.getByText("Source class: Official")).toHaveCount(0);
 
   await page.getByRole("button", {name: "Move earlier: Supply"}).click();
   await expect(page).toHaveURL(/lp_stages=supply%2Ctransport%2Crecovery$/);
