@@ -1,9 +1,9 @@
 "use client";
 
 import {Copy, ExternalLink} from "lucide-react";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import type {ProgressionRoleRoute, ProgressionRoleId} from "@/features/tools/progression-routes";
-import {encodeProgressionRouteState, type ProgressionRouteState} from "@/features/tools/share-state";
+import {decodeProgressionRouteState, encodeProgressionRouteState, type ProgressionRouteState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {EvidenceProvenance} from "./evidence-provenance";
 
@@ -18,6 +18,9 @@ export function ProgressionRoute({
 }) {
   const [state, setState] = useState(initialState);
   const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (window.location.search) setState(decodeProgressionRouteState(window.location.search, routes.map(({id}) => id)));
+  }, [routes]);
   const route = useMemo(
     () => routes.find(({id}) => id === state.role) ?? routes[0],
     [routes, state.role],

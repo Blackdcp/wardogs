@@ -74,13 +74,14 @@ test("German mobile tools keep selectors contained and expose provenance while s
   await expect(page.getByText("Vertrauensniveau: Gegengeprüft")).toBeVisible();
 });
 
-test("invalid repeated weapon parameters recover identically in SSR and after hydration", async ({browser}) => {
+test("invalid repeated weapon parameters use static defaults and recover after hydration", async ({browser}) => {
   const invalidUrl = "/de/tools/weapon-compare?left=deagle&left=fal&right=amp-9";
   const weapons = getComparableWeapons("de");
   const expected = decodeWeaponCompareState(
     "left=deagle&left=fal&right=amp-9",
     weapons.map(({slug}) => slug),
   );
+  const staticDefault = decodeWeaponCompareState("", weapons.map(({slug}) => slug));
   const expectedValues = [expected.left, expected.right];
 
   const serverContext = await browser.newContext({javaScriptEnabled: false, viewport: mobileViewport});
@@ -89,7 +90,7 @@ test("invalid repeated weapon parameters recover identically in SSR and after hy
   const serverSelects = serverPage.getByRole("region", {name: "Dokumentierter Feldvergleich"}).getByRole("combobox");
   await expect(serverSelects).toHaveCount(2);
   expect(await serverSelects.evaluateAll((selects) =>
-    selects.map((select) => (select as HTMLSelectElement).value))).toEqual(expectedValues);
+    selects.map((select) => (select as HTMLSelectElement).value))).toEqual([staticDefault.left, staticDefault.right]);
   await serverContext.close();
 
   const hydratedContext = await browser.newContext({viewport: mobileViewport});
@@ -103,8 +104,8 @@ test("invalid repeated weapon parameters recover identically in SSR and after hy
   await hydratedPage.goto(invalidUrl);
   const hydratedSelects = hydratedPage.getByRole("region", {name: "Dokumentierter Feldvergleich"}).getByRole("combobox");
   await expect(hydratedSelects).toHaveCount(2);
-  expect(await hydratedSelects.evaluateAll((selects) =>
-    selects.map((select) => (select as HTMLSelectElement).value))).toEqual(expectedValues);
+  await expect(hydratedSelects.nth(0)).toHaveValue(expectedValues[0]!);
+  await expect(hydratedSelects.nth(1)).toHaveValue(expectedValues[1]!);
   await hydratedPage.getByRole("combobox", {name: "Erste Waffe"}).selectOption("fal");
   await expect(hydratedPage).toHaveURL(/left=fal&right=amp-9$/);
   expect(consoleErrors.filter((message) => /hydration|did not match|server rendered/i.test(message))).toEqual([]);

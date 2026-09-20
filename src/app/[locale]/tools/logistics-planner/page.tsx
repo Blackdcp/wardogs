@@ -5,15 +5,12 @@ import {isLocale, locales} from "@/config/site";
 import {getLogisticsStages, logisticsStageIds} from "@/features/tools/logistics-plan";
 import {
   decodeLogisticsPlanState,
-  serializeToolSearchParams,
-  type ToolSearchParams,
 } from "@/features/tools/share-state";
 import {getToolCopy} from "@/features/tools/tool-copy";
 import {buildPageMetadata} from "@/lib/metadata";
 
 type PageProps = {
   params: Promise<{locale: string}>;
-  searchParams?: Promise<ToolSearchParams>;
 };
 
 export function generateStaticParams() {
@@ -27,13 +24,12 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
   return buildPageMetadata(locale, "/tools/logistics-planner", copy.logisticsPlannerTitle, copy.logisticsPlannerDescription);
 }
 
-export default async function LogisticsPlannerPage({params, searchParams}: PageProps) {
+export default async function LogisticsPlannerPage({params}: PageProps) {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
   const copy = getToolCopy(locale);
   const stages = getLogisticsStages(locale);
-  const query = serializeToolSearchParams(await (searchParams ?? Promise.resolve({})));
-  const initialState = decodeLogisticsPlanState(query, logisticsStageIds);
+  const initialState = decodeLogisticsPlanState("", logisticsStageIds);
 
   return (
     <main className="site-container py-10 md:py-16">

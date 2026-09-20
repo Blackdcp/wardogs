@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import {ArrowRight, Copy, ImageOff} from "lucide-react";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import type {AmmoMatch, AmmoMatcherDataset} from "@/features/tools/ammo-matcher-data";
 import {matchAmmoDataset} from "@/features/tools/ammo-matcher-runtime";
-import {encodeAmmoMatcherState, type AmmoMatcherState} from "@/features/tools/share-state";
+import {decodeAmmoMatcherState, encodeAmmoMatcherState, type AmmoMatcherState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
@@ -65,6 +65,15 @@ export function AmmoMatcher({
 }) {
   const [state, setState] = useState(initialState);
   const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (window.location.search) {
+      setState(decodeAmmoMatcherState(
+        window.location.search,
+        dataset.weapons.map(({slug}) => slug),
+        dataset.ammo.map(({slug}) => slug),
+      ));
+    }
+  }, [dataset]);
   const result = useMemo(() => matchAmmoDataset(dataset, state), [dataset, state]);
 
   function commit(next: AmmoMatcherState) {

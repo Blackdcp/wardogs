@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import {Copy, ExternalLink} from "lucide-react";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import type {ComparableWeapon, ToolEvidenceState, WeaponComparisonValue} from "@/features/tools/weapon-compare-data";
 import {compareWeaponOptions} from "@/features/tools/weapon-compare-runtime";
-import {encodeWeaponCompareState, type WeaponCompareState} from "@/features/tools/share-state";
+import {decodeWeaponCompareState, encodeWeaponCompareState, type WeaponCompareState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
@@ -83,6 +83,9 @@ export function WeaponCompare({
 }) {
   const [state, setState] = useState(initialState);
   const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (window.location.search) setState(decodeWeaponCompareState(window.location.search, weapons.map(({slug}) => slug)));
+  }, [weapons]);
   const comparison = useMemo(() => state.left && state.right
     ? compareWeaponOptions(weapons, state.left, state.right)
     : null, [state, weapons]);

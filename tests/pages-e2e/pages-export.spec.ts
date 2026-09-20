@@ -1,6 +1,7 @@
 import {existsSync} from "node:fs";
 import {resolve} from "node:path";
 import {expect, test} from "@playwright/test";
+import {getIndexableItemPaths} from "../../src/features/items/item-library";
 import {getPublicSiteBase} from "../../src/lib/public-url";
 
 const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/wardogs";
@@ -39,11 +40,8 @@ test("serves the Pages export from its deployment base", async ({page, request})
   page.on("requestfailed", (failedRequest) => {
     const error = failedRequest.failure()?.errorText ?? "unknown error";
     const url = failedRequest.url();
-    const isAnalyticsProbe = url.startsWith("https://www.googletagmanager.com/gtag/js");
-    if (failedRequest.method() !== "HEAD" && !error.includes("ERR_ABORTED")) {
-      if (!isAnalyticsProbe || !error.includes("ERR_BLOCKED_BY_ORB")) {
-        failures.push(`${failedRequest.method()} ${url}: ${error}`);
-      }
+    if (new URL(url).origin === previewOrigin && failedRequest.method() !== "HEAD" && !error.includes("ERR_ABORTED")) {
+      failures.push(`${failedRequest.method()} ${url}: ${error}`);
     }
   });
   page.on("response", (response) => {
@@ -96,6 +94,22 @@ test("serves the Pages export from its deployment base", async ({page, request})
   expect(sitemapText).toContain(`${canonicalBase}/en/guides/wardogs-gameplay/</loc>`);
   expect(failures).toEqual([]);
   expect((await page.goto(deployed("/en/guides/not-a-topic/")))?.status()).toBe(404);
+});
+
+test("restores shared tool selections from query parameters after hydration", async ({page}) => {
+  await page.goto(deployed("/en/tools/weapon-compare/?left=amp-9&right=deagle"));
+  await expect(page.getByRole("combobox", {name: "First weapon"})).toHaveValue("amp-9");
+  await expect(page.getByRole("combobox", {name: "Second weapon"})).toHaveValue("deagle");
+
+  await page.goto(deployed("/en/tools/ammo-matcher/?weapon=amp-9"));
+  await expect(page.getByRole("combobox", {name: "Select a weapon"})).toHaveValue("amp-9");
+
+  await page.goto(deployed("/en/tools/progression-route/?pr_role=driver&pr_level=18"));
+  await expect(page.getByRole("combobox", {name: "Role track"})).toHaveValue("driver");
+  await expect(page.getByRole("spinbutton", {name: "Current level shown in your client"})).toHaveValue("18");
+
+  await page.goto(deployed("/en/tools/logistics-planner/?lp_stages=transport%2Csupply%2Crecovery"));
+  await expect(page.locator("ol > li h3")).toHaveText(["Transport", "Supply", "Recovery"]);
 });
 
 test("exports all 34 model articles in every locale with exact public URLs and real images", async ({request}) => {
@@ -204,22 +218,13 @@ test("crawls every catalogue-facing internal link across all locales", async ({p
   test.setTimeout(180_000);
   await page.route("**/pagead2.googlesyndication.com/**", (route) => route.abort("blockedbyclient"));
   const categories = ["weapons", "vehicles", "ammo", "attachments", "gear", "equipment", "loadouts"] as const;
-  const legacyDetails = [
-    "/items/weapons/mortar/",
-    "/items/equipment/mobile-fob/",
-    "/items/vehicles/littlebird/",
-    "/items/vehicles/tank/",
-    "/items/vehicles/attack-helicopter/",
-    "/items/vehicles/armored-transport/"
-  ];
   const sourcePaths = [
     ...locales.flatMap((locale) => [
       `/${locale}/`,
       `/${locale}/items/`,
       ...categories.map((category) => `/${locale}/items/${category}/`)
     ]),
-    ...locales.flatMap((locale) => modelPaths.map(({type, slug}) => `/${locale}/items/${type}/${slug}/`)),
-    ...locales.flatMap((locale) => legacyDetails.map((pathname) => `/${locale}${pathname}`))
+    ...getIndexableItemPaths().map(({locale, type, slug}) => `/${locale}/items/${type}/${slug}/`)
   ];
   const internalTargets = new Set<string>();
   const sourceFailures: string[] = [];

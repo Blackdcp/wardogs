@@ -3,13 +3,12 @@ import {notFound} from "next/navigation";
 import {AmmoMatcher} from "@/components/tools/ammo-matcher";
 import {isLocale, locales} from "@/config/site";
 import {getAmmoMatcherDataset} from "@/features/tools/ammo-matcher-data";
-import {decodeAmmoMatcherState, serializeToolSearchParams, type ToolSearchParams} from "@/features/tools/share-state";
+import {decodeAmmoMatcherState} from "@/features/tools/share-state";
 import {getToolCopy} from "@/features/tools/tool-copy";
 import {buildPageMetadata} from "@/lib/metadata";
 
 type PageProps = {
   params: Promise<{locale: string}>;
-  searchParams?: Promise<ToolSearchParams>;
 };
 
 export function generateStaticParams() {
@@ -23,14 +22,13 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
   return buildPageMetadata(locale, "/tools/ammo-matcher", copy.ammoMatcherTitle, copy.ammoMatcherDescription);
 }
 
-export default async function AmmoMatcherPage({params, searchParams}: PageProps) {
+export default async function AmmoMatcherPage({params}: PageProps) {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
   const copy = getToolCopy(locale);
   const dataset = getAmmoMatcherDataset(locale);
-  const query = serializeToolSearchParams(await (searchParams ?? Promise.resolve({})));
   const initialState = decodeAmmoMatcherState(
-    query,
+    "",
     dataset.weapons.map(({slug}) => slug),
     dataset.ammo.map(({slug}) => slug),
   );

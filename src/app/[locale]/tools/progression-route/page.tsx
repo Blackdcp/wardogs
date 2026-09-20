@@ -5,15 +5,12 @@ import {isLocale, locales} from "@/config/site";
 import {getProgressionRoutes, progressionRoleIds} from "@/features/tools/progression-routes";
 import {
   decodeProgressionRouteState,
-  serializeToolSearchParams,
-  type ToolSearchParams,
 } from "@/features/tools/share-state";
 import {getToolCopy} from "@/features/tools/tool-copy";
 import {buildPageMetadata} from "@/lib/metadata";
 
 type PageProps = {
   params: Promise<{locale: string}>;
-  searchParams?: Promise<ToolSearchParams>;
 };
 
 export function generateStaticParams() {
@@ -27,13 +24,12 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
   return buildPageMetadata(locale, "/tools/progression-route", copy.progressionRouteTitle, copy.progressionRouteDescription);
 }
 
-export default async function ProgressionRoutePage({params, searchParams}: PageProps) {
+export default async function ProgressionRoutePage({params}: PageProps) {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
   const copy = getToolCopy(locale);
   const routes = getProgressionRoutes(locale);
-  const query = serializeToolSearchParams(await (searchParams ?? Promise.resolve({})));
-  const initialState = decodeProgressionRouteState(query, progressionRoleIds);
+  const initialState = decodeProgressionRouteState("", progressionRoleIds);
 
   return (
     <main className="site-container py-10 md:py-16">

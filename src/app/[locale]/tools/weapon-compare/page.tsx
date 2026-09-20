@@ -3,13 +3,12 @@ import {notFound} from "next/navigation";
 import {WeaponCompare} from "@/components/tools/weapon-compare";
 import {isLocale, locales} from "@/config/site";
 import {getComparableWeapons} from "@/features/tools/weapon-compare-data";
-import {decodeWeaponCompareState, serializeToolSearchParams, type ToolSearchParams} from "@/features/tools/share-state";
+import {decodeWeaponCompareState} from "@/features/tools/share-state";
 import {getToolCopy} from "@/features/tools/tool-copy";
 import {buildPageMetadata} from "@/lib/metadata";
 
 type PageProps = {
   params: Promise<{locale: string}>;
-  searchParams?: Promise<ToolSearchParams>;
 };
 
 export function generateStaticParams() {
@@ -23,13 +22,12 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
   return buildPageMetadata(locale, "/tools/weapon-compare", copy.weaponCompareTitle, copy.weaponCompareDescription);
 }
 
-export default async function WeaponComparePage({params, searchParams}: PageProps) {
+export default async function WeaponComparePage({params}: PageProps) {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
   const copy = getToolCopy(locale);
   const weapons = getComparableWeapons(locale);
-  const query = serializeToolSearchParams(await (searchParams ?? Promise.resolve({})));
-  const initialState = decodeWeaponCompareState(query, weapons.map(({slug}) => slug));
+  const initialState = decodeWeaponCompareState("", weapons.map(({slug}) => slug));
 
   return (
     <main className="site-container py-10 md:py-16">

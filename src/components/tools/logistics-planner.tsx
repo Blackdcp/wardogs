@@ -1,9 +1,9 @@
 "use client";
 
 import {ArrowDown, ArrowUp, Copy, ExternalLink} from "lucide-react";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import type {LogisticsStage, LogisticsEvidenceState} from "@/features/tools/logistics-plan";
-import {encodeLogisticsPlanState, type LogisticsPlanState} from "@/features/tools/share-state";
+import {decodeLogisticsPlanState, encodeLogisticsPlanState, type LogisticsPlanState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {EvidenceProvenance} from "./evidence-provenance";
 
@@ -28,6 +28,9 @@ export function LogisticsPlanner({
 }) {
   const [state, setState] = useState(initialState);
   const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (window.location.search) setState(decodeLogisticsPlanState(window.location.search, stages.map(({id}) => id)));
+  }, [stages]);
   const stageById = useMemo(() => new Map(stages.map((stage) => [stage.id, stage])), [stages]);
   const plan = state.stages.flatMap((id) => {
     const stage = stageById.get(id as LogisticsStage["id"]);
