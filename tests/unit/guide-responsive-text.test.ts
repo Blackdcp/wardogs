@@ -13,7 +13,7 @@ describe("guide responsive typography", () => {
       "utf8",
     );
 
-    expect(source).toContain('overflowWrap: "break-word", wordBreak: "normal"');
+    expect(source).toContain('overflowWrap: "break-word", wordBreak: locale === "ja" ? "keep-all" : "normal"');
     expect(source).not.toContain('wordBreak: "break-all"');
   });
 

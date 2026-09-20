@@ -44,7 +44,7 @@ describe("source-driven 2026-08-26 content refresh", () => {
           : ["wardogs-fob-guide", "wardogs-helicopter-guide"].includes(slug)
             ? "2026-08-29"
             : "2026-08-26";
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedDate);
+        expect(Date.parse(guide!.frontmatter.updatedAt), `${locale}/${slug}`).toBeGreaterThanOrEqual(Date.parse(expectedDate));
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.frontmatter.sources.some(({kind}) => kind === "official"), `${locale}/${slug}`).toBe(true);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);

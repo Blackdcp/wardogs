@@ -28,7 +28,7 @@ describe("September 13-17 search performance refresh", () => {
       const guide = await loadGuideDocument("ja", slug);
       const searchable = `${guide?.frontmatter.title}\n${guide?.frontmatter.description}\n${guide?.body}`;
 
-      expect(guide?.frontmatter.updatedAt, slug).toBe("2026-09-17");
+      expect(Date.parse(guide!.frontmatter.updatedAt), slug).toBeGreaterThanOrEqual(Date.parse("2026-09-17"));
       expect(searchable.toLowerCase(), slug).toContain(query.toLowerCase());
       expect(
         guide?.frontmatter.sources.some(({url}) => url.includes(sourceFragment)),

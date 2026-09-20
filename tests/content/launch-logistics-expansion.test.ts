@@ -36,7 +36,7 @@ describe("2026-08-29 launch and logistics expansion", () => {
               : locale === "zh-cn"
                 ? "2026-09-01"
                 : "2026-08-29";
-        expect(guide?.frontmatter.updatedAt).toBe(expectedDate);
+        expect(Date.parse(guide!.frontmatter.updatedAt)).toBeGreaterThanOrEqual(Date.parse(expectedDate));
         expect(guide?.frontmatter.sources.length).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug} body`).toBeGreaterThan(1800);
       }

@@ -83,7 +83,7 @@ export default async function GuideArticlePage({params}: PageProps) {
           <p className="mt-3 text-xs text-[#8b9992]">
             {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy" title={t("teamName")}>{t("teamName")}</Link>
           </p>
-          <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "zh-cn" ? "text-3xl sm:text-5xl" : "text-4xl sm:text-5xl"} md:text-6xl`} style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.title}</h1>
+          <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "ja" ? "text-3xl sm:text-4xl md:text-5xl" : locale === "zh-cn" ? "text-3xl sm:text-5xl md:text-6xl" : "text-4xl sm:text-5xl md:text-6xl"}`} style={{overflowWrap: "break-word", wordBreak: locale === "ja" ? "keep-all" : "normal"}}>{guide.frontmatter.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]" style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.description}</p>
         </div>
       </header>

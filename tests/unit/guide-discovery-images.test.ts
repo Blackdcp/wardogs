@@ -16,4 +16,14 @@ describe("guide discovery images", () => {
     expect(getGuideDiscoveryImageSrc(local!)).toBe("/wardogs/images/guide-discovery/best-weapons-loadouts.webp");
     expect(getGuideDiscoveryImageSrc(remote!)).toContain("https://i.ytimg.com/");
   });
+
+  it("uses a sourced image for the high-demand squad and cargo guides", () => {
+    expect(getGuideDiscoveryImage("wardogs-squad-guide")).toMatchObject({
+      url: "/images/wardogs-hero.jpg",
+      creditLabel: "Team17 WARDOGS Press Kit"
+    });
+    expect(getGuideDiscoveryImage("wardogs-cargo-guide")).toMatchObject({
+      creditUrl: "https://www.youtube.com/watch?v=2aU4OB0duYg"
+    });
+  });
 });

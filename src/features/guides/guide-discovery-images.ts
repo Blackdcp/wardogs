@@ -60,6 +60,22 @@ export const guideDiscoveryImages: Readonly<Record<string, GuideDiscoveryImage>>
     creditLabel: "WARDOGS game mode creator footage",
     creditUrl: "https://www.youtube.com/watch?v=cSn5IGknapM"
   },
+  "wardogs-squad-guide": {
+    url: "/images/wardogs-hero.jpg",
+    width: 1280,
+    height: 720,
+    alt: "Official WARDOGS scene showing a helicopter transporting a squad; contextual teamplay artwork",
+    creditLabel: "Team17 WARDOGS Press Kit",
+    creditUrl: "https://www.team17.com/press-and-creator-hub"
+  },
+  "wardogs-cargo-guide": {
+    url: youtubeImage("2aU4OB0duYg"),
+    width: 1280,
+    height: 720,
+    alt: "WARDOGS vehicle cargo walkthrough thumbnail; beta-build logistics footage",
+    creditLabel: "How Vehicles and Cargo Work in WARDOGS",
+    creditUrl: "https://www.youtube.com/watch?v=2aU4OB0duYg"
+  },
   "wardogs-money-guide": {
     url: youtubeImage("2E-KNIugA2M"),
     width: 1280,
