@@ -23,6 +23,8 @@ import {StatusBadge} from "@/components/ui/status-badge";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
 import {getItemUi} from "@/features/items/item-ui";
 import {loadGuideDocument} from "@/content/guides";
+import {getTranslations} from "next-intl/server";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 
 type PageProps = {params: Promise<{locale: string; type: string; slug: string}>};
 
@@ -71,6 +73,7 @@ export default async function ItemDetailPage({params}: PageProps) {
   const hasObservedAmmunition = baseItem.type === "weapons" && baseItem.facts.some((fact) =>
     fact.label === "Ammunition" && !/Not captured|Not confirmed/.test(fact.value)
   );
+  const articleT = await getTranslations({locale, namespace: "article"});
 
   return (
     <main>
@@ -108,6 +111,8 @@ export default async function ItemDetailPage({params}: PageProps) {
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>
           <p className="mt-3 text-base leading-7 text-white">{item.summary}</p>
         </aside>
+
+        <AdsterraNativeBanner label={articleT("advertisement")} />
 
         <EvidencePanel
           dataAsOf={baseItem.build}

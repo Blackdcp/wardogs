@@ -13,6 +13,7 @@ import {getVideoUi} from "@/features/videos/video-ui";
 import {buildPageMetadataWithImage} from "@/lib/metadata";
 import {loadGuideDocument} from "@/content/guides";
 import {getTranslations} from "next-intl/server";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -81,6 +82,8 @@ export default async function VideoArticlePage({params}: PageProps) {
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>
           <p className="mt-3 text-base leading-7 text-white">{article.quickAnswer}</p>
         </aside>
+
+        <AdsterraNativeBanner label={articleT("advertisement")} />
 
         <section className="border-y border-[#2c3631] py-8" aria-labelledby="video-takeaways">
           <h2 className="display-font text-3xl text-white" id="video-takeaways">{ui.takeaways}</h2>

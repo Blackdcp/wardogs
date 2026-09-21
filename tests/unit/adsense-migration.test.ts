@@ -15,21 +15,25 @@ function walk(directory: string): string[] {
 }
 
 describe("AdSense migration", () => {
-  it("removes every Adsterra integration from production source", () => {
+  it("keeps AdSense plus only the approved conservative Adsterra native slot", () => {
     const sourceFiles = walk(path.join(root, "src"));
     for (const file of sourceFiles) {
       const source = fs.readFileSync(file, "utf8");
-      expect(source, path.relative(root, file)).not.toMatch(/Adsterra|arkgleamfox|effectivecpmnetwork/i);
+      expect(source, path.relative(root, file)).not.toMatch(/arkgleamfox|popunder|social\s*bar|direct\s*link|smartlink|auto-?redirect/i);
+      if (/effectivecpmnetwork/i.test(source)) {
+        expect(path.relative(root, file)).toBe(path.join("src", "components", "ads", "adsterra-native-banner.tsx"));
+        expect(source).toContain("481d6501bcd0c27b98bc3c4776a26f6e");
+      }
     }
   });
 
-  it("describes Google AdSense instead of Adsterra in every privacy policy", () => {
+  it("describes Google AdSense and the conservative third-party ad provider in every privacy policy", () => {
     for (const locale of locales) {
       const messages = JSON.parse(
         fs.readFileSync(path.join(root, "messages", `${locale}.json`), "utf8")
       ) as {privacy: {advertising: string}};
       expect(messages.privacy.advertising, locale).toMatch(/Google|AdSense/i);
-      expect(messages.privacy.advertising, locale).not.toMatch(/Adsterra/i);
+      expect(messages.privacy.advertising, locale).toMatch(/Adsterra|third-party|terceiros|сторон|第三方|第三者/i);
     }
   });
 

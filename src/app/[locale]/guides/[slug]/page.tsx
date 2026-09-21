@@ -24,6 +24,7 @@ import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
 import {GuideTaskPanel} from "@/components/guides/guide-task-panel";
 import {prepareGuideBodyForTaskPanel} from "@/features/guides/guide-task-body";
 import {getGuideTaskData} from "@/features/guides/guide-task-data";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -115,6 +116,7 @@ export default async function GuideArticlePage({params}: PageProps) {
             <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
           </aside>
         ) : null}
+        <AdsterraNativeBanner label={t("advertisement")} />
         <div className="guide-prose">{compiled.content}</div>
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">

@@ -489,7 +489,8 @@
     "byline": "調査・更新",
     "teamName": "WARDOGS Wiki編集チーム",
     "editorialPolicy": "編集方針",
-    "imageSource": "映像出典"
+    "imageSource": "映像出典",
+    "advertisement": "広告"
   },
   "categories": {
     "access": "参加",
@@ -563,11 +564,11 @@
   },
   "privacy": {
     "metaTitle": "WARDOGS Wikiプライバシーポリシー：Cookie・解析・広告",
-    "metaDescription": "WARDOGS WikiにおけるCookie、アクセス解析、Google AdSense広告、外部メディアとリンクの扱い、ゲームアカウント情報を収集しない方針を説明します。",
+    "metaDescription": "WARDOGS WikiにおけるCookie、解析、Google AdSenseと第三者広告、外部メディア、リンク、ゲームアカウント情報を収集しない方針を説明します。",
     "title": "プライバシーポリシー",
     "intro": "このファン攻略はデータ収集を最小限にし、外部メディアとリンクの動作を説明します。",
     "content": "当サイトはプレイヤーアカウントを運営せず、ゲームの認証情報を収集しません。外部サービスを開いた後は各社のプライバシーポリシーが適用されます。",
-    "advertising": "当サイトの運営費用を賄うためGoogle AdSenseを使用します。Googleは、同意が必要な地域では同意に基づき、広告の配信、測定、パーソナライズのためにIPアドレス、ブラウザや端末情報、Cookie等を処理する場合があります。"
+    "advertising": "当サイトの運営費用を賄うためGoogle AdSenseと保守的に配置した第三者ネイティブ広告プロバイダーのAdsterraを使用します。これらの事業者は、同意が必要な地域では同意に基づき、広告の配信、測定、パーソナライズのためにIPアドレス、ブラウザや端末情報、Cookie等を処理する場合があります。"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki利用規約：攻略情報の注意事項と免責",

@@ -489,7 +489,8 @@
     "byline": "Researched and maintained by",
     "teamName": "WARDOGS Wiki Editorial Team",
     "editorialPolicy": "Editorial policy",
-    "imageSource": "Source footage"
+    "imageSource": "Source footage",
+    "advertisement": "Advertisement"
   },
   "categories": {
     "access": "Access",
@@ -563,11 +564,11 @@
   },
   "privacy": {
     "metaTitle": "WARDOGS Wiki Privacy Policy: Cookies, Analytics & Ads",
-    "metaDescription": "Read how WARDOGS Wiki handles cookies, analytics, AdSense advertising, external media and links, and why the site does not collect game account credentials.",
+    "metaDescription": "Read how WARDOGS Wiki handles cookies, analytics, AdSense and third-party ads, media, links, and why we do not collect game account credentials.",
     "title": "Privacy Policy",
     "intro": "This fan guide minimizes data collection and explains how external media and links work.",
     "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.",
-    "advertising": "We use Google AdSense to fund this site. Google may process your IP address, browser and device information, and use cookies or similar technologies to deliver, measure and personalize advertising where consent is required."
+    "advertising": "We use Google AdSense and a conservative third-party native ad provider, Adsterra, to fund this site. These providers may process your IP address, browser and device information, and use cookies or similar technologies to deliver, measure and personalize advertising where consent is required."
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Terms of Use: Guide Rules & Disclaimers",

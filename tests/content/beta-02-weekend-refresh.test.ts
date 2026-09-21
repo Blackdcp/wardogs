@@ -141,7 +141,7 @@ describe("Closed Beta 02 weekend release contract", () => {
     });
   });
 
-  it("uses meaningful hero image text and contains no Adsterra implementation", () => {
+  it("uses meaningful hero image text and contains no high-risk ad implementation", () => {
     const hero = readFileSync(path.resolve("src/components/home/home-hero.tsx"), "utf8");
     expect(hero).toContain('alt={t("home.heroImageAlt")}');
 
@@ -150,7 +150,7 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const file of files) {
         if (!/\.(?:ts|tsx|json)$/.test(file)) continue;
         const source = readFileSync(file, "utf8");
-        expect(source, file).not.toMatch(/arkgleamfox|adsterra|smartlinkCta|sponsored recommendations/i);
+        expect(source, file).not.toMatch(/arkgleamfox|popunder|social\s*bar|direct\s*link|smartlinkCta|sponsored recommendations/i);
       }
     }
   });
