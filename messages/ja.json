@@ -231,6 +231,10 @@
           "rumor": "未確認"
         },
         "items": {
+          "season02": {
+            "title": "Season 02は10月15日開始",
+            "description": "公式ティーザーは日付と嵐のテーマを確認しました。完全なパッチノート、開始時刻、進行リセット規則は未発表です。"
+          },
           "closedBeta02": {
             "title": "Closed Beta 02は終了済み",
             "description": "9月3日から6日のテストは過去の記録です。WARDOGSはSteamのメインアプリでEarly Access配信中です。"

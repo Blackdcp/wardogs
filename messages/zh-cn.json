@@ -231,6 +231,10 @@
           "rumor": "未确认"
         },
         "items": {
+          "season02": {
+            "title": "第二赛季将于 10 月 15 日上线",
+            "description": "官方预告确认了日期与雷暴主题；完整补丁说明、开放时间和进度重置规则仍未公布。"
+          },
           "closedBeta02": {
             "title": "Closed Beta 02 已结束",
             "description": "9 月 3 日至 6 日的测试已成为历史；WARDOGS 当前已通过 Steam 主应用开放抢先体验。"

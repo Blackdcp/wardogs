@@ -115,11 +115,11 @@ describe("2026-08-29 launch and logistics expansion", () => {
     expect(START_GUIDES[0].slug).toBe("wardogs-beginner-guide");
     expect(START_GUIDES[1].slug).toBe("wardogs-money-guide");
     expect(TOP_GUIDE_SLUGS.slice(0, 5)).toEqual([
+      "wardogs-season-2",
       "wardogs-server-status",
       "wardogs-patch-notes",
       "wardogs-beginner-guide",
       "wardogs-money-guide",
-      "wardogs-progression-wipes-guide",
     ]);
   });
 });

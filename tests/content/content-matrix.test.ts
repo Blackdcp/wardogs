@@ -2,12 +2,12 @@ import {describe, expect, it} from "vitest";
 import {assertCompleteContentMatrix, listGuideSummaries, loadGuideDocument} from "../../src/content/guides";
 
 describe("English guide library", () => {
-  it("contains 50 substantial, unique, manifest-matched guides", async () => {
+  it("contains 51 substantial, unique, manifest-matched guides", async () => {
     await expect(assertCompleteContentMatrix(["en"])).resolves.toBeUndefined();
     const summaries = await listGuideSummaries("en");
-    expect(summaries).toHaveLength(50);
-    expect(new Set(summaries.map(({title}) => title)).size).toBe(50);
-    expect(new Set(summaries.map(({description}) => description)).size).toBe(50);
+    expect(summaries).toHaveLength(51);
+    expect(new Set(summaries.map(({title}) => title)).size).toBe(51);
+    expect(new Set(summaries.map(({description}) => description)).size).toBe(51);
     for (const summary of summaries) {
       const guide = await loadGuideDocument("en", summary.slug);
       expect(guide?.body.length).toBeGreaterThanOrEqual(1_200);

@@ -121,6 +121,7 @@ describe("WARDOGS current and historical status boundaries", () => {
     expect(await loadGuideDocument("en", "wardogs-100k-clip-contest")).not.toBeNull();
     expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toContain("closedBeta02");
     expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toContain("clipContest");
+    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({status: "confirmed", titleKey: "season02", slug: "wardogs-season-2"}));
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"}));
   });
 });

@@ -231,6 +231,10 @@
           "rumor": "Nicht bestätigt"
         },
         "items": {
+          "season02": {
+            "title": "Season 02 startet am 15. Oktober",
+            "description": "Der offizielle Teaser bestätigt Termin und Sturmthema; Patchnotes, Startzeit und Regeln zum Fortschrittsreset fehlen noch."
+          },
           "closedBeta02": {
             "title": "Closed Beta 02 ist beendet",
             "description": "Der Test vom 3. bis 6. September ist historisch. WARDOGS ist jetzt über die Steam-Haupt-App im Early Access verfügbar."

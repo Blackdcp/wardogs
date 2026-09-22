@@ -40,6 +40,7 @@ describe("homepage data", () => {
 
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
+      "wardogs-season-2",
       "wardogs-server-status",
       "wardogs-patch-notes",
       "wardogs-beginner-guide",
@@ -67,7 +68,12 @@ describe("homepage data", () => {
     ], 2);
 
     expect(latest.map((guide) => guide.slug)).toEqual(["newest", "middle"]);
-    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.status)).toEqual(["confirmed", "confirmed", "rumor"]);
+    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.status)).toEqual(["confirmed", "confirmed", "confirmed", "rumor"]);
+    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual({
+      status: "confirmed",
+      titleKey: "season02",
+      slug: "wardogs-season-2"
+    });
     expect(CONFIRMED_RUMOR_ITEMS).toContainEqual({
       status: "confirmed",
       titleKey: "steamEarlyAccess",
@@ -88,6 +94,7 @@ describe("homepage data", () => {
     expect(result.top).toHaveLength(0);
     expect(result.recent).toHaveLength(3);
     expect(result.status).toEqual([
+      expect.objectContaining({titleKey: "season02", status: "confirmed"}),
       expect.objectContaining({titleKey: "steamEarlyAccess", status: "confirmed"}),
       expect.objectContaining({titleKey: "patch011", status: "confirmed"}),
       expect.objectContaining({titleKey: "ps5Release", status: "rumor"})

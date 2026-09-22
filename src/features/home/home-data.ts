@@ -39,6 +39,7 @@ export const HOME_CATEGORY_GUIDES = [
 ] as const;
 
 export const TOP_GUIDE_SLUGS = [
+  "wardogs-season-2",
   "wardogs-server-status",
   "wardogs-patch-notes",
   "wardogs-beginner-guide",
@@ -76,6 +77,7 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 }
 
 export const CONFIRMED_RUMOR_ITEMS = [
+  {status: "confirmed", titleKey: "season02", slug: "wardogs-season-2"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
   {status: "confirmed", titleKey: "patch011", slug: "wardogs-patch-notes"},
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
