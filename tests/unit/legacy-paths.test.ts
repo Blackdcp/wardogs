@@ -7,11 +7,13 @@ describe("legacy unprefixed paths", () => {
     expect(getLegacyEnglishRedirectPath("/guides/wardogs-trailer")).toBe("/en/guides/wardogs-trailer");
     expect(getLegacyEnglishRedirectPath("/guides/wardogs-early-access")).toBe("/en/guides/wardogs-early-access");
     expect(getLegacyEnglishRedirectPath("/videos/wardogs-mortars-indirect-fire")).toBe("/en/videos/wardogs-mortars-indirect-fire");
+    expect(getLegacyEnglishRedirectPath("/items/weapons/ak74")).toBe("/en/items/weapons/ak74");
   });
 
   it("redirects known top-level pages but leaves unknown paths alone", () => {
     expect(getLegacyEnglishRedirectPath("/guides")).toBe("/en/guides");
     expect(getLegacyEnglishRedirectPath("/videos")).toBe("/en/videos");
+    expect(getLegacyEnglishRedirectPath("/items")).toBe("/en/items");
     expect(getLegacyEnglishRedirectPath("/news")).toBe("/en/news");
     expect(getLegacyEnglishRedirectPath("/not-a-page")).toBeNull();
     expect(getLegacyEnglishRedirectPath("/en/guides/wardogs-factions")).toBeNull();

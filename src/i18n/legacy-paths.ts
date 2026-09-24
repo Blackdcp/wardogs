@@ -1,6 +1,6 @@
 import {isLocale} from "@/config/site";
 
-const legacyEnglishSegments = new Set(["guides", "videos", "news", "privacy", "terms"]);
+const legacyEnglishSegments = new Set(["guides", "videos", "items", "news", "privacy", "terms"]);
 
 export function getLegacyEnglishRedirectPath(pathname: string): string | null {
   const segments = pathname.split("/").filter(Boolean);
