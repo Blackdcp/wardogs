@@ -38,7 +38,9 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale, type, slug} = await params;
   if (!isLocale(locale)) return {};
   const item = getItemByTypeAndSlug(type, slug);
-  if (!item) return {};
+  if (!item || !isItemDetailRouteAvailable(locale, `/items/${type}/${slug}`)) {
+    return item ? {robots: {index: false, follow: true}} : {};
+  }
   return buildItemMetadata(locale, item);
 }
 
