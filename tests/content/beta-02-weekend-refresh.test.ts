@@ -80,7 +80,11 @@ describe("Closed Beta 02 weekend release contract", () => {
       for (const slug of currentGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
         const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(slug === "wardogs-livestream" ? "2026-09-13" : "2026-09-17");
+        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
+          slug === "wardogs-livestream" ? "2026-09-13"
+            : locale === "en" && ["wardogs-beta", "wardogs-playtest"].includes(slug) ? "2026-09-24"
+            : "2026-09-17"
+        );
         expect(sources, `${locale}/${slug}`).toContain(steamUrl);
         expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
         if (["wardogs-beta", "wardogs-playtest", "wardogs-livestream"].includes(slug)) {

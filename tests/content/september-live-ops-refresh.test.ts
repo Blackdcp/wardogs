@@ -34,7 +34,9 @@ describe("September 2026 live-ops content refresh", () => {
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          slug === "wardogs-livestream" ? "2026-09-13" : "2026-09-17",
+          slug === "wardogs-livestream" ? "2026-09-13"
+            : locale === "en" && ["wardogs-beta", "wardogs-playtest"].includes(slug) ? "2026-09-24"
+            : "2026-09-17",
         );
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
