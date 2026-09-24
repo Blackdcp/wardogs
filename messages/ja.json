@@ -397,6 +397,10 @@
         "Not confirmed": "未確認"
       },
       "items": {
+        "season02": {
+          "title": "WARDOGS Season 02は10月15日に開始",
+          "description": "9月23日の公式ティーザーで日付と嵐の映像を確認できます。開始時刻、パッチ内容、進行状況のリセット規則は未発表です。"
+        },
         "closedBeta02": {
           "title": "Closed Beta 02は9月6日に終了",
           "description": "配信は18:00 UTC開始、訂正後のサーバーは9月3日19:00 UTCから9月6日08:00 UTCまで稼働しました。参加条件は過去の記録です。"

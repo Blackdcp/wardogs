@@ -397,6 +397,10 @@
         "Not confirmed": "Nicht bestätigt"
       },
       "items": {
+        "season02": {
+          "title": "WARDOGS Season 02 startet am 15. Oktober",
+          "description": "Der offizielle Teaser vom 23. September bestätigt das Datum und zeigt Sturm-Motive. Startzeit, Patch-Details und Regeln für einen Fortschritts-Reset sind noch nicht bekannt."
+        },
         "closedBeta02": {
           "title": "Closed Beta 02 endete am 6. September",
           "description": "Die Show begann um 18:00 UTC; die korrigierten Server liefen vom 3. September 19:00 UTC bis 6. September 08:00 UTC. Die Zugangsregeln sind historisch."

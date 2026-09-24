@@ -5,6 +5,7 @@ import {describe, expect, it, vi} from "vitest";
 
 const root = process.cwd();
 const scriptPath = path.join(root, "scripts", "submit-indexnow.mjs");
+const productionScriptPath = path.join(root, "scripts", "deploy-production.mjs");
 const workflowPath = path.join(root, ".github", "workflows", "deploy-pages.yml");
 
 describe("IndexNow deployment notification", () => {
@@ -14,6 +15,7 @@ describe("IndexNow deployment notification", () => {
 
     const indexNow = await import(pathToFileURL(scriptPath).href) as {
       INDEXNOW_KEY: string;
+      MAX_URLS_PER_RUN: number;
       deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
     };
     const keyPath = path.join(root, "public", `${indexNow.INDEXNOW_KEY}.txt`);
@@ -58,9 +60,10 @@ describe("IndexNow deployment notification", () => {
 
   it("limits catalogue changes to affected item routes and caps each run", async () => {
     const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      MAX_URLS_PER_RUN: number;
       deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
     };
-    const weaponUrls = Array.from({length: 120}, (_, index) =>
+    const weaponUrls = Array.from({length: 220}, (_, index) =>
       `https://www.wardogswiki.com/en/items/weapons/weapon-${index}`
     );
     const sitemapUrls = [
@@ -74,11 +77,21 @@ describe("IndexNow deployment notification", () => {
 
     const selected = indexNow.deriveIndexNowUrls(["src/features/items/weapon-items.ts"], sitemapUrls);
 
-    expect(selected).toHaveLength(100);
+    expect(selected).toHaveLength(indexNow.MAX_URLS_PER_RUN);
     expect(new Set(selected).size).toBe(selected.length);
     expect(selected).toContain("https://www.wardogswiki.com/en/items");
     expect(selected).toContain("https://www.wardogswiki.com/en/items/weapons");
     expect(selected.some((url) => url.endsWith("/guides"))).toBe(false);
+  });
+
+  it("notifies all locale news pages when the shared timeline changes", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
+    };
+    expect(indexNow.deriveIndexNowUrls(
+      ["src/features/news/news-data.ts"],
+      ["https://www.wardogswiki.com/en/news", "https://www.wardogswiki.com/ja/news", "https://www.wardogswiki.com/en/guides"]
+    )).toEqual(["https://www.wardogswiki.com/en/news", "https://www.wardogswiki.com/ja/news"]);
   });
 
   it("submits one throttled GET request per changed URL instead of batch JSON", async () => {
@@ -119,5 +132,15 @@ describe("IndexNow deployment notification", () => {
     expect(workflow).toContain("notify-indexnow:");
     expect(workflow).toContain("needs: deploy");
     expect(workflow).toContain("node scripts/submit-indexnow.mjs");
+  });
+
+  it("refuses a direct production deploy without a known diff or with uncommitted content", async () => {
+    const deployment = await import(pathToFileURL(productionScriptPath).href) as {
+      validateDeploymentDiff: (base: string | undefined, head: string, status: string) => void;
+    };
+    expect(() => deployment.validateDeploymentDiff(undefined, "new", "")).toThrow(/INDEXNOW_BASE_SHA/);
+    expect(() => deployment.validateDeploymentDiff("old", "new", " M messages\/en.json")).toThrow(/Commit/);
+    expect(() => deployment.validateDeploymentDiff("same", "same", "")).toThrow(/No committed changes/);
+    expect(() => deployment.validateDeploymentDiff("old", "new", "")).not.toThrow();
   });
 });

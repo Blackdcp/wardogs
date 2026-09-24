@@ -35,10 +35,12 @@ describe("sitemap", () => {
   it("marks refreshed hubs with the current editorial date", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
-    for (const path of ["", "/guides", "/news", "/videos", "/items"]) {
+    for (const path of ["", "/guides", "/videos", "/items"]) {
       expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path || "/")
         .toBe("2026-09-17T00:00:00.000Z");
     }
+    expect(new Date(entriesByUrl.get(`${origin}/en/news`)!.lastModified!).toISOString())
+      .toBe("2026-09-24T00:00:00.000Z");
   });
 
   it("publishes every guide in all five locales with reciprocal hreflang", () => {

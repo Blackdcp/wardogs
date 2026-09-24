@@ -39,3 +39,5 @@ npm.cmd run build
 ## Production
 
 Set `NEXT_PUBLIC_SITE_URL` to the exact public HTTPS origin, then run `npm.cmd run build` and `npm.cmd run start`. Vercel can build the repository with the same environment variable and automatically serves the generated Next.js routes, images, sitemap, robots file, and localized metadata.
+
+For a direct Vercel production release, commit the changes and set `INDEXNOW_BASE_SHA` to the last production revision whose changed URLs were notified. Then run `npm.cmd run deploy:prod` in PowerShell. The command refuses a dirty tree or missing base, deploys first, and notifies IndexNow only after a successful release. Check the returned notification count and the public pages; IndexNow submission does not guarantee crawling, indexing, or ranking.

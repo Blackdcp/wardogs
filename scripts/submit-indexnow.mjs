@@ -3,7 +3,7 @@ import {pathToFileURL} from "node:url";
 
 export const INDEXNOW_KEY = "8a4e2c91d70b46f8ab32458d0937ce61";
 export const SITE_ORIGIN = "https://www.wardogswiki.com";
-export const MAX_URLS_PER_RUN = 100;
+export const MAX_URLS_PER_RUN = 200;
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 const INDEXNOW_DELAY_MS = 200;
 const localeIdsPattern = "en|de|ru|pt-br|ja|zh-cn";
@@ -43,6 +43,10 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
       for (const route of ["", "/guides", "/items", "/news", "/videos", "/privacy", "/terms"]) {
         wantedPaths.add(`/${locale}${route}`);
       }
+      continue;
+    }
+    if (file === "src/features/news/news-data.ts") {
+      for (const locale of localeIdsPattern.split("|")) wantedPaths.add(`/${locale}/news`);
       continue;
     }
     if (file === "src/features/videos/video-library.ts") {

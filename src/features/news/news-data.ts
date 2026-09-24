@@ -1,5 +1,11 @@
 export const NEWS_UPDATES = [
   {
+    date: "2026-09-23",
+    status: "Confirmed",
+    titleKey: "season02",
+    guideSlug: "wardogs-season-2"
+  },
+  {
     date: "2026-09-15",
     status: "Confirmed",
     titleKey: "twoMillionCopies",

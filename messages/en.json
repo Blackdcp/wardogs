@@ -384,11 +384,11 @@
     "read": "Read guide"
   },
   "news": {
-    "metaTitle": "WARDOGS News - Patch 0.11, Servers & Early Access",
-    "metaDescription": "Track confirmed WARDOGS news, Patch 0.11 maintenance, server fixes, Steam Early Access, console plans, platform status, and updated guide links.",
+    "metaTitle": "WARDOGS News - Season 02 Date, Patch Notes & Servers",
+    "metaDescription": "Track the confirmed October 15 WARDOGS Season 02 date, the latest published patch notes, server updates, Steam Early Access, and sourced guide links.",
     "eyebrow": "Latest Updates",
     "title": "WARDOGS News and Confirmed Timeline",
-    "description": "Current, sourced WARDOGS updates for Patch 0.11, server status, known issues, Steam Early Access, platforms, downloads, and gameplay.",
+    "description": "Current, sourced WARDOGS updates for Season 02, Patch 0.11, server status, known issues, Steam Early Access, and gameplay.",
     "timeline": {
       "title": "Confirmed Timeline",
       "readMore": "Read the full guide",
@@ -397,6 +397,10 @@
         "Not confirmed": "Not confirmed"
       },
       "items": {
+        "season02": {
+          "title": "WARDOGS Season 02 launches October 15",
+          "description": "The official September 23 teaser confirms the date and shows storm imagery. Launch hour, patch details, and progression-reset rules have not been announced."
+        },
         "closedBeta02": {
           "title": "Closed Beta 02 ended September 6",
           "description": "The show began at 18:00 UTC; revised servers ran September 3 at 19:00 UTC through September 6 at 08:00 UTC. Its access rules are now historical."

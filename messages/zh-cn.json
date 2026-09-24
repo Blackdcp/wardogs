@@ -397,6 +397,10 @@
         "Not confirmed": "未确认"
       },
       "items": {
+        "season02": {
+          "title": "WARDOGS 第 02 赛季将于 10 月 15 日上线",
+          "description": "9 月 23 日的官方预告确认了日期并展示暴风雨画面；具体上线时间、补丁内容及进度重置规则尚未公布。"
+        },
         "closedBeta02": {
           "title": "Closed Beta 02 已于 9 月 6 日结束",
           "description": "发布会于 18:00 UTC 开始；修订后的服务器从 9 月 3 日 19:00 UTC 运行至 9 月 6 日 08:00 UTC，参与规则现为历史记录。"

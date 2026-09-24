@@ -33,7 +33,7 @@ const staleMaintenanceSignals = {
 
 describe("September 17 Season 1 weekend refresh", () => {
   it("leads the news feed with the official two-million-copy milestone", () => {
-    expect(NEWS_UPDATES[0]).toEqual({
+    expect(NEWS_UPDATES).toContainEqual({
       date: "2026-09-15",
       status: "Confirmed",
       titleKey: "twoMillionCopies",

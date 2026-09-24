@@ -43,6 +43,9 @@ const freshHubPaths = new Set([
 ]);
 
 function resolvePageLastModified(pathname: string) {
+  if (pathname === "/news") {
+    return new Date("2026-09-24T00:00:00.000Z");
+  }
   if (freshHubPaths.has(pathname) || /^\/items\/[^/]+$/.test(pathname)) {
     return new Date("2026-09-17T00:00:00.000Z");
   }
