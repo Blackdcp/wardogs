@@ -100,11 +100,7 @@ export function buildSiteMetadata(): Metadata {
       apple: [{url: assetPath("/icons/apple-touch-icon.png"), sizes: "180x180", type: "image/png"}]
     },
     robots: {
-      index: true,
-      follow: true,
       googleBot: {
-        index: true,
-        follow: true,
         "max-image-preview": "large",
         "max-video-preview": -1,
         "max-snippet": -1

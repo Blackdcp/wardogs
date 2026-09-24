@@ -51,6 +51,8 @@ describe("localized metadata", () => {
     const siteMetadata = buildSiteMetadata();
     const googleBot = (siteMetadata.robots as {googleBot: Record<string, unknown>}).googleBot;
     expect(googleBot["max-image-preview"]).toBe("large");
+    expect((siteMetadata.robots as Record<string, unknown>).index).toBeUndefined();
+    expect(googleBot.index).toBeUndefined();
 
     const crashGuide = await loadGuideDocument("en", "wardogs-crash-fix");
     const helicopterGuide = await loadGuideDocument("en", "wardogs-helicopter-guide");
