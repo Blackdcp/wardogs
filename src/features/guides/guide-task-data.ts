@@ -96,7 +96,7 @@ const copy: Record<Locale, Record<GuideTaskSlug, GuideTaskCopy>> = {
     ),
     "wardogs-beginner-guide": task(
       "Run a useful first match",
-      "Learn deployment, the active objective, squad movement, and one support loop before buying a specialist kit. Stay near teammates and use the current interface instead of relying on an old beginner video for exact values.",
+      "Dying before you can contribute? Spawn with a squad or transport, move between cover toward the active Control Zone, and bring a cheap complete kit plus one support job. Learn the route before risking high-tier equipment.",
       "Prices, rewards, controls, and progression shown in earlier builds may no longer match the live client.",
       "Join a squad, read its objective, and identify the active Control Zone on the map.",
       "Choose an affordable loadout with a clear infantry or support purpose.",
@@ -155,8 +155,8 @@ const copy: Record<Locale, Record<GuideTaskSlug, GuideTaskCopy>> = {
       "Defend the supply route and prepare to repair, relocate, or abandon the position when its value changes."
     ),
     "wardogs-cargo-guide": task(
-      "Complete the entire cargo loop",
-      "A cargo run is complete only when the requested resource is loaded, delivered, transferred into the usable destination pool, and the transport survives for another task. Check the current cargo interface at every handoff.",
+      "Unload a pallet into a FOB",
+      "If unloading a pallet appears to do nothing, check the requested resource and valid receiving area, use the current transfer prompt, then confirm the FOB's usable supply count increases. A dropped pallet is not proof of completed delivery.",
       "Vehicle capacity, resource names, loading controls, and transfer zones may differ from recorded test builds.",
       "Ask the destination what resource and quantity it currently needs.",
       "Choose a compatible transport and confirm the cargo appears in its current inventory.",
@@ -165,8 +165,8 @@ const copy: Record<Locale, Record<GuideTaskSlug, GuideTaskCopy>> = {
       "Leave without blocking the spawn or supply lane, then return the asset for another run."
     ),
     "wardogs-mortar-guide": task(
-      "Run a controlled mortar mission",
-      "A mortar team needs a safe emplacement, a current target, an observer, and measured corrections. Treat old range marks and damage claims as references only until the current build confirms them.",
+      "Aim and counter a mortar mission",
+      "Set a current target with live range and azimuth cues, fire a small correction, and stop when friendlies move in. Players report that the live impact camera can aid solo observation, but a separate spotter improves safety. Under enemy fire, break observation and disrupt ammunition supply.",
       "Range behavior, ammunition supply, damage, controls, and emplacement rules can change between builds.",
       "Place the mortar where the crew has cover, supply access, and room to leave.",
       "Confirm the target and friendly positions with an observer before loading a shot.",
@@ -216,7 +216,7 @@ const copy: Record<Locale, Record<GuideTaskSlug, GuideTaskCopy>> = {
     ),
     "wardogs-equipment-tools-guide": task(
       "Choose equipment by battlefield task",
-      "Carry tools that solve a named team problem, then verify their current slot, charge, resource, and interaction requirements in the live interface. Extra equipment without a job adds cost and complexity rather than value.",
+      "Before spawning, name your role, check that its essential tool is actually in your loadout, then confirm the tool's slot, charges, supplies, and interaction requirements in the live interface. A builder without a hammer or a medic without supplies cannot complete the intended task; saved loadouts are a player request, not a confirmed feature.",
       "Charges, capacities, costs, interaction prompts, placement rules, and compatible targets are build-sensitive.",
       "Name the task: medical support, repair, construction, demolition, reconnaissance, or resupply.",
       "Check the current item description, required resource, slot, and compatible target.",

@@ -49,7 +49,9 @@ describe("September 17 Season 1 weekend refresh", () => {
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          ["wardogs-progression-wipes-guide", "wardogs-best-weapons-loadouts"].includes(slug)
+          locale === "en" && slug === "wardogs-beginner-guide"
+            ? "2026-09-24"
+            : ["wardogs-progression-wipes-guide", "wardogs-best-weapons-loadouts"].includes(slug)
             ? "2026-09-23"
             : "2026-09-17",
         );
@@ -79,7 +81,9 @@ describe("September 17 Season 1 weekend refresh", () => {
         const sourceUrls = guide?.frontmatter.sources.map((source) => source.url) ?? [];
 
         expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          ["wardogs-progression-wipes-guide", "wardogs-best-weapons-loadouts"].includes(slug)
+          locale === "en" && slug === "wardogs-beginner-guide"
+            ? "2026-09-24"
+            : ["wardogs-progression-wipes-guide", "wardogs-best-weapons-loadouts"].includes(slug)
             ? "2026-09-23"
             : "2026-09-17",
         );

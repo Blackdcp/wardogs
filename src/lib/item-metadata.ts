@@ -14,6 +14,33 @@ function itemPath(item: WardogsItem) {
   return `/items/${item.type}/${item.slug}`;
 }
 
+const englishSearchIntent: Record<string, {title: string; description: string; answer: string}> = {
+  "vehicles/sph-2": {
+    title: "WARDOGS SPH-2: Artillery Role, Alpha Price & Unlock",
+    description: "Is the SPH-2 current in WARDOGS? Review its self-propelled artillery role and historical Alpha 1 price and unlock; verify live costs and balance in-game.",
+    answer: "The SPH-2 is a self-propelled artillery vehicle in the Alpha catalogue. Its $10,000 price and Wardog Level 55 gate are historical observations, not verified Season 1 values. Check the current vehicle vendor before budgeting for it."
+  },
+  "vehicles/havoc": {
+    title: "WARDOGS Havoc: Attack Helicopter Role & Alpha Data",
+    description: "The Havoc is listed as an attack helicopter in the Alpha catalogue. See its observed price, unreadable test-build gate, tactical role and live-build limits.",
+    answer: "The Havoc is an attack-helicopter record from Alpha footage. The observed $18,000 price is historical and its unlock gate was unreadable; neither is a confirmed current value. Check the live vendor and pilot controls before committing to a sortie."
+  },
+  "weapons/bmr-308": {
+    title: "WARDOGS BMR-308: Ammo, Recon Gate & Alpha Price",
+    description: "The BMR-308 Alpha record shows a semi-auto marksman rifle using .308 Winchester with Recon progression. Check source evidence before using old prices live.",
+    answer: "The BMR-308 is a semi-automatic marksman rifle shown with .308 Winchester ammunition and Recon progression in the Alpha catalogue. Its observed $6,000 price is not a verified current vendor price. Confirm ammo and unlock in the live client."
+  },
+  "vehicles/flakpanzer-gepard": {
+    title: "WARDOGS Flakpanzer Gepard: Anti-Air Role & Alpha Data",
+    description: "The Flakpanzer Gepard is historical anti-air armor in the Alpha catalogue. Review its observed cost and gate; verify current availability in the live client.",
+    answer: "The Flakpanzer Gepard is an anti-air vehicle in the Alpha catalogue. The $8,000 price and Wardog Level 45 gate are historical observations. Verify its current availability and counter-air performance in the live game before planning a loadout."
+  }
+};
+
+export function getEnglishItemSearchIntent(item: WardogsItem) {
+  return englishSearchIntent[`${item.type}/${item.slug}`];
+}
+
 export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Locale {
   return resolveItemRouteTarget(locale, itemPath(item)).locale;
 }
@@ -186,8 +213,9 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   ) as Record<string, string>;
   languages["x-default"] = languages.en ?? canonical;
 
-  const title = searchTitle(locale, localizedItem);
-  const description = searchDescription(locale, localizedItem);
+  const intent = locale === "en" ? getEnglishItemSearchIntent(item) : undefined;
+  const title = intent?.title ?? searchTitle(locale, localizedItem);
+  const description = intent?.description ?? searchDescription(locale, localizedItem);
   const image = publicAssetUrl(localizedItem.detailImage ?? "/images/og-wardogs.jpg");
   const imageAlt = localizedItem.detailImageAlt ?? `WARDOGS ${localizedItem.name}`;
 

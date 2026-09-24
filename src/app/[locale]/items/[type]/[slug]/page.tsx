@@ -15,7 +15,7 @@ import {
 } from "@/features/items/item-library";
 import {isItemDetailRouteAvailable} from "@/features/items/item-route-availability";
 import {Link} from "@/i18n/navigation";
-import {buildItemMetadata} from "@/lib/item-metadata";
+import {buildItemMetadata, getEnglishItemSearchIntent} from "@/lib/item-metadata";
 import {buildItemArticleJsonLd} from "@/lib/item-structured-data";
 import {assetPath} from "@/lib/assets";
 import {JsonLd} from "@/components/seo/json-ld";
@@ -96,6 +96,10 @@ export default async function ItemDetailPage({params}: PageProps) {
           </div>
           <h1 className="display-font mt-5 text-4xl leading-[1.05] text-white sm:text-5xl md:text-6xl">WARDOGS {item.name}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]">{item.description}</p>
+          <aside className="mt-7 border-l-4 border-[#4d946d] bg-[#142019] p-5">
+            <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>
+            <p className="mt-2 text-base leading-7 text-white">{locale === "en" ? (getEnglishItemSearchIntent(baseItem)?.answer ?? item.summary) : item.summary}</p>
+          </aside>
           {item.detailImage && item.detailImageAlt ? (
             <figure className="mt-8 border border-[#2c3631] bg-[#151b18] p-2">
               <Image
@@ -112,11 +116,6 @@ export default async function ItemDetailPage({params}: PageProps) {
       </header>
 
       <article className="site-container max-w-4xl py-10 md:py-14">
-        <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
-          <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>
-          <p className="mt-3 text-base leading-7 text-white">{item.summary}</p>
-        </aside>
-
         <AdsterraNativeBanner label={articleT("advertisement")} />
         <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />

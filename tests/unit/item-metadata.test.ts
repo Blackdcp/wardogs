@@ -1,7 +1,7 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
 import {getItemBySlug, itemLibrary} from "../../src/features/items/item-library";
-import {buildCatalogGuideMetadata, buildItemHubMetadata, buildItemMetadata} from "../../src/lib/item-metadata";
+import {buildCatalogGuideMetadata, buildItemHubMetadata, buildItemMetadata, getEnglishItemSearchIntent} from "../../src/lib/item-metadata";
 
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -120,6 +120,24 @@ describe("item metadata", () => {
       expect(description.length, `${item.slug} description`).toBeGreaterThanOrEqual(140);
       expect(description.length, `${item.slug} description`).toBeLessThanOrEqual(160);
     }
+  });
+
+  it.each(["sph-2", "havoc", "bmr-308", "flakpanzer-gepard"])("answers the US search intent for %s without treating Alpha values as live", (slug) => {
+    const item = getItemBySlug(slug);
+    expect(item?.indexable).toBe(true);
+    const intent = getEnglishItemSearchIntent(item!);
+    const metadata = buildItemMetadata("en", item!);
+
+    expect(String(metadata.title)).toBe(intent?.title);
+    expect(String(metadata.description)).toBe(intent?.description);
+    expect(intent?.answer).toMatch(/Alpha|historical/);
+    expect(intent?.answer).toMatch(/current|live|Season 1/);
+  });
+
+  it("does not generate an optimized snippet for the unavailable Littlebird page", () => {
+    const item = getItemBySlug("littlebird");
+    expect(item?.indexable).toBe(false);
+    expect(getEnglishItemSearchIntent(item!)).toBeUndefined();
   });
 
   it("writes Simplified Chinese item metadata without English search templates", () => {

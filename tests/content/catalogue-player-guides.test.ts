@@ -31,6 +31,8 @@ describe("source-backed catalogue player guides", () => {
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         const expectedDate = slug === "wardogs-best-weapons-loadouts"
           ? "2026-09-23"
+          : slug === "wardogs-equipment-tools-guide" && locale === "en"
+            ? "2026-09-24"
           : locale === "zh-cn"
             ? "2026-09-01"
             : "2026-08-30";

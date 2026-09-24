@@ -53,7 +53,7 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const fob = await loadGuideDocument(locale, "wardogs-fob-guide");
       const money = await loadGuideDocument(locale, "wardogs-money-guide");
 
-      expect(beginner?.frontmatter.updatedAt, locale).toBe("2026-09-17");
+      expect(beginner?.frontmatter.updatedAt, locale).toBe(locale === "en" ? "2026-09-24" : "2026-09-17");
       expect(fob?.frontmatter.updatedAt, locale).toBe("2026-09-17");
       expect(money?.frontmatter.updatedAt, locale).toBe("2026-09-17");
 
