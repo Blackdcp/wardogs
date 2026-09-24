@@ -7,7 +7,7 @@ import {
 } from "../../src/components/ads/adsterra-native-banner";
 
 describe("Adsterra native banner", () => {
-  it("configures the approved conservative native banner script", () => {
+  it("configures the approved native banner script", () => {
     const attributes = new Map<string, string>();
     const script = {
       async: false,

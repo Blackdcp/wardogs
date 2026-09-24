@@ -141,18 +141,15 @@ describe("Closed Beta 02 weekend release contract", () => {
     });
   });
 
-  it("uses meaningful hero image text and contains no high-risk ad implementation", () => {
+  it("uses meaningful hero image text and keeps the intentional Adsterra policy explicit", () => {
     const hero = readFileSync(path.resolve("src/components/home/home-hero.tsx"), "utf8");
+    const adPolicy = readFileSync(path.resolve("src/features/ads/ad-policy.ts"), "utf8");
     expect(hero).toContain('alt={t("home.heroImageAlt")}');
-
-    for (const root of ["src", "messages"]) {
-      const files = walk(path.resolve(root));
-      for (const file of files) {
-        if (!/\.(?:ts|tsx|json)$/.test(file)) continue;
-        const source = readFileSync(file, "utf8");
-        expect(source, file).not.toMatch(/arkgleamfox|popunder|social\s*bar|direct\s*link|smartlinkCta|sponsored recommendations/i);
-      }
-    }
+    expect(adPolicy).toContain("ADSTERRA_SOCIAL_BAR_SCRIPT_SRC");
+    expect(adPolicy).toContain("ADSTERRA_POPUNDER_SCRIPT_SRC");
+    expect(adPolicy).toContain("ADSTERRA_SMARTLINK_URLS");
+    expect(adPolicy).toContain("smartlink-1");
+    expect(adPolicy).toContain("smartlink-2");
   });
 
   it("keeps every catalogue image present, described, sourced, and build-labeled", () => {

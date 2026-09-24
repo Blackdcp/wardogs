@@ -22,6 +22,9 @@ import {buildPageMetadata} from "@/lib/metadata";
 import {buildHomeJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type HomePageProps = {
   params: Promise<{locale: string}>;
@@ -83,6 +86,11 @@ export default async function HomePage({params}: HomePageProps) {
       <CurrentBuildChanges locale={locale} />
       <CatalogueHomeBand locale={locale} />
       <PriorityGuides guides={guides} locale={locale} />
+      <section className="site-container py-2" data-page-ad-inventory="home">
+        <AdsterraDisplayBanner label={t("ads.label")} placement="rectangle" />
+        <AdsterraNativeBanner label={t("ads.label")} />
+        <AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />
+      </section>
       <VideoIntelligence locale={locale} />
       <CategoryGrid guideCount={guides.length} />
       <AboutGame />

@@ -13,6 +13,10 @@ import {buildCatalogGuideMetadata} from "@/lib/item-metadata";
 import {buildItemTypeJsonLd} from "@/lib/item-structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
+import {getTranslations} from "next-intl/server";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; type: string}>};
 
@@ -42,11 +46,18 @@ export default async function ItemTypePage({params}: PageProps) {
   if (!baseCatalogueGuide) notFound();
   const catalogueGuide = getLocalizedCatalogGuide(baseCatalogueGuide, locale);
   const ui = getItemUi(locale);
+  const adsT = await getTranslations({locale, namespace: "ads"});
 
   return (
     <main>
       <JsonLd data={buildItemTypeJsonLd(locale, itemType.id)} />
       <CatalogueCategoryView guide={catalogueGuide} locale={locale} />
+
+      <section className="site-container py-2" data-page-ad-inventory="item-type">
+        <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
+        <AdsterraNativeBanner label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
+      </section>
 
       {items.length > 0 ? (
         <section className="border-t border-[#2c3631] bg-[#101411]">

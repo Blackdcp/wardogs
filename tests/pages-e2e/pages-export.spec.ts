@@ -140,7 +140,8 @@ test("exports all 34 model articles in every locale with exact public URLs and r
         expect(html, pathname).not.toContain(`href="/images/catalogue/${type}/${slug}.webp"`);
         expect(html, pathname).not.toContain(`src="/images/catalogue/${type}/${slug}.webp"`);
       }
-      expect(html, pathname).not.toMatch(/arkgleamfox|popunder|social\s*bar|direct\s*link|smartlink|auto-?redirect/i);
+      expect(html, pathname).toContain("https://arkgleamfox.com/jvxhi4z3ts?key=678e9aeab41077b9e6a3e5626292c434");
+      expect(html, pathname).toContain("https://arkgleamfox.com/j7way0p0?key=a9590c5cd64a0d11f4aa2ecf617130bc");
       expect(renderedHtml, pathname).not.toMatch(/NEXT_HTTP_ERROR_FALLBACK|<title>404|Page not found/i);
 
       const image = await request.get(imagePath);

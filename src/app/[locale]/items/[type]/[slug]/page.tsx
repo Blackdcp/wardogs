@@ -25,6 +25,8 @@ import {getItemUi} from "@/features/items/item-ui";
 import {loadGuideDocument} from "@/content/guides";
 import {getTranslations} from "next-intl/server";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; type: string; slug: string}>};
 
@@ -73,7 +75,10 @@ export default async function ItemDetailPage({params}: PageProps) {
   const hasObservedAmmunition = baseItem.type === "weapons" && baseItem.facts.some((fact) =>
     fact.label === "Ammunition" && !/Not captured|Not confirmed/.test(fact.value)
   );
-  const articleT = await getTranslations({locale, namespace: "article"});
+  const [articleT, adsT] = await Promise.all([
+    getTranslations({locale, namespace: "article"}),
+    getTranslations({locale, namespace: "ads"})
+  ]);
 
   return (
     <main>
@@ -113,6 +118,8 @@ export default async function ItemDetailPage({params}: PageProps) {
         </aside>
 
         <AdsterraNativeBanner label={articleT("advertisement")} />
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
 
         <EvidencePanel
           dataAsOf={baseItem.build}

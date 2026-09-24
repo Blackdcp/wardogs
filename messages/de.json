@@ -496,6 +496,12 @@
     "imageSource": "Quellmaterial",
     "advertisement": "Werbung"
   },
+  "ads": {
+    "label": "Werbung",
+    "sponsored": "Gesponsert",
+    "smartlinkCta": "Gesponserte Empfehlungen öffnen",
+    "smartlinkDescription": "Öffnet ein externes gesponsertes Ziel in einem neuen Tab."
+  },
   "categories": {
     "access": "Zugang",
     "release": "Release",
@@ -572,7 +578,7 @@
     "title": "Datenschutzerklärung",
     "intro": "Dieser Fan-Guide minimiert die Datenerfassung und erklärt externe Medien und Links.",
     "content": "Wir verwalten keine Spielerkonten und erfassen keine Zugangsdaten. Nach dem Öffnen eines externen Dienstes gelten dessen Datenschutzbestimmungen.",
-    "advertising": "Wir verwenden Google AdSense und den konservativ eingebundenen Drittanbieter Adsterra zur Finanzierung dieser Website. Diese Anbieter können Ihre IP-Adresse sowie Browser- und Geräteinformationen verarbeiten und, soweit eine Einwilligung erforderlich ist, Cookies oder ähnliche Technologien zur Auslieferung, Messung und Personalisierung von Werbung verwenden."
+    "advertising": "Wir verwenden Adsterra-Displaybanner, Native Ads, Sticky Ads, Social Bar, Popunder und gesponserte Smartlinks zur Finanzierung dieser Website. Adsterra und seine Werbepartner können Ihre IP-Adresse sowie Browser- und Geräteinformationen verarbeiten und, soweit eine Einwilligung erforderlich ist, Cookies oder ähnliche Technologien zur Auslieferung, Messung und Personalisierung von Werbung verwenden. Gesponserte Links öffnen externe Werbeziele in einem neuen Tab."
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Nutzungsbedingungen und Haftungshinweise",

@@ -25,6 +25,8 @@ import {GuideTaskPanel} from "@/components/guides/guide-task-panel";
 import {prepareGuideBodyForTaskPanel} from "@/features/guides/guide-task-body";
 import {getGuideTaskData} from "@/features/guides/guide-task-data";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -61,9 +63,10 @@ export default async function GuideArticlePage({params}: PageProps) {
   const taskData = getGuideTaskData(slug, locale);
   const guideBody = prepareGuideBodyForTaskPanel(guide.body, locale, Boolean(taskData));
   setRequestLocale(locale);
-  const [t, categoryT, related, compiled] = await Promise.all([
+  const [t, categoryT, adsT, related, compiled] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "categories"}),
+    getTranslations({locale, namespace: "ads"}),
     getRelatedGuides(locale, slug),
     compileLocalizedGuideBody(guideBody, mdxComponents, locale)
   ]);
@@ -117,6 +120,8 @@ export default async function GuideArticlePage({params}: PageProps) {
           </aside>
         ) : null}
         <AdsterraNativeBanner label={t("advertisement")} />
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         <div className="guide-prose">{compiled.content}</div>
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">
