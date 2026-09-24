@@ -3,6 +3,7 @@
 import {ArrowRight, Search} from "lucide-react";
 import {useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent} from "react";
 import type {Locale} from "@/config/site";
+import {recordSiteSearch, recordSiteSearchResult} from "@/features/search/site-search-analytics";
 import {
   getSearchKeyboardAction,
   searchSiteIndex,
@@ -58,8 +59,10 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
       ?.scrollIntoView({block: "nearest"});
   }, [selectedIndex]);
 
-  function openResult(href: string) {
-    window.location.assign(localizedHref(locale, href));
+  function openResult(result: SiteSearchEntry) {
+    recordSiteSearch(query, results.length, locale, "home");
+    recordSiteSearchResult(query, result, locale, "home");
+    window.location.assign(localizedHref(locale, result.href));
   }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -70,6 +73,10 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter" && results.length === 0 && query.trim()) {
+      recordSiteSearch(query, 0, locale, "home");
+      return;
+    }
     const action = getSearchKeyboardAction(event.key, selectedIndex, results);
     if (action.type === "none") return;
     event.preventDefault();
@@ -82,7 +89,8 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
       setIsOpen(false);
     } else {
       setIsOpen(false);
-      openResult(action.href);
+      const result = results.find((entry) => entry.href === action.href);
+      if (result) openResult(result);
     }
   }
 
@@ -146,7 +154,7 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
                   data-search-index={resultIndex}
                   id={`site-search-option-${resultIndex}`}
                   key={result.id}
-                  onClick={() => openResult(result.href)}
+                  onClick={() => openResult(result)}
                   onMouseDown={(event) => event.preventDefault()}
                   onMouseEnter={() => setActiveIndex(resultIndex)}
                   role="option"

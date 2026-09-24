@@ -6,7 +6,10 @@ export const ANALYTICS_EVENTS = {
   videoStart: "video_start",
   officialOutboundClick: "official_outbound_click",
   languageSwitch: "language_switch",
-  catalogueFilter: "catalogue_filter"
+  catalogueFilter: "catalogue_filter",
+  siteSearch: "search",
+  siteSearchNoResults: "site_search_no_results",
+  siteSearchResultOpen: "site_search_result_open"
 } as const;
 
 export type AnalyticsEventName = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];

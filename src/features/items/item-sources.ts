@@ -1,7 +1,7 @@
 export type ItemSource = {
   label: string;
   url: string;
-  kind: "official" | "creator" | "internal";
+  kind: "official" | "creator" | "community" | "internal";
   lastChecked: string;
 };
 
@@ -10,6 +10,27 @@ export const officialSteam: ItemSource = {
   url: "https://store.steampowered.com/app/1867240/WARDOGS/",
   kind: "official",
   lastChecked: "2026-08-16"
+};
+
+export const officialSeasonOneChangelog: ItemSource = {
+  label: "BULKHEAD Season 1 launch changelog",
+  url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455",
+  kind: "official",
+  lastChecked: "2026-09-24"
+};
+
+export const havocSeasonOnePilotReport: ItemSource = {
+  label: "Havoc Season 1 pilot field report (single player)",
+  url: "https://www.reddit.com/r/OfficialWARDOGS/comments/1wl3fl7/havoc_helicopter_review/",
+  kind: "community",
+  lastChecked: "2026-09-24"
+};
+
+export const sph2SeasonOnePlayerReport: ItemSource = {
+  label: "SPH-2 Season 1 player field report (single thread)",
+  url: "https://www.reddit.com/r/OfficialWARDOGS/comments/1wj2f29/sph_2/",
+  kind: "community",
+  lastChecked: "2026-09-24"
 };
 
 export const officialTeam17: ItemSource = {

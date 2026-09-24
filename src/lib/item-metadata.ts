@@ -16,14 +16,14 @@ function itemPath(item: WardogsItem) {
 
 const englishSearchIntent: Record<string, {title: string; description: string; answer: string}> = {
   "vehicles/sph-2": {
-    title: "WARDOGS SPH-2: Artillery Role, Alpha Price & Unlock",
-    description: "Is the SPH-2 current in WARDOGS? Review its self-propelled artillery role and historical Alpha 1 price and unlock; verify live costs and balance in-game.",
-    answer: "The SPH-2 is a self-propelled artillery vehicle in the Alpha catalogue. Its $10,000 price and Wardog Level 55 gate are historical observations, not verified Season 1 values. Check the current vehicle vendor before budgeting for it."
+    title: "WARDOGS SPH-2: Season 1 Unlock & Artillery Guide",
+    description: "Season 1 Artillery Tank access is Career 90 with a $500,000 one-time unlock. See SPH-2 source notes, old vendor prices, crew workflow and live-price caveats.",
+    answer: "The official Season 1 changelog places the Artillery Tank at Career level 90 with a $500,000 one-time unlock. The SPH-2 is the artillery model in our historical catalogue; the official note does not name the model or confirm its current vendor purchase price. Alpha and Beta prices are historical, not live quotes."
   },
   "vehicles/havoc": {
-    title: "WARDOGS Havoc: Attack Helicopter Role & Alpha Data",
-    description: "The Havoc is listed as an attack helicopter in the Alpha catalogue. See its observed price, unreadable test-build gate, tactical role and live-build limits.",
-    answer: "The Havoc is an attack-helicopter record from Alpha footage. The observed $18,000 price is historical and its unlock gate was unreadable; neither is a confirmed current value. Check the live vendor and pilot controls before committing to a sortie."
+    title: "WARDOGS Havoc: Season 1 Pilot Reports & Counters",
+    description: "Compare the Havoc's Alpha vendor record with recent Season 1 pilot reports on cost, unlock and anti-air counters. Player claims are not official prices.",
+    answer: "The Havoc's $18,000 Alpha price is historical. A September 20 Season 1 pilot report describes Pilot level 35 and a roughly $22,000–$30,000 equipped sortie, but these are one player's observations, not official or independently verified live prices. Check the vendor and anti-air situation before buying."
   },
   "weapons/bmr-308": {
     title: "WARDOGS BMR-308: Ammo, Recon Gate & Alpha Price",

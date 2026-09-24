@@ -2,9 +2,12 @@ import type {WardogsItemInput} from "./item-library";
 import {
   artilleryGuideVideo,
   gameplayVideo,
+  havocSeasonOnePilotReport,
   officialSteam,
+  officialSeasonOneChangelog,
   officialTeam17,
   sevenThingsVideo,
+  sph2SeasonOnePlayerReport,
   vehiclesExplainedVideo
 } from "./item-sources";
 
@@ -262,7 +265,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     status: "pre-release-build",
     statusLabel: "Pre-release build",
     build: "Alpha 1 - 7 Aug 2026",
-    summary: "The Havoc was the $18,000 attack helicopter in Alpha 1 and the captured vendor did not reveal its gate.",
+    summary: "The $18,000 Havoc listing is Alpha-only; a Season 1 pilot report describes a higher equipped sortie cost and strong anti-air counters.",
     description:
       "The Havoc sat at the top of the observed vehicle price list and carried the broad attack-helicopter role rather than an AH-6 weapon-specific label. That makes it the heaviest economic air commitment in the Alpha 1 snapshot, while its loadout, armor, crew arrangement, and access condition remain unavailable for a final comparison.",
     role: "Commit the Havoc only when the team can support a high-value attack-aircraft purchase with target information, airspace awareness, and a route away from concentrated return fire.",
@@ -274,7 +277,8 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     cautions: [
       "The purchase gate was unreadable, so the path to access was not captured.",
       "Weapons, armor, sensors, countermeasures, and crew requirements were not recorded.",
-      "The highest observed vehicle price makes any unsupported purchase especially consequential in the Alpha economy."
+      "Recent pilot cost and unlock claims come from one player report, not an official price list.",
+      "A high-value aircraft can be shut down by coordinated anti-air coverage; assess the route before spending."
     ],
     facts: [
       {label: "Role", value: "Attack helicopter", evidence: ["Pre-release Build"]},
@@ -284,7 +288,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     relatedGuides: ["wardogs-gameplay", "wardogs-price", "wardogs-playtest"],
     relatedItems: ["ah-6r-rockets", "flakpanzer-gepard"],
-    sources: [officialSteam, officialTeam17, gameplayVideo],
+    sources: [officialSteam, officialTeam17, gameplayVideo, havocSeasonOnePilotReport],
     detailImage: "/images/catalogue/vehicles/havoc.webp",
     detailImageAlt: "Havoc attack helicopter",
     observedPrice: "$18,000",
@@ -296,9 +300,10 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Loadout, armor, crew arrangement, flight model, countermeasures, and price may change before Early Access or final release."
+      "A September 20 Season 1 pilot reported Pilot level 35 and a roughly $22,000–$30,000 equipped sortie; this is an unverified community observation.",
+      "Loadout, armor, crew arrangement, flight model, countermeasures, and live price need current-client verification."
     ],
-    detailUpdatedAt: "2026-08-18",
+    detailUpdatedAt: "2026-09-24",
     priority: 205,
     indexLocales: ["en"]
   },
@@ -705,7 +710,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     status: "pre-release-build",
     statusLabel: "Pre-release build",
     build: "Alpha 1 and Closed Beta footage checked 2026-08-28",
-    summary: "The SPH-2 is late-track self-propelled artillery whose crew, stabilization, aiming and reload flow were observed across Alpha and Closed Beta footage.",
+    summary: "Season 1 moved the Artillery Tank category to Career 90 with a $500,000 unlock; SPH-2 vendor prices and crew workflow remain versioned observations.",
     description:
       "The SPH-2 was the only self-propelled-artillery model in the captured vendor and carried a Wardog Level 55 gate. Later Closed Beta footage showed a three-position crew, a stabilization step, indirect range setting, 155 mm ammunition and a manual reload sequence. The Alpha capture listed a $10,000 purchase, while a later creator guide showed an $8,000 repeat purchase after a separate $400,000 unlock; that conflict is preserved as build evidence rather than flattened into a final price.",
     role: "Use the SPH-2 as a coordinated indirect-fire asset that depends on target information, protected firing positions, and logistics, then relocate when its position becomes predictable.",
@@ -717,7 +722,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     cautions: [
       "The driver cannot fire while driving; a solo operator must stop and change seats.",
       "A predictable firing position is vulnerable to drones, aircraft, counter-battery fire and infantry hunters.",
-      "Alpha and Beta footage disagree on purchase economics, so every price, gate, range and shell value must be checked in the current build."
+      "Season 1 confirms the Artillery Tank category gate, not a current SPH-2 vendor price; check price, range and shell values in the current build."
     ],
     facts: [
       {label: "Role", value: "Self-propelled artillery", evidence: ["Pre-release Build"]},
@@ -730,7 +735,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     relatedGuides: ["wardogs-artillery-guide", "wardogs-gameplay", "wardogs-factions"],
     relatedItems: ["l2a6", "flakpanzer-gepard", "ural-defender"],
-    sources: [officialSteam, officialTeam17, artilleryGuideVideo, vehiclesExplainedVideo],
+    sources: [officialSeasonOneChangelog, sph2SeasonOnePlayerReport, officialSteam, officialTeam17, artilleryGuideVideo, vehiclesExplainedVideo],
     detailImage: "/images/catalogue/vehicles/sph-2.webp",
     detailImageAlt: "SPH-2 self-propelled artillery",
     observedPrice: "$10,000",
@@ -741,13 +746,16 @@ export const vehicleItems: readonly WardogsItemInput[] = [
       "Observed in Alpha 1: Alpha price: $10,000",
       "Observed in Alpha 1: Observed gate: Wardog Level 55",
       "Observed across creator footage: stabilize the platform before firing and use a manual reload sequence",
-      "Observed across creator footage: driver, main-gun and top-gunner positions"
+      "Observed across creator footage: driver, main-gun and top-gunner positions",
+      "Official Season 1 Artillery Tank category: Career level 90 and $500,000 one-time unlock; model association comes from the versioned catalogue"
     ],
     unconfirmedFacts: [
       "The Alpha $10,000 purchase and later Beta $8,000 repeat purchase conflict; neither is confirmed for Early Access.",
-      "The reported $400,000 unlock, Wardog Level 55 gate, effective range, blast, armor and ammunition economy may change before or during Early Access."
+      "One Season 1 player reports an $8,000 repeat purchase and $11,000–$13,000 equipped sortie; this has not been independently verified in the current vendor.",
+      "The official changelog names Artillery Tank rather than SPH-2; current model identity and repeat vendor price need current-client verification.",
+      "Range, blast, armor and ammunition economy need current-client verification."
     ],
-    detailUpdatedAt: "2026-08-28",
+    detailUpdatedAt: "2026-09-24",
     priority: 214,
     indexLocales: ["en"]
   },

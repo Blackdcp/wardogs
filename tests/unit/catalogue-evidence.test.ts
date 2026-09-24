@@ -24,8 +24,8 @@ const expectedSeasonOneChanges = [
   {entity: "FOB vendor", field: "Vendor price", previousValue: "$2,500", currentValue: "$7,500", progressionTrack: null, catalogueKey: "deployables/fob-vendor"},
   {entity: "Large Hammer vendor", field: "Vendor price", previousValue: "$1,600", currentValue: "$2,400", progressionTrack: null, catalogueKey: null},
   {entity: "Large Hammer Support unlock", field: "Support unlock", previousValue: "$25,000", currentValue: "$75,000", progressionTrack: "support", catalogueKey: null},
-  {entity: "Artillery Tank career unlock", field: "Career unlock", previousValue: "$400,000", currentValue: "$500,000", progressionTrack: "career", catalogueKey: null},
-  {entity: "Artillery Tank required career level", field: "Required career level", previousValue: "55", currentValue: "90", progressionTrack: "career", catalogueKey: null},
+  {entity: "Artillery Tank career unlock", field: "Career unlock", previousValue: "$400,000", currentValue: "$500,000", progressionTrack: "career", catalogueKey: "vehicles/sph-2"},
+  {entity: "Artillery Tank required career level", field: "Required career level", previousValue: "55", currentValue: "90", progressionTrack: "career", catalogueKey: "vehicles/sph-2"},
   {entity: "Recon 6-10x MRAD scope unlock", field: "Recon unlock", previousValue: "$25,000", currentValue: "$40,000", progressionTrack: "recon", catalogueKey: null},
   {entity: "Recon 6-10x MOA scope unlock", field: "Recon unlock", previousValue: "$30,000", currentValue: "$45,000", progressionTrack: "recon", catalogueKey: null},
   {entity: "Medium Hammer Support unlock", field: "Support unlock", previousValue: "$10,000", currentValue: "$25,000", progressionTrack: "support", catalogueKey: null},
@@ -111,7 +111,11 @@ describe("catalogue evidence", () => {
       {entity: "556mm AP career level", previousValue: "85", currentValue: "83"},
     ]));
     expect(seasonOneChanges).toHaveLength(32);
-    expect(seasonOneChanges.some((change) => change.entity === "Artillery Tank career unlock" && change.catalogueKey === undefined)).toBe(true);
+    expect(seasonOneChanges.some((change) => change.entity === "Artillery Tank career unlock" && change.catalogueKey === "vehicles/sph-2")).toBe(true);
+    expect(catalogueRecords.find((record) => record.slug === "sph-2")?.changeHistory).toEqual(expect.arrayContaining([
+      expect.objectContaining({field: "Career unlock", currentValue: "$500,000"}),
+      expect.objectContaining({field: "Required career level", currentValue: "90"})
+    ]));
     expect(seasonOneChanges).toContainEqual(expect.objectContaining({entity: "762x54mm AP career level", previousValue: "83", currentValue: "82", catalogueKey: "ammo/7-62x54mmr"}));
     expect(seasonOneChanges).toContainEqual(expect.objectContaining({entity: "556mm AP career level", previousValue: "85", currentValue: "83", catalogueKey: "ammo/5-56x45mm"}));
     expect(catalogueRecords.find((record) => record.slug === "7-62x54mmr")?.changeHistory).toContainEqual(expect.objectContaining({previousValue: "83", currentValue: "82"}));

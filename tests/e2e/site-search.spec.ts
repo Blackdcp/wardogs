@@ -59,3 +59,15 @@ test("search options stay out of the Tab sequence and remain pointer-activatable
   await target.click();
   await expect(page).toHaveURL(new RegExp(`/en${targetHref!.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/?$`));
 });
+
+test("header search finds a guide from an item page", async ({page}) => {
+  await page.goto("/en/items/vehicles/sph-2");
+  await page.getByRole("button", {name: "Search WARDOGS Wiki"}).first().click();
+  const dialog = page.getByRole("dialog", {name: "Search WARDOGS Wiki"});
+  await expect(dialog).toBeVisible();
+  const input = dialog.getByRole("combobox", {name: "Search WARDOGS Wiki"});
+  await input.fill("artillery guide");
+  await expect(dialog.getByRole("option").first()).toContainText("SPH-2");
+  await input.press("Enter");
+  await expect(page).toHaveURL(/\/en\/guides\/wardogs-artillery-guide\/?$/);
+});
