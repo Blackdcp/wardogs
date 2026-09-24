@@ -49,6 +49,16 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
       for (const locale of localeIdsPattern.split("|")) wantedPaths.add(`/${locale}/news`);
       continue;
     }
+    if (file === "src/features/guides/related.ts") {
+      // These historical entry points render a different Related Guides block.
+      // Notify the affected localized pages, not every guide on the site.
+      for (const locale of localeIdsPattern.split("|")) {
+        for (const slug of ["wardogs-alpha", "wardogs-alpha-key", "wardogs-beta", "wardogs-playtest"]) {
+          wantedPaths.add(`/${locale}/guides/${slug}`);
+        }
+      }
+      continue;
+    }
     if (file === "src/features/videos/video-library.ts") {
       wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/videos(?:\/|$)`));
       continue;

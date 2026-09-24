@@ -94,6 +94,21 @@ describe("IndexNow deployment notification", () => {
     )).toEqual(["https://www.wardogswiki.com/en/news", "https://www.wardogswiki.com/ja/news"]);
   });
 
+  it("notifies historical guide pages changed by related-link code in every locale", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
+    };
+    const sitemapUrls = [
+      "https://www.wardogswiki.com/en/guides/wardogs-beta",
+      "https://www.wardogswiki.com/ja/guides/wardogs-beta",
+      "https://www.wardogswiki.com/zh-cn/guides/wardogs-playtest",
+      "https://www.wardogswiki.com/en/guides/wardogs-season-2"
+    ];
+
+    expect(indexNow.deriveIndexNowUrls(["src/features/guides/related.ts"], sitemapUrls))
+      .toEqual(sitemapUrls.slice(0, 3));
+  });
+
   it("submits one throttled GET request per changed URL instead of batch JSON", async () => {
     const indexNow = await import(pathToFileURL(scriptPath).href) as {
       INDEXNOW_KEY: string;
