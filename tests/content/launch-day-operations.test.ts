@@ -13,7 +13,7 @@ describe("September 17 Early Access operations", () => {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          slug === "wardogs-patch-notes" ? "2026-09-23" : "2026-09-17",
+          slug === "wardogs-patch-notes" ? (locale === "en" ? "2026-09-26" : "2026-09-23") : "2026-09-17",
         );
         expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(12);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeGreaterThanOrEqual(140);

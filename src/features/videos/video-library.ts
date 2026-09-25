@@ -2293,7 +2293,7 @@ export const videoArticles: readonly VideoArticle[] = [
     sourceLabel: "WARDOGS Just Got Some HUGE News",
     sourceUrl: "https://www.youtube.com/watch?v=im60BiRZFow",
     publishedDate: "2026-08-31",
-    updatedDate: "2026-09-04",
+    updatedDate: "2026-09-26",
     kind: "creator",
     priority: -22,
     internalGuideSlug: "wardogs-progression-wipes-guide",
@@ -2304,7 +2304,7 @@ export const videoArticles: readonly VideoArticle[] = [
       "Closed Beta leveling speed was intentionally faster than the planned normal pace.",
       "Tanks are moving from the temporary main track into Driver progression.",
       "The completed September 3 reveal confirmed Closed Beta 02 for September 3-6; it did not confirm an exact Early Access unlock hour.",
-      "Season, wipe, lawsuit and roadmap claims need separate first-party confirmation.",
+      "BULKHEAD confirmed the season-end cash and XP reset and Gold Bar/cosmetic carryover separately; exact Season 02 timing and exchange rate remain unconfirmed.",
       "The maintained progression and launch guides replace predictions as new facts arrive."
     ],
     sections: [
@@ -2333,7 +2333,7 @@ export const videoArticles: readonly VideoArticle[] = [
         heading: "Private servers and seasons",
         body: [
           "Community-server hosting now has a separate developer statement: two approved providers at launch, map and mode selection, no arbitrary self-hosting at launch and RCON in development.",
-          "Season length, wipe scope and carryover are not fully documented. Keep those topics in the progression and community-server guides rather than turning one discussion segment into permanent rules."
+          "The video's discussion is not the sole source for seasonal wipes. In BULKHEAD's earlier Early Access & Beyond video at 03:05, the developer says cash and XP reset at season end, remaining cash converts to Gold Bars, and Gold Bars and cosmetics persist. The exact Season 02 reset hour, conversion rate and treatment of purchased unlocks still need confirmation; use the maintained progression guide for those distinctions."
         ]
       },
       {
@@ -2348,7 +2348,7 @@ export const videoArticles: readonly VideoArticle[] = [
         body: [
           "Start with the current Steam announcement, official WARDOGS channels and the live progression menus. Record the build date beside every screenshot so a Beta track, Early Access track and later balance patch are never presented as the same system.",
           "For tanks, capture the Driver track position, level requirement, purchase cost and the actions that visibly move its XP bar. For carryover, look for an explicit account-data statement rather than inferring permanence from an unchanged Playtest library entry.",
-          "Until those checks produce primary evidence, describe launch pace, wipe timing, season length and economy persistence as unknown. That wording is less dramatic than a prediction, but it remains useful after the next patch."
+          "Do not describe the entire seasonal wipe policy as unknown: BULKHEAD already confirmed the cash/XP reset and Gold Bar/cosmetic carryover in its Early Access & Beyond video. Keep the exact reset time, conversion rate, future season length and purchased-unlock treatment marked as unconfirmed until a first-party update supplies them."
         ]
       }
     ]

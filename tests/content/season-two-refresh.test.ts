@@ -32,9 +32,13 @@ describe("September 23 Season 02 content refresh", () => {
       const patches = await loadGuideDocument(locale, "wardogs-patch-notes");
       const wipes = await loadGuideDocument(locale, "wardogs-progression-wipes-guide");
 
-      expect(patches?.frontmatter.updatedAt, `${locale}/patches`).toBe("2026-09-23");
+      expect(patches?.frontmatter.updatedAt, `${locale}/patches`).toBe(locale === "en" ? "2026-09-26" : "2026-09-23");
       expect((wipes?.frontmatter.updatedAt ?? "") >= "2026-09-23", `${locale}/wipes`).toBe(true);
       expect(patches?.frontmatter.sources.map(({url}) => url)).toContain(seasonAnnouncement);
+      if (locale === "en") {
+        expect(patches?.frontmatter.sources.map(({url}) => url)).toContain(officialWipePolicy);
+        expect(patches?.body).toMatch(/cash and XP reset[\s\S]*Gold Bars/);
+      }
       expect(wipes?.frontmatter.sources.map(({url}) => url)).toContain(seasonAnnouncement);
       expect(wipes?.frontmatter.sources.map(({url}) => url)).toContain(officialWipePolicy);
       expect(patches?.body, `${locale}/latest numbered patch`).toContain("Patch 0.11");
