@@ -27,6 +27,10 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       expect(guide?.body).toMatch(/stabili|стабилиз|stabilisieren|estabiliz|安定化|稳定/i);
       expect(guide?.body).toMatch(/reload|перезар|nachladen|recarga|リロード|装填|换弹|重新加载/i);
       expect(guide?.body).toMatch(/build-sensitive|buildabhängig|версии сборки|dependente da build|ビルド依存|版本相关|构建敏感/i);
+      if (locale === "en") {
+        expect(guide?.body).toContain("**Season 1 deployment — corroborating player reports:**");
+        expect(guide?.body).not.toMatch(/^\|\s*Claim\s*\|/m);
+      }
     }
   });
 
