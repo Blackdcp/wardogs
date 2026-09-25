@@ -23,6 +23,8 @@ Track weekly: qualified prospects, personalized requests sent, accepted placemen
 | Sep 26 | [wardogs.tech community Discord](https://discord.gg/FhWDZQn9Gy) | Owner approved one rule-checked partner pitch | **Not sent**: Discord invite remained a blank/loading screen in the signed-in in-app browser | Do not join/post through a guessed channel or claim a partnership. Retry only when the page loads normally. |
 | Sep 26 | [Production SPH-2 and Havoc guides](https://www.wardogswiki.com/en/guides/wardogs-artillery-guide) | Updated both English source-led assets and fixed raw Markdown table rendering | **Live and verified**: claim list and Havoc field report appeared on canonical site | Build/content tests passed; IndexNow accepted updated URL notifications. |
 | Sep 26 | [Steam guide draft](steam-sph2-guide-draft-2026-09-26.md) | Wrote a complete native Steam guide with sources, conditional budget examples and one wiki attribution link | **Draft only**: Steam sign-in still pending | Do not claim a published Steam placement. |
+| Sep 26 | [r/WarDogs wipe question](https://www.reddit.com/r/WarDogs/comments/1wncit2/comment/pc09mka/) | Posted one self-contained answer with BULKHEAD's original 03:05 statement, the remaining Season 02 unknowns, and a disclosed link to our corrected guide after owner approval | Reddit showed “Comment posted successfully”; reply and wiki link were visible in the signed-in thread | Live public permalink exists; community filters can still alter visibility. Do not duplicate the reply in other wipe threads. |
+| Sep 26 | [Season 02 and wipe guides](https://www.wardogswiki.com/en/guides/wardogs-season-2) | Corrected a serious source omission in all six locales: BULKHEAD had already stated the seasonal cash/XP reset and persistent Gold Bar/cosmetic policy in April | **Production live and verified**; 497 tests passed and IndexNow accepted 31 updated URLs | Track GSC landing-page impressions and clicks separately from Reddit referrals; correction itself is not an earned backlink. |
 
 ## Qualified opportunities and next gates
 
@@ -52,6 +54,6 @@ These are distinct candidate surfaces, not 12 backlinks. “Candidate” means a
 ## Next execution block
 
 1. Recheck wardogs.tech community rules and one administrator contact route once its Discord invite loads; send a single tailored request only if permitted.
-2. Finish owner Steam sign-in in the in-app browser; publish the [self-contained native guide draft](steam-sph2-guide-draft-2026-09-26.md) with a single wiki attribution link after checking the editor and rules.
+2. Finish owner Steam sign-in in the in-app browser; publish the [self-contained native guide draft](steam-sph2-guide-draft-2026-09-26.md) with a single wiki attribution link after checking the editor and rules. The in-app Steam tab still showed the login form on September 26.
 3. Recheck a working r/WarDogs moderator route through the community UI, but stop if Reddit continues rejecting the account or recipient.
 4. Expand the prospect list only with verified placement/contact paths. Do not pad it to an arbitrary 50 domains.
