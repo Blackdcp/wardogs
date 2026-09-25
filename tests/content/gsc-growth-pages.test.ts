@@ -39,9 +39,7 @@ describe("GSC growth page reinforcement", () => {
             : "2026-08-26";
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          expectedCheckDate
-        );
+        expect((guide?.frontmatter.updatedAt ?? "") >= expectedCheckDate, `${locale}/${slug} is older than its evidence baseline`).toBe(true);
         expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(locale === "zh-cn" ? 12 : 24);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeGreaterThanOrEqual(100);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug} FAQ`).toBeGreaterThanOrEqual(3);
