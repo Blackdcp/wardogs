@@ -11,7 +11,8 @@ describe("MDX components", () => {
       "OfficialVideo",
       "SourceNote",
       "Steps",
-      "a"
+      "a",
+      "table"
     ]);
   });
 });

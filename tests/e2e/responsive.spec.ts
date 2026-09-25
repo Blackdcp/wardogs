@@ -1,6 +1,22 @@
 import {expect, test} from "@playwright/test";
 import {expectImagesLoaded, expectNoHorizontalOverflow} from "./helpers";
 
+test("mobile guide tables remain semantic and scroll within the article", async ({page}) => {
+  await page.setViewportSize({width: 390, height: 844});
+
+  for (const pathname of ["/en/guides/wardogs-patch-notes", "/ja/guides/wardogs-system-requirements"]) {
+    await page.goto(pathname);
+    const tables = page.locator(".guide-table-scroll");
+    await expect(tables.first().locator("table thead th").first()).toBeVisible();
+    const dimensions = await tables.first().evaluate((element) => ({
+      clientWidth: element.clientWidth,
+      scrollWidth: element.scrollWidth
+    }));
+    expect(dimensions.scrollWidth).toBeGreaterThan(dimensions.clientWidth);
+    await expectNoHorizontalOverflow(page);
+  }
+});
+
 for (const viewport of [
   {name: "mobile", width: 390, height: 844},
   {name: "tablet", width: 768, height: 1024},
