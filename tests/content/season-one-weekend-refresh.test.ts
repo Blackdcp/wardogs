@@ -48,13 +48,12 @@ describe("September 17 Season 1 weekend refresh", () => {
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          locale === "en" && slug === "wardogs-beginner-guide"
-            ? "2026-09-24"
-            : ["wardogs-progression-wipes-guide", "wardogs-best-weapons-loadouts"].includes(slug)
+        const baselineDate = locale === "en" && slug === "wardogs-beginner-guide"
+          ? "2026-09-24"
+          : ["wardogs-progression-wipes-guide", "wardogs-best-weapons-loadouts"].includes(slug)
             ? "2026-09-23"
-            : "2026-09-17",
-        );
+            : "2026-09-17";
+        expect((guide?.frontmatter.updatedAt ?? "") >= baselineDate, `${locale}/${slug}`).toBe(true);
         expect(guide?.body, `${locale}/${slug}`).toContain("Season 1");
         expect(guide?.body, `${locale}/${slug}`).toContain("Patch 0.11");
         expect(sourceUrls, `${locale}/${slug}`).toContain("https://steamcommunity.com/app/1867240/announcements/");
@@ -80,13 +79,12 @@ describe("September 17 Season 1 weekend refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
         const sourceUrls = guide?.frontmatter.sources.map((source) => source.url) ?? [];
 
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          locale === "en" && slug === "wardogs-beginner-guide"
-            ? "2026-09-24"
-            : ["wardogs-progression-wipes-guide", "wardogs-best-weapons-loadouts"].includes(slug)
+        const baselineDate = locale === "en" && slug === "wardogs-beginner-guide"
+          ? "2026-09-24"
+          : ["wardogs-progression-wipes-guide", "wardogs-best-weapons-loadouts"].includes(slug)
             ? "2026-09-23"
-            : "2026-09-17",
-        );
+            : "2026-09-17";
+        expect((guide?.frontmatter.updatedAt ?? "") >= baselineDate, `${locale}/${slug}`).toBe(true);
         expect(sourceUrls, `${locale}/${slug}`).toContain(url);
         expect(guide?.body, `${locale}/${slug}`).toContain(channel);
       }

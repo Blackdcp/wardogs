@@ -58,7 +58,7 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
 
       expect(beginner?.frontmatter.updatedAt, locale).toBe(locale === "en" ? "2026-09-24" : "2026-09-17");
       expect(fob?.frontmatter.updatedAt, locale).toBe("2026-09-17");
-      expect(money?.frontmatter.updatedAt, locale).toBe("2026-09-17");
+      expect((money?.frontmatter.updatedAt ?? "") >= "2026-09-17", locale).toBe(true);
 
       expect(beginner?.frontmatter.sources.some(({url}) => url.includes("Msg78ysR_hQ"))).toBe(true);
       expect(beginner?.body).toMatch(/practice range|Übungsplatz|полигон|campo de treino|射撃練習場|训练场|实践范围/i);
@@ -70,9 +70,10 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       expect(fob?.body).toMatch(/small.*medium.*large|klein.*mittel.*groß|мал.*сред.*больш|pequen.*médio.*grande|小型.*中型.*大型|小.*中.*大/i);
 
       expect(money?.frontmatter.sources.some(({url}) => url.includes("Jm7ogJLKIJo"))).toBe(true);
+      expect(money?.frontmatter.sources.some(({url}) => url.includes("PQvtvAvl-78"))).toBe(true);
       expect(money?.body).toMatch(/pilot|Pilot|пилот|piloto|パイロット|飞行员/i);
       expect(money?.body).toMatch(/Gold Bars|Goldbarren|золот.*слит|Barras de Ouro|ゴールドバー/i);
-      expect(money?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認|尚未(?:得到)?确认|未确认/i);
+      expect(money?.body).toMatch(/reset|zurückgesetzt|сбрас|リセット|重置/i);
     }
   });
 

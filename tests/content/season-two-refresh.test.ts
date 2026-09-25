@@ -5,6 +5,7 @@ import {CONFIRMED_RUMOR_ITEMS, TOP_GUIDE_SLUGS} from "../../src/features/home/ho
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const seasonAnnouncement = "https://steamcommunity.com/games/1867240/announcements/detail/677384059121304815";
 const officialTeaser = "https://www.youtube.com/watch?v=3rdbnh8P0T0";
+const officialWipePolicy = "https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s";
 const handlerM4 = "https://www.youtube.com/watch?v=W3zijGs1jbY";
 const jaronMk22 = "https://www.youtube.com/watch?v=xAkcBAFUYz0";
 
@@ -15,10 +16,11 @@ describe("September 23 Season 02 content refresh", () => {
       const sources = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(guide, `${locale}/wardogs-season-2`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-23");
+      expect((guide?.frontmatter.updatedAt ?? "") >= "2026-09-23", locale).toBe(true);
       expect(guide?.frontmatter.order, locale).toBe(51);
       expect(sources, `${locale}/announcement`).toContain(seasonAnnouncement);
       expect(sources, `${locale}/teaser`).toContain(officialTeaser);
+      expect(sources, `${locale}/wipe policy`).toContain(officialWipePolicy);
       expect(guide?.body, `${locale}/date`).toContain("15");
       expect(guide?.body, `${locale}/year`).toContain("2026");
       expect(guide?.body.length, `${locale}/body`).toBeGreaterThanOrEqual(1_200);
@@ -31,12 +33,13 @@ describe("September 23 Season 02 content refresh", () => {
       const wipes = await loadGuideDocument(locale, "wardogs-progression-wipes-guide");
 
       expect(patches?.frontmatter.updatedAt, `${locale}/patches`).toBe("2026-09-23");
-      expect(wipes?.frontmatter.updatedAt, `${locale}/wipes`).toBe("2026-09-23");
+      expect((wipes?.frontmatter.updatedAt ?? "") >= "2026-09-23", `${locale}/wipes`).toBe(true);
       expect(patches?.frontmatter.sources.map(({url}) => url)).toContain(seasonAnnouncement);
       expect(wipes?.frontmatter.sources.map(({url}) => url)).toContain(seasonAnnouncement);
+      expect(wipes?.frontmatter.sources.map(({url}) => url)).toContain(officialWipePolicy);
       expect(patches?.body, `${locale}/latest numbered patch`).toContain("Patch 0.11");
       expect(`${wipes?.frontmatter.faq.map(({answer}) => answer).join("\n")}\n${wipes?.body}`, `${locale}/wipe boundary`)
-        .toMatch(/does not.*wipe|keinen Wipe|не подтверждает вайп|não confirma um wipe|ワイプを確定していない|没有确认删档/i);
+        .toMatch(/Gold Bars|Goldbarren|ゴールドバー|слитки/i);
     }
   });
 

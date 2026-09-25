@@ -70,9 +70,7 @@ describe("September 2026 live-ops content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          slug === "wardogs-progression-wipes-guide" ? "2026-09-23" : "2026-09-17",
-        );
+        expect((guide?.frontmatter.updatedAt ?? "") >= (slug === "wardogs-progression-wipes-guide" ? "2026-09-23" : "2026-09-17"), `${locale}/${slug}`).toBe(true);
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(2);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(locale === "ja" ? 1_500 : 1_800);

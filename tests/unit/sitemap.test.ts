@@ -64,7 +64,7 @@ describe("sitemap", () => {
     expect(new Date(entriesByUrl.get(`${origin}/en/guides/wardogs-fob-guide`)!.lastModified!).toISOString())
       .toBe("2026-09-17T00:00:00.000Z");
     expect(new Date(entriesByUrl.get(`${origin}/ja/guides/wardogs-money-guide`)!.lastModified!).toISOString())
-      .toBe("2026-09-17T00:00:00.000Z");
+      .toBe("2026-09-26T00:00:00.000Z");
   });
 
   it("includes the video hub and every standalone video article in all five locales", () => {

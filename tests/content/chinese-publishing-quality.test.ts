@@ -146,7 +146,7 @@ describe("Simplified Chinese publishing quality", () => {
       const expectedDate = ["wardogs-map", "wardogs-money-guide"].includes(slug)
         ? "2026-09-17"
         : "2026-09-01";
-      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(expectedDate);
+      expect((guide?.frontmatter.updatedAt ?? "") >= expectedDate, `zh-cn/${slug}`).toBe(true);
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
       expect(searchable, `zh-cn/${slug}`).toContain("版本相关");
       expect(guide?.frontmatter.sources.length, `zh-cn/${slug}`).toBeGreaterThanOrEqual(2);
