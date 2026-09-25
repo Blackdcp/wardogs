@@ -8,8 +8,8 @@ Track weekly: qualified prospects, personalized requests sent, accepted placemen
 
 ## Assets ready to cite
 
-- [SPH-2 Season 1 evidence ledger](https://www.wardogswiki.com/en/guides/wardogs-artillery-guide): official Career 90/$500,000 one-time unlock versus historical vendor footage and two separately sourced Season 1 $8,000 player reports. Updated locally on September 26 with a copyable cost breakdown and correction path. **Production deployment not yet verified at writing.**
-- [Havoc helicopter guide](https://www.wardogswiki.com/en/guides/wardogs-helicopter-guide): flight workflow and two separately sourced player loadout-price reports, with a warning not to treat either as an official vendor sheet. Updated locally on September 26. **Production deployment not yet verified at writing.**
+- [SPH-2 Season 1 evidence ledger](https://www.wardogswiki.com/en/guides/wardogs-artillery-guide): official Career 90/$500,000 one-time unlock versus historical vendor footage and two separately sourced Season 1 $8,000 player reports. The September 26 update and its readable, claim-by-claim list were verified on the production page after deployment.
+- [Havoc helicopter guide](https://www.wardogswiki.com/en/guides/wardogs-helicopter-guide): flight workflow and two separately sourced player loadout-price reports, with a warning not to treat either as an official vendor sheet. The September 26 update was verified on the production page.
 - [Loadout budget planner](https://www.wardogswiki.com/en/tools/loadout-budget): existing interactive asset; inspect live behavior before pitching exact features or prices.
 
 ## Verified actions, not inferred wins
@@ -21,6 +21,8 @@ Track weekly: qualified prospects, personalized requests sent, accepted placemen
 | Sep 24 | [r/WarDogs Guides & Tools Hub](https://www.reddit.com/r/WarDogs/wiki/guidesandtools/) | Submission via listed moderator-message route | **Not sent**: Reddit rejected the community recipient | Directory does not list us. |
 | Sep 26 | [u/Mike_Prowe](https://www.reddit.com/user/Mike_Prowe/) | Owner approved one direct submission attempt; drafted tailored invitation | **Not sent**: Reddit chat returned “Unable to invite the selected invitee(s).” | Do not count as outreach sent or retry blindly. A working moderator route would need separate verification. |
 | Sep 26 | [wardogs.tech community Discord](https://discord.gg/FhWDZQn9Gy) | Owner approved one rule-checked partner pitch | **Not sent**: Discord invite remained a blank/loading screen in the signed-in in-app browser | Do not join/post through a guessed channel or claim a partnership. Retry only when the page loads normally. |
+| Sep 26 | [Production SPH-2 and Havoc guides](https://www.wardogswiki.com/en/guides/wardogs-artillery-guide) | Updated both English source-led assets and fixed raw Markdown table rendering | **Live and verified**: claim list and Havoc field report appeared on canonical site | Build/content tests passed; IndexNow accepted updated URL notifications. |
+| Sep 26 | [Steam guide draft](steam-sph2-guide-draft-2026-09-26.md) | Wrote a complete native Steam guide with sources, conditional budget examples and one wiki attribution link | **Draft only**: Steam sign-in still pending | Do not claim a published Steam placement. |
 
 ## Qualified opportunities and next gates
 
@@ -29,7 +31,7 @@ These are distinct candidate surfaces, not 12 backlinks. “Candidate” means a
 | Priority | Surface and evidence | Why relevant | Next gate / state |
 | --- | --- | --- | --- |
 | 1 | [r/WarDogs Guides & Tools Hub](https://www.reddit.com/r/WarDogs/wiki/guidesandtools/) | Directory explicitly asks for guide/tool submissions | Both visible messaging paths failed. Wait for a legitimate working mod route; do not claim listing. |
-| 1 | [wardogs.tech Partners & community tools](https://wardogs.tech/) | Maintains a real partner/tools section for WARDOGS players | Its [community Discord](https://discord.gg/FhWDZQn9Gy) is the visible contact route, but the invite would not render in the in-app browser. Check rules and whether administrators welcome guide references before one tailored pitch. |
+| 1 | [wardogs.tech Partners & community tools](https://wardogs.tech/) | Maintains a real partner/tools section for WARDOGS players | Its [community Discord](https://discord.gg/FhWDZQn9Gy) would not render in the in-app browser. Its [Terms page](https://wardogs.tech/terms) publicly lists cory@niblett.me as a contact; owner approval to switch to email is pending. Do not call an unsent email an outreach win. |
 | 1 | [WARDOGS Steam Guides](https://steamcommunity.com/app/1867240/guides/) | Official game hub invites players to publish complete guides; 132 guides visible | In-app browser is **not signed into Steam**. Create a substantial native guide, not a thin off-site-link stub, only after login and rules check. |
 | 2 | [r/WarDogs self-promotion update](https://www.reddit.com/r/WarDogs/comments/1v0xa6h/self_promotion_update/) | Allows limited original creator content | One self-promotional post per week and genuine community participation. Choose one differentiated asset and confirm current rules; no cross-post blast. |
 | 2 | [r/WarDogs artillery price discussion](https://www.reddit.com/r/WarDogs/comments/1wjbvaa/what_are_your_thoughts_on_how_cheap_this_is/) | Source of specific live-build price observations | Cite in our ledger (done); only answer a new material question with original analysis, not another generic link drop. |
@@ -49,8 +51,7 @@ These are distinct candidate surfaces, not 12 backlinks. “Candidate” means a
 
 ## Next execution block
 
-1. Deploy and verify the two updated English assets before pitching their September 26 changes.
-2. Check wardogs.tech community rules and one administrator contact route; send a single tailored request if permitted.
-3. Ask owner to sign into Steam in the in-app browser; publish one self-contained original guide with the source table and a single attribution link after login.
-4. Recheck a working r/WarDogs moderator route through the community UI, but stop if Reddit continues rejecting the account or recipient.
-5. Expand the prospect list only with verified placement/contact paths. Do not pad it to an arbitrary 50 domains.
+1. Recheck wardogs.tech community rules and one administrator contact route once its Discord invite loads; send a single tailored request only if permitted.
+2. Finish owner Steam sign-in in the in-app browser; publish the [self-contained native guide draft](steam-sph2-guide-draft-2026-09-26.md) with a single wiki attribution link after checking the editor and rules.
+3. Recheck a working r/WarDogs moderator route through the community UI, but stop if Reddit continues rejecting the account or recipient.
+4. Expand the prospect list only with verified placement/contact paths. Do not pad it to an arbitrary 50 domains.
