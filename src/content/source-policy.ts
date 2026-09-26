@@ -1,6 +1,9 @@
 const approvedHosts = new Set([
   "store.steampowered.com",
   "steamcommunity.com",
+  "api.steampowered.com",
+  "partner.steamgames.com",
+  "steamdb.info",
   "team17.com",
   "www.team17.com",
   "bulkhead.com",

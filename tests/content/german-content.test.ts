@@ -6,7 +6,7 @@ describe("German guide library", () => {
     await expect(assertCompleteContentMatrix(["en", "de"])).resolves.toBeUndefined();
     const summaries = await listGuideSummaries("de");
     const english = await listGuideSummaries("en");
-    expect(summaries).toHaveLength(52);
+    expect(summaries).toHaveLength(53);
     const englishBySlug = new Map(english.map((guide) => [guide.slug, guide]));
     for (const summary of summaries) {
       expect(summary.description).not.toBe(englishBySlug.get(summary.slug)?.description);

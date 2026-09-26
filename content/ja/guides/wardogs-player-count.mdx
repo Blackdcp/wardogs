@@ -1,0 +1,56 @@
+---
+title: "WARDOGSのプレイヤー数：Steam同時接続と公式発表の違い"
+description: "WARDOGSの現在のプレイヤー数を確認する方法を整理します。Steamの同時接続、公式の40万人ピーク、累計200万本の販売数は別の指標です。メイン製品のApp ID、時刻付きグラフ、ValveのAPI、過去のPlaytestとの違いを確認し、古い数字を現在のオンライン人数として扱わないための手順を解説します。"
+keyword: "wardogs player count"
+category: "guide"
+slug: "wardogs-player-count"
+order: 53
+updatedAt: "2026-09-26"
+badges:
+  - label: "Steamデータ"
+    tone: "accent"
+  - label: "現在値は変動"
+    tone: "warning"
+faq:
+  - question: "今WARDOGSをプレイしている人数は？"
+    answer: "静的な記事に正確な現在値は固定できません。メイン製品App 1867240のSteamDBグラフ、またはValveの現在プレイヤー数APIを開き、取得時刻を確認してください。"
+  - question: "同時接続40万人を超えましたか？"
+    answer: "はい。BULKHEADは9月12日のPatch 0.11公式告知で、ピーク時の同時接続40万人に感謝しています。これは過去の記録であり、今日の現在値ではありません。"
+  - question: "200万本販売なら200万人がオンラインですか？"
+    answer: "いいえ。9月15日の公式発表は累計販売数です。同時接続は指定したSteamアプリの一時点の活動人数を示します。"
+sources:
+  - label: "BULKHEAD公式Steam告知：ピークと販売数"
+    url: "https://steamcommunity.com/app/1867240/announcements/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Valve Steamworks：現在プレイヤー数の定義"
+    url: "https://partner.steamgames.com/doc/webapi/ISteamUserStats"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "SteamDB：メイン製品App 1867240の独立グラフ"
+    url: "https://steamdb.info/app/1867240/charts/"
+    kind: "community"
+    checkedAt: "2026-09-26"
+  - label: "WARDOGS公式Steamストア：メイン製品App 1867240"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+---
+
+## 今の人数を知るには
+
+**現在プレイ中の人数**は、[WARDOGSメイン製品App 1867240のSteamDBグラフ](https://steamdb.info/app/1867240/charts/)を開き、表示された時刻を確認してください。SteamDBは独立した追跡サイトであり、開発会社の公式発表ではありません。[Valveの現在プレイヤー数API](https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1867240)も同じApp IDで確認できます。[Steamworks公式文書](https://partner.steamgames.com/doc/webapi/ISteamUserStats)は、指定したSteamアプリでその時点に活動しているユーザーの数と定義しています。静的なWikiに数字をコピーすると、数分後には古くなり得ます。
+
+## BULKHEADが確認した数字
+
+BULKHEADは**9月12日のPatch 0.11公式告知**で、**ピーク時に同時接続40万人**に達したことを述べています。これは過去のピークであり、常時40万人がオンラインという意味ではありません。**9月15日**には**累計200万本販売**を発表しました。販売数は積み上がる指標であり、現在プレイ中の人数、1日のユニークユーザー、ログイン待ち人数、サーバー空席数とは異なります。
+
+独立したグラフが公式の概数より細かいピークや高い値を示す場合もあります。測定間隔と時刻が異なるためです。その数値を使うなら、第三者の観測値と明示して日時を添え、BULKHEADの公式な厳密値として書かないでください。
+
+## 同じアプリを比べる
+
+現在販売されているメイン製品は**WARDOGS App 1867240**です。以前のWARDOGS Playtestは別のベータクライアントでした。ベータ週末の活動をメイン製品のEarly Access人数に足してはいけません。Valveの方法はApp IDを指定するため、そのアプリを要求時点で利用している人を数えます。購入者全員や過去の総プレイヤー数を数えるものではなく、ログイン待ちや個別サーバーの正常稼働も保証しません。
+
+二つのスクリーンショットを比較するときは、App ID、UTCの取得時刻、「現在プレイ中」か「24時間／歴代ピーク」か、Valve・第三者・開発会社のどれが出所かを確認しましょう。発売直後のピークから下がっただけではサービス停止の証拠になりません。人数が増えていても、入ろうとしている特定サーバーが動いているとは限りません。
+
+接続問題では[公式Steam告知](https://steamcommunity.com/app/1867240/announcements/)と[サーバー状態ガイド](/ja/guides/wardogs-server-status)を確認してください。更新内容は[パッチノート](/ja/guides/wardogs-patch-notes)にまとめています。このページは変動する現在値を見出しに固定しません。

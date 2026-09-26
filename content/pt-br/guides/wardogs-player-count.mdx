@@ -1,0 +1,56 @@
+---
+title: "Jogadores de WARDOGS: online na Steam e recordes oficiais"
+description: "Confira jogadores online em WARDOGS sem misturar o número ao vivo da Steam, o pico oficial de 400 mil simultâneos e as duas milhões de cópias vendidas."
+keyword: "wardogs player count"
+category: "guide"
+slug: "wardogs-player-count"
+order: 53
+updatedAt: "2026-09-26"
+badges:
+  - label: "Dados da Steam"
+    tone: "accent"
+  - label: "Número ao vivo varia"
+    tone: "warning"
+faq:
+  - question: "Quantas pessoas jogam WARDOGS agora?"
+    answer: "Um artigo estático não pode manter um número confiável a cada minuto. Abra o gráfico da SteamDB ou a consulta atual da Valve para o jogo principal, App 1867240, e confira o horário."
+  - question: "WARDOGS passou de 400 mil jogadores simultâneos?"
+    answer: "Sim. No anúncio oficial do Patch 0.11 em 12 de setembro, a BULKHEAD agradeceu pelo pico de 400 mil usuários simultâneos. Isso é um marco histórico, não o valor atual."
+  - question: "Dois milhões de cópias significam dois milhões online?"
+    answer: "Não. O anúncio oficial de 15 de setembro informa vendas acumuladas. Jogadores simultâneos são uma medição momentânea de um aplicativo específico da Steam."
+sources:
+  - label: "Anúncios oficiais da BULKHEAD na Steam: pico e vendas"
+    url: "https://steamcommunity.com/app/1867240/announcements/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Valve Steamworks: definição do total atual de jogadores"
+    url: "https://partner.steamgames.com/doc/webapi/ISteamUserStats"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "SteamDB: gráfico independente do jogo principal App 1867240"
+    url: "https://steamdb.info/app/1867240/charts/"
+    kind: "community"
+    checkedAt: "2026-09-26"
+  - label: "Loja oficial WARDOGS: App 1867240"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+---
+
+## Onde conferir o número deste momento
+
+Para saber quantos jogadores estão **agora** no jogo, abra o [gráfico SteamDB da App principal 1867240](https://steamdb.info/app/1867240/charts/) e observe o horário da leitura. SteamDB é um monitor independente, não um anúncio da desenvolvedora. Quem prefere a origem técnica pode consultar a [API de jogadores atuais da Valve para essa App](https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1867240). A [documentação Steamworks](https://partner.steamgames.com/doc/webapi/ISteamUserStats) define o resultado como usuários ativos no aplicativo indicado naquele instante. Um valor copiado para uma página estática pode ficar desatualizado rapidamente.
+
+## Números realmente confirmados pela BULKHEAD
+
+No comunicado oficial sobre o **Patch 0.11 de 12 de setembro**, a BULKHEAD agradeceu pelo pico de **400 mil usuários simultâneos**. É um marco histórico, não uma afirmação de que 400 mil permanecem online o tempo todo. Em **15 de setembro**, a empresa anunciou **dois milhões de cópias vendidas**. Vendas são acumuladas e não equivalem ao total online neste momento, usuários únicos diários, fila ou vagas disponíveis em servidores.
+
+Um gráfico independente pode registrar um pico mais preciso ou mais alto, pois seus intervalos e horários de amostragem variam. Identifique esse número como observação de terceiros com data e horário; não o apresente como valor exato divulgado pela BULKHEAD.
+
+## Confira o aplicativo e a métrica
+
+O jogo principal no Acesso Antecipado é **WARDOGS App 1867240**. O WARDOGS Playtest antigo era um cliente beta separado. Não some a atividade daqueles fins de semana ao contador do jogo principal. O método da Valve recebe um App ID específico e mede a atividade naquele aplicativo, não todas as pessoas que compraram ou jogaram alguma vez. Também não prova que a fila de login, o matchmaking ou cada servidor estejam saudáveis.
+
+Ao comparar capturas, verifique quatro pontos: App ID, horário UTC da leitura, se o dado é “jogando agora” ou pico diário/histórico, e se a origem é Valve, um monitor externo ou a desenvolvedora. Cair em relação ao recorde do lançamento não prova interrupção. Um número alto também não garante que o servidor desejado esteja acessível.
+
+Para uma falha de conexão, veja os [anúncios oficiais](https://steamcommunity.com/app/1867240/announcements/) e nosso [guia de status dos servidores](/pt-br/guides/wardogs-server-status). Para mudanças recentes, leia as [notas de atualização](/pt-br/guides/wardogs-patch-notes). Esta página não congela um número volátil no título.

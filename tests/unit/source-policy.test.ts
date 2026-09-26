@@ -2,6 +2,12 @@ import {describe, expect, it} from "vitest";
 import {isApprovedSourceUrl} from "../../src/content/source-policy";
 
 describe("source policy", () => {
+  it("allows Valve player-count documentation and a labeled independent chart", () => {
+    expect(isApprovedSourceUrl("https://partner.steamgames.com/doc/webapi/ISteamUserStats")).toBe(true);
+    expect(isApprovedSourceUrl("https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1867240")).toBe(true);
+    expect(isApprovedSourceUrl("https://steamdb.info/app/1867240/charts/")).toBe(true);
+  });
+
   it("allows Microsoft's official Windows support pages", () => {
     expect(isApprovedSourceUrl("https://support.microsoft.com/en-us/topic/example")).toBe(true);
   });
