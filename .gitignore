@@ -10,6 +10,7 @@ test-results/
 !.env.example
 .superpowers/
 .worktrees/
+.indexnow/
 *.tsbuildinfo
 
 .vercel

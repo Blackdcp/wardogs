@@ -1,0 +1,39 @@
+# Global search and engagement audit — 2026-09-26
+
+Source: the owner's logged-in Google Search Console, GA4 and Bing Webmaster Tools dashboards, inspected on 2026-09-26. Search Console and GA4 use different date ranges and definitions; do not combine their clicks, users and sessions into one metric. Dashboard data can be revised after this snapshot.
+
+## What the global totals hide
+
+Google Search Console, Web search, all countries, Sep 17–23 vs Sep 10–16: approximately **13.8k vs 11.8k clicks**, **281k vs 251k impressions**, CTR **4.9% vs 4.7%**, average position **6.5 vs 6.5**. This is not a site-wide drop in total Google clicks. Japan supplied **8,444 vs 5,921** clicks (+2,523); the rest of the world together was approximately **5.36k vs 5.88k** (-0.52k, about -9%). The totals are rounded, so the non-Japan figure is approximate.
+
+| GSC country | Clicks, latest vs prior week | Impressions, latest vs prior week | Reading |
+| --- | ---: | ---: | --- |
+| Japan | 8,444 vs 5,921 | 53,665 vs 33,856 | Strong growth masks losses elsewhere. |
+| Russia | 1,191 vs 1,505 | 18,900 vs 22,948 | Both demand/reach and clicks fell. |
+| United States | 753 vs 934 | 67,162 vs 70,795 | Clicks fell faster than impressions. |
+| Germany | 908 vs 1,083 | 24,133 vs 23,697 | Impressions held; click-through weakened. |
+| United Kingdom | 226 vs 295 | 15,645 vs 16,384 | Click loss. |
+| Brazil | 195 vs 262 | 6,162 vs 8,243 | Both impressions and clicks fell. |
+| Singapore | 22 vs 20 | 1,196 vs 931 | Search clicks stayed tiny despite the GA4 user spike. |
+
+GSC page comparison shows the largest absolute click losses on `/en/guides/wardogs-cargo-guide` (**529 vs 861**, impressions **29,302 vs 33,485**, CTR **1.8% vs 2.6%**, average position **5.8 vs 5.6**), `/ru/guides/wardogs-mortar-guide` (**38 vs 293**), `/ja/items/vehicles/stingray` (**39 vs 133**), `/ru/guides/wardogs-best-settings` (**24 vs 116**), `/ja/guides/wardogs-squad-guide` (**1,352 vs 1,442**), `/en/guides/wardogs-oil-rig-guide` (**33 vs 123**) and `/de/items/weapons` (**18 vs 108**). The English cargo page was revised on Sep 26, after this GSC comparison window; its new title/answer cannot be judged from these seven-day results yet. The brand query `wardogs wiki` rose from 67 to 455 clicks, so the observed loss is not a blanket disappearance on that term.
+
+GA4, Sep 19–25 vs Sep 12–18: active users **14,237 vs 12,244** (+16.3%), but engaged sessions **8,343 vs 8,645** (-3.5%), engagement rate **45.06% vs 52.13%**, and average engagement **30s vs 41s**. Japan active users rose **7,067 vs 5,311**; Russia fell **1,601 vs 1,917**, US **959 vs 1,097**, Germany **810 vs 998**, UK **216 vs 273** and Brazil **215 vs 268**. A user count alone therefore overstates healthy growth.
+
+Singapore had **1,129 sessions**, but only **18 engaged sessions**, a **1.59%** engagement rate, **0s** average engagement and one key event. **1,093 sessions (96.8%)** were tagged `(direct)/(none)`; only **29** were `google/organic`. This is not evidence of new organic-search demand or engaged players. Source attribution and traffic quality warrant investigation, but the available data do not prove that the visits are bots.
+
+Bing Webmaster Tools, Sep 19–25, shows **0 clicks and 56 impressions**. The Pages report assigns **all 56 impressions to `/en/guides/wardogs-beta`**; no other page was served in that seven-day report. The 56 impressions came from multiple countries (including US 27 and UK 10), so this is not an American-only problem. The chart drops sharply from **2,700 impressions/31 clicks on Sep 6** to **400/0 on Sep 7**, then **157/1 on Sep 8**. Yet Site Explorer currently reports **819 indexed of 901 known URLs**, zero crawl errors, 44 warnings and 38 excluded. A canonical cargo-guide inspection also returned “Indexed successfully.” The evidence points to a collapse in Bing *serving/visibility*, not proven sitewide deindexing; per-URL problems are still possible. The dashboard alone does not identify the cause.
+
+## Diagnosis and next checks
+
+1. Treat non-Japan organic loss and engagement decline as the primary growth problem; keep Japan in the total but never let it offset country-level losses in reporting.
+2. Separate *lost impressions* from *weaker CTR at similar position*. Prioritize the English cargo guide (high exposure and falling CTR), Russian mortar/settings, German weapons, and the oil-rig guide. Compare query-by-country after the Sep 26 content change has had time to be recrawled; do not repeatedly change titles before a clean measurement window.
+3. Investigate the Singapore direct spike by landing page, device, city and server logs/referrer availability. Do not block a geography or declare bot traffic without stronger evidence.
+4. Investigate Bing as a separate urgent issue: compare the exact Sep 6–8 query/page breakdown and crawl/robots/sitemap timeline, then monitor whether indexed non-beta URLs resume serving. IndexNow can announce changes but cannot force ranking. An indexed page can still lose query relevance, impressions or CTR; neither a 404 count nor an IndexNow acceptance proves a ranking recovery.
+5. Review localized copies of time-sensitive guidance. The English community-server guide now states that the 5% cash bonus was offered for only one week; five non-English versions still say “temporary” without that exact duration.
+
+Next content batch, based on a read-only local audit (content opportunities, **not** proven causes of the traffic loss): move the Russian mortar guide's beta-labeled aiming steps into its first screen and align the title with “how to fire/range/azimuth” intent; lead the Russian settings guide with actionable official hardware baselines instead of a video preamble; make the German weapons index disclose that its catalog entries are historical Alpha/Beta evidence rather than a live official list; and separate the English oil-rig guide's unverified beta mechanics from the official Season 1 Large Hammer unlock facts. Do not use unverified current in-game prices or overwrite the Sep 26 cargo-title experiment before it has a measurement window.
+
+The 81 historical redirects and 38 genuine 404s from [the URL audit](gsc-us-404-audit-2026-09-24.md) were rechecked on the live site: all 81 redirects resolved to 200, and all 38 unavailable details ended at 404. No new broad redirect is justified by that audit.
+
+Dashboards: [Google Search Console](https://search.google.com/search-console/performance/search-analytics?resource_id=sc-domain%3Awardogswiki.com), [GA4](https://analytics.google.com/), [Bing Webmaster Tools](https://www.bing.com/webmasters/).

@@ -1,12 +1,15 @@
 import {execFileSync, spawnSync} from "node:child_process";
+import {existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync} from "node:fs";
+import path from "node:path";
 import {pathToFileURL} from "node:url";
-import {SITE_ORIGIN, submitIndexNow} from "./submit-indexnow.mjs";
+import {SITE_ORIGIN, fetchLiveSitemapUrls, submitIndexNow} from "./submit-indexnow.mjs";
 
 const livePages = [
   "/en",
   "/en/guides/wardogs-squad-guide",
   "/en/guides/wardogs-known-issues"
 ];
+const defaultSnapshotPath = path.join(process.cwd(), ".indexnow", "predeploy-sitemap.json");
 
 function hasCanonical(html, expected) {
   return [...html.matchAll(/<link\b[^>]*>/gi)].some(([tag]) =>
@@ -89,14 +92,52 @@ export function validateDeploymentDiff(base, head, status) {
   if (base === head) throw new Error("No committed changes since INDEXNOW_BASE_SHA.");
 }
 
-export async function deployProduction() {
-  const base = process.env.INDEXNOW_BASE_SHA;
-  const head = git("rev-parse", "HEAD");
-  validateDeploymentDiff(base, head, git("status", "--porcelain"));
-  git("rev-parse", "--verify", `${base}^{commit}`);
-  execFileSync("git", ["merge-base", "--is-ancestor", base, head]);
+async function preDeploySitemapUrls(base, head, fetchImpl, snapshotPath) {
+  if (existsSync(snapshotPath)) {
+    let snapshot;
+    try {
+      snapshot = JSON.parse(readFileSync(snapshotPath, "utf8"));
+    } catch (error) {
+      throw new Error(`IndexNow snapshot at ${snapshotPath} is unreadable; inspect it before retrying.`, {cause: error});
+    }
+    if (snapshot.base !== base || snapshot.head !== head) {
+      throw new Error(`IndexNow snapshot at ${snapshotPath} belongs to a different release; inspect it before deploying.`);
+    }
+    if (!Array.isArray(snapshot.urls) || snapshot.urls.length === 0 ||
+      snapshot.urls.some((url) => {
+        try {
+          return typeof url !== "string" || new URL(url).origin !== SITE_ORIGIN;
+        } catch {
+          return true;
+        }
+      })) {
+      throw new Error(`IndexNow snapshot at ${snapshotPath} has invalid sitemap URLs; inspect it before retrying.`);
+    }
+    console.log(`Reusing saved pre-deployment sitemap for ${head}.`);
+    return snapshot.urls;
+  }
 
-  const deployment = spawnSync("vercel", ["deploy", "--prod", "--yes", "--build-env", `WARDOGSWIKI_RELEASE_SHA=${head}`], {
+  const urls = await fetchLiveSitemapUrls(fetchImpl);
+  mkdirSync(path.dirname(snapshotPath), {recursive: true});
+  writeFileSync(snapshotPath, JSON.stringify({base, head, urls}), {encoding: "utf8", flag: "wx"});
+  return urls;
+}
+
+export async function deployProduction(options = {}) {
+  const gitImpl = options.gitImpl ?? git;
+  const spawnImpl = options.spawnImpl ?? spawnSync;
+  const fetchImpl = options.fetchImpl ?? fetch;
+  const submitImpl = options.submitImpl ?? submitIndexNow;
+  const snapshotPath = options.snapshotPath ?? defaultSnapshotPath;
+  const base = process.env.INDEXNOW_BASE_SHA;
+  const head = gitImpl("rev-parse", "HEAD");
+  validateDeploymentDiff(base, head, gitImpl("status", "--porcelain"));
+  gitImpl("rev-parse", "--verify", `${base}^{commit}`);
+  gitImpl("merge-base", "--is-ancestor", base, head);
+
+  const previousSitemapUrls = await preDeploySitemapUrls(base, head, fetchImpl, snapshotPath);
+
+  const deployment = spawnImpl("vercel", ["deploy", "--prod", "--yes", "--build-env", `WARDOGSWIKI_RELEASE_SHA=${head}`], {
     stdio: "inherit",
     shell: process.platform === "win32",
     env: {...process.env, NO_UPDATE_NOTIFIER: "1"}
@@ -104,12 +145,13 @@ export async function deployProduction() {
   if (deployment.error) throw deployment.error;
   if (deployment.status !== 0) throw new Error(`Production deployment failed (${deployment.status}); IndexNow was not notified.`);
 
-  const smoke = await verifyProduction(fetch, SITE_ORIGIN, head);
+  const smoke = await verifyProduction(fetchImpl, SITE_ORIGIN, head);
   console.log(`Production smoke passed for ${smoke.checked} routes.`);
 
   process.env.BEFORE_SHA = base;
   process.env.CURRENT_SHA = head;
-  const result = await submitIndexNow();
+  const result = await submitImpl({previousSitemapUrls, fetchImpl});
+  unlinkSync(snapshotPath);
   return result;
 }
 
