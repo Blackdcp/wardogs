@@ -451,10 +451,15 @@ export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): C
   const type = getLocalizedItemType(baseType, locale);
   const text = localeText[locale];
   const count = getCatalogEntryCount(guide.id);
+  const germanWeapons = locale === "de" && guide.id === "weapons";
   return {
     ...guide,
-    title: `WARDOGS ${type.label}`,
-    description: text.description(type.label),
+    title: germanWeapons
+      ? "WARDOGS Waffenliste: Gewehre, MPs und mehr aus Alpha/Beta"
+      : `WARDOGS ${type.label}`,
+    description: germanWeapons
+      ? "Alle dokumentierten WARDOGS Waffen aus Alpha 1 und Closed Beta: Gewehre, MPs und mehr. Historische Preise sind keine aktuellen Saison-1-Preise."
+      : text.description(type.label),
     countLabel: text.count(count, type.label),
     dataAsOf: localizeCatalogueBuild(guide.dataAsOf, locale),
     heroImageAlt: type.imageAlt,
