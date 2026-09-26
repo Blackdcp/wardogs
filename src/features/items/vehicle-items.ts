@@ -54,7 +54,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Minigun performance, flight handling, durability, and the $7,000 price may change before Early Access or final release."
+      "Minigun performance, flight handling, durability, and the $7,000 Alpha price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 200,
@@ -102,7 +102,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Rocket payload, damage, replenishment, handling, and price may change before Early Access or final release."
+      "Rocket payload, damage, replenishment, handling, and price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 201,
@@ -201,7 +201,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 10 and the $1,500 price remain unconfirmed for Early Access or final release.",
-      "Speed, handling, durability, seats, and cargo behavior may change before Early Access or final release."
+      "Speed, handling, durability, seats, and cargo behavior may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 203,
@@ -251,7 +251,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Wardog Level 45 and the $8,000 price remain unconfirmed for Early Access or final release.",
-      "Armor, anti-air detection, weapon performance, crew needs, and ammunition may change before Early Access or final release."
+      "Armor, anti-air detection, weapon performance, crew needs, and ammunition may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 204,
@@ -351,7 +351,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 25 and the $3,750 price remain unconfirmed for Early Access or final release.",
-      "M249 behavior, protection, seats, cargo capacity, and handling may change before Early Access or final release."
+      "M249 behavior, protection, seats, cargo capacity, and handling may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 206,
@@ -399,7 +399,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Minigun performance, vehicle protection, capacity, handling, and price may change before Early Access or final release."
+      "Minigun performance, vehicle protection, capacity, handling, and price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 207,
@@ -449,7 +449,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 15 and the $3,000 price remain unconfirmed for Early Access or final release.",
-      "Protection, seats, storage, mobility, fuel, and repair behavior may change before Early Access or final release."
+      "Protection, seats, storage, mobility, fuel, and repair behavior may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 208,
@@ -499,7 +499,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 8 and the $3,750 price remain unconfirmed for Early Access or final release.",
-      "M249 behavior, seating, cargo, protection, handling, and durability may change before Early Access or final release."
+      "M249 behavior, seating, cargo, protection, handling, and durability may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 209,
@@ -548,7 +548,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The $15,000 unlock and $3,000 purchase price remain unconfirmed for Early Access or final release.",
-      "Unlock persistence, cargo rules, capacity, seats, protection, and handling may change before Early Access or final release."
+      "Unlock persistence, cargo rules, capacity, seats, protection, and handling may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 210,
@@ -647,7 +647,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Wardog Level 35 and the $14,000 price remain unconfirmed for Early Access or final release.",
-      "Armor, armament, ammunition, crew roles, mobility, fuel, and repairs may change before Early Access or final release."
+      "Armor, armament, ammunition, crew roles, mobility, fuel, and repairs may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 212,
@@ -801,7 +801,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Minigun behavior, seats, payload, durability, flight handling, and price may change before Early Access or final release."
+      "Minigun behavior, seats, payload, durability, flight handling, and price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 215,
@@ -851,7 +851,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Pilot Level 10 and the $7,400 price remain unconfirmed for Early Access or final release.",
-      "Seats, cargo, loadout, protection, flight handling, and countermeasures may change before Early Access or final release."
+      "Seats, cargo, loadout, protection, flight handling, and countermeasures may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 216,
@@ -901,7 +901,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 40 and the $6,750 price remain unconfirmed for Early Access or final release.",
-      "Weapon behavior, cargo, protection, seating, mobility, and operating costs may change before Early Access or final release."
+      "Weapon behavior, cargo, protection, seating, mobility, and operating costs may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 217,
@@ -951,7 +951,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 30 and the $6,000 price remain unconfirmed for Early Access or final release.",
-      "Protection, cargo, seats, handling, fuel, repair, and loss behavior may change before Early Access or final release."
+      "Protection, cargo, seats, handling, fuel, repair, and loss behavior may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 218,
@@ -1000,7 +1000,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The $60,000 unlock and $5,000 purchase price remain unconfirmed for Early Access or final release.",
-      "Unlock persistence, cargo rules, supply interactions, protection, seats, and handling may change before Early Access or final release."
+      "Unlock persistence, cargo rules, supply interactions, protection, seats, and handling may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 219,

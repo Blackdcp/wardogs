@@ -254,7 +254,7 @@ export const weaponItems = [
     ],
     unconfirmedFacts: [
       "Optic compatibility, recoil, damage, and range tuning remain unconfirmed for Early Access or final release.",
-      "The observed $6,000 price and magazine economy may change before Early Access or final release."
+      "The observed $6,000 Alpha price and magazine economy may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 104,
@@ -358,7 +358,7 @@ export const weaponItems = [
     ],
     unconfirmedFacts: [
       "Arrow damage, velocity, recovery, and capacity remain unconfirmed for Early Access or final release.",
-      "The $800 price and Recon XP requirements may change before Early Access or final release."
+      "The $800 Alpha price and Recon XP requirements may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 106,
@@ -408,7 +408,7 @@ export const weaponItems = [
     ],
     unconfirmedFacts: [
       "Weight and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
-      "Damage, recoil, magazine behavior, and the $900 price may change before Early Access or final release."
+      "Damage, recoil, magazine behavior, and the $900 Alpha price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 107,
@@ -512,7 +512,7 @@ export const weaponItems = [
     ],
     unconfirmedFacts: [
       "Recoil, damage, attachment fit, and Assault XP tuning remain unconfirmed for Early Access or final release.",
-      "The Alpha 1 rifle and magazine prices may change before Early Access or final release."
+      "The Alpha 1 rifle and magazine prices may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 109,
@@ -561,7 +561,7 @@ export const weaponItems = [
     ],
     unconfirmedFacts: [
       "Price, weight, and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
-      "Magazine compatibility, damage, recoil, and capacity may change before Early Access or final release."
+      "Magazine compatibility, damage, recoil, and capacity may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 110,
@@ -610,7 +610,7 @@ export const weaponItems = [
     ],
     unconfirmedFacts: [
       "Price, weight, and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
-      "Full-auto tuning, magazine compatibility, recoil, and damage may change before Early Access or final release."
+      "Full-auto tuning, magazine compatibility, recoil, and damage may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 111,
@@ -659,7 +659,7 @@ export const weaponItems = [
     ],
     unconfirmedFacts: [
       "Fire mode, weight, and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
-      "Capacity, reload behavior, damage, and the $250 price may change before Early Access or final release."
+      "Capacity, reload behavior, damage, and the $250 Alpha price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 112,

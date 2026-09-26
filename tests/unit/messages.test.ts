@@ -14,6 +14,14 @@ function leafPaths(value: unknown, prefix = ""): string[] {
 }
 
 describe("localized messages", () => {
+  it("dates the current official-patch check in every homepage locale", () => {
+    for (const locale of locales) {
+      const messages = loadMessages(locale) as {liveOps?: {windowValue?: string}};
+      expect(messages.liveOps?.windowValue, locale).toMatch(/26/);
+      expect(JSON.stringify(messages.liveOps), locale).not.toMatch(/unlock time is not confirmed|解锁时刻|解禁時刻|Freischaltzeit|время открытия раннего доступа|horário exato de liberação/i);
+    }
+  });
+
   it("keeps every locale structurally identical to English", () => {
     const englishPaths = leafPaths(loadMessages("en")).sort();
 

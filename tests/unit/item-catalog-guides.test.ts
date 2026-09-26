@@ -23,6 +23,12 @@ const recordBackedGuideIds = [
 ] as const;
 
 describe("WARDOGS item catalog guides", () => {
+  it("describes Alpha observations as historical now that Early Access is live", () => {
+    for (const guide of catalogGuides) {
+      expect(`${guide.disclaimer} ${guide.unknowns.join(" ")}`, guide.id).not.toMatch(/before Early Access/i);
+    }
+  });
+
   it("covers every catalogue players can browse from the competitor-shaped guide matrix", () => {
     expect(catalogGuides.map((guide) => guide.id)).toEqual([
       "weapons",

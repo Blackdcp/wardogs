@@ -49,7 +49,7 @@ describe("September 17 Early Access operations", () => {
 
     const status = getPublicStatus();
     expect(status.schemaVersion).toBe(2);
-    expect(status.dataAsOf).toBe("2026-09-17");
+    expect(status.dataAsOf).toBe("2026-09-26");
     expect(status.currentEvent).toMatchObject({
       id: "early-access-patch-0-11",
       name: "Early Access - Patch 0.11",

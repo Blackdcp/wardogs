@@ -80,6 +80,13 @@ const expectedVehicleRelations: Record<(typeof vehicleSlugs)[number], readonly s
 };
 
 describe("item library", () => {
+  it("does not present the live Early Access release as a future event", () => {
+    for (const item of itemLibrary) {
+      expect(JSON.stringify([item.description, item.cautions, item.unconfirmedFacts]), item.slug)
+        .not.toMatch(/before Early Access|Final Early Access/i);
+    }
+  });
+
   it("keeps item pages independent from the guide keyword matrix", () => {
     expect(itemLibrary.map((item) => item.slug)).toContain("mortar");
     expect(getItemsByType("weapons").every((item) => item.type === "weapons")).toBe(true);

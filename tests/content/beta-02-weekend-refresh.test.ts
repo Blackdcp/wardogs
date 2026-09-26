@@ -48,7 +48,7 @@ describe("Closed Beta 02 weekend release contract", () => {
   });
 
   it("publishes the contest and known-issues guides in every language while promoting only current help", async () => {
-    expect(guideManifest).toHaveLength(51);
+    expect(guideManifest).toHaveLength(52);
     for (const slug of newGuideSlugs) {
       expect(guideManifest.some((entry) => entry.slug === slug), slug).toBe(true);
     }

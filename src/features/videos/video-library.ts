@@ -589,7 +589,7 @@ export const videoArticles: readonly VideoArticle[] = [
       {name: "Mobile spawn vehicles", startOffset: 474}
     ],
     quickAnswer:
-      "This creator walkthrough is a practical tour of the WARDOGS pre-match catalogue. It shows how free starter options, paid consumables, medical equipment, armor, storage, specialist launchers, FOB construction kits, and mobile spawn vehicles fit together. Prices, unlock levels, and capacities shown here come from the recorded test build and may change before Early Access.",
+      "This creator walkthrough is a practical tour of the WARDOGS pre-match catalogue. It shows how free starter options, paid consumables, medical equipment, armor, storage, specialist launchers, FOB construction kits, and mobile spawn vehicles fit together. Prices, unlock levels, and capacities shown here come from a historical test build and may differ from the live Early Access client.",
     takeaways: [
       "A basic rifle and limited resources can get a new player into the match without requiring an expensive first loadout.",
       "Consumables, explosives, medical tools, armor, storage, and specialist weapons compete for both cash and inventory space.",
@@ -1099,7 +1099,7 @@ export const videoArticles: readonly VideoArticle[] = [
       {
         heading: "Alpha roughness and honest expectations",
         body: [
-          "A first look should not be mistaken for a final verdict. Alpha footage can include unclear onboarding, balance oddities, technical roughness, and moments that may change before Early Access or full release.",
+          "A first look should not be mistaken for a verdict on today's game. Alpha footage can include unclear onboarding, balance oddities, technical roughness, and moments that differ from the live Early Access client or eventual full release.",
           "The article should be honest about that without becoming negative. The strongest message is that WARDOGS looks ambitious and watchable, but players should keep checking official updates for dates, pricing, system requirements, and confirmed mechanics."
         ]
       },

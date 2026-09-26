@@ -1,7 +1,7 @@
 export const CURRENT_EVENT = {
   id: "early-access-patch-0-11",
   status: "live",
-  dataAsOf: "2026-09-17",
+  dataAsOf: "2026-09-26",
   phase: "early-access",
   broadcastAt: "2026-09-03T18:00:00Z",
   startsAt: "2026-09-03T19:00:00Z",
