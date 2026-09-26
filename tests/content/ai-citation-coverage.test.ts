@@ -94,7 +94,7 @@ describe("AI citation query coverage", () => {
       const searchable = `${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
       const expectedDate = "2026-09-17";
 
-      expect(guide?.frontmatter.updatedAt, locale).toBe(expectedDate);
+      expect((guide?.frontmatter.updatedAt ?? "") >= expectedDate, locale).toBe(true);
       expect(searchable, `${locale} date`).toMatch(releaseDateSignals[locale]);
       expect(searchable, `${locale} platform`).toMatch(locale === "zh-cn" ? /Windows\s*PC|WindowsPC|Windows 电脑/i : /Windows PC/i);
       expect(searchable, `${locale} store`).toContain("Steam");

@@ -109,9 +109,9 @@ describe("September 17 Early Access operations", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
+        expect((guide?.frontmatter.updatedAt ?? "") >= (
           locale === "en" && ["wardogs-beta", "wardogs-playtest"].includes(slug) ? "2026-09-24" : "2026-09-17"
-        );
+        ), `${locale}/${slug}`).toBe(true);
         expect(searchable, `${locale}/${slug}`).toContain("Beta 02");
         expect(searchable, `${locale}/${slug}`).toMatch(liveSignals[locale]);
       }

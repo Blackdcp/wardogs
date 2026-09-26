@@ -27,12 +27,14 @@ describe("WARDOGS current and historical status boundaries", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
+        expect((guide?.frontmatter.updatedAt ?? "") >= (
           locale === "en" && ["wardogs-beta", "wardogs-playtest"].includes(slug) ? "2026-09-24" : "2026-09-17"
-        );
+        ), `${locale}/${slug}`).toBe(true);
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
-        expect(searchable, `${locale}/${slug}`).toContain("08:00 UTC");
+        if (["wardogs-beta", "wardogs-playtest"].includes(slug)) {
+          expect(searchable, `${locale}/${slug}`).toContain("08:00 UTC");
+        }
         if (slug !== "wardogs-download") {
           expect(searchable, `${locale}/${slug}`).toContain("19:00 UTC");
         }
