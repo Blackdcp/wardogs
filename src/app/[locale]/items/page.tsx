@@ -10,6 +10,7 @@ import {catalogueGroups} from "@/features/catalogue/catalogue-groups";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecord, CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
+import {itemHubPreviewSlugs} from "@/features/items/item-hub-data";
 import {getLocalizedCatalogGuide, getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getFeaturedItems, itemTypes, type ItemTypeId} from "@/features/items/item-library";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
@@ -54,11 +55,6 @@ const categoryMedia: Record<ItemTypeId, CategoryMedia> = {
   loadouts: {image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: "WARDOGS loadout planning catalogue banner"}
 };
 
-const previewSlugs: Record<"weapons" | "vehicles", readonly string[]> = {
-  weapons: ["a-91", "amp-9", "compound-bow"],
-  vehicles: ["bobcat", "l2a6", "uh-1y"]
-};
-
 const previewSizes = "(min-width: 1280px) 386px, (min-width: 640px) calc(33vw - 36px), calc(100vw - 32px)";
 
 export function generateStaticParams() {
@@ -73,7 +69,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
 
 function getPreviewRecords(type: "weapons" | "vehicles", locale: Locale): readonly PublishedPreviewRecord[] {
   const records = getLocalizedCatalogueRecords(getCatalogueRecords(type), locale);
-  return previewSlugs[type].map((slug) => {
+  return itemHubPreviewSlugs[type].map((slug) => {
     const record = records.find((candidate) => candidate.slug === slug);
     if (!record || record.detailStatus !== "published" || !record.detailHref || !record.image || !record.imageAlt) {
       throw new Error(`Missing published ${type} catalogue preview: ${slug}`);

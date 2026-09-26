@@ -3,9 +3,10 @@ import {pathToFileURL} from "node:url";
 
 export const INDEXNOW_KEY = "8a4e2c91d70b46f8ab32458d0937ce61";
 export const SITE_ORIGIN = "https://www.wardogswiki.com";
-export const MAX_URLS_PER_RUN = 200;
+export const MAX_URLS_PER_RUN = 10_000;
 const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 const INDEXNOW_DELAY_MS = 200;
+const URLS_PER_PAGE = 200;
 const localeIdsPattern = "en|de|ru|pt-br|ja|zh-cn";
 const localizedPathPattern = `(?:${localeIdsPattern})`;
 
@@ -90,7 +91,6 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
     if (!wantedPaths.has(pathname) && !wantedPatterns.some((pattern) => pattern.test(pathname))) continue;
     seen.add(url);
     selected.push(url);
-    if (selected.length === MAX_URLS_PER_RUN) break;
   }
   return selected;
 }
@@ -132,19 +132,26 @@ export async function submitIndexNowUrls(urls, options = {}) {
   const fetchImpl = options.fetchImpl ?? fetch;
   const keyLocation = options.keyLocation ?? `${SITE_ORIGIN}/${INDEXNOW_KEY}.txt`;
   const pause = options.pause ?? (() => wait(INDEXNOW_DELAY_MS));
-  const urlList = [...new Set(urls)].slice(0, MAX_URLS_PER_RUN);
+  const urlList = [...new Set(urls)];
+  if (urlList.length > MAX_URLS_PER_RUN) {
+    throw new Error(`IndexNow selected ${urlList.length.toLocaleString("en-US")} URLs, exceeding the ${MAX_URLS_PER_RUN.toLocaleString("en-US")} URL safety ceiling.`);
+  }
 
-  for (let index = 0; index < urlList.length; index += 1) {
-    const endpoint = new URL(INDEXNOW_ENDPOINT);
-    endpoint.searchParams.set("url", urlList[index]);
-    endpoint.searchParams.set("key", INDEXNOW_KEY);
-    endpoint.searchParams.set("keyLocation", keyLocation);
-    const response = await fetchImpl(endpoint.toString());
+  for (let pageStart = 0; pageStart < urlList.length; pageStart += URLS_PER_PAGE) {
+    const pageEnd = Math.min(pageStart + URLS_PER_PAGE, urlList.length);
+    for (let index = pageStart; index < pageEnd; index += 1) {
+      const endpoint = new URL(INDEXNOW_ENDPOINT);
+      endpoint.searchParams.set("url", urlList[index]);
+      endpoint.searchParams.set("key", INDEXNOW_KEY);
+      endpoint.searchParams.set("keyLocation", keyLocation);
+      const response = await fetchImpl(endpoint.toString());
 
-    if (![200, 202].includes(response.status)) {
-      throw new Error(`IndexNow returned ${response.status} for ${urlList[index]}: ${await response.text()}`);
+      if (![200, 202].includes(response.status)) {
+        throw new Error(`IndexNow returned ${response.status} for ${urlList[index]}: ${await response.text()}`);
+      }
+      if (index < urlList.length - 1) await pause();
     }
-    if (index < urlList.length - 1) await pause();
+    if (urlList.length > URLS_PER_PAGE) console.log(`IndexNow accepted ${pageEnd}/${urlList.length} updated URLs.`);
   }
 
   return {submitted: urlList.length};

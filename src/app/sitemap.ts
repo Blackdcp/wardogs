@@ -4,8 +4,13 @@ import path from "node:path";
 import matter from "gray-matter";
 import {guideManifest} from "@/content/manifest";
 import {locales} from "@/config/site";
-import {getIndexableItemPaths, getItemByTypeAndSlug, itemTypes} from "@/features/items/item-library";
+import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
+import {getCatalogGuide} from "@/features/items/item-catalog-guides";
+import {itemHubPreviewSlugs} from "@/features/items/item-hub-data";
+import {getFeaturedItems, getIndexableItemPaths, getItemByTypeAndSlug, itemLibrary, itemTypes} from "@/features/items/item-library";
 import {getItemLatestVerifiedAt, type ItemFreshnessSource} from "@/features/items/item-freshness";
+import {operationsAtlasRecords} from "@/features/maps/operations-atlas";
+import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "@/features/news/news-data";
 import {videoArticles} from "@/features/videos/video-library";
 import {buildAlternates} from "@/lib/metadata";
 
@@ -33,20 +38,94 @@ const freshHubPaths = new Set([
   "",
   "/guides",
   "/news",
-  "/videos",
-  "/maps",
-  "/items",
   "/tools/weapon-compare",
   "/tools/ammo-matcher",
   "/tools/progression-route",
   "/tools/logistics-planner",
 ]);
 
-function resolvePageLastModified(pathname: string) {
-  if (pathname === "" || pathname === "/guides" || pathname === "/news") {
-    return new Date("2026-09-26T00:00:00.000Z");
+function latestDate(dates: string[]) {
+  return dates.reduce((latest, candidate) =>
+    Date.parse(candidate) > Date.parse(latest) ? candidate : latest, "2026-08-16");
+}
+
+function itemHubDate(type?: string) {
+  if (!type) {
+    const previewDates = (["weapons", "vehicles"] as const).flatMap((previewType) =>
+      getCatalogueRecords(previewType)
+        .filter(({slug}) => itemHubPreviewSlugs[previewType].some((previewSlug) => previewSlug === slug))
+        .flatMap((record) => [record.evidence.verifiedAt, ...record.changeHistory.map(({verifiedAt}) => verifiedAt)])
+    );
+    const guideDates = itemTypes.map(({id}) => getCatalogGuide(id)?.lastReviewedAt ?? "2026-08-16");
+    return latestDate([...getFeaturedItems(6).map(getItemLatestVerifiedAt), ...previewDates, ...guideDates]);
   }
-  if (freshHubPaths.has(pathname) || /^\/items\/[^/]+$/.test(pathname)) {
+  if (type === "loadouts") return getCatalogGuide("loadouts")?.lastReviewedAt ?? "2026-08-16";
+  const items = itemLibrary.filter((item) => item.type === type);
+  const types = itemTypes.filter(({id}) => id === type);
+  const catalogueDates = types.flatMap(({id}) => id === "loadouts" ? [] : getCatalogueRecords(id).flatMap((record) => [
+    record.evidence.verifiedAt,
+    ...record.changeHistory.map(({verifiedAt}) => verifiedAt)
+  ]));
+  return latestDate([...items.map(getItemLatestVerifiedAt), ...catalogueDates, getCatalogGuide(type)?.lastReviewedAt ?? "2026-08-16"]);
+}
+
+export function resolveMapHubLastModified(catalogueDates: string[], guideDates: string[]) {
+  return new Date(`${latestDate([...catalogueDates, ...guideDates])}T00:00:00.000Z`);
+}
+
+function mapHubDate(locale: string) {
+  const catalogueDates = getCatalogueRecords("maps").flatMap((record) => [
+    record.evidence.verifiedAt,
+    ...record.changeHistory.map(({verifiedAt}) => verifiedAt)
+  ]);
+  const guideDates = operationsAtlasRecords.map(({guideSlug}) => resolveGuideUpdatedAt(locale, guideSlug));
+  return resolveMapHubLastModified(catalogueDates, guideDates);
+}
+
+type EditorialHubSources = {
+  guides: string[];
+  news: string[];
+  videos: string[];
+  items: string[];
+  maps: string[];
+};
+
+export function resolveEditorialHubLastModified(pathname: "" | "/guides" | "/news", sources: EditorialHubSources) {
+  const dates = pathname === "/guides"
+    ? [...sources.guides, ...sources.videos]
+    : pathname === "/news"
+      ? sources.news
+      : Object.values(sources).flat();
+  return new Date(`${latestDate(dates)}T00:00:00.000Z`);
+}
+
+function editorialHubSources(locale: string): EditorialHubSources {
+  return {
+    guides: guideManifest.map(({slug}) => resolveGuideUpdatedAt(locale, slug)),
+    news: [
+      ...NEWS_UPDATES.map(({date}) => date),
+      ...NEWS_CHECKLIST_SLUGS.map((slug) => resolveGuideUpdatedAt(locale, slug))
+    ],
+    videos: videoArticles.map(({updatedDate}) => updatedDate),
+    items: [itemHubDate()],
+    maps: [mapHubDate(locale).toISOString().slice(0, 10)]
+  };
+}
+
+function resolvePageLastModified(locale: string, pathname: string) {
+  if (pathname === "" || pathname === "/guides" || pathname === "/news") {
+    return resolveEditorialHubLastModified(pathname, editorialHubSources(locale));
+  }
+  if (pathname === "/videos") {
+    return new Date(`${latestDate(videoArticles.map(({updatedDate}) => updatedDate))}T00:00:00.000Z`);
+  }
+  if (pathname === "/maps") {
+    return mapHubDate(locale);
+  }
+  if (pathname === "/items" || /^\/items\/[^/]+$/.test(pathname)) {
+    return new Date(`${itemHubDate(pathname === "/items" ? undefined : pathname.slice("/items/".length))}T00:00:00.000Z`);
+  }
+  if (freshHubPaths.has(pathname)) {
     return new Date("2026-09-17T00:00:00.000Z");
   }
   return new Date("2026-08-16T00:00:00.000Z");
@@ -56,10 +135,14 @@ export function resolveItemLastModified(item: ItemFreshnessSource | undefined) {
   return new Date(`${getItemLatestVerifiedAt(item)}T00:00:00.000Z`);
 }
 
-function resolveGuideLastModified(locale: string, slug: string) {
+function resolveGuideUpdatedAt(locale: string, slug: string) {
   const source = readFileSync(path.join(process.cwd(), "content", locale, "guides", `${slug}.mdx`), "utf8");
   const {updatedAt} = matter(source).data as {updatedAt: string};
-  return new Date(`${updatedAt}T00:00:00.000Z`);
+  return updatedAt;
+}
+
+function resolveGuideLastModified(locale: string, slug: string) {
+  return new Date(`${resolveGuideUpdatedAt(locale, slug)}T00:00:00.000Z`);
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -101,7 +184,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           ? new Date(`${videoArticle.updatedDate}T00:00:00.000Z`)
         : itemDetailMatch
           ? resolveItemLastModified(item)
-          : resolvePageLastModified(pathname),
+          : resolvePageLastModified(locale, pathname),
       changeFrequency: pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? "weekly" as const : "daily" as const,
       priority: pathname === "" ? 1 : pathname === "/guides" || pathname === "/videos" || pathname === "/items" ? 0.9 : pathname === "/news" ? 0.85 : pathname.startsWith("/guides/") || pathname.startsWith("/videos/") || pathname.startsWith("/items/") ? 0.8 : 0.3,
       alternates: {languages}

@@ -16,6 +16,7 @@ export type CatalogSection = {
 
 export type CatalogGuide = {
   id: ItemTypeId;
+  lastReviewedAt?: string;
   title: string;
   description: string;
   countLabel: string;
@@ -583,6 +584,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
   },
   {
     id: "loadouts",
+    lastReviewedAt: "2026-09-17",
     title: "WARDOGS Loadout Guide",
     description: "A budget-first way to plan kits when weapons, ammunition, protection, tools, and vehicles all compete for persistent cash.",
     countLabel: "3 budget bands",

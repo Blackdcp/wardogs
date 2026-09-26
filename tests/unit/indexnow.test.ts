@@ -58,9 +58,8 @@ describe("IndexNow deployment notification", () => {
     )).toEqual([]);
   });
 
-  it("limits catalogue changes to affected item routes and caps each run", async () => {
+  it("selects every affected catalogue route beyond the first 200 without duplicates", async () => {
     const indexNow = await import(pathToFileURL(scriptPath).href) as {
-      MAX_URLS_PER_RUN: number;
       deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
     };
     const weaponUrls = Array.from({length: 220}, (_, index) =>
@@ -77,10 +76,11 @@ describe("IndexNow deployment notification", () => {
 
     const selected = indexNow.deriveIndexNowUrls(["src/features/items/weapon-items.ts"], sitemapUrls);
 
-    expect(selected).toHaveLength(indexNow.MAX_URLS_PER_RUN);
+    expect(selected).toHaveLength(222);
     expect(new Set(selected).size).toBe(selected.length);
     expect(selected).toContain("https://www.wardogswiki.com/en/items");
     expect(selected).toContain("https://www.wardogswiki.com/en/items/weapons");
+    expect(selected.at(-1)).toBe(weaponUrls[219]);
     expect(selected.some((url) => url.endsWith("/guides"))).toBe(false);
   });
 
@@ -140,6 +140,73 @@ describe("IndexNow deployment notification", () => {
       expect(parsed.searchParams.get("url")).toMatch(/^https:\/\/www\.wardogswiki\.com\//);
       expect(init).toBeUndefined();
     }
+  });
+
+  it("submits every selected URL across 200 URL pages with pacing between pages", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      submitIndexNowUrls: (
+        urls: string[],
+        options: {fetchImpl: typeof fetch; pause: () => Promise<void>}
+      ) => Promise<{submitted: number}>;
+    };
+    const urls = Array.from({length: 205}, (_, index) =>
+      `https://www.wardogswiki.com/en/items/weapons/weapon-${index}`
+    );
+    let requestCount = 0;
+    const fetchImpl = vi.fn<typeof fetch>(async () =>
+      new Response("", {status: requestCount++ % 2 === 0 ? 200 : 202})
+    );
+    const pause = vi.fn(async () => undefined);
+
+    const result = await indexNow.submitIndexNowUrls([...urls, urls[0]], {fetchImpl, pause});
+
+    expect(result).toEqual({submitted: 205});
+    expect(fetchImpl.mock.calls.map(([requestUrl]) =>
+      new URL(String(requestUrl)).searchParams.get("url")
+    )).toEqual(urls);
+    expect(pause).toHaveBeenCalledTimes(204);
+  });
+
+  it("rejects a failed IndexNow response after the first page", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      submitIndexNowUrls: (
+        urls: string[],
+        options: {fetchImpl: typeof fetch; pause: () => Promise<void>}
+      ) => Promise<{submitted: number}>;
+    };
+    const urls = Array.from({length: 201}, (_, index) =>
+      `https://www.wardogswiki.com/en/items/weapons/weapon-${index}`
+    );
+    const fetchImpl = vi.fn<typeof fetch>(async (requestUrl) =>
+      new Response("rate limited", {
+        status: new URL(String(requestUrl)).searchParams.get("url") === urls[200] ? 429 : 200
+      })
+    );
+
+    await expect(indexNow.submitIndexNowUrls(urls, {
+      fetchImpl,
+      pause: async () => undefined
+    })).rejects.toThrow(`IndexNow returned 429 for ${urls[200]}: rate limited`);
+    expect(fetchImpl).toHaveBeenCalledTimes(201);
+  });
+
+  it("fails explicitly before requests when the run exceeds its safety ceiling", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      submitIndexNowUrls: (
+        urls: string[],
+        options: {fetchImpl: typeof fetch; pause: () => Promise<void>}
+      ) => Promise<{submitted: number}>;
+    };
+    const urls = Array.from({length: 10_001}, (_, index) =>
+      `https://www.wardogswiki.com/en/items/weapons/weapon-${index}`
+    );
+    const fetchImpl = vi.fn<typeof fetch>(async () => new Response("", {status: 200}));
+
+    await expect(indexNow.submitIndexNowUrls(urls, {
+      fetchImpl,
+      pause: async () => undefined
+    })).rejects.toThrow(/10,001.*10,000/);
+    expect(fetchImpl).not.toHaveBeenCalled();
   });
 
   it("runs the notifier only after the deployment job succeeds", () => {

@@ -1,6 +1,6 @@
 ---
-title: "WARDOGS Launch Watchlist: Beta 02 Issues to Recheck"
-description: "Track Beta 02 reports on servers, crashes, voice, RAM, VRAM, DLSS, and progression against the live Early Access build, with official and community evidence."
+title: "WARDOGS Mic Not Working? Voice Chat Fixes & Known Issues"
+description: "Troubleshoot WARDOGS microphone and voice chat by symptom, including Team17's current reconnect steps, plus launch server, crash and performance issues."
 keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
@@ -16,8 +16,10 @@ faq:
     answer: "Not automatically. A Beta 02 workaround only applies to the current Early Access build after retesting; check official Steam notices and record the exact error and build."
   - question: "How should I troubleshoot a WARDOGS crash?"
     answer: "Restart Steam and Windows, verify game files, remove unsupported launch commands, update the GPU driver, close overlays, and capture the exact error before contacting official support."
-  - question: "Why did local voice chat stop working?"
-    answer: "First check the current Steam patch notice and in-game communication status. The toggle and U-twice advice came from Beta 02; retest it in the current client rather than treating it as a confirmed live fix."
+  - question: "Why is my WARDOGS microphone working in a test but not in a match?"
+    answer: "Check the selected voice channel, squad membership, push-to-talk binding, and communication status. Team17 currently suggests reconnecting voice in Audio settings or from the scoreboard for some Early Access failures; neither is a guaranteed fix."
+  - question: "What should I check if I cannot hear other players?"
+    answer: "Confirm the game's output device points to your headphones or speakers, then check its VOIP volume controls. If communication status shows a disconnection, follow Team17's current reconnect steps."
   - question: "Are Supporter Pack items available in Closed Beta 02?"
     answer: "Their absence was a Beta-only known issue. The Supporter Pack is now sold as Steam DLC; verify the live DLC entitlement and current build if items are missing."
 sources:
@@ -31,6 +33,22 @@ sources:
     checkedAt: "2026-09-26"
   - label: "Official Patch 0.11 maintenance announcement"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413005176"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Team17 Early Access voice-chat troubleshooting replies"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Team17 VOIP volume-control reply"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/562541634873781802/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Developer explanation of squad and local VOIP channels"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/766311475521529360/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Microsoft Windows microphone test and access guidance"
+    url: "https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems"
     kind: "official"
     checkedAt: "2026-09-26"
   - label: "Developer WARDOGS Closed Beta known issues"
@@ -56,11 +74,11 @@ Do not disable anti-cheat, install unknown network tools, or follow exploit tuto
 
 ## Quick Answer
 
-For a current **crash, login failure, empty server list or broken voice chat**, check official Steam notices first, then record the exact error, region and build. Beta 02 workarounds are historical until reproduced in Early Access; do not disable Elytra or Windows security to test them.
+If your **WARDOGS mic or voice chat is not working**, test the microphone in Windows and in-game Audio, confirm the Squad or Local channel and push-to-talk binding, then check the communication-status icon. For a red cross or mid-match dropout, Team17 suggests re-enabling Voice Chat or reconnecting it from the scoreboard; these are individual troubleshooting steps, not guaranteed fixes. For crashes, login failures or an empty server list, check official Steam notices and record the exact error, region and build. Do not disable Elytra or Windows security to test any workaround.
 
 ## Confirmed Facts
 
-These workarounds came from the official Beta 02 known-issues thread. They are build-specific and must be retested in Early Access. Server or third-party voice outages cannot always be fixed on the player's PC.
+The official Beta 02 known-issues thread documents that test's incidents and workarounds. Team17's later Early Access support replies provide current, case-specific voice reconnect steps. A service-side voice outage cannot always be fixed on the player's PC.
 
 ## What Players Search For
 
@@ -97,9 +115,19 @@ Players are reporting uneven frame rates, high RAM or VRAM use, and different re
 
 Start from the in-game preset, monitor actual frame time and memory use, lower one expensive setting at a time, and test the same location. Do not copy a creator's final numbers without matching resolution, GPU, CPU, driver, and build.
 
-## Voice Chat and Audio
+## WARDOGS Microphone and Voice Chat Troubleshooting
 
-The Season 1 changelog says it fixed voice cutting out after a failed join and added a visible communication status. For a current failure, check that status, your selected Windows input/output devices, and the latest Steam notices first. Turning voice chat off in settings or opening the scoreboard and pressing **U twice** came from the Beta 02 known-issues post. Try it only as a build-sensitive test; it is not evidence that the old Beta defect or a third-party provider outage is happening now.
+First identify **which test fails**. Hearing game effects does not prove voice is connected, and a successful microphone test does not prove the selected channel reaches another player. The [Season 1 changelog](https://store.steampowered.com/news/app/1867240/view/701027323413004455) says voice should recover after a failed join and adds a visible communication status. [Patch 0.11](https://store.steampowered.com/news/app/1867240/view/701027323413005176) discusses server-browser, capacity, cash, and GPU changes; it does not announce another voice fix.
+
+1. **Windows does not hear your microphone:** Check the headset's mute switch and connection. In Windows **Settings > System > Sound > Input**, select the microphone and run its recording test. If it is still silent, check **Privacy & security > Microphone** and desktop-app access. Follow [Microsoft's microphone guidance](https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems) before changing WARDOGS settings.
+2. **Windows hears it, but WARDOGS's Test Microphone is silent:** In the game's **Settings > Audio**, select that same microphone as **Input Device**, enable Voice Chat, apply the settings, and retest. Keep input (microphone) distinct from output (headphones or speakers). A player reported that the remembered input did not activate on boot; [Team17 said it had forwarded that report for investigation](https://steamcommunity.com/app/1867240/discussions/3/562541966849748491/). Do not treat a device-switching workaround as a confirmed fix for every setup.
+3. **The in-game test works, but nobody hears you:** Check whether you are using **Squad** or **Local** voice and whether you have joined a squad. The [developer describes Squad as squad-only and Local as nearby voice](https://steamcommunity.com/app/1867240/discussions/3/766311475521529360/). In the current controls menu, check each channel's push-to-talk binding and any conflicting keybind, then test with a teammate in the intended channel. If the visible communication status or a red cross suggests a disconnected voice session, use the reconnect step below.
+4. **You hear game audio but not other players:** Select the intended **Output Device** in Audio and check the **VOIP volume controls** that [Team17 confirms are in that tab](https://steamcommunity.com/app/1867240/discussions/3/562541634873781802/). Ask a teammate to speak in the channel you are testing; silence in an empty squad or out of local range is inconclusive.
+5. **Voice drops mid-match or shows a red cross:** [Team17's Early Access support reply](https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/) suggests two reconnect tests. In **Settings > Audio**, disable Voice Chat and apply, wait several seconds, re-enable it and apply, then join or rejoin a match. Alternatively, press **Tab** for the scoreboard, press **U** to disconnect, wait **five seconds**, and press **U** again to reconnect. Retest Squad and Local; if the red cross remains, Team17 says you may need to restart the game. These are support suggestions for individual reports, not guaranteed repairs.
+
+If several players lose voice at once or your communication status still shows a service failure, check the [official Steam announcements](https://steamcommunity.com/app/1867240/announcements/) and the [server-status guide](/en/guides/wardogs-server-status). Avoid changing drivers, ports, or security settings based only on an old outage post. The [Closed Beta notice](https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/) mentioned possible third-party provider outages and the same toggle/U workaround; that notice does **not** confirm an ongoing Early Access outage.
+
+If the problem persists, use WARDOGS's [Steam **Report a Problem** forum](https://steamcommunity.com/app/1867240/discussions/3/) or [Team17 support](https://www.team17.com/support). Include the build, UTC time, region and server, the exact communication-status message or screenshot, input and output device names, whether Windows and the in-game mic tests passed, the voice channel and push-to-talk result, and what the reconnect tests changed. Remove personal account details from public screenshots.
 
 ## Supporter Pack and Progress
 
@@ -113,7 +141,7 @@ Before contacting support, capture the exact error, UTC time, selected region, e
 
 ## Sources and Last Checked
 
-The historical Beta workarounds were checked against the developer's official known-issues thread. The Season 1 voice fix and Patch 0.11 browser changes were rechecked against official Steam notices on **2026-09-26**. Neither announcement verifies that the old Beta workarounds are current universal fixes.
+The historical Beta notice, Season 1 voice changelog, Patch 0.11 announcement, and Team17's later Early Access voice replies were checked on **2026-09-26**. The reconnect steps are current support suggestions; neither the changelog nor the support replies establish a universal microphone fix or a present-day provider outage.
 
 ## Related Guides
 
