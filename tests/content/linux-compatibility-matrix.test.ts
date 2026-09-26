@@ -13,7 +13,7 @@ describe("Linux, Proton and Steam Deck compatibility matrix", () => {
       expect(body, locale).toContain("Proton");
       expect(body, locale).toContain("Steam Deck");
       expect((body.match(/\|/g) ?? []).length, locale).toBeGreaterThanOrEqual(20);
-      expect(body, locale).toMatch(/2026-09-05/);
+      expect(body, locale).toMatch(/2026-09-25/);
     }
   });
 });

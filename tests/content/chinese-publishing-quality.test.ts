@@ -98,7 +98,7 @@ describe("Simplified Chinese publishing quality", () => {
       const expectedDate = ["wardogs-early-access", "wardogs-release-date", "wardogs-gameplay"].includes(slug)
         ? "2026-09-26"
         : slug === "wardogs-system-requirements"
-          ? "2026-09-05"
+          ? "2026-09-26"
         : slug === "wardogs-price"
           ? "2026-09-17"
           : "2026-09-01";

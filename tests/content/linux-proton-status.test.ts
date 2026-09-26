@@ -5,7 +5,7 @@ import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const slug = "wardogs-linux-proton";
-const officialLinuxStatusUrl = "https://steamcommunity.com/app/1867240/homecontent/";
+const officialLinuxStatusUrl = "https://steamcommunity.com/app/1867240/discussions/0/588436698284962639";
 
 describe("WARDOGS Linux and Proton status", () => {
   it("publishes the current official support status in every supported locale", async () => {
@@ -20,12 +20,13 @@ describe("WARDOGS Linux and Proton status", () => {
       const guide = await loadGuideDocument(locale, slug);
 
       expect(guide, `${locale}/${slug}`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-05");
+      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-26");
       expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({
         url: officialLinuxStatusUrl,
         kind: "official",
-        checkedAt: "2026-09-05"
+        checkedAt: "2026-09-26"
       }));
+      expect(guide?.body, locale).toContain("2026-09-25");
       expect(guide?.frontmatter.faq.length, locale).toBeGreaterThanOrEqual(3);
       expect(guide?.body.length, locale).toBeGreaterThanOrEqual(1_200);
     }
@@ -35,11 +36,11 @@ describe("WARDOGS Linux and Proton status", () => {
     for (const locale of locales) {
       const requirements = await loadGuideDocument(locale, "wardogs-system-requirements");
 
-      expect(requirements?.frontmatter.updatedAt, locale).toBe("2026-09-05");
+      expect(requirements?.frontmatter.updatedAt, locale).toBe("2026-09-26");
       expect(requirements?.frontmatter.sources).toContainEqual(expect.objectContaining({
         url: officialLinuxStatusUrl,
         kind: "official",
-        checkedAt: "2026-09-05"
+        checkedAt: "2026-09-26"
       }));
       expect(requirements?.body, locale).toContain("/guides/wardogs-linux-proton");
     }
