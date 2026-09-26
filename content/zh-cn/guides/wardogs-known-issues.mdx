@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-17"
+updatedAt: "2026-09-26"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -17,22 +17,22 @@ faq:
   - question: "WARDOGS 崩溃时怎么安全排查？"
     answer: "重启 Steam 和 Windows，验证文件，移除非官方启动参数，从显卡厂商更新驱动，关闭叠加层，并一次只改一个项目，同时记录准确报错。"
   - question: "本地语音失效怎么办？"
-    answer: "开发者建议在选项中关闭一次语音聊天，或者打开计分板后连续按两次 U；第三方语音服务本身也可能出现中断。"
+    answer: "先检查当前 Steam 补丁公告和游戏内通信状态。关闭语音或按两次 U 是 Beta 02 的旧建议，须在当前版本复测，不能当作已确认的现行修复。"
   - question: "Beta 02 里没有 Supporter Pack 道具，是购买失败吗？"
     answer: "这是 Beta 期间的已知限制。Supporter Pack 现已作为 Steam DLC 销售；当前缺失应核对 DLC 权益和最新版本。"
 sources:
   - label: "官方预载与 Season 1 更新日志"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
     kind: "official"
-    checkedAt: "2026-09-13"
+    checkedAt: "2026-09-26"
   - label: "Launch Stability Hotfix #1 官方公告"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
     kind: "official"
-    checkedAt: "2026-09-13"
+    checkedAt: "2026-09-26"
   - label: "Patch 0.11 维护官方公告"
-    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413005176"
     kind: "official"
-    checkedAt: "2026-09-13"
+    checkedAt: "2026-09-26"
   - label: "开发者发布的 Beta 已知问题"
     url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
     kind: "official"
@@ -46,7 +46,7 @@ sources:
     kind: "community"
     checkedAt: "2026-09-09"
 ---
-## 9 月 17 日已知问题中心
+## 9 月 26 日已知问题中心
 
 Patch 0.11 仍是最新官方补丁公告，已公布的 9 月 14 日 08:00 UTC 维护窗口已经过去。公告包含拆分 Official 与 Community 服务器浏览器、改进搜索和筛选、持久化服务器 ID、修复现金与 GPU 问题并增加亚洲容量。新的异常请查看 Steam 官方动态；本站不运营实时服务器遥测。
 
@@ -57,11 +57,11 @@ Patch 0.11 仍是最新官方补丁公告，已公布的 9 月 14 日 08:00 UTC 
 
 玩家在 Beta 02 中报告过排队与服务器浏览器、可重复崩溃、帧时间波动、RAM 或 VRAM 压力、DLSS、DLAA、阴影和 Reflex + Boost 表现差异、本地语音中断，以及进度或权益混乱。这些是**特定硬件和 Beta 02 版本下的社区报告**，不是已经确认的抢先体验故障，也不是通用修复结论。
 
-只把每条报告当作测试用例：在 9 月 10 日版本重新复现，记录硬件、驱动、地区、报错和版本号，然后核对官方公告。[63 小时 Beta 反馈帖](https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/)可以提供线索，但不能替代官方补丁说明。
+只把每条报告当作测试用例：在当前抢先体验版本重新复现，记录硬件、驱动、地区、报错和版本号，然后核对官方公告。[63 小时 Beta 反馈帖](https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/)可以提供线索，但不能替代官方补丁说明。
 
 ## 快速结论
 
-服务器列表空白时只选择**一个地区**；本地语音失效时关闭一次语音，或打开计分板后**连续按两次 U**。Supporter Pack 在 Beta 中不可用，目前已作为 Steam DLC 上架。官方没有确认一个适用于所有崩溃的万能修复。
+服务器列表空白时，先核对 **Official / Community** 页面、Community 搜索和筛选以及 **Show Empty/Full** 选项，再看 Steam 官方维护公告。只选一个地区、按两次 U 是 Beta 02 的旧办法，并非已确认的现行通用修复。
 
 ## 已确认事实
 
@@ -86,7 +86,7 @@ Closed Beta 02 已按 **9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC** 的修
 
 ## 服务器浏览器空白
 
-开发者在官方已知问题中明确建议：服务器浏览器里**只选择一个区域**。同时选择多个区域时，列表可能显示为空。第一步应取消多余区域，只保留一个，刷新一次，然后查看官方社区是否发布了维护或容量通知。
+先按当前 Patch 0.11 的界面检查：确认选中 **Official** 还是 **Community** 服务器、清除 Community 搜索词或筛选，并查看 **Show Empty/Full** 快捷选项。0.11 移除了 Official 浏览器的筛选，改进了 Community 搜索与筛选。刷新一次并查看 Steam 维护公告。Beta 02 曾建议**只选择一个区域**；现在只能把它作为单独复测，不能保证解决当前版本的问题。
 
 服务器已满、地区暂未开放、会话过期、Steam 许可尚未同步和维护都可能产生相似结果。不要因为其他玩家能看到服务器，就直接判断自己的账户损坏。记录所选区域、UTC 时间、Steam 许可状态和客户端显示的完整文字，再决定是否验证文件或联系支持。
 
@@ -104,7 +104,7 @@ Closed Beta 02 已按 **9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC** 的修
 
 ## 本地语音与音频
 
-如果本地语音突然失效，开发者建议在设置里关闭一次语音聊天，或者打开计分板后**连续按两次 U**。官方帖子同时提到，第三方语音提供商可能发生中断。如果服务端正在故障，反复重启电脑不会解决问题，需要等待官方恢复。
+Season 1 官方更新日志称已修复加入失败后语音持续中断的问题，并增加可见的通信状态。当前语音失效时，先检查该状态、Windows 输入输出设备及最新 Steam 公告。设置里关闭语音或在计分板按**两次 U**来自 Beta 02 的旧公告，只能作为版本敏感的复测，不能据此认定旧故障或第三方服务中断仍在发生。
 
 本地仍应检查 Windows 默认输入和输出设备、游戏内语音设备以及麦克风权限。提交问题时说明“完全听不到”“只能听不能说”还是“特定频道失效”，能让排查更准确。
 

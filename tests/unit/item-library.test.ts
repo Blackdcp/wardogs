@@ -116,7 +116,8 @@ describe("item library", () => {
     expect(weaponModels.every((item) => item.unconfirmedFacts?.every((fact) => /Early Access|final release/.test(fact)))).toBe(true);
     expect(weaponModels.every((item) => item.sources.length > 0 && item.relatedGuides.length > 0 && item.relatedItems.length > 0)).toBe(true);
     expect(weaponModels.every((item) => item.detailImage && item.detailImageAlt)).toBe(true);
-    expect(weaponModels.every((item) => item.detailUpdatedAt === "2026-08-18")).toBe(true);
+    expect(weaponModels.filter((item) => item.slug !== "deagle").every((item) => item.detailUpdatedAt === "2026-08-18")).toBe(true);
+    expect(weaponModels.find((item) => item.slug === "deagle")?.detailUpdatedAt).toBe("2026-09-26");
     expect(weaponModels.every((item) => item.build === "Alpha 1 - 7 Aug 2026")).toBe(true);
     expect(new Set(weaponModels.map((item) => item.summary)).size).toBe(14);
     expect(new Set(weaponModels.map((item) => item.description)).size).toBe(14);
@@ -166,7 +167,9 @@ describe("item library", () => {
     expect(vehicleModels.every((item) => item.sources.length > 0 && item.sources.every((source) => isApprovedSourceUrl(source.url)))).toBe(true);
     expect(vehicleModels.every((item) => item.relatedGuides.length > 0 && item.relatedGuides.every((slug) => guideSlugs.has(slug)))).toBe(true);
     expect(vehicleModels.every((item) => item.detailImage && item.detailImageAlt)).toBe(true);
-    expect(alphaOnlyVehicleModels.every((item) => item.detailUpdatedAt === "2026-08-18")).toBe(true);
+    expect(alphaOnlyVehicleModels.filter((item) => item.slug !== "dune-buggy" && item.slug !== "ural").every((item) => item.detailUpdatedAt === "2026-08-18")).toBe(true);
+    expect(alphaOnlyVehicleModels.find((item) => item.slug === "dune-buggy")?.detailUpdatedAt).toBe("2026-09-26");
+    expect(alphaOnlyVehicleModels.find((item) => item.slug === "ural")?.detailUpdatedAt).toBe("2026-09-26");
     expect(vehicleModels.find((item) => item.slug === "havoc")?.detailUpdatedAt).toBe("2026-09-24");
     expect(alphaOnlyVehicleModels.every((item) => item.build === "Alpha 1 - 7 Aug 2026")).toBe(true);
     expect(sph2).toMatchObject({

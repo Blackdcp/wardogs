@@ -448,7 +448,7 @@ export const videoArticles: readonly VideoArticle[] = [
         heading: "What this video is really answering",
         body: [
           "A title like 10 Reasons Not to Buy works because it matches a real WARDOGS search intent. Players are not only looking for hype; they want to know whether a huge tactical FPS can actually hold together when 100 players, vehicles, squad play, cash, and construction all collide in one match.",
-          "That makes this page different from a trailer recap. The goal is to help a reader decide whether the rough edges are acceptable, whether the core loop fits their taste, and which parts of the game need more proof before launch."
+          "That made the original August review different from a trailer recap. Since Steam Early Access launched on September 10, readers can now judge its rough edges against the live build and use current patch notes for anything the prelaunch footage could not prove."
         ]
       },
       {
@@ -497,7 +497,7 @@ export const videoArticles: readonly VideoArticle[] = [
     sourceLabel: "FGS: 7 Things You Need to Know About WARDOGS",
     sourceUrl: "https://www.youtube.com/watch?v=-k6IV0ITLDo",
     publishedDate: "2026-08-13",
-    updatedDate: "2026-08-16",
+    updatedDate: "2026-09-26",
     kind: "creator",
     priority: 2,
     internalGuideSlug: "wardogs-gameplay",
@@ -552,7 +552,7 @@ export const videoArticles: readonly VideoArticle[] = [
       {
         heading: "Support roles are not filler",
         body: [
-          "One of the most useful details from the video is that WARDOGS can reward more than shooting. A player may earn value by reviving, supplying FOBs, transporting teammates, disrupting enemy resources, or using tools to damage bases and supply chains.",
+          "WARDOGS officially names reviving allies, transporting friendlies, and controlling the objective as ways to earn cash beyond combat. Supplying FOBs and disrupting enemy resources also help the team, but a separate cash payout for supply delivery is not confirmed.",
           "That matters for a guide site because it creates multiple content angles. A beginner guide should not only teach aim and loadouts; it should explain how a player can contribute when they are broke, under-equipped, or not confident in direct fights."
         ]
       },
@@ -1388,17 +1388,17 @@ export const videoArticles: readonly VideoArticle[] = [
     slug: "wardogs-first-10000",
     title: "How to Earn Your First $10,000 in WARDOGS",
     description:
-      "A beginner WARDOGS money route covering low-risk kits, Control Zone income, revives, transport, supply work, survival, spending discipline, and cash recovery.",
+      "A beginner WARDOGS money route covering low-risk kits, Control Zone income, revives, transport, survival, spending discipline, cash recovery, and the team value of supply work.",
     youtubeId: "2E-KNIugA2M",
     sourceLabel: "How to Make Your First $10,000 in WARDOGS",
     sourceUrl: "https://www.youtube.com/watch?v=2E-KNIugA2M",
     publishedDate: "2026-08-22",
-    updatedDate: "2026-08-22",
+    updatedDate: "2026-09-26",
     kind: "creator",
     priority: -8,
     internalGuideSlug: "wardogs-money-guide",
     quickAnswer:
-      "The safest path to a first or replacement $10,000 is not an expensive kill streak. Use a cheap functional kit, stay with the active team push, survive long enough to receive objective value, and add repeatable support actions such as safe revives, transport, supply deliveries, spotting, or asset defense. Protect the balance by keeping money for another life.",
+      "The safest path to a first or replacement $10,000 is not an expensive kill streak. Use a cheap functional kit, stay with the active team push, and focus on officially named cash actions such as safe revives, transporting friendlies, and controlling the objective. Supply deliveries, spotting, and asset defense help the team, but their separate cash payouts need live-build verification. Keep money for another life.",
     takeaways: [
       "Separate the opening account balance from money earned during later play.",
       "Use a low-risk kit until the income loop is consistent.",
@@ -1430,10 +1430,10 @@ export const videoArticles: readonly VideoArticle[] = [
         ]
       },
       {
-        heading: "Transport and logistics as income routes",
+        heading: "Transport income and team logistics",
         body: [
           "A driver should choose a task before leaving base: deliver infantry, move supplies, recover a stranded group, or support a changing objective. Avoid idling in exposed roads or abandoning the vehicle after one drop. A reliable shuttle creates more team value than a dramatic one-way charge.",
-          "Supply runs work best when builders specify what is needed and the route has protection. The player earns more consistently by completing repeated useful deliveries than by carrying an expensive load into an unsupplied position that is already lost."
+          "Supply runs work best when builders specify what is needed and the route has protection. Repeated useful deliveries sustain the team better than carrying an expensive load into an unsupplied position that is already lost. Check the current cash balance before and after a delivery before treating it as a personal income route."
         ]
       },
       {
@@ -1987,7 +1987,7 @@ export const videoArticles: readonly VideoArticle[] = [
     sourceLabel: "How to Make Money FAST in WARDOGS Beta",
     sourceUrl: "https://www.youtube.com/watch?v=Jm7ogJLKIJo",
     publishedDate: "2026-08-23",
-    updatedDate: "2026-08-28",
+    updatedDate: "2026-09-26",
     kind: "creator",
     priority: -12,
     internalGuideSlug: "wardogs-money-guide",
@@ -2013,7 +2013,7 @@ export const videoArticles: readonly VideoArticle[] = [
         heading: "Passenger and supply cycles",
         body: [
           "A pilot should leave with a mission, choose a safe drop near useful pressure and return before fuel or threats trap the aircraft. A supply pallet should match what the FOB needs and be released low and slow enough to survive the drop.",
-          "A delivery creates more value when teammates can unload and use it. Dropping cargo into an abandoned or collapsing FOB creates activity but not a reliable income loop."
+          "A delivery creates more team value when teammates can unload and use it. Dropping cargo into an abandoned or collapsing FOB creates activity without sustaining the position; any separate cash payout for delivery needs current-build verification."
         ]
       },
       {
@@ -2049,7 +2049,7 @@ export const videoArticles: readonly VideoArticle[] = [
     sourceLabel: "WARDOGS Vehicle Cargo and Logistics Guide",
     sourceUrl: "https://www.youtube.com/watch?v=2aU4OB0duYg",
     publishedDate: "2026-08-28",
-    updatedDate: "2026-08-29",
+    updatedDate: "2026-09-26",
     kind: "creator",
     priority: -16,
     internalGuideSlug: "wardogs-cargo-guide",
@@ -2095,7 +2095,7 @@ export const videoArticles: readonly VideoArticle[] = [
       {
         heading: "Build-sensitive limits",
         body: [
-          "Vehicle slots, pallet capacity, keyboard bindings, unload radius, construction cost and logistics rewards can all change. The article therefore avoids publishing one fixed Ural capacity or declaring B, G and F permanent.",
+          "Vehicle slots, pallet capacity, keyboard bindings, unload radius and construction cost can all change. Whether a supply delivery pays cash separately also needs current-build verification. The article therefore avoids publishing one fixed Ural capacity or declaring B, G and F permanent.",
           "Use the maintained cargo and FOB guides after every update. They preserve the delivery logic while allowing current controls and resource behavior to be corrected without rewriting the video evidence."
         ]
       }
@@ -2298,13 +2298,13 @@ export const videoArticles: readonly VideoArticle[] = [
     priority: -22,
     internalGuideSlug: "wardogs-progression-wipes-guide",
     quickAnswer:
-      "The useful part of this news video is its source trail: Beta progression was deliberately compressed and tanks are planned to move into the Driver track for Early Access. The later September 3 reveal confirmed Closed Beta 02, while release rumors, season guesses, lawsuit discussion and private-server predictions still need primary-source confirmation.",
+      "This August creator video is historical context, not a current patch report. The official Season 1 changelog later moved the Heavy Tank to Driver level 35 and Artillery to Career level 90; Steam Early Access launched September 10 and the official Season 02 teaser now names October 15. Check the linked first-party updates before acting on older predictions.",
     takeaways: [
       "Use the developer statements linked by the creator, not the headline alone.",
       "Closed Beta leveling speed was intentionally faster than the planned normal pace.",
-      "Tanks are moving from the temporary main track into Driver progression.",
-      "The completed September 3 reveal confirmed Closed Beta 02 for September 3-6; it did not confirm an exact Early Access unlock hour.",
-      "BULKHEAD confirmed the season-end cash and XP reset and Gold Bar/cosmetic carryover separately; exact Season 02 timing and exchange rate remain unconfirmed.",
+      "The Season 1 changelog moved the Heavy Tank to Driver level 35; not every tank shares one unlock rule.",
+      "The September 3 reveal and Closed Beta 02 are over; WARDOGS launched in Steam Early Access September 10.",
+      "The official Season 02 teaser names October 15. Its exact start hour, reset time and Gold Bar conversion rate remain unconfirmed.",
       "The maintained progression and launch guides replace predictions as new facts arrive."
     ],
     sections: [
@@ -2319,27 +2319,27 @@ export const videoArticles: readonly VideoArticle[] = [
         heading: "Progression and tanks",
         body: [
           "The strongest confirmed detail is that Closed Beta progression was compressed for a three-day test. Early Access should not be expected to unlock equipment at the same speed.",
-          "The developer also says tanks were temporarily placed in the main War Dog path and are planned for the Driver path. Final level requirements, prices and XP actions remain unknown."
+          "The later official Season 1 changelog moved the Heavy Tank to Driver level 35 and Artillery to Career level 90. It publishes selected unlock-cost changes and XP bands, not a complete current repeat-purchase price or payout table."
         ]
       },
       {
         heading: "Release and event claims",
         body: [
-          "The September 3 FPS Games Show is complete. Its confirmed outcome was Closed Beta 02 on the revised September 3, 19:00 UTC to September 6, 08:00 UTC server window; September 10 remains the listed Steam Early Access date.",
-          "The checked reveal did not confirm an earlier launch, open beta, new platform or exact Early Access unlock hour. Any later change still needs Steam or an official WARDOGS post."
+          "The September 3 FPS Games Show and Closed Beta 02 are complete. WARDOGS subsequently launched in Steam Early Access on September 10, and BULKHEAD's September 22 Season 02 teaser set October 15 as the next season's date.",
+          "This older creator video could not have confirmed those later facts. Use the current Steam announcement feed for new launch-hour, platform and progression details rather than treating its predictions as a live status update."
         ]
       },
       {
         heading: "Private servers and seasons",
         body: [
-          "Community-server hosting now has a separate developer statement: two approved providers at launch, map and mode selection, no arbitrary self-hosting at launch and RCON in development.",
+          "BULKHEAD's September 8 announcement names three approved community-server hosts: QONZER, BisectHosting and xREALM. Patch 0.11 later split Official and Community browsers; older provider counts in this August video are historical.",
           "The video's discussion is not the sole source for seasonal wipes. In BULKHEAD's earlier Early Access & Beyond video at 03:05, the developer says cash and XP reset at season end, remaining cash converts to Gold Bars, and Gold Bars and cosmetics persist. The exact Season 02 reset hour, conversion rate and treatment of purchased unlocks still need confirmation; use the maintained progression guide for those distinctions."
         ]
       },
       {
         heading: "How to use this page",
         body: [
-          "Watch the original for the creator's complete argument and source links. Use our maintained pages for the current answer after the September 2 technical session and completed FPS Games Show, then recheck them again at Early Access.",
+          "Watch the original for its August argument and source links. For the current answer, use the maintained progression, release and Season 2 guides together with the official Steam announcements.",
           "This approach preserves the value of fast creator coverage without allowing a high-energy headline to outrun the underlying evidence."
         ]
       },

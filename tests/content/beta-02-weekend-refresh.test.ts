@@ -1,4 +1,4 @@
-import {existsSync, readFileSync, readdirSync} from "node:fs";
+import {existsSync, readFileSync} from "node:fs";
 import path from "node:path";
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
@@ -48,7 +48,7 @@ describe("Closed Beta 02 weekend release contract", () => {
   });
 
   it("publishes the contest and known-issues guides in every language while promoting only current help", async () => {
-    expect(guideManifest).toHaveLength(53);
+    expect(guideManifest).toHaveLength(54);
     for (const slug of newGuideSlugs) {
       expect(guideManifest.some((entry) => entry.slug === slug), slug).toBe(true);
     }
@@ -194,10 +194,3 @@ describe("Closed Beta 02 weekend release contract", () => {
     }
   });
 });
-
-function walk(root: string): string[] {
-  return readdirSync(root, {withFileTypes: true}).flatMap((entry) => {
-    const next = path.join(root, entry.name);
-    return entry.isDirectory() ? walk(next) : [next];
-  });
-}

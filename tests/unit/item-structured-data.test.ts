@@ -38,13 +38,13 @@ describe("item structured data", () => {
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
-  it("uses the latest verified Deagle change for Article freshness", () => {
+  it("uses the latest Deagle editorial update for Article freshness", () => {
     const deagle = getItemBySlug("deagle");
     expect(deagle).toBeDefined();
 
     const jsonLd = buildItemArticleJsonLd("en", deagle!);
 
-    expect(jsonLd[0].dateModified).toBe("2026-09-09");
+    expect(jsonLd[0].dateModified).toBe("2026-09-26");
   });
 
   it("uses Article schema and the exact image for a published vehicle model", () => {

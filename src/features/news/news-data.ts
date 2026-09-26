@@ -1,6 +1,6 @@
 export const NEWS_UPDATES = [
   {
-    date: "2026-09-23",
+    date: "2026-09-22",
     status: "Confirmed",
     titleKey: "season02",
     guideSlug: "wardogs-season-2"
@@ -12,7 +12,7 @@ export const NEWS_UPDATES = [
     guideSlug: "wardogs-early-access"
   },
   {
-    date: "2026-09-13",
+    date: "2026-09-12",
     status: "Confirmed",
     titleKey: "patch011",
     guideSlug: "wardogs-patch-notes"
@@ -40,6 +40,12 @@ export const NEWS_UPDATES = [
     status: "Confirmed",
     titleKey: "ps5",
     guideSlug: "wardogs-ps5"
+  },
+  {
+    date: "2026-09-09",
+    status: "Confirmed",
+    titleKey: "preload",
+    guideSlug: "wardogs-download"
   },
   {
     date: "2026-09-03",
@@ -84,13 +90,7 @@ export const NEWS_UPDATES = [
     guideSlug: "wardogs-twitch-drops"
   },
   {
-    date: "2026-08-20",
-    status: "Confirmed",
-    titleKey: "preload",
-    guideSlug: "wardogs-download"
-  },
-  {
-    date: "2026-08-13",
+    date: "2026-08-11",
     status: "Confirmed",
     titleKey: "steamPreorder",
     guideSlug: "wardogs-steam"

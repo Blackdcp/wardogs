@@ -92,14 +92,14 @@ describe("AI citation query coverage", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-early-access");
       const searchable = `${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
-      const expectedDate = "2026-09-17";
+      const expectedDate = "2026-09-26";
 
       expect((guide?.frontmatter.updatedAt ?? "") >= expectedDate, locale).toBe(true);
       expect(searchable, `${locale} date`).toMatch(releaseDateSignals[locale]);
       expect(searchable, `${locale} platform`).toMatch(locale === "zh-cn" ? /Windows\s*PC|WindowsPC|Windows 电脑/i : /Windows PC/i);
       expect(searchable, `${locale} store`).toContain("Steam");
       expect(searchable, `${locale} verification date`).toMatch(
-        /September 17|17\. September|17 сентября|17 de setembro|9月17日|9 月 17 日|2026-09-17/,
+        /September 26|26\. September|26 сентября|26 de setembro|9月26日|9 月 26 日|2026-09-26/,
       );
       expect(searchable, `${locale} table`).toMatch(/\|[^\n]+\|[^\n]+\|/);
     }
@@ -129,5 +129,12 @@ describe("AI citation query coverage", () => {
       }
       expect(`${messages.home.about.bodyOne}\n${gameplay?.body}`, locale).toMatch(/BULKHEAD/i);
     }
+  });
+
+  it("distinguishes the confirmed full map from the active control zone in Chinese gameplay", async () => {
+    const gameplay = await loadGuideDocument("zh-cn", "wardogs-gameplay");
+    expect(gameplay?.body).toMatch(/256 平方公里[\s\S]{0,100}2×2 公里/);
+    expect(gameplay?.body).not.toContain("本站不把这一预发布说法作为当前已确认规格");
+    expect(gameplay?.frontmatter.sources.some(({url}) => url === "https://www.team17.com/games/wardogs")).toBe(true);
   });
 });

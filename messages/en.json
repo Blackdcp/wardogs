@@ -233,7 +233,7 @@
         "items": {
           "season02": {
             "title": "Season 02 launches October 15",
-            "description": "The official teaser confirms the date and storm theme; full patch notes, launch time, and progression-reset rules are still pending."
+            "description": "The official teaser confirms the date and storm theme. The general cash/XP reset policy is published; the Season 02 launch hour and conversion rate remain unannounced."
           },
           "closedBeta02": {
             "title": "Closed Beta 02 has ended",
@@ -256,8 +256,8 @@
             "description": "The September 14 maintenance window has passed; use the patch notes and official Steam feed for current changes and live-service notices."
           },
           "ps5Release": {
-            "title": "Console versions are planned for 2028",
-            "description": "The official trailer confirms 2028, but PS5, Xbox, exact dates, cross-play, and cross-progression are not individually confirmed."
+            "title": "Exact PS5 and Xbox release dates remain unconfirmed",
+            "description": "Team17 names PlayStation 5 and Xbox Series X|S as planned targets, and the trailer gives a broad 2028 console window. The unconfirmed part is each platform's release date; neither console version is available yet, and cross-play and cross-progression are unconfirmed."
           }
         }
       }
@@ -336,7 +336,7 @@
         },
         "support": {
           "title": "Support Actions Pay",
-          "description": "Revives, transport, supply runs, and objective control can earn cash alongside combat."
+          "description": "Revives, transporting allies, and objective control earn cash. Supply runs help the team, but a separate cash payout is not confirmed."
         },
         "mobility": {
           "title": "Plan the Approach",
@@ -399,7 +399,7 @@
       "items": {
         "season02": {
           "title": "WARDOGS Season 02 launches October 15",
-          "description": "The official September 23 teaser confirms the date and shows storm imagery. Launch hour, patch details, and progression-reset rules have not been announced."
+          "description": "The official September 22 teaser confirms the date and storm imagery. The general cash/XP reset policy is known; launch hour, patch details, and conversion rate remain unannounced."
         },
         "closedBeta02": {
           "title": "Closed Beta 02 ended September 6",
@@ -423,11 +423,11 @@
         },
         "earlyAccess": {
           "title": "WARDOGS Early Access launched September 10",
-          "description": "The Windows PC version is playable on Steam. The official launch trailer also announces console versions for 2028, without naming individual platforms or dates."
+          "description": "The Windows PC version is playable on Steam. The launch trailer announces consoles in 2028, and Team17 names PlayStation 5 and Xbox Series X|S as planned platforms; platform-specific dates are unannounced."
         },
         "ps5": {
           "title": "Console versions are planned for 2028",
-          "description": "The launch trailer confirms a 2028 console window, but does not name PS5, Xbox, exact dates, cross-play, or cross-progression."
+          "description": "The launch trailer gives a 2028 console window. Team17 names PlayStation 5 and Xbox Series X|S as planned platforms, but gives no platform-specific date or confirmation of cross-play or cross-progression."
         },
         "preload": {
           "title": "Official pre-load went live September 9",
@@ -476,7 +476,7 @@
         },
         "rumor": {
           "title": "Rumors stay labeled",
-          "description": "PS5, the exact unlock time, launch server regions, and any extra beta window stay unconfirmed until a primary source says otherwise."
+          "description": "Platform-specific console dates, cross-play, cross-progression, and any new beta window stay unconfirmed until a primary source says otherwise."
         },
         "refresh": {
           "title": "Refresh before sharing",

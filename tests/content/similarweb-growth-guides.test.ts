@@ -153,7 +153,7 @@ describe("Similarweb growth guide cluster", () => {
     }
 
     const ps5 = await loadGuideDocument("en", "wardogs-ps5");
-    expect(ps5?.frontmatter.updatedAt).toBe("2026-09-13");
+    expect(ps5?.frontmatter.updatedAt).toBe("2026-09-26");
     expect(ps5?.frontmatter.title).toBe("Is WARDOGS Coming to PS5 or Xbox? Console Status");
     expect(`${ps5?.frontmatter.description}\n${ps5?.body}`).toMatch(/not (?:individually )?confirmed|unconfirmed/i);
   });

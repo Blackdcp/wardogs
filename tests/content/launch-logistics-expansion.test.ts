@@ -102,12 +102,12 @@ describe("2026-08-29 launch and logistics expansion", () => {
     for (const locale of locales) {
       const guide = await loadGuideDocument(locale, "wardogs-ps5");
 
-      expect(guide?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect(guide?.frontmatter.updatedAt).toBe("2026-09-26");
       expect(guide?.frontmatter.title).toMatch(/PS5/i);
       expect(guide?.frontmatter.title).toMatch(/Xbox/i);
       expect(guide?.frontmatter.description).toMatch(/PS5/i);
       expect(guide?.frontmatter.description).toMatch(/Xbox/i);
-      expect(`${guide?.frontmatter.description}\n${guide?.body}`).toMatch(/not confirmed|unconfirmed|nicht.*bestätigt|не.*подтверж|não.*confirmad|未確認|尚未(?:得到)?确认|未确认/i);
+      expect(`${guide?.frontmatter.description}\n${guide?.body}`).toMatch(/not confirmed|unconfirmed|nicht.*bestätigt|nicht bekannt|не.*подтверж|não.*confirmad|未確認|尚未(?:得到)?确认|未确认/i);
     }
   });
 

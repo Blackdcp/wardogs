@@ -1,6 +1,6 @@
 ---
 title: "WARDOGS 進行・ロール・ワイプ完全ガイド"
-description: "WARDOGSのBetaで使われた6つのロール進行、戦車がDriver系統へ移る理由、Early Accessで変わる速度、引き継ぎ、シーズン、ワイプ、現金、XPの確定事項と未発表情報を整理します。古いテスト数値を正式仕様として扱わず、開始日に確認すべき画面と検証手順も日本語で解説します。"
+description: "WARDOGSのBeta進行とSeason 1の戦車解除条件を整理。Heavy TankはDriverレベル35、Artillery TankはCareerレベル90。シーズンリセット、現金とXPの扱い、テストデータの引き継ぎ、販売所での再購入など未確認の条件を分けて解説します。"
 keyword: "wardogs progression wipes guide"
 category: "guide"
 slug: "wardogs-progression-wipes-guide"
@@ -16,8 +16,8 @@ faq:
     answer: "公式の引き継ぎ保証はありません。Closed Betaの現金、XP、解除、統計は、別途確認されるまで一時データとして扱ってください。"
   - question: "Betaのレベル上げが速かったのはなぜですか？"
     answer: "開発者は3日間の短いテスト向けに進行速度を意図的に圧縮したと説明しており、Early Accessの通常速度とは異なります。"
-  - question: "Early Accessで戦車はどこから解除しますか？"
-    answer: "Betaでは一時的にWar Dog共通系統にありました。発売前にはDriver系統が移動先と説明されましたが、XPを使う前に現在のメニューを確認してください。"
+  - question: "Season 1でHeavy TankとArtillery Tankはどこで解除しますか？"
+    answer: "公式Season 1変更履歴では、Heavy TankはDriverレベル35、Artillery TankはCareerレベル90です。全戦車に共通の条件や、販売所での再購入ルールまでは確認できません。"
   - question: "WARDOGSにシーズンワイプはありますか？"
     answer: "あります。BULKHEADの公式動画では、シーズン終了時にCashとXP進行がリセットされ、残額はGold Barsへ自動変換、Gold Barsとコスメは維持されると説明しています。Season 02は10月15日開始ですが、正確な移行時刻は未発表です。"
 sources:
@@ -29,6 +29,10 @@ sources:
     url: "https://steamcommunity.com/app/1867240/announcements/"
     kind: "official"
     checkedAt: "2026-09-17"
+  - label: "BULKHEAD：9月9日のSeason 1変更履歴、戦車の解除系統とレベル"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-26"
   - label: "Patch 0.11の経済・不正利用に関する公式告知"
     url: "https://steamcommunity.com/app/1867240/homecontent/"
     kind: "official"
@@ -73,7 +77,7 @@ sources:
 
 Patch 0.11が最新の公式パッチ告知です。9月14日08:00 UTCに公開されたメンテナンス時間帯は終了しています。告知にはOfficialとCommunityのブラウザー分離、検索・フィルター改善、固定サーバーID、CashとGPUの修正、アジア容量増加が含まれます。新しい障害はSteam公式フィードで確認してください。本サイトはライブ監視を運用していません。
 
-8月Closed Betaの進行速度は短いテスト向けに意図的に加速されていました。開発者は通常速度を遅くし、戦車を仮のWar Dog共通系統から**Driverロール系統**へ移すと説明していました。古い必要値や画面写真を使う前に、現在のビルドで再確認してください。
+8月Closed Betaの進行速度は短いテスト向けに意図的に加速されていました。[Season 1変更履歴](https://store.steampowered.com/news/app/1867240/view/701027323413004455)は2種類の戦車を別々に指定し、**Heavy TankはDriverレベル35**、**Artillery TankはCareerレベル90**です。古い必要値や画面写真は当時の記録として扱ってください。
 
 ## 結論
 
@@ -85,7 +89,7 @@ Patch 0.11が最新の公式パッチ告知です。9月14日08:00 UTCに公開�
 
 バランス更新では、Closed Betaが3日間だったため進行を圧縮したと説明されています。通常より早く装備や車両へ到達できたため、動画の解除速度は正式版の基準になりません。
 
-戦車はテストのため共通War Dog系統へ置かれ、発売前にはDriver系統が移動先と説明されました。古いメニューを恒久仕様として扱わず、現在のゲーム画面を優先し、画像や動画には日付とビルドを付けます。
+戦車がテスト用の共通War Dog系統に置かれ、発売前にDriver系統が移動先とされたのは過去の経緯です。Season 1ではHeavy TankがDriver 35、Artillery TankがCareer 90に設定されています。古い画像や動画には日付とビルドを付けて区別してください。
 
 公式Beta総括は進行とメタゲームをEarly Access前に調整すると説明していましたが、最終XP表、シーズン長、引き継ぎ表は掲載していません。現在はライブ画面と新しいパッチノートを優先します。
 
@@ -93,7 +97,7 @@ Patch 0.11が最新の公式パッチ告知です。9月14日08:00 UTCに公開�
 
 観測された仕組みは、1本の共通武器レベルではなく6つのロール別系統へ解除を分けます。欲しい装備に関係する仕事を行うのが基本です。運転、輸送、修理、後方支援はDriver系統、戦闘や支援行動は該当するロールへ結び付くと考え、ライブ画面で確認します。
 
-正式な名称、XP獲得源、必要値、報酬順、途中でロールを変えた場合の扱いはビルド依存です。Betaだけで「最強系統」を固定しないでください。車両の移動や報酬調整だけで優先順位が変わります。
+上記2種類のSeason 1戦車解除条件以外のXP獲得源、必要値、報酬順、途中でロールを変えた場合の扱いはビルド依存です。Betaだけで「最強系統」を固定しないでください。車両の移動や報酬調整だけで優先順位が変わります。
 
 開始日に確認する項目：
 
@@ -103,11 +107,11 @@ Patch 0.11が最新の公式パッチ告知です。9月14日08:00 UTCに公開�
 4. 解除レベルと購入現金の両方;
 5. 最初のバランスパッチ後の差分。
 
-## 戦車とDriver系統
+## Heavy TankとArtillery Tankの別々の系統
 
-Closed Betaでは戦車が共通系統に仮配置され、発売前にはDriverが移動先と説明されました。戦車を目標にするプレイヤーは現在の系統を確認し、運転、輸送、修理、物流、目標支援も記録してください。
+Closed Betaで戦車が共通War Dog/Career系統に仮配置されたのは過去の経緯です。[9月9日のSeason 1変更履歴](https://store.steampowered.com/news/app/1867240/view/701027323413004455)では、**Heavy TankはCareerレベル35からDriverレベル35へ**、**Artillery TankはCareerレベル55からCareerレベル90へ**変更されました。別々の系統にある2つの解除条件であり、全戦車共通のレベルではありません。
 
-最終レベル、価格、XP対象行動、全装甲車が同じ条件かは未発表です。[車両カタログ](/ja/items/vehicles)、[戦車ページ](/ja/items/vehicles/tank)、[資金ガイド](/ja/guides/wardogs-money-guide)ではBeta値を暫定情報として残します。
+ほかの装甲車両もいずれかの条件を共有するか、販売所で再購入が必要か、Driver・Career XPを得る具体的な行動は未確認です。[車両カタログ](/ja/items/vehicles)、[戦車ページ](/ja/items/vehicles/tank)、[資金ガイド](/ja/guides/wardogs-money-guide)ではBetaの観測値とSeason 1で確定した条件を分けて扱います。
 
 ## 進行はワイプされるのか
 
@@ -131,17 +135,17 @@ Playtest項目がSteamに残ることを引き継ぎ証明にせず、別ゲー�
 
 9月10日にビルド番号、最初の解除、必要レベル、価格、バーを動かした行動を記録します。キル、蘇生、運転、配送、目標を一度に混ぜず、1種類ずつ再現してください。
 
-解除後も購入費が必要な場合に備えて現金を残します。ショーやパッチノートが出たらBeta仮説を公式文へ置き換えます。[ローンチチェックリスト](/ja/guides/wardogs-launch-checklist)で日程を確認できます。
+現金を残しておきましょう。戦車を使用するたびに販売所で再購入が必要かどうかは、この変更履歴だけでは分かりません。現行ビルドの販売所と新しい公式告知で確認してください。[ローンチチェックリスト](/ja/guides/wardogs-launch-checklist)で日程を確認できます。
 
 ## 確定と未確定
 
-**確定:** Beta進行は加速されていた、通常速度は遅くなる、戦車はDriver系統へ移る、進行とメタゲームは調整中。
+**確認済みの過去情報:** Betaの進行は加速され、戦車は一時的に共通系統にありました。**Season 1の解除条件:** Heavy TankはDriver 35、Artillery TankはCareer 90。ほかの戦車との条件共有や販売所での再購入は未確認です。
 
 **シーズン方針は確定:** CashとXPをリセットし、残額はGold Barsへ自動変換、Gold Barsとコスメは維持。**未確定:** Season 02の正確な移行時刻、交換レート、解除や設定の詳細、今後のシーズン長。
 
 ## 情報源と確認日
 
-公式Beta総括、開発者発言を保存した投稿、最新解説動画を2026年9月1日に確認しました。開始後はライブメニューと公式パッチノートを優先します。
+戦車の解除条件を記した[公式Season 1変更履歴](https://store.steampowered.com/news/app/1867240/view/701027323413004455)は**2026年9月26日**に確認しました。Beta総括と発売前の発言は過去の資料として扱い、後の公式パッチノートで変更された場合は更新します。
 
 ## 関連ガイド
 
@@ -149,3 +153,4 @@ Playtest項目がSteamに残ることを引き継ぎ証明にせず、別ゲー�
 - [資金ガイド](/ja/guides/wardogs-money-guide)
 - [初心者ガイド](/ja/guides/wardogs-beginner-guide)
 - [車両一覧](/ja/items/vehicles)
+- [WARDOGSのSteam実績](/ja/guides/wardogs-achievements)

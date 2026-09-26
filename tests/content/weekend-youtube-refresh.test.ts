@@ -56,7 +56,7 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const fob = await loadGuideDocument(locale, "wardogs-fob-guide");
       const money = await loadGuideDocument(locale, "wardogs-money-guide");
 
-      expect(beginner?.frontmatter.updatedAt, locale).toBe(locale === "en" ? "2026-09-24" : "2026-09-17");
+      expect(beginner?.frontmatter.updatedAt, locale).toBe("2026-09-26");
       expect(fob?.frontmatter.updatedAt, locale).toBe("2026-09-17");
       expect((money?.frontmatter.updatedAt ?? "") >= "2026-09-17", locale).toBe(true);
 
@@ -89,7 +89,7 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const release = await loadGuideDocument(locale, "wardogs-release-date");
 
-      expect(livestream?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect((livestream?.frontmatter.updatedAt ?? "") >= "2026-09-13").toBe(true);
       expect(livestream?.frontmatter.sources.map(({url}) => url)).toContain("https://www.twitch.tv/thefpsgamesshow");
       expect(livestream?.body).toMatch(/18:00 UTC/);
       expect((price?.frontmatter.updatedAt ?? "") >= "2026-09-17").toBe(true);

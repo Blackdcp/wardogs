@@ -233,7 +233,7 @@
         "items": {
           "season02": {
             "title": "Season 02 chega em 15 de outubro",
-            "description": "O teaser oficial confirma a data e o tema de tempestade; notas completas, horário e regras de reset ainda não foram publicados."
+            "description": "O teaser confirma data e cenas de tempestade. A regra geral de reset de dinheiro e XP já foi publicada; horário e taxa de conversão da Season 02 ainda não."
           },
           "closedBeta02": {
             "title": "Closed Beta 02 foi encerrado",
@@ -256,8 +256,8 @@
             "description": "A manutenção de 14 de setembro já passou; consulte as notas e o feed oficial da Steam para mudanças e avisos atuais."
           },
           "ps5Release": {
-            "title": "Versões para consoles são planejadas para 2028",
-            "description": "O trailer oficial confirma 2028, mas não cita individualmente PS5, Xbox, datas, cross-play ou progressão compartilhada."
+            "title": "Datas exatas de PS5 e Xbox ainda não confirmadas",
+            "description": "A Team17 cita PlayStation 5 e Xbox Series X|S como plataformas planejadas, enquanto o trailer dá apenas a janela geral de 2028. O que falta confirmar são as datas de cada plataforma; as versões para consoles ainda não estão disponíveis, e cross-play e progressão compartilhada não foram anunciados."
           }
         }
       }
@@ -336,7 +336,7 @@
         },
         "support": {
           "title": "Ações de suporte rendem",
-          "description": "Reanimações, transporte, entregas de suprimentos e controle do objetivo podem gerar dinheiro além do combate."
+          "description": "Reanimações, transporte de aliados e controle do objetivo rendem dinheiro. Suprimentos ajudam a equipe, mas um pagamento separado não foi confirmado."
         },
         "mobility": {
           "title": "Planeje a aproximação",
@@ -399,7 +399,7 @@
       "items": {
         "season02": {
           "title": "WARDOGS Season 02 chega em 15 de outubro",
-          "description": "O teaser oficial de 23 de setembro confirma a data e mostra cenas de tempestade. Horário de lançamento, detalhes do patch e regras de reset do progresso ainda não foram anunciados."
+          "description": "O teaser de 22 de setembro confirma data e tempestade. A regra geral de reset de dinheiro e XP é conhecida; horário, detalhes do patch e taxa de conversão seguem sem anúncio."
         },
         "closedBeta02": {
           "title": "Closed Beta 02 terminou em 6 de setembro",
@@ -423,11 +423,11 @@
         },
         "earlyAccess": {
           "title": "WARDOGS entrou em Acesso Antecipado em 10 de setembro",
-          "description": "A versão Windows PC está jogável na Steam. O trailer oficial anuncia consoles em 2028, sem plataformas ou datas específicas."
+          "description": "A versão para Windows PC está disponível na Steam. O trailer anuncia consoles para 2028, e a Team17 cita PlayStation 5 e Xbox Series X|S como plataformas planejadas; não há datas específicas para cada uma."
         },
         "ps5": {
           "title": "Versões para consoles são planejadas para 2028",
-          "description": "O trailer confirma 2028, mas não cita PS5, Xbox, datas, cross-play ou cross-progression."
+          "description": "O trailer aponta 2028 para consoles. A Team17 cita PlayStation 5 e Xbox Series X|S como plataformas planejadas, mas não confirmou datas específicas, cross-play ou progressão compartilhada."
         },
         "preload": {
           "title": "O preload oficial foi liberado em 9 de setembro",
@@ -476,7 +476,7 @@
         },
         "rumor": {
           "title": "Rumores ficam marcados",
-          "description": "PS5, horário exato de desbloqueio, regiões de servidor no lançamento e outro beta seguem sem confirmação de uma fonte primária."
+          "description": "Datas específicas para cada console, cross-play, progressão compartilhada e uma nova fase beta seguem sem confirmação de uma fonte primária."
         },
         "refresh": {
           "title": "Revise antes de compartilhar",

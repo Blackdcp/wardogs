@@ -56,7 +56,7 @@ describe("WARDOGS Closed Beta reference content", () => {
     ]));
     expect(NEWS_CHECKLIST_SLUGS).toContain("wardogs-twitch-drops");
     expect(NEWS_UPDATES).toContainEqual(expect.objectContaining({
-      date: "2026-08-20",
+      date: "2026-09-09",
       status: "Confirmed",
       titleKey: "preload",
       guideSlug: "wardogs-download",

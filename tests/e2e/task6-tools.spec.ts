@@ -31,7 +31,7 @@ test("mobile progression and logistics tools keep ordered share state", async ({
   await page.goto("/en/tools/logistics-planner?lp_stages=transport%2Csupply%2Crecovery");
   await expectNoHorizontalOverflow(page);
   const stageNames = () => page.locator("ol > li > div h3").allTextContents();
-  expect(await stageNames()).toEqual(["Transport", "Supply", "Recovery"]);
+  await expect.poll(stageNames).toEqual(["Transport", "Supply", "Recovery"]);
   const recoveryStage = page.locator("ol > li").filter({has: page.getByRole("heading", {name: "Recovery"})});
   await expect(recoveryStage.getByText("Unknown")).toBeVisible();
   await expect(recoveryStage.getByRole("link", {name: "Open official Season 1 source"})).toHaveCount(0);
@@ -39,7 +39,7 @@ test("mobile progression and logistics tools keep ordered share state", async ({
 
   await page.getByRole("button", {name: "Move earlier: Supply"}).click();
   await expect(page).toHaveURL(/lp_stages=supply%2Ctransport%2Crecovery$/);
-  expect(await stageNames()).toEqual(["Supply", "Transport", "Recovery"]);
+  await expect.poll(stageNames).toEqual(["Supply", "Transport", "Recovery"]);
   await page.getByRole("checkbox", {name: "Recovery"}).uncheck();
   await expect(page).toHaveURL(/lp_stages=supply%2Ctransport$/);
   await page.getByRole("button", {name: "Copy tool link"}).click();

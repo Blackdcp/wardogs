@@ -35,12 +35,16 @@ describe("sitemap", () => {
   it("marks refreshed hubs with the current editorial date", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
-    for (const path of ["", "/guides", "/videos", "/items"]) {
+    for (const path of ["", "/guides"]) {
       expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path || "/")
+        .toBe("2026-09-26T00:00:00.000Z");
+    }
+    for (const path of ["/videos", "/items"]) {
+      expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path)
         .toBe("2026-09-17T00:00:00.000Z");
     }
     expect(new Date(entriesByUrl.get(`${origin}/en/news`)!.lastModified!).toISOString())
-      .toBe("2026-09-24T00:00:00.000Z");
+      .toBe("2026-09-26T00:00:00.000Z");
   });
 
   it("publishes every guide in all five locales with reciprocal hreflang", () => {
@@ -139,13 +143,13 @@ describe("sitemap", () => {
     }
   });
 
-  it("locks Deagle freshness to its latest official change", () => {
+  it("locks Deagle freshness to its latest editorial update", () => {
     const deagle = itemLibrary.find((item) => item.slug === "deagle");
 
     expect(deagle).toBeDefined();
-    expect(resolveItemLastModified(deagle).toISOString()).toBe("2026-09-09T00:00:00.000Z");
+    expect(resolveItemLastModified(deagle).toISOString()).toBe("2026-09-26T00:00:00.000Z");
     expect(new Date(sitemap().find((entry) => entry.url === `${origin}/en/items/weapons/deagle`)!.lastModified!).toISOString())
-      .toBe("2026-09-09T00:00:00.000Z");
+      .toBe("2026-09-26T00:00:00.000Z");
   });
 
   it("resolves distinct supplied detail dates", () => {

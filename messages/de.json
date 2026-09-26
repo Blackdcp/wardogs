@@ -233,7 +233,7 @@
         "items": {
           "season02": {
             "title": "Season 02 startet am 15. Oktober",
-            "description": "Der offizielle Teaser bestätigt Termin und Sturmthema; Patchnotes, Startzeit und Regeln zum Fortschrittsreset fehlen noch."
+            "description": "Der offizielle Teaser bestätigt Termin und Sturmbilder. Die allgemeine Reset-Regel für Geld und XP ist bekannt; Startzeit und Umrechnungskurs für Season 02 fehlen noch."
           },
           "closedBeta02": {
             "title": "Closed Beta 02 ist beendet",
@@ -256,8 +256,8 @@
             "description": "Das Wartungsfenster vom 14. September ist vorbei; aktuelle Änderungen und Live-Hinweise stehen in den Patchnotes und im offiziellen Steam-Feed."
           },
           "ps5Release": {
-            "title": "Konsolenversionen sind für 2028 geplant",
-            "description": "Der offizielle Trailer bestätigt 2028, nennt aber PS5, Xbox, genaue Termine, Crossplay und Cross-Progression nicht einzeln."
+            "title": "Genaue PS5- und Xbox-Termine sind nicht bestätigt",
+            "description": "Team17 nennt PlayStation 5 und Xbox Series X|S als geplante Ziele; der Trailer gibt nur das allgemeine Konsolenfenster 2028 an. Unbestätigt sind die Termine je Plattform. Die Konsolenversionen sind noch nicht verfügbar; Crossplay und Cross-Progression sind offen."
           }
         }
       }
@@ -336,7 +336,7 @@
         },
         "support": {
           "title": "Unterstützung zahlt sich aus",
-          "description": "Wiederbelebungen, Transporte, Versorgung und Zielkontrolle können neben dem Kampf Geld einbringen."
+          "description": "Wiederbelebungen, Transport von Verbündeten und Zielkontrolle bringen Geld. Versorgung hilft dem Team; eine eigene Geldprämie ist nicht bestätigt."
         },
         "mobility": {
           "title": "Plane den Anmarsch",
@@ -399,7 +399,7 @@
       "items": {
         "season02": {
           "title": "WARDOGS Season 02 startet am 15. Oktober",
-          "description": "Der offizielle Teaser vom 23. September bestätigt das Datum und zeigt Sturm-Motive. Startzeit, Patch-Details und Regeln für einen Fortschritts-Reset sind noch nicht bekannt."
+          "description": "Der offizielle Teaser vom 22. September bestätigt Datum und Sturmbilder. Die allgemeine Reset-Regel für Geld und XP ist bekannt; Startzeit, Patch-Details und Umrechnungskurs fehlen noch."
         },
         "closedBeta02": {
           "title": "Closed Beta 02 endete am 6. September",
@@ -423,11 +423,11 @@
         },
         "earlyAccess": {
           "title": "WARDOGS Early Access startete am 10. September",
-          "description": "Die Windows-PC-Version ist auf Steam spielbar. Der offizielle Launch-Trailer kündigt Konsolenversionen für 2028 an, jedoch ohne Plattformen oder Termine."
+          "description": "Die Windows-PC-Version ist auf Steam spielbar. Der Launch-Trailer kündigt Konsolen für 2028 an; Team17 nennt PlayStation 5 und Xbox Series X|S als geplante Plattformen. Eigene Erscheinungstermine fehlen noch."
         },
         "ps5": {
           "title": "Konsolenversionen sind für 2028 geplant",
-          "description": "Der Trailer bestätigt 2028, nennt aber weder PS5, Xbox, genaue Termine, Cross-play noch Cross-progression."
+          "description": "Der Trailer nennt 2028 als Konsolenfenster. Team17 führt PlayStation 5 und Xbox Series X|S als geplante Plattformen auf; eigene Termine, Crossplay und Cross-Progression sind nicht bestätigt."
         },
         "preload": {
           "title": "Der offizielle Preload startete am 9. September",
@@ -476,7 +476,7 @@
         },
         "rumor": {
           "title": "Gerüchte bleiben markiert",
-          "description": "PS5, die genaue Freischaltzeit, Startregionen der Server und ein weiteres Beta-Fenster bleiben bis zu einer Primärquelle unbestätigt."
+          "description": "Plattformspezifische Konsolentermine, Crossplay, Cross-Progression und ein weiteres Beta-Fenster bleiben bis zu einer Primärquelle unbestätigt."
         },
         "refresh": {
           "title": "Vor dem Teilen prüfen",

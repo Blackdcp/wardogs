@@ -1,5 +1,5 @@
 import type {WardogsItemInput} from "./item-library";
-import {gameplayVideo, officialSteam, officialTeam17, sevenThingsVideo} from "./item-sources";
+import {gameplayVideo, officialSeasonOneChangelog, officialSteam, officialTeam17, sevenThingsVideo} from "./item-sources";
 
 export const weaponItems = [
   {
@@ -384,7 +384,7 @@ export const weaponItems = [
     cautions: [
       "The $900 Alpha 1 price matched the AMP-9 before ammunition or magazine costs.",
       "The recorded seven-round magazine cost $50 and limits error tolerance.",
-      "Weight and progression were not captured, so the full acquisition and carry burden is unknown."
+      "Season 1 confirms Career level 85; only the current weight and full carry burden remain unverified."
     ],
     facts: [
       {label: "Alpha price", value: "$900", evidence: ["Pre-release Build"]},
@@ -395,7 +395,7 @@ export const weaponItems = [
     ],
     relatedGuides: ["wardogs-price", "wardogs-gameplay", "wardogs-alpha"],
     relatedItems: ["judge", "ggx-17", "ggx-18"],
-    sources: [officialSteam, officialTeam17, gameplayVideo],
+    sources: [officialSteam, officialTeam17, officialSeasonOneChangelog, gameplayVideo],
     detailImage: "/images/catalogue/weapons/deagle.webp",
     detailImageAlt: "Deagle sidearm",
     observedPrice: "$900",
@@ -407,10 +407,10 @@ export const weaponItems = [
       "Observed in Alpha 1: Fire modes: Semi automatic"
     ],
     unconfirmedFacts: [
-      "Weight and progression were not captured in Alpha 1 and remain unconfirmed for Early Access or final release.",
-      "Damage, recoil, magazine behavior, and the $900 Alpha price may differ from the live Early Access build or full release."
+      "Alpha 1 omitted weight and progression; Season 1 confirms Career level 85, while weight remains unverified for Early Access or final release.",
+      "Damage, recoil, and magazine behavior may differ from the live build; the $900 Alpha 1 vendor price remains unverified for Early Access."
     ],
-    detailUpdatedAt: "2026-08-18",
+    detailUpdatedAt: "2026-09-26",
     priority: 107,
     indexLocales: ["en"]
   },

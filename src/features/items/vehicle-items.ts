@@ -176,7 +176,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     cautions: [
       "Final speed, acceleration, traction, and rollover behavior were not captured.",
-      "The Driver Level 10 gate and $1,500 price may not survive beyond Alpha 1.",
+      "Season 1 lists Driver level 8; the Alpha 1 Driver Level 10 gate is historical.",
       "No protection, seat count, or cargo specification was recorded."
     ],
     facts: [
@@ -187,7 +187,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     relatedGuides: ["wardogs-gameplay", "wardogs-alpha", "wardogs-price"],
     relatedItems: ["bobcat", "humvee"],
-    sources: [officialSteam, officialTeam17, gameplayVideo],
+    sources: [officialSteam, officialTeam17, officialSeasonOneChangelog, gameplayVideo],
     detailImage: "/images/catalogue/vehicles/dune-buggy.webp",
     detailImageAlt: "Dune Buggy fast transport",
     observedPrice: "$1,500",
@@ -200,10 +200,10 @@ export const vehicleItems: readonly WardogsItemInput[] = [
       "Observed in Alpha 1: Track: Driver"
     ],
     unconfirmedFacts: [
-      "Driver Level 10 and the $1,500 price remain unconfirmed for Early Access or final release.",
+      "Season 1 lists a $25,000 Driver-track unlock; the $1,500 Alpha 1 vehicle purchase price remains unverified for Early Access.",
       "Speed, handling, durability, seats, and cargo behavior may differ from the live Early Access build or full release."
     ],
-    detailUpdatedAt: "2026-08-18",
+    detailUpdatedAt: "2026-09-26",
     priority: 203,
     indexLocales: ["en"]
   },
@@ -975,7 +975,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
       "The $60,000 unlock was readable, exposing an important second cost instead of hiding it behind a level label."
     ],
     cautions: [
-      "The record does not explain whether the $60,000 unlock was permanent, repeatable, shared, or refundable.",
+      "Season 1 lists Driver level 3 and a $35,000 Driver-track unlock, separate from any repeat vehicle purchase.",
       "Cargo capacity, loading rules, supply types, passenger seats, and loss behavior were not captured.",
       "No protection, handling, fuel, repair, or off-road specification was recorded."
     ],
@@ -987,7 +987,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     relatedGuides: ["wardogs-gameplay", "wardogs-price", "wardogs-early-access"],
     relatedItems: ["ural-defender", "ural-defender-m249", "kodiak-pickup"],
-    sources: [officialSteam, officialTeam17, sevenThingsVideo],
+    sources: [officialSteam, officialTeam17, officialSeasonOneChangelog, sevenThingsVideo],
     detailImage: "/images/catalogue/vehicles/ural.webp",
     detailImageAlt: "Ural logistics truck",
     observedPrice: "$5,000",
@@ -999,10 +999,10 @@ export const vehicleItems: readonly WardogsItemInput[] = [
       "Observed in Alpha 1: Observed gate: $60,000 unlock"
     ],
     unconfirmedFacts: [
-      "The $60,000 unlock and $5,000 purchase price remain unconfirmed for Early Access or final release.",
+      "The $5,000 Alpha 1 vehicle purchase price remains unverified for Early Access; the $60,000 Alpha 1 unlock is historical.",
       "Unlock persistence, cargo rules, supply interactions, protection, seats, and handling may differ from the live Early Access build or full release."
     ],
-    detailUpdatedAt: "2026-08-18",
+    detailUpdatedAt: "2026-09-26",
     priority: 219,
     indexLocales: ["en"]
   }
