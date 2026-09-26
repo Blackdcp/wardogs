@@ -24,7 +24,9 @@ describe("GSC growth page reinforcement", () => {
     for (const locale of locales) {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedCheckDate = locale === "en" && ["wardogs-beta", "wardogs-playtest", "wardogs-helicopter-guide"].includes(slug)
+        const expectedCheckDate = locale === "en" && slug === "wardogs-crash-fix"
+          ? "2026-09-26"
+          : locale === "en" && ["wardogs-beta", "wardogs-playtest", "wardogs-helicopter-guide"].includes(slug)
           ? "2026-09-24"
           : ["wardogs-beta", "wardogs-playtest", "wardogs-fob-guide"].includes(slug)
           ? "2026-09-17"
@@ -77,8 +79,8 @@ describe("GSC growth page reinforcement", () => {
         phrases: ["What is the current WARDOGS Playtest status?", "WARDOGS playtest sign up"]
       },
       "wardogs-crash-fix": {
-        title: "WARDOGS Crash Fix: Startup, Reboots & Stutter",
-        phrases: ["WARDOGS crashes on startup", "WARDOGS keeps rebooting my PC", "WARDOGS stuttering"]
+        title: "WARDOGS Crashing or Won't Launch? WD-L020 & Safe Fixes",
+        phrases: ["How do you fix WARDOGS crashes and freezes?", "WD-L020 After KB5124010", "Whole PC reboot"]
       },
       "wardogs-helicopter-guide": {
         title: "WARDOGS Helicopter Controls: Fly, Land & Transport",

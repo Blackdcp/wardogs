@@ -99,7 +99,9 @@ describe("Closed Beta 02 weekend release contract", () => {
     for (const locale of locales) {
       for (const slug of refreshedGuideSlugs) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedDate = ["wardogs-preload", "wardogs-best-settings"].includes(slug)
+        const expectedDate = locale === "en" && slug === "wardogs-crash-fix"
+          ? "2026-09-26"
+          : ["wardogs-preload", "wardogs-best-settings"].includes(slug)
           ? "2026-09-17"
           : slug === "wardogs-ps5"
             ? "2026-09-13"
@@ -110,6 +112,9 @@ describe("Closed Beta 02 weekend release contract", () => {
             : "2026-09-04";
         expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedDate);
         expect(guide?.frontmatter.sources.map(({url}) => url), `${locale}/${slug}`).toContain(beta02Url);
+        if (locale === "en" && slug === "wardogs-crash-fix") {
+          expect(guide?.frontmatter.sources.map(({url}) => url)).toContain("https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/");
+        }
         if (slug === "wardogs-ps5") {
           expect(guide?.body, `${locale}/${slug}`).toContain("2028");
         } else {

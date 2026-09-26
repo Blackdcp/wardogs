@@ -111,7 +111,7 @@ describe("AI citation query coverage", () => {
         const guide = await loadGuideDocument(locale, slug);
         const query = localizedQueries[locale][intent as keyof typeof localizedQueries.en];
 
-        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13", "2026-09-17", "2026-09-24"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
+        expect(["2026-08-24", "2026-08-25", "2026-08-26", "2026-08-28", "2026-09-01", "2026-09-04", "2026-09-09", "2026-09-13", "2026-09-17", "2026-09-24", "2026-09-26"], `${locale}/${slug}`).toContain(guide?.frontmatter.updatedAt);
         const searchable = `${guide?.body}\n${guide?.frontmatter.faq.map(({question}) => question).join("\n")}`;
         expect(searchable, `${locale}/${slug} missing ${query}`).toContain(query);
       }
