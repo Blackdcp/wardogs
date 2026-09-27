@@ -70,6 +70,7 @@
     "deployables": "Platzierbare Systeme",
     "mechanics": "Spielmechaniken",
     "operationsAtlas": "Einsatzatlas",
+    "interactiveMap": "Interaktive Karte",
     "loadouts": "Zusammenstellungen",
     "blackMarket": "Schwarzmarkt",
     "goldMarket": "Goldmarkt",
@@ -92,7 +93,7 @@
     "heroDescription": "Nutze ein quellengeprüftes WARDOGS-Nachschlagewerk für Ausrüstung, Steuerung, Zugang, Problemlösungen und Taktiken mit klaren Build-Hinweisen.",
     "primaryCta": "Patch 0.11 lesen",
     "secondaryCta": "Serverstatus prüfen",
-    "quickTasks": {"weapons": "Waffen", "vehicles": "Fahrzeuge", "map": "Kartenplanung", "status": "Serverstatus"},
+    "quickTasks": {"weapons": "Waffen", "vehicles": "Fahrzeuge", "map": "Interaktive Karte", "status": "Serverstatus"},
     "status": "Steam Early Access ist live",
     "statsLabel": "Wichtige Fakten zu WARDOGS",
     "stats": {

@@ -1,4 +1,7 @@
+import {readFileSync} from "node:fs";
+import {resolve} from "node:path";
 import {describe, expect, it} from "vitest";
+import {locales} from "../../src/config/site";
 import {
   buildNavigation,
   selectSearchNavigationItems,
@@ -40,6 +43,8 @@ describe("grouped navigation", () => {
       .toBe("/guides/wardogs-helicopter-guide");
     expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.systemCheck")?.href)
       .toBe("/tools/system-check");
+    expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.interactiveMap")?.href)
+      .toBe("/tools/map");
   });
 
   it("keeps every guide link on the current locale", () => {
@@ -61,6 +66,18 @@ describe("grouped navigation", () => {
     expect(byHref.get("/tools/weapon-compare")).toBe("tool");
     expect(byHref.get("/tools/ammo-matcher")).toBe("tool");
     expect(byHref.get("/maps")).toBe("map");
+    expect(byHref.get("/tools/map")).toBe("map");
+  });
+
+  it("renders a localized direct-map label in the navigation for every locale", () => {
+    for (const locale of locales) {
+      const messages = JSON.parse(readFileSync(resolve(`messages/${locale}.json`), "utf8"));
+      const groups = buildNavigation((key) => key === "nav.interactiveMap" ? messages.nav.interactiveMap : key);
+      const mapLink = groups.find((group) => group.id === "guides")?.items.find(({href}) => href === "/tools/map");
+
+      expect(mapLink?.label, locale).toBe(messages.nav.interactiveMap);
+      expect(mapLink?.label, locale).not.toBe("nav.interactiveMap");
+    }
   });
 
   it("selects tools and maps by explicit type instead of URL shape", () => {
@@ -70,13 +87,15 @@ describe("grouped navigation", () => {
       items: [
         {href: "/tools/not-a-tool", label: "Guide with a tool-shaped URL", searchType: "guide"},
         {href: "/planner", label: "Future planner", searchType: "tool"},
-        {href: "/maps", label: "Operations atlas", searchType: "map"}
+        {href: "/maps", label: "Operations atlas", searchType: "map"},
+        {href: "/tools/map", label: "Interactive map", searchType: "map"}
       ]
     }];
 
     expect(selectSearchNavigationItems(groups)).toEqual([
       {href: "/planner", label: "Future planner", searchType: "tool", category: "Field reference"},
-      {href: "/maps", label: "Operations atlas", searchType: "map", category: "Field reference"}
+      {href: "/maps", label: "Operations atlas", searchType: "map", category: "Field reference"},
+      {href: "/tools/map", label: "Interactive map", searchType: "map", category: "Field reference"}
     ]);
   });
 });

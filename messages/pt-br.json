@@ -70,6 +70,7 @@
     "deployables": "Itens posicionáveis",
     "mechanics": "Mecânicas",
     "operationsAtlas": "Atlas de operações",
+    "interactiveMap": "Mapa interativo",
     "loadouts": "Configurações de equipamento",
     "blackMarket": "Mercado Negro",
     "goldMarket": "Mercado de Ouro",
@@ -92,7 +93,7 @@
     "heroDescription": "Use uma referência de WARDOGS verificada por fontes para equipamentos, controles, acesso, solução de problemas e táticas, com detalhes de build sinalizados.",
     "primaryCta": "Ler Patch 0.11",
     "secondaryCta": "Ver Status dos Servidores",
-    "quickTasks": {"weapons": "Armas", "vehicles": "Veículos", "map": "Planejar no mapa", "status": "Status dos servidores"},
+    "quickTasks": {"weapons": "Armas", "vehicles": "Veículos", "map": "Mapa interativo", "status": "Status dos servidores"},
     "status": "Acesso Antecipado disponível na Steam",
     "statsLabel": "Fatos principais sobre WARDOGS",
     "stats": {

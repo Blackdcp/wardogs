@@ -14,7 +14,7 @@ const translations: Record<string, string> = {
   "home.statsLabel": "Quick facts",
   "home.quickTasks.weapons": "Weapons",
   "home.quickTasks.vehicles": "Vehicles",
-  "home.quickTasks.map": "Map planning",
+  "home.quickTasks.map": "Interactive map",
   "home.quickTasks.status": "Server status"
 };
 
@@ -38,7 +38,9 @@ describe("HomeHero", () => {
     expect(html).toContain('href="/guides/wardogs-server-status"');
     expect(html).toContain('href="/items/weapons"');
     expect(html).toContain('href="/items/vehicles"');
-    expect(html).toContain('href="/maps"');
+    expect(html).toContain('href="/tools/map"');
+    expect(html).not.toContain('href="/maps"');
+    expect(html).toContain("Interactive map");
     for (const task of ["weapons", "vehicles", "map", "status"]) {
       expect(html).toContain(`data-home-task="${task}"`);
     }
