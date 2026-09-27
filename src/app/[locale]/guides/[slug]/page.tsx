@@ -21,6 +21,7 @@ import {JsonLd} from "@/components/seo/json-ld";
 import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker";
 import {formatLocalizedDate} from "@/lib/localized-date";
 import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
+import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -86,7 +87,11 @@ export default async function GuideArticlePage({params}: PageProps) {
       <LiveBetaBanner compact />
 
       <article className="site-container max-w-4xl py-10 md:py-14">
-        {discoveryImage ? (
+        {slug === "wardogs-map" ? (
+          <section className="mb-10" aria-label="Interactive Tactical Map">
+            <WardogsMapViewer initialMap="bakurani" />
+          </section>
+        ) : discoveryImage ? (
           <figure className="mb-10 overflow-hidden border border-[#2c3631] bg-[#101411]">
             <Image
               alt={discoveryImage.alt}
