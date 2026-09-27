@@ -21,9 +21,7 @@ import {JsonLd} from "@/components/seo/json-ld";
 import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker";
 import {formatLocalizedDate} from "@/lib/localized-date";
 import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
-import {GuideTaskPanel} from "@/components/guides/guide-task-panel";
-import {prepareGuideBodyForTaskPanel} from "@/features/guides/guide-task-body";
-import {getGuideTaskData} from "@/features/guides/guide-task-data";
+import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -57,14 +55,12 @@ export default async function GuideArticlePage({params}: PageProps) {
   const guide = await loadGuideDocument(locale, slug);
   if (!guide) notFound();
   const discoveryImage = getGuideDiscoveryImage(slug);
-  const taskData = getGuideTaskData(slug, locale);
-  const guideBody = prepareGuideBodyForTaskPanel(guide.body, locale, Boolean(taskData));
   setRequestLocale(locale);
   const [t, categoryT, related, compiled] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "categories"}),
     getRelatedGuides(locale, slug),
-    compileLocalizedGuideBody(guideBody, mdxComponents, locale)
+    compileLocalizedGuideBody(guide.body, mdxComponents, locale)
   ]);
 
   return (
@@ -83,7 +79,7 @@ export default async function GuideArticlePage({params}: PageProps) {
           <p className="mt-3 text-xs text-[#8b9992]">
             {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy" title={t("teamName")}>{t("teamName")}</Link>
           </p>
-          <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "ja" ? "text-3xl sm:text-4xl md:text-5xl" : locale === "zh-cn" ? "text-3xl sm:text-5xl md:text-6xl" : "text-4xl sm:text-5xl md:text-6xl"}`} style={{overflowWrap: "break-word", wordBreak: locale === "ja" ? "keep-all" : "normal"}}>{guide.frontmatter.title}</h1>
+          <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "zh-cn" ? "text-3xl sm:text-5xl" : "text-4xl sm:text-5xl"} md:text-6xl`} style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]" style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.description}</p>
         </div>
       </header>
@@ -91,8 +87,11 @@ export default async function GuideArticlePage({params}: PageProps) {
       <LiveBetaBanner compact />
 
       <article className="site-container max-w-4xl py-10 md:py-14">
-        {taskData ? <GuideTaskPanel data={taskData} locale={locale} /> : null}
-        {discoveryImage ? (
+        {slug === "wardogs-map" ? (
+          <section className="mb-10" aria-label="Interactive Tactical Map">
+            <WardogsMapViewer initialMap="bakurani" />
+          </section>
+        ) : discoveryImage ? (
           <figure className="mb-10 overflow-hidden border border-[#2c3631] bg-[#101411]">
             <Image
               alt={discoveryImage.alt}
@@ -109,12 +108,10 @@ export default async function GuideArticlePage({params}: PageProps) {
             </figcaption>
           </figure>
         ) : null}
-        {!taskData ? (
-          <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
-            <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
-            <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
-          </aside>
-        ) : null}
+        <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
+          <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
+          <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
+        </aside>
         <div className="guide-prose">{compiled.content}</div>
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">
