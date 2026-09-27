@@ -123,7 +123,7 @@ describe("catalogue evidence views", () => {
     expect(cardHtml).toContain("Historical");
     expect(noticeHtml).toContain("data-catalogue-freshness-summary");
     expect(noticeHtml).toMatch(/Historical: \d+/);
-    expect(noticeHtml).toContain("101");
+    expect(noticeHtml).toContain("36 records remain behind a media-verification notice");
   });
 
   it("keeps downgraded equipment provenance visible without a borrowed source", () => {

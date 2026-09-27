@@ -123,9 +123,9 @@ describe("CatalogueBuildNotice", () => {
     const chineseHtml = renderToStaticMarkup(<CatalogueBuildNotice locale="zh-cn" />);
 
     expect(englishHtml).toContain("Alpha 1 and August Closed Beta");
-    expect(englishHtml).toContain("101 records remain behind a media-verification notice");
+    expect(englishHtml).toContain("36 records remain behind a media-verification notice");
     expect(chineseHtml).toContain("Alpha 1 与 8 月封闭测试");
-    expect(chineseHtml).toContain("101 个条目继续显示图片待核验");
+    expect(chineseHtml).toContain("36 个条目继续显示图片待核验");
     expect(chineseHtml).toContain("抢先体验版本重新验证");
     expect(englishHtml).not.toContain("final launch data");
   });
