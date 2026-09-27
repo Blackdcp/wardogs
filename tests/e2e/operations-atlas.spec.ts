@@ -22,6 +22,16 @@ test("operations atlas filters sourced workflows without inventing a tactical ma
   await page.goto("/en/maps");
 
   await expect(page.getByRole("heading", {level: 1, name: "WARDOGS Operations Atlas"})).toBeVisible();
+  const mapLinks = page.locator("[data-community-map-link]");
+  await expect(mapLinks).toHaveCount(3);
+  await expect(mapLinks.nth(0)).toHaveAttribute("href", "https://metaforge.app/wardogs/map/bakurani");
+  await expect(mapLinks.nth(1)).toHaveAttribute("href", "https://metaforge.app/wardogs/map/ozeti");
+  await expect(mapLinks.nth(2)).toHaveAttribute("href", "https://metaforge.app/wardogs/map/zestafona");
+  for (const link of await mapLinks.all()) {
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", /noopener/);
+  }
+  await expect(page.locator("[data-community-maps]")).toContainText("MetaForge");
   await expect(page.locator("[data-atlas-entry]")).toHaveCount(7);
   await expect(page.locator('[data-atlas-visual="pending"]')).toHaveCount(2);
   await expect(page.locator('[data-atlas-visual="verified"]')).toHaveCount(1);
@@ -47,6 +57,7 @@ test("Simplified Chinese atlas keeps localized navigation and exact guide target
   await page.goto("/zh-cn/maps");
 
   await expect(page.getByRole("heading", {level: 1, name: "WARDOGS 行动地图"})).toBeVisible();
+  await expect(page.locator("[data-community-maps]")).toContainText("在 MetaForge 打开交互地图");
   await page.getByRole("button", {name: "火力支援"}).click();
   await expect(page.locator("[data-atlas-entry]")).toHaveCount(1);
   await expect(page.locator('[data-atlas-entry="mortar-support"]')).toBeVisible();
