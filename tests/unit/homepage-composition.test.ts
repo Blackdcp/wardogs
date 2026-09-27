@@ -3,23 +3,20 @@ import path from "node:path";
 import {describe, expect, it} from "vitest";
 
 describe("homepage composition", () => {
-  it("puts task navigation and visual catalogue before the long-form guide index", () => {
+  it("puts task navigation, catalogue, and featured guides before the compact search and updates", () => {
     const source = readFileSync(path.resolve("src/app/[locale]/page.tsx"), "utf8");
-    const hero = source.indexOf("<HomeHero");
-    const live = source.indexOf("<LiveBetaBanner");
-    const search = source.indexOf("<SiteSearch");
-    const actions = source.indexOf("<HomeActionHub");
-    const changes = source.indexOf("<CurrentBuildChanges");
-    const catalogue = source.indexOf("<CatalogueHomeBand");
-    const priorities = source.indexOf("<PriorityGuides");
+    const primarySections = [
+      "<HomeHero",
+      "<LiveBetaBanner",
+      "<HomeActionHub",
+      "<CatalogueHomeBand",
+      "<PriorityGuides",
+      "<SiteSearch",
+      "<CurrentBuildChanges"
+    ].map((component) => source.indexOf(component));
 
-    expect(hero).toBeGreaterThan(-1);
-    expect(live).toBeGreaterThan(hero);
-    expect(search).toBeGreaterThan(live);
-    expect(actions).toBeGreaterThan(search);
-    expect(changes).toBeGreaterThan(actions);
-    expect(catalogue).toBeGreaterThan(changes);
-    expect(priorities).toBeGreaterThan(catalogue);
+    expect(primarySections.every((position) => position >= 0)).toBe(true);
+    expect(primarySections).toEqual([...primarySections].sort((left, right) => left - right));
   });
 
   it("keeps the branded visual hero before the compact operational status surface", () => {
@@ -28,7 +25,8 @@ describe("homepage composition", () => {
     expect(source).toContain("<HomeHero facts={facts} />");
     expect(source).toContain("<LiveBetaBanner compact />");
     expect(source.indexOf("<HomeHero")).toBeLessThan(source.indexOf("<LiveBetaBanner"));
-    expect(source.indexOf("<LiveBetaBanner")).toBeLessThan(source.indexOf("<SiteSearch"));
+    expect(source.indexOf("<LiveBetaBanner")).toBeLessThan(source.indexOf("<HomeActionHub"));
+    expect(source.indexOf("<HomeActionHub")).toBeLessThan(source.indexOf("<SiteSearch"));
   });
 
   it("keeps the visible WARDOGS Wiki brand and hero artwork in the hero component", () => {

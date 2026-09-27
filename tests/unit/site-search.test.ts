@@ -113,10 +113,8 @@ describe("site search index", () => {
           empty: "No maintained result found.",
           resultCount: "{count} results",
           openResult: "Open result",
-          types: {guide: "Guide", item: "Item", video: "Video", tool: "Tool", map: "Map"},
-          counts: {guides: "Guides", items: "Items", videos: "Current videos", tools: "Tools", maps: "Maps"}
+          types: {guide: "Guide", item: "Item", video: "Video", tool: "Tool", map: "Map"}
         },
-        counts: {guides: 47, items: 12, videos: 8, tools: 2, maps: 1},
         index: [],
         locale: "en"
       })
@@ -125,7 +123,8 @@ describe("site search index", () => {
     expect(html).toContain('role="combobox"');
     expect(html).toContain('aria-controls="site-search-results"');
     expect(html).toContain('data-site-search-results="stable"');
-    expect(html).toContain("h-[308px] overflow-y-auto");
+    expect(html).toContain('hidden=""');
+    expect(html).not.toContain("h-[308px]");
     expect(html).toContain("Search guides, items, videos, and tools");
   });
 

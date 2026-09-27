@@ -20,6 +20,28 @@ test("each real basemap loads and switching maps resets zoom", async ({page}) =>
   await expect(page.getByRole("button", {name: /layers/i})).toHaveCount(0);
 });
 
+test("describes the three switchable 2D map images without claiming calibrated coordinates", async ({page}) => {
+  const localizedBasemapWording = [
+    {locale: "en", phrase: "2D map images"},
+    {locale: "de", phrase: "2D-Kartenbilder"},
+    {locale: "ru", phrase: "2D-изображения карт"},
+    {locale: "pt-br", phrase: "imagens de mapas 2D"},
+    {locale: "ja", phrase: "2Dマップ画像"},
+    {locale: "zh-cn", phrase: "三张 2D 战场底图"}
+  ];
+
+  for (const {locale, phrase} of localizedBasemapWording) {
+    await page.goto(`/${locale}/tools/map`);
+    const description = await page.locator("main > header p").innerText();
+
+    expect(description, locale).toContain(phrase);
+    for (const mapName of ["Bakurani", "Ozeti", "Zestafona"]) {
+      expect(description.toLowerCase(), `${locale}/${mapName}`).toContain(mapName.toLowerCase());
+    }
+    expect(description, locale).not.toMatch(/coordinates?|grid references?|座標|坐标|koordinaten|координат|coordenadas/i);
+  }
+});
+
 test("map fits a narrow viewport without page overflow and supports pointer panning", async ({page}) => {
   await page.setViewportSize({width: 375, height: 812});
   await page.goto("/en/maps");

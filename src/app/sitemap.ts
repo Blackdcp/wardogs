@@ -29,6 +29,7 @@ const staticPaths = [
   "/tools/ammo-matcher",
   "/tools/progression-route",
   "/tools/logistics-planner",
+  "/tools/map",
   "/about",
   "/contact",
   "/editorial-policy",
