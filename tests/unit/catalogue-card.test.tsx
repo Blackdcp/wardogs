@@ -9,20 +9,13 @@ describe("catalogue card image disclosure", () => {
   const pending = getCatalogueRecords("weapons").find((record) => record.slug === "m12g")!;
   const captured = getCatalogueRecords("weapons").find((record) => record.slug === "ak74")!;
 
-  it.each([
-    ["en", "Historical owner-provided artwork"],
-    ["de", "Historische, vom Betreiber bereitgestellte Grafik"],
-    ["ru", "Историческое изображение от владельца сайта"],
-    ["pt-br", "Arte histórica fornecida pelo responsável pelo site"],
-    ["ja", "サイト運営者提供の過去の画像"],
-    ["zh-cn", "站长提供的历史物品图"],
-  ] as const)("labels owner-pack art honestly in %s", (locale, caption) => {
+  it.each(["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const)("shows owner-pack art without a visible source caption in %s", (locale) => {
     const html = renderToStaticMarkup(<CatalogueCard locale={locale} record={historical} />);
 
     expect(html).toContain("light-helmet.webp");
-    expect(html).toContain(`data-catalogue-media-source="owner-asset-pack"`);
-    expect(html).toContain(caption);
-    expect(html).toContain("2026");
+    expect(html).not.toContain("data-catalogue-media-source");
+    expect(html).not.toContain("Historical owner-provided artwork");
+    expect(html).not.toContain("站长提供的历史物品图");
     expect(html).toContain('data-media-surface="contrast"');
   });
 

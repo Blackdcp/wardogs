@@ -29,15 +29,6 @@ const pendingMediaCopy: Record<Locale, {label: string; description: string}> = {
   "zh-cn": {label: "图片仍待验证", description: "已记录物品标识，但尚未确认该物品的专属图片。"},
 };
 
-const historicalMediaCopy: Record<Locale, string> = {
-  en: "Historical owner-provided artwork (Aug 2026); current build not verified.",
-  de: "Historische, vom Betreiber bereitgestellte Grafik (Aug. 2026); aktuelle Version nicht geprüft.",
-  ru: "Историческое изображение от владельца сайта (авг. 2026); текущая версия не проверена.",
-  "pt-br": "Arte histórica fornecida pelo responsável pelo site (ago. 2026); versão atual não verificada.",
-  ja: "サイト運営者提供の過去の画像（2026年8月）。現行版では未確認です。",
-  "zh-cn": "站长提供的历史物品图（2026年8月）；尚未核对当前版本。",
-};
-
 function CardContent({locale, record, linked, eagerImage}: {locale: Locale; record: CatalogueRecord; linked: boolean; eagerImage: boolean}) {
   const pendingMedia = record.mediaState === "pending" || !record.image || !record.imageAlt;
   const ownerPackArt = !pendingMedia && getCatalogueMediaSource(record)?.origin === "owner-asset-pack";
@@ -58,21 +49,14 @@ function CardContent({locale, record, linked, eagerImage}: {locale: Locale; reco
             <span className="mt-2 text-xs leading-5 text-[#849189]">{pendingMediaCopy[locale].description}</span>
           </div>
         ) : (
-          <>
-            <Image
-              alt={record.imageAlt!}
-              className={`object-contain p-4 ${ownerPackArt ? "pb-12" : ""} ${linked ? "transition-transform duration-300 group-hover:scale-[1.025]" : ""}`}
-              fill
-              loading={eagerImage ? "eager" : "lazy"}
-              sizes={cardImageSizes}
-              src={assetPath(record.image!)}
-            />
-            {ownerPackArt ? (
-              <p className="absolute inset-x-0 bottom-0 bg-[#111a16]/95 px-3 py-2 text-center text-[11px] leading-4 text-[#d8e2db]" data-catalogue-media-source="owner-asset-pack">
-                {historicalMediaCopy[locale]}
-              </p>
-            ) : null}
-          </>
+          <Image
+            alt={record.imageAlt!}
+            className={`object-contain p-4 ${linked ? "transition-transform duration-300 group-hover:scale-[1.025]" : ""}`}
+            fill
+            loading={eagerImage ? "eager" : "lazy"}
+            sizes={cardImageSizes}
+            src={assetPath(record.image!)}
+          />
         )}
       </div>
       <div className="flex min-w-0 flex-1 flex-col p-5">

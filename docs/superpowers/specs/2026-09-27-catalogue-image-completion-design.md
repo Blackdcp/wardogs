@@ -28,3 +28,7 @@ Keep `catalogue-records.ts` as the record inventory and `catalogue-media-sources
 Test-first changes must catch missing files, duplicate use of object images, wrong record mapping, false provenance, missing alt text, unsupported external-source claims, and a regression to generic banners. An integration/browser check must verify that approved images actually load in the catalogue, not merely that the data object contains a path. The full existing test suite, lint, typecheck, content validation, and production build must pass before a release.
 
 The target is 101 resolved pending records. A record without a trustworthy WARDOGS-specific or honestly contextual asset is an explicit unresolved dependency, not a “completed image.” The release may ship verified batches independently, but completion of this image project is claimed only when the final inventory and rendered site support that claim.
+
+## Owner correction — 27 Sep 2026
+
+The owner rejected the visible historical-media caption. Keep provenance in the internal record-specific approval manifest, remove the caption and its reserved image padding from cards, and retain the existing evidence labels on version-sensitive item facts.
