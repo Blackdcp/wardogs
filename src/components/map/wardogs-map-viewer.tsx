@@ -175,15 +175,15 @@ export function WardogsMapViewer({ initialMap = "bakurani", className = "" }: Wa
             <option value="bakurani" className="bg-slate-900 text-slate-100">
               Bakurani / 巴库拉尼 (16×16 km)
             </option>
-            <option value="ozeti" className="bg-slate-900 text-slate-400" disabled>
-              Ozeti / 奥泽蒂 (待加入)
+            <option value="ozeti" className="bg-slate-900 text-slate-100">
+              Ozeti / 奥泽蒂 (16×16 km)
             </option>
-            <option value="zestafona" className="bg-slate-900 text-slate-400" disabled>
-              Zestafona / 泽斯塔福纳 (待加入)
+            <option value="zestafona" className="bg-slate-900 text-slate-100">
+              Zestafona / 泽斯塔福纳 (16×16 km)
             </option>
           </select>
           <span className="rounded bg-sky-950 px-2 py-0.5 text-xs font-semibold text-sky-400 border border-sky-800">
-            2D 战术底图
+            实机全景底图
           </span>
         </div>
 
@@ -322,17 +322,18 @@ export function WardogsMapViewer({ initialMap = "bakurani", className = "" }: Wa
           }}
           className="relative aspect-square w-full max-w-[1400px] max-h-[1400px]"
         >
-          {/* Main 2D Vector Basemap */}
+          {/* Main 2D Real Game Basemap */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/maps/bakurani/overview.svg"
-            alt="WARDOGS Bakurani Tactical Map"
+            src={`/images/maps/${currentMap}/overview.webp`}
+            alt={`WARDOGS ${currentMap} Real Game Map`}
             className="w-full h-full object-contain pointer-events-none select-none"
             draggable={false}
           />
 
           {/* Interactive Overlay Markers: Towers */}
           {showTowers &&
+            currentMap === "bakurani" &&
             BAKURANI_TOWERS.map((t) => (
               <button
                 key={t.id}
