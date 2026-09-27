@@ -14,6 +14,7 @@ import {CatalogueBuildNotice} from "./catalogue-build-notice";
 import {getLocalizedCatalogueGroup, getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getItemUi} from "@/features/items/item-ui";
 import {getCatalogueCategoryMedia} from "@/features/catalogue/catalogue-media";
+import {seasonOneSourceUrl} from "@/features/catalogue/catalogue-evidence-data";
 
 type CatalogueCategoryViewProps = {
   guide: CatalogGuide;
@@ -61,6 +62,28 @@ function hasImageExplorer(type: ItemTypeId): type is CatalogueItemType {
   return type !== "loadouts";
 }
 
+const seasonOneVehicleCopy: Record<Locale, {title: string; description: string; source: string}> = {
+  en: {title: "Season 1 vehicle update", description: "The official Season 1 changelog names the Z20 Lakota and reduces its Pilot unlock from $50,000 to $35,000. The UH-1Y entries below are from the Alpha vendor, not a confirmed current helicopter roster.", source: "Official Season 1 changelog"},
+  de: {title: "Fahrzeug-Update in Saison 1", description: "Das offizielle Änderungsprotokoll zu Saison 1 nennt den Z20 Lakota und senkt seine Freischaltung für Piloten von $50,000 auf $35,000. Die UH-1Y-Einträge unten stammen aus dem Alpha-Händler und sind kein bestätigtes aktuelles Helikopterangebot.", source: "Offizielles Änderungsprotokoll zu Saison 1"},
+  ru: {title: "Обновление техники в сезоне 1", description: "В официальном списке изменений сезона 1 указан Z20 Lakota: стоимость открытия для пилота снижена с $50,000 до $35,000. Записи UH-1Y ниже относятся к магазину альфа-версии, а не к подтвержденному текущему списку вертолетов.", source: "Официальные изменения сезона 1"},
+  "pt-br": {title: "Atualização de veículos da Temporada 1", description: "O registro oficial da Temporada 1 cita o Z20 Lakota e reduz seu desbloqueio de Piloto de $50,000 para $35,000. As entradas UH-1Y abaixo vieram da loja Alpha e não são uma lista atual de helicópteros confirmada.", source: "Registro oficial da Temporada 1"},
+  ja: {title: "シーズン1の車両更新", description: "公式のシーズン1更新履歴にはZ20 Lakotaが記載され、パイロットの解除費用は$50,000から$35,000に下がりました。以下のUH-1Yはアルファ版ショップの記録であり、現行ヘリ一覧として確定したものではありません。", source: "シーズン1公式更新履歴"},
+  "zh-cn": {title: "第 1 赛季载具更新", description: "官方第 1 赛季更新记录已列出 Z20 Lakota，飞行员解锁费用从 $50,000 降至 $35,000。下方 UH-1Y 条目属于 Alpha 商店记录，不能当作当前直升机名单。", source: "官方第 1 赛季更新记录"},
+};
+
+function SeasonOneVehicleUpdate({locale}: {locale: Locale}) {
+  const copy = seasonOneVehicleCopy[locale];
+  return (
+    <section className="border-b border-[#35423b] bg-[#111b16]" data-season-one-vehicle-update>
+      <div className="site-container py-6">
+        <h2 className="display-font text-2xl text-white">{copy.title}</h2>
+        <p className="mt-2 max-w-4xl text-sm leading-6 text-[#c0d0c5]">{copy.description}</p>
+        <a className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-[#86d0a4] hover:text-white" href={seasonOneSourceUrl} rel="noreferrer" target="_blank" title={copy.source}>{copy.source}</a>
+      </div>
+    </section>
+  );
+}
+
 export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProps) {
   const hero = getCatalogueCategoryMedia(guide.id);
   const records = hasImageExplorer(guide.id) ? getLocalizedCatalogueRecords(getCatalogueRecords(guide.id), locale) : [];
@@ -97,6 +120,8 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
       </section>
 
       <CatalogueBuildNotice locale={locale} />
+
+      {guide.id === "vehicles" ? <SeasonOneVehicleUpdate locale={locale} /> : null}
 
       {group && records.length > 0 ? (
         <CatalogueExplorer
