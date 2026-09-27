@@ -303,7 +303,14 @@ const recordInputs: readonly CatalogueRecordInput[] = [
 export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((record) => {
   const matchedImage = existingArtMatches[`${record.type}/${record.slug}`];
   const withMatchedArt = matchedImage && !record.image
-    ? {...record, image: matchedImage, imageAlt: `${record.name} item artwork from a WARDOGS community catalogue`}
+    ? {
+      ...record,
+      image: matchedImage,
+      imageAlt: `${record.name} item artwork from a WARDOGS community catalogue`,
+      sourceNotes: record.type === "equipment"
+        ? ["Community catalogue image matched to the item label; role, price, and current behavior are not independently verified."]
+        : [...(record.sourceNotes ?? []), "Community catalogue image matched to the item label; current item stats are not inferred from artwork."],
+    }
     : record;
   const mediaSource = getCatalogueMediaSource(withMatchedArt);
   return {

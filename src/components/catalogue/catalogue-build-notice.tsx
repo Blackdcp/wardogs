@@ -13,27 +13,27 @@ const copy: Record<Locale, {title: string; description: string; pending: (count:
   },
   de: {
     title: "Aktueller Stand der Daten",
-    description: "Namen, Bilder, Preise und Handhabung stammen aus Alpha 1 und der August-Closed-Beta. Sie wurden in Beta 02 nicht vollständig neu geprüft; im Early Access muss jeder Wert erneut kontrolliert werden.",
+    description: "Die Einträge verbinden datierte Alpha-, Beta-, offizielle Saison-1- und Community-Quellen. Prüfe den Belegzeitpunkt jedes Gegenstands, bevor du Preise oder Leistung im Early Access verwendest.",
     pending: (count) => `${count} Einträge benötigen noch ein gegenstandsspezifisches Bild.`
   },
   ru: {
     title: "Охват текущей сборки",
-    description: "Названия, изображения, цены и заметки взяты из Alpha 1 и августовской Closed Beta. В Beta 02 они не были полностью перепроверены; каждый параметр нужно проверить в Early Access.",
+    description: "Каталог объединяет датированные источники Alpha, Beta, официального сезона 1 и сообщества. Перед использованием цены или характеристик в раннем доступе проверьте дату подтверждения предмета.",
     pending: (count) => `${count} записей всё ещё требуют изображения конкретного предмета.`
   },
   "pt-br": {
     title: "Cobertura da build atual",
-    description: "Nomes, imagens, preços e notas vêm do Alpha 1 e do Closed Beta de agosto. Eles não foram totalmente revalidados no Beta 02; confira cada valor no Acesso Antecipado.",
+    description: "O catálogo reúne fontes datadas do Alpha, Beta, Temporada 1 oficial e comunidade. Confira a data da evidência de cada item antes de usar preços ou desempenho no Acesso Antecipado.",
     pending: (count) => `${count} registros ainda precisam de uma imagem do item específico.`
   },
   ja: {
     title: "現在のビルド範囲",
-    description: "名称、画像、価格、操作情報はAlpha 1と8月Closed Betaの記録です。Beta 02では全面再検証できていないため、Early Accessで各数値を再確認します。",
+    description: "図鑑は日付付きのAlpha、Beta、公式シーズン1、コミュニティ資料を併用しています。早期アクセスで価格や性能を使う前に各アイテムの根拠日付を確認してください。",
     pending: (count) => `${count}件は対象物固有の画像を引き続き確認中です。`
   },
   "zh-cn": {
     title: "当前版本覆盖范围",
-    description: "名称、图片、价格和操作信息来自 Alpha 1 与 8 月封闭测试记录，尚未在 Beta 02 完整复核；所有数值都要在抢先体验版本重新验证。",
+    description: "图鉴汇集了标注日期的 Alpha、Beta、官方第 1 赛季和社区资料。使用任何价格或性能数据前，请先核对该物品的来源和时间。",
     pending: (count) => `${count} 个条目仍待补充对应物品图片。`
   }
 };

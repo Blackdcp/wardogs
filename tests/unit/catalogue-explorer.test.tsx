@@ -124,9 +124,9 @@ describe("CatalogueBuildNotice", () => {
 
     expect(englishHtml).toContain("Alpha, Beta, official Season 1 and community sources");
     expect(englishHtml).toContain("22 records still need an item-specific image");
-    expect(chineseHtml).toContain("Alpha 1 与 8 月封闭测试");
+    expect(chineseHtml).toContain("Alpha、Beta、官方第 1 赛季和社区资料");
     expect(chineseHtml).toContain("22 个条目仍待补充对应物品图片");
-    expect(chineseHtml).toContain("抢先体验版本重新验证");
+    expect(chineseHtml).toContain("核对该物品的来源和时间");
     expect(englishHtml).not.toContain("final launch data");
   });
 });

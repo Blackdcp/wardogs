@@ -5,6 +5,7 @@ import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {CatalogueCard} from "../../src/components/catalogue/catalogue-card";
 import {getCatalogueGroup} from "../../src/features/catalogue/catalogue-groups";
+import {CatalogueBuildNotice} from "../../src/components/catalogue/catalogue-build-notice";
 
 describe("catalogue coverage from supplied item art", () => {
   it("lists the previously missing catalogue families with object images", () => {
@@ -52,5 +53,14 @@ describe("catalogue coverage from supplied item art", () => {
   it("exposes filters for the new gear and field-equipment families", () => {
     expect(getCatalogueGroup("gear")?.filters.map(({value}) => value)).toEqual(expect.arrayContaining(["vest", "parachute"]));
     expect(getCatalogueGroup("equipment")?.filters.map(({value}) => value)).toEqual(expect.arrayContaining(["tactical", "medical", "recon", "vehicle-tool", "building", "misc"]));
+  });
+
+  it("describes the mixed-source catalogue honestly in every language", () => {
+    for (const locale of ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const) {
+      const html = renderToStaticMarkup(React.createElement(CatalogueBuildNotice, {locale}));
+      expect(html, locale).not.toMatch(/rather than competitor|statt unpassender oder fremder|не чужое|sem usar arte incorreta|他サイトの画像|竞争对手素材/i);
+    }
+    const binoculars = getCatalogueRecord("equipment", "binoculars")!;
+    expect(binoculars.sourceNotes.join(" ")).toMatch(/community catalogue image/i);
   });
 });
