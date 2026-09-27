@@ -34,5 +34,19 @@ Official change source: [WARDOGS Season 1 changelog](https://store.steampowered.
 - **Gear (14 names):** Large/Medium/Small Tac Vest; Arsenal Backpack + 2 Slings, Assault Backpack, Field Backpack, Gunner Backpack + Sling, Halftrack Backpack, Medium Backpack + Sling, Operator Backpack, Pouch, Ruck Backpack; Basic and Sport Parachute. Our five helmets, five armor pieces and Scout Backpack cover the other 11 names. See the competitor's [gear listing](https://wardogshub.gg/gear/).
 - **Attachments (15 names):** AK74 75-round drum, GGX 33-round, Mosin standard mag, MP43 internal mag, AMR 50 5-round, SV98 10-round, SVD 10-round, MK22 10-round, FAL 10-round, GGX 17-round, STANAG 30-round, AK74 30-round, AK74 60-round, PKM 100-round box and M249 200-round box. Existing 40 records match the other 40 *visible* names after normalization. See the competitor's [attachments listing](https://wardogshub.gg/attachments/).
 - **Vehicles (two current names):** Z20 Lakota and Z20 Lakota Miniguns. Our UH-1Y pair holds the equivalent old roster slots and should be preserved as history, not relabeled with the wrong helicopter image. See [helicopters](https://wardogshub.gg/vehicles/helicopters/) and the official [Season 1 change](https://store.steampowered.com/news/app/1867240/view/701027323413004455).
-- **Equipment:** the largest unfinished reconciliation. The competitor groups 58 names into tactical (15), medical (14), recon (7), vehicle (4), building (10), misc (7), other (1). Our comparable equipment/medical/supplies/deployables records total 18, but not all have a proven one-to-one equivalent. Missing-name examples already visible include six signal/smoke grenades, M67, C4, remote detonator, six additional medical items, several recon tools, hammers, vests/repair-related tools and misc keys. The next batch must resolve aliases and build dates for all 58 before publishing numerical fields. See [equipment](https://wardogshub.gg/equipment/).
+- **Equipment:** the competitor groups 58 names into tactical (15), medical (14), recon (7), vehicle (4), building (10), misc (7), other (1). Our comparable equipment/medical/supplies/deployables records total 18, but only 15 are direct name matches after obvious normalization. The 43 missing competitor names are itemized below. “Repair Tool” versus “Wrench” and “FOB Vendor” versus “Forward Operating Base” are *possible* aliases, not proven identical records. Resolve aliases and build dates before publishing their numerical fields. See [equipment](https://wardogshub.gg/equipment/).
 - **Skins:** none of the competitor's [21 cosmetic entries](https://wardogshub.gg/skins/) has a corresponding skin record here yet; acquiring legitimate item-specific screenshots is part of this batch, not an excuse to use its hosted files.
+
+### Equipment name reconciliation — 43 absent from our catalogue
+
+| Competitor group | Missing names | Count |
+| --- | --- | ---: |
+| Tactical | M18 Signal Grenade: Alert, Damaged Vehicle, Friendly, Hostile; M18 Smoke Grenade: White, Black; M67 Frag Grenade; C4 Charge; Remote Detonator; Flash Grenade; Gold Frag Grenade; HE Grenade | 12 |
+| Medical | Bandage; Adrenaline Pen; Field Resuscitator; Individual First Aid Kit; Amphetamine; Emergency Resuscitator; Energy Drink; Field Medical Kit; Manual Resuscitator; Painkillers | 10 |
+| Recon | Monocular; Flares; Infrared Range Finder; IR Goggles; Spotted Scope | 5 |
+| Vehicle | Wrench; Light Drill; Heavy Drill | 3 |
+| Building | M18 Signal Grenade: Landing Zone, Supply Request; Small Hammer; Medium Hammer; Large Hammer; Forward Operating Base | 6 |
+| Misc | Arrow; High Capacity Battery; Alpha Card 1; Bravo Card; Charlie Card; Music Tape | 6 |
+| Other | Halligan Bar | 1 |
+
+The competitor's [skins page](https://wardogshub.gg/skins/) also embeds a 13 Sep gold-bar rate while its [gold-market page](https://wardogshub.gg/gold-market/) shows a later 22 Sep rate. Cross-page freshness must be checked instead of copying its “today” statements.
