@@ -1,6 +1,7 @@
 import {officialLinks} from "@/config/site";
 
 export const ANALYTICS_EVENTS = {
+  homeTaskClick: "home_task_click",
   engagedGuide: "engaged_guide",
   catalogueItemOpen: "catalogue_item_open",
   videoStart: "video_start",

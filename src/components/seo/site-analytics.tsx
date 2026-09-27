@@ -2,7 +2,7 @@
 
 import {useEffect} from "react";
 import type {Locale} from "@/config/site";
-import {getTrackedLinkEvent, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {ANALYTICS_EVENTS, getTrackedLinkEvent, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 export function SiteAnalytics({locale}: {locale: Locale}) {
   useEffect(() => {
@@ -10,6 +10,17 @@ export function SiteAnalytics({locale}: {locale: Locale}) {
       if (!(event.target instanceof Element)) return;
       const link = event.target.closest<HTMLAnchorElement>("a[href]");
       if (!link) return;
+
+      const homeTask = link.dataset.homeTask;
+      if (homeTask && ["weapons", "vehicles", "map", "status"].includes(homeTask)) {
+        trackAnalyticsEvent(ANALYTICS_EVENTS.homeTaskClick, {
+          task: homeTask,
+          placement: link.dataset.homePlacement || "unknown",
+          locale,
+          page_path: window.location.pathname,
+          link_url: link.href
+        });
+      }
 
       const trackedEvent = getTrackedLinkEvent(link.href, window.location.origin, {
         basePath: process.env.NEXT_PUBLIC_BASE_PATH,

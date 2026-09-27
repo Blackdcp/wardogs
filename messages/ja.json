@@ -92,6 +92,7 @@
     "heroDescription": "装備、操作、現在の参加状況、不具合対策、実戦戦術を出典付きで確認できます。ビルド依存の情報は明確に区別しています。",
     "primaryCta": "Patch 0.11を読む",
     "secondaryCta": "サーバー状態を確認",
+    "quickTasks": {"weapons": "武器", "vehicles": "車両", "map": "マップ計画", "status": "サーバー状態"},
     "status": "Steam Early Access配信中",
     "statsLabel": "WARDOGSの重要情報",
     "stats": {

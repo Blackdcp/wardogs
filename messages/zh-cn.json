@@ -92,6 +92,7 @@
     "heroDescription": "这里整理经过来源核实的装备、操作、当前参与状态、故障排查与实战策略，并明确标注所有受版本影响的信息。",
     "primaryCta": "查看 Patch 0.11",
     "secondaryCta": "检查服务器状态",
+    "quickTasks": {"weapons": "武器", "vehicles": "载具", "map": "地图规划", "status": "服务器状态"},
     "status": "Steam 抢先体验已上线",
     "statsLabel": "WARDOGS 关键信息",
     "stats": {

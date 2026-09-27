@@ -11,7 +11,11 @@ const translations: Record<string, string> = {
   "home.heroImageAlt": "WARDOGS combat scene",
   "home.primaryCta": "Play now",
   "home.secondaryCta": "Known issues",
-  "home.statsLabel": "Quick facts"
+  "home.statsLabel": "Quick facts",
+  "home.quickTasks.weapons": "Weapons",
+  "home.quickTasks.vehicles": "Vehicles",
+  "home.quickTasks.map": "Map planning",
+  "home.quickTasks.status": "Server status"
 };
 
 vi.mock("next-intl/server", () => ({
@@ -19,8 +23,8 @@ vi.mock("next-intl/server", () => ({
 }));
 
 vi.mock("../../src/components/ui/button-link", () => ({
-  ButtonLink: ({children, href}: {children: ReactNode; href: ComponentProps<"a">["href"]}) => (
-    <a href={href}>{children}</a>
+  ButtonLink: ({children, href, homeTask}: {children: ReactNode; href: ComponentProps<"a">["href"]; homeTask?: string}) => (
+    <a data-home-task={homeTask} href={href}>{children}</a>
   )
 }));
 
@@ -32,5 +36,11 @@ describe("HomeHero", () => {
     expect(html).toContain('alt="WARDOGS"');
     expect(html).toContain('href="/guides/wardogs-patch-notes"');
     expect(html).toContain('href="/guides/wardogs-server-status"');
+    expect(html).toContain('href="/items/weapons"');
+    expect(html).toContain('href="/items/vehicles"');
+    expect(html).toContain('href="/maps"');
+    for (const task of ["weapons", "vehicles", "map", "status"]) {
+      expect(html).toContain(`data-home-task="${task}"`);
+    }
   });
 });

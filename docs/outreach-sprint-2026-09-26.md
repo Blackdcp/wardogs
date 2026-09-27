@@ -1,5 +1,7 @@
 # WARDOGS relevance-first outreach sprint — started 2026-09-26
 
+Sep 27 update: the owner's AITDK screenshots were audited domain by domain in [the Hub backlink sample and outreach queue](research/aitdk-hub-backlinks-2026-09-27.md). It records 20 visible referring domains, fit and contact gates, plus AITDK's estimated traffic mix. This is a prospect audit, not 20 outreach messages or new backlinks.
+
 ## Scope and scorecard
 
 Goal: earn references and qualified visits from real WARDOGS players and creators. An outreach attempt is not a backlink; a visible third-party link is not a search-ranking promise. Count each distinct referring page only after checking the live page and destination. Do not buy ranking links, post duplicate comments, add links to unrelated wikis/directories, or claim community endorsement.
@@ -57,3 +59,19 @@ These are distinct candidate surfaces, not 12 backlinks. “Candidate” means a
 2. Finish owner Steam sign-in in the in-app browser; publish the [self-contained native guide draft](steam-sph2-guide-draft-2026-09-26.md) with a single wiki attribution link after checking the editor and rules. The in-app Steam tab still showed the login form on September 26.
 3. Recheck a working r/WarDogs moderator route through the community UI, but stop if Reddit continues rejecting the account or recipient.
 4. Expand the prospect list only with verified placement/contact paths. Do not pad it to an arbitrary 50 domains.
+
+## Sep 27: public Hub-citation audit (AITDK browser access unavailable)
+
+The owner's Chrome AITDK backlink panel could not be read: the browser-control bridge returned `Unable to load browser request-header policy` twice. This is a **public-search sample, not Hub's complete backlink export**. Search-result mirrors, language variants of one Steam thread, and automated domain-analysis pages are not independent referring domains. Do not quote this sample as a backlink count.
+
+| Source page | What was verified | Our status / next action |
+| --- | --- | --- |
+| [Boet's World WARDOGS resources](https://boets.world/resources.html) | A genuine tools-and-databases directory links Hub and explicitly asks people to report missing resources in [its Discord](https://discord.gg/hebFpRqdWd). | Our wiki is not in the five-tool list displayed on this page. Best new placement prospect. Propose the source-checked Season 1 SPH-2 guide or our player-tool collection to staff in the appropriate channel, after reading its rules. **Not contacted**: authenticated Discord/browser control unavailable. |
+| [The Kennel sources](https://kennel.gg/guides/reference/sources/) | Lists both Hub and `wardogswiki.com`; the latter resolves to our live site. | **Existing verified referring page**. Do not send a generic listing request. A deeper page citation could be earned only by supplying a useful correction or primary evidence. |
+| [WARDOGS Field Manual FOB guide](https://www.wardogs-companion.com/guides/building-a-forward-base/) | Cites Hub in a contextual numbered source list; its [Discord](https://discord.gg/wardogscompanion) is publicly linked. | Editorial-source prospect, not an open directory. Identify a specific correction or source gap first; do not request a citation just because Hub has one. **Not contacted**. |
+| [Dakanoth contact](https://dakanoth.com/contact/) | Site credits Hub terrain imagery and invites measured corrections through its contact page/Discord. | Only pitch if we provide a first-hand measured figure that improves its calculator; our SPH-2 source ledger alone does not appear to meet its stated request. **Not contacted**. |
+| [WarDogs Portal assault-rifle guide](https://wardogsportal.com/guides/assault-rifles/) | Credits Hub's damage/RPM data on an editorial page. | Not a resource-directory opening; defer unless we have a concrete data correction. **Not contacted**. |
+
+The [r/WarDogs discussion](https://www.reddit.com/r/WarDogs/comments/1vrpgin/in_the_alpha_alot_of_content_creators_mentioned/) and [Steam server-status thread](https://steamcommunity.com/app/1867240/discussions/0/588436698284861406/?l=english) are contextual user citations, not sites to solicit for a link. The [automated NitroPay-user list](https://aruljohn.com/websites-using-nitropay) is not a WARDOGS resource and should be excluded. The already-contacted wardogs.tech staff member must not be pitched again or emailed.
+
+Tailored Boet's World submission (send only after Discord rules/channel check): “I maintain an independent WARDOGS Wiki. Your resources page is a useful directory for South African players. One addition that may fill a gap is our source-checked SPH-2 guide: it separates BULKHEAD's one-time Season 1 Career 90 / $500k unlock from player-reported deployment prices and links the original evidence. If it is useful for your tools-and-databases list, here is the page: https://www.wardogswiki.com/en/guides/wardogs-artillery-guide . Happy to leave the decision with your team.”

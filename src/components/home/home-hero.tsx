@@ -15,7 +15,7 @@ export async function HomeHero({facts}: HomeHeroProps) {
   const t = await getTranslations();
 
   return (
-    <section aria-labelledby="home-hero-title" className="relative isolate flex min-h-[680px] items-center overflow-hidden border-b border-[#2c3631]">
+    <section aria-labelledby="home-hero-title" className="relative isolate flex min-h-[560px] items-center overflow-hidden border-b border-[#2c3631]">
       <Image
         src={assetPath("/images/wardogs-hero.jpg")}
         alt={t("home.heroImageAlt")}
@@ -54,17 +54,20 @@ export async function HomeHero({facts}: HomeHeroProps) {
             {t("home.heroDescription")}
           </p>
 
-          <div className="mt-6 flex w-full max-w-xl flex-col justify-center gap-3 sm:flex-row">
-            <ButtonLink href={`/guides/${CURRENT_EVENT.patchNotesGuideSlug}`} className="w-full sm:w-auto" title={t("home.primaryCta")}>
+          <div className="mt-6 grid w-full max-w-2xl grid-cols-2 gap-2.5 sm:grid-cols-4">
+            <ButtonLink href="/items/weapons" homeTask="weapons" className="px-2" title={t("home.quickTasks.weapons")}>{t("home.quickTasks.weapons")}</ButtonLink>
+            <ButtonLink href="/items/vehicles" homeTask="vehicles" variant="secondary" className="px-2" title={t("home.quickTasks.vehicles")}>{t("home.quickTasks.vehicles")}</ButtonLink>
+            <ButtonLink href="/maps" homeTask="map" variant="secondary" className="px-2" title={t("home.quickTasks.map")}>{t("home.quickTasks.map")}</ButtonLink>
+            <ButtonLink href="/guides/wardogs-server-status" homeTask="status" variant="secondary" className="px-2" title={t("home.quickTasks.status")}>{t("home.quickTasks.status")}</ButtonLink>
+          </div>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm">
+            <ButtonLink href={`/guides/${CURRENT_EVENT.patchNotesGuideSlug}`} variant="secondary" title={t("home.primaryCta")}>
               {t("home.primaryCta")}
               <ArrowRight aria-hidden="true" className="size-4" />
             </ButtonLink>
-            <ButtonLink href="/guides/wardogs-server-status" variant="secondary" className="w-full sm:w-auto" title={t("home.secondaryCta")}>
-              {t("home.secondaryCta")}
-            </ButtonLink>
           </div>
 
-          <StatsGrid items={facts} label={t("home.statsLabel")} className="mt-7 w-full" />
+          <StatsGrid items={facts} label={t("home.statsLabel")} className="mt-5 w-full" />
         </div>
       </div>
     </section>
