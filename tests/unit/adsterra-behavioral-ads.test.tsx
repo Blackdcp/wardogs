@@ -42,14 +42,18 @@ describe("Adsterra behavioral ads", () => {
     ]);
   });
 
-  it("renders both smartlinks as clearly labeled sponsored links", async () => {
+  it("pauses social bar on public pages while retaining the interaction popunder", async () => {
+    const {getSocialBarScriptForPath, ADSTERRA_POPUNDER_SCRIPT_SRC} = await import("../../src/features/ads/ad-policy");
+
+    expect(getSocialBarScriptForPath("/en/guides/wardogs-gameplay")).toBeNull();
+    expect(getSocialBarScriptForPath("/ja/items/vehicles/stingray")).toBeNull();
+    expect(ADSTERRA_POPUNDER_SCRIPT_SRC).toContain("arkgleamfox.com");
+  });
+
+  it("does not render sponsored Smartlinks during the revenue test", async () => {
     const {AdsterraSmartlink} = await import("../../src/components/ads/adsterra-smartlink");
     const html = renderToStaticMarkup(React.createElement(AdsterraSmartlink));
 
-    expect(html).toContain("Sponsored");
-    expect(html).toContain("https://arkgleamfox.com/jvxhi4z3ts?key=678e9aeab41077b9e6a3e5626292c434");
-    expect(html).toContain("https://arkgleamfox.com/j7way0p0?key=a9590c5cd64a0d11f4aa2ecf617130bc");
-    expect(html.match(/rel="nofollow noopener noreferrer sponsored"/g)).toHaveLength(2);
-    expect(html.match(/target="_blank"/g)).toHaveLength(2);
+    expect(html).toBe("");
   });
 });

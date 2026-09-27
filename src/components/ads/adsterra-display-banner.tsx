@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useRef, useState} from "react";
+import {ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
 
 export type AdsterraBannerUnit = {
   height: number;
@@ -65,7 +66,7 @@ function loadBanner(container: HTMLElement, unit: AdsterraBannerUnit) {
 }
 
 export function selectHorizontalBannerUnit(viewportWidth: number): AdsterraBannerUnit | null {
-  if (viewportWidth >= 728) return ADSTERRA_BANNER_UNITS.leaderboard728;
+  if (viewportWidth >= 728) return ADSTERRA_LEADERBOARD_ENABLED ? ADSTERRA_BANNER_UNITS.leaderboard728 : null;
   if (viewportWidth >= 468) return ADSTERRA_BANNER_UNITS.horizontal468;
   return null;
 }
@@ -174,13 +175,15 @@ export function AdsterraGlobalInventory({label = "Advertisement"}: {label?: stri
         position="fixed left-3 top-24 z-40 hidden min-[1600px]:block"
         unit={ADSTERRA_BANNER_UNITS.rail300}
       />
-      <FixedBanner
-        label={label}
-        media="(min-width: 1600px) and (min-height: 760px)"
-        placement="right-rail"
-        position="fixed right-3 top-24 z-40 hidden min-[1600px]:block"
-        unit={ADSTERRA_BANNER_UNITS.rail600}
-      />
+      {ADSTERRA_RIGHT_RAIL_ENABLED ? (
+        <FixedBanner
+          label={label}
+          media="(min-width: 1600px) and (min-height: 760px)"
+          placement="right-rail"
+          position="fixed right-3 top-24 z-40 hidden min-[1600px]:block"
+          unit={ADSTERRA_BANNER_UNITS.rail600}
+        />
+      ) : null}
     </>
   );
 }

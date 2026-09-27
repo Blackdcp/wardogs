@@ -15,11 +15,10 @@ describe("Adsterra page inventory", () => {
       const source = await readFile(file, "utf8");
       expect(source, file).toContain("AdsterraDisplayBanner");
       expect(source, file).toContain("AdsterraNativeBanner");
-      expect(source, file).toContain("AdsterraSmartlink");
     }
   });
 
-  it("adds a rectangle and dual-smartlink unit to every monetized detail template", async () => {
+  it("adds a rectangle unit to every monetized detail template", async () => {
     for (const file of [
       "src/app/[locale]/guides/[slug]/page.tsx",
       "src/app/[locale]/videos/[slug]/page.tsx",
@@ -27,7 +26,6 @@ describe("Adsterra page inventory", () => {
     ]) {
       const source = await readFile(file, "utf8");
       expect(source, file).toContain('<AdsterraDisplayBanner placement="rectangle"');
-      expect(source, file).toContain("AdsterraSmartlink");
     }
   });
 

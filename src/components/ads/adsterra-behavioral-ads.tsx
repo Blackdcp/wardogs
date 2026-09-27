@@ -4,9 +4,9 @@ import {usePathname} from "next/navigation";
 import {useEffect} from "react";
 import {
   ADSTERRA_POPUNDER_SCRIPT_SRC,
-  ADSTERRA_SOCIAL_BAR_SCRIPT_SRC,
   BEHAVIORAL_POPUNDER_ENABLED,
   canLoadPopunder,
+  getSocialBarScriptForPath,
   isBehavioralAdPath,
   POPUNDER_STORAGE_KEY
 } from "@/features/ads/ad-policy";
@@ -26,7 +26,8 @@ export function AdsterraBehavioralAds() {
   useEffect(() => {
     if (!isBehavioralAdPath(pathname)) return;
 
-    const socialBarScript = appendAdScript(ADSTERRA_SOCIAL_BAR_SCRIPT_SRC, "social-bar");
+    const socialBarSrc = getSocialBarScriptForPath(pathname);
+    const socialBarScript = socialBarSrc ? appendAdScript(socialBarSrc, "social-bar") : null;
     let popunderScript: HTMLScriptElement | null = null;
 
     const removeInteractionListeners = () => {
@@ -58,7 +59,7 @@ export function AdsterraBehavioralAds() {
 
     return () => {
       removeInteractionListeners();
-      socialBarScript.remove();
+      socialBarScript?.remove();
       popunderScript?.remove();
     };
   }, [pathname]);

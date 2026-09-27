@@ -22,7 +22,8 @@ describe("Adsterra display banner inventory", () => {
     expect(selectHorizontalBannerUnit(467)).toBeNull();
     expect(selectHorizontalBannerUnit(468)?.width).toBe(468);
     expect(selectHorizontalBannerUnit(727)?.width).toBe(468);
-    expect(selectHorizontalBannerUnit(728)?.width).toBe(728);
+    expect(selectHorizontalBannerUnit(728)).toBeNull();
+    expect(selectHorizontalBannerUnit(1600)).toBeNull();
   });
 
   it("renders stable shells for inline and global high-density inventory", async () => {
@@ -33,6 +34,6 @@ describe("Adsterra display banner inventory", () => {
     expect(inline).toContain('data-ad-placement="rectangle"');
     expect(global).toContain('data-ad-placement="mobile-sticky"');
     expect(global).toContain('data-ad-placement="left-rail"');
-    expect(global).toContain('data-ad-placement="right-rail"');
+    expect(global).not.toContain('data-ad-placement="right-rail"');
   });
 });

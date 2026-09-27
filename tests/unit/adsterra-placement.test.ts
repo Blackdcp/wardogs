@@ -10,7 +10,7 @@ function source(pathname: string) {
 }
 
 describe("aggressive Adsterra placement", () => {
-  it("renders native, rectangle, and dual-smartlink inventory on detail and primary index pages", () => {
+  it("keeps native and rectangle inventory on detail and primary index pages", () => {
     for (const pathname of [
       "src/app/[locale]/guides/[slug]/page.tsx",
       "src/app/[locale]/videos/[slug]/page.tsx",
@@ -25,7 +25,6 @@ describe("aggressive Adsterra placement", () => {
       expect(text.match(/AdsterraNativeBanner/g) ?? [], pathname).toHaveLength(2);
       expect(text, pathname).toMatch(/<AdsterraNativeBanner label=\{[^}]+\}/);
       expect(text, pathname).toContain("AdsterraDisplayBanner");
-      expect(text, pathname).toContain("AdsterraSmartlink");
     }
   });
 
