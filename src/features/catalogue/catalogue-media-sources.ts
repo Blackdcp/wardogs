@@ -1,5 +1,6 @@
 import type {CatalogueMediaState, CatalogueRecord} from "./catalogue-types";
 import type {ItemTypeId} from "@/features/items/item-library";
+import {existingArtApprovals, suppliedArtApprovals} from "./supplied-art-records";
 
 export type CatalogueCategoryMediaKey = ItemTypeId | "hub";
 
@@ -212,7 +213,7 @@ const contextualApprovals = [
   contextualSource("/images/guide-discovery/equipment-tools.webp", "WD_Screenshot_Foundry_1_WD2.jpg", "Official indoor-combat frame approved only as equipment, supply, and deployable context; it does not verify a specific object.", ["equipment", "supplies", "deployables"]),
 ];
 
-const approvedMedia = [...weaponApprovals, ...vehicleApprovals, ...ownerAmmoApprovals, ...ownerAttachmentApprovals, ...ownerGearApprovals, ...exactObjectOverrides, ...contextualApprovals];
+const approvedMedia = [...weaponApprovals, ...vehicleApprovals, ...ownerAmmoApprovals, ...ownerAttachmentApprovals, ...ownerGearApprovals, ...exactObjectOverrides, ...contextualApprovals, ...suppliedArtApprovals, ...existingArtApprovals];
 
 export const catalogueMediaSources: Readonly<Record<string, CatalogueMediaSource>> = Object.fromEntries(
   approvedMedia.map((source) => [source.image, source]),

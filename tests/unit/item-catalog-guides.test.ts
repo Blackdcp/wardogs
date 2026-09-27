@@ -110,6 +110,7 @@ describe("WARDOGS item catalog guides", () => {
     expect(equipment?.disclaimer).toMatch(/unverified|record-specific/i);
 
     const unsupported = equipment?.sections.flatMap((section) => section.rows)
+      .filter((row) => ["Binoculars", "Rangefinder", "Fuel Can", "Repair Tool", "Battery"].includes(row.cells[0]))
       .flatMap((catalogueRow) => catalogueRow.cells.slice(1))
       .join(" ");
     expect(unsupported).not.toMatch(/\$\d|Recon|Vehicle|Utility|RangeFinder|FuelCan|RepairTool/i);

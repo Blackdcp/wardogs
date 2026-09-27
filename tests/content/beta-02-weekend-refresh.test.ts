@@ -178,7 +178,7 @@ describe("Closed Beta 02 weekend release contract", () => {
         expect(record.dataAsOf, record.slug).toMatch(/record-specific evidence pending/i);
         expect(record.evidence.sourceUrl, record.slug).toBeUndefined();
       } else {
-        expect(record.dataAsOf, record.slug).toMatch(/Alpha|Closed Beta|Season 1|pre-release/i);
+        expect(record.dataAsOf, record.slug).toMatch(/Alpha|Closed Beta|Season 1|pre-release|Community catalogue snapshot/i);
       }
     }
   });

@@ -37,6 +37,7 @@ const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> =
     "Official pre-release mode explanation":"官方预发布模式说明",
     "Pre-release catalogue walkthrough - 20 Aug 2026":"预发布图鉴演示 — 2026年8月20日",
     "Record-specific evidence pending - checked 17 Sep 2026":"逐项证据待核验 — 2026年9月17日检查",
+    "Community catalogue snapshot - 27 Sep 2026":"社区图鉴快照 — 2026年9月27日",
   },
   ru: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 августа 2026",
@@ -51,6 +52,7 @@ const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> =
     "Official pre-release mode explanation": "Официальное предрелизное объяснение режима",
     "Pre-release catalogue walkthrough - 20 Aug 2026": "Предрелизный обзор каталога — 20 августа 2026",
     "Record-specific evidence pending - checked 17 Sep 2026": "Ожидается проверка записи — проверено 17 сентября 2026",
+    "Community catalogue snapshot - 27 Sep 2026": "Снимок каталога сообщества — 27 сентября 2026",
   },
   de: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7. August 2026",
@@ -65,6 +67,7 @@ const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> =
     "Official pre-release mode explanation": "Offizielle Moduserklärung vor Release",
     "Pre-release catalogue walkthrough - 20 Aug 2026": "Katalog-Rundgang vor Release — 20. August 2026",
     "Record-specific evidence pending - checked 17 Sep 2026": "Einzelnachweis ausstehend — geprüft am 17. September 2026",
+    "Community catalogue snapshot - 27 Sep 2026": "Community-Katalogstand — 27. September 2026",
   },
   "pt-br": {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 7 de agosto de 2026",
@@ -79,6 +82,7 @@ const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> =
     "Official pre-release mode explanation": "Explicação oficial do modo antes do lançamento",
     "Pre-release catalogue walkthrough - 20 Aug 2026": "Visão do catálogo antes do lançamento — 20 de agosto de 2026",
     "Record-specific evidence pending - checked 17 Sep 2026": "Evidência específica pendente — verificado em 17 de setembro de 2026",
+    "Community catalogue snapshot - 27 Sep 2026": "Registro do catálogo da comunidade — 27 de setembro de 2026",
   },
   ja: {
     "Alpha 1 - 7 Aug 2026": "Alpha 1 — 2026年8月7日",
@@ -93,6 +97,7 @@ const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> =
     "Official pre-release mode explanation": "公式リリース前モード解説",
     "Pre-release catalogue walkthrough - 20 Aug 2026": "リリース前カタログ解説 — 2026年8月20日",
     "Record-specific evidence pending - checked 17 Sep 2026": "個別証拠を確認中 — 2026年9月17日確認",
+    "Community catalogue snapshot - 27 Sep 2026": "コミュニティ図鑑の記録 — 2026年9月27日",
   },
 };
 

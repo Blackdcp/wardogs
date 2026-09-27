@@ -1,6 +1,7 @@
 import type {CatalogueEvidence, CatalogueFact, CatalogueRecord, CatalogueRecordType} from "./catalogue-types";
 import {getCatalogueChangeHistory, normalizeCatalogueEvidence, seasonOneSourceUrl, seasonOneVerifiedAt} from "./catalogue-evidence-data";
 import {getCatalogueMediaSource} from "./catalogue-media-sources";
+import {existingArtMatches, suppliedArtRecords} from "./supplied-art-records";
 
 const dataAsOf = "Alpha 1 - 7 Aug 2026";
 const betaDataAsOf = "Closed Beta - 21-23 Aug 2026";
@@ -296,17 +297,22 @@ const recordInputs: readonly CatalogueRecordInput[] = [
   ...deployableRecords,
   ...mechanicRecords,
   ...mapRecords,
+  ...suppliedArtRecords,
 ];
 
 export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((record) => {
-  const mediaSource = getCatalogueMediaSource(record);
+  const matchedImage = existingArtMatches[`${record.type}/${record.slug}`];
+  const withMatchedArt = matchedImage && !record.image
+    ? {...record, image: matchedImage, imageAlt: `${record.name} item artwork from a WARDOGS community catalogue`}
+    : record;
+  const mediaSource = getCatalogueMediaSource(withMatchedArt);
   return {
-    ...record,
-    image: mediaSource ? record.image : undefined,
-    imageAlt: mediaSource ? record.imageAlt : undefined,
-    evidenceTier: record.evidenceTier ?? "build-capture",
+    ...withMatchedArt,
+    image: mediaSource ? withMatchedArt.image : undefined,
+    imageAlt: mediaSource ? withMatchedArt.imageAlt : undefined,
+    evidenceTier: withMatchedArt.evidenceTier ?? "build-capture",
     mediaState: (mediaSource?.approvedState ?? "pending") as CatalogueRecord["mediaState"],
-    sourceNotes: record.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
+    sourceNotes: withMatchedArt.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
   };
 }).map((record) => ({
   ...record,

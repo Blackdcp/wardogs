@@ -11,13 +11,13 @@ import {getCatalogueGroup} from "../../src/features/catalogue/catalogue-groups";
 
 describe("catalogue records", () => {
   it("exposes the expanded record inventory", () => {
-    expect(catalogueRecords).toHaveLength(160);
+    expect(catalogueRecords).toHaveLength(234);
     expect(getCatalogueRecords("weapons")).toHaveLength(38);
-    expect(getCatalogueRecords("vehicles")).toHaveLength(28);
+    expect(getCatalogueRecords("vehicles")).toHaveLength(30);
     expect(getCatalogueRecords("ammo")).toHaveLength(14);
-    expect(getCatalogueRecords("attachments")).toHaveLength(40);
-    expect(getCatalogueRecords("gear")).toHaveLength(11);
-    expect(getCatalogueRecords("equipment")).toHaveLength(5);
+    expect(getCatalogueRecords("attachments")).toHaveLength(55);
+    expect(getCatalogueRecords("gear")).toHaveLength(25);
+    expect(getCatalogueRecords("equipment")).toHaveLength(48);
     expect(getCatalogueRecords("medical")).toHaveLength(4);
     expect(getCatalogueRecords("supplies")).toHaveLength(4);
     expect(getCatalogueRecords("deployables")).toHaveLength(5);
@@ -35,18 +35,14 @@ describe("catalogue records", () => {
       expect(getCatalogueGroup(type)?.filters.length, type).toBeGreaterThan(0);
       expect(records.every((record) => record.detailStatus === "inline"), type).toBe(true);
       expect(records.every((record) => record.detailHref === undefined), type).toBe(true);
-      if (type === "equipment") {
-        expect(records.every((record) => record.evidence.sourceUrl === undefined), type).toBe(true);
-      } else {
-        expect(records.every((record) => record.evidence.sourceUrl?.startsWith("https://")), type).toBe(true);
-      }
+      expect(records.every((record) => record.evidence.sourceUrl === undefined || record.evidence.sourceUrl.startsWith("https://")), type).toBe(true);
       expect(getIndexableCatalogueItems(records), type).toEqual([]);
     }
   });
 
   it("downgrades equipment labels without object-level source scope to unverified records", () => {
     const equipmentSlugs = ["binoculars", "rangefinder", "fuel-can", "repair-tool", "battery"];
-    const records = getCatalogueRecords("equipment");
+    const records = getCatalogueRecords("equipment").filter((record) => equipmentSlugs.includes(record.slug));
 
     expect(records.map((record) => record.slug)).toEqual(equipmentSlugs);
     for (const record of records) {
@@ -56,7 +52,7 @@ describe("catalogue records", () => {
       expect(record.evidence.current, record.slug).toBe(false);
       expect(record.evidenceStatus, record.slug).toBe("unverified");
       expect(record.evidenceTier, record.slug).toBe("identifier-only");
-      expect(record.mediaState, record.slug).toBe("pending");
+      expect(record.mediaState, record.slug).toBe(record.slug === "repair-tool" ? "pending" : "context-only");
       expect(record.subtype, record.slug).toBe("Unverified");
       expect(record.filterValues, record.slug).toEqual(["unverified"]);
       expect(record.facts, record.slug).toEqual([

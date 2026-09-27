@@ -52,13 +52,22 @@ export const catalogueGroups: readonly CatalogueGroup[] = [
     filters: [
       {label: "Helmet", value: "helmet"},
       {label: "Armor", value: "armor"},
-      {label: "Backpack", value: "backpack"}
+      {label: "Backpack", value: "backpack"},
+      {label: "Vest", value: "vest"},
+      {label: "Parachute", value: "parachute"}
     ]
   },
   {
     type: "equipment",
     label: "Field Equipment",
     filters: [
+      {label: "Tactical", value: "tactical"},
+      {label: "Medical", value: "medical"},
+      {label: "Recon", value: "recon"},
+      {label: "Vehicle tool", value: "vehicle-tool"},
+      {label: "Building", value: "building"},
+      {label: "Misc", value: "misc"},
+      {label: "Other", value: "other"},
       {label: "Unverified", value: "unverified"}
     ]
   },

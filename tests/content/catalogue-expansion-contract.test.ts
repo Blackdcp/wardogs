@@ -6,7 +6,7 @@ import {getItemByTypeAndSlug} from "../../src/features/items/item-library";
 describe("catalogue competitive expansion contract", () => {
   it("publishes the documented pre-launch weapon and vehicle coverage", () => {
     expect(getCatalogueRecords("weapons")).toHaveLength(38);
-    expect(getCatalogueRecords("vehicles")).toHaveLength(28);
+    expect(getCatalogueRecords("vehicles")).toHaveLength(30);
   });
 
   it("keeps incomplete weapon identifiers visibly separate from verified records", () => {

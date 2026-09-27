@@ -8,33 +8,33 @@ import {getItemUi} from "@/features/items/item-ui";
 const copy: Record<Locale, {title: string; description: string; pending: (count: number) => string}> = {
   en: {
     title: "Current build coverage",
-    description: "Names, images, prices, and handling notes come from Alpha 1 and August Closed Beta captures. They were not fully revalidated in Beta 02; recheck every value in Early Access.",
-    pending: (count) => `${count} records remain behind a media-verification notice instead of using unrelated or competitor artwork.`
+    description: "Catalogue entries combine dated Alpha, Beta, official Season 1 and community sources. Check each item's evidence date before using prices or performance in Early Access.",
+    pending: (count) => `${count} records still need an item-specific image.`
   },
   de: {
     title: "Aktueller Stand der Daten",
     description: "Namen, Bilder, Preise und Handhabung stammen aus Alpha 1 und der August-Closed-Beta. Sie wurden in Beta 02 nicht vollständig neu geprüft; im Early Access muss jeder Wert erneut kontrolliert werden.",
-    pending: (count) => `${count} Einträge behalten einen Prüfhinweis statt unpassender oder fremder Bilder.`
+    pending: (count) => `${count} Einträge benötigen noch ein gegenstandsspezifisches Bild.`
   },
   ru: {
     title: "Охват текущей сборки",
     description: "Названия, изображения, цены и заметки взяты из Alpha 1 и августовской Closed Beta. В Beta 02 они не были полностью перепроверены; каждый параметр нужно проверить в Early Access.",
-    pending: (count) => `${count} записей показывают уведомление о проверке, а не чужое или неподходящее изображение.`
+    pending: (count) => `${count} записей всё ещё требуют изображения конкретного предмета.`
   },
   "pt-br": {
     title: "Cobertura da build atual",
     description: "Nomes, imagens, preços e notas vêm do Alpha 1 e do Closed Beta de agosto. Eles não foram totalmente revalidados no Beta 02; confira cada valor no Acesso Antecipado.",
-    pending: (count) => `${count} registros mantêm o aviso de verificação, sem usar arte incorreta ou de concorrentes.`
+    pending: (count) => `${count} registros ainda precisam de uma imagem do item específico.`
   },
   ja: {
     title: "現在のビルド範囲",
     description: "名称、画像、価格、操作情報はAlpha 1と8月Closed Betaの記録です。Beta 02では全面再検証できていないため、Early Accessで各数値を再確認します。",
-    pending: (count) => `${count}件は、無関係な画像や他サイトの画像を使わず、画像検証中として表示します。`
+    pending: (count) => `${count}件は対象物固有の画像を引き続き確認中です。`
   },
   "zh-cn": {
     title: "当前版本覆盖范围",
     description: "名称、图片、价格和操作信息来自 Alpha 1 与 8 月封闭测试记录，尚未在 Beta 02 完整复核；所有数值都要在抢先体验版本重新验证。",
-    pending: (count) => `${count} 个条目继续显示图片待核验，而不会拿无关图片或竞争对手素材冒充单品图。`
+    pending: (count) => `${count} 个条目仍待补充对应物品图片。`
   }
 };
 

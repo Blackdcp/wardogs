@@ -230,6 +230,15 @@ describe("sitemap", () => {
     }
   });
 
+  it("indexes all newly published catalogue destinations in every locale", () => {
+    const urls = new Set(sitemap().map(({url}) => url));
+    for (const locale of locales) {
+      for (const path of ["/vehicles/helicopters", "/skins", "/black-market", "/gold-market"]) {
+        expect(urls.has(`${origin}/${locale}${path}`), `${locale}${path}`).toBe(true);
+      }
+    }
+  });
+
   it("uses the same trailing-slash form in a Pages export", () => {
     const previous = process.env.GITHUB_PAGES;
     process.env.GITHUB_PAGES = "true";

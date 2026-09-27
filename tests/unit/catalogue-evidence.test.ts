@@ -57,7 +57,7 @@ const expectedSeasonOneChanges = [
 
 describe("catalogue evidence", () => {
   it("normalizes evidence for every catalogue record without promoting Alpha or Closed Beta observations", () => {
-    expect(catalogueRecords).toHaveLength(160);
+    expect(catalogueRecords).toHaveLength(234);
 
     for (const record of catalogueRecords) {
       expect(isCalendarDate(record.evidence.verifiedAt), record.slug).toBe(true);
