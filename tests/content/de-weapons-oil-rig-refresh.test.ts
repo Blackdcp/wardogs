@@ -14,7 +14,8 @@ describe("German weapons and English Oil Rig source boundaries", () => {
     expect(guide.description).toMatch(/historische Preise.*keine aktuellen Saison-1-Preise/i);
     expect(metadata.title).toBe(guide.title);
     expect(metadata.description).toBe(guide.description);
-    expect(new URL(String(metadata.alternates?.canonical ?? "http://invalid")).pathname).toBe("/de/items/weapons");
+    const expectedPath = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/de/items/weapons${process.env.GITHUB_PAGES === "true" ? "/" : ""}`;
+    expect(new URL(String(metadata.alternates?.canonical ?? "http://invalid")).pathname).toBe(expectedPath);
   });
 
   it("separates the beta-only rig workflow from official Season 1 hammer facts", async () => {

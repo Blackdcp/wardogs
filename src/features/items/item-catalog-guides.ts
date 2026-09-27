@@ -200,7 +200,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
           row("Talon 9K-SAM", "Stationary anti-air", "Not captured", "Not captured", "Not captured"),
           row("L81 Mortar", "Stationary artillery", "Not captured", "Not captured", "Not captured"),
           row("Vanguard CIWS", "Stationary defense", "Not captured", "Not captured", "Not captured"),
-          row("Stingray", "Stationary weapon", "Not captured", "Not captured", "Not captured")
+          row("Stingray", "Anti-vehicle drone launcher", "Not captured", "Not captured", "Not captured")
         ]
       }
     ],

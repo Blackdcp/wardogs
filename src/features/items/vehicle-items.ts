@@ -8,6 +8,8 @@ import {
   officialTeam17,
   sevenThingsVideo,
   sph2SeasonOnePlayerReport,
+  stingrayBuildingVideo,
+  stingraySeptemberVideo,
   vehiclesExplainedVideo
 } from "./item-sources";
 
@@ -1004,6 +1006,52 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-09-26",
     priority: 219,
+    indexLocales: ["en"]
+  },
+  {
+    slug: "stingray",
+    name: "Stingray",
+    type: "vehicles",
+    subtype: "Anti-vehicle drone launcher",
+    status: "pre-release-build",
+    statusLabel: "Pre-release build",
+    build: "Closed Beta - 21-23 Aug 2026",
+    summary: "The Stingray is a ground-launched anti-vehicle drone shown in Beta gameplay; its current price, unlock, and damage are unverified.",
+    description:
+      "The Stingray is a launcher-and-controller system for a one-way anti-vehicle drone, not a conventional drivable vehicle. Closed Beta building footage shows the launch tube and handheld controller. A September gameplay clip demonstrates targeting enemy vehicles and artillery, but neither source establishes a current shop price, unlock, damage figure, or guaranteed kill.",
+    role:
+      "Choose a confirmed high-value vehicle or stationary artillery target before launching, position the operator under cover, and keep a teammate watching the launch site. The older flight walkthrough recommends controlled final corrections rather than spending all boost on the approach; retest handling in the current build.",
+    strengths: [
+      "A remote anti-vehicle attack can pressure a known stationary artillery or spawn-support position.",
+      "The launch hardware and controller are directly visible in the cited Beta building footage.",
+      "A September gameplay clip provides a newer demonstration of Stingray use against vehicles."
+    ],
+    cautions: [
+      "The operator can be exposed while controlling the drone, so launch from cover rather than an open FOB.",
+      "Do not assume Beta flight handling, targeting behavior, or damage still matches the current build.",
+      "The current purchase price, unlock requirement, deployment cost, and damage are not independently verified."
+    ],
+    facts: [
+      {label: "Role", value: "Anti-vehicle drone launcher", evidence: ["Creator Footage", "Pre-release Build"]},
+      {label: "Closed Beta price", value: "Not captured", evidence: ["Pre-release Build"]},
+      {label: "Observed gate", value: "Not captured", evidence: ["Pre-release Build"]}
+    ],
+    relatedGuides: ["wardogs-equipment-tools-guide", "wardogs-fob-guide", "wardogs-artillery-guide"],
+    relatedItems: ["sph-2", "l81-mortar", "vanguard-ciws"],
+    sources: [stingrayBuildingVideo, stingraySeptemberVideo, officialSteam],
+    detailImage: "/images/catalogue/vehicles/stingray.webp",
+    detailImageAlt: "Stingray launcher tube and handheld drone controller in WARDOGS gameplay",
+    observedAmmoOrVehicleClass: "Anti-vehicle drone launcher",
+    confirmedFacts: [
+      "The launch tube and handheld controller are visible in the cited Closed Beta building footage.",
+      "The cited September gameplay clip shows Stingray use against enemy vehicles and artillery."
+    ],
+    unconfirmedFacts: [
+      "No current shop screenshot or official note verifies the price, unlock, deployment cost, or damage.",
+      "The Beta flight method may differ from current handling and targeting behavior."
+    ],
+    detailUpdatedAt: "2026-09-27",
+    priority: 220,
     indexLocales: ["en"]
   }
 ];

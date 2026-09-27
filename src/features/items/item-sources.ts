@@ -68,6 +68,20 @@ export const buildingMortarVideo: ItemSource = {
   lastChecked: "2026-09-01"
 };
 
+export const stingrayBuildingVideo: ItemSource = {
+  label: "WARDOGS Building 101 (Stingray at 03:56)",
+  url: "https://www.youtube.com/watch?v=kg46BZ1H2W0&t=236s",
+  kind: "creator",
+  lastChecked: "2026-09-27"
+};
+
+export const stingraySeptemberVideo: ItemSource = {
+  label: "Stingrays - No more Enemy Spawn Vehicles or Artillery (September gameplay)",
+  url: "https://www.youtube.com/watch?v=4lqHgQKIl50",
+  kind: "creator",
+  lastChecked: "2026-09-27"
+};
+
 export const weaponsCatalogueVideo: ItemSource = {
   label: "Every Weapon Tested in WARDOGS",
   url: "https://www.youtube.com/watch?v=9mSvZyAk62E",

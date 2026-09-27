@@ -46,6 +46,9 @@ export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Local
 }
 
 function searchTitle(locale: Locale, item: WardogsItem): string {
+  if (locale === "ja" && item.type === "vehicles" && item.slug === "stingray") {
+    return "WARDOGS スティングレイランチャー：対車両ドローンの使い方";
+  }
   const freshness = getCatalogueFreshness({dataAsOf: item.build, evidence: item.evidence});
   let candidates: string[];
   if (freshness === "historical") {
@@ -154,6 +157,9 @@ function clampSearchDescription(value: string, locale: Locale = "en"): string {
 }
 
 function searchDescription(locale: Locale, item: WardogsItem): string {
+  if (locale === "ja" && item.type === "vehicles" && item.slug === "stingray") {
+    return "WARDOGSのスティングレイは対車両ドローンのランチャー。クローズドベータ映像では発射筒と操作端末を確認でき、9月の実機映像では敵車両と砲兵への運用を確認できます。発射位置の防護、目標確認、飛行中の修正を解説。現在のショップ価格、解除条件、配備費用、ダメージ、現行ビルドの誘導仕様は未確認です。";
+  }
   const freshness = getCatalogueFreshness({dataAsOf: item.build, evidence: item.evidence});
   const historicalPrefixes: Record<Locale, string> = {
     en: "Historical snapshot:",

@@ -171,6 +171,7 @@ describe("catalogue evidence", () => {
     const {getIndexableCatalogueItems: getIsolatedIndexableCatalogueItems} = await import("../../src/features/catalogue/catalogue-evidence");
 
     expect(getIsolatedIndexableCatalogueItems().map((record) => `${record.type}/${record.slug}`)).toContain("weapons/a-91");
-    expect(getIsolatedIndexableCatalogueItems()).toHaveLength(34);
+    expect(getIsolatedIndexableCatalogueItems().map((record) => `${record.type}/${record.slug}`)).toContain("vehicles/stingray");
+    expect(getIsolatedIndexableCatalogueItems()).toHaveLength(35);
   });
 });

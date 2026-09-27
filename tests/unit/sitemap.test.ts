@@ -63,10 +63,12 @@ describe("sitemap", () => {
       expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path || "/")
         .toBe("2026-09-26T00:00:00.000Z");
     }
-    for (const path of ["/videos", "/maps", "/items/weapons", "/items/vehicles"]) {
+    for (const path of ["/videos", "/maps", "/items/weapons"]) {
       expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path)
         .toBe("2026-09-26T00:00:00.000Z");
     }
+    expect(new Date(entriesByUrl.get(`${origin}/en/items/vehicles`)!.lastModified!).toISOString())
+      .toBe("2026-09-27T00:00:00.000Z");
     expect(new Date(entriesByUrl.get(`${origin}/en/items`)!.lastModified!).toISOString())
       .toBe("2026-09-17T00:00:00.000Z");
     expect(new Date(entriesByUrl.get(`${origin}/en/items/loadouts`)!.lastModified!).toISOString())

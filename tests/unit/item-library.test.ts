@@ -153,7 +153,7 @@ describe("item library", () => {
     const sph2 = vehicleModels.find((item) => item.slug === "sph-2");
     const guideSlugs = new Set(guideManifest.map((guide) => guide.slug));
 
-    expect(vehicleItems).toHaveLength(20);
+    expect(vehicleItems).toHaveLength(21);
     expect(vehicleModels.map((item) => item.slug)).toEqual(vehicleSlugs);
     expect(vehicleModels).toHaveLength(20);
     expect(vehicleModels.every((item) => item.type === "vehicles")).toBe(true);
