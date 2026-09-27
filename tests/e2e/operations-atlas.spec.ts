@@ -17,11 +17,16 @@ async function expectAtlasImagesLoaded(page: Page) {
   }
 }
 
-test("operations atlas filters sourced workflows without inventing a tactical map", async ({page}) => {
+test("operations atlas opens our three playable basemaps without routing users to a third party", async ({page}) => {
   await page.setViewportSize({width: 375, height: 812});
   await page.goto("/en/maps");
 
   await expect(page.getByRole("heading", {level: 1, name: "WARDOGS Operations Atlas"})).toBeVisible();
+  const mapSelector = page.getByRole("combobox", {name: "Map"});
+  await expect(mapSelector).toBeVisible();
+  await expect(mapSelector.locator("option")).toHaveCount(3);
+  await expect(page.locator("[data-community-map-link]")).toHaveCount(0);
+  await expect(page.getByRole("img", {name: /Bakurani map/})).toBeVisible();
   await expect(page.locator("[data-atlas-entry]")).toHaveCount(7);
   await expect(page.locator('[data-atlas-visual="pending"]')).toHaveCount(2);
   await expect(page.locator('[data-atlas-visual="verified"]')).toHaveCount(1);
@@ -47,6 +52,7 @@ test("Simplified Chinese atlas keeps localized navigation and exact guide target
   await page.goto("/zh-cn/maps");
 
   await expect(page.getByRole("heading", {level: 1, name: "WARDOGS 行动地图"})).toBeVisible();
+  await expect(page.getByRole("combobox", {name: "地图"})).toBeVisible();
   await page.getByRole("button", {name: "火力支援"}).click();
   await expect(page.locator("[data-atlas-entry]")).toHaveCount(1);
   await expect(page.locator('[data-atlas-entry="mortar-support"]')).toBeVisible();

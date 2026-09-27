@@ -7,6 +7,7 @@ import {DesktopNavigation} from "./desktop-navigation";
 import {LocaleSwitcher} from "./locale-switcher";
 import {MobileNav} from "./mobile-nav";
 import {SiteBrand} from "./site-brand";
+import {SiteSearchDialog} from "./site-search-dialog";
 
 export async function SiteHeader() {
   const t = await getTranslations();
@@ -25,6 +26,7 @@ export async function SiteHeader() {
             <SiteBrand markClassName="w-[100px] sm:w-[118px]" />
           </Link>
           <div className="flex shrink-0 items-center gap-2">
+            <SiteSearchDialog compact />
             <a
               href={officialLinks.steam}
               target="_blank"
@@ -56,6 +58,7 @@ export async function SiteHeader() {
             <SiteBrand markClassName="w-[136px] min-[1360px]:w-[150px]" />
           </Link>
           <DesktopNavigation groups={navigation} label={t("nav.primaryLabel")} />
+          <SiteSearchDialog compact />
           <LocaleSwitcher label={t("common.language")} />
           <a
             href={officialLinks.steam}

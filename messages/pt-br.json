@@ -16,7 +16,7 @@
     "title": "Season 1 em Acesso Antecipado está no Patch 0.11",
     "description": "A janela de manutenção publicada para 14 de setembro já passou. O Patch 0.11 segue como o anúncio oficial mais recente; consulte o feed oficial da Steam para o status ao vivo.",
     "windowLabel": "Ponto atual",
-    "windowValue": "Patch 0.11 - revisado em 17 de setembro",
+    "windowValue": "Patch 0.11 - revisado em 26 de setembro",
     "accessLabel": "Mudanças verificadas do Patch 0.11",
     "accessValue": "Navegadores Oficial e Community separados, busca e filtros melhores, IDs persistentes, correções de dinheiro e GPU e mais capacidade na Ásia.",
     "closedBetaNote": "A BULKHEAD anunciou dois milhões de cópias vendidas em 15 de setembro. É um marco de vendas, não jogadores simultâneos.",
@@ -29,7 +29,7 @@
       "reached": "Data programada alcançada",
       "checking": "Verificando o cronograma",
       "scheduleOnly": "Baseado no cronograma, não em telemetria dos servidores.",
-      "exactTimeUnconfirmed": "O horário exato de liberação do Acesso Antecipado não foi confirmado.",
+      "exactTimeUnconfirmed": "O Acesso Antecipado começou nesta data. Confira o status atual na Steam.",
       "dateValue": "10 de setembro de 2026",
       "days": "D",
       "hours": "H",
@@ -59,9 +59,11 @@
     "catalogueHome": "Página inicial do catálogo",
     "weapons": "Armas",
     "vehicles": "Veículos",
+    "helicopters": "Helicópteros",
     "ammo": "Munição",
     "attachments": "Acessórios",
     "gear": "Equipamento",
+    "skins": "Visuais",
     "equipment": "Dispositivos",
     "medical": "Itens médicos",
     "supplies": "Suprimentos",
@@ -69,6 +71,8 @@
     "mechanics": "Mecânicas",
     "operationsAtlas": "Atlas de operações",
     "loadouts": "Configurações de equipamento",
+    "blackMarket": "Mercado Negro",
+    "goldMarket": "Mercado de Ouro",
     "systemCheck": "Verificar configuração do PC",
     "budgetTool": "Orçamento de equipamento",
     "weaponCompare": "Comparar armas",
@@ -88,6 +92,7 @@
     "heroDescription": "Use uma referência de WARDOGS verificada por fontes para equipamentos, controles, acesso, solução de problemas e táticas, com detalhes de build sinalizados.",
     "primaryCta": "Ler Patch 0.11",
     "secondaryCta": "Ver Status dos Servidores",
+    "quickTasks": {"weapons": "Armas", "vehicles": "Veículos", "map": "Planejar no mapa", "status": "Status dos servidores"},
     "status": "Acesso Antecipado disponível na Steam",
     "statsLabel": "Fatos principais sobre WARDOGS",
     "stats": {
@@ -231,6 +236,10 @@
           "rumor": "Não confirmado"
         },
         "items": {
+          "season02": {
+            "title": "Season 02 chega em 15 de outubro",
+            "description": "O teaser confirma data e cenas de tempestade. A regra geral de reset de dinheiro e XP já foi publicada; horário e taxa de conversão da Season 02 ainda não."
+          },
           "closedBeta02": {
             "title": "Closed Beta 02 foi encerrado",
             "description": "O teste de 3 a 6 de setembro é histórico. WARDOGS já está no Acesso Antecipado pela aplicação principal da Steam."
@@ -252,8 +261,8 @@
             "description": "A manutenção de 14 de setembro já passou; consulte as notas e o feed oficial da Steam para mudanças e avisos atuais."
           },
           "ps5Release": {
-            "title": "Versões para consoles são planejadas para 2028",
-            "description": "O trailer oficial confirma 2028, mas não cita individualmente PS5, Xbox, datas, cross-play ou progressão compartilhada."
+            "title": "Datas exatas de PS5 e Xbox ainda não confirmadas",
+            "description": "A Team17 cita PlayStation 5 e Xbox Series X|S como plataformas planejadas, enquanto o trailer dá apenas a janela geral de 2028. O que falta confirmar são as datas de cada plataforma; as versões para consoles ainda não estão disponíveis, e cross-play e progressão compartilhada não foram anunciados."
           }
         }
       }
@@ -332,7 +341,7 @@
         },
         "support": {
           "title": "Ações de suporte rendem",
-          "description": "Reanimações, transporte, entregas de suprimentos e controle do objetivo podem gerar dinheiro além do combate."
+          "description": "Reanimações, transporte de aliados e controle do objetivo rendem dinheiro. Suprimentos ajudam a equipe, mas um pagamento separado não foi confirmado."
         },
         "mobility": {
           "title": "Planeje a aproximação",
@@ -393,6 +402,10 @@
         "Not confirmed": "Não confirmado"
       },
       "items": {
+        "season02": {
+          "title": "WARDOGS Season 02 chega em 15 de outubro",
+          "description": "O teaser de 22 de setembro confirma data e tempestade. A regra geral de reset de dinheiro e XP é conhecida; horário, detalhes do patch e taxa de conversão seguem sem anúncio."
+        },
         "closedBeta02": {
           "title": "Closed Beta 02 terminou em 6 de setembro",
           "description": "O show começou às 18:00 UTC; os servidores operaram de 3 de setembro às 19:00 UTC até 6 de setembro às 08:00 UTC. As regras de acesso são históricas."
@@ -415,11 +428,11 @@
         },
         "earlyAccess": {
           "title": "WARDOGS entrou em Acesso Antecipado em 10 de setembro",
-          "description": "A versão Windows PC está jogável na Steam. O trailer oficial anuncia consoles em 2028, sem plataformas ou datas específicas."
+          "description": "A versão para Windows PC está disponível na Steam. O trailer anuncia consoles para 2028, e a Team17 cita PlayStation 5 e Xbox Series X|S como plataformas planejadas; não há datas específicas para cada uma."
         },
         "ps5": {
           "title": "Versões para consoles são planejadas para 2028",
-          "description": "O trailer confirma 2028, mas não cita PS5, Xbox, datas, cross-play ou cross-progression."
+          "description": "O trailer aponta 2028 para consoles. A Team17 cita PlayStation 5 e Xbox Series X|S como plataformas planejadas, mas não confirmou datas específicas, cross-play ou progressão compartilhada."
         },
         "preload": {
           "title": "O preload oficial foi liberado em 9 de setembro",
@@ -468,7 +481,7 @@
         },
         "rumor": {
           "title": "Rumores ficam marcados",
-          "description": "PS5, horário exato de desbloqueio, regiões de servidor no lançamento e outro beta seguem sem confirmação de uma fonte primária."
+          "description": "Datas específicas para cada console, cross-play, progressão compartilhada e uma nova fase beta seguem sem confirmação de uma fonte primária."
         },
         "refresh": {
           "title": "Revise antes de compartilhar",
@@ -489,7 +502,14 @@
     "byline": "Pesquisado e mantido por",
     "teamName": "Equipe Editorial do WARDOGS Wiki",
     "editorialPolicy": "Política editorial",
-    "imageSource": "Vídeo de origem"
+    "imageSource": "Vídeo de origem",
+    "advertisement": "Publicidade"
+  },
+  "ads": {
+    "label": "Publicidade",
+    "sponsored": "Patrocinado",
+    "smartlinkCta": "Ver recomendações patrocinadas",
+    "smartlinkDescription": "Abre um destino externo patrocinado em uma nova guia."
   },
   "categories": {
     "access": "Acesso",
@@ -563,11 +583,11 @@
   },
   "privacy": {
     "metaTitle": "Privacidade no WARDOGS Wiki: Cookies, Análises e Anúncios",
-    "metaDescription": "Saiba como o WARDOGS Wiki trata cookies, análises, anúncios do AdSense, mídias e links externos e por que não coletamos credenciais de contas do jogo.",
+    "metaDescription": "Saiba como o WARDOGS Wiki trata cookies, análises, anúncios do AdSense e de terceiros, mídias, links e credenciais do jogo.",
     "title": "Política de Privacidade",
     "intro": "Este guia de fãs reduz a coleta de dados e explica como funcionam mídias e links externos.",
     "content": "Não operamos contas de jogadores nem coletamos credenciais do jogo. Ao abrir um serviço externo, a política de privacidade dele passa a valer.",
-    "advertising": "Usamos o Google AdSense para financiar este site. O Google pode processar seu endereço IP e informações do navegador e do dispositivo, além de usar cookies ou tecnologias semelhantes para veicular, medir e personalizar anúncios quando o consentimento for exigido."
+    "advertising": "Os anúncios da Adsterra neste site podem incluir banners, anúncios nativos e fixos, Social Bar, Popunder e Smartlinks patrocinados; nem todos os formatos ficam ativos ao mesmo tempo. A Adsterra e seus parceiros de publicidade podem processar seu endereço IP e informações do navegador e do dispositivo, além de usar cookies ou tecnologias semelhantes para veicular, medir e personalizar anúncios quando o consentimento for exigido. Quando ativados, links patrocinados abrem destinos externos em uma nova guia."
   },
   "terms": {
     "metaTitle": "Termos do WARDOGS Wiki: Regras e Avisos do Guia",

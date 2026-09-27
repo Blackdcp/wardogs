@@ -129,7 +129,10 @@ export function auditCatalogueVisualCoverage(
       if (source.approvedState !== record.mediaState) {
         violations.push(`${recordKey}: record media state does not match approved provenance`);
       }
-      if (!source.sourceUrl.startsWith("https://") || source.usageNote.trim().length < 20) {
+      const sourceIsComplete = source.origin === "owner-asset-pack"
+        ? !source.sourceUrl && source.sourceLabel.includes("Owner-provided") && Boolean(source.capturedAt?.includes("Alpha")) && /^2026-\d\d-\d\d$/.test(source.retrievedAt)
+        : source.sourceUrl.startsWith("https://");
+      if (!sourceIsComplete || source.usageNote.trim().length < 20) {
         violations.push(`${recordKey}: provenance source or scope is incomplete`);
       }
     }

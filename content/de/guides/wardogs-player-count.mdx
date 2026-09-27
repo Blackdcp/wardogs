@@ -1,0 +1,56 @@
+---
+title: "WARDOGS Spielerzahlen: Steam live und offizielle Rekorde"
+description: "Prüfe WARDOGS-Spielerzahlen: aktuelle Steam-Nutzer, der offizielle Spitzenwert über 400.000 und zwei Millionen Verkäufe sind verschiedene Kennzahlen."
+keyword: "wardogs player count"
+category: "guide"
+slug: "wardogs-player-count"
+order: 53
+updatedAt: "2026-09-26"
+badges:
+  - label: "Steam-Daten"
+    tone: "accent"
+  - label: "Livewert ändert sich"
+    tone: "warning"
+faq:
+  - question: "Wie viele Menschen spielen WARDOGS gerade?"
+    answer: "Eine statische Seite kann keinen zuverlässigen Momentwert nennen. Öffne die SteamDB-Grafik oder Valves aktuelle Spieler-API für das Hauptspiel mit App-ID 1867240 und beachte die Abrufzeit."
+  - question: "Wurde die Marke von 400.000 gleichzeitigen Spielern erreicht?"
+    answer: "Ja. BULKHEAD nannte im offiziellen Patch-0.11-Beitrag vom 12. September einen Spitzenwert von 400.000 gleichzeitigen Nutzern. Das ist kein heutiger Livewert."
+  - question: "Bedeuten zwei Millionen Verkäufe zwei Millionen Spieler online?"
+    answer: "Nein. Der offizielle Beitrag vom 15. September meldet kumulierte Verkäufe. Gleichzeitige Spieler sind ein Momentwert einer bestimmten Steam-App."
+sources:
+  - label: "Offizielle BULKHEAD-Ankündigungen auf Steam: Rekord und Verkäufe"
+    url: "https://steamcommunity.com/app/1867240/announcements/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Valve Steamworks: Definition der aktuellen Spielerzahl"
+    url: "https://partner.steamgames.com/doc/webapi/ISteamUserStats"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "SteamDB: unabhängiges Diagramm für App 1867240"
+    url: "https://steamdb.info/app/1867240/charts/"
+    kind: "community"
+    checkedAt: "2026-09-26"
+  - label: "Offizielle WARDOGS-Shopseite: Hauptspiel App 1867240"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+---
+
+## Die Antwort für den aktuellen Moment
+
+Wenn du wissen möchtest, wie viele Menschen **jetzt** spielen, öffne das [SteamDB-Diagramm zur Haupt-App 1867240](https://steamdb.info/app/1867240/charts/) und beachte die Abrufzeit. SteamDB ist ein unabhängiger Beobachter, keine offizielle Mitteilung des Studios. Alternativ liefert [Valves aktueller Spieler-Endpunkt für diese App](https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1867240) einen Momentwert. Die [Steamworks-Dokumentation](https://partner.steamgames.com/doc/webapi/ISteamUserStats) definiert ihn als aktuell aktive Steam-Nutzer der angegebenen App. Eine statische Wiki-Zahl wäre schon kurz nach der Veröffentlichung veraltet.
+
+## Was BULKHEAD offiziell gemeldet hat
+
+Im offiziellen Beitrag zu **Patch 0.11 vom 12. September** dankte BULKHEAD für **400.000 gleichzeitige Nutzer als Spitzenwert**. Das ist ein historischer Rekord, keine Aussage darüber, wie viele Spieler ständig online bleiben. Am **15. September** meldete das Studio **zwei Millionen verkaufte Exemplare**. Verkäufe zählen kumulativ und sind weder gleichzeitige Spieler noch täglich einzigartige Spieler oder verfügbare Serverplätze.
+
+Ein unabhängiges Diagramm kann einen genaueren oder etwas höheren Höchstwert zeigen, weil Abrufzeiten und Messintervalle voneinander abweichen. Kennzeichne ihn mit Quelle und Zeitstempel als Drittanbieterbeobachtung; schreibe ihn nicht stillschweigend BULKHEAD zu.
+
+## Die richtige App und Kennzahl vergleichen
+
+Das aktuelle Hauptspiel ist **WARDOGS App 1867240**. Der ältere Playtest war ein getrennter Beta-Client. Zahlen aus einem Beta-Wochenende dürfen daher nicht einfach zum Early-Access-Wert der Haupt-App addiert werden. Valves Schnittstelle zählt nur die aktive Nutzung der jeweils angegebenen App. Sie misst nicht alle Käufer, Warteschlangen oder die Gesundheit eines einzelnen Spielservers.
+
+Prüfe bei zwei Screenshots vier Punkte: App-ID, UTC-Zeit des Abrufs, Kennzahl „jetzt online“ versus Tages- oder Allzeitspitze und Herkunft von Valve, Tracker oder Entwickler. Ein Rückgang vom Startrekord ist für sich allein kein Beweis für einen Ausfall. Ein hoher Wert garantiert wiederum nicht, dass dein bevorzugter Server erreichbar ist.
+
+Bei Verbindungsproblemen nutze die [offiziellen Steam-Ankündigungen](https://steamcommunity.com/app/1867240/announcements/) und unseren [Serverstatus-Guide](/de/guides/wardogs-server-status). Die aktuelle Version erklärt der [Patchnotes-Guide](/de/guides/wardogs-patch-notes). Diese Seite friert bewusst keinen flüchtigen Livewert in der Überschrift ein.

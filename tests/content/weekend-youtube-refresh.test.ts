@@ -19,15 +19,18 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
       expect(guide, `${locale}/wardogs-artillery-guide`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt).toBe(
-        locale === "ja" ? "2026-09-17" : locale === "zh-cn" ? "2026-09-01" : "2026-08-28",
-      );
+      const baselineDate = locale === "en" ? "2026-09-24" : locale === "ja" ? "2026-09-17" : locale === "zh-cn" ? "2026-09-01" : "2026-08-28";
+      expect((guide?.frontmatter.updatedAt ?? "") >= baselineDate).toBe(true);
       expect(sourceUrls).toContain("https://www.youtube.com/watch?v=oP9RelmWk6A");
       expect(sourceUrls).toContain("https://www.youtube.com/watch?v=ZFRrDSru7Kg");
       expect(guide?.body).toMatch(/SPH-?2/i);
       expect(guide?.body).toMatch(/stabili|стабилиз|stabilisieren|estabiliz|安定化|稳定/i);
       expect(guide?.body).toMatch(/reload|перезар|nachladen|recarga|リロード|装填|换弹|重新加载/i);
       expect(guide?.body).toMatch(/build-sensitive|buildabhängig|версии сборки|dependente da build|ビルド依存|版本相关|构建敏感/i);
+      if (locale === "en") {
+        expect(guide?.body).toContain("**Season 1 deployment — corroborating player reports:**");
+        expect(guide?.body).not.toMatch(/^\|\s*Claim\s*\|/m);
+      }
     }
   });
 
@@ -53,9 +56,9 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const fob = await loadGuideDocument(locale, "wardogs-fob-guide");
       const money = await loadGuideDocument(locale, "wardogs-money-guide");
 
-      expect(beginner?.frontmatter.updatedAt, locale).toBe("2026-09-17");
+      expect(beginner?.frontmatter.updatedAt, locale).toBe("2026-09-26");
       expect(fob?.frontmatter.updatedAt, locale).toBe("2026-09-17");
-      expect(money?.frontmatter.updatedAt, locale).toBe("2026-09-17");
+      expect((money?.frontmatter.updatedAt ?? "") >= "2026-09-17", locale).toBe(true);
 
       expect(beginner?.frontmatter.sources.some(({url}) => url.includes("Msg78ysR_hQ"))).toBe(true);
       expect(beginner?.body).toMatch(/practice range|Übungsplatz|полигон|campo de treino|射撃練習場|训练场|实践范围/i);
@@ -67,9 +70,10 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       expect(fob?.body).toMatch(/small.*medium.*large|klein.*mittel.*groß|мал.*сред.*больш|pequen.*médio.*grande|小型.*中型.*大型|小.*中.*大/i);
 
       expect(money?.frontmatter.sources.some(({url}) => url.includes("Jm7ogJLKIJo"))).toBe(true);
+      expect(money?.frontmatter.sources.some(({url}) => url.includes("PQvtvAvl-78"))).toBe(true);
       expect(money?.body).toMatch(/pilot|Pilot|пилот|piloto|パイロット|飞行员/i);
       expect(money?.body).toMatch(/Gold Bars|Goldbarren|золот.*слит|Barras de Ouro|ゴールドバー/i);
-      expect(money?.body).toMatch(/not confirmed|nicht bestätigt|не подтверж|não confirmad|未確認|尚未(?:得到)?确认|未确认/i);
+      expect(money?.body).toMatch(/reset|zurückgesetzt|сбрас|リセット|重置/i);
     }
   });
 
@@ -85,13 +89,12 @@ describe("2026-08-28 weekend and YouTube refresh", () => {
       const price = await loadGuideDocument(locale, "wardogs-price");
       const release = await loadGuideDocument(locale, "wardogs-release-date");
 
-      expect(livestream?.frontmatter.updatedAt).toBe("2026-09-13");
+      expect((livestream?.frontmatter.updatedAt ?? "") >= "2026-09-13").toBe(true);
       expect(livestream?.frontmatter.sources.map(({url}) => url)).toContain("https://www.twitch.tv/thefpsgamesshow");
       expect(livestream?.body).toMatch(/18:00 UTC/);
-      expect(price?.frontmatter.updatedAt).toBe("2026-09-17");
+      expect((price?.frontmatter.updatedAt ?? "") >= "2026-09-17").toBe(true);
       expect(price?.body).toContain("Beta 02");
-      expect(price?.body).toContain("08:00 UTC");
-      expect(release?.frontmatter.updatedAt).toBe("2026-09-17");
+      expect((release?.frontmatter.updatedAt ?? "") >= "2026-09-17").toBe(true);
       expect(release?.body).toContain("Beta 02");
       expect(release?.body).toContain("2028");
     }

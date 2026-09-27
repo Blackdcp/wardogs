@@ -49,7 +49,7 @@ describe("September 17 Early Access operations", () => {
 
     const status = getPublicStatus();
     expect(status.schemaVersion).toBe(2);
-    expect(status.dataAsOf).toBe("2026-09-17");
+    expect(status.dataAsOf).toBe("2026-09-26");
     expect(status.currentEvent).toMatchObject({
       id: "early-access-patch-0-11",
       name: "Early Access - Patch 0.11",
@@ -109,7 +109,9 @@ describe("September 17 Early Access operations", () => {
         const searchable = `${guide?.frontmatter.description}\n${guide?.frontmatter.faq.map(({question, answer}) => `${question} ${answer}`).join("\n")}\n${guide?.body}`;
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-17");
+        expect((guide?.frontmatter.updatedAt ?? "") >= (
+          locale === "en" && ["wardogs-beta", "wardogs-playtest"].includes(slug) ? "2026-09-24" : "2026-09-17"
+        ), `${locale}/${slug}`).toBe(true);
         expect(searchable, `${locale}/${slug}`).toContain("Beta 02");
         expect(searchable, `${locale}/${slug}`).toMatch(liveSignals[locale]);
       }

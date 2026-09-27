@@ -1,11 +1,18 @@
 "use client";
 
 import {Copy, ExternalLink} from "lucide-react";
-import {useEffect, useMemo, useState} from "react";
+import {useMemo, useState, useSyncExternalStore} from "react";
 import type {ProgressionRoleRoute, ProgressionRoleId} from "@/features/tools/progression-routes";
 import {decodeProgressionRouteState, encodeProgressionRouteState, type ProgressionRouteState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {EvidenceProvenance} from "./evidence-provenance";
+
+const emptySearch = () => "";
+
+function subscribeToLocation(onStoreChange: () => void) {
+  window.addEventListener("popstate", onStoreChange);
+  return () => window.removeEventListener("popstate", onStoreChange);
+}
 
 export function ProgressionRoute({
   copy,
@@ -16,18 +23,20 @@ export function ProgressionRoute({
   routes: readonly ProgressionRoleRoute[];
   initialState: ProgressionRouteState;
 }) {
-  const [state, setState] = useState(initialState);
+  const search = useSyncExternalStore(subscribeToLocation, () => window.location.search, emptySearch);
+  const sharedState = useMemo(() => search
+    ? decodeProgressionRouteState(search, routes.map(({id}) => id))
+    : initialState, [search, routes, initialState]);
+  const [editedState, setEditedState] = useState<ProgressionRouteState | null>(null);
+  const state = editedState ?? sharedState;
   const [copied, setCopied] = useState(false);
-  useEffect(() => {
-    if (window.location.search) setState(decodeProgressionRouteState(window.location.search, routes.map(({id}) => id)));
-  }, [routes]);
   const route = useMemo(
     () => routes.find(({id}) => id === state.role) ?? routes[0],
     [routes, state.role],
   );
 
   function commit(next: ProgressionRouteState) {
-    setState(next);
+    setEditedState(next);
     setCopied(false);
     const url = new URL(window.location.href);
     url.search = encodeProgressionRouteState(next);

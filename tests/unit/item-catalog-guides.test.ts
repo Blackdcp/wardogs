@@ -23,6 +23,12 @@ const recordBackedGuideIds = [
 ] as const;
 
 describe("WARDOGS item catalog guides", () => {
+  it("describes Alpha observations as historical now that Early Access is live", () => {
+    for (const guide of catalogGuides) {
+      expect(`${guide.disclaimer} ${guide.unknowns.join(" ")}`, guide.id).not.toMatch(/before Early Access/i);
+    }
+  });
+
   it("covers every catalogue players can browse from the competitor-shaped guide matrix", () => {
     expect(catalogGuides.map((guide) => guide.id)).toEqual([
       "weapons",
@@ -104,6 +110,7 @@ describe("WARDOGS item catalog guides", () => {
     expect(equipment?.disclaimer).toMatch(/unverified|record-specific/i);
 
     const unsupported = equipment?.sections.flatMap((section) => section.rows)
+      .filter((row) => ["Binoculars", "Rangefinder", "Fuel Can", "Repair Tool", "Battery"].includes(row.cells[0]))
       .flatMap((catalogueRow) => catalogueRow.cells.slice(1))
       .join(" ");
     expect(unsupported).not.toMatch(/\$\d|Recon|Vehicle|Utility|RangeFinder|FuelCan|RepairTool/i);

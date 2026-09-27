@@ -19,14 +19,14 @@ describe("visual coverage audit", () => {
   it("reports deterministic verified, contextual, and pending counts by group", () => {
     expect(getVisualCoverageSummary()).toEqual([
       {group: "weapons", total: 38, verified: 34, contextual: 0, pending: 4},
-      {group: "vehicles", total: 28, verified: 25, contextual: 0, pending: 3},
-      {group: "ammo", total: 14, verified: 0, contextual: 0, pending: 14},
-      {group: "attachments", total: 40, verified: 0, contextual: 0, pending: 40},
-      {group: "gear", total: 11, verified: 0, contextual: 0, pending: 11},
-      {group: "equipment", total: 5, verified: 0, contextual: 0, pending: 5},
-      {group: "medical", total: 4, verified: 0, contextual: 0, pending: 4},
-      {group: "supplies", total: 4, verified: 0, contextual: 0, pending: 4},
-      {group: "deployables", total: 5, verified: 0, contextual: 0, pending: 5},
+      {group: "vehicles", total: 30, verified: 25, contextual: 2, pending: 3},
+      {group: "ammo", total: 14, verified: 14, contextual: 0, pending: 0},
+      {group: "attachments", total: 55, verified: 40, contextual: 15, pending: 0},
+      {group: "gear", total: 25, verified: 11, contextual: 14, pending: 0},
+      {group: "equipment", total: 48, verified: 0, contextual: 47, pending: 1},
+      {group: "medical", total: 4, verified: 0, contextual: 3, pending: 1},
+      {group: "supplies", total: 4, verified: 0, contextual: 4, pending: 0},
+      {group: "deployables", total: 5, verified: 0, contextual: 3, pending: 2},
       {group: "mechanics", total: 4, verified: 0, contextual: 0, pending: 4},
       {group: "maps", total: 7, verified: 0, contextual: 0, pending: 7},
       {group: "operations-atlas", total: 7, verified: 1, contextual: 4, pending: 2},
@@ -38,6 +38,13 @@ describe("visual coverage audit", () => {
     const recordEvidence = entries.filter(({scope}) => scope === "catalogue");
     expect(recordEvidence.filter(({state}) => state === "verified").every(({image}) => !image?.includes("/banners/"))).toBe(true);
     expect(recordEvidence.filter(({state}) => state === "pending").every(({image, alt}) => image === undefined && alt === undefined)).toBe(true);
+  });
+
+  it("rejects a missing owner-pack file and a swapped record identity", () => {
+    const ownerRecord = catalogueRecords.find((record) => record.type === "ammo" && record.slug === "45-acp")!;
+    expect(ownerRecord.mediaState).toBe("verified");
+    expect(auditCatalogueVisualCoverage([ownerRecord], catalogueMediaSources, () => false)).toContain("ammo/45-acp: asset file is missing");
+    expect(auditCatalogueVisualCoverage([{...ownerRecord, slug: "not-45-acp"}], catalogueMediaSources, () => true)).toContain("ammo/not-45-acp: image has no approved provenance");
   });
 
   it("rejects wrong record state, duplicate images, banners, missing alt, missing files, and unapproved assets", () => {
@@ -83,6 +90,7 @@ describe("visual coverage audit", () => {
       ...catalogueMediaSources,
       [verified.image!]: {
         ...source,
+        origin: "external-capture",
         sourceUrl: "https://www.youtube.com/watch?v=-k6IV0ITLDo",
         sourceLabel: "General WARDOGS overview",
         capturedAt: "Item-specific catalogue sequence",

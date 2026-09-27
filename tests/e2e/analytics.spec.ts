@@ -57,6 +57,22 @@ test("delegated official and catalogue links emit analytics events", async ({pag
   ]);
 });
 
+test("homepage priority links emit a task click before navigation", async ({page}) => {
+  await page.goto("/en");
+  await waitForAnalyticsReady(page);
+  await page.evaluate(() => {
+    document.addEventListener("click", (event) => {
+      if ((event.target as Element | null)?.closest("a[data-home-task]")) event.preventDefault();
+    }, true);
+  });
+  await page.locator('a[data-home-task="weapons"]').click();
+  await expect.poll(() => dataLayerEvents(page, "home_task_click")).toEqual([
+    expect.objectContaining({
+      parameters: expect.objectContaining({task: "weapons", placement: "hero", locale: "en"})
+    })
+  ]);
+});
+
 test("video starts and catalogue filters emit their dedicated events", async ({page}) => {
   await page.goto("/en/videos/wardogs-everything-before-playing");
   await waitForAnalyticsReady(page);

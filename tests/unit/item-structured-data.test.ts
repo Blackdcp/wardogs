@@ -21,7 +21,7 @@ describe("item structured data", () => {
     expect(jsonLd[0]["@type"]).toBe("Article");
     expect(jsonLd[0]).not.toHaveProperty("offers");
     expect(jsonLd[1]["@type"]).toBe("BreadcrumbList");
-    expect((jsonLd[1].itemListElement as Array<{name: string}>)[1].name).toBe("WARDOGS Catalogue");
+    expect((jsonLd[1].itemListElement as Array<{name: string}>)[1].name).toBe("WARDOGS Weapons, Vehicles & Items");
   });
 
   it("uses a model article's image and editorial date instead of its Alpha observation date", () => {
@@ -38,13 +38,13 @@ describe("item structured data", () => {
     expect(JSON.stringify(jsonLd)).not.toMatch(/Product|Offer|AggregateRating|Rating/);
   });
 
-  it("uses the latest verified Deagle change for Article freshness", () => {
+  it("uses the latest Deagle editorial update for Article freshness", () => {
     const deagle = getItemBySlug("deagle");
     expect(deagle).toBeDefined();
 
     const jsonLd = buildItemArticleJsonLd("en", deagle!);
 
-    expect(jsonLd[0].dateModified).toBe("2026-09-09");
+    expect(jsonLd[0].dateModified).toBe("2026-09-26");
   });
 
   it("uses Article schema and the exact image for a published vehicle model", () => {
@@ -88,12 +88,12 @@ describe("item structured data", () => {
 
     expect(jsonLd.map((entry) => entry["@type"])).toEqual(["CollectionPage", "ItemList", "BreadcrumbList"]);
     expect(jsonLd[0]["@type"]).toBe("CollectionPage");
-    expect(jsonLd[0].name).toBe("WARDOGS Catalogue");
+    expect(jsonLd[0].name).toBe("WARDOGS Weapons, Vehicles & Items");
     expect(jsonLd[1]["@type"]).toBe("ItemList");
     expect(jsonLd[1].itemListElement).toHaveLength(11);
     expect(jsonLd[2].itemListElement).toEqual([
       {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: "http://localhost:3000/en"},
-      {"@type": "ListItem", position: 2, name: "WARDOGS Catalogue", item: "http://localhost:3000/en/items"}
+      {"@type": "ListItem", position: 2, name: "WARDOGS Weapons, Vehicles & Items", item: "http://localhost:3000/en/items"}
     ]);
   });
 
@@ -127,7 +127,7 @@ describe("item structured data", () => {
 
     expect(weapons[1].itemListElement).toHaveLength(getCatalogueRecords("weapons").length);
     expect(ammo[1].itemListElement).toHaveLength(14);
-    expect((weapons[2].itemListElement as Array<{name: string}>)[1].name).toBe("WARDOGS Catalogue");
+    expect((weapons[2].itemListElement as Array<{name: string}>)[1].name).toBe("WARDOGS Weapons, Vehicles & Items");
   });
 
   it("uses published detail URLs and images for weapon models without duplicate entries", () => {

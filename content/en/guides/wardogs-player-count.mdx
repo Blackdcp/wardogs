@@ -1,0 +1,58 @@
+---
+title: "WARDOGS Player Count: Live Steam Data vs Official Milestones"
+description: "Check WARDOGS player count without mixing live Steam concurrency, the official 400,000-plus peak and two million copies sold. Links, dates and limits explained."
+keyword: "wardogs player count"
+category: "guide"
+slug: "wardogs-player-count"
+order: 53
+updatedAt: "2026-09-26"
+badges:
+  - label: "Steam Data"
+    tone: "accent"
+  - label: "Live Number Changes"
+    tone: "warning"
+faq:
+  - question: "How many people are playing WARDOGS right now?"
+    answer: "A static article cannot give a reliable right-now number. Open the live SteamDB chart or Valve's current-player endpoint for the main game, App 1867240, and note the read time."
+  - question: "Did WARDOGS pass 400,000 concurrent players?"
+    answer: "Yes. BULKHEAD thanked players for reaching 400,000 peak concurrent users in its official September 12 Patch 0.11 announcement. That historical milestone is not today's live count."
+  - question: "Does two million copies sold mean two million people online?"
+    answer: "No. The official September 15 post reports copies sold, which is a cumulative sales milestone. Concurrent players is a momentary count for a specific Steam app."
+sources:
+  - label: "BULKHEAD official Steam announcements: 400,000 peak and two million sold"
+    url: "https://steamcommunity.com/app/1867240/announcements/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Valve Steamworks: GetNumberOfCurrentPlayers definition"
+    url: "https://partner.steamgames.com/doc/webapi/ISteamUserStats"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "SteamDB independent WARDOGS chart for App 1867240"
+    url: "https://steamdb.info/app/1867240/charts/"
+    kind: "community"
+    checkedAt: "2026-09-26"
+  - label: "Official WARDOGS Steam store: main App 1867240"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+---
+
+## The answer that does not go stale
+
+For **players online now**, open the [SteamDB chart for WARDOGS App 1867240](https://steamdb.info/app/1867240/charts/) and look at its current read time. A number copied into a static wiki page would become outdated within minutes. SteamDB is an independent tracker, not an official developer announcement. Technically inclined readers can also request [Valve's current-player endpoint for App 1867240](https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1867240); Valve's [Steamworks documentation](https://partner.steamgames.com/doc/webapi/ISteamUserStats) defines this as the number active in the specified Steam app at that moment.
+
+## Numbers BULKHEAD has actually confirmed
+
+In the official **September 12 Patch 0.11 announcement**, BULKHEAD thanked players for **400,000 peak concurrent users**. This is a historical peak milestone, not a claim that 400,000 people remain online continuously. On **September 15**, the studio announced **two million copies sold**. Sales are cumulative; they cannot be substituted for active players, daily unique users, available server slots or a current concurrent count.
+
+An independent chart may show a more precise or higher peak than the rounded official milestone because its sampling and update time differ. Label such a number as a third-party observation with its timestamp. Do not silently present it as BULKHEAD's official figure.
+
+## Read the right app and metric
+
+The live product on Steam is **WARDOGS App 1867240**. The older WARDOGS Playtest was a separate beta client, so its beta-weekend activity should not be added to the main game's Early Access count. Valve's method takes an app ID: it counts people active in that particular Steam app at the time of the request, not everyone who bought it or ever played it. It also does not prove whether login queues, matchmaking or individual game servers are healthy.
+
+When comparing two screenshots, check four things: the app ID, the UTC read time, whether the number is *playing now* or a *24-hour/all-time peak*, and whether the source is Valve, a third-party tracker or a developer announcement. A decline from a launch peak is not by itself evidence that a game is unavailable; a rising count does not prove a specific server is working.
+
+## Where to go next
+
+For a current interruption, use the [official Steam announcements](https://steamcommunity.com/app/1867240/announcements/) and our [server-status guide](/en/guides/wardogs-server-status), not a player-count graph alone. For the current game version, check the [patch-notes guide](/en/guides/wardogs-patch-notes). This page deliberately links to the live chart instead of freezing one volatile number in its headline.

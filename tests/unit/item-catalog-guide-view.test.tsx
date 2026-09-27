@@ -14,6 +14,20 @@ afterEach(() => {
 });
 
 describe("ItemCatalogGuide", () => {
+  it("separates the official Season 1 Z20 Lakota update from the historical UH-1Y vehicle rows", () => {
+    const guide = getCatalogGuide("vehicles")!;
+    const en = renderToStaticMarkup(<CatalogueCategoryView guide={guide} locale="en" />);
+    const zh = renderToStaticMarkup(<CatalogueCategoryView guide={guide} locale="zh-cn" />);
+
+    expect(en).toContain("Z20 Lakota");
+    expect(en).toContain("$35,000");
+    expect(en).toContain("UH-1Y");
+    expect(en).toContain("https://store.steampowered.com/news/app/1867240/view/701027323413004455");
+    expect(zh).toContain("Z20 Lakota");
+    expect(zh).toContain("第 1 赛季");
+    expect(en).toContain('data-season-one-vehicle-update="true"');
+  });
+
   it("normalizes the category hero return link for a subpath Pages export", () => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
     vi.stubEnv("GITHUB_PAGES", "true");

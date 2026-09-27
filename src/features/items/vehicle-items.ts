@@ -2,9 +2,14 @@ import type {WardogsItemInput} from "./item-library";
 import {
   artilleryGuideVideo,
   gameplayVideo,
+  havocSeasonOnePilotReport,
   officialSteam,
+  officialSeasonOneChangelog,
   officialTeam17,
   sevenThingsVideo,
+  sph2SeasonOnePlayerReport,
+  stingrayBuildingVideo,
+  stingraySeptemberVideo,
   vehiclesExplainedVideo
 } from "./item-sources";
 
@@ -51,7 +56,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Minigun performance, flight handling, durability, and the $7,000 price may change before Early Access or final release."
+      "Minigun performance, flight handling, durability, and the $7,000 Alpha price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 200,
@@ -99,7 +104,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Rocket payload, damage, replenishment, handling, and price may change before Early Access or final release."
+      "Rocket payload, damage, replenishment, handling, and price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 201,
@@ -173,7 +178,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     cautions: [
       "Final speed, acceleration, traction, and rollover behavior were not captured.",
-      "The Driver Level 10 gate and $1,500 price may not survive beyond Alpha 1.",
+      "Season 1 lists Driver level 8; the Alpha 1 Driver Level 10 gate is historical.",
       "No protection, seat count, or cargo specification was recorded."
     ],
     facts: [
@@ -184,7 +189,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     relatedGuides: ["wardogs-gameplay", "wardogs-alpha", "wardogs-price"],
     relatedItems: ["bobcat", "humvee"],
-    sources: [officialSteam, officialTeam17, gameplayVideo],
+    sources: [officialSteam, officialTeam17, officialSeasonOneChangelog, gameplayVideo],
     detailImage: "/images/catalogue/vehicles/dune-buggy.webp",
     detailImageAlt: "Dune Buggy fast transport",
     observedPrice: "$1,500",
@@ -197,10 +202,10 @@ export const vehicleItems: readonly WardogsItemInput[] = [
       "Observed in Alpha 1: Track: Driver"
     ],
     unconfirmedFacts: [
-      "Driver Level 10 and the $1,500 price remain unconfirmed for Early Access or final release.",
-      "Speed, handling, durability, seats, and cargo behavior may change before Early Access or final release."
+      "Season 1 lists a $25,000 Driver-track unlock; the $1,500 Alpha 1 vehicle purchase price remains unverified for Early Access.",
+      "Speed, handling, durability, seats, and cargo behavior may differ from the live Early Access build or full release."
     ],
-    detailUpdatedAt: "2026-08-18",
+    detailUpdatedAt: "2026-09-26",
     priority: 203,
     indexLocales: ["en"]
   },
@@ -248,7 +253,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Wardog Level 45 and the $8,000 price remain unconfirmed for Early Access or final release.",
-      "Armor, anti-air detection, weapon performance, crew needs, and ammunition may change before Early Access or final release."
+      "Armor, anti-air detection, weapon performance, crew needs, and ammunition may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 204,
@@ -262,7 +267,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     status: "pre-release-build",
     statusLabel: "Pre-release build",
     build: "Alpha 1 - 7 Aug 2026",
-    summary: "The Havoc was the $18,000 attack helicopter in Alpha 1 and the captured vendor did not reveal its gate.",
+    summary: "The $18,000 Havoc listing is Alpha-only; a Season 1 pilot report describes a higher equipped sortie cost and strong anti-air counters.",
     description:
       "The Havoc sat at the top of the observed vehicle price list and carried the broad attack-helicopter role rather than an AH-6 weapon-specific label. That makes it the heaviest economic air commitment in the Alpha 1 snapshot, while its loadout, armor, crew arrangement, and access condition remain unavailable for a final comparison.",
     role: "Commit the Havoc only when the team can support a high-value attack-aircraft purchase with target information, airspace awareness, and a route away from concentrated return fire.",
@@ -274,7 +279,8 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     cautions: [
       "The purchase gate was unreadable, so the path to access was not captured.",
       "Weapons, armor, sensors, countermeasures, and crew requirements were not recorded.",
-      "The highest observed vehicle price makes any unsupported purchase especially consequential in the Alpha economy."
+      "Recent pilot cost and unlock claims come from one player report, not an official price list.",
+      "A high-value aircraft can be shut down by coordinated anti-air coverage; assess the route before spending."
     ],
     facts: [
       {label: "Role", value: "Attack helicopter", evidence: ["Pre-release Build"]},
@@ -284,7 +290,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     relatedGuides: ["wardogs-gameplay", "wardogs-price", "wardogs-playtest"],
     relatedItems: ["ah-6r-rockets", "flakpanzer-gepard"],
-    sources: [officialSteam, officialTeam17, gameplayVideo],
+    sources: [officialSteam, officialTeam17, gameplayVideo, havocSeasonOnePilotReport],
     detailImage: "/images/catalogue/vehicles/havoc.webp",
     detailImageAlt: "Havoc attack helicopter",
     observedPrice: "$18,000",
@@ -296,9 +302,10 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Loadout, armor, crew arrangement, flight model, countermeasures, and price may change before Early Access or final release."
+      "A September 20 Season 1 pilot reported Pilot level 35 and a roughly $22,000–$30,000 equipped sortie; this is an unverified community observation.",
+      "Loadout, armor, crew arrangement, flight model, countermeasures, and live price need current-client verification."
     ],
-    detailUpdatedAt: "2026-08-18",
+    detailUpdatedAt: "2026-09-24",
     priority: 205,
     indexLocales: ["en"]
   },
@@ -346,7 +353,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 25 and the $3,750 price remain unconfirmed for Early Access or final release.",
-      "M249 behavior, protection, seats, cargo capacity, and handling may change before Early Access or final release."
+      "M249 behavior, protection, seats, cargo capacity, and handling may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 206,
@@ -394,7 +401,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Minigun performance, vehicle protection, capacity, handling, and price may change before Early Access or final release."
+      "Minigun performance, vehicle protection, capacity, handling, and price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 207,
@@ -444,7 +451,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 15 and the $3,000 price remain unconfirmed for Early Access or final release.",
-      "Protection, seats, storage, mobility, fuel, and repair behavior may change before Early Access or final release."
+      "Protection, seats, storage, mobility, fuel, and repair behavior may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 208,
@@ -494,7 +501,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 8 and the $3,750 price remain unconfirmed for Early Access or final release.",
-      "M249 behavior, seating, cargo, protection, handling, and durability may change before Early Access or final release."
+      "M249 behavior, seating, cargo, protection, handling, and durability may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 209,
@@ -543,7 +550,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The $15,000 unlock and $3,000 purchase price remain unconfirmed for Early Access or final release.",
-      "Unlock persistence, cargo rules, capacity, seats, protection, and handling may change before Early Access or final release."
+      "Unlock persistence, cargo rules, capacity, seats, protection, and handling may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 210,
@@ -642,7 +649,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Wardog Level 35 and the $14,000 price remain unconfirmed for Early Access or final release.",
-      "Armor, armament, ammunition, crew roles, mobility, fuel, and repairs may change before Early Access or final release."
+      "Armor, armament, ammunition, crew roles, mobility, fuel, and repairs may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 212,
@@ -705,7 +712,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     status: "pre-release-build",
     statusLabel: "Pre-release build",
     build: "Alpha 1 and Closed Beta footage checked 2026-08-28",
-    summary: "The SPH-2 is late-track self-propelled artillery whose crew, stabilization, aiming and reload flow were observed across Alpha and Closed Beta footage.",
+    summary: "Season 1 moved the Artillery Tank category to Career 90 with a $500,000 unlock; SPH-2 vendor prices and crew workflow remain versioned observations.",
     description:
       "The SPH-2 was the only self-propelled-artillery model in the captured vendor and carried a Wardog Level 55 gate. Later Closed Beta footage showed a three-position crew, a stabilization step, indirect range setting, 155 mm ammunition and a manual reload sequence. The Alpha capture listed a $10,000 purchase, while a later creator guide showed an $8,000 repeat purchase after a separate $400,000 unlock; that conflict is preserved as build evidence rather than flattened into a final price.",
     role: "Use the SPH-2 as a coordinated indirect-fire asset that depends on target information, protected firing positions, and logistics, then relocate when its position becomes predictable.",
@@ -717,7 +724,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     cautions: [
       "The driver cannot fire while driving; a solo operator must stop and change seats.",
       "A predictable firing position is vulnerable to drones, aircraft, counter-battery fire and infantry hunters.",
-      "Alpha and Beta footage disagree on purchase economics, so every price, gate, range and shell value must be checked in the current build."
+      "Season 1 confirms the Artillery Tank category gate, not a current SPH-2 vendor price; check price, range and shell values in the current build."
     ],
     facts: [
       {label: "Role", value: "Self-propelled artillery", evidence: ["Pre-release Build"]},
@@ -730,7 +737,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     relatedGuides: ["wardogs-artillery-guide", "wardogs-gameplay", "wardogs-factions"],
     relatedItems: ["l2a6", "flakpanzer-gepard", "ural-defender"],
-    sources: [officialSteam, officialTeam17, artilleryGuideVideo, vehiclesExplainedVideo],
+    sources: [officialSeasonOneChangelog, sph2SeasonOnePlayerReport, officialSteam, officialTeam17, artilleryGuideVideo, vehiclesExplainedVideo],
     detailImage: "/images/catalogue/vehicles/sph-2.webp",
     detailImageAlt: "SPH-2 self-propelled artillery",
     observedPrice: "$10,000",
@@ -741,13 +748,16 @@ export const vehicleItems: readonly WardogsItemInput[] = [
       "Observed in Alpha 1: Alpha price: $10,000",
       "Observed in Alpha 1: Observed gate: Wardog Level 55",
       "Observed across creator footage: stabilize the platform before firing and use a manual reload sequence",
-      "Observed across creator footage: driver, main-gun and top-gunner positions"
+      "Observed across creator footage: driver, main-gun and top-gunner positions",
+      "Official Season 1 Artillery Tank category: Career level 90 and $500,000 one-time unlock; model association comes from the versioned catalogue"
     ],
     unconfirmedFacts: [
       "The Alpha $10,000 purchase and later Beta $8,000 repeat purchase conflict; neither is confirmed for Early Access.",
-      "The reported $400,000 unlock, Wardog Level 55 gate, effective range, blast, armor and ammunition economy may change before or during Early Access."
+      "One Season 1 player reports an $8,000 repeat purchase and $11,000–$13,000 equipped sortie; this has not been independently verified in the current vendor.",
+      "The official changelog names Artillery Tank rather than SPH-2; current model identity and repeat vendor price need current-client verification.",
+      "Range, blast, armor and ammunition economy need current-client verification."
     ],
-    detailUpdatedAt: "2026-08-28",
+    detailUpdatedAt: "2026-09-24",
     priority: 214,
     indexLocales: ["en"]
   },
@@ -793,7 +803,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "The unread Alpha 1 gate remains unconfirmed for Early Access or final release.",
-      "Minigun behavior, seats, payload, durability, flight handling, and price may change before Early Access or final release."
+      "Minigun behavior, seats, payload, durability, flight handling, and price may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 215,
@@ -843,7 +853,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Pilot Level 10 and the $7,400 price remain unconfirmed for Early Access or final release.",
-      "Seats, cargo, loadout, protection, flight handling, and countermeasures may change before Early Access or final release."
+      "Seats, cargo, loadout, protection, flight handling, and countermeasures may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 216,
@@ -893,7 +903,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 40 and the $6,750 price remain unconfirmed for Early Access or final release.",
-      "Weapon behavior, cargo, protection, seating, mobility, and operating costs may change before Early Access or final release."
+      "Weapon behavior, cargo, protection, seating, mobility, and operating costs may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 217,
@@ -943,7 +953,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     unconfirmedFacts: [
       "Driver Level 30 and the $6,000 price remain unconfirmed for Early Access or final release.",
-      "Protection, cargo, seats, handling, fuel, repair, and loss behavior may change before Early Access or final release."
+      "Protection, cargo, seats, handling, fuel, repair, and loss behavior may differ from the live Early Access build or full release."
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 218,
@@ -967,7 +977,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
       "The $60,000 unlock was readable, exposing an important second cost instead of hiding it behind a level label."
     ],
     cautions: [
-      "The record does not explain whether the $60,000 unlock was permanent, repeatable, shared, or refundable.",
+      "Season 1 lists Driver level 3 and a $35,000 Driver-track unlock, separate from any repeat vehicle purchase.",
       "Cargo capacity, loading rules, supply types, passenger seats, and loss behavior were not captured.",
       "No protection, handling, fuel, repair, or off-road specification was recorded."
     ],
@@ -979,7 +989,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     relatedGuides: ["wardogs-gameplay", "wardogs-price", "wardogs-early-access"],
     relatedItems: ["ural-defender", "ural-defender-m249", "kodiak-pickup"],
-    sources: [officialSteam, officialTeam17, sevenThingsVideo],
+    sources: [officialSteam, officialTeam17, officialSeasonOneChangelog, sevenThingsVideo],
     detailImage: "/images/catalogue/vehicles/ural.webp",
     detailImageAlt: "Ural logistics truck",
     observedPrice: "$5,000",
@@ -991,11 +1001,57 @@ export const vehicleItems: readonly WardogsItemInput[] = [
       "Observed in Alpha 1: Observed gate: $60,000 unlock"
     ],
     unconfirmedFacts: [
-      "The $60,000 unlock and $5,000 purchase price remain unconfirmed for Early Access or final release.",
-      "Unlock persistence, cargo rules, supply interactions, protection, seats, and handling may change before Early Access or final release."
+      "The $5,000 Alpha 1 vehicle purchase price remains unverified for Early Access; the $60,000 Alpha 1 unlock is historical.",
+      "Unlock persistence, cargo rules, supply interactions, protection, seats, and handling may differ from the live Early Access build or full release."
     ],
-    detailUpdatedAt: "2026-08-18",
+    detailUpdatedAt: "2026-09-26",
     priority: 219,
+    indexLocales: ["en"]
+  },
+  {
+    slug: "stingray",
+    name: "Stingray",
+    type: "vehicles",
+    subtype: "Anti-vehicle drone launcher",
+    status: "pre-release-build",
+    statusLabel: "Pre-release build",
+    build: "Closed Beta - 21-23 Aug 2026",
+    summary: "The Stingray is a ground-launched anti-vehicle drone shown in Beta gameplay; its current price, unlock, and damage are unverified.",
+    description:
+      "The Stingray is a launcher-and-controller system for a one-way anti-vehicle drone, not a conventional drivable vehicle. Closed Beta building footage shows the launch tube and handheld controller. A September gameplay clip demonstrates targeting enemy vehicles and artillery, but neither source establishes a current shop price, unlock, damage figure, or guaranteed kill.",
+    role:
+      "Choose a confirmed high-value vehicle or stationary artillery target before launching, position the operator under cover, and keep a teammate watching the launch site. The older flight walkthrough recommends controlled final corrections rather than spending all boost on the approach; retest handling in the current build.",
+    strengths: [
+      "A remote anti-vehicle attack can pressure a known stationary artillery or spawn-support position.",
+      "The launch hardware and controller are directly visible in the cited Beta building footage.",
+      "A September gameplay clip provides a newer demonstration of Stingray use against vehicles."
+    ],
+    cautions: [
+      "The operator can be exposed while controlling the drone, so launch from cover rather than an open FOB.",
+      "Do not assume Beta flight handling, targeting behavior, or damage still matches the current build.",
+      "The current purchase price, unlock requirement, deployment cost, and damage are not independently verified."
+    ],
+    facts: [
+      {label: "Role", value: "Anti-vehicle drone launcher", evidence: ["Creator Footage", "Pre-release Build"]},
+      {label: "Closed Beta price", value: "Not captured", evidence: ["Pre-release Build"]},
+      {label: "Observed gate", value: "Not captured", evidence: ["Pre-release Build"]}
+    ],
+    relatedGuides: ["wardogs-equipment-tools-guide", "wardogs-fob-guide", "wardogs-artillery-guide"],
+    relatedItems: ["sph-2", "l81-mortar", "vanguard-ciws"],
+    sources: [stingrayBuildingVideo, stingraySeptemberVideo, officialSteam],
+    detailImage: "/images/catalogue/vehicles/stingray.webp",
+    detailImageAlt: "Stingray launcher tube and handheld drone controller in WARDOGS gameplay",
+    observedAmmoOrVehicleClass: "Anti-vehicle drone launcher",
+    confirmedFacts: [
+      "The launch tube and handheld controller are visible in the cited Closed Beta building footage.",
+      "The cited September gameplay clip shows Stingray use against enemy vehicles and artillery."
+    ],
+    unconfirmedFacts: [
+      "No current shop screenshot or official note verifies the price, unlock, deployment cost, or damage.",
+      "The Beta flight method may differ from current handling and targeting behavior."
+    ],
+    detailUpdatedAt: "2026-09-27",
+    priority: 220,
     indexLocales: ["en"]
   }
 ];

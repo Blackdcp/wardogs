@@ -104,6 +104,7 @@ const localizedTerms: Record<string, Partial<Record<TranslatedLocale, string>>> 
   "Stationary weapon": {ru:"Стационарное оружие", de:"Stationäre Waffe", "pt-br":"Arma estacionária", ja:"固定式兵器"},
   "Anti-air launcher": {ru:"Зенитная пусковая установка", de:"Flugabwehrwerfer", "pt-br":"Lançador antiaéreo", ja:"対空ランチャー"},
   "Anti-vehicle launcher": {ru:"Противотранспортная пусковая установка", de:"Panzerabwehrwerfer", "pt-br":"Lançador antiveículo", ja:"対車両ランチャー"},
+  "Anti-vehicle drone launcher": {ru:"пусковая установка противотранспортного дрона", de:"Startanlage für eine Anti-Fahrzeug-Drohne", "pt-br":"lançador de drone antiveículo", ja:"対車両ドローンランチャー"},
   "Grenade launcher": {ru:"Гранатомёт", de:"Granatwerfer", "pt-br":"Lança-granadas", ja:"グレネードランチャー"},
   Ammunition: {ru:"Боеприпасы", de:"Munition", "pt-br":"Munição", ja:"弾薬"},
   "Fire modes": {ru:"Режимы огня", de:"Feuermodi", "pt-br":"Modos de disparo", ja:"射撃モード"},
@@ -180,7 +181,7 @@ const chineseTerms: Record<string, string> = {
   "Best targets":"最佳目标", "Key support":"关键支援", "Final balance":"最终平衡", "System role":"系统定位", "Placement needs":"部署要求", "Team dependency":"团队依赖", "Final upgrade list":"最终升级列表", "Vehicle role":"载具定位", "Final loadout":"最终配装", "Best support":"最佳支援", "Final stats":"最终属性", "Natural counter":"主要克制方式", "Final weapons":"最终武装", "Final capacity":"最终容量", "Not confirmed":"尚未确认",
   "Indirect fire pressure":"间接火力压制", "Static clusters, rooftops, towers, FOB defenses":"固定集群、屋顶、塔楼与 FOB 防御点", "Spotting, distance correction, supply":"侦察标记、距离修正与补给", "Forward logistics and defense point":"前线后勤与防御支点", "Terrain, cover, delivery room, route access":"地形、掩体、卸货空间与路线通行条件", "Requires supplies and defense":"需要持续补给与防守", "Light air mobility":"轻型空中机动", "Scouting, insertion, fast rotation":"侦察、投送与快速转场", "Exposure during approach and landing":"接近与着陆阶段容易暴露", "Heavy armor pressure":"重装甲火力压制", "Infantry screen and logistics":"步兵掩护与后勤支援", "Isolation from the team":"脱离团队支援", "Air support pressure":"空中支援压制", "Anti-air coverage and pressure":"防空掩护与压制", "Exposed movement and clustered fights":"开阔移动与密集交战", "Squad movement and supply support":"小队运输与补给支援", "Predictable routes":"路线容易被预判",
   "Driver / gunner / top gunner":"驾驶员 / 炮手 / 顶部机枪手", "155 mm high explosive":"155 毫米高爆弹", "Stabilize before firing":"开火前需要稳定车体",
-  "Anti-air launcher":"防空发射器", "Anti-vehicle launcher":"反载具发射器", "Grenade launcher":"榴弹发射器", "Standard Arrows":"标准箭矢", "Stationary anti-air":"固定式防空", "Stationary artillery":"固定式火炮", "Stationary defense":"固定防御设施", "Stationary support":"固定支援设备", "Stationary weapon":"固定式武器"
+  "Anti-air launcher":"防空发射器", "Anti-vehicle launcher":"反载具发射器", "Anti-vehicle drone launcher":"反载具无人机发射器", "Grenade launcher":"榴弹发射器", "Standard Arrows":"标准箭矢", "Stationary anti-air":"固定式防空", "Stationary artillery":"固定式火炮", "Stationary defense":"固定防御设施", "Stationary support":"固定支援设备", "Stationary weapon":"固定式武器"
 };
 
 function translateItemTerm(value: string, locale: TranslatedLocale): string {
@@ -255,7 +256,7 @@ export function getLocalizedItem(item: WardogsItem, locale: Locale): WardogsItem
   const statusLabel = profile.status[item.status];
   const build = localizeBuild(item.build, locale, profile.buildPrefix);
   const localizedEvidenceItem = {...item, statusLabel, build};
-  return {
+  const localized: WardogsItem = {
     ...item,
     subtype: translatedSubtype === item.subtype ? typeName : translatedSubtype,
     statusLabel,
@@ -277,6 +278,33 @@ export function getLocalizedItem(item: WardogsItem, locale: Locale): WardogsItem
     detailImageAlt: item.detailImage ? profile.imageAlt(item, typeName) : item.detailImageAlt,
     imageAlt: item.image ? profile.imageAlt(item, typeName) : item.imageAlt
   };
+  if (locale === "ja" && item.type === "vehicles" && item.slug === "stingray") {
+    return {
+      ...localized,
+      summary: "スティングレイはWARDOGSの対車両ドローン用ランチャーです。ベータ版映像で発射筒と操作端末を確認できますが、現在の価格・解除条件・ダメージは未確認です。",
+      description: "スティングレイは運転する車両ではなく、発射筒と操作端末を使う対車両ドローンです。クローズドベータの建築映像で機材を確認でき、9月の実機映像では敵車両や砲兵を狙う様子が見られます。現在の価格、解除条件、配備費用、ダメージはこれらの映像だけでは確定できません。",
+      role: "目標の位置を確認してから発射し、操縦者は遮蔽物の内側に置きましょう。停止中の高価値車両や砲兵を優先する運用は過去の実機映像に基づきます。着弾前の最終修正に余裕を残し、無理な追尾より撤退判断を優先します。飛行操作やブーストの感覚は現在のビルドで再確認してください。",
+      strengths: [
+        "確認済みの敵車両や停止中の砲兵を遠隔から攻撃できます。",
+        "発射筒と操作端末は出典のベータ版映像で直接確認できます。",
+        "9月の実機映像もスティングレイによる対車両運用の参考になります。"
+      ],
+      cautions: [
+        "操作中の操縦者は周辺の敵に対応しづらいため、発射地点の防護と味方の監視が必要です。",
+        "ベータ版の操縦方法、誘導、威力を現在の仕様として扱わないでください。",
+        "現在の価格、解除条件、配備費用、ダメージは未確認です。"
+      ],
+      confirmedFacts: [
+        "出典のクローズドベータ映像で発射筒と操作端末を確認できます。",
+        "9月の実機映像で敵車両・砲兵を狙う運用が紹介されています。"
+      ],
+      unconfirmedFacts: [
+        "現在のショップ価格、解除条件、配備費用、ダメージは公式資料や現行ビルドの画面で確認できていません。",
+        "ベータ版の飛行操作が現行ビルドと同じとは限りません。"
+      ]
+    };
+  }
+  return localized;
 }
 
 export function getLocalizedItemType(itemType: ItemType, locale: Locale): ItemType {

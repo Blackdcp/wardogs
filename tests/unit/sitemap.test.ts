@@ -1,8 +1,13 @@
 import {describe, expect, it} from "vitest";
-import sitemap, {resolveItemLastModified} from "../../src/app/sitemap";
+import sitemap, {resolveEditorialHubLastModified, resolveItemLastModified, resolveMapHubLastModified} from "../../src/app/sitemap";
 import {guideManifest} from "../../src/content/manifest";
 import {locales} from "../../src/config/site";
 import {itemLibrary, itemTypes} from "../../src/features/items/item-library";
+import {getFeaturedItems} from "../../src/features/items/item-library";
+import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-records";
+import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
+import {getItemLatestVerifiedAt} from "../../src/features/items/item-freshness";
+import {itemHubPreviewSlugs} from "../../src/features/items/item-hub-data";
 import {videoArticles} from "../../src/features/videos/video-library";
 
 const origin = "http://localhost:3000";
@@ -32,13 +37,60 @@ function pageAlternates(pathname: string) {
 }
 
 describe("sitemap", () => {
+  it("advances editorial hub dates when their underlying content gets newer", () => {
+    const sources = {
+      guides: ["2026-09-20", "2026-10-01"],
+      news: ["2026-09-22", "2026-09-28"],
+      videos: ["2026-09-25"],
+      items: ["2026-09-27"],
+      maps: ["2026-09-24"]
+    };
+
+    expect(resolveEditorialHubLastModified("/guides", sources).toISOString()).toBe("2026-10-01T00:00:00.000Z");
+    expect(resolveEditorialHubLastModified("/news", sources).toISOString()).toBe("2026-09-28T00:00:00.000Z");
+    expect(resolveEditorialHubLastModified("", sources).toISOString()).toBe("2026-10-01T00:00:00.000Z");
+  });
+
+  it("advances the map hub when a linked guide is refreshed", () => {
+    expect(resolveMapHubLastModified(["2026-09-14"], ["2026-09-26"]).toISOString())
+      .toBe("2026-09-26T00:00:00.000Z");
+  });
+
   it("marks refreshed hubs with the current editorial date", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
-    for (const path of ["", "/guides", "/news", "/videos", "/items"]) {
+    for (const path of ["", "/guides"]) {
       expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path || "/")
-        .toBe("2026-09-17T00:00:00.000Z");
+        .toBe("2026-09-26T00:00:00.000Z");
     }
+    for (const path of ["/videos", "/maps", "/items/weapons"]) {
+      expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path)
+        .toBe("2026-09-26T00:00:00.000Z");
+    }
+    expect(new Date(entriesByUrl.get(`${origin}/en/items/vehicles`)!.lastModified!).toISOString())
+      .toBe("2026-09-27T00:00:00.000Z");
+    expect(new Date(entriesByUrl.get(`${origin}/en/items`)!.lastModified!).toISOString())
+      .toBe("2026-09-17T00:00:00.000Z");
+    expect(new Date(entriesByUrl.get(`${origin}/en/items/loadouts`)!.lastModified!).toISOString())
+      .toBe("2026-09-17T00:00:00.000Z");
+    expect(new Date(entriesByUrl.get(`${origin}/en/news`)!.lastModified!).toISOString())
+      .toBe("2026-09-26T00:00:00.000Z");
+  });
+
+  it("does not let an unfeatured detail update falsely refresh the item homepage", () => {
+    const visible = [
+      ...getFeaturedItems(6).map(getItemLatestVerifiedAt),
+      ...(["weapons", "vehicles"] as const).flatMap((type) =>
+        getCatalogueRecords(type)
+          .filter((record) => itemHubPreviewSlugs[type].some((slug) => slug === record.slug))
+          .flatMap((record) => [record.evidence.verifiedAt, ...record.changeHistory.map(({verifiedAt}) => verifiedAt)])
+      ),
+      ...itemTypes.map(({id}) => getCatalogGuide(id)?.lastReviewedAt ?? "2026-08-16")
+    ];
+    const latestVisible = visible.sort().at(-1);
+    const itemHome = sitemap().find((entry) => entry.url === `${origin}/en/items`);
+
+    expect(new Date(itemHome!.lastModified!).toISOString()).toBe(`${latestVisible}T00:00:00.000Z`);
   });
 
   it("publishes every guide in all five locales with reciprocal hreflang", () => {
@@ -62,7 +114,7 @@ describe("sitemap", () => {
     expect(new Date(entriesByUrl.get(`${origin}/en/guides/wardogs-fob-guide`)!.lastModified!).toISOString())
       .toBe("2026-09-17T00:00:00.000Z");
     expect(new Date(entriesByUrl.get(`${origin}/ja/guides/wardogs-money-guide`)!.lastModified!).toISOString())
-      .toBe("2026-09-17T00:00:00.000Z");
+      .toBe("2026-09-26T00:00:00.000Z");
   });
 
   it("includes the video hub and every standalone video article in all five locales", () => {
@@ -137,13 +189,13 @@ describe("sitemap", () => {
     }
   });
 
-  it("locks Deagle freshness to its latest official change", () => {
+  it("locks Deagle freshness to its latest editorial update", () => {
     const deagle = itemLibrary.find((item) => item.slug === "deagle");
 
     expect(deagle).toBeDefined();
-    expect(resolveItemLastModified(deagle).toISOString()).toBe("2026-09-09T00:00:00.000Z");
+    expect(resolveItemLastModified(deagle).toISOString()).toBe("2026-09-26T00:00:00.000Z");
     expect(new Date(sitemap().find((entry) => entry.url === `${origin}/en/items/weapons/deagle`)!.lastModified!).toISOString())
-      .toBe("2026-09-09T00:00:00.000Z");
+      .toBe("2026-09-26T00:00:00.000Z");
   });
 
   it("resolves distinct supplied detail dates", () => {
@@ -175,6 +227,15 @@ describe("sitemap", () => {
       const url = `${origin}/${locale}/maps`;
       expect(urls.filter((candidate) => candidate === url), url).toHaveLength(1);
       expect(sitemap().find((entry) => entry.url === url)?.alternates?.languages).toEqual(pageAlternates("/maps"));
+    }
+  });
+
+  it("indexes all newly published catalogue destinations in every locale", () => {
+    const urls = new Set(sitemap().map(({url}) => url));
+    for (const locale of locales) {
+      for (const path of ["/vehicles/helicopters", "/skins", "/black-market", "/gold-market"]) {
+        expect(urls.has(`${origin}/${locale}${path}`), `${locale}${path}`).toBe(true);
+      }
     }
   });
 

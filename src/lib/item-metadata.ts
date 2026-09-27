@@ -14,11 +14,41 @@ function itemPath(item: WardogsItem) {
   return `/items/${item.type}/${item.slug}`;
 }
 
+const englishSearchIntent: Record<string, {title: string; description: string; answer: string}> = {
+  "vehicles/sph-2": {
+    title: "WARDOGS SPH-2: Season 1 Unlock & Artillery Guide",
+    description: "Season 1 Artillery Tank access is Career 90 with a $500,000 one-time unlock. See SPH-2 source notes, old vendor prices, crew workflow and live-price caveats.",
+    answer: "The official Season 1 changelog places the Artillery Tank at Career level 90 with a $500,000 one-time unlock. The SPH-2 is the artillery model in our historical catalogue; the official note does not name the model or confirm its current vendor purchase price. Alpha and Beta prices are historical, not live quotes."
+  },
+  "vehicles/havoc": {
+    title: "WARDOGS Havoc: Season 1 Pilot Reports & Counters",
+    description: "Compare the Havoc's Alpha vendor record with recent Season 1 pilot reports on cost, unlock and anti-air counters. Player claims are not official prices.",
+    answer: "The Havoc's $18,000 Alpha price is historical. A September 20 Season 1 pilot report describes Pilot level 35 and a roughly $22,000–$30,000 equipped sortie, but these are one player's observations, not official or independently verified live prices. Check the vendor and anti-air situation before buying."
+  },
+  "weapons/bmr-308": {
+    title: "WARDOGS BMR-308: Ammo, Recon Gate & Alpha Price",
+    description: "The BMR-308 Alpha record shows a semi-auto marksman rifle using .308 Winchester with Recon progression. Check source evidence before using old prices live.",
+    answer: "The BMR-308 is a semi-automatic marksman rifle shown with .308 Winchester ammunition and Recon progression in the Alpha catalogue. Its observed $6,000 price is not a verified current vendor price. Confirm ammo and unlock in the live client."
+  },
+  "vehicles/flakpanzer-gepard": {
+    title: "WARDOGS Flakpanzer Gepard: Anti-Air Role & Alpha Data",
+    description: "The Flakpanzer Gepard is historical anti-air armor in the Alpha catalogue. Review its observed cost and gate; verify current availability in the live client.",
+    answer: "The Flakpanzer Gepard is an anti-air vehicle in the Alpha catalogue. The $8,000 price and Wardog Level 45 gate are historical observations. Verify its current availability and counter-air performance in the live game before planning a loadout."
+  }
+};
+
+export function getEnglishItemSearchIntent(item: WardogsItem) {
+  return englishSearchIntent[`${item.type}/${item.slug}`];
+}
+
 export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Locale {
   return resolveItemRouteTarget(locale, itemPath(item)).locale;
 }
 
 function searchTitle(locale: Locale, item: WardogsItem): string {
+  if (locale === "ja" && item.type === "vehicles" && item.slug === "stingray") {
+    return "WARDOGS スティングレイランチャー：対車両ドローンの使い方";
+  }
   const freshness = getCatalogueFreshness({dataAsOf: item.build, evidence: item.evidence});
   let candidates: string[];
   if (freshness === "historical") {
@@ -127,6 +157,9 @@ function clampSearchDescription(value: string, locale: Locale = "en"): string {
 }
 
 function searchDescription(locale: Locale, item: WardogsItem): string {
+  if (locale === "ja" && item.type === "vehicles" && item.slug === "stingray") {
+    return "WARDOGSのスティングレイは対車両ドローンのランチャー。クローズドベータ映像では発射筒と操作端末を確認でき、9月の実機映像では敵車両と砲兵への運用を確認できます。発射位置の防護、目標確認、飛行中の修正を解説。現在のショップ価格、解除条件、配備費用、ダメージ、現行ビルドの誘導仕様は未確認です。";
+  }
   const freshness = getCatalogueFreshness({dataAsOf: item.build, evidence: item.evidence});
   const historicalPrefixes: Record<Locale, string> = {
     en: "Historical snapshot:",
@@ -186,8 +219,9 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   ) as Record<string, string>;
   languages["x-default"] = languages.en ?? canonical;
 
-  const title = searchTitle(locale, localizedItem);
-  const description = searchDescription(locale, localizedItem);
+  const intent = locale === "en" ? getEnglishItemSearchIntent(item) : undefined;
+  const title = intent?.title ?? searchTitle(locale, localizedItem);
+  const description = intent?.description ?? searchDescription(locale, localizedItem);
   const image = publicAssetUrl(localizedItem.detailImage ?? "/images/og-wardogs.jpg");
   const imageAlt = localizedItem.detailImageAlt ?? `WARDOGS ${localizedItem.name}`;
 

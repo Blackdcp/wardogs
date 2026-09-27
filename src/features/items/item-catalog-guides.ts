@@ -16,6 +16,7 @@ export type CatalogSection = {
 
 export type CatalogGuide = {
   id: ItemTypeId;
+  lastReviewedAt?: string;
   title: string;
   description: string;
   countLabel: string;
@@ -49,7 +50,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
     dataAsOf: "Alpha 1 and Closed Beta - 7-23 Aug 2026",
     heroImage: "/images/items/catalog-weapons.jpg",
     heroImageAlt: "WARDOGS weapons from a large battlefield match",
-    disclaimer: "Community-observed pre-release data. Prices, unlocks, balance, and availability may change before Early Access.",
+    disclaimer: "Community-observed pre-release data. Prices, unlocks, balance, and availability may differ from the live Early Access build; check the current vendor.",
     columns: ["Weapon", "Alpha price", "Ammunition", "Fire modes", "Weight", "Progression"],
     sections: [
       {
@@ -199,7 +200,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
           row("Talon 9K-SAM", "Stationary anti-air", "Not captured", "Not captured", "Not captured"),
           row("L81 Mortar", "Stationary artillery", "Not captured", "Not captured", "Not captured"),
           row("Vanguard CIWS", "Stationary defense", "Not captured", "Not captured", "Not captured"),
-          row("Stingray", "Stationary weapon", "Not captured", "Not captured", "Not captured")
+          row("Stingray", "Anti-vehicle drone launcher", "Not captured", "Not captured", "Not captured")
         ]
       }
     ],
@@ -211,7 +212,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
     unknowns: [
       "Final durability, seat counts, fuel use, and weapon damage were not confirmed.",
       "Some lock conditions were unreadable in the Alpha vendor capture.",
-      "Vehicle pricing and gates can change before Early Access."
+      "These older vehicle prices and gates may differ from the live Early Access build."
     ],
     officialSources
   },
@@ -358,7 +359,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
     unknowns: [
       "Several optic prices displayed as zero or were missing and are listed here as not captured.",
       "Exact recoil and ADS modifiers were described qualitatively rather than numerically.",
-      "The complete compatibility matrix can change before Early Access."
+      "The older compatibility observations may differ from the live Early Access build."
     ],
     officialSources
   },
@@ -409,7 +410,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
     unknowns: [
       "Exact protection, stamina, and movement modifiers were not captured.",
       "Vest and traversal slots were visible as categories but lacked complete item records.",
-      "The recruit discount and level gates may change before Early Access."
+      "The observed recruit discount and level gates may differ from the live Early Access build."
     ],
     officialSources
   },
@@ -555,7 +556,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
     title: "WARDOGS Objective, Economy, and Support Mechanics",
     description: "A sourced reference for Control Zone scoring, persistent cash, support rewards, and the historical Hot Zone bonus.",
     countLabel: "4 mechanics",
-    dataAsOf: "Season 1 Early Access - checked 17 Sep 2026",
+    dataAsOf: "Season 1 Early Access - checked 26 Sep 2026",
     heroImage: "/images/catalogue/banners/thegame-1280.webp",
     heroImageAlt: "WARDOGS combined-arms objective battle",
     disclaimer: "Official current rules are labeled only where the source supports them; historical mode material remains explicitly build-sensitive.",
@@ -566,7 +567,7 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
       rows: [
         row("Control Zone Scoring", "Objective", "First team to 100 points", "Official current"),
         row("Persistent Cash", "Economy", "$10,000 starting balance", "Official current"),
-        row("Support Rewards", "Support", "Revive, transport, supply, objective", "Official current"),
+        row("Support Rewards", "Support", "Revive allies, transport friendlies, control objective", "Official current"),
         row("Hot Zone Bonus", "Economy", "Bonus cash", "Official historical")
       ]
     }],
@@ -576,20 +577,21 @@ const catalogGuideDefinitions: readonly CatalogGuide[] = [
       "Officially named support actions explain useful roles without requiring unverified payout figures."
     ],
     unknowns: [
-      "Exact support payouts and any current Hot Zone bonus values are not confirmed.",
+      "Exact support payouts, any separate cash reward for supply deliveries, and current Hot Zone bonus values are not confirmed.",
       "Server settings and future balance changes may alter pacing without changing the documented core objective."
     ],
     officialSources
   },
   {
     id: "loadouts",
+    lastReviewedAt: "2026-09-17",
     title: "WARDOGS Loadout Guide",
     description: "A budget-first way to plan kits when weapons, ammunition, protection, tools, and vehicles all compete for persistent cash.",
     countLabel: "3 budget bands",
     dataAsOf: "Alpha 1 - 7 Aug 2026",
     heroImage: "/images/items/catalog-loadouts.jpg",
     heroImageAlt: "WARDOGS squad loadout planning and role balance",
-    disclaimer: "Community-observed pre-release planning framework, not a final meta tier list. Build prices and balance can change before Early Access.",
+    disclaimer: "Community-observed pre-release planning framework, not a current meta tier list. Build prices and balance may differ from the live Early Access build.",
     columns: ["Band", "Spending rule", "Best use", "Main risk"],
     sections: [
       {

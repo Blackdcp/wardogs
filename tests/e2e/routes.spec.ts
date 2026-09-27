@@ -133,7 +133,7 @@ test("localized catalogue hubs keep model previews in the active locale", async 
   }
 });
 
-test("category routes render approved heroes, complete explorers, safe anchors, and no ads", async ({page}) => {
+test("category routes render approved heroes, complete explorers, and aggressive ad inventory", async ({page}) => {
   const visualCategories = itemTypes.filter((itemType) => itemType.id !== "loadouts");
 
   for (const category of visualCategories) {
@@ -148,7 +148,8 @@ test("category routes render approved heroes, complete explorers, safe anchors, 
     await expect(page.locator('[data-catalogue-record] img')).toHaveCount(imageCount);
     const linkedRecordCount = getIndexableCatalogueItems(records).length;
     await expect(page.locator('[data-catalogue-record] > a[aria-label]')).toHaveCount(linkedRecordCount);
-    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+    await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(2);
     await expectImagesLoaded(page);
   }
 
@@ -157,7 +158,8 @@ test("category routes render approved heroes, complete explorers, safe anchors, 
   expect(loadoutHero).toBeDefined();
   await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(loadoutHero!.image.split("/").at(-1)!.split(".")[0]));
   await expect(page.locator('[data-catalogue-explorer]')).toHaveCount(0);
-  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+  await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(2);
 });
 
 test("weapon categories use locale-specific model links and keep standalone articles unique", async ({page}) => {
@@ -350,7 +352,8 @@ test("localized homepages feature unique weapon and vehicle model links in the a
 test("localized privacy pages disclose the advertising provider", async ({page}) => {
   for (const locale of locales) {
     await page.goto(`/${locale}/privacy`);
-    await expect(page.getByText(/Google|AdSense/i)).toBeVisible();
+    await expect(page.getByText(/Adsterra/i)).toBeVisible();
+    await expect(page.getByText(/Popunder/i)).toBeVisible();
     await expect(page.getByText(/IP/)).toBeVisible();
   }
 });

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import {ArrowRight, Copy, ImageOff} from "lucide-react";
-import {useEffect, useMemo, useState} from "react";
+import {useMemo, useState, useSyncExternalStore} from "react";
 import type {AmmoMatch, AmmoMatcherDataset} from "@/features/tools/ammo-matcher-data";
 import {matchAmmoDataset} from "@/features/tools/ammo-matcher-runtime";
 import {decodeAmmoMatcherState, encodeAmmoMatcherState, type AmmoMatcherState} from "@/features/tools/share-state";
@@ -10,6 +10,13 @@ import type {ToolCopy} from "@/features/tools/tool-copy";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
 import {EvidenceProvenance} from "./evidence-provenance";
+
+const emptySearch = () => "";
+
+function subscribeToLocation(onStoreChange: () => void) {
+  window.addEventListener("popstate", onStoreChange);
+  return () => window.removeEventListener("popstate", onStoreChange);
+}
 
 function MatchItem({copy, match}: {copy: ToolCopy; match: AmmoMatch}) {
   const label = match.state === "current"
@@ -63,21 +70,17 @@ export function AmmoMatcher({
   dataset: AmmoMatcherDataset;
   initialState: AmmoMatcherState;
 }) {
-  const [state, setState] = useState(initialState);
+  const search = useSyncExternalStore(subscribeToLocation, () => window.location.search, emptySearch);
+  const sharedState = useMemo(() => search
+    ? decodeAmmoMatcherState(search, dataset.weapons.map(({slug}) => slug), dataset.ammo.map(({slug}) => slug))
+    : initialState, [search, dataset, initialState]);
+  const [editedState, setEditedState] = useState<AmmoMatcherState | null>(null);
+  const state = editedState ?? sharedState;
   const [copied, setCopied] = useState(false);
-  useEffect(() => {
-    if (window.location.search) {
-      setState(decodeAmmoMatcherState(
-        window.location.search,
-        dataset.weapons.map(({slug}) => slug),
-        dataset.ammo.map(({slug}) => slug),
-      ));
-    }
-  }, [dataset]);
   const result = useMemo(() => matchAmmoDataset(dataset, state), [dataset, state]);
 
   function commit(next: AmmoMatcherState) {
-    setState(next);
+    setEditedState(next);
     setCopied(false);
     const url = new URL(window.location.href);
     url.search = encodeAmmoMatcherState(next);

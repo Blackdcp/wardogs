@@ -16,7 +16,7 @@
     "title": "Season 1 Early Access is live on Patch 0.11",
     "description": "The published September 14 maintenance window has passed. Patch 0.11 is the latest official patch announcement; use the official Steam feed for live service status.",
     "windowLabel": "Current checkpoint",
-    "windowValue": "Patch 0.11 - reviewed September 17",
+    "windowValue": "Patch 0.11 - reviewed September 26",
     "accessLabel": "Verified Patch 0.11 changes",
     "accessValue": "Separate Official and Community browsers, better search and filters, persistent server IDs, cash and GPU fixes, and more Asia capacity.",
     "closedBetaNote": "BULKHEAD reported two million copies sold on September 15. That is a sales milestone, not a live player count.",
@@ -29,7 +29,7 @@
       "reached": "Scheduled date reached",
       "checking": "Checking schedule",
       "scheduleOnly": "Schedule-based, not live server telemetry.",
-      "exactTimeUnconfirmed": "Exact Early Access unlock time is not confirmed.",
+      "exactTimeUnconfirmed": "Early Access launched on this date. Check Steam for current service status.",
       "dateValue": "Sep 10, 2026",
       "days": "D",
       "hours": "H",
@@ -59,9 +59,11 @@
     "catalogueHome": "Catalogue Home",
     "weapons": "Weapons",
     "vehicles": "Vehicles",
+    "helicopters": "Helicopters",
     "ammo": "Ammo",
     "attachments": "Attachments",
     "gear": "Gear",
+    "skins": "Skins",
     "equipment": "Equipment",
     "medical": "Medical",
     "supplies": "Supplies",
@@ -69,6 +71,8 @@
     "mechanics": "Mechanics",
     "operationsAtlas": "Operations Atlas",
     "loadouts": "Loadouts",
+    "blackMarket": "Black Market",
+    "goldMarket": "Gold Market",
     "systemCheck": "PC Configuration Check",
     "budgetTool": "Loadout Budget",
     "weaponCompare": "Weapon Compare",
@@ -88,6 +92,7 @@
     "heroDescription": "Use a source-checked WARDOGS reference for equipment, controls, current access, troubleshooting, and practical tactics, with build-sensitive details clearly labeled.",
     "primaryCta": "Read Patch 0.11",
     "secondaryCta": "Check Server Status",
+    "quickTasks": {"weapons": "Weapons", "vehicles": "Vehicles", "map": "Map planning", "status": "Server status"},
     "status": "Steam Early Access is live",
     "statsLabel": "Key WARDOGS facts",
     "stats": {
@@ -231,6 +236,10 @@
           "rumor": "Not confirmed"
         },
         "items": {
+          "season02": {
+            "title": "Season 02 launches October 15",
+            "description": "The official teaser confirms the date and storm theme. The general cash/XP reset policy is published; the Season 02 launch hour and conversion rate remain unannounced."
+          },
           "closedBeta02": {
             "title": "Closed Beta 02 has ended",
             "description": "The September 3-6 test is historical. WARDOGS is now live in Steam Early Access through the main app."
@@ -252,8 +261,8 @@
             "description": "The September 14 maintenance window has passed; use the patch notes and official Steam feed for current changes and live-service notices."
           },
           "ps5Release": {
-            "title": "Console versions are planned for 2028",
-            "description": "The official trailer confirms 2028, but PS5, Xbox, exact dates, cross-play, and cross-progression are not individually confirmed."
+            "title": "Exact PS5 and Xbox release dates remain unconfirmed",
+            "description": "Team17 names PlayStation 5 and Xbox Series X|S as planned targets, and the trailer gives a broad 2028 console window. The unconfirmed part is each platform's release date; neither console version is available yet, and cross-play and cross-progression are unconfirmed."
           }
         }
       }
@@ -332,7 +341,7 @@
         },
         "support": {
           "title": "Support Actions Pay",
-          "description": "Revives, transport, supply runs, and objective control can earn cash alongside combat."
+          "description": "Revives, transporting allies, and objective control earn cash. Supply runs help the team, but a separate cash payout is not confirmed."
         },
         "mobility": {
           "title": "Plan the Approach",
@@ -380,11 +389,11 @@
     "read": "Read guide"
   },
   "news": {
-    "metaTitle": "WARDOGS News - Patch 0.11, Servers & Early Access",
-    "metaDescription": "Track confirmed WARDOGS news, Patch 0.11 maintenance, server fixes, Steam Early Access, console plans, platform status, and updated guide links.",
+    "metaTitle": "WARDOGS News - Season 02 Date, Patch Notes & Servers",
+    "metaDescription": "Track the confirmed October 15 WARDOGS Season 02 date, the latest published patch notes, server updates, Steam Early Access, and sourced guide links.",
     "eyebrow": "Latest Updates",
     "title": "WARDOGS News and Confirmed Timeline",
-    "description": "Current, sourced WARDOGS updates for Patch 0.11, server status, known issues, Steam Early Access, platforms, downloads, and gameplay.",
+    "description": "Current, sourced WARDOGS updates for Season 02, Patch 0.11, server status, known issues, Steam Early Access, and gameplay.",
     "timeline": {
       "title": "Confirmed Timeline",
       "readMore": "Read the full guide",
@@ -393,6 +402,10 @@
         "Not confirmed": "Not confirmed"
       },
       "items": {
+        "season02": {
+          "title": "WARDOGS Season 02 launches October 15",
+          "description": "The official September 22 teaser confirms the date and storm imagery. The general cash/XP reset policy is known; launch hour, patch details, and conversion rate remain unannounced."
+        },
         "closedBeta02": {
           "title": "Closed Beta 02 ended September 6",
           "description": "The show began at 18:00 UTC; revised servers ran September 3 at 19:00 UTC through September 6 at 08:00 UTC. Its access rules are now historical."
@@ -415,11 +428,11 @@
         },
         "earlyAccess": {
           "title": "WARDOGS Early Access launched September 10",
-          "description": "The Windows PC version is playable on Steam. The official launch trailer also announces console versions for 2028, without naming individual platforms or dates."
+          "description": "The Windows PC version is playable on Steam. The launch trailer announces consoles in 2028, and Team17 names PlayStation 5 and Xbox Series X|S as planned platforms; platform-specific dates are unannounced."
         },
         "ps5": {
           "title": "Console versions are planned for 2028",
-          "description": "The launch trailer confirms a 2028 console window, but does not name PS5, Xbox, exact dates, cross-play, or cross-progression."
+          "description": "The launch trailer gives a 2028 console window. Team17 names PlayStation 5 and Xbox Series X|S as planned platforms, but gives no platform-specific date or confirmation of cross-play or cross-progression."
         },
         "preload": {
           "title": "Official pre-load went live September 9",
@@ -468,7 +481,7 @@
         },
         "rumor": {
           "title": "Rumors stay labeled",
-          "description": "PS5, the exact unlock time, launch server regions, and any extra beta window stay unconfirmed until a primary source says otherwise."
+          "description": "Platform-specific console dates, cross-play, cross-progression, and any new beta window stay unconfirmed until a primary source says otherwise."
         },
         "refresh": {
           "title": "Refresh before sharing",
@@ -489,7 +502,14 @@
     "byline": "Researched and maintained by",
     "teamName": "WARDOGS Wiki Editorial Team",
     "editorialPolicy": "Editorial policy",
-    "imageSource": "Source footage"
+    "imageSource": "Source footage",
+    "advertisement": "Advertisement"
+  },
+  "ads": {
+    "label": "Advertisement",
+    "sponsored": "Sponsored",
+    "smartlinkCta": "Explore sponsored recommendations",
+    "smartlinkDescription": "Open an external sponsored destination in a new tab."
   },
   "categories": {
     "access": "Access",
@@ -563,11 +583,11 @@
   },
   "privacy": {
     "metaTitle": "WARDOGS Wiki Privacy Policy: Cookies, Analytics & Ads",
-    "metaDescription": "Read how WARDOGS Wiki handles cookies, analytics, AdSense advertising, external media and links, and why the site does not collect game account credentials.",
+    "metaDescription": "Read how WARDOGS Wiki handles cookies, analytics, Adsterra advertising, sponsored links, external media, and game account credentials.",
     "title": "Privacy Policy",
     "intro": "This fan guide minimizes data collection and explains how external media and links work.",
     "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.",
-    "advertising": "We use Google AdSense to fund this site. Google may process your IP address, browser and device information, and use cookies or similar technologies to deliver, measure and personalize advertising where consent is required."
+    "advertising": "Our Adsterra ad mix may include display banners, native ads, sticky ads, Social Bar, Popunder, and sponsored Smartlinks; not every format is active at all times. Adsterra and its advertising partners may process your IP address, browser and device information, and use cookies or similar technologies to deliver, measure and personalize advertising where consent is required. When enabled, sponsored links open external advertiser destinations in a new tab."
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Terms of Use: Guide Rules & Disclaimers",

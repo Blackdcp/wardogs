@@ -13,6 +13,9 @@ import {getVideoUi} from "@/features/videos/video-ui";
 import {buildPageMetadataWithImage} from "@/lib/metadata";
 import {loadGuideDocument} from "@/content/guides";
 import {getTranslations} from "next-intl/server";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -42,8 +45,9 @@ export default async function VideoArticlePage({params}: PageProps) {
   const ui = getVideoUi(locale);
   const era = getVideoEra(article);
   const eraLabel = era === "historical" ? ui.historicalReference : ui.betaWorkflow;
-  const [articleT, relatedGuide] = await Promise.all([
+  const [articleT, adsT, relatedGuide] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
+    getTranslations({locale, namespace: "ads"}),
     loadGuideDocument(locale, article.internalGuideSlug)
   ]);
 
@@ -81,6 +85,10 @@ export default async function VideoArticlePage({params}: PageProps) {
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>
           <p className="mt-3 text-base leading-7 text-white">{article.quickAnswer}</p>
         </aside>
+
+        <AdsterraNativeBanner label={articleT("advertisement")} />
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
 
         <section className="border-y border-[#2c3631] py-8" aria-labelledby="video-takeaways">
           <h2 className="display-font text-3xl text-white" id="video-takeaways">{ui.takeaways}</h2>

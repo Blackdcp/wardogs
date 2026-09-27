@@ -1,11 +1,18 @@
 "use client";
 
 import {ArrowDown, ArrowUp, Copy, ExternalLink} from "lucide-react";
-import {useEffect, useMemo, useState} from "react";
+import {useMemo, useState, useSyncExternalStore} from "react";
 import type {LogisticsStage, LogisticsEvidenceState} from "@/features/tools/logistics-plan";
 import {decodeLogisticsPlanState, encodeLogisticsPlanState, type LogisticsPlanState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {EvidenceProvenance} from "./evidence-provenance";
+
+const emptySearch = () => "";
+
+function subscribeToLocation(onStoreChange: () => void) {
+  window.addEventListener("popstate", onStoreChange);
+  return () => window.removeEventListener("popstate", onStoreChange);
+}
 
 function stateLabel(state: LogisticsEvidenceState, copy: ToolCopy) {
   if (state === "current") return copy.currentEvidence;
@@ -26,11 +33,13 @@ export function LogisticsPlanner({
   stages: readonly LogisticsStage[];
   initialState: LogisticsPlanState;
 }) {
-  const [state, setState] = useState(initialState);
+  const search = useSyncExternalStore(subscribeToLocation, () => window.location.search, emptySearch);
+  const sharedState = useMemo(() => search
+    ? decodeLogisticsPlanState(search, stages.map(({id}) => id))
+    : initialState, [search, stages, initialState]);
+  const [editedState, setEditedState] = useState<LogisticsPlanState | null>(null);
+  const state = editedState ?? sharedState;
   const [copied, setCopied] = useState(false);
-  useEffect(() => {
-    if (window.location.search) setState(decodeLogisticsPlanState(window.location.search, stages.map(({id}) => id)));
-  }, [stages]);
   const stageById = useMemo(() => new Map(stages.map((stage) => [stage.id, stage])), [stages]);
   const plan = state.stages.flatMap((id) => {
     const stage = stageById.get(id as LogisticsStage["id"]);
@@ -38,7 +47,7 @@ export function LogisticsPlanner({
   });
 
   function commit(next: LogisticsPlanState) {
-    setState(next);
+    setEditedState(next);
     setCopied(false);
     const url = new URL(window.location.href);
     url.search = encodeLogisticsPlanState(next);

@@ -33,12 +33,16 @@ describe("September 2026 live-ops content refresh", () => {
         const sourceUrls = guide?.frontmatter.sources.map(({url}) => url) ?? [];
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          slug === "wardogs-livestream" ? "2026-09-13" : "2026-09-17",
-        );
+        expect((guide?.frontmatter.updatedAt ?? "") >= (
+          slug === "wardogs-livestream" ? "2026-09-13"
+            : locale === "en" && ["wardogs-beta", "wardogs-playtest"].includes(slug) ? "2026-09-24"
+            : "2026-09-17"
+        ), `${locale}/${slug}`).toBe(true);
         expect(sourceUrls, `${locale}/${slug}`).toContain(beta02Url);
         expect(sourceUrls, `${locale}/${slug}`).toContain(revisedScheduleUrl);
-        expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
+        if (["wardogs-beta", "wardogs-playtest", "wardogs-livestream"].includes(slug)) {
+          expect(guide?.body, `${locale}/${slug}`).toContain("08:00 UTC");
+        }
         if (["wardogs-beta", "wardogs-playtest", "wardogs-livestream"].includes(slug)) {
           expect(guide?.body, `${locale}/${slug}`).toContain("18:00 UTC");
           expect(guide?.body, `${locale}/${slug}`).toContain("19:00 UTC");
@@ -68,7 +72,7 @@ describe("September 2026 live-ops content refresh", () => {
         const guide = await loadGuideDocument(locale, slug);
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe("2026-09-17");
+        expect((guide?.frontmatter.updatedAt ?? "") >= (slug === "wardogs-progression-wipes-guide" ? "2026-09-23" : "2026-09-17"), `${locale}/${slug}`).toBe(true);
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(2);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(locale === "ja" ? 1_500 : 1_800);

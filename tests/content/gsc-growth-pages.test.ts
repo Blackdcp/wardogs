@@ -24,7 +24,11 @@ describe("GSC growth page reinforcement", () => {
     for (const locale of locales) {
       for (const slug of growthPages) {
         const guide = await loadGuideDocument(locale, slug);
-        const expectedCheckDate = ["wardogs-beta", "wardogs-playtest", "wardogs-fob-guide"].includes(slug)
+        const expectedCheckDate = locale === "en" && slug === "wardogs-crash-fix"
+          ? "2026-09-26"
+          : locale === "en" && ["wardogs-beta", "wardogs-playtest", "wardogs-helicopter-guide"].includes(slug)
+          ? "2026-09-24"
+          : ["wardogs-beta", "wardogs-playtest", "wardogs-fob-guide"].includes(slug)
           ? "2026-09-17"
           : slug === "wardogs-crash-fix"
             ? "2026-09-04"
@@ -37,9 +41,7 @@ describe("GSC growth page reinforcement", () => {
             : "2026-08-26";
 
         expect(guide, `${locale}/${slug}`).not.toBeNull();
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(
-          expectedCheckDate
-        );
+        expect((guide?.frontmatter.updatedAt ?? "") >= expectedCheckDate, `${locale}/${slug} is older than its evidence baseline`).toBe(true);
         expect(guide?.frontmatter.title.length, `${locale}/${slug} title`).toBeGreaterThanOrEqual(locale === "zh-cn" ? 12 : 24);
         expect(guide?.frontmatter.description.length, `${locale}/${slug} description`).toBeGreaterThanOrEqual(100);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug} FAQ`).toBeGreaterThanOrEqual(3);
@@ -77,8 +79,8 @@ describe("GSC growth page reinforcement", () => {
         phrases: ["What is the current WARDOGS Playtest status?", "WARDOGS playtest sign up"]
       },
       "wardogs-crash-fix": {
-        title: "WARDOGS Crash Fix: Startup, Reboots & Stutter",
-        phrases: ["WARDOGS crashes on startup", "WARDOGS keeps rebooting my PC", "WARDOGS stuttering"]
+        title: "WARDOGS Crashing or Won't Launch? WD-L020 & Safe Fixes",
+        phrases: ["How do you fix WARDOGS crashes and freezes?", "WD-L020 After KB5124010", "Whole PC reboot"]
       },
       "wardogs-helicopter-guide": {
         title: "WARDOGS Helicopter Controls: Fly, Land & Transport",

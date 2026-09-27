@@ -97,7 +97,7 @@ const definitions = [
     guideSlug: "wardogs-map",
     relatedGuideSlugs: ["wardogs-towers-guide", "wardogs-fob-guide"],
     relatedToolHrefs: [],
-    sourceLabel: "Official WARDOGS Steam description",
+    sourceLabel: "Official WARDOGS Team17 description",
   },
   {
     id: "tower-terminal",
@@ -176,7 +176,7 @@ const localizedSourceNotesByLocale: Record<
   Record<OperationsAtlasRecordId, readonly string[]>
 > = {
   de: {
-    "battlefield-control-zone": ["Die offizielle Steam-Beschreibung bestätigt das zufällige Zielmodell und die Größe des Schlachtfelds; eine feste Route wird nicht behauptet."],
+    "battlefield-control-zone": ["Die offizielle Team17-Beschreibung bestätigt die 256 km² große Karte und die zufällige 2 × 2 km große Control Zone; eine feste Route wird nicht behauptet."],
     "tower-terminal": ["Die offizielle Quelle belegt nur das Terminalziel; aktuelle Hinweise, Codes, Zeiten und Auswirkungen auf die Wertung werden nicht behauptet."],
     "oil-rig-hot-zone": ["Die Creator-Quelle zeigt den Bau-, Liefer- und Aktivierungsablauf der Closed Beta; Zahlenwerte für Kosten und Abklingzeiten sowie die aktuelle Verfügbarkeit bleiben unbestätigt."],
     "fob-network": ["Die offizielle Spielbeschreibung bestätigt nur Basisbau und Logistik; Standortwahl, Spawn-Verhalten, Verbesserungen und Liefertaktiken sind redaktionelle Hinweise oder buildabhängige Beobachtungen."],
@@ -185,7 +185,7 @@ const localizedSourceNotesByLocale: Record<
     "helicopter-transport": ["Der freigegebene Hubschrauber-Guide zeigt den Transporteinsatz; die Routenplanung ist redaktionelle Anleitung, während Flugverhalten, Tastenbelegung, Haltbarkeit, Treibstoff und Belohnungen buildabhängig bleiben."],
   },
   ru: {
-    "battlefield-control-zone": ["Официальное описание в Steam подтверждает случайную модель цели и масштаб поля боя; фиксированный маршрут не заявляется."],
+    "battlefield-control-zone": ["Официальное описание Team17 подтверждает карту площадью 256 км² и случайную зону контроля 2 × 2 км; фиксированный маршрут не заявляется."],
     "tower-terminal": ["Официальный источник подтверждает только цель с терминалом; текущие подсказки, коды, время и влияние на счёт не заявляются."],
     "oil-rig-hot-zone": ["Источник автора показывает последовательность строительства, доставки и активации в Closed Beta; числовые значения стоимости и перезарядки, а также текущая доступность остаются неподтверждёнными."],
     "fob-network": ["Официальное описание игры подтверждает только строительство баз и логистику; выбор места, поведение точек возрождения, улучшения и тактика доставки являются редакционными рекомендациями или зависящими от сборки наблюдениями."],
@@ -194,7 +194,7 @@ const localizedSourceNotesByLocale: Record<
     "helicopter-transport": ["Одобренное руководство по вертолёту показывает транспортное применение; планирование маршрута является редакционной рекомендацией, а управление, привязки клавиш, прочность, топливо и награды зависят от сборки."],
   },
   "pt-br": {
-    "battlefield-control-zone": ["A descrição oficial na Steam confirma o modelo de objetivo aleatório e a escala do campo de batalha; nenhuma rota fixa é afirmada."],
+    "battlefield-control-zone": ["A descrição oficial da Team17 confirma o mapa de 256 km² e a Control Zone aleatória de 2 × 2 km; nenhuma rota fixa é afirmada."],
     "tower-terminal": ["A fonte oficial sustenta apenas o objetivo do terminal; instruções, códigos, tempos e efeitos de pontuação atuais não são afirmados."],
     "oil-rig-hot-zone": ["A fonte do criador demonstra a sequência de construção, entrega e ativação da Closed Beta; custos numéricos, tempos de recarga e disponibilidade atual continuam não verificados."],
     "fob-network": ["A descrição oficial do jogo confirma apenas construção de bases e logística; escolha do local, comportamento de spawn, melhorias e táticas de entrega são orientação editorial ou observações dependentes da versão."],
@@ -203,7 +203,7 @@ const localizedSourceNotesByLocale: Record<
     "helicopter-transport": ["O guia aprovado de helicóptero demonstra o uso para transporte; o planejamento de rota é orientação editorial, enquanto pilotagem, comandos, durabilidade, combustível e recompensas continuam dependentes da versão."],
   },
   ja: {
-    "battlefield-control-zone": ["Steam の公式説明は、目標がランダムに決まる仕組みと戦場規模のみを確認しており、固定ルートがあるとはしていません。"],
+    "battlefield-control-zone": ["Team17の公式説明は256 km²のマップとランダムに決まる2×2 kmのControl Zoneを確認しており、固定ルートがあるとはしていません。"],
     "tower-terminal": ["公式資料が裏付けるのはターミナル目標のみで、現在の表示、コード、時間、スコアへの影響は確認していません。"],
     "oil-rig-hot-zone": ["クリエイターの資料は Closed Beta における建設、配送、起動の手順を示していますが、費用やクールダウンの数値、現在の利用可否は未確認です。"],
     "fob-network": ["ゲームの公式説明が確認しているのは基地建設と兵站のみです。設置場所の選定、スポーン挙動、アップグレード、配送戦術は編集上の助言またはビルド依存の観察です。"],
@@ -212,7 +212,7 @@ const localizedSourceNotesByLocale: Record<
     "helicopter-transport": ["承認済みのヘリコプターガイドは輸送用途を示しています。ルート計画は編集上の助言であり、操縦特性、キー設定、耐久性、燃料、報酬はビルド依存です。"],
   },
   "zh-cn": {
-    "battlefield-control-zone": ["Steam 官方说明仅确认了随机目标机制与战场规模，并未确认任何固定路线。"],
+    "battlefield-control-zone": ["Team17 官方说明确认地图面积为 256 平方公里，控制区为随机的 2×2 公里；未确认固定路线。"],
     "tower-terminal": ["官方来源仅支持“终端目标”这一事实；当前提示、代码、计时及计分影响均未确认。"],
     "oil-rig-hot-zone": ["创作者来源展示了 Closed Beta 中建造、运输与启动的流程；具体成本、冷却时间及当前可用性仍未核验。"],
     "fob-network": ["官方游戏说明仅确认了基地建造与后勤系统；选址、复活机制、升级和运输战术属于编辑建议或受版本影响的观察。"],

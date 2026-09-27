@@ -111,8 +111,10 @@ const ui: Record<Locale, ItemUi> = {
 
 const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
   en: {
-    hubMetaDescription: "Browse 11 WARDOGS indexes for weapons, vehicles, ammo, attachments, gear, equipment, medical, supplies, deployables, mechanics, and loadouts.",
-    hubDescription: "Compare all 11 field indexes: weapons, vehicles, ammunition, attachments, gear, equipment, medical, supplies, deployables, mechanics, and loadouts, with source and build labels.",
+    hubMetaTitle: "WARDOGS Weapons & Vehicles: 11-Category Item Index",
+    hubMetaDescription: "Find WARDOGS weapons, vehicles, ammo, gear, supplies and loadouts in 11 searchable categories. Each record labels its source and build; Alpha values are not live prices.",
+    hubTitle: "WARDOGS Weapons, Vehicles & Items",
+    hubDescription: "Looking for a weapon, vehicle or supply item? Browse all 11 categories and check the source and observed build before treating an Alpha price or unlock as current.",
     indexesEyebrow: "Field indexes",
     alphaSnapshot: "Historical Alpha 1 baseline",
     preRelease: "Historical test record",

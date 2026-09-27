@@ -3,6 +3,7 @@ import path from "node:path";
 import type {MDXComponents} from "mdx/types";
 import {compileMDX} from "next-mdx-remote/rsc";
 import matter from "gray-matter";
+import remarkGfm from "remark-gfm";
 import type {Locale} from "../config/site";
 import {getManifestEntry, guideManifest, type GuideManifestEntry} from "./manifest";
 import {remarkWardogsMdxPolicy} from "./mdx-policy";
@@ -106,6 +107,6 @@ export async function compileLocalizedGuideBody(body: string, components: MDXCom
   return compileMDX({
     source: localizeMdxInternalLinks(body, locale),
     components,
-    options: {blockJS: true, blockDangerousJS: true, mdxOptions: {remarkPlugins: [remarkWardogsMdxPolicy]}}
+    options: {blockJS: true, blockDangerousJS: true, mdxOptions: {remarkPlugins: [remarkGfm, remarkWardogsMdxPolicy]}}
   });
 }

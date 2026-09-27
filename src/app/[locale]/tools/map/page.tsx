@@ -13,32 +13,32 @@ export function generateStaticParams() {
 const copy: Record<string, {title: string; desc: string; badge: string}> = {
   "zh-cn": {
     title: "WARDOGS 交互式战术战区地图",
-    desc: "16×16 km 全景战术测绘底图，支持平移缩放、网格标尺（1km/100m）、中心 2×2km 争夺区与塔台终端 1~5 号点位标记。",
+    desc: "查看 Bakurani、Ozeti、Zestafona 三张 2D 战场底图；可缩放、拖动与切换地图。",
     badge: "2D 战术底图系统"
   },
   en: {
     title: "WARDOGS Interactive Tactical Theater Map",
-    desc: "16×16 km full theater tactical map with smooth pan & zoom, 1km/100m grid coordinates, 2×2km Control Zone, and verified Tower Terminals 1–5.",
+    desc: "Explore 2D basemaps of Bakurani, Ozeti, and Zestafona. Pan, zoom, and switch between maps.",
     badge: "2D Tactical Cartography"
   },
   de: {
     title: "WARDOGS Interaktive Taktische Karte",
-    desc: "16×16 km taktische Karte mit stufenlosem Zoom, Gitterkoordinaten (1km/100m), Kontrollzone und Funktürmen 1–5.",
+    desc: "Erkunde die 2D-Karten von Bakurani, Ozeti und Zestafona. Verschiebe, vergrößere und wechsle zwischen den Karten.",
     badge: "2D Taktische Karte"
   },
   ru: {
     title: "WARDOGS Интерактивная тактическая карта",
-    desc: "Тактическая карта 16×16 км с масштабированием, сеткой координат (1 км / 100 м), зоной контроля 2×2 км и вышками 1–5.",
+    desc: "Изучайте 2D-карты Bakurani, Ozeti и Zestafona. Перемещайте, увеличивайте и переключайте карты.",
     badge: "2D Тактическая карта"
   },
   "pt-br": {
     title: "Mapa Tático Interativo do WARDOGS",
-    desc: "Mapa tático de 16×16 km com zoom suave, grade de coordenadas (1km/100m), Zona de Controle 2×2km e Torres 1–5.",
+    desc: "Explore os mapas 2D de Bakurani, Ozeti e Zestafona. Arraste, amplie e alterne entre os mapas.",
     badge: "Cartografia Tática 2D"
   },
   ja: {
     title: "WARDOGS インタラクティブ戦術マップ",
-    desc: "16×16 kmの全域戦術マップ。ズーム・パン、グリッド座標（1km/100m）、2×2km制圧エリア、タワー端末1〜5の表示に対応。",
+    desc: "Bakurani、Ozeti、Zestafona の2Dマップを表示。ドラッグ、ズーム、マップ切り替えに対応しています。",
     badge: "2D戦術マップ"
   }
 };
@@ -70,7 +70,7 @@ export default async function TacticalMapPage({params}: PageProps) {
       </header>
 
       <section aria-label="Interactive Map Viewer">
-        <WardogsMapViewer initialMap="bakurani" />
+        <WardogsMapViewer initialMap="bakurani" locale={requestedLocale} />
       </section>
     </main>
   );

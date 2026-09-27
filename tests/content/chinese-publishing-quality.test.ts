@@ -95,9 +95,11 @@ describe("Simplified Chinese publishing quality", () => {
         guide?.body,
       ].join("\n");
 
-      const expectedDate = slug === "wardogs-system-requirements"
-        ? "2026-09-05"
-        : ["wardogs-early-access", "wardogs-release-date", "wardogs-price"].includes(slug)
+      const expectedDate = ["wardogs-early-access", "wardogs-release-date", "wardogs-gameplay"].includes(slug)
+        ? "2026-09-26"
+        : slug === "wardogs-system-requirements"
+          ? "2026-09-26"
+        : slug === "wardogs-price"
           ? "2026-09-17"
           : "2026-09-01";
       expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(expectedDate);
@@ -146,7 +148,7 @@ describe("Simplified Chinese publishing quality", () => {
       const expectedDate = ["wardogs-map", "wardogs-money-guide"].includes(slug)
         ? "2026-09-17"
         : "2026-09-01";
-      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(expectedDate);
+      expect((guide?.frontmatter.updatedAt ?? "") >= expectedDate, `zh-cn/${slug}`).toBe(true);
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
       expect(searchable, `zh-cn/${slug}`).toContain("版本相关");
       expect(guide?.frontmatter.sources.length, `zh-cn/${slug}`).toBeGreaterThanOrEqual(2);
@@ -173,6 +175,8 @@ describe("Simplified Chinese publishing quality", () => {
         "wardogs-twitter",
       ].includes(slug)
         ? "2026-09-17"
+        : slug === "wardogs-equipment-tools-guide"
+          ? "2026-09-26"
         : slug === "wardogs-oil-rig-guide"
           ? "2026-09-13"
         : slug === "wardogs-twitch-drops"

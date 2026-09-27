@@ -22,6 +22,13 @@ import {GuideEngagementTracker} from "@/components/seo/guide-engagement-tracker"
 import {formatLocalizedDate} from "@/lib/localized-date";
 import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
 import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
+import {ServerStatusSignal} from "@/components/live-ops/server-status-signal";
+import {GuideTaskPanel} from "@/components/guides/guide-task-panel";
+import {prepareGuideBodyForTaskPanel} from "@/features/guides/guide-task-body";
+import {getGuideTaskData} from "@/features/guides/guide-task-data";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -55,12 +62,15 @@ export default async function GuideArticlePage({params}: PageProps) {
   const guide = await loadGuideDocument(locale, slug);
   if (!guide) notFound();
   const discoveryImage = getGuideDiscoveryImage(slug);
+  const taskData = getGuideTaskData(slug, locale);
+  const guideBody = prepareGuideBodyForTaskPanel(guide.body, locale, Boolean(taskData));
   setRequestLocale(locale);
-  const [t, categoryT, related, compiled] = await Promise.all([
+  const [t, categoryT, adsT, related, compiled] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "categories"}),
+    getTranslations({locale, namespace: "ads"}),
     getRelatedGuides(locale, slug),
-    compileLocalizedGuideBody(guide.body, mdxComponents, locale)
+    compileLocalizedGuideBody(guideBody, mdxComponents, locale)
   ]);
 
   return (
@@ -79,17 +89,19 @@ export default async function GuideArticlePage({params}: PageProps) {
           <p className="mt-3 text-xs text-[#8b9992]">
             {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy" title={t("teamName")}>{t("teamName")}</Link>
           </p>
-          <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "zh-cn" ? "text-3xl sm:text-5xl" : "text-4xl sm:text-5xl"} md:text-6xl`} style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.title}</h1>
+          <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "ja" ? "text-3xl sm:text-4xl md:text-5xl" : locale === "zh-cn" ? "text-3xl sm:text-5xl md:text-6xl" : "text-4xl sm:text-5xl md:text-6xl"}`} style={{overflowWrap: "break-word", wordBreak: locale === "ja" ? "keep-all" : "normal"}}>{guide.frontmatter.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]" style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.description}</p>
         </div>
       </header>
 
+      {slug === "wardogs-server-status" ? <ServerStatusSignal locale={locale} /> : null}
       <LiveBetaBanner compact />
 
       <article className="site-container max-w-4xl py-10 md:py-14">
+        {taskData ? <GuideTaskPanel data={taskData} locale={locale} /> : null}
         {slug === "wardogs-map" ? (
           <section className="mb-10" aria-label="Interactive Tactical Map">
-            <WardogsMapViewer initialMap="bakurani" />
+            <WardogsMapViewer initialMap="bakurani" locale={locale} />
           </section>
         ) : discoveryImage ? (
           <figure className="mb-10 overflow-hidden border border-[#2c3631] bg-[#101411]">
@@ -108,10 +120,15 @@ export default async function GuideArticlePage({params}: PageProps) {
             </figcaption>
           </figure>
         ) : null}
-        <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
-          <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
-          <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
-        </aside>
+        {!taskData ? (
+          <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
+            <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
+            <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
+          </aside>
+        ) : null}
+        <AdsterraNativeBanner label={t("advertisement")} />
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         <div className="guide-prose">{compiled.content}</div>
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">

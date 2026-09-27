@@ -58,18 +58,16 @@ describe("item detail route entry", () => {
     expect(metadata).toEqual({});
   });
 
-  it("marks a generated item page noindex,follow and rejects its direct route", async () => {
+  it("keeps unavailable item routes noindex without a false canonical or hreflang", async () => {
     const generatedParams = {
       params: Promise.resolve({locale: "en", type: "weapons", slug: "m4"})
     };
 
-    await expect(generateMetadata(generatedParams)).resolves.toMatchObject({
-      robots: {index: false, follow: true},
-      alternates: {
-        canonical: "http://localhost:3000/en/items/weapons/m4"
-      }
-    });
+    await expect(generateMetadata(generatedParams)).resolves.toEqual({robots: {index: false, follow: true}});
     await expect(ItemDetailPage(generatedParams)).rejects.toMatchObject({digest: "NEXT_HTTP_ERROR_FALLBACK;404"});
+    await expect(generateMetadata({
+      params: Promise.resolve({locale: "en", type: "vehicles", slug: "littlebird"})
+    })).resolves.toEqual({robots: {index: false, follow: true}});
   });
 
   it("preserves the weapon slug in compare and ammunition tool actions", async () => {

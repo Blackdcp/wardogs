@@ -436,7 +436,7 @@ function catalogueRecordToItem(record: CatalogueRecord, priority: number): Wardo
       "Unknown fields remain visible, which prevents an old test-build value from becoming a permanent recommendation.",
     ],
     cautions: [
-      "Pre-release price, handling, damage, availability, and unlock conditions can change before or during Early Access.",
+      "These pre-release observations may differ from the live Early Access build in price, handling, damage, availability, and unlock conditions.",
       "A catalogue identifier does not prove final attachment, ammunition, or progression compatibility.",
       "Use the Build label on every fact before comparing this record with newer footage.",
     ],
@@ -461,7 +461,7 @@ function catalogueRecordToItem(record: CatalogueRecord, priority: number): Wardo
       ...knownFacts.map((fact) => `Observed in ${record.dataAsOf}: ${fact.label}: ${fact.value}`),
     ],
     unconfirmedFacts: [
-      `Final Early Access and release values for ${record.name} remain unconfirmed.`,
+      `Current Early Access and full-release values for ${record.name} have not been verified from a current build.`,
       "Damage, handling, price, availability, and compatibility can change with a new Build.",
     ],
     detailUpdatedAt: "2026-08-30",

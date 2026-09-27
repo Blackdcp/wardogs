@@ -1,10 +1,14 @@
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import {ContextualVideoEvidence} from "../../src/components/guides/contextual-video-evidence";
 import VideosPage from "../../src/app/[locale]/videos/page";
 import {getGuideTaskData} from "../../src/features/guides/guide-task-data";
 import {CURRENT_VIDEO_SOURCES_REVIEWED_AT} from "../../src/features/videos/video-library";
+
+vi.mock("next-intl/server", () => ({
+  getTranslations: vi.fn(async () => (key: string) => key)
+}));
 
 describe("ContextualVideoEvidence", () => {
   it("renders the reviewed source metadata, thumbnail, and both external and internal links", async () => {

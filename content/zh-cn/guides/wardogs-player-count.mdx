@@ -1,0 +1,56 @@
+---
+title: "WARDOGS 玩家人数：Steam 实时在线与官方里程碑"
+description: "想知道 WARDOGS 现在有多少人玩？本页区分 Steam 主游戏实时并发、官方确认的 40 万同时在线峰值与 200 万份销量，提供可查看即时数字的 Valve 接口和第三方图表，并解释时间戳、测试版与主游戏 App ID 的区别，避免把销量或旧截图误写成当前在线玩家数，也说明为什么不能据此判断服务器是否正常。"
+keyword: "wardogs player count"
+category: "guide"
+slug: "wardogs-player-count"
+order: 53
+updatedAt: "2026-09-26"
+badges:
+  - label: "Steam 数据"
+    tone: "accent"
+  - label: "实时数字会变"
+    tone: "warning"
+faq:
+  - question: "WARDOGS 此刻有多少玩家在线？"
+    answer: "静态文章无法可靠地给出此刻的数字。请打开主游戏 App 1867240 的 SteamDB 图表或 Valve 当前玩家数接口，并记录读取时刻。"
+  - question: "官方确认突破 40 万同时在线了吗？"
+    answer: "确认。BULKHEAD 在 9 月 12 日 Patch 0.11 官方公告中感谢玩家达到 40 万峰值同时在线；这是历史里程碑，不是今天的实时数字。"
+  - question: "卖出 200 万份等于有 200 万人在线吗？"
+    answer: "不等于。9 月 15 日的官方公告是累计销量里程碑，而同时在线是特定 Steam 应用某一时刻的活跃人数。"
+sources:
+  - label: "BULKHEAD Steam 官方公告：40 万峰值与 200 万销量"
+    url: "https://steamcommunity.com/app/1867240/announcements/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Valve Steamworks：当前玩家数接口定义"
+    url: "https://partner.steamgames.com/doc/webapi/ISteamUserStats"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "SteamDB：主游戏 App 1867240 的独立图表"
+    url: "https://steamdb.info/app/1867240/charts/"
+    kind: "community"
+    checkedAt: "2026-09-26"
+  - label: "WARDOGS Steam 官方商店：主游戏 App 1867240"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+---
+
+## 不会几分钟后就过期的答案
+
+如果你要知道**现在在线的人数**，打开 [WARDOGS 主游戏 App 1867240 的 SteamDB 图表](https://steamdb.info/app/1867240/charts/)，查看数字及读取时间。SteamDB 是独立统计网站，不是开发商公告。熟悉接口的读者也可以直接查看 [Valve 针对 App 1867240 的当前玩家数接口](https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1867240)。[Steamworks 官方文档](https://partner.steamgames.com/doc/webapi/ISteamUserStats)说明，该接口返回的是指定 Steam 应用在请求当时的活跃玩家总数。把这个数值复制到静态 Wiki 标题里，几分钟后就可能不准确。
+
+## 官方已经确认的两个不同数字
+
+BULKHEAD 在 **9 月 12 日的 Patch 0.11 公告**中明确感谢玩家达到 **40 万峰值同时在线**。这是历史峰值里程碑，不代表后来每一分钟仍有 40 万人在玩。开发商随后在 **9 月 15 日公告**宣布 **售出 200 万份**。销量是累计指标，不能拿来替代当前在线、日活跃人数、可用服务器席位或排队人数。
+
+第三方图表可能给出比官方约数更精确、甚至更高的峰值，因为采样频率和读取时间不同。引用这类数字时必须写明“第三方观察值”和时间戳，不要把它包装成官方发布的精确峰值。
+
+## App ID 和统计口径先看清
+
+目前正式销售的主游戏是 **WARDOGS App 1867240**。此前的 WARDOGS Playtest 是独立的测试客户端，测试周末的人数不应与抢先体验主游戏数字直接相加。Valve 接口按 App ID 计数，因此显示的是该应用当时的 Steam 活跃用户，不是购买总人数，也不能单独证明游戏登录队列、匹配和某个具体服务器健康。
+
+比较两张截图时，依次确认应用编号、UTC 读取时间、指标是“当前在线”还是“24 小时／历史峰值”，以及数据究竟来自 Valve、第三方图表还是开发商公告。玩家数从首发峰值下降，不自动说明游戏停服；玩家数上涨，也不能证明你想进入的那台服务器一定正常。
+
+若你遇到连接问题，应看[官方 Steam 公告](https://steamcommunity.com/app/1867240/announcements/)和本站[服务器状态攻略](/zh-cn/guides/wardogs-server-status)，不要只凭人数曲线判断。版本变化请看[补丁说明](/zh-cn/guides/wardogs-patch-notes)。本页刻意不把会快速变动的“当前在线”数字永久写死在标题中。

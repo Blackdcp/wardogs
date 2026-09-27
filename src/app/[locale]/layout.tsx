@@ -8,7 +8,8 @@ import {SiteFooter} from "@/components/layout/site-footer";
 import {SiteHeader} from "@/components/layout/site-header";
 import {GoogleAnalytics} from "@/components/seo/google-analytics";
 import {SiteAnalytics} from "@/components/seo/site-analytics";
-import {GoogleAdsense} from "@/components/ads/google-adsense";
+import {AdsterraBehavioralAds} from "@/components/ads/adsterra-behavioral-ads";
+import {AdsterraDisplayBanner, AdsterraGlobalInventory} from "@/components/ads/adsterra-display-banner";
 import {buildSiteMetadata} from "@/lib/metadata";
 
 type LocaleLayoutProps = {
@@ -27,19 +28,19 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
   if (!isLocale(locale)) notFound();
 
   setRequestLocale(locale);
-  const [messages, t] = await Promise.all([
+  const [messages, t, adsT] = await Promise.all([
     getMessages({locale}),
-    getTranslations({locale, namespace: "common"})
+    getTranslations({locale, namespace: "common"}),
+    getTranslations({locale, namespace: "ads"})
   ]);
 
   return (
     <html lang={locale} data-scroll-behavior="smooth">
-      <head>
-        <GoogleAdsense />
-      </head>
       <body className="min-h-screen overflow-x-hidden">
         <GoogleAnalytics />
         <SiteAnalytics locale={locale} />
+        <AdsterraBehavioralAds />
+        <AdsterraGlobalInventory label={adsT("label")} />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <a
             href="#main-content"
@@ -48,10 +49,16 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
           >
             {t("skipToContent")}
           </a>
-          <div className="flex min-h-screen flex-col">
+          <div className="flex min-h-screen flex-col pb-[74px] min-[468px]:pb-0">
             <SiteHeader />
+            <div className="site-container py-1" data-global-ad-position="top">
+              <AdsterraDisplayBanner label={adsT("label")} placement="horizontal" />
+            </div>
             <div id="main-content" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
               {children}
+            </div>
+            <div className="site-container py-1" data-global-ad-position="bottom">
+              <AdsterraDisplayBanner label={adsT("label")} placement="horizontal" />
             </div>
             <SiteFooter />
           </div>

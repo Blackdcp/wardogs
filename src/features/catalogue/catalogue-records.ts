@@ -1,6 +1,7 @@
 import type {CatalogueEvidence, CatalogueFact, CatalogueRecord, CatalogueRecordType} from "./catalogue-types";
 import {getCatalogueChangeHistory, normalizeCatalogueEvidence, seasonOneSourceUrl, seasonOneVerifiedAt} from "./catalogue-evidence-data";
 import {getCatalogueMediaSource} from "./catalogue-media-sources";
+import {existingArtMatches, suppliedArtRecords} from "./supplied-art-records";
 
 const dataAsOf = "Alpha 1 - 7 Aug 2026";
 const betaDataAsOf = "Closed Beta - 21-23 Aug 2026";
@@ -20,6 +21,7 @@ type CatalogueRecordInput = Omit<CatalogueRecord, "evidenceTier" | "mediaState" 
 const fact = (label: string, value: string): CatalogueFact => ({label, value});
 
 const officialSteamUrl = "https://store.steampowered.com/app/1867240/WARDOGS/";
+const officialTeam17Url = "https://www.team17.com/games/wardogs";
 const officialModeVideoUrl = "https://www.youtube.com/watch?v=cSn5IGknapM";
 const equipmentWalkthroughUrl = "https://www.youtube.com/watch?v=J5QZXLENLgQ";
 const equipmentWalkthroughBuild = "Pre-release catalogue walkthrough - 20 Aug 2026";
@@ -141,7 +143,7 @@ const vehicleRecords: readonly CatalogueRecordInput[] = [
   {slug: "talon-9k-sam", name: "Talon 9K-SAM", type: "vehicles", subtype: "Stationary anti-air", image: "/images/catalogue/vehicles/talon-9k-sam.webp", imageAlt: "Talon 9K-SAM emplacement shown in WARDOGS gameplay", summary: "Stationary anti-air system identified in Closed Beta catalogue coverage; cost and deployment rules remain unconfirmed.", facts: [fact("Role", "Stationary anti-air"), fact("Closed Beta price", "Not captured"), fact("Observed gate", "Not captured")], filterValues: ["stationary-system", "anti-air"], detailStatus: "published", detailHref: "/items/vehicles/talon-9k-sam", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: creatorCaptureNotes("WARDOGS Building 101", "15:30"), dataAsOf: betaDataAsOf},
   {slug: "l81-mortar", name: "L81 Mortar", type: "vehicles", subtype: "Stationary artillery", image: "/images/catalogue/vehicles/l81-mortar.webp", imageAlt: "Deployed L81 Mortar shown in a WARDOGS sandbag pit", summary: "Stationary mortar system identified in Closed Beta catalogue coverage; range, ammunition, and cost remain unconfirmed.", facts: [fact("Role", "Stationary artillery"), fact("Closed Beta price", "Not captured"), fact("Observed gate", "Not captured")], filterValues: ["stationary-system", "artillery"], detailStatus: "published", detailHref: "/items/vehicles/l81-mortar", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: creatorCaptureNotes("WARDOGS Building 101", "01:16"), dataAsOf: betaDataAsOf},
   {slug: "vanguard-ciws", name: "Vanguard CIWS", type: "vehicles", subtype: "Stationary defense", image: "/images/catalogue/vehicles/vanguard-ciws.webp", imageAlt: "Vanguard CIWS operator view shown in WARDOGS gameplay", summary: "Stationary close-in defense system identified in Closed Beta catalogue coverage; exact behavior remains unconfirmed.", facts: [fact("Role", "Stationary defense"), fact("Closed Beta price", "Not captured"), fact("Observed gate", "Not captured")], filterValues: ["stationary-system", "defense"], detailStatus: "published", detailHref: "/items/vehicles/vanguard-ciws", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: creatorCaptureNotes("WARDOGS Building 101", "09:50"), dataAsOf: betaDataAsOf},
-  {slug: "stingray", name: "Stingray", type: "vehicles", subtype: "Stationary weapon", image: "/images/catalogue/vehicles/stingray.webp", imageAlt: "Stingray launcher tube and control unit shown in WARDOGS gameplay", summary: "Stationary weapon-system identifier observed in Closed Beta catalogue coverage; exact role and cost remain unconfirmed.", facts: [fact("Role", "Stationary weapon"), fact("Closed Beta price", "Not captured"), fact("Observed gate", "Not captured")], filterValues: ["stationary-system", "weapon"], detailStatus: "published", detailHref: "/items/vehicles/stingray", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: creatorCaptureNotes("WARDOGS Building 101", "03:56"), dataAsOf: betaDataAsOf}
+  {slug: "stingray", name: "Stingray", type: "vehicles", subtype: "Anti-vehicle drone launcher", image: "/images/catalogue/vehicles/stingray.webp", imageAlt: "Stingray launcher tube and control unit shown in WARDOGS gameplay", summary: "Ground-launched anti-vehicle drone shown in Beta footage; current price, unlock, and damage remain unverified.", facts: [fact("Role", "Anti-vehicle drone launcher"), fact("Closed Beta price", "Not captured"), fact("Observed gate", "Not captured")], filterValues: ["stationary-system", "anti-vehicle", "drone"], detailStatus: "published", detailHref: "/items/vehicles/stingray", evidenceStatus, evidenceTier: "corroborated-community", mediaState: "context-only", sourceNotes: creatorCaptureNotes("WARDOGS Building 101", "03:56"), dataAsOf: betaDataAsOf}
 ];
 
 const ammoRecords: readonly CatalogueRecordInput[] = [
@@ -269,12 +271,12 @@ const deployableRecords: readonly CatalogueRecordInput[] = [
 const mechanicRecords: readonly CatalogueRecordInput[] = [
   sourcedInlineRecord({slug: "control-zone-scoring", name: "Control Zone Scoring", type: "mechanics", subtype: "Objective", summary: "Three teams contest a randomized 2 x 2 km Control Zone, with the first team to 100 points winning.", facts: [fact("Active objective", "Randomized 2 x 2 km Control Zone"), fact("Win condition", "First team to 100 points")], filterValues: ["objective"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The scale, three-team format, and scoring target come from the official Steam description."}),
   sourcedInlineRecord({slug: "persistent-cash", name: "Persistent Cash", type: "mechanics", subtype: "Economy", summary: "Players begin with $10,000 and use persistent cash to buy a loadout for each life.", facts: [fact("Starting balance", "$10,000"), fact("Persistence", "Cash carries between matches")], filterValues: ["economy"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The starting balance and persistent-economy description are stated on the official Steam page."}),
-  sourcedInlineRecord({slug: "support-rewards", name: "Support Rewards", type: "mechanics", subtype: "Support", summary: "Official descriptions identify reviving, transporting, supplying, and objective play as rewarded team actions.", facts: [fact("Rewarded support", "Revive, transport, and supply"), fact("Objective contribution", "Control Zone presence")], filterValues: ["support", "objective"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "Only support actions named in official descriptions are listed; no payout values are inferred."}),
+  sourcedInlineRecord({slug: "support-rewards", name: "Support Rewards", type: "mechanics", subtype: "Support", summary: "Official descriptions identify reviving, transporting friendlies, and objective play as rewarded team actions.", facts: [fact("Rewarded support", "Revive and transport"), fact("Objective contribution", "Control Zone presence")], filterValues: ["support", "objective"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "Only support actions named in official descriptions are listed; no payout values are inferred."}),
   sourcedInlineRecord({slug: "hot-zone-bonus", name: "Hot Zone Bonus", type: "mechanics", subtype: "Economy", summary: "Official mode material associates the smaller Hot Zone with bonus cash, separate from the main Control Zone win condition.", facts: [fact("Observed reward", "Bonus cash"), fact("Win condition", "Still determined by Control Zone scoring")], filterValues: ["economy", "objective"], dataAsOf: "Official pre-release mode explanation", evidence: officialEvidence("Official pre-release mode explanation", "2026-08-23", officialModeVideoUrl, false), evidenceTier: "official", evidenceStatus: "pre-release-build", sourceNote: "The official mode explanation is retained as build-sensitive context; current payout values are not claimed."}),
 ];
 
 const mapRecords: readonly CatalogueRecordInput[] = [
-  sourcedInlineRecord({slug: "battlefield-control-zone", name: "Battlefield and Control Zone", type: "maps", subtype: "Orientation", summary: "Start by locating the live randomized Control Zone and comparing routes, cover, transport, and supply access.", facts: [fact("Confirmed fact", "Three teams fight across a 16 km² battlefield"), fact("Confirmed fact", "Randomized 2 x 2 km Control Zone")], filterValues: ["orientation", "objective"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The official Steam description confirms the randomized objective model and battlefield scale; no fixed route is asserted."}),
+  sourcedInlineRecord({slug: "battlefield-control-zone", name: "Battlefield and Control Zone", type: "maps", subtype: "Orientation", summary: "Start by locating the live randomized Control Zone and comparing routes, cover, transport, and supply access.", facts: [fact("Confirmed fact", "Three teams fight across a 256 km² battlefield"), fact("Confirmed fact", "Randomized 2 x 2 km Control Zone")], filterValues: ["orientation", "objective"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-26", officialTeam17Url, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The official Team17 description confirms the 256 km² map and randomized 2 x 2 km Control Zone; no fixed route is asserted."}),
   sourcedInlineRecord({slug: "tower-terminal", name: "Tower Terminal", type: "maps", subtype: "Objective", summary: "Treat tower terminals as exposed sub-objectives whose prompts and interaction flow must be read in the live build.", facts: [fact("Confirmed fact", "Tower terminals appear in the official pre-release mode explanation"), fact("Evidence window", "Official pre-release footage checked 26 Aug 2026")], filterValues: ["objective"], dataAsOf: "Official pre-release mode explanation", evidence: officialEvidence("Official pre-release mode explanation", "2026-08-26", officialModeVideoUrl, false), evidenceTier: "official", evidenceStatus: "pre-release-build", sourceNote: "The official source supports the terminal objective only; current prompts, codes, timing, and scoring effects are not claimed."}),
   sourcedInlineRecord({slug: "oil-rig-hot-zone", name: "Oil Rig and Hot Zone", type: "maps", subtype: "Construction", summary: "Use the historical Oil Rig workflow only as a checklist for FOB construction, fuel delivery, activation, and defense.", facts: [fact("Observed role", "FOB-built objective support structure"), fact("Observed dependency", "Construction supplies and fuel in Closed Beta")], filterValues: ["construction", "objective"], dataAsOf: betaDataAsOf, evidence: betaBuildingEvidence, evidenceTier: "corroborated-community", evidenceStatus, sourceNote: "The creator source demonstrates the Closed Beta construction, delivery, and activation sequence; numeric costs, cooldowns, and current availability remain unverified."}),
   sourcedInlineRecord({slug: "fob-network", name: "FOB Network", type: "maps", subtype: "Logistics", summary: "Choose a forward site by reinforcement value, delivery access, cover, unloading room, and defensibility.", facts: [fact("Confirmed fact", "The official description includes base building"), fact("Confirmed fact", "The official description includes logistics and transport")], filterValues: ["construction", "logistics"], dataAsOf: "Season 1 Early Access", evidence: officialEvidence("Season 1 Early Access", "2026-09-17", officialSteamUrl, true), evidenceTier: "official", evidenceStatus: "official", sourceNote: "The official game description confirms building and logistics only; site selection, spawn behavior, upgrades, and delivery tactics are editorial guidance or build-sensitive observations."}),
@@ -295,17 +297,29 @@ const recordInputs: readonly CatalogueRecordInput[] = [
   ...deployableRecords,
   ...mechanicRecords,
   ...mapRecords,
+  ...suppliedArtRecords,
 ];
 
 export const catalogueRecords: readonly CatalogueRecord[] = recordInputs.map((record) => {
-  const mediaSource = getCatalogueMediaSource(record);
+  const matchedImage = existingArtMatches[`${record.type}/${record.slug}`];
+  const withMatchedArt = matchedImage && !record.image
+    ? {
+      ...record,
+      image: matchedImage,
+      imageAlt: `${record.name} item artwork from a WARDOGS community catalogue`,
+      sourceNotes: record.type === "equipment"
+        ? ["Community catalogue image matched to the item label; role, price, and current behavior are not independently verified."]
+        : [...(record.sourceNotes ?? []), "Community catalogue image matched to the item label; current item stats are not inferred from artwork."],
+    }
+    : record;
+  const mediaSource = getCatalogueMediaSource(withMatchedArt);
   return {
-    ...record,
-    image: mediaSource ? record.image : undefined,
-    imageAlt: mediaSource ? record.imageAlt : undefined,
-    evidenceTier: record.evidenceTier ?? "build-capture",
+    ...withMatchedArt,
+    image: mediaSource ? withMatchedArt.image : undefined,
+    imageAlt: mediaSource ? withMatchedArt.imageAlt : undefined,
+    evidenceTier: withMatchedArt.evidenceTier ?? "build-capture",
     mediaState: (mediaSource?.approvedState ?? "pending") as CatalogueRecord["mediaState"],
-    sourceNotes: record.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
+    sourceNotes: withMatchedArt.sourceNotes ?? ["Observed in the WARDOGS Alpha 1 catalogue capture dated 7 Aug 2026."],
   };
 }).map((record) => ({
   ...record,

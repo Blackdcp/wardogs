@@ -13,8 +13,8 @@ describe("ammo matcher data", () => {
       sourceClass: "live-client",
       confidence: "observed",
     });
-    expect(result.ammoMatches[0].image).toBeUndefined();
-    expect(result.ammoMatches[0].imageAlt).toBeUndefined();
+    expect(result.ammoMatches[0].image).toBe("/images/catalogue/ammo/9mm-fmj.webp");
+    expect(result.ammoMatches[0].imageAlt).toBe("9x19mm ammunition");
   });
 
   it("matches ammunition back to all and only weapons with the exact recorded value", () => {
@@ -26,8 +26,8 @@ describe("ammo matcher data", () => {
     expect(names).not.toContain("deagle");
     expect(result.weaponMatches.every(({relationshipValue}) => relationshipValue === "9x19mm")).toBe(true);
     expect(result.selectedAmmo?.slug).toBe("9x19mm");
-    expect(result.selectedAmmo).not.toHaveProperty("image");
-    expect(result.selectedAmmo).not.toHaveProperty("imageAlt");
+    expect(result.selectedAmmo?.image).toBe("/images/catalogue/ammo/9mm-fmj.webp");
+    expect(result.selectedAmmo?.imageAlt).toBe("9x19mm ammunition");
   });
 
   it("keeps creator-historical relationship provenance distinct from live-client evidence", () => {

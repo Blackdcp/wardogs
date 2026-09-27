@@ -24,7 +24,12 @@ describe("catalogue media provenance", () => {
     for (const record of visibleImages) {
       expect(existsSync(join(process.cwd(), "public", record.image!)), record.image).toBe(true);
       expect(catalogueMediaSources[record.image!], record.image).toBeDefined();
-      expect(catalogueMediaSources[record.image!]?.sourceUrl, record.image).toMatch(/^https:\/\//);
+      const source = catalogueMediaSources[record.image!]!;
+      if (source.origin === "owner-asset-pack") {
+        expect(source.sourceUrl, record.image).toBeUndefined();
+      } else {
+        expect(source.sourceUrl, record.image).toMatch(/^https:\/\//);
+      }
       expect(catalogueMediaSources[record.image!]?.retrievedAt, record.image).toMatch(/^2026-/);
       expect(catalogueMediaSources[record.image!]?.usageNote.length, record.image).toBeGreaterThan(20);
     }
@@ -35,29 +40,38 @@ describe("catalogue media provenance", () => {
     const visibleRecords = catalogueRecords.filter((record) => record.mediaState !== "pending");
     const visibleImages = visibleRecords.map((record) => record.image).filter((image): image is string => Boolean(image));
 
-    expect(pendingRecords).toHaveLength(101);
+    expect(pendingRecords).toHaveLength(22);
     expect(pendingRecords.every((record) => record.image === undefined && record.imageAlt === undefined)).toBe(true);
     expect(new Set(visibleImages)).toHaveLength(visibleImages.length);
     expect(visibleImages.every((image) => !image.includes("/banners/"))).toBe(true);
   });
 
-  it("keeps all 65 ammo, attachment, and gear assets pending without record-level provenance", () => {
-    const records = catalogueRecords.filter((record) => ["ammo", "attachments", "gear"].includes(record.type));
+  it("shows all 65 owner-pack assets with exact historical provenance and no invented URL", () => {
+    const records = catalogueRecords.filter((record) => ["ammo", "attachments", "gear"].includes(record.type) && record.image && !record.image.includes("/imported/"));
 
     expect(records).toHaveLength(65);
     for (const record of records) {
-      expect(record.mediaState, `${record.type}/${record.slug}`).toBe("pending");
-      expect(record.image, `${record.type}/${record.slug}`).toBeUndefined();
-      expect(record.imageAlt, `${record.type}/${record.slug}`).toBeUndefined();
-      expect(getCatalogueMediaSource(record), `${record.type}/${record.slug}`).toBeUndefined();
+      const key = `${record.type}/${record.slug}`;
+      expect(record.mediaState, key).toBe("verified");
+      expect(record.image, key).toBeTruthy();
+      expect(record.imageAlt, key).toBeTruthy();
+      expect(existsSync(join(process.cwd(), "public", record.image!)), key).toBe(true);
+      const source = getCatalogueMediaSource(record);
+      expect(source?.recordKey, key).toBe(key);
+      expect(source?.origin, key).toBe("owner-asset-pack");
+      expect(source?.sourceUrl, key).toBeUndefined();
+      expect(source?.retrievedAt, key).toBe("2026-08-17");
+      expect(source?.capturedAt, key).toContain("Alpha");
     }
     expect(JSON.stringify(catalogueMediaSources)).not.toContain("-k6IV0ITLDo");
   });
 
-  it("contains no competitor asset or watermark-removal source", () => {
+  it("contains no watermark-removal source and scopes supplied community art", () => {
     const serialized = JSON.stringify(catalogueMediaSources);
-
-    expect(serialized).not.toMatch(/wardogs(?:hub|zone)|watermark|remove[_-]?watermark/i);
+    expect(serialized).not.toMatch(/watermark|remove[_-]?watermark/i);
+    expect(Object.values(catalogueMediaSources).filter(({image}) => image.includes("/imported/")).every((source) =>
+      source.origin === "external-capture" && source.approvedState === "context-only" && source.sourceUrl.includes("wardogshub.gg")
+    )).toBe(true);
   });
 
   it("uses source-audited Team17 press-kit media for verified expansion art", () => {
@@ -83,7 +97,7 @@ describe("catalogue media provenance", () => {
       .map((record) => record.image)
       .filter((image): image is string => Boolean(image));
 
-    expect(verifiedRecordImages).toHaveLength(59);
+    expect(verifiedRecordImages).toHaveLength(124);
     expect(new Set(verifiedRecordImages)).toHaveLength(verifiedRecordImages.length);
     for (const record of catalogueRecords.filter((candidate) => candidate.mediaState === "verified")) {
       const source = getCatalogueMediaSource(record);
@@ -93,7 +107,7 @@ describe("catalogue media provenance", () => {
       expect(source?.approvedState, key).toBe(record.mediaState);
       expect(source?.recordKey === key || source?.additionalRecordKeys?.includes(key), key).toBe(true);
     }
-    expect(catalogueRecords.filter((record) => record.mediaState === "context-only")).toHaveLength(0);
+    expect(catalogueRecords.filter((record) => record.mediaState === "context-only")).toHaveLength(88);
   });
 
   it("publishes category hero, metadata, and JSON-LD images only through contextual approvals", () => {

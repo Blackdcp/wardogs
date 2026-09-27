@@ -48,7 +48,7 @@ describe("structured data", () => {
     expect(page).toMatchObject({
       url: "http://localhost:3000/en",
       datePublished: "2026-08-13",
-      dateModified: "2026-09-17",
+      dateModified: "2026-09-26",
       author: {
         name: "WARDOGS Wiki Editorial Team",
         url: "http://localhost:3000/en/editorial-policy"

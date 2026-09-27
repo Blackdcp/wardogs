@@ -42,6 +42,7 @@ iframe {border: 0;}
 .guide-prose strong {color: #f2f5f3;}
 .guide-prose code {border: 1px solid var(--border); background: #111512; padding: .15rem .35rem; color: #d9e2dd;}
 .guide-prose blockquote {margin: 1.5rem 0; border-left: 3px solid #d9a93a; padding: .5rem 0 .5rem 1.25rem; color: #d6ded9;}
+.guide-prose .guide-table-scroll {max-width: 100%; margin: 1.5rem 0; overflow-x: auto; border: 1px solid var(--border);}
 .guide-prose table {width: 100%; border-collapse: collapse; min-width: 520px;}
 .guide-prose th, .guide-prose td {border: 1px solid var(--border); padding: .75rem; text-align: left;}
 

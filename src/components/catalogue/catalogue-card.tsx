@@ -5,6 +5,7 @@ import type {Locale} from "@/config/site";
 import type {CatalogueRecord} from "@/features/catalogue/catalogue-types";
 import {getCatalogueFreshness, getIndexableCatalogueItems} from "@/features/catalogue/catalogue-evidence";
 import {formatCatalogueVerifiedAt, localizeCatalogueBuild} from "@/features/catalogue/catalogue-localization";
+import {getCatalogueMediaSource} from "@/features/catalogue/catalogue-media-sources";
 import {getCatalogueSourceClassLabel, getItemUi} from "@/features/items/item-ui";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {assetPath} from "@/lib/assets";
@@ -30,12 +31,17 @@ const pendingMediaCopy: Record<Locale, {label: string; description: string}> = {
 
 function CardContent({locale, record, linked, eagerImage}: {locale: Locale; record: CatalogueRecord; linked: boolean; eagerImage: boolean}) {
   const pendingMedia = record.mediaState === "pending" || !record.image || !record.imageAlt;
+  const contrastArt = !pendingMedia && (getCatalogueMediaSource(record)?.origin === "owner-asset-pack" || record.image?.startsWith("/images/catalogue/imported/"));
   const freshness = getCatalogueFreshness(record);
   const ui = getItemUi(locale);
 
   return (
     <>
-      <div className="relative flex h-56 shrink-0 overflow-hidden border-b border-[#303b35] bg-[#090c0a] sm:h-64" data-media-state={record.mediaState}>
+      <div
+        className={`relative flex h-56 shrink-0 overflow-hidden border-b border-[#303b35] sm:h-64 ${contrastArt ? "bg-[radial-gradient(circle_at_50%_42%,#4b5a50_0%,#26342c_64%,#161e19_100%)]" : "bg-[#090c0a]"}`}
+        data-media-state={record.mediaState}
+        {...(contrastArt ? {"data-media-surface": "contrast"} : {})}
+      >
         {pendingMedia ? (
           <div className="m-auto flex max-w-[18rem] flex-col items-center px-6 text-center">
             <ImageOff aria-hidden="true" className="size-8 text-[#8b9a92]" strokeWidth={1.5} />

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import {Copy, ExternalLink} from "lucide-react";
-import {useEffect, useMemo, useState} from "react";
+import {useMemo, useState, useSyncExternalStore} from "react";
 import type {ComparableWeapon, ToolEvidenceState, WeaponComparisonValue} from "@/features/tools/weapon-compare-data";
 import {compareWeaponOptions} from "@/features/tools/weapon-compare-runtime";
 import {decodeWeaponCompareState, encodeWeaponCompareState, type WeaponCompareState} from "@/features/tools/share-state";
@@ -10,6 +10,13 @@ import type {ToolCopy} from "@/features/tools/tool-copy";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
 import {EvidenceProvenance} from "./evidence-provenance";
+
+const emptySearch = () => "";
+
+function subscribeToLocation(onStoreChange: () => void) {
+  window.addEventListener("popstate", onStoreChange);
+  return () => window.removeEventListener("popstate", onStoreChange);
+}
 
 function stateLabel(state: ToolEvidenceState, copy: ToolCopy) {
   if (state === "current") return copy.currentEvidence;
@@ -81,17 +88,19 @@ export function WeaponCompare({
   weapons: readonly ComparableWeapon[];
   initialState: WeaponCompareState;
 }) {
-  const [state, setState] = useState(initialState);
+  const search = useSyncExternalStore(subscribeToLocation, () => window.location.search, emptySearch);
+  const sharedState = useMemo(() => search
+    ? decodeWeaponCompareState(search, weapons.map(({slug}) => slug))
+    : initialState, [search, weapons, initialState]);
+  const [editedState, setEditedState] = useState<WeaponCompareState | null>(null);
+  const state = editedState ?? sharedState;
   const [copied, setCopied] = useState(false);
-  useEffect(() => {
-    if (window.location.search) setState(decodeWeaponCompareState(window.location.search, weapons.map(({slug}) => slug)));
-  }, [weapons]);
   const comparison = useMemo(() => state.left && state.right
     ? compareWeaponOptions(weapons, state.left, state.right)
     : null, [state, weapons]);
 
   function commit(next: WeaponCompareState) {
-    setState(next);
+    setEditedState(next);
     setCopied(false);
     const url = new URL(window.location.href);
     url.search = encodeWeaponCompareState(next);

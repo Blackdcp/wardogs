@@ -25,6 +25,8 @@ describe("operations atlas", () => {
     const mapSlugs = new Set(getCatalogueRecords("maps").map(({slug}) => slug));
 
     expect(operationsAtlasRecords).toHaveLength(7);
+    expect(operationsAtlasRecords[0]?.evidence.sourceUrl).toBe("https://www.team17.com/games/wardogs");
+    expect(operationsAtlasRecords[0]?.sourceLabel).toBe("Official WARDOGS Team17 description");
     for (const record of operationsAtlasRecords) {
       expect(mapSlugs.has(record.id), record.id).toBe(true);
       expect(record.evidence.verifiedAt, record.id).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -91,32 +93,32 @@ describe("operations atlas", () => {
   it("localizes current, historical, contextual, and pending source scope without translating source titles", () => {
     const sourceScopeMatrix = {
       en: {
-        "battlefield-control-zone": "The official Steam description confirms the randomized objective model and battlefield scale; no fixed route is asserted.",
+        "battlefield-control-zone": "The official Team17 description confirms the 256 km² map and randomized 2 x 2 km Control Zone; no fixed route is asserted.",
         "oil-rig-hot-zone": "The creator source demonstrates the Closed Beta construction, delivery, and activation sequence; numeric costs, cooldowns, and current availability remain unverified.",
         "cargo-route": "The approved cargo walkthrough demonstrates a Closed Beta purchase, loading, transport, and unloading sequence; controls, capacity, prices, and routes remain historical.",
       },
       de: {
-        "battlefield-control-zone": "Die offizielle Steam-Beschreibung bestätigt das zufällige Zielmodell und die Größe des Schlachtfelds; eine feste Route wird nicht behauptet.",
+        "battlefield-control-zone": "Die offizielle Team17-Beschreibung bestätigt die 256 km² große Karte und die zufällige 2 × 2 km große Control Zone; eine feste Route wird nicht behauptet.",
         "oil-rig-hot-zone": "Die Creator-Quelle zeigt den Bau-, Liefer- und Aktivierungsablauf der Closed Beta; Zahlenwerte für Kosten und Abklingzeiten sowie die aktuelle Verfügbarkeit bleiben unbestätigt.",
         "cargo-route": "Der freigegebene Fracht-Walkthrough zeigt den Kauf-, Belade-, Transport- und Entladeablauf der Closed Beta; Steuerung, Kapazität, Preise und Routen bleiben historische Angaben.",
       },
       ru: {
-        "battlefield-control-zone": "Официальное описание в Steam подтверждает случайную модель цели и масштаб поля боя; фиксированный маршрут не заявляется.",
+        "battlefield-control-zone": "Официальное описание Team17 подтверждает карту площадью 256 км² и случайную зону контроля 2 × 2 км; фиксированный маршрут не заявляется.",
         "oil-rig-hot-zone": "Источник автора показывает последовательность строительства, доставки и активации в Closed Beta; числовые значения стоимости и перезарядки, а также текущая доступность остаются неподтверждёнными.",
         "cargo-route": "Одобренное руководство по грузам показывает последовательность покупки, погрузки, перевозки и разгрузки в Closed Beta; управление, вместимость, цены и маршруты остаются историческими данными.",
       },
       "pt-br": {
-        "battlefield-control-zone": "A descrição oficial na Steam confirma o modelo de objetivo aleatório e a escala do campo de batalha; nenhuma rota fixa é afirmada.",
+        "battlefield-control-zone": "A descrição oficial da Team17 confirma o mapa de 256 km² e a Control Zone aleatória de 2 × 2 km; nenhuma rota fixa é afirmada.",
         "oil-rig-hot-zone": "A fonte do criador demonstra a sequência de construção, entrega e ativação da Closed Beta; custos numéricos, tempos de recarga e disponibilidade atual continuam não verificados.",
         "cargo-route": "O guia aprovado de carga demonstra a sequência de compra, carregamento, transporte e descarregamento da Closed Beta; controles, capacidade, preços e rotas permanecem históricos.",
       },
       ja: {
-        "battlefield-control-zone": "Steam の公式説明は、目標がランダムに決まる仕組みと戦場規模のみを確認しており、固定ルートがあるとはしていません。",
+        "battlefield-control-zone": "Team17の公式説明は256 km²のマップとランダムに決まる2×2 kmのControl Zoneを確認しており、固定ルートがあるとはしていません。",
         "oil-rig-hot-zone": "クリエイターの資料は Closed Beta における建設、配送、起動の手順を示していますが、費用やクールダウンの数値、現在の利用可否は未確認です。",
         "cargo-route": "承認済みの貨物解説は Closed Beta における購入、積載、輸送、荷下ろしの手順を示していますが、操作、容量、価格、ルートは過去ビルドの情報です。",
       },
       "zh-cn": {
-        "battlefield-control-zone": "Steam 官方说明仅确认了随机目标机制与战场规模，并未确认任何固定路线。",
+        "battlefield-control-zone": "Team17 官方说明确认地图面积为 256 平方公里，控制区为随机的 2×2 公里；未确认固定路线。",
         "oil-rig-hot-zone": "创作者来源展示了 Closed Beta 中建造、运输与启动的流程；具体成本、冷却时间及当前可用性仍未核验。",
         "cargo-route": "已批准的货运讲解展示了 Closed Beta 中购买、装载、运输与卸载的流程；按键、容量、价格和路线均属于历史版本信息。",
       },
@@ -172,7 +174,8 @@ describe("operations atlas", () => {
     expect(html).toContain("data-atlas-sourced-facts");
     expect(html).toContain(copy.workflowNote);
     expect(html).toContain(copy.sourceScopeLabel);
-    expect(html).toContain("The official Steam description confirms the randomized objective model");
+    expect(html).toContain("The official Team17 description confirms the 256 km² map");
+    expect(html).toContain("Official WARDOGS Team17 description");
     expect(html).toContain("Randomized 2 x 2 km Control Zone");
   });
 

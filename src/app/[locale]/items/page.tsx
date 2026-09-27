@@ -10,6 +10,7 @@ import {catalogueGroups} from "@/features/catalogue/catalogue-groups";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecord, CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
+import {itemHubPreviewSlugs} from "@/features/items/item-hub-data";
 import {getLocalizedCatalogGuide, getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getFeaturedItems, itemTypes, type ItemTypeId} from "@/features/items/item-library";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
@@ -20,6 +21,10 @@ import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
 import {buildItemHubMetadata} from "@/lib/item-metadata";
 import {buildItemIndexJsonLd} from "@/lib/item-structured-data";
+import {getTranslations} from "next-intl/server";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string}>};
 
@@ -50,11 +55,6 @@ const categoryMedia: Record<ItemTypeId, CategoryMedia> = {
   loadouts: {image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: "WARDOGS loadout planning catalogue banner"}
 };
 
-const previewSlugs: Record<"weapons" | "vehicles", readonly string[]> = {
-  weapons: ["a-91", "amp-9", "compound-bow"],
-  vehicles: ["bobcat", "l2a6", "uh-1y"]
-};
-
 const previewSizes = "(min-width: 1280px) 386px, (min-width: 640px) calc(33vw - 36px), calc(100vw - 32px)";
 
 export function generateStaticParams() {
@@ -69,7 +69,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
 
 function getPreviewRecords(type: "weapons" | "vehicles", locale: Locale): readonly PublishedPreviewRecord[] {
   const records = getLocalizedCatalogueRecords(getCatalogueRecords(type), locale);
-  return previewSlugs[type].map((slug) => {
+  return itemHubPreviewSlugs[type].map((slug) => {
     const record = records.find((candidate) => candidate.slug === slug);
     if (!record || record.detailStatus !== "published" || !record.detailHref || !record.image || !record.imageAlt) {
       throw new Error(`Missing published ${type} catalogue preview: ${slug}`);
@@ -145,6 +145,7 @@ export default async function ItemsPage({params}: PageProps) {
   const categories = catalogueCategories(locale);
   const featured = getFeaturedItems(6).map((item) => getLocalizedItem(item, locale));
   const ui = getItemUi(locale);
+  const adsT = await getTranslations({locale, namespace: "ads"});
 
   return (
     <main>
@@ -181,7 +182,10 @@ export default async function ItemsPage({params}: PageProps) {
         </div>
       </section>
 
-      <section className="site-container py-2">
+      <section className="site-container py-2" data-page-ad-inventory="items">
+        <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
+        <AdsterraNativeBanner label={adsT("label")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
 
       <section className="site-container py-12 md:py-16" aria-labelledby="catalogue-categories-title">

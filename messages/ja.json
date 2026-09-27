@@ -16,7 +16,7 @@
     "title": "Season 1 Early AccessはPatch 0.11で配信中",
     "description": "9月14日に告知されたメンテナンス時間は経過しました。最新の公式パッチ告知はPatch 0.11です。稼働状況はSteam公式フィードで確認してください。",
     "windowLabel": "現在の確認点",
-    "windowValue": "Patch 0.11 - 9月17日確認",
+    "windowValue": "Patch 0.11 - 9月26日確認",
     "accessLabel": "Patch 0.11の確認済み変更",
     "accessValue": "公式・Communityブラウザーの分離、検索とフィルター、固定サーバーID、キャッシュとGPU修正、アジア地域の容量増加。",
     "closedBetaNote": "BULKHEADは9月15日に販売200万本を発表しました。同時接続数ではなく販売本数です。",
@@ -29,7 +29,7 @@
       "reached": "予定日になりました",
       "checking": "日程を確認中",
       "scheduleOnly": "公式日程に基づく表示で、サーバーのリアルタイム監視ではありません。",
-      "exactTimeUnconfirmed": "早期アクセスの正確な解禁時刻は未確認です。",
+      "exactTimeUnconfirmed": "この日に早期アクセスが開始しました。現在の稼働状況はSteamで確認してください。",
       "dateValue": "2026年9月10日",
       "days": "日",
       "hours": "時",
@@ -59,9 +59,11 @@
     "catalogueHome": "カタログトップ",
     "weapons": "武器",
     "vehicles": "車両",
+    "helicopters": "ヘリコプター",
     "ammo": "弾薬",
     "attachments": "アタッチメント",
     "gear": "装備",
+    "skins": "スキン",
     "equipment": "特殊装備",
     "medical": "医療装備",
     "supplies": "補給物資",
@@ -69,6 +71,8 @@
     "mechanics": "ゲームシステム",
     "operationsAtlas": "作戦アトラス",
     "loadouts": "ロードアウト",
+    "blackMarket": "ブラックマーケット",
+    "goldMarket": "ゴールドマーケット",
     "systemCheck": "PC構成チェック",
     "budgetTool": "ロードアウト予算",
     "weaponCompare": "武器比較",
@@ -88,6 +92,7 @@
     "heroDescription": "装備、操作、現在の参加状況、不具合対策、実戦戦術を出典付きで確認できます。ビルド依存の情報は明確に区別しています。",
     "primaryCta": "Patch 0.11を読む",
     "secondaryCta": "サーバー状態を確認",
+    "quickTasks": {"weapons": "武器", "vehicles": "車両", "map": "マップ計画", "status": "サーバー状態"},
     "status": "Steam Early Access配信中",
     "statsLabel": "WARDOGSの重要情報",
     "stats": {
@@ -231,6 +236,10 @@
           "rumor": "未確認"
         },
         "items": {
+          "season02": {
+            "title": "Season 02は10月15日開始",
+            "description": "公式ティーザーは日付と嵐の映像を示しています。現金とXPのシーズン終了時リセット方針は公表済みですが、Season 02の開始時刻と換算率は未発表です。"
+          },
           "closedBeta02": {
             "title": "Closed Beta 02は終了済み",
             "description": "9月3日から6日のテストは過去の記録です。WARDOGSはSteamのメインアプリでEarly Access配信中です。"
@@ -252,8 +261,8 @@
             "description": "9月14日のメンテナンス時間は終了済みです。現在の変更と運用告知はパッチノートとSteam公式フィードで確認してください。"
           },
           "ps5Release": {
-            "title": "コンソール版は2028年予定",
-            "description": "公式Trailerは2028年を確認しましたが、PS5、Xbox、日程、クロスプレイ、クロス進行は個別に発表されていません。"
+            "title": "PS5・Xboxの機種別発売日は未発表",
+            "description": "Team17はPlayStation 5とXbox Series X|Sを予定機種として明記し、公式トレーラーはコンソール全体の2028年枠を示しています。未確認なのは機種別の発売日です。コンソール版はまだプレイできず、クロスプレイと進行共有も未発表です。"
           }
         }
       }
@@ -332,7 +341,7 @@
         },
         "support": {
           "title": "支援行動でも稼げる",
-          "description": "蘇生、輸送、補給、目標確保は、戦闘と同様に資金獲得へつながります。"
+          "description": "蘇生、味方の輸送、目標確保には現金報酬があります。補給もチームに有用ですが、独立した現金報酬は未確認です。"
         },
         "mobility": {
           "title": "進入ルートを計画する",
@@ -393,6 +402,10 @@
         "Not confirmed": "未確認"
       },
       "items": {
+        "season02": {
+          "title": "WARDOGS Season 02は10月15日に開始",
+          "description": "9月22日の公式ティーザーで日付と嵐の映像を確認できます。現金とXPの基本リセット方針は公表済みですが、開始時刻、パッチ内容、換算率は未発表です。"
+        },
         "closedBeta02": {
           "title": "Closed Beta 02は9月6日に終了",
           "description": "配信は18:00 UTC開始、訂正後のサーバーは9月3日19:00 UTCから9月6日08:00 UTCまで稼働しました。参加条件は過去の記録です。"
@@ -415,11 +428,11 @@
         },
         "earlyAccess": {
           "title": "WARDOGS Early Accessは9月10日開始",
-          "description": "Windows PC版はSteamでプレイ可能です。公式トレーラーは2028年のコンソール展開を発表しましたが、機種と日付は未発表です。"
+          "description": "Windows PC版はSteamでプレイ可能です。公式トレーラーは2028年のコンソール展開を発表し、Team17はPlayStation 5とXbox Series X|Sを予定機種として明記しています。機種別の日付は未発表です。"
         },
         "ps5": {
           "title": "コンソール版は2028年予定",
-          "description": "公式Trailerは2028年を確認しましたが、PS5、Xbox、日程、クロスプレイ、クロス進行は未発表です。"
+          "description": "公式トレーラーは2028年のコンソール展開を発表しました。Team17はPlayStation 5とXbox Series X|Sを予定機種として明記していますが、機種別の発売日、クロスプレイ、進行共有は未発表です。"
         },
         "preload": {
           "title": "公式プリロードは9月9日に開始",
@@ -468,7 +481,7 @@
         },
         "rumor": {
           "title": "噂は噂として表示",
-          "description": "PS5、正確な解禁時刻、開始時のサーバー地域、追加ベータは一次情報が出るまで未確認として扱います。"
+          "description": "機種別のコンソール発売日、クロスプレイ、進行共有、今後の追加ベータは一次情報が出るまで未確認として扱います。"
         },
         "refresh": {
           "title": "共有前に再確認",
@@ -489,7 +502,14 @@
     "byline": "調査・更新",
     "teamName": "WARDOGS Wiki編集チーム",
     "editorialPolicy": "編集方針",
-    "imageSource": "映像出典"
+    "imageSource": "映像出典",
+    "advertisement": "広告"
+  },
+  "ads": {
+    "label": "広告",
+    "sponsored": "スポンサー",
+    "smartlinkCta": "スポンサー提供のおすすめを見る",
+    "smartlinkDescription": "外部のスポンサー広告ページを新しいタブで開きます。"
   },
   "categories": {
     "access": "参加",
@@ -563,11 +583,11 @@
   },
   "privacy": {
     "metaTitle": "WARDOGS Wikiプライバシーポリシー：Cookie・解析・広告",
-    "metaDescription": "WARDOGS WikiにおけるCookie、アクセス解析、Google AdSense広告、外部メディアとリンクの扱い、ゲームアカウント情報を収集しない方針を説明します。",
+    "metaDescription": "WARDOGS WikiにおけるCookie、解析、Google AdSenseと第三者広告、外部メディア、リンク、ゲームアカウント情報を収集しない方針を説明します。",
     "title": "プライバシーポリシー",
     "intro": "このファン攻略はデータ収集を最小限にし、外部メディアとリンクの動作を説明します。",
     "content": "当サイトはプレイヤーアカウントを運営せず、ゲームの認証情報を収集しません。外部サービスを開いた後は各社のプライバシーポリシーが適用されます。",
-    "advertising": "当サイトの運営費用を賄うためGoogle AdSenseを使用します。Googleは、同意が必要な地域では同意に基づき、広告の配信、測定、パーソナライズのためにIPアドレス、ブラウザや端末情報、Cookie等を処理する場合があります。"
+    "advertising": "当サイトのAdsterra広告には、ディスプレイ広告、ネイティブ広告、固定広告、Social Bar、Popunder、スポンサーSmartlinkが含まれる場合があります。すべての形式が常時有効とは限りません。Adsterraと広告パートナーは、同意が必要な地域では同意に基づき、広告の配信、測定、パーソナライズのためにIPアドレス、ブラウザや端末情報、Cookie等を処理する場合があります。有効な場合、スポンサーリンクは外部広告ページを新しいタブで開きます。"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki利用規約：攻略情報の注意事項と免責",
