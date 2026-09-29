@@ -547,7 +547,10 @@
     "methodTitle": "Source-checked and version-aware",
     "methodBody": "Official Steam, Team17, BULKHEAD and WARDOGS sources lead factual updates. Creator footage and community reports are used only with clear labels, dates and build caveats.",
     "independenceTitle": "Independent from the game and advertisers",
-    "independenceBody": "WARDOGS Wiki is not affiliated with BULKHEAD, Team17, Steam or creators. Advertising does not determine rankings, conclusions, source labels or corrections."
+    "independenceBody": "WARDOGS Wiki is not affiliated with BULKHEAD, Team17, Steam or creators. Advertising does not determine rankings, conclusions, source labels or corrections.",
+    "caseStudyTitle": "How the reference is engineered",
+    "caseStudyBody": "T Salon published a technical field report on the site's source rules, build-aware records, six-language content contract, static export and production verification.",
+    "caseStudyCta": "Read the engineering field report"
   },
   "contactPage": {
     "metaTitle": "Contact WARDOGS Wiki: Corrections and Source Tips",

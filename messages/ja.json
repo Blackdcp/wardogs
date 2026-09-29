@@ -547,7 +547,10 @@
     "methodTitle": "出典とバージョンを明示",
     "methodBody": "Steam、Team17、BULKHEAD、WARDOGSの公式情報を優先します。動画やコミュニティ報告には日付、分類、ビルド上の注意を付けます。",
     "independenceTitle": "ゲーム運営と広告主から独立",
-    "independenceBody": "BULKHEAD、Team17、Steam、クリエイターとは提携していません。広告が評価、出典表示、訂正を左右することはありません。"
+    "independenceBody": "BULKHEAD、Team17、Steam、クリエイターとは提携していません。広告が評価、出典表示、訂正を左右することはありません。",
+    "caseStudyTitle": "このリファレンスの設計方法",
+    "caseStudyBody": "T Salon は、情報源ルール、ビルド別記録、6言語のコンテンツ契約、静的エクスポート、本番検証を扱う技術レポートを公開しました。",
+    "caseStudyCta": "技術レポートを読む"
   },
   "contactPage": {
     "metaTitle": "WARDOGS Wikiへの連絡：訂正と情報源",
