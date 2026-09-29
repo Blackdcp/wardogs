@@ -414,8 +414,16 @@ const plannerToolCopy = {
   },
 } as const;
 
-function localizePlannerTerms<T>(value: T, locale: Locale): T {
-  const terms: Record<Locale, string> = {
+type ToolLocale = keyof typeof copy;
+
+export function resolveToolLocale(locale: string): ToolLocale {
+  // New site locales remain usable until their dedicated tool translations land.
+  if (locale === "zh-tw") return "zh-cn";
+  return Object.hasOwn(copy, locale) ? locale as ToolLocale : "en";
+}
+
+function localizePlannerTerms<T>(value: T, locale: ToolLocale): T {
+  const terms: Record<ToolLocale, string> = {
     en: "Season 1",
     de: "Saison 1",
     ru: "Сезон 1",
@@ -423,7 +431,7 @@ function localizePlannerTerms<T>(value: T, locale: Locale): T {
     ja: "シーズン1",
     "zh-cn": "第 1 赛季",
   };
-  const roleTerms: Record<Locale, Record<string, string>> = {
+  const roleTerms: Record<ToolLocale, Record<string, string>> = {
     en: {},
     de: {Assault: "Angriff", Medic: "Sanitäter", Recon: "Aufklärung", Support: "Unterstützung", Driver: "Fahrer", Pilot: "Pilot"},
     ru: {Assault: "Штурмовик", Medic: "Медик", Recon: "Разведчик", Support: "Поддержка", Driver: "Водитель", Pilot: "Пилот"},
@@ -445,11 +453,12 @@ function localizePlannerTerms<T>(value: T, locale: Locale): T {
 }
 
 export function getToolCopy(locale: Locale) {
+  const resolvedLocale = resolveToolLocale(locale);
   return {
     locale,
     ...localizePlannerTerms(
-      {...copy[locale], ...evidenceToolCopy[locale], ...evidenceProvenanceCopy[locale], ...plannerToolCopy[locale]},
-      locale,
+      {...copy[resolvedLocale], ...evidenceToolCopy[resolvedLocale], ...evidenceProvenanceCopy[resolvedLocale], ...plannerToolCopy[resolvedLocale]},
+      resolvedLocale,
     ),
   };
 }

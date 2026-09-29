@@ -80,7 +80,7 @@ describe("GSC growth page reinforcement", () => {
       },
       "wardogs-crash-fix": {
         title: "WARDOGS Crashing or Won't Launch? WD-L020 & Safe Fixes",
-        phrases: ["How do you fix WARDOGS crashes and freezes?", "WD-L020 After KB5124010", "Whole PC reboot"]
+        phrases: ["How do you fix WARDOGS crashes and freezes?", "WD-L020: choose the matching branch", "KB5124010", "Whole PC reboot"]
       },
       "wardogs-helicopter-guide": {
         title: "WARDOGS Helicopter Controls: Fly, Land & Transport",

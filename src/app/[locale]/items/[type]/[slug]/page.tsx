@@ -1,11 +1,14 @@
 import type {Metadata} from "next";
-import Image from "next/image";
+import {ItemImageViewer} from "@/components/catalogue/item-image-viewer";
+import {getCatalogueMediaSource} from "@/features/catalogue/catalogue-media-sources";
 import {notFound} from "next/navigation";
-import {ArrowLeft, ArrowRight, CalendarDays, ExternalLink, GitCompareArrows, PackageSearch} from "lucide-react";
+import {ArrowLeft, ArrowRight, CalendarDays, Calculator, ExternalLink, GitCompareArrows, PackageSearch} from "lucide-react";
 import {EvidencePanel} from "@/components/catalogue/evidence-panel";
 import {ItemChangeHistory} from "@/components/catalogue/item-change-history";
 import {isLocale, type Locale} from "@/config/site";
 import {getCatalogueFreshness} from "@/features/catalogue/catalogue-evidence";
+import {catalogueRecords} from "@/features/catalogue/catalogue-records";
+import {getWorkflowCopy} from "@/features/tools/workflow-copy";
 import {
   getIndexableItemPaths,
   getItemByTypeAndSlug,
@@ -17,7 +20,6 @@ import {isItemDetailRouteAvailable} from "@/features/items/item-route-availabili
 import {Link} from "@/i18n/navigation";
 import {buildItemMetadata, getEnglishItemSearchIntent} from "@/lib/item-metadata";
 import {buildItemArticleJsonLd} from "@/lib/item-structured-data";
-import {assetPath} from "@/lib/assets";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
@@ -77,6 +79,8 @@ export default async function ItemDetailPage({params}: PageProps) {
   const hasObservedAmmunition = baseItem.type === "weapons" && baseItem.facts.some((fact) =>
     fact.label === "Ammunition" && !/Not captured|Not confirmed/.test(fact.value)
   );
+  const canPlanBudget = catalogueRecords.some((record) => record.type === baseItem.type && record.slug === baseItem.slug && !["maps", "mechanics"].includes(record.type));
+  const budgetLabel = getWorkflowCopy(locale).addBudget;
   const [articleT, adsT] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "ads"})
@@ -103,16 +107,12 @@ export default async function ItemDetailPage({params}: PageProps) {
             <p className="mt-2 text-base leading-7 text-white">{locale === "en" ? (getEnglishItemSearchIntent(baseItem)?.answer ?? item.summary) : item.summary}</p>
           </aside>
           {item.detailImage && item.detailImageAlt ? (
-            <figure className="mt-8 border border-[#2c3631] bg-[#151b18] p-2">
-              <Image
+            <ItemImageViewer
                 alt={item.detailImageAlt}
-                className="aspect-video w-full object-contain"
-                height={720}
-                priority
-                src={assetPath(item.detailImage)}
-                width={1280}
-              />
-            </figure>
+                src={item.detailImage}
+                locale={locale}
+                source={baseItem.type === "loadouts" ? undefined : getCatalogueMediaSource({type: baseItem.type, slug: baseItem.slug, image: baseItem.detailImage})}
+            />
           ) : null}
         </div>
       </header>
@@ -144,17 +144,24 @@ export default async function ItemDetailPage({params}: PageProps) {
           </dl>
         </section>
 
-        {baseItem.indexable && baseItem.type === "weapons" ? (
+        {baseItem.indexable && (baseItem.type === "weapons" || canPlanBudget) ? (
           <nav className="mt-10 border-y border-[#2c3631] py-6" aria-label={ui.itemActions}>
             <h2 className="text-sm font-semibold uppercase text-[#9ba9a2]">{ui.itemActions}</h2>
             <div className="mt-4 flex flex-wrap gap-3">
-              <Link
+              {baseItem.type === "weapons" ? <Link
                 className="inline-flex min-h-11 items-center gap-2 rounded-[4px] border border-[#4d946d] bg-[#193124] px-4 py-2 font-semibold text-[#d8f4e4] hover:bg-[#244332]"
                 href={`/tools/weapon-compare?left=${encodeURIComponent(baseItem.slug)}`}
                 title={ui.compare}
               >
                 <GitCompareArrows aria-hidden="true" size={17} />{ui.compare}<ArrowRight aria-hidden="true" size={15} />
-              </Link>
+              </Link> : null}
+              {canPlanBudget ? <Link
+                className="inline-flex min-h-11 items-center gap-2 rounded-[4px] border border-[#46534d] px-4 py-2 font-semibold text-[#d6ded9] hover:border-[#6c8176] hover:text-white"
+                href={`/tools/loadout-budget?pick=${encodeURIComponent(`${baseItem.type}/${baseItem.slug}`)}`}
+                title={budgetLabel}
+              >
+                <Calculator aria-hidden="true" size={17} />{budgetLabel}<ArrowRight aria-hidden="true" size={15} />
+              </Link> : null}
               {hasObservedAmmunition ? (
                 <Link
                   className="inline-flex min-h-11 items-center gap-2 rounded-[4px] border border-[#46534d] px-4 py-2 font-semibold text-[#d6ded9] hover:border-[#6c8176] hover:text-white"

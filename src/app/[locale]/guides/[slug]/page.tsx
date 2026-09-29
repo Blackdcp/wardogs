@@ -3,7 +3,9 @@ import Image from "next/image";
 import {notFound} from "next/navigation";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {ArrowLeft, CalendarDays, ExternalLink} from "lucide-react";
-import {isLocale, locales, officialLinks, type Locale} from "@/config/site";
+import {isLocale, isPilotLocale, locales, officialLinks, type Locale} from "@/config/site";
+import {PilotGuideArticle} from "@/i18n/pilot-pages";
+import {buildPilotGuideMetadata, getPilotGuideStaticParams} from "@/i18n/pilot-guides";
 import {guideManifest} from "@/content/manifest";
 import {compileLocalizedGuideBody, loadGuideDocument} from "@/content/guides";
 import {mdxComponents} from "@/components/mdx/mdx-components";
@@ -33,11 +35,15 @@ import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
 export function generateStaticParams() {
-  return locales.flatMap((locale) => guideManifest.map(({slug}) => ({locale, slug})));
+  return [
+    ...locales.flatMap((locale) => guideManifest.map(({slug}) => ({locale, slug}))),
+    ...getPilotGuideStaticParams()
+  ];
 }
 
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale, slug} = await params;
+  if (isPilotLocale(locale)) return buildPilotGuideMetadata(locale, slug);
   if (!isLocale(locale)) return {};
   const guide = await loadGuideDocument(locale, slug);
   return guide ? buildArticleMetadata(locale, guide) : {};
@@ -57,6 +63,10 @@ function plainDirectAnswer(body: string) {
 
 export default async function GuideArticlePage({params}: PageProps) {
   const {locale: requestedLocale, slug} = await params;
+  if (isPilotLocale(requestedLocale)) {
+    setRequestLocale(requestedLocale);
+    return <PilotGuideArticle locale={requestedLocale} slug={slug} />;
+  }
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
   const guide = await loadGuideDocument(locale, slug);

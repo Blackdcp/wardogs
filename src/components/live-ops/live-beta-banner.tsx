@@ -37,7 +37,7 @@ export async function LiveBetaBanner({compact = false}: LiveBetaBannerProps) {
           </div>
 
           <div className="flex flex-wrap gap-2 lg:flex-col lg:items-stretch lg:justify-self-end xl:flex-row">
-            <Link className="inline-flex min-h-11 items-center gap-2 border border-[#68bd8d] bg-[#24583a] px-4 py-2 text-sm font-semibold text-white hover:bg-[#2c6a46]" href={`/guides/${CURRENT_EVENT.patchNotesGuideSlug}`} title={t("accessCta")}>
+            <Link className="inline-flex min-h-11 items-center gap-2 border border-[#68bd8d] bg-[#24583a] px-4 py-2 text-sm font-semibold text-white hover:bg-[#2c6a46]" href={`/guides/${CURRENT_EVENT.nextSeasonGuideSlug}`} title={t("accessCta")}>
               {t("accessCta")}<ArrowRight aria-hidden="true" className="size-4" />
             </Link>
             <Link className="inline-flex min-h-11 items-center border border-[#4b6255] px-4 py-2 text-sm font-semibold text-[#dbe7df] hover:border-[#79d19c] hover:text-white" href={`/guides/${CURRENT_EVENT.statusGuideSlug}`} title={t("issuesCta")}>

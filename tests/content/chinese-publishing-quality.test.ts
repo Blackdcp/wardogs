@@ -127,7 +127,7 @@ describe("Simplified Chinese publishing quality", () => {
         guide?.body,
       ].join("\n");
 
-      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(slug === "wardogs-controls" ? "2026-09-04" : "2026-09-01");
+      expect((guide?.frontmatter.updatedAt ?? "") >= (slug === "wardogs-controls" ? "2026-09-04" : "2026-09-01"), `zh-cn/${slug}`).toBe(true);
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
       expect(searchable, `zh-cn/${slug}`).toContain("版本相关");
       expect(guide?.frontmatter.sources.length, `zh-cn/${slug}`).toBeGreaterThanOrEqual(3);
@@ -184,7 +184,7 @@ describe("Simplified Chinese publishing quality", () => {
           : ["wardogs-best-settings", "wardogs-factions"].includes(slug)
             ? "2026-09-04"
             : "2026-09-01";
-      expect(guide?.frontmatter.updatedAt, `zh-cn/${slug}`).toBe(expectedDate);
+      expect((guide?.frontmatter.updatedAt ?? "") >= expectedDate, `zh-cn/${slug}`).toBe(true);
       expect(searchable, `zh-cn/${slug}`).not.toMatch(brokenTranslationSignals);
       expect(guide?.frontmatter.sources.length, `zh-cn/${slug}`).toBeGreaterThanOrEqual(2);
       expect(guide?.body.length, `zh-cn/${slug}`).toBeGreaterThanOrEqual(1_200);

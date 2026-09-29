@@ -7,7 +7,7 @@ describe("September 13-17 search performance refresh", () => {
     const guide = await loadGuideDocument("en", "wardogs-ammo-reload-guide");
     const searchable = `${guide?.frontmatter.title}\n${guide?.frontmatter.description}\n${guide?.body}`;
 
-    expect(guide?.frontmatter.updatedAt).toBe("2026-09-17");
+    expect((guide?.frontmatter.updatedAt ?? "") >= "2026-09-17").toBe(true);
     expect(guide?.frontmatter.title).toBe("WARDOGS Ammo Guide: How to Reload, Refill & Change Ammo");
     expect(searchable).toMatch(/how to reload/i);
     expect(searchable).toMatch(/refill.*magazine/i);

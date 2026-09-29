@@ -14,14 +14,14 @@ export function generateStaticParams() {
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
-  const c = interactiveMapPageCopy[locale as Locale];
+  const c = interactiveMapPageCopy[locale] ?? interactiveMapPageCopy.en;
   return buildPageMetadata(locale as Locale, "/tools/map", c.title, c.desc);
 }
 
 export default async function TacticalMapPage({params}: PageProps) {
   const {locale: requestedLocale} = await params;
   if (!isLocale(requestedLocale)) notFound();
-  const c = interactiveMapPageCopy[requestedLocale];
+  const c = interactiveMapPageCopy[requestedLocale] ?? interactiveMapPageCopy.en;
 
   return (
     <main className="site-container py-8 md:py-12">

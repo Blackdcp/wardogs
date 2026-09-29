@@ -5,6 +5,8 @@ out/
 coverage/
 playwright-report/
 test-results/
+.tmp/
+tests/map-artifacts/
 .tmp-catalogue-media/
 .env*
 !.env.example

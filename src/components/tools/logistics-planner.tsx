@@ -6,6 +6,10 @@ import type {LogisticsStage, LogisticsEvidenceState} from "@/features/tools/logi
 import {decodeLogisticsPlanState, encodeLogisticsPlanState, type LogisticsPlanState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {EvidenceProvenance} from "./evidence-provenance";
+import {dataFingerprint, emptySupplyPlan, isToolShareWithinLimit, supplyPlanSchema} from "@/features/tools/workflow-state";
+import {getWorkflowCopy} from "@/features/tools/workflow-copy";
+import {ToolShareNotice} from "./tool-share-notice";
+import {SupplyManifest} from "./supply-manifest";
 
 const emptySearch = () => "";
 
@@ -37,9 +41,14 @@ export function LogisticsPlanner({
   const sharedState = useMemo(() => search
     ? decodeLogisticsPlanState(search, stages.map(({id}) => id))
     : initialState, [search, stages, initialState]);
-  const [editedState, setEditedState] = useState<LogisticsPlanState | null>(null);
-  const state = editedState ?? sharedState;
+  const [editedState, setEditedState] = useState<{search: string; value: LogisticsPlanState} | null>(null);
+  const state = editedState?.search === search ? editedState.value : sharedState;
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState(false);
+  const dataVersion = useMemo(() => dataFingerprint(stages), [stages]);
+  const encodedState = encodeLogisticsPlanState(state, dataVersion);
+  const tooLarge = !isToolShareWithinLimit(encodedState);
+  const validPlan = !state.supplies || supplyPlanSchema.safeParse(state.supplies).success;
   const stageById = useMemo(() => new Map(stages.map((stage) => [stage.id, stage])), [stages]);
   const plan = state.stages.flatMap((id) => {
     const stage = stageById.get(id as LogisticsStage["id"]);
@@ -47,15 +56,19 @@ export function LogisticsPlanner({
   });
 
   function commit(next: LogisticsPlanState) {
-    setEditedState(next);
     setCopied(false);
+    setShareError(false);
     const url = new URL(window.location.href);
-    url.search = encodeLogisticsPlanState(next);
-    window.history.replaceState(null, "", url);
+    const encoded = encodeLogisticsPlanState(next, dataVersion);
+    if (isToolShareWithinLimit(encoded) && (!next.supplies || supplyPlanSchema.safeParse(next.supplies).success)) {
+      url.search = encoded;
+      window.history.replaceState(null, "", url);
+    }
+    setEditedState({search: url.search, value: next});
   }
 
   function toggle(id: LogisticsStage["id"], checked: boolean) {
-    commit({stages: checked ? [...state.stages, id] : state.stages.filter((stage) => stage !== id)});
+    commit({...state, stages: checked ? [...state.stages, id] : state.stages.filter((stage) => stage !== id)});
   }
 
   function move(index: number, delta: -1 | 1) {
@@ -63,19 +76,25 @@ export function LogisticsPlanner({
     if (target < 0 || target >= state.stages.length) return;
     const next = [...state.stages];
     [next[index], next[target]] = [next[target], next[index]];
-    commit({stages: next});
+    commit({...state, stages: next});
   }
 
   async function copyLink() {
+    if (tooLarge || !validPlan) return;
     const url = new URL(window.location.href);
-    url.search = encodeLogisticsPlanState(state);
+    url.search = encodedState;
     window.history.replaceState(null, "", url);
-    await navigator.clipboard.writeText(url.toString());
-    setCopied(true);
+    setEditedState({search: url.search, value: state});
+    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    catch { setShareError(true); }
   }
 
   return (
     <section className="border-y border-[#354039] bg-[#111512]" aria-label={copy.logisticsPlannerTitle}>
+      <ToolShareNotice locale={copy.locale} search={search} dataVersion={dataVersion} invalid={new URLSearchParams(search).has("lp_supplies") && !sharedState.supplies} />
+      <SupplyManifest copy={copy} stages={stages} plan={state.supplies ?? emptySupplyPlan} onChange={(supplies) => commit({...state, supplies})} />
+      {tooLarge ? <p role="status" className="px-5 text-sm text-[#e4c35f]">{getWorkflowCopy(copy.locale).shareTooLarge}</p> : null}
+      {shareError ? <p role="status" className="px-5 text-sm text-[#e4c35f]">{getWorkflowCopy(copy.locale).shareFailed}</p> : null}
       <div className="grid gap-8 p-5 lg:grid-cols-[minmax(15rem,0.7fr)_minmax(0,1.3fr)] md:p-8">
         <fieldset className="min-w-0">
           <legend className="text-xs font-semibold uppercase text-[#69c78f]">{copy.availableStages}</legend>
@@ -92,7 +111,7 @@ export function LogisticsPlanner({
               </label>
             ))}
           </div>
-          <button className="mt-5 inline-flex min-h-11 items-center gap-2 border border-[#397b59] bg-[#397b59] px-4 text-sm font-semibold text-white hover:bg-[#45946c]" onClick={copyLink} type="button" title={copy.copyToolLink}>
+          <button disabled={tooLarge || !validPlan} className="mt-5 inline-flex min-h-11 items-center gap-2 border border-[#397b59] bg-[#397b59] px-4 text-sm font-semibold text-white hover:bg-[#45946c] disabled:opacity-40" onClick={copyLink} type="button" title={copy.copyToolLink}>
             <Copy aria-hidden="true" size={16} />{copied ? copy.copiedToolLink : copy.copyToolLink}
           </button>
         </fieldset>

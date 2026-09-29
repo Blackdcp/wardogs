@@ -1,6 +1,6 @@
 import type {Metadata} from "next";
 import {getTranslations, setRequestLocale} from "next-intl/server";
-import {notFound} from "next/navigation";
+import {notFound, permanentRedirect} from "next/navigation";
 import {CatalogueHomeBand} from "@/components/catalogue/catalogue-home-band";
 import {AboutGame} from "@/components/home/about-game";
 import {BeginnerTips} from "@/components/home/beginner-tips";
@@ -14,7 +14,8 @@ import {OfficialMedia} from "@/components/home/official-media";
 import {PriorityGuides} from "@/components/home/priority-guides";
 import {SiteSearch, type SiteSearchCopy} from "@/components/home/site-search";
 import {VideoIntelligence} from "@/components/home/video-intelligence";
-import {isLocale} from "@/config/site";
+import {isLocale, isPilotLocale} from "@/config/site";
+import {publicRoutePath} from "@/lib/public-url";
 import {listGuideSummaries} from "@/content/guides";
 import {getHomeFacts} from "@/features/home/home-data";
 import {buildSiteSearchIndex} from "@/features/search/site-search-index";
@@ -32,6 +33,7 @@ type HomePageProps = {
 
 export async function generateMetadata({params}: HomePageProps): Promise<Metadata> {
   const {locale} = await params;
+  if (isPilotLocale(locale)) permanentRedirect(publicRoutePath(`/${locale}/guides`));
   if (!isLocale(locale)) notFound();
 
   const t = await getTranslations({locale, namespace: "home"});
@@ -40,6 +42,7 @@ export async function generateMetadata({params}: HomePageProps): Promise<Metadat
 
 export default async function HomePage({params}: HomePageProps) {
   const {locale} = await params;
+  if (isPilotLocale(locale)) permanentRedirect(publicRoutePath(`/${locale}/guides`));
   if (!isLocale(locale)) notFound();
 
   setRequestLocale(locale);

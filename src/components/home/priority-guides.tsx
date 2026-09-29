@@ -18,7 +18,7 @@ const statusStyles = {
 
 export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
   const t = await getTranslations();
-  const {top: topGuides, recent: recentGuides, status: statusItems} = getHomePriorityGuides(guides);
+  const {top: topGuides, recent: recentGuides, status: statusItems} = getHomePriorityGuides(guides, locale);
 
   return (
     <section aria-labelledby="priority-guides-title" className="border-b border-[#26312c] bg-[#111613] py-16 sm:py-20">

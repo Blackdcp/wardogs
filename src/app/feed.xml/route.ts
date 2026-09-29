@@ -1,6 +1,7 @@
 import englishMessages from "../../../messages/en.json";
 import {listGuideSummaries} from "@/content/guides";
 import {NEWS_UPDATES} from "@/features/news/news-data";
+import {getServiceUpdates} from "@/features/news/service-updates";
 import {getSiteOrigin} from "@/lib/metadata";
 
 export const dynamic = "force-static";
@@ -22,19 +23,22 @@ export async function GET() {
   const origin = getSiteOrigin();
   const guides = await listGuideSummaries("en");
   const newsMessages = englishMessages.news.timeline.items;
+  const updates = [
+    ...getServiceUpdates("en"),
+    ...NEWS_UPDATES.map((update) => ({...update, ...newsMessages[update.titleKey]}))
+  ];
 
-  const newsItems = NEWS_UPDATES.map((update) => {
-    const message = newsMessages[update.titleKey];
+  const newsItems = updates.map((update) => {
     const link = `${origin}/en/guides/${update.guideSlug}`;
 
     return [
       "    <item>",
-      `      <title>${escapeXml(message.title)}</title>`,
+      `      <title>${escapeXml(update.title)}</title>`,
       `      <link>${escapeXml(link)}</link>`,
       `      <guid isPermaLink="false">urn:wardogswiki:news:${update.titleKey}:${update.date}</guid>`,
       `      <pubDate>${toRssDate(update.date)}</pubDate>`,
       "      <category>News</category>",
-      `      <description>${escapeXml(message.description)}</description>`,
+      `      <description>${escapeXml(update.description)}</description>`,
       "    </item>"
     ].join("\n");
   });
@@ -56,7 +60,7 @@ export async function GET() {
   });
 
   const publicationDates = [
-    ...NEWS_UPDATES.map((update) => update.date),
+    ...updates.map((update) => update.date),
     ...guides.map((guide) => guide.updatedAt)
   ].sort();
   const lastBuildDate = toRssDate(publicationDates.at(-1) ?? "2026-09-05");

@@ -1,4 +1,6 @@
 import {describe, expect, it} from "vitest";
+import {readFileSync} from "node:fs";
+import matter from "gray-matter";
 import sitemap, {resolveEditorialHubLastModified, resolveItemLastModified, resolveMapHubLastModified} from "../../src/app/sitemap";
 import {guideManifest} from "../../src/content/manifest";
 import {locales} from "../../src/config/site";
@@ -9,6 +11,11 @@ import {getCatalogGuide} from "../../src/features/items/item-catalog-guides";
 import {getItemLatestVerifiedAt} from "../../src/features/items/item-freshness";
 import {itemHubPreviewSlugs} from "../../src/features/items/item-hub-data";
 import {videoArticles} from "../../src/features/videos/video-library";
+import {videoCandidates} from "../../src/features/videos/video-candidates";
+import {getServiceUpdates} from "../../src/features/news/service-updates";
+import {pilotGuideSlugs, siteLanguageTags} from "../../src/i18n/pilot-locales";
+import {pilotLocales} from "../../src/config/site";
+import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "../../src/features/news/news-data";
 
 const origin = "http://localhost:3000";
 
@@ -32,6 +39,9 @@ function pageAlternates(pathname: string) {
     "pt-BR": `${origin}/pt-br${pathname}`,
     ja: `${origin}/ja${pathname}`,
     "zh-CN": `${origin}/zh-cn${pathname}`,
+    ...Object.fromEntries(pilotLocales
+      .filter((locale) => pathname === "/guides" || (pilotGuideSlugs[locale] as readonly string[]).some((slug) => pathname === `/guides/${slug}`))
+      .map((locale) => [siteLanguageTags[locale], `${origin}/${locale}${pathname}`])),
     "x-default": `${origin}/en${pathname}`
   };
 }
@@ -58,23 +68,19 @@ describe("sitemap", () => {
 
   it("marks refreshed hubs with the current editorial date", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
-
-    for (const path of ["", "/guides"]) {
-      expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path || "/")
-        .toBe("2026-09-26T00:00:00.000Z");
+    const dateOf = (pathname: string) => new Date(entriesByUrl.get(`${origin}/en${pathname}`)!.lastModified!).toISOString().slice(0, 10);
+    const guideDate = (slug: string) => String(matter(readFileSync(`content/en/guides/${slug}.mdx`, "utf8")).data.updatedAt);
+    const videoDates = [...videoArticles.map(({updatedDate}) => updatedDate), ...videoCandidates.map(({metadataCheckedAt}) => metadataCheckedAt)];
+    const latestGuide = [...guideManifest.map(({slug}) => guideDate(slug)), ...videoDates].sort().at(-1)!;
+    expect(dateOf("/guides")).toBe(latestGuide);
+    expect(dateOf("/videos")).toBe(videoDates.sort().at(-1));
+    expect(dateOf("/news")).toBe([...NEWS_UPDATES.map(({date}) => date), ...getServiceUpdates("en").map(({date}) => date), ...NEWS_CHECKLIST_SLUGS.map(guideDate)].sort().at(-1));
+    for (const pathname of ["/tools/loadout-budget", "/tools/logistics-planner", "/tools/map"]) {
+      expect(dateOf(pathname)).toBe("2026-09-30");
     }
-    for (const path of ["/videos", "/maps", "/items/weapons"]) {
-      expect(new Date(entriesByUrl.get(`${origin}/en${path}`)!.lastModified!).toISOString(), path)
-        .toBe("2026-09-26T00:00:00.000Z");
+    for (const pathname of ["/guides", "/videos", "/maps", "/items", "/news"]) {
+      expect(dateOf("") >= dateOf(pathname), pathname).toBe(true);
     }
-    expect(new Date(entriesByUrl.get(`${origin}/en/items/vehicles`)!.lastModified!).toISOString())
-      .toBe("2026-09-27T00:00:00.000Z");
-    expect(new Date(entriesByUrl.get(`${origin}/en/items`)!.lastModified!).toISOString())
-      .toBe("2026-09-17T00:00:00.000Z");
-    expect(new Date(entriesByUrl.get(`${origin}/en/items/loadouts`)!.lastModified!).toISOString())
-      .toBe("2026-09-17T00:00:00.000Z");
-    expect(new Date(entriesByUrl.get(`${origin}/en/news`)!.lastModified!).toISOString())
-      .toBe("2026-09-26T00:00:00.000Z");
   });
 
   it("does not let an unfeatured detail update falsely refresh the item homepage", () => {
@@ -93,7 +99,7 @@ describe("sitemap", () => {
     expect(new Date(itemHome!.lastModified!).toISOString()).toBe(`${latestVisible}T00:00:00.000Z`);
   });
 
-  it("publishes every guide in all five locales with reciprocal hreflang", () => {
+  it("publishes full-site guides with reciprocal hreflang only for real pilot translations", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const locale of locales) {
@@ -112,9 +118,9 @@ describe("sitemap", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     expect(new Date(entriesByUrl.get(`${origin}/en/guides/wardogs-fob-guide`)!.lastModified!).toISOString())
-      .toBe("2026-09-17T00:00:00.000Z");
+      .toBe(`${matter(readFileSync("content/en/guides/wardogs-fob-guide.mdx", "utf8")).data.updatedAt}T00:00:00.000Z`);
     expect(new Date(entriesByUrl.get(`${origin}/ja/guides/wardogs-money-guide`)!.lastModified!).toISOString())
-      .toBe("2026-09-26T00:00:00.000Z");
+      .toBe(`${matter(readFileSync("content/ja/guides/wardogs-money-guide.mdx", "utf8")).data.updatedAt}T00:00:00.000Z`);
   });
 
   it("includes the video hub and every standalone video article in all five locales", () => {

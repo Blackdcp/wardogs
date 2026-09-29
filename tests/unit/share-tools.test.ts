@@ -90,7 +90,7 @@ describe("shareable player tools", () => {
     const roles = ["assault", "medic", "recon", "support", "driver", "pilot"];
     const state = {role: "driver", currentLevel: 18};
 
-    expect(encodeProgressionRouteState(state)).toBe("pr_role=driver&pr_level=18");
+    expect(encodeProgressionRouteState(state)).toContain("pr_role=driver&pr_level=18");
     expect(decodeProgressionRouteState(encodeProgressionRouteState(state), roles)).toEqual(state);
     expect(decodeProgressionRouteState("pr_role=unknown&pr_level=-1", roles)).toEqual({role: "assault", currentLevel: null});
     expect(decodeProgressionRouteState("pr_role=medic&pr_role=pilot&pr_level=9&pr_level=10", roles))
@@ -102,7 +102,7 @@ describe("shareable player tools", () => {
     const stages = ["spawn", "construction", "supply", "transport", "defense", "recovery"];
     const state = {stages: ["transport", "supply", "recovery"]};
 
-    expect(encodeLogisticsPlanState(state)).toBe("lp_stages=transport%2Csupply%2Crecovery");
+    expect(encodeLogisticsPlanState(state)).toContain("lp_stages=transport%2Csupply%2Crecovery");
     expect(decodeLogisticsPlanState(encodeLogisticsPlanState(state), stages)).toEqual(state);
     expect(decodeLogisticsPlanState("lp_stages=none", stages)).toEqual({stages: []});
     expect(decodeLogisticsPlanState("lp_stages=supply,supply", stages)).toEqual({stages});

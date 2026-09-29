@@ -30,7 +30,7 @@ describe("api/status.json", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
     expect(payload).toMatchObject({
       schemaVersion: 2,
-      dataAsOf: "2026-09-26",
+      dataAsOf: "2026-09-30",
       game: "WARDOGS",
       currentEvent: {
         id: "early-access-patch-0-11",
@@ -49,6 +49,12 @@ describe("api/status.json", () => {
         patchVersion: "0.11",
         startsAt: "2026-09-14T08:00:00Z",
         expectedDurationMinutes: 60
+      },
+      nextSeason: {
+        date: "2026-10-15",
+        datePrecision: "date",
+        exactTimeConfirmed: false,
+        status: "announced"
       }
     });
     expect(payload.historicalEvents).toContainEqual(expect.objectContaining({

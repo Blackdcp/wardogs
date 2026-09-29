@@ -1,0 +1,18 @@
+{
+  "common": {"language": "Język", "skipToContent": "Przejdź do treści", "fanMade": "Nieoficjalna, niezależna wiki"},
+  "ads": {"label": "Reklama"},
+  "notFound": {"title": "Nie ma tej strony", "description": "Ten temat nie ma jeszcze polskiej wersji. Przejdź do dostępnych poradników.", "home": "Strona poradników", "guides": "Polskie poradniki"},
+  "pilot": {
+    "title": "WARDOGS: poradniki po polsku",
+    "description": "Budżet wyposażenia, transport palet do FOB, odblokowanie pojazdów, obsługa moździerza i przejmowanie wież. Angielskie nazwy interfejsu ułatwiają odnalezienie opcji w grze.",
+    "allGuides": "Wszystkie polskie poradniki", "read": "Czytaj poradnik", "related": "Powiązane poradniki", "sources": "Źródła",
+    "checked": "Weryfikacja źródła", "updated": "Aktualizacja", "faq": "Pytania i odpowiedzi", "english": "Pełna wersja angielska", "language": "Język",
+    "team": "Redakcja WARDOGS Wiki", "independent": "Nieoficjalna strona graczy, niezwiązana z BULKHEAD ani Team17.",
+    "review": "Tekst opracowano i sprawdzono z pomocą AI, bez zewnętrznej korekty rodzimego użytkownika języka. Nie deklarujemy nowych testów w grze.",
+    "image": "Grafika z gry WARDOGS", "imageCredit": "Źródło ilustracji", "bodyNav": "Spis treści",
+    "tools": "Narzędzia i mapa po angielsku", "budget": "Budżet wyposażenia (EN)", "map": "Mapa interaktywna (EN)",
+    "logistics": "Planowanie logistyki (EN)", "official": "Oficjalne ogłoszenia Steam", "otherLanguage": "Inne języki",
+    "sitePolicies": "Informacje i zasady strony (po angielsku)", "about": "O stronie (EN)", "contact": "Kontakt (EN)",
+    "editorialPolicy": "Zasady redakcyjne (EN)", "privacy": "Polityka prywatności (EN)", "terms": "Warunki korzystania (EN)"
+  }
+}

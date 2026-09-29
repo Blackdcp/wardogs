@@ -1,6 +1,4 @@
-import type {Locale} from "@/config/site";
-
-export const interactiveMapPageCopy: Record<Locale, {title: string; desc: string; badge: string}> = {
+export const interactiveMapPageCopy: Record<string, {title: string; desc: string; badge: string}> = {
   "zh-cn": {
     title: "WARDOGS 交互式战区地图",
     desc: "查看 Bakurani、Ozeti、Zestafona 三张 2D 战场底图。支持拖动、缩放和切换地图。",

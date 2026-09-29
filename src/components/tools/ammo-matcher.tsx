@@ -10,6 +10,9 @@ import type {ToolCopy} from "@/features/tools/tool-copy";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
 import {EvidenceProvenance} from "./evidence-provenance";
+import {ToolShareNotice} from "./tool-share-notice";
+import {dataFingerprint, hasInvalidSelection} from "@/features/tools/workflow-state";
+import {getWorkflowCopy} from "@/features/tools/workflow-copy";
 
 const emptySearch = () => "";
 
@@ -77,26 +80,31 @@ export function AmmoMatcher({
   const [editedState, setEditedState] = useState<AmmoMatcherState | null>(null);
   const state = editedState ?? sharedState;
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState(false);
+  const dataVersion = useMemo(() => dataFingerprint(dataset), [dataset]);
   const result = useMemo(() => matchAmmoDataset(dataset, state), [dataset, state]);
 
   function commit(next: AmmoMatcherState) {
     setEditedState(next);
     setCopied(false);
+    setShareError(false);
     const url = new URL(window.location.href);
-    url.search = encodeAmmoMatcherState(next);
+    url.search = encodeAmmoMatcherState(next, dataVersion);
     window.history.replaceState(null, "", url);
   }
 
   async function copyLink() {
     const url = new URL(window.location.href);
-    url.search = encodeAmmoMatcherState(state);
+    url.search = encodeAmmoMatcherState(state, dataVersion);
     window.history.replaceState(null, "", url);
-    await navigator.clipboard.writeText(url.toString());
-    setCopied(true);
+    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    catch { setShareError(true); }
   }
 
   return (
     <section className="border-y border-[#354039] bg-[#111512]" aria-label={copy.ammoMatcherTitle}>
+      <ToolShareNotice locale={copy.locale} search={search} dataVersion={dataVersion} invalid={hasInvalidSelection(search, "weapon", dataset.weapons.map(({slug}) => slug)) || hasInvalidSelection(search, "ammo", dataset.ammo.map(({slug}) => slug))} />
+      {shareError ? <p className="px-5 text-sm text-[#e4c35f]" role="status">{getWorkflowCopy(copy.locale).shareFailed}</p> : null}
       <div className="grid gap-5 p-5 sm:grid-cols-2 md:p-8">
         <label className="grid min-w-0 gap-2 text-sm font-semibold text-[#cbd5cf]">
           {copy.selectWeapon}
@@ -119,6 +127,8 @@ export function AmmoMatcher({
           </button>
         </div>
       </div>
+
+      {state.weapon || state.ammo ? <Link className="mx-5 mb-5 inline-flex min-h-11 items-center gap-2 border border-[#397b59] px-4 text-sm font-semibold text-[#7fd0a1]" title={`${getWorkflowCopy(copy.locale).addBudget}: ${[result.selectedWeapon?.name, result.selectedAmmo?.name].filter(Boolean).join(", ")}`} href={`/tools/loadout-budget?${[state.weapon ? `pick=${encodeURIComponent(`weapons/${state.weapon}`)}` : "", state.ammo ? `pick=${encodeURIComponent(`ammo/${state.ammo}`)}` : ""].filter(Boolean).join("&")}`}>{getWorkflowCopy(copy.locale).addBudget}<ArrowRight size={16} aria-hidden="true" /></Link> : null}
 
       {!result.selectedWeapon && !result.selectedAmmo ? (
         <p className="border-t border-[#354039] px-5 py-10 text-center text-sm leading-6 text-[#a8b4ae] md:px-8">{copy.emptyMatcher}</p>

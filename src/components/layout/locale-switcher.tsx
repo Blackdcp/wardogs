@@ -3,19 +3,21 @@
 import {useId, useTransition, type ChangeEvent} from "react";
 import {ChevronDown, Languages} from "lucide-react";
 import {useLocale} from "next-intl";
-import type {Locale} from "@/config/site";
-import {locales} from "@/config/site";
+import {isPilotLocale, isSiteLocale, siteLocales, type SiteLocale} from "@/config/site";
+import {getPilotSwitchPath, siteLocaleLabels} from "@/i18n/pilot-locales";
 import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {usePathname, useRouter} from "@/i18n/navigation";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 
-const localeLabels: Record<Locale, string> = {
+const localeLabels: Record<SiteLocale, string> = {
   en: "EN",
   ru: "RU",
   de: "DE",
   "pt-br": "PT-BR",
   ja: "JA",
-  "zh-cn": "简中"
+  "zh-cn": "简中",
+  "zh-tw": "繁中",
+  pl: "PL"
 };
 
 type LocaleSwitcherProps = {
@@ -25,15 +27,18 @@ type LocaleSwitcherProps = {
 
 export function LocaleSwitcher({label, compact = false}: LocaleSwitcherProps) {
   const id = useId();
-  const locale = useLocale() as Locale;
+  const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
-    const nextLocale = event.target.value as Locale;
+    const nextLocale = event.target.value;
+    if (!isSiteLocale(nextLocale)) return;
     if (nextLocale === locale) return;
-    const target = resolveItemRouteTarget(nextLocale, pathname, "localized-category");
+    const target = isPilotLocale(nextLocale)
+      ? {locale: nextLocale, pathname: getPilotSwitchPath(nextLocale, pathname)}
+      : resolveItemRouteTarget(nextLocale, pathname, "localized-category");
     trackAnalyticsEvent(ANALYTICS_EVENTS.languageSwitch, {
       from_locale: locale,
       to_locale: nextLocale,
@@ -57,8 +62,8 @@ export function LocaleSwitcher({label, compact = false}: LocaleSwitcherProps) {
         onChange={handleChange}
         disabled={isPending}
       >
-        {locales.map((option) => (
-          <option key={option} value={option} className="bg-[#151b18] text-[#f2f5f3]">
+        {siteLocales.map((option) => (
+          <option key={option} value={option} title={siteLocaleLabels[option]} className="bg-[#151b18] text-[#f2f5f3]">
             {localeLabels[option]}
           </option>
         ))}

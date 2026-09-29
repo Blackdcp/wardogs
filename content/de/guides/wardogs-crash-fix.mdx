@@ -5,7 +5,7 @@ keyword: "wardogs crash fix"
 category: "guide"
 slug: "wardogs-crash-fix"
 order: 25
-updatedAt: "2026-09-04"
+updatedAt: "2026-09-30"
 badges:
   - label: "Fehlerbehebung"
     tone: "accent"
@@ -43,9 +43,17 @@ sources:
     checkedAt: "2026-09-04"
 ---
 
-## Absturzdiagnose in Beta 02
+## WD-L020 oder Login-Problem?
+Die [Entwicklermeldung vom 23. September](https://steamcommunity.com/app/1867240/discussions/0/585060903246928845/) beschreibt eine **mögliche**, nicht allgemeingültige Verbindung mit Windows 11 KB5124010. Die behobene Verteilung vom 24. September und Service-Rückkehr vom 25. September belegen keine Kompatibilitätskorrektur.
 
-Trenne während Beta 02 zuerst einen Dienstfehler von einem lokalen Absturz. Eine laufende Login-Warteschlange, eine leere Liste bei mehreren gewählten Regionen oder ein geschlossener Server werden nicht durch eine Windows-Neuinstallation behoben. Bei einem echten Absturz: Fehler festhalten, Steam-Dateien prüfen, Grafiktreiber aktualisieren, Overlays schließen, Übertaktung zurücksetzen und nur eine Variable ändern. Der offizielle Hinweis bestätigt, dass Abstürze verfolgt werden, nennt aber keine universelle Ursache.
+| Beobachtung | Nächster Schritt | Grenze |
+| --- | --- | --- |
+| WD-L020, KB5124010 installiert, Beginn danach | Updateverlauf mit dem Hinweis vergleichen; auf einen Spiel-Fix warten lässt Windows-Schutz unverändert | Rollback nicht als sichere Lösung versprechen |
+| KB fehlt oder anderer Fehlercode | Steam-Dateien, offiziellen GPU-Treiber und mitgelieferte Elytra-Reparatur einzeln prüfen | Keine fremden Updates entfernen |
+| Reagierende Queue, feststehender Login oder Berechtigungsfehler | Phase notieren; [gleiche Region](/de/guides/wardogs-server-status), Steam-Konto und Hauptspiel prüfen | Windows-Neuinstallation schafft keine Serverplätze |
+| Ganzer PC startet neu oder geht aus | Wiederholte Starts stoppen und Systemstabilität prüfen | Nicht als normalen Spielabsturz weiter testen |
+
+Team17 nennt die Entfernung des Preview-Updates optional und weist auf Sicherheits-, Stabilitäts- und Kompatibilitätsrisiken hin. Aktuelle Meldung und Regeln verwalteter Geräte zuerst lesen. Ohne reguläre Rücknahme keine Pakete erzwingen, keine Schutzfunktionen oder Anti-Cheat deaktivieren. Supportbericht: Datum/Zeitzone, Spiel-Build, Fehlerbild, Startphase, Windows-Build/Updateverlauf, GPU-Treiber und bisherige Ergebnisse; persönliche Daten schwärzen.
 
 ## Wie behebt man Abstürze und Einfrieren in WARDOGS?
 

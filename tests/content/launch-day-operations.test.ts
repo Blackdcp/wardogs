@@ -25,7 +25,8 @@ describe("September 17 Early Access operations", () => {
   it("keeps launch availability and patch publication claims evidence-labeled", async () => {
     const status = await loadGuideDocument("en", "wardogs-server-status");
     const patches = await loadGuideDocument("en", "wardogs-patch-notes");
-    expect(status?.body).toMatch(/Steam.*source of truth|source of truth.*Steam/i);
+    expect(status?.frontmatter.sources.some(source => source.kind === "official" && source.url.includes("steamcommunity.com"))).toBe(true);
+    expect(status?.body).toContain("https://x.com/WARDOGSUpdates/status/2103054159641538707");
     expect(status?.body).toMatch(/not.*live telemetry|does (?:\*\*)?not(?:\*\*)? operate.*telemetry/i);
     expect(patches?.body).toMatch(/Patch 0\.11/i);
     expect(patches?.body).toMatch(/Season 1[\s\S]*Launch Stability Hotfix|Launch Stability Hotfix[\s\S]*Season 1/i);

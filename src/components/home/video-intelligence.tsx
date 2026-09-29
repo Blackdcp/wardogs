@@ -3,6 +3,8 @@ import type {Locale} from "@/config/site";
 import {CurrentVideoSourceGrid} from "@/components/videos/current-video-source-grid";
 import {currentVideoSources} from "@/features/videos/video-library";
 import {getVideoUi} from "@/features/videos/video-ui";
+import {getVideoCandidateCopy} from "@/features/videos/video-candidate-copy";
+import {publicRoutePath} from "@/lib/public-url";
 
 export function VideoIntelligence({locale}: {locale: Locale}) {
   const ui = getVideoUi(locale);
@@ -23,12 +25,15 @@ export function VideoIntelligence({locale}: {locale: Locale}) {
               {ui.currentSourcesDescription}
             </p>
           </div>
-          <a href={`/${locale}/videos`} className="inline-flex min-h-11 items-center gap-2 self-start rounded-[6px] border border-[#46534d] px-5 py-2.5 text-sm font-semibold text-[#f2f5f3] hover:border-[#5e7168] hover:bg-[#202723] md:self-auto" title={ui.allVideos}>
+          <a href={publicRoutePath(`/${locale}/videos`)} className="inline-flex min-h-11 items-center gap-2 self-start rounded-[6px] border border-[#46534d] px-5 py-2.5 text-sm font-semibold text-[#f2f5f3] hover:border-[#5e7168] hover:bg-[#202723] md:self-auto" title={ui.allVideos}>
             {ui.allVideos}
             <ArrowRight aria-hidden="true" className="size-4" />
           </a>
         </div>
 
+        <a className="mt-6 inline-flex items-center gap-2 text-sm text-[#79d19c]" title={getVideoCandidateCopy(locale).title} href={publicRoutePath(`/${locale}/videos#creator-candidates`)}>
+          {getVideoCandidateCopy(locale).title}<ArrowRight aria-hidden="true" className="size-4" />
+        </a>
         <div className="mt-10"><CurrentVideoSourceGrid limit={6} locale={locale} sources={currentVideoSources} /></div>
       </div>
     </section>

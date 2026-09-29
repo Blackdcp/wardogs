@@ -23,6 +23,14 @@ export function getPublicStatus() {
       launched: true,
       storeUrl: CURRENT_EVENT.storeUrl
     },
+    nextSeason: {
+      name: "Season 02",
+      date: CURRENT_EVENT.nextSeasonDate,
+      datePrecision: "date",
+      exactTimeConfirmed: false,
+      status: "announced",
+      officialUrl: CURRENT_EVENT.nextSeasonUrl
+    },
     maintenance: {
       status: "window-passed",
       patchVersion: CURRENT_EVENT.latestPatchVersion,
@@ -54,12 +62,14 @@ export function getPublicStatus() {
       knownIssues: `${origin}/en/guides/${CURRENT_EVENT.issuesGuideSlug}`,
       serverStatus: `${origin}/en/guides/${CURRENT_EVENT.statusGuideSlug}`,
       patchNotes: `${origin}/en/guides/${CURRENT_EVENT.patchNotesGuideSlug}`,
+      nextSeason: `${origin}/en/guides/${CURRENT_EVENT.nextSeasonGuideSlug}`,
       api: `${origin}/api/status.json`,
       widget: `${origin}/embed/status`
     },
     sources: [
       {kind: "official", label: "Patch 0.11 and the published maintenance window", url: CURRENT_EVENT.latestOfficialUrl},
-      {kind: "official", label: "2 million copies sold milestone", url: CURRENT_EVENT.latestOfficialUrl},
+      {kind: "official", label: CURRENT_EVENT.latestMilestone, url: CURRENT_EVENT.latestOfficialUrl},
+      {kind: "official", label: "Season 02 announced for October 15", url: CURRENT_EVENT.nextSeasonUrl},
       {kind: "official", label: "Steam Early Access store", url: CURRENT_EVENT.storeUrl},
       {kind: "official", label: "Pre-Load Live and Season 1 changelog", url: CURRENT_EVENT.seasonOnePatchUrl},
       {kind: "official", label: "Launch Stability Hotfix #1", url: CURRENT_EVENT.launchHotfixUrl},

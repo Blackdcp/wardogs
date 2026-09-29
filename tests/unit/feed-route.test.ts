@@ -33,6 +33,8 @@ describe("feed.xml", () => {
     expect(body).toContain("/feed.xml");
     expect(body).toContain("<category>News</category>");
     expect(body).toContain("Closed Beta 02 ended September 6");
+    expect(body).toContain("Three million copies sold");
+    expect(body).toContain("urn:wardogswiki:news:securityMaintenanceSeptember25:2026-09-25");
     expect(body).toContain("/en/guides/wardogs-beta");
     expect(body).toContain("<category>Guide</category>");
     expect(body).toContain("/en/guides/wardogs-system-requirements");

@@ -3,6 +3,7 @@ import {notFound} from "next/navigation";
 import {Clapperboard} from "lucide-react";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {CurrentVideoSourceGrid} from "@/components/videos/current-video-source-grid";
+import {VideoCandidateList} from "@/components/videos/video-candidate-list";
 import {VideoArticleCard} from "@/components/videos/video-article-card";
 import {currentVideoSources, videoArticles} from "@/features/videos/video-library";
 import {getLocalizedFeaturedVideoArticles} from "@/features/videos/video-localization";
@@ -61,6 +62,7 @@ export default async function VideosPage({params}: PageProps) {
           </p>
         </div>
       </section>
+      <VideoCandidateList locale={locale} />
       <section className="border-b border-[#2c3631] bg-[#151b18]">
         <div className="site-container py-12 md:py-16">
           <div className="max-w-3xl">

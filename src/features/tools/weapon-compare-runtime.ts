@@ -2,7 +2,17 @@ import type {
   ComparableWeapon,
   WeaponComparison,
   WeaponComparisonValue,
+  WeaponComparisonRow,
 } from "./weapon-compare-data";
+
+export function comparisonRowDiffers(row: WeaponComparisonRow): boolean {
+  return row.left.value !== row.right.value || row.left.state !== row.right.state || row.left.build !== row.right.build;
+}
+
+export function searchComparableWeapons(weapons: readonly ComparableWeapon[], query: string, subtype = "") {
+  const text = query.trim().toLocaleLowerCase();
+  return weapons.filter((weapon) => (!subtype || weapon.subtype === subtype) && `${weapon.name} ${weapon.slug} ${weapon.subtype}`.toLocaleLowerCase().includes(text));
+}
 
 function unknownValue(): WeaponComparisonValue {
   return {

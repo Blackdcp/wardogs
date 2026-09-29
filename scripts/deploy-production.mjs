@@ -6,9 +6,14 @@ import {SITE_ORIGIN, fetchLiveSitemapUrls, submitIndexNow} from "./submit-indexn
 
 const livePages = [
   "/en",
+  "/ja",
   "/en/guides/wardogs-squad-guide",
   "/en/guides/wardogs-known-issues",
-  "/en/tools/map"
+  "/en/tools/map",
+  "/en/tools/loadout-budget",
+  "/en/videos",
+  "/zh-tw/guides",
+  "/pl/guides"
 ];
 const defaultSnapshotPath = path.join(process.cwd(), ".indexnow", "predeploy-sitemap.json");
 
@@ -59,7 +64,11 @@ export async function verifyProduction(fetchImpl = fetch, siteOrigin = SITE_ORIG
   for (const pathname of livePages) {
     const response = await fetchImpl(`${siteOrigin}${pathname}`, {redirect: "manual"});
     if (response.status !== 200) throw new Error(`Production smoke: ${pathname} returned ${response.status}, expected 200.`);
-    if (!hasCanonical(await response.text(), `${siteOrigin}${pathname}`)) {
+    const html = await response.text();
+    if (hasNoindex(html) || /\bnoindex\b/i.test(response.headers.get("x-robots-tag") ?? "")) {
+      throw new Error(`Production smoke: ${pathname} unexpectedly has noindex.`);
+    }
+    if (!hasCanonical(html, `${siteOrigin}${pathname}`)) {
       throw new Error(`Production smoke: ${pathname} has no matching canonical URL.`);
     }
   }
@@ -68,8 +77,9 @@ export async function verifyProduction(fetchImpl = fetch, siteOrigin = SITE_ORIG
   const sitemapXml = await sitemapResponse.text();
   if (sitemapResponse.status !== 200 ||
     !sitemapXml.includes(`<loc>${siteOrigin}/en</loc>`) ||
+    !sitemapXml.includes(`<loc>${siteOrigin}/ja</loc>`) ||
     !sitemapXml.includes(`<loc>${siteOrigin}/en/tools/map</loc>`)) {
-    throw new Error("Production smoke: sitemap.xml is unavailable or missing the English home or map URL.");
+    throw new Error("Production smoke: sitemap.xml is unavailable or missing the English/Japanese home or map URL.");
   }
 
   const redirectResponse = await fetchImpl(`${siteOrigin}/maps`, {redirect: "manual"});
@@ -83,7 +93,7 @@ export async function verifyProduction(fetchImpl = fetch, siteOrigin = SITE_ORIG
   if (missingResponse.status !== 404 || !hasNoindex(missingHtml) || hasSearchMetadataLink(missingHtml) || hasSearchMetadataHeader(missingResponse.headers.get("link") ?? "")) {
     throw new Error("Production smoke: unavailable item is not a clean 404 with noindex.");
   }
-  return {checked: 8};
+  return {checked: livePages.length + 4};
 }
 
 function git(...args) {

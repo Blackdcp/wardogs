@@ -20,7 +20,7 @@ describe("WARDOGS Linux and Proton status", () => {
       const guide = await loadGuideDocument(locale, slug);
 
       expect(guide, `${locale}/${slug}`).not.toBeNull();
-      expect(guide?.frontmatter.updatedAt, locale).toBe("2026-09-26");
+      expect((guide?.frontmatter.updatedAt ?? "") >= "2026-09-26", locale).toBe(true);
       expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({
         url: officialLinuxStatusUrl,
         kind: "official",

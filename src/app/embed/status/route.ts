@@ -43,7 +43,7 @@ export function GET() {
         <span class="badge" id="status-badge">Live</span>
       </div>
       <h1 id="status-title">WARDOGS Early Access is live</h1>
-      <p class="schedule">Patch 0.11 is the latest official patch announcement.</p>
+      <p class="schedule">Season 2 is announced for October 15. The exact start time is not confirmed.</p>
       <div class="status-grid">
         <div class="status-item">
           <span class="status-label">Current phase</span>
@@ -51,11 +51,12 @@ export function GET() {
         </div>
         <div class="status-item">
           <span class="status-label">Last checked</span>
-          <span class="status-value">September 17</span>
+          <span class="status-value">${status.dataAsOf}</span>
         </div>
       </div>
-      <p class="note">The published maintenance window has passed. This is not live telemetry; use the official feed for live service status before troubleshooting locally.</p>
+      <p class="note">This is the published release schedule, not live server telemetry. Check the official feed for service interruptions.</p>
       <div class="links">
+        <a href="${status.links.nextSeason}" target="_blank" rel="noopener noreferrer">Season 2 and wipes</a>
         <a href="${officialSource.url}" target="_blank" rel="noopener noreferrer">Official source</a>
         <span>Powered by <a href="${status.links.home}" target="_blank" rel="noopener noreferrer">WARDOGS Wiki</a></span>
       </div>

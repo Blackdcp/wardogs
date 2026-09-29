@@ -6,6 +6,9 @@ import type {ProgressionRoleRoute, ProgressionRoleId} from "@/features/tools/pro
 import {decodeProgressionRouteState, encodeProgressionRouteState, type ProgressionRouteState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {EvidenceProvenance} from "./evidence-provenance";
+import {ToolShareNotice} from "./tool-share-notice";
+import {dataFingerprint} from "@/features/tools/workflow-state";
+import {getWorkflowCopy} from "@/features/tools/workflow-copy";
 
 const emptySearch = () => "";
 
@@ -30,6 +33,8 @@ export function ProgressionRoute({
   const [editedState, setEditedState] = useState<ProgressionRouteState | null>(null);
   const state = editedState ?? sharedState;
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState(false);
+  const dataVersion = useMemo(() => dataFingerprint(routes), [routes]);
   const route = useMemo(
     () => routes.find(({id}) => id === state.role) ?? routes[0],
     [routes, state.role],
@@ -38,23 +43,26 @@ export function ProgressionRoute({
   function commit(next: ProgressionRouteState) {
     setEditedState(next);
     setCopied(false);
+    setShareError(false);
     const url = new URL(window.location.href);
-    url.search = encodeProgressionRouteState(next);
+    url.search = encodeProgressionRouteState(next, dataVersion);
     window.history.replaceState(null, "", url);
   }
 
   async function copyLink() {
     const url = new URL(window.location.href);
-    url.search = encodeProgressionRouteState(state);
+    url.search = encodeProgressionRouteState(state, dataVersion);
     window.history.replaceState(null, "", url);
-    await navigator.clipboard.writeText(url.toString());
-    setCopied(true);
+    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    catch { setShareError(true); }
   }
 
   if (!route) return null;
 
   return (
     <section className="border-y border-[#354039] bg-[#111512]" aria-label={copy.progressionRouteTitle}>
+      <ToolShareNotice locale={copy.locale} search={search} dataVersion={dataVersion} />
+      {shareError ? <p role="status" className="px-5 text-sm text-[#e4c35f]">{getWorkflowCopy(copy.locale).shareFailed}</p> : null}
       <div className="grid gap-5 p-5 sm:grid-cols-2 md:p-8">
         <label className="grid min-w-0 gap-2 text-sm font-semibold text-[#cbd5cf]">
           {copy.selectRole}

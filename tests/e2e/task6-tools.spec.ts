@@ -10,8 +10,8 @@ async function expectNoHorizontalOverflow(page: Page) {
   expect(metrics.documentWidth).toBeLessThanOrEqual(metrics.viewportWidth);
 }
 
-test("mobile progression and logistics tools keep ordered share state", async ({context, page}) => {
-  await context.grantPermissions(["clipboard-read", "clipboard-write"], {origin: "http://127.0.0.1:3000"});
+test("mobile progression and logistics tools keep ordered share state", async ({context, page, baseURL}) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {origin: new URL(baseURL!).origin});
   await page.setViewportSize(mobileViewport);
 
   await page.goto("/en/tools/progression-route?pr_role=driver&pr_level=18");
@@ -23,7 +23,7 @@ test("mobile progression and logistics tools keep ordered share state", async ({
 
   await page.getByRole("combobox", {name: "Role track"}).selectOption("pilot");
   await page.getByRole("spinbutton", {name: "Current level shown in your client"}).fill("22");
-  await expect(page).toHaveURL(/pr_role=pilot&pr_level=22$/);
+  await expect(page).toHaveURL((url) => url.searchParams.get("pr_role") === "pilot" && url.searchParams.get("pr_level") === "22" && url.searchParams.get("schema") === "2");
   await page.getByRole("button", {name: "Copy tool link"}).click();
   await expect(page.getByRole("button", {name: "Tool link copied"})).toBeVisible();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
@@ -38,10 +38,10 @@ test("mobile progression and logistics tools keep ordered share state", async ({
   await expect(recoveryStage.getByText("Source class: Official")).toHaveCount(0);
 
   await page.getByRole("button", {name: "Move earlier: Supply"}).click();
-  await expect(page).toHaveURL(/lp_stages=supply%2Ctransport%2Crecovery$/);
+  await expect(page).toHaveURL((url) => url.searchParams.get("lp_stages") === "supply,transport,recovery");
   await expect.poll(stageNames).toEqual(["Supply", "Transport", "Recovery"]);
   await page.getByRole("checkbox", {name: "Recovery"}).uncheck();
-  await expect(page).toHaveURL(/lp_stages=supply%2Ctransport$/);
+  await expect(page).toHaveURL((url) => url.searchParams.get("lp_stages") === "supply,transport");
   await page.getByRole("button", {name: "Copy tool link"}).click();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
 });

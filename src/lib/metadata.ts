@@ -4,6 +4,7 @@ import type {Locale} from "@/config/site";
 import {assetPath} from "@/lib/assets";
 import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 import {getPublicSiteBase, publicAssetUrl, publicRoutePath, publicRouteUrl} from "@/lib/public-url";
+import {buildAvailableGuideAlternates, buildGuideIndexAlternates} from "@/i18n/pilot-guides";
 
 const languageTags: Record<Locale, string> = {
   en: "en",
@@ -33,6 +34,12 @@ export function buildLocalizedUrl(locale: Locale, pathname: string) {
 }
 
 export function buildAlternates(locale: Locale, pathname: string): NonNullable<Metadata["alternates"]> {
+  const cleanPath = pathname.replace(/\/+$/, "");
+  if (cleanPath === "/guides") return buildGuideIndexAlternates(locale);
+  const guideMatch = /^\/guides\/([^/]+)$/.exec(cleanPath);
+  if (guideMatch) {
+    return buildAvailableGuideAlternates(locale, guideMatch[1]) ?? {canonical: buildLocalizedUrl(locale, pathname)};
+  }
   return {
     canonical: buildLocalizedUrl(locale, pathname),
     languages: {

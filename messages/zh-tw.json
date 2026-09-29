@@ -1,0 +1,18 @@
+{
+  "common": {"language": "語言", "skipToContent": "跳至主要內容", "fanMade": "獨立非官方玩家攻略"},
+  "ads": {"label": "廣告"},
+  "notFound": {"title": "找不到這個頁面", "description": "這個主題尚未提供繁體中文頁面，請前往現有攻略目錄。", "home": "攻略首頁", "guides": "瀏覽繁中攻略"},
+  "pilot": {
+    "title": "WARDOGS 繁體中文攻略",
+    "description": "新手配裝預算、醫療救援、塔與控圈、FOB 貨運，以及倍鏡操作排查。保留英文介面術語，區分官方規則、操作建議與待確認細節。",
+    "allGuides": "全部繁中攻略", "read": "閱讀攻略", "related": "延伸閱讀", "sources": "資料來源",
+    "checked": "來源核對", "updated": "文章更新", "faq": "常見問題", "english": "英文完整站", "language": "語言",
+    "team": "WARDOGS Wiki 編輯", "independent": "本站為非官方玩家網站，與 BULKHEAD 或 Team17 無隸屬關係。",
+    "review": "文字經 AI 編輯自校，尚未經外部母語審校；未宣稱本輪已完成遊戲內實測。",
+    "image": "WARDOGS 遊戲畫面", "imageCredit": "圖片來源", "bodyNav": "本頁章節",
+    "tools": "英文工具與地圖", "budget": "配裝預算（英文）", "map": "互動地圖（英文）",
+    "logistics": "後勤規劃（英文）", "official": "官方 Steam 公告", "otherLanguage": "其他語言",
+    "sitePolicies": "網站資訊與政策（英文版）", "about": "關於本站（英文）", "contact": "聯絡我們（英文）",
+    "editorialPolicy": "編輯政策（英文）", "privacy": "隱私政策（英文）", "terms": "服務條款（英文）"
+  }
+}

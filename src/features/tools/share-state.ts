@@ -1,3 +1,5 @@
+import {inspectToolState, isToolShareWithinLimit, purchaseLinesSchema, readJsonParam, stampToolState, supplyPlanSchema, type PurchaseLine, type SupplyPlan} from "./workflow-state";
+
 export type HardwareTier = "below" | "minimum" | "recommended" | "unknown";
 export type WindowsVersion = "windows-10" | "windows-11" | "unsupported";
 
@@ -14,11 +16,15 @@ export type BudgetState = {
   loadout: number;
   vehicle: number;
   reserve: number;
+  once?: number;
+  mode?: "total" | "items";
+  lines?: PurchaseLine[];
 };
 
 export type WeaponCompareState = {
   left: string | null;
   right: string | null;
+  differences?: boolean;
 };
 
 export type AmmoMatcherState = {
@@ -33,6 +39,7 @@ export type ProgressionRouteState = {
 
 export type LogisticsPlanState = {
   stages: string[];
+  supplies?: SupplyPlan;
 };
 
 export type ToolSearchParams = Record<string, string | string[] | undefined>;
@@ -68,16 +75,17 @@ export function serializeToolSearchParams(searchParams: ToolSearchParams) {
 }
 
 export function encodeSystemCheckState(state: SystemCheckState) {
-  return new URLSearchParams({
+  return stampToolState(new URLSearchParams({
     os: state.os,
     ram: String(state.ramGb),
     storage: String(state.storageGb),
     cpu: state.cpuTier,
     gpu: state.gpuTier,
-  }).toString();
+  }));
 }
 
 export function decodeSystemCheckState(value: string): SystemCheckState | null {
+  if (inspectToolState(value).status === "unsupported") return null;
   const params = new URLSearchParams(value.replace(/^\?/, ""));
   const os = params.get("os") as WindowsVersion;
   const cpuTier = params.get("cpu") as HardwareTier;
@@ -117,23 +125,52 @@ export function evaluateSystemCheck(state: SystemCheckState): {level: "below" | 
   return {level: "minimum", limiting};
 }
 
-export function encodeBudgetState(state: BudgetState) {
-  return new URLSearchParams({
+export function encodeBudgetState(state: BudgetState, dataVersion?: string) {
+  const params = new URLSearchParams({
     cash: String(state.cash),
     loadout: String(state.loadout),
     vehicle: String(state.vehicle),
     reserve: String(state.reserve),
-  }).toString();
+  });
+  if (state.once !== undefined) params.set("once", String(state.once));
+  if (state.mode) params.set("mode", state.mode);
+  if (state.lines) params.set("lines", JSON.stringify(state.lines));
+  return stampToolState(params, dataVersion);
 }
 
 export function decodeBudgetState(value: string): BudgetState | null {
+  if (!isToolShareWithinLimit(value) || inspectToolState(value).status === "unsupported") return null;
   const params = new URLSearchParams(value.replace(/^\?/, ""));
-  const cash = parseBoundedInteger(params.get("cash"));
-  const loadout = parseBoundedInteger(params.get("loadout"));
-  const vehicle = parseBoundedInteger(params.get("vehicle"));
-  const reserve = parseBoundedInteger(params.get("reserve"));
+  const cash = readMoneyParam(params, "cash");
+  const loadout = readMoneyParam(params, "loadout");
+  const vehicle = readMoneyParam(params, "vehicle");
+  const reserve = readMoneyParam(params, "reserve");
   if (cash === null || loadout === null || vehicle === null || reserve === null) return null;
-  return {cash, loadout, vehicle, reserve};
+  const state: BudgetState = {cash, loadout, vehicle, reserve};
+  if (params.has("once")) {
+    const once = readMoneyParam(params, "once");
+    if (once === null) return null;
+    state.once = once;
+  }
+  if (params.has("mode")) {
+    const mode = readSingleAllowedParam(params, "mode", new Set(["items", "total"]));
+    if (!mode) return null;
+    state.mode = mode as "items" | "total";
+  }
+  if (params.has("lines")) {
+    const lines = readJsonParam(params, "lines", purchaseLinesSchema);
+    if (!lines) return null;
+    state.lines = lines;
+  }
+  if (state.mode === "items" && !state.lines) return null;
+  return state;
+}
+
+function readMoneyParam(params: URLSearchParams, key: string) {
+  const values = params.getAll(key);
+  if (values.length !== 1 || !/^\d+(\.\d{1,2})?$/.test(values[0])) return null;
+  const value = Number(values[0]);
+  return Number.isFinite(value) && value <= 1_000_000 ? value : null;
 }
 
 export function calculateBudget(state: BudgetState) {
@@ -142,14 +179,16 @@ export function calculateBudget(state: BudgetState) {
   return {spent, remaining, reserveMet: remaining >= state.reserve};
 }
 
-export function encodeWeaponCompareState(state: WeaponCompareState) {
+export function encodeWeaponCompareState(state: WeaponCompareState, dataVersion?: string) {
   const params = new URLSearchParams();
   if (state.left) params.set("left", state.left);
   if (state.right) params.set("right", state.right);
-  return params.toString();
+  if (state.differences !== undefined) params.set("differences", state.differences ? "1" : "0");
+  return stampToolState(params, dataVersion);
 }
 
 export function decodeWeaponCompareState(value: string, allowedSlugs: readonly string[]): WeaponCompareState {
+  if (inspectToolState(value).status === "unsupported") return {left: allowedSlugs[0] ?? null, right: allowedSlugs[1] ?? null};
   const params = new URLSearchParams(value.replace(/^\?/, ""));
   const allowed = new Set(allowedSlugs);
   const requestedLeft = readSingleAllowedParam(params, "left", allowed);
@@ -159,14 +198,14 @@ export function decodeWeaponCompareState(value: string, allowedSlugs: readonly s
     ? requestedRight
     : allowedSlugs.find((slug) => slug !== left) ?? null;
 
-  return {left, right};
+  return {left, right, ...(params.getAll("differences").length === 1 && ["0", "1"].includes(params.get("differences") ?? "") ? {differences: params.get("differences") === "1"} : {})};
 }
 
-export function encodeAmmoMatcherState(state: AmmoMatcherState) {
+export function encodeAmmoMatcherState(state: AmmoMatcherState, dataVersion?: string) {
   const params = new URLSearchParams();
   if (state.weapon) params.set("weapon", state.weapon);
   if (state.ammo) params.set("ammo", state.ammo);
-  return params.toString();
+  return stampToolState(params, dataVersion);
 }
 
 export function decodeAmmoMatcherState(
@@ -174,6 +213,7 @@ export function decodeAmmoMatcherState(
   allowedWeaponSlugs: readonly string[],
   allowedAmmoSlugs: readonly string[],
 ): AmmoMatcherState {
+  if (inspectToolState(value).status === "unsupported") return {weapon: null, ammo: null};
   const params = new URLSearchParams(value.replace(/^\?/, ""));
   return {
     weapon: readSingleAllowedParam(params, "weapon", new Set(allowedWeaponSlugs)),
@@ -181,16 +221,17 @@ export function decodeAmmoMatcherState(
   };
 }
 
-export function encodeProgressionRouteState(state: ProgressionRouteState) {
+export function encodeProgressionRouteState(state: ProgressionRouteState, dataVersion?: string) {
   const params = new URLSearchParams({pr_role: state.role});
   if (state.currentLevel !== null) params.set("pr_level", String(state.currentLevel));
-  return params.toString();
+  return stampToolState(params, dataVersion);
 }
 
 export function decodeProgressionRouteState(
   value: string,
   allowedRoles: readonly string[],
 ): ProgressionRouteState {
+  if (inspectToolState(value).status === "unsupported") return {role: allowedRoles[0] ?? "", currentLevel: null};
   const params = new URLSearchParams(value.replace(/^\?/, ""));
   const role = readSingleAllowedParam(params, "pr_role", new Set(allowedRoles)) ?? allowedRoles[0] ?? "";
   return {
@@ -199,19 +240,24 @@ export function decodeProgressionRouteState(
   };
 }
 
-export function encodeLogisticsPlanState(state: LogisticsPlanState) {
-  return new URLSearchParams({lp_stages: state.stages.length > 0 ? state.stages.join(",") : "none"}).toString();
+export function encodeLogisticsPlanState(state: LogisticsPlanState, dataVersion?: string) {
+  const params = new URLSearchParams({lp_stages: state.stages.length > 0 ? state.stages.join(",") : "none"});
+  if (state.supplies) params.set("lp_supplies", JSON.stringify(state.supplies));
+  return stampToolState(params, dataVersion);
 }
 
 export function decodeLogisticsPlanState(
   value: string,
   allowedStages: readonly string[],
 ): LogisticsPlanState {
+  if (!isToolShareWithinLimit(value) || inspectToolState(value).status === "unsupported") return {stages: [...allowedStages]};
   const params = new URLSearchParams(value.replace(/^\?/, ""));
+  const supplies = readJsonParam(params, "lp_supplies", supplyPlanSchema);
+  const extra = supplies ? {supplies} : {};
   const values = params.getAll("lp_stages");
-  if (values.length === 0) return {stages: [...allowedStages]};
-  if (values.length !== 1) return {stages: [...allowedStages]};
-  if (values[0] === "none") return {stages: []};
+  if (values.length === 0) return {stages: [...allowedStages], ...extra};
+  if (values.length !== 1) return {stages: [...allowedStages], ...extra};
+  if (values[0] === "none") return {stages: [], ...extra};
 
   const stages = values[0].split(",").filter(Boolean);
   const allowed = new Set(allowedStages);
@@ -222,5 +268,5 @@ export function decodeLogisticsPlanState(
   ) {
     return {stages: [...allowedStages]};
   }
-  return {stages};
+  return {stages, ...extra};
 }

@@ -1,8 +1,19 @@
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
-import {describe, expect, it} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
 
 describe("Adsterra behavioral ads", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.resetModules();
+  });
+
+  it.each([undefined, "false", "1", "true"])("only enables popunders with explicit true: %s", async (value) => {
+    vi.stubEnv("NEXT_PUBLIC_WARDOGS_ENABLE_POPUNDER", value);
+    vi.resetModules();
+    const {BEHAVIORAL_POPUNDER_ENABLED} = await import("../../src/features/ads/ad-policy");
+    expect(BEHAVIORAL_POPUNDER_ENABLED).toBe(value === "true");
+  });
   it("runs behavioral ads across every localized public page", async () => {
     const {isBehavioralAdPath} = await import("../../src/features/ads/ad-policy");
 

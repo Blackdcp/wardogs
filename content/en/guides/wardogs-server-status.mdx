@@ -5,7 +5,7 @@ keyword: "wardogs server status"
 category: "guide"
 slug: "wardogs-server-status"
 order: 49
-updatedAt: "2026-09-17"
+updatedAt: "2026-09-30"
 badges:
   - label: "Launch Day"
     tone: "accent"
@@ -38,17 +38,18 @@ sources:
     kind: "community"
     checkedAt: "2026-09-10"
 ---
-## September 17 server status and latest patch
+## September 24-29: incidents, recovery and developer response
+| Date | Official record | What it does not prove |
+| --- | --- | --- |
+| 2026-09-24 | [Wrong Steam build distributed](https://x.com/WARDOGSUpdates/status/2103051537308135694); [official reply says resolved](https://x.com/WARDOGSUpdates/status/2103054159641538707) | A new numbered patch or a WD-L020 fix |
+| 2026-09-25 | [Security maintenance planned for 11:00 UTC](https://x.com/WARDOGSUpdates/status/2103432101781545416); [services returning at 11:42 UTC](https://x.com/WARDOGSUpdates/status/2103450008431313221) | Every region is healthy now, or Windows compatibility is fixed |
+| 2026-09-29 | [Joe Brammer publishes a balancing/XP response](https://x.com/Brammflakes/status/2104937869634662749) | A verified XP change or release commitment; full video transcript not reviewed |
 
-Patch 0.11 is the latest official patch announcement. Its published September 14 08:00 UTC maintenance window has passed. The announcement covered separate Official and Community server browsers, search and filter improvements, persistent server IDs, cash and GPU fixes, and additional Asia capacity. The official Steam feed remains the source of truth for newer incidents; this site does not operate live telemetry.
-
-Launch Stability Hotfix #1 targeted failed joins, unexpected kicks, and extended login queues. A later developer update said the launch queue should have passed, but that historical notice is not a guarantee of current uptime in every region.
-
-Before reinstalling, check for a Steam update, verify the selected region, compare reports from the same region and UTC window, and record the build number and exact error. Patch 0.11 also changes the server browser and increases Asian capacity.
+The September 24 request to restart and download approximately 16 GB applied to the small affected group at that time, not everyone today. These are dated notices, not live telemetry. For a new failure, capture the current region, time/timezone, build and exact error, then compare the latest official notice before reinstalling. Use the [crash branches](/en/guides/wardogs-crash-fix) for a client that actually exits.
 
 ## Quick Answer
 
-Patch 0.11 is the latest official patch announcement. Its published September 14 08:00 UTC maintenance window has passed. The announcement covered separate Official and Community server browsers, search and filter improvements, persistent server IDs, cash and GPU fixes, and additional Asia capacity. Check the official Steam feed for newer incidents; this site does not operate live telemetry.
+This page records dated official incidents, not live uptime. Match a new failure to the current official notice, region, build and exact error. A queue, an entitlement error and a process crash require different checks below.
 
 ## Fast status check
 

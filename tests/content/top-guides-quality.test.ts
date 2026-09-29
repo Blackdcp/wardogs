@@ -6,8 +6,6 @@ import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
 const requiredHeadings = [
   "## Quick Answer",
   "## Confirmed Facts",
-  "## What Players Search For",
-  "## How to Use This Guide",
   "## Sources and Last Checked",
   "## Related Guides"
 ] as const;

@@ -78,6 +78,13 @@ describe("item detail route entry", () => {
 
     expect(hrefs).toContain("/tools/weapon-compare?left=amp-9");
     expect(hrefs).toContain("/tools/ammo-matcher?weapon=amp-9");
+    expect(hrefs).toContain("/tools/loadout-budget?pick=weapons%2Famp-9");
+  });
+
+  it("preselects non-weapon catalogue items without weapon-only actions", async () => {
+    const hrefs = collectHrefs(await ItemDetailPage(localizedBobcatParams));
+    expect(hrefs).toContain("/tools/loadout-budget?pick=vehicles%2Fbobcat");
+    expect(hrefs.some((href) => href.startsWith("/tools/weapon-compare"))).toBe(false);
   });
 
   it("keeps authored AMP-9 and Bobcat routes indexable with canonical alternates", async () => {

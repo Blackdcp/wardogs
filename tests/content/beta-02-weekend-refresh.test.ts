@@ -119,6 +119,9 @@ describe("Closed Beta 02 weekend release contract", () => {
         }
         if (slug === "wardogs-ps5") {
           expect(guide?.body, `${locale}/${slug}`).toContain("2028");
+        } else if (slug === "wardogs-crash-fix") {
+          expect(guide?.body, `${locale}/${slug}`).toContain("WD-L020");
+          expect(guide?.body, `${locale}/${slug}`).toContain("KB5124010");
         } else {
           expect(guide?.body, `${locale}/${slug}`).toContain("Beta 02");
         }

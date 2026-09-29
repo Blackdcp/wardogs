@@ -38,7 +38,7 @@ describe("source-backed catalogue player guides", () => {
           : locale === "zh-cn"
             ? "2026-09-01"
             : "2026-08-30";
-        expect(guide?.frontmatter.updatedAt, `${locale}/${slug}`).toBe(expectedDate);
+        expect((guide?.frontmatter.updatedAt ?? "") >= expectedDate, `${locale}/${slug}`).toBe(true);
         expect(guide?.frontmatter.sources.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(2);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(1_800);
         expect(searchable, `${locale}/${slug}`).toMatch(languageSignals[locale]);

@@ -3,6 +3,8 @@
 import {CheckCircle2, Copy, ExternalLink, TriangleAlert} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
 import type {ToolCopy} from "@/features/tools/tool-copy";
+import {ToolShareNotice} from "./tool-share-notice";
+import {getWorkflowCopy} from "@/features/tools/workflow-copy";
 import {
   decodeSystemCheckState,
   encodeSystemCheckState,
@@ -26,6 +28,7 @@ export function SystemChecker({copy}: {copy: ToolCopy}) {
   const [editedState, setEditedState] = useState<SystemCheckState | null>(null);
   const state = editedState ?? sharedState ?? defaults;
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState(false);
   const result = useMemo(() => evaluateSystemCheck(state), [state]);
 
   const tierOptions: {value: HardwareTier; label: string}[] = [
@@ -38,12 +41,14 @@ export function SystemChecker({copy}: {copy: ToolCopy}) {
     const url = new URL(window.location.href);
     url.search = encodeSystemCheckState(state);
     window.history.replaceState(null, "", url);
-    await navigator.clipboard.writeText(url.toString());
-    setCopied(true);
+    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    catch { setShareError(true); }
   }
 
   return (
     <section className="border-y border-[#354039] bg-[#111512]" aria-labelledby="system-check-form">
+      <ToolShareNotice locale={copy.locale} search={search} />
+      {shareError ? <p role="status" className="px-5 text-sm text-[#e4c35f]">{getWorkflowCopy(copy.locale).shareFailed}</p> : null}
       <div className="grid gap-8 p-5 md:grid-cols-2 md:p-8">
         <div className="grid content-start gap-5">
           <label className="grid gap-2 text-sm text-[#cbd5cf]">{copy.os}

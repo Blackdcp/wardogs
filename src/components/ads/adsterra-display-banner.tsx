@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useRef, useState} from "react";
+import {X} from "lucide-react";
 import {ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
 
 export type AdsterraBannerUnit = {
@@ -134,14 +135,16 @@ export function AdsterraDisplayBanner({label, placement}: AdsterraDisplayBannerP
   );
 }
 
-function FixedBanner({label, media, placement, position, unit}: {
+function FixedBanner({label, media, placement, position, unit, dismissLabel}: {
   label?: string;
   media: string;
   placement: string;
   position: string;
   unit: AdsterraBannerUnit;
+  dismissLabel?: string;
 }) {
   const [enabled, setEnabled] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     const query = window.matchMedia(media);
@@ -151,20 +154,25 @@ function FixedBanner({label, media, placement, position, unit}: {
     return () => query.removeEventListener("change", update);
   }, [media]);
 
+  if (dismissed) return null;
   return (
     <div className={position} data-ad-placement={placement}>
+      {enabled && dismissLabel ? <button type="button" className="absolute bottom-full right-0 flex size-11 items-center justify-center rounded-t border border-[#46534d] bg-[#0d0f0e] text-white hover:bg-[#223329]" onClick={() => setDismissed(true)} aria-label={dismissLabel} title={dismissLabel}><X aria-hidden="true" size={18} /></button> : null}
       {enabled ? <BannerSlot label={label} placement={`${placement}-creative`} unit={unit} /> : null}
     </div>
   );
 }
 
-export function AdsterraGlobalInventory({label = "Advertisement"}: {label?: string} = {}) {
+const closeAd: Record<string, string> = {en: "Close advertisement", ja: "広告を閉じる", ru: "Закрыть рекламу", de: "Werbung schließen", "pt-br": "Fechar anúncio", "zh-cn": "关闭广告", "zh-tw": "關閉廣告", pl: "Zamknij reklamę"};
+
+export function AdsterraGlobalInventory({label = "Advertisement", locale = "en"}: {label?: string; locale?: string} = {}) {
   return (
     <>
       <FixedBanner
         label={label}
         media="(max-width: 467px)"
         placement="mobile-sticky"
+        dismissLabel={closeAd[locale] ?? closeAd.en}
         position="fixed inset-x-0 bottom-0 z-[70] mx-auto w-[320px] border-t border-[#2c3631] bg-[#0d0f0e] pt-1 min-[468px]:hidden"
         unit={ADSTERRA_BANNER_UNITS.mobile320}
       />

@@ -11,8 +11,11 @@ import {getFeaturedItems, getIndexableItemPaths, getItemByTypeAndSlug, itemLibra
 import {getItemLatestVerifiedAt, type ItemFreshnessSource} from "@/features/items/item-freshness";
 import {operationsAtlasRecords} from "@/features/maps/operations-atlas";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "@/features/news/news-data";
+import {getServiceUpdates} from "@/features/news/service-updates";
 import {videoArticles} from "@/features/videos/video-library";
+import {videoCandidates} from "@/features/videos/video-candidates";
 import {buildAlternates} from "@/lib/metadata";
+import {getPilotSitemapEntries} from "@/i18n/pilot-guides";
 
 const staticPaths = [
   "",
@@ -44,6 +47,9 @@ const freshHubPaths = new Set([
   "/guides",
   "/news",
   "/tools/weapon-compare",
+  "/tools/loadout-budget",
+  "/tools/system-check",
+  "/tools/map",
   "/tools/ammo-matcher",
   "/tools/progression-route",
   "/tools/logistics-planner",
@@ -109,9 +115,10 @@ function editorialHubSources(locale: string): EditorialHubSources {
     guides: guideManifest.map(({slug}) => resolveGuideUpdatedAt(locale, slug)),
     news: [
       ...NEWS_UPDATES.map(({date}) => date),
+      ...getServiceUpdates(locale).map(({date}) => date),
       ...NEWS_CHECKLIST_SLUGS.map((slug) => resolveGuideUpdatedAt(locale, slug))
     ],
-    videos: videoArticles.map(({updatedDate}) => updatedDate),
+    videos: [...videoArticles.map(({updatedDate}) => updatedDate), ...videoCandidates.map(({metadataCheckedAt}) => metadataCheckedAt)],
     items: [itemHubDate()],
     maps: [mapHubDate(locale).toISOString().slice(0, 10)]
   };
@@ -122,7 +129,7 @@ function resolvePageLastModified(locale: string, pathname: string) {
     return resolveEditorialHubLastModified(pathname, editorialHubSources(locale));
   }
   if (pathname === "/videos") {
-    return new Date(`${latestDate(videoArticles.map(({updatedDate}) => updatedDate))}T00:00:00.000Z`);
+    return new Date(`${latestDate(editorialHubSources(locale).videos)}T00:00:00.000Z`);
   }
   if (pathname === "/maps") {
     return mapHubDate(locale);
@@ -131,7 +138,7 @@ function resolvePageLastModified(locale: string, pathname: string) {
     return new Date(`${itemHubDate(pathname === "/items" ? undefined : pathname.slice("/items/".length))}T00:00:00.000Z`);
   }
   if (freshHubPaths.has(pathname)) {
-    return new Date("2026-09-17T00:00:00.000Z");
+    return new Date("2026-09-30T00:00:00.000Z");
   }
   return new Date("2026-08-16T00:00:00.000Z");
 }
@@ -164,7 +171,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       .map(({type, slug}) => `/items/${type}/${slug}`)
   ].map((pathname) => ({locale, pathname})));
 
-  return localizedPaths.map(({locale, pathname}) => {
+  const fullSiteEntries = localizedPaths.map(({locale, pathname}) => {
     const alternates = buildAlternates(locale, pathname || "/");
     const itemDetailMatch = pathname.match(/^\/items\/([^\/]+)\/([^\/]+)$/);
     const guideDetailMatch = pathname.match(/^\/guides\/([^\/]+)$/);
@@ -195,4 +202,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: {languages}
     };
   });
+  return [...fullSiteEntries, ...getPilotSitemapEntries()];
 }

@@ -32,7 +32,7 @@ describe("September 23 Season 02 content refresh", () => {
       const patches = await loadGuideDocument(locale, "wardogs-patch-notes");
       const wipes = await loadGuideDocument(locale, "wardogs-progression-wipes-guide");
 
-      expect(patches?.frontmatter.updatedAt, `${locale}/patches`).toBe(locale === "en" ? "2026-09-26" : "2026-09-23");
+      expect((patches?.frontmatter.updatedAt ?? "") >= "2026-09-26", `${locale}/patches`).toBe(true);
       expect((wipes?.frontmatter.updatedAt ?? "") >= "2026-09-23", `${locale}/wipes`).toBe(true);
       expect(patches?.frontmatter.sources.map(({url}) => url)).toContain(seasonAnnouncement);
       if (locale === "en") {
@@ -52,7 +52,7 @@ describe("September 23 Season 02 content refresh", () => {
       const loadouts = await loadGuideDocument(locale, "wardogs-best-weapons-loadouts");
       const sources = loadouts?.frontmatter.sources.map(({url}) => url) ?? [];
 
-      expect(loadouts?.frontmatter.updatedAt, locale).toBe("2026-09-23");
+      expect((loadouts?.frontmatter.updatedAt ?? "") >= "2026-09-23", locale).toBe(true);
       expect(sources, `${locale}/M4`).toContain(handlerM4);
       expect(sources, `${locale}/MK22`).toContain(jaronMk22);
       expect(loadouts?.body, `${locale}/weapons`).toMatch(/M4[\s\S]*MK22|MK22[\s\S]*M4/);

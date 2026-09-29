@@ -11,6 +11,17 @@ import {
 } from "../../src/features/home/home-data";
 
 describe("homepage data", () => {
+  it("prioritizes each language's tasks without inventing missing guides", () => {
+    const guides = [...TOP_GUIDE_SLUGS, "wardogs-helicopter-guide", "wardogs-cargo-guide"].map((slug) => ({slug, updatedAt: "2026-09-30"}));
+    const result = getHomePriorityGuides(guides, "ja");
+    expect(result.top.map((guide) => guide.slug)).toEqual([
+      "wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-helicopter-guide",
+      "wardogs-cargo-guide", "wardogs-fob-guide", "wardogs-controls"
+    ]);
+    expect(getHomePriorityGuides(guides, "de").top.map((guide) => guide.slug)).toEqual(TOP_GUIDE_SLUGS.slice(0, 6));
+    const sparse = getHomePriorityGuides([guides[0]], "ja");
+    expect(sparse.top).toEqual([guides[0]]);
+  });
   it("uses four intuitive facts and six current start routes", () => {
     const copy = {
       earlyAccess: "Early Access Sep 10, 2026",

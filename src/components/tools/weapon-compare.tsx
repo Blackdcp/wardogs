@@ -4,12 +4,15 @@ import Image from "next/image";
 import {Copy, ExternalLink} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
 import type {ComparableWeapon, ToolEvidenceState, WeaponComparisonValue} from "@/features/tools/weapon-compare-data";
-import {compareWeaponOptions} from "@/features/tools/weapon-compare-runtime";
+import {compareWeaponOptions, comparisonRowDiffers, searchComparableWeapons} from "@/features/tools/weapon-compare-runtime";
 import {decodeWeaponCompareState, encodeWeaponCompareState, type WeaponCompareState} from "@/features/tools/share-state";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
 import {EvidenceProvenance} from "./evidence-provenance";
+import {ToolShareNotice} from "./tool-share-notice";
+import {dataFingerprint, hasInvalidSelection} from "@/features/tools/workflow-state";
+import {getWorkflowCopy} from "@/features/tools/workflow-copy";
 
 const emptySearch = () => "";
 
@@ -43,20 +46,21 @@ function fieldLabel(key: string, fallback: string, copy: ToolCopy) {
   return labels[key] ?? fallback;
 }
 
-function FieldValue({copy, value}: {copy: ToolCopy; value: WeaponComparisonValue}) {
+function FieldValue({copy, value, weaponName}: {copy: ToolCopy; value: WeaponComparisonValue; weaponName: string}) {
   return (
     <div className="min-w-0 px-3 py-4 sm:px-4">
+      <p className="mb-2 break-words text-xs font-bold text-[#9daea4] sm:hidden">{weaponName}</p>
       <p className="break-words text-sm font-semibold leading-6 text-white">{value.value ?? copy.unknownEvidence}</p>
       <span className={`mt-2 inline-flex border px-2 py-1 text-[11px] font-semibold uppercase ${stateClass(value.state)}`}>
         {stateLabel(value.state, copy)}
       </span>
-      <EvidenceProvenance
+      <details className="mt-2 text-xs text-[#9daea4]"><summary className="min-h-8 cursor-pointer">{getWorkflowCopy(copy.locale).evidence}</summary><EvidenceProvenance
         build={value.build}
         confidence={value.confidence}
         copy={copy}
         sourceClass={value.sourceClass}
         verifiedAt={value.verifiedAt}
-      />
+      /></details>
       {value.sourceUrl ? (
         <a className="mt-2 inline-flex min-h-8 items-center gap-1 text-xs font-semibold text-[#7fd0a1] hover:text-white" href={value.sourceUrl} rel="noreferrer" target="_blank" title={copy.openItem}>
           {copy.openItem}<ExternalLink aria-hidden="true" size={13} />
@@ -72,9 +76,12 @@ function WeaponHeader({weapon, copy}: {weapon: ComparableWeapon; copy: ToolCopy}
       <Image alt={weapon.imageAlt} className="aspect-[16/9] w-full object-contain" height={180} src={assetPath(weapon.image)} width={320} />
       <p className="mt-3 break-words text-base font-bold text-white">{weapon.name}</p>
       <p className="mt-1 text-xs uppercase text-[#8fa098]">{weapon.subtype}</p>
-      <Link className="mt-3 inline-flex min-h-9 items-center text-sm font-semibold text-[#7fd0a1] hover:text-white" href={weapon.href} title={`${copy.openItem}: ${weapon.name}`}>
+      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+      <Link className="inline-flex min-h-9 items-center text-sm font-semibold text-[#7fd0a1] hover:text-white" href={weapon.href} title={`${copy.openItem}: ${weapon.name}`}>
         {copy.openItem}
       </Link>
+      <Link className="inline-flex min-h-9 items-center text-sm font-semibold text-[#7fd0a1] hover:text-white" title={`${getWorkflowCopy(copy.locale).addBudget}: ${weapon.name}`} href={`/tools/loadout-budget?pick=${encodeURIComponent(`weapons/${weapon.slug}`)}`}>{getWorkflowCopy(copy.locale).addBudget}</Link>
+      </div>
     </div>
   );
 }
@@ -95,6 +102,13 @@ export function WeaponCompare({
   const [editedState, setEditedState] = useState<WeaponCompareState | null>(null);
   const state = editedState ?? sharedState;
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState(false);
+  const [query, setQuery] = useState("");
+  const [subtype, setSubtype] = useState("");
+  const t = getWorkflowCopy(copy.locale);
+  const dataVersion = useMemo(() => dataFingerprint(weapons), [weapons]);
+  const filtered = useMemo(() => searchComparableWeapons(weapons, query, subtype), [weapons, query, subtype]);
+  const options = weapons.filter((weapon) => weapon.slug === state.left || weapon.slug === state.right || filtered.includes(weapon));
   const comparison = useMemo(() => state.left && state.right
     ? compareWeaponOptions(weapons, state.left, state.right)
     : null, [state, weapons]);
@@ -102,8 +116,9 @@ export function WeaponCompare({
   function commit(next: WeaponCompareState) {
     setEditedState(next);
     setCopied(false);
+    setShareError(false);
     const url = new URL(window.location.href);
-    url.search = encodeWeaponCompareState(next);
+    url.search = encodeWeaponCompareState(next, dataVersion);
     window.history.replaceState(null, "", url);
   }
 
@@ -111,59 +126,66 @@ export function WeaponCompare({
     const right = state.right === left
       ? weapons.find(({slug}) => slug !== left)?.slug ?? null
       : state.right;
-    commit({left, right});
+    commit({...state, left, right});
   }
 
   function updateRight(right: string) {
     const left = state.left === right
       ? weapons.find(({slug}) => slug !== right)?.slug ?? null
       : state.left;
-    commit({left, right});
+    commit({...state, left, right});
   }
 
   async function copyLink() {
     const url = new URL(window.location.href);
-    url.search = encodeWeaponCompareState(state);
+    url.search = encodeWeaponCompareState(state, dataVersion);
     window.history.replaceState(null, "", url);
-    await navigator.clipboard.writeText(url.toString());
-    setCopied(true);
+    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    catch { setShareError(true); }
   }
 
   return (
     <section className="border-y border-[#354039] bg-[#111512]" aria-label={copy.comparison}>
+      <ToolShareNotice search={search} locale={copy.locale} dataVersion={dataVersion} invalid={["left", "right"].some((key) => hasInvalidSelection(search, key, weapons.map(({slug}) => slug)))} />
       <div className="grid gap-5 p-5 sm:grid-cols-2 md:p-8">
+        <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{t.search}<input className="min-h-11 w-full border border-[#46534d] bg-[#0c100e] px-3 text-white" type="search" value={query} onChange={(event) => setQuery(event.target.value)} /></label>
+        <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{t.allTypes}<select className="min-h-11 w-full border border-[#46534d] bg-[#0c100e] px-3 text-white" value={subtype} onChange={(event) => setSubtype(event.target.value)}><option value="">{t.allTypes}</option>{[...new Set(weapons.map(({subtype}) => subtype))].map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+        {!filtered.length ? <p className="text-sm text-[#e4c35f] sm:col-span-2" role="status">{t.noResults}</p> : null}
         <label className="grid min-w-0 gap-2 text-sm font-semibold text-[#cbd5cf]">
           {copy.leftWeapon}
           <select className="min-h-11 w-full min-w-0 border border-[#46534d] bg-[#0c100e] px-3 text-white" value={state.left ?? ""} onChange={(event) => updateLeft(event.target.value)}>
-            {weapons.map((weapon) => <option key={weapon.slug} value={weapon.slug}>{weapon.name} - {weapon.subtype}</option>)}
+            {options.map((weapon) => <option key={weapon.slug} value={weapon.slug}>{weapon.name} - {weapon.subtype}</option>)}
           </select>
         </label>
         <label className="grid min-w-0 gap-2 text-sm font-semibold text-[#cbd5cf]">
           {copy.rightWeapon}
           <select className="min-h-11 w-full min-w-0 border border-[#46534d] bg-[#0c100e] px-3 text-white" value={state.right ?? ""} onChange={(event) => updateRight(event.target.value)}>
-            {weapons.map((weapon) => <option key={weapon.slug} value={weapon.slug}>{weapon.name} - {weapon.subtype}</option>)}
+            {options.map((weapon) => <option key={weapon.slug} value={weapon.slug}>{weapon.name} - {weapon.subtype}</option>)}
           </select>
         </label>
         <div className="flex flex-wrap items-center justify-between gap-4 sm:col-span-2">
+          <label className="inline-flex min-h-11 items-center gap-2 text-sm text-white"><input type="checkbox" checked={state.differences ?? false} onChange={(event) => commit({...state, differences: event.target.checked})} />{t.differences}</label>
           <p className="max-w-2xl text-sm leading-6 text-[#d7bd68]">{copy.historicalWarning}</p>
           <button className="inline-flex min-h-11 items-center gap-2 border border-[#397b59] bg-[#397b59] px-4 text-sm font-semibold text-white hover:bg-[#45946c]" onClick={copyLink} type="button" title={copy.copyToolLink}>
             <Copy aria-hidden="true" size={16} />{copied ? copy.copiedToolLink : copy.copyToolLink}
           </button>
         </div>
       </div>
+      {shareError ? <p className="px-5 text-sm text-[#e4c35f]" role="status">{t.shareFailed}</p> : null}
 
       {comparison ? (
         <div className="border-t border-[#354039]">
           <h2 className="px-5 pt-7 text-sm font-semibold uppercase text-[#9ba9a2] md:px-8">{copy.comparison}</h2>
-          <div className="mt-4 grid grid-cols-[minmax(5.75rem,0.55fr)_repeat(2,minmax(0,1fr))] border-y border-[#354039] bg-[#1b221f]">
-            <div className="px-3 py-4 text-xs font-semibold uppercase text-[#7f8e87] sm:px-4">WARDOGS</div>
+          {state.differences && !comparison.rows.some(comparisonRowDiffers) ? <p role="status" className="p-5 text-sm text-[#a8b4ae]">{t.noDifferences}</p> : null}
+          <div className="mt-4 grid grid-cols-2 border-y border-[#354039] bg-[#1b221f] sm:grid-cols-[minmax(5.75rem,0.55fr)_repeat(2,minmax(0,1fr))]">
+            <div className="hidden px-3 py-4 text-xs font-semibold uppercase text-[#7f8e87] sm:block sm:px-4">WARDOGS</div>
             <WeaponHeader copy={copy} weapon={comparison.left} />
             <WeaponHeader copy={copy} weapon={comparison.right} />
-            {comparison.rows.map((row) => (
+            {comparison.rows.filter((row) => !state.differences || comparisonRowDiffers(row)).map((row) => (
               <div className="contents" key={row.key}>
-                <div className="border-t border-[#354039] px-3 py-4 text-xs font-semibold uppercase leading-5 text-[#8fa098] sm:px-4">{fieldLabel(row.key, row.label, copy)}</div>
-                <div className="border-l border-t border-[#354039]"><FieldValue copy={copy} value={row.left} /></div>
-                <div className="border-l border-t border-[#354039]"><FieldValue copy={copy} value={row.right} /></div>
+                <div className="col-span-2 border-t border-[#354039] px-3 py-4 text-xs font-semibold uppercase leading-5 text-[#8fa098] sm:col-span-1 sm:px-4">{fieldLabel(row.key, row.label, copy)}</div>
+                <div className="min-w-0 border-l border-t border-[#354039]"><FieldValue copy={copy} value={row.left} weaponName={comparison.left.name} /></div>
+                <div className="min-w-0 border-l border-t border-[#354039]"><FieldValue copy={copy} value={row.right} weaponName={comparison.right.name} /></div>
               </div>
             ))}
           </div>

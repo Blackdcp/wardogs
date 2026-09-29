@@ -5,7 +5,7 @@ keyword: "wardogs crash fix"
 category: "guide"
 slug: "wardogs-crash-fix"
 order: 25
-updatedAt: "2026-09-04"
+updatedAt: "2026-09-30"
 badges:
   - label: "Solução de problemas"
     tone: "accent"
@@ -43,9 +43,17 @@ sources:
     checkedAt: "2026-09-04"
 ---
 
-## Triagem de travamentos no Beta 02
+## WD-L020 ou falha de login?
+O [aviso de 23 de setembro](https://steamcommunity.com/app/1867240/discussions/0/585060903246928845/) descreve uma relação **potencial**, não universal, com Windows 11 KB5124010. A correção da distribuição em 24 de setembro e a recuperação dos serviços em 25 de setembro não comprovam correção dessa compatibilidade.
 
-Primeiro separe falha de serviço de travamento local. Fila de login em movimento, lista vazia com várias regiões selecionadas ou servidor fechado não são resolvidos reinstalando o Windows. Em um crash real, registre o erro, verifique arquivos no Steam, atualize o driver de vídeo, feche overlays, remova overclock e mude uma variável por vez. O tópico oficial confirma que crashes estão sendo rastreados, mas não aponta uma causa universal.
+| Observação | Próxima ação | Limite |
+| --- | --- | --- |
+| WD-L020, KB5124010 instalado, falha começou depois | Compare datas com o aviso; aguardar correção do jogo preserva a proteção do Windows | Não prometa sucesso do rollback |
+| KB ausente ou outro código | Confira arquivos Steam, driver oficial de GPU e reparo do Elytra incluído no jogo, um de cada vez | Não remova atualizações sem relação |
+| Fila responsiva, tela de login parada ou erro de licença | Registre a etapa, compare [avisos da mesma região](/pt-br/guides/wardogs-server-status), conta Steam e aplicativo principal | Reinstalar Windows não cria vagas |
+| PC reinicia ou desliga | Pare de repetir a abertura e investigue estabilidade do sistema | Não trate como simples crash do jogo |
+
+A remoção do preview é opcional segundo a Team17 e envolve riscos de segurança, estabilidade e compatibilidade. Leia o aviso atual e a política de computadores gerenciados. Sem rollback normal, não force remoção de pacotes nem desative proteção/anti-cheat. Ao suporte, envie data/fuso, build, código e captura, etapa da falha, Windows/histórico de updates, driver GPU e resultados, ocultando dados pessoais.
 
 ## Como corrigir travamentos e congelamentos em WARDOGS?
 

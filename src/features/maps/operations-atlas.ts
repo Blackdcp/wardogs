@@ -172,7 +172,7 @@ export const operationsAtlasRecords: readonly OperationsAtlasRecord[] = definiti
 });
 
 const localizedSourceNotesByLocale: Record<
-  Exclude<Locale, "en">,
+  string,
   Record<OperationsAtlasRecordId, readonly string[]>
 > = {
   de: {
@@ -223,7 +223,7 @@ const localizedSourceNotesByLocale: Record<
 };
 
 const localizedVisualUsageByLocale: Record<
-  Exclude<Locale, "en">,
+  string,
   Partial<Record<OperationsAtlasRecordId, string>>
 > = {
   de: {
@@ -267,6 +267,7 @@ export function getLocalizedOperationsAtlasRecords(locale: Locale): readonly Ope
   if (locale === "en") return operationsAtlasRecords;
   const sourceNotesById = localizedSourceNotesByLocale[locale];
   const visualUsageById = localizedVisualUsageByLocale[locale];
+  if (!sourceNotesById || !visualUsageById) return operationsAtlasRecords;
   return operationsAtlasRecords.map((record) => ({
     ...record,
     sourceNotes: sourceNotesById[record.id as OperationsAtlasRecordId],
@@ -285,7 +286,7 @@ export function filterOperationsAtlas(
   return records.filter((record) => record.tasks.includes(filter));
 }
 
-const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
+const copyByLocale: Record<string, OperationsAtlasCopy> = {
   en: {
     metaTitle: "WARDOGS Operations Atlas: Maps, FOBs, Cargo and Objectives",
     metaDescription: "Use the sourced WARDOGS operations atlas for Control Zone orientation, tower objectives, FOBs, cargo, mortars, and helicopter transport without invented routes.",
@@ -398,5 +399,5 @@ const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
 };
 
 export function getOperationsAtlasCopy(locale: Locale): OperationsAtlasCopy {
-  return copyByLocale[locale];
+  return copyByLocale[locale] ?? copyByLocale.en;
 }

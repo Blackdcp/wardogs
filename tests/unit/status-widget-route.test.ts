@@ -9,9 +9,11 @@ describe("embed/status", () => {
     expect(dynamic).toBe("force-static");
     expect(response.status).toBe(200);
     expect(body).toContain("WARDOGS Early Access is live");
-    expect(body).toContain("Patch 0.11 is the latest official patch announcement");
-    expect(body).toContain("published maintenance window has passed");
-    expect(body).toContain("official feed for live service status");
+    expect(body).toContain("Season 2 is announced for October 15");
+    expect(body).toContain("exact start time is not confirmed");
+    expect(body).toContain("not live server telemetry");
+    expect(body).toContain("2026-09-30");
+    expect(body).not.toContain("September 17");
     expect(body).toContain("steamcommunity.com/app/1867240/homecontent");
     expect(body).not.toContain("Maintenance in");
     expect(body).not.toContain("setInterval");

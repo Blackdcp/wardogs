@@ -20,7 +20,7 @@ export const ADSTERRA_RIGHT_RAIL_ENABLED = false;
 export const POPUNDER_COOLDOWN_MS = 6 * 60 * 60 * 1000;
 export const POPUNDER_STORAGE_KEY = "wardogs-adsterra-popunder-loaded-at";
 export const BEHAVIORAL_POPUNDER_ENABLED =
-  process.env.NEXT_PUBLIC_WARDOGS_ENABLE_POPUNDER !== "false";
+  process.env.NEXT_PUBLIC_WARDOGS_ENABLE_POPUNDER === "true";
 
 const LOCALIZED_PUBLIC_PATH = /^\/(?:en|de|pt-br|ru|ja|zh-cn)(?:\/.*)?$/;
 

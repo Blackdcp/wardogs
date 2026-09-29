@@ -25,8 +25,8 @@ async function expectNoHorizontalOverflow(page: Page) {
   }
 }
 
-test("German mobile tools keep selectors contained and expose provenance while sharing replaced URLs", async ({context, page}) => {
-  await context.grantPermissions(["clipboard-read", "clipboard-write"], {origin: "http://127.0.0.1:3000"});
+test("German mobile tools keep selectors contained and expose provenance while sharing replaced URLs", async ({context, page, baseURL}) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"], {origin: new URL(baseURL!).origin});
   await page.setViewportSize(mobileViewport);
   await page.addInitScript(() => {
     window.__task5ReplaceCalls = 0;
@@ -39,6 +39,7 @@ test("German mobile tools keep selectors contained and expose provenance while s
 
   await page.goto("/de/tools/weapon-compare?left=amp-9&right=deagle");
   await expectNoHorizontalOverflow(page);
+  for (const summary of await page.locator("details > summary").filter({hasText: "Belege"}).all()) await summary.click();
   await expect(page.getByText("Quellenklasse: Live-Client").first()).toBeVisible();
   await expect(page.getByText("Vertrauensniveau: Beobachtet").first()).toBeVisible();
   await expect(page.getByText("Quellenklasse: Offiziell")).toBeVisible();
@@ -46,7 +47,7 @@ test("German mobile tools keep selectors contained and expose provenance while s
 
   const historyLength = await page.evaluate(() => window.history.length);
   await page.getByRole("combobox", {name: "Erste Waffe"}).selectOption("fal");
-  await expect(page).toHaveURL(/\/de\/tools\/weapon-compare\?left=fal&right=deagle$/);
+  await expect(page).toHaveURL((url) => url.pathname === "/de/tools/weapon-compare" && url.searchParams.get("left") === "fal" && url.searchParams.get("right") === "deagle" && url.searchParams.get("schema") === "2");
   expect(await page.evaluate(() => window.history.length)).toBe(historyLength);
   expect(await page.evaluate(() => window.__task5ReplaceCalls ?? 0)).toBeGreaterThan(0);
 
@@ -61,7 +62,7 @@ test("German mobile tools keep selectors contained and expose provenance while s
 
   const matcherHistoryLength = await page.evaluate(() => window.history.length);
   await page.getByRole("combobox", {name: "Munition auswählen"}).selectOption("9x19mm");
-  await expect(page).toHaveURL(/\/de\/tools\/ammo-matcher\?weapon=amp-9&ammo=9x19mm$/);
+  await expect(page).toHaveURL((url) => url.pathname === "/de/tools/ammo-matcher" && url.searchParams.get("weapon") === "amp-9" && url.searchParams.get("ammo") === "9x19mm" && url.searchParams.get("schema") === "2");
   expect(await page.evaluate(() => window.history.length)).toBe(matcherHistoryLength);
   expect(await page.evaluate(() => window.__task5ReplaceCalls ?? 0)).toBeGreaterThan(0);
 
@@ -87,7 +88,7 @@ test("invalid repeated weapon parameters use static defaults and recover after h
   const serverContext = await browser.newContext({javaScriptEnabled: false, viewport: mobileViewport});
   const serverPage = await serverContext.newPage();
   await serverPage.goto(invalidUrl);
-  const serverSelects = serverPage.getByRole("region", {name: "Dokumentierter Feldvergleich"}).getByRole("combobox");
+  const serverSelects = serverPage.getByRole("region", {name: "Dokumentierter Feldvergleich"}).getByRole("combobox", {name: /^(Erste|Zweite) Waffe$/});
   await expect(serverSelects).toHaveCount(2);
   expect(await serverSelects.evaluateAll((selects) =>
     selects.map((select) => (select as HTMLSelectElement).value))).toEqual([staticDefault.left, staticDefault.right]);
@@ -102,12 +103,12 @@ test("invalid repeated weapon parameters use static defaults and recover after h
   });
   hydratedPage.on("pageerror", (error) => pageErrors.push(error.message));
   await hydratedPage.goto(invalidUrl);
-  const hydratedSelects = hydratedPage.getByRole("region", {name: "Dokumentierter Feldvergleich"}).getByRole("combobox");
+  const hydratedSelects = hydratedPage.getByRole("region", {name: "Dokumentierter Feldvergleich"}).getByRole("combobox", {name: /^(Erste|Zweite) Waffe$/});
   await expect(hydratedSelects).toHaveCount(2);
   await expect(hydratedSelects.nth(0)).toHaveValue(expectedValues[0]!);
   await expect(hydratedSelects.nth(1)).toHaveValue(expectedValues[1]!);
   await hydratedPage.getByRole("combobox", {name: "Erste Waffe"}).selectOption("fal");
-  await expect(hydratedPage).toHaveURL(/left=fal&right=amp-9$/);
+  await expect(hydratedPage).toHaveURL((url) => url.searchParams.get("left") === "fal" && url.searchParams.get("right") === "amp-9");
   expect(consoleErrors.filter((message) => /hydration|did not match|server rendered/i.test(message))).toEqual([]);
   expect(pageErrors).toEqual([]);
   await hydratedContext.close();

@@ -5,6 +5,7 @@ import {notFound} from "next/navigation";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "@/features/news/news-data";
+import {getServiceUpdates} from "@/features/news/service-updates";
 import {Link} from "@/i18n/navigation";
 import {buildPageMetadata} from "@/lib/metadata";
 import {formatLocalizedDate} from "@/lib/localized-date";
@@ -37,6 +38,10 @@ export default async function NewsPage({params}: PageProps) {
     listGuideSummaries(locale)
   ]);
   const guideBySlug = new Map(guides.map((guide) => [guide.slug, guide]));
+  const timeline = [
+    ...getServiceUpdates(locale),
+    ...NEWS_UPDATES.map(item => ({...item, title: t(`timeline.items.${item.titleKey}.title`), description: t(`timeline.items.${item.titleKey}.description`), sources: [] as readonly string[]}))
+  ];
   const checklistGuides = NEWS_CHECKLIST_SLUGS.map((slug) => guideBySlug.get(slug)).filter((guide): guide is NonNullable<typeof guide> => Boolean(guide));
 
   return (
@@ -60,7 +65,7 @@ export default async function NewsPage({params}: PageProps) {
               <h2 className="display-font text-3xl text-white">{t("timeline.title")}</h2>
             </div>
             <ol className="mt-7 border-l border-[#344039]">
-              {NEWS_UPDATES.map((item) => (
+              {timeline.map((item) => (
                 <li key={`${item.date}-${item.titleKey}`} className="relative pb-8 pl-6 last:pb-0">
                   <span className="absolute -left-1.5 top-1.5 size-3 rounded-full bg-[#69c78f]" />
                   <div className="flex flex-wrap items-center gap-3">
@@ -69,10 +74,11 @@ export default async function NewsPage({params}: PageProps) {
                       {t(`timeline.status.${item.status}`)}
                     </span>
                   </div>
-                  <h3 className="display-font mt-3 text-2xl text-[#f2f5f3]">{t(`timeline.items.${item.titleKey}.title`)}</h3>
-                  <p className="mt-2 max-w-2xl text-sm leading-7 text-[#a8b4ae]">{t(`timeline.items.${item.titleKey}.description`)}</p>
-                  <Link href={`/guides/${item.guideSlug}`} className="mt-3 inline-flex text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba]" aria-label={`${t("timeline.readMore")}: ${t(`timeline.items.${item.titleKey}.title`)}`} title={t(`timeline.items.${item.titleKey}.title`)}>
-                    {t("timeline.readMore")}<span className="sr-only">: {t(`timeline.items.${item.titleKey}.title`)}</span>
+                  <h3 className="display-font mt-3 text-2xl text-[#f2f5f3]">{item.title}</h3>
+                  <p className="mt-2 max-w-2xl text-sm leading-7 text-[#a8b4ae]">{item.description}</p>
+                  <div className="mt-2 flex flex-wrap gap-4 text-xs text-[#a8b4ae]">{item.sources.map((url, index) => <a key={url} title={`${item.title} - ${new URL(url).hostname} [${index + 1}]`} href={url} rel="noreferrer" target="_blank">{new URL(url).hostname} [{index + 1}]</a>)}</div>
+                  <Link href={`/guides/${item.guideSlug}`} className="mt-3 inline-flex text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba]" aria-label={`${t("timeline.readMore")}: ${item.title}`} title={item.title}>
+                    {t("timeline.readMore")}<span className="sr-only">: {item.title}</span>
                   </Link>
                 </li>
               ))}

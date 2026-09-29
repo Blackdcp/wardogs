@@ -1,6 +1,7 @@
 import createMiddleware from "next-intl/middleware";
 import {NextRequest, NextResponse} from "next/server";
-import {isLocale} from "@/config/site";
+import {isLocale, isPilotLocale, isSiteLocale} from "@/config/site";
+import {isPilotPathAvailable} from "@/i18n/pilot-locales";
 import {isItemDetailRouteAvailable} from "@/features/items/item-route-availability";
 import {getLegacyEnglishRedirectPath} from "@/i18n/legacy-paths";
 import {routing} from "@/i18n/routing";
@@ -17,7 +18,18 @@ export default function proxy(request: NextRequest) {
   const legacyRedirectPath = getLegacyEnglishRedirectPath(pathname);
   if (legacyRedirectPath) return NextResponse.redirect(new URL(legacyRedirectPath, request.url), 308);
   const firstSegment = pathname.split("/")[1];
-  if (firstSegment && !isLocale(firstSegment)) return NextResponse.next();
+  if (firstSegment && !isSiteLocale(firstSegment)) return NextResponse.next();
+  if (isPilotLocale(firstSegment)) {
+    const pilotPath = pathname.slice(firstSegment.length + 1).replace(/\/+$/, "");
+    if (!pilotPath) {
+      const destination = request.nextUrl.clone();
+      destination.pathname = `/${firstSegment}/guides`;
+      return NextResponse.redirect(destination, 308);
+    }
+    if (!isPilotPathAvailable(firstSegment, pilotPath)) {
+      return new NextResponse(null, {status: 404, headers: {"X-Robots-Tag": "noindex"}});
+    }
+  }
   const response = handleI18n(request);
   const segments = pathname.split("/").filter(Boolean);
   if (
@@ -39,6 +51,6 @@ export const config = {
     },
     // Only localized pages and known legacy redirects need Proxy on the canonical host.
     "/",
-    "/((?!.*\\..*)(?:(?:en|ru|de|pt-br|ja|zh-cn)(?:/.*)?|wardogs(?:/.*)?|(?:guides|videos|items|news|privacy|terms)(?:/.*)?|maps|about|contact|editorial-policy|tools/(?:system-check|ammo-matcher|logistics-planner|progression-route|weapon-compare|loadout-budget)))"
+    "/((?!.*\\..*)(?:(?:en|ru|de|pt-br|ja|zh-cn|zh-tw|pl)(?:/.*)?|wardogs(?:/.*)?|(?:guides|videos|items|news|privacy|terms)(?:/.*)?|maps|about|contact|editorial-policy|tools/(?:system-check|ammo-matcher|logistics-planner|progression-route|weapon-compare|loadout-budget)))"
   ]
 };

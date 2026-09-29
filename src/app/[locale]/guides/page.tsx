@@ -1,7 +1,8 @@
 import type {Metadata} from "next";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
-import {isLocale, locales, type Locale} from "@/config/site";
+import {isLocale, isPilotLocale, siteLocales, type Locale} from "@/config/site";
+import {PilotGuideIndex, buildPilotIndexMetadata} from "@/i18n/pilot-pages";
 import {GuideGrid} from "@/components/guides/guide-grid";
 import {PriorityGuides} from "@/components/home/priority-guides";
 import {VideoGuideStrip} from "@/components/guides/video-guide-strip";
@@ -17,11 +18,12 @@ import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 type PageProps = {params: Promise<{locale: string}>};
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({locale}));
+  return siteLocales.map((locale) => ({locale}));
 }
 
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
+  if (isPilotLocale(locale)) return buildPilotIndexMetadata(locale);
   if (!isLocale(locale)) return {};
   const [t, guides] = await Promise.all([
     getTranslations({locale, namespace: "guides"}),
@@ -32,6 +34,10 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
 
 export default async function GuidesPage({params}: PageProps) {
   const {locale: requestedLocale} = await params;
+  if (isPilotLocale(requestedLocale)) {
+    setRequestLocale(requestedLocale);
+    return <PilotGuideIndex locale={requestedLocale} />;
+  }
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
   setRequestLocale(locale);

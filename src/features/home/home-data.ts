@@ -83,9 +83,16 @@ export const CONFIRMED_RUMOR_ITEMS = [
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
 ] as const;
 
-export function getHomePriorityGuides<T extends RecentlyUpdatedGuideInput>(guides: readonly T[]) {
+const LOCALIZED_PRIORITY_SLUGS: Readonly<Record<string, readonly string[]>> = {
+  en: ["wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-ammo-reload-guide", "wardogs-artillery-guide", "wardogs-achievements"],
+  ja: ["wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-helicopter-guide", "wardogs-cargo-guide", "wardogs-fob-guide", "wardogs-controls"],
+  ru: ["wardogs-crash-fix", "wardogs-squad-guide", "wardogs-progression-wipes-guide", "wardogs-mortar-guide", "wardogs-cargo-guide", "wardogs-money-guide"]
+};
+
+export function getHomePriorityGuides<T extends RecentlyUpdatedGuideInput>(guides: readonly T[], locale?: string) {
   const bySlug = new Map(guides.map((guide) => [guide.slug, guide]));
-  const top = TOP_GUIDE_SLUGS
+  const priorities = [...new Set([...(LOCALIZED_PRIORITY_SLUGS[locale ?? ""] ?? []), ...TOP_GUIDE_SLUGS])];
+  const top = priorities
     .map((slug) => bySlug.get(slug))
     .filter((guide): guide is T => Boolean(guide))
     .slice(0, 6);

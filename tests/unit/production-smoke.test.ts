@@ -16,10 +16,15 @@ function liveResponses(overrides: Record<string, Response> = {}) {
   const responses: Record<string, Response> = {
     "/api/revision": new Response(JSON.stringify({revision}), {status: 200}),
     "/en": new Response(htmlPage("/en"), {status: 200}),
+    "/ja": new Response(htmlPage("/ja"), {status: 200}),
     "/en/guides/wardogs-squad-guide": new Response(htmlPage("/en/guides/wardogs-squad-guide"), {status: 200}),
     "/en/guides/wardogs-known-issues": new Response(htmlPage("/en/guides/wardogs-known-issues"), {status: 200}),
     "/en/tools/map": new Response(htmlPage("/en/tools/map"), {status: 200}),
-    "/sitemap.xml": new Response(`<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`, {status: 200}),
+    "/en/tools/loadout-budget": new Response(htmlPage("/en/tools/loadout-budget"), {status: 200}),
+    "/en/videos": new Response(htmlPage("/en/videos"), {status: 200}),
+    "/zh-tw/guides": new Response(htmlPage("/zh-tw/guides"), {status: 200}),
+    "/pl/guides": new Response(htmlPage("/pl/guides"), {status: 200}),
+    "/sitemap.xml": new Response(`<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/ja</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`, {status: 200}),
     "/maps": new Response(null, {status: 308, headers: {location: "/en/maps"}}),
     "/en/items/vehicles/littlebird": new Response("<meta name=\"robots\" content=\"noindex\">", {status: 404})
   };
@@ -63,7 +68,7 @@ describe("production release smoke", () => {
     const events: string[] = [];
     const beforeUrl = `${origin}/en/guides/newly-removed`;
     const oldSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${beforeUrl}</loc></url></urlset>`;
-    const newSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`;
+    const newSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/ja</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`;
     const savedBefore = process.env.BEFORE_SHA;
     const savedCurrent = process.env.CURRENT_SHA;
     const base = "b".repeat(40);
@@ -140,7 +145,7 @@ describe("production release smoke", () => {
     const snapshotPath = path.join(snapshotDirectory, "snapshot.json");
     const removed = `${origin}/en/guides/removed`;
     const oldSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${removed}</loc></url></urlset>`;
-    const newSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`;
+    const newSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/ja</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`;
     const savedBefore = process.env.BEFORE_SHA;
     const savedCurrent = process.env.CURRENT_SHA;
     const base = "b".repeat(40);
@@ -295,13 +300,18 @@ describe("production release smoke", () => {
   it("checks live landing pages, sitemap, exact redirect, and genuine 404 before notification", async () => {
     const {result, requested} = await verifyWith(liveResponses());
 
-    expect(result).toEqual({checked: 8});
+    expect(result).toEqual({checked: 13});
     expect(requested).toEqual([
       "/api/revision",
       "/en",
+      "/ja",
       "/en/guides/wardogs-squad-guide",
       "/en/guides/wardogs-known-issues",
       "/en/tools/map",
+      "/en/tools/loadout-budget",
+      "/en/videos",
+      "/zh-tw/guides",
+      "/pl/guides",
       "/sitemap.xml",
       "/maps",
       "/en/items/vehicles/littlebird"
@@ -322,6 +332,20 @@ describe("production release smoke", () => {
     });
 
     await expect(verifyWith(responses)).rejects.toThrow(/revision.*expected/i);
+  });
+
+  it("rejects a Japanese homepage canonical pointing at English", async () => {
+    await expect(verifyWith(liveResponses({
+      "/ja": new Response(htmlPage("/en"), {status: 200})
+    }))).rejects.toThrow(/\/ja.*canonical/);
+  });
+
+  it.each(["html", "header"])("rejects noindex on a key landing page via %s", async (source) => {
+    await expect(verifyWith(liveResponses({
+      "/ja": new Response(htmlPage("/ja") + (source === "html" ? '<meta name="robots" content="noindex">' : ""), {
+        status: 200, headers: source === "header" ? {"x-robots-tag": "noindex"} : {}
+      })
+    }))).rejects.toThrow(/\/ja.*noindex/);
   });
 
   it("rejects production if the interactive map route is still missing", async () => {
@@ -354,7 +378,7 @@ describe("production release smoke", () => {
     await expect(deployment.verifyProduction(fetchImpl, origin, revision, {
       revisionAttempts: 2,
       pause: async () => { pauses += 1; }
-    })).resolves.toEqual({checked: 8});
+    })).resolves.toEqual({checked: 13});
     expect(checks).toBe(2);
     expect(pauses).toBe(1);
   });
@@ -367,7 +391,7 @@ describe("production release smoke", () => {
       })
     });
 
-    await expect(verifyWith(responses)).resolves.toMatchObject({result: {checked: 8}});
+    await expect(verifyWith(responses)).resolves.toMatchObject({result: {checked: 13}});
   });
 
   it("rejects a canonical Link header on a 404", async () => {
