@@ -47,7 +47,7 @@ test("desktop: full basemaps, versioned share, marker editing and sourced search
   await expect(page.locator("[data-map-reference]")).toHaveCount(1);
   await expect(page.locator("[data-map-reference]")).toContainText("Position not verified");
   await expect(page.locator("[data-map-reference] a").first()).toHaveAttribute("href", "/en/guides/wardogs-towers-guide");
-  await expect(page.getByRole("button", {name: "Measure distance (not calibrated)", exact: true})).toBeDisabled();
+  await expect(page.getByRole("button", {name: "Measure distance", exact: true})).toBeEnabled();
   await page.getByRole("searchbox").fill("");
   await page.getByRole("button", {name: "Close", exact: true}).click();
   await page.locator("[data-map-viewer]").evaluate((element) => window.scrollTo(0, window.scrollY + element.getBoundingClientRect().top - 100));
@@ -82,7 +82,7 @@ test("phone: genuine touch pinch, drag, cancellation and fullscreen fallback", a
   const page = await context.newPage();
   await page.route(/https?:\/\/(?!127\.0\.0\.1|localhost)/, (route) => route.abort());
   await page.addInitScript(() => { Element.prototype.requestFullscreen = async () => {throw new Error("Unavailable");}; });
-  await page.goto("http://127.0.0.1:3107/en/tools/map"); await ready(page);
+  await page.goto(`${testInfo.project.use.baseURL}/en/tools/map`); await ready(page);
   await page.locator("[data-map-viewport]").scrollIntoViewIfNeeded();
   const box = (await page.locator("[data-map-viewport]").boundingBox())!;
   const x = box.x + box.width / 2, y = box.y + box.height / 2;

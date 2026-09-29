@@ -1,70 +1,200 @@
 ---
-title: "WARDOGS: odblokowanie pojazdów, Driver i budżet"
-description: "Rozdziel poziom ścieżki Driver, dostęp do pojazdu i jego zakup. Sprawdzaj wymagania w bieżącej wersji, bez zgadywania poziomu URAL-a i czasu zdobywania XP."
+title: "WARDOGS: reset gotówki, XP i zachowanie Gold Bars"
+description: "Progi Season 1 dla Heavy Tank, Artillery Tank i innych odblokowań oraz zasady BULKHEAD dotyczące resetu gotówki i XP, Gold Bars i pozostałe niewiadome."
 keyword: "wardogs progression wipes guide"
 category: "guide"
 slug: "wardogs-progression-wipes-guide"
 order: 44
 updatedAt: "2026-09-30"
 badges:
-  - label: "Rozwój i pojazdy"
+  - label: "Progresja"
     tone: "accent"
-  - label: "Wymagania zależą od wersji"
+  - label: "Zależne od buildu"
     tone: "warning"
 faq:
-  - question: "Czy każdy pojazd odblokowuje się na tej samej ścieżce?"
-    answer: "Nie należy tego zakładać. Oficjalny changelog sezonu 1 rozróżnia Heavy Tank na ścieżce Driver i Artillery Tank na ścieżce Career. Sprawdzaj konkretny pojazd."
-  - question: "Jaki poziom jest potrzebny do odblokowania URAL-a?"
-    answer: "Ten poradnik nie podaje niezweryfikowanego progu. Otwórz aktualną kartę pojazdu i zanotuj nazwę ścieżki, poziom oraz wymagane opłaty. Nie przenoś progu z innej ciężarówki."
-  - question: "Czy gotówka zachowywana między meczami nigdy nie jest resetowana?"
-    answer: "Nie. Zachowanie salda między meczami i reguły przejścia między sezonami to odrębne kwestie. Przed dużymi wydatkami sprawdź najnowszy oficjalny komunikat o danym sezonie."
+  - question: "Czy postępy beta WARDOGS przejdą do Early Access?"
+    answer: "Nie opublikowano oficjalnej obietnicy przeniesienia. Traktuj gotówkę, XP, odblokowania i statystyki Closed Beta jako tymczasowe, chyba że WARDOGS potwierdzi inaczej."
+  - question: "Dlaczego progresja beta WARDOGS była tak szybka?"
+    answer: "Twórcy powiedzieli, że celowo skompresowali progresję na krótki trzydniowy test, więc tempa odblokowań beta nie należy używać do przewidywania tempa Early Access."
+  - question: "Gdzie odblokowuje się Heavy Tank i Artillery Tank w Season 1?"
+    answer: "Oficjalna lista zmian Season 1 umieszcza Heavy Tank na Driver level 35, a Artillery Tank na Career level 90. Nie ustanawia jednego wspólnego progu wszystkich czołgów ani zasad ponownych zakupów u sprzedawcy."
+  - question: "Czy WARDOGS ma sezony lub resety progresji?"
+    answer: "Tak. Film BULKHEAD Early Access & Beyond z 7 kwietnia mówi o resecie gotówki i XP na końcu sezonu, automatycznej zamianie reszty gotówki na Gold Bars oraz zachowaniu Gold Bars i kosmetyków. Season 02 zaczyna się 15 października, ale teaser nie określa godziny resetu i szczegółów przejścia."
 sources:
-  - label: "Oficjalne ogłoszenia Steam: zmiany ścieżek w sezonie 1"
-    url: "https://steamcommunity.com/app/1867240/announcements/?l=polish"
+  - label: "BULKHEAD: Early Access & Beyond, deklaracja resetu sezonowego w 03:05"
+    url: "https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s"
     kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "Steam: gotówka, XP i rozwój we wczesnym dostępie"
-    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    checkedAt: "2026-09-26"
+  - label: "Oficjalne komunikaty WARDOGS i lista zmian Season 1"
+    url: "https://steamcommunity.com/app/1867240/announcements/"
     kind: "official"
-    checkedAt: "2026-09-30"
+    checkedAt: "2026-09-17"
+  - label: "BULKHEAD: lista zmian Season 1 z 9 września, ścieżki i poziomy czołgów"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Oficjalny komunikat Patch 0.11 o ekonomii i nadużyciach"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Season 1"
+    url: "https://steamcommunity.com/games/1867240/announcements/detail/708906720730023608"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "Transkrypcja aktualizacji twórców o balansie i link źródłowy"
+    url: "https://www.reddit.com/r/WarDogs/comments/1w1xbeo/an_update_on_balancing/"
+    kind: "community"
+    checkedAt: "2026-09-01"
+  - label: "Przegląd wiadomości o progresji WARDOGS"
+    url: "https://www.youtube.com/watch?v=im60BiRZFow"
+    kind: "creator"
+    checkedAt: "2026-09-01"
+  - label: "DrybearGamers: WARDOGS Is Resetting Progress - And the Grind Makes This..."
+    url: "https://www.youtube.com/watch?v=smOE0063KOE"
+    kind: "creator"
+    checkedAt: "2026-09-17"
+  - label: "Oficjalny teaser WARDOGS Season 02"
+    url: "https://steamcommunity.com/games/1867240/announcements/detail/677384059121304815"
+    kind: "official"
+    checkedAt: "2026-09-23"
 ---
 
-## Pojazd to nie tylko wymagany poziom
+## Skrócona tabela odblokowań Season 1
 
-Wybierz konkretny pojazd i sprawdź trzy rzeczy: właściwą ścieżkę rozwoju, warunki odblokowania oraz koszt faktycznego użycia. Sam poziom konta ani wystarczająca gotówka nie potwierdzają, że spełniasz wszystkie wymagania.
+[Lista zmian Season 1 z 9 września](https://store.steampowered.com/news/app/1867240/view/701027323413004455) wyraźnie zmieniła poniższe nazwane progi odblokowania. To krótka lista opublikowanych zmian, **nie** pełna drabina odblokowań; późniejsze korekty sprawdzaj w aktualnym kliencie.
 
-Oficjalne ogłoszenia sezonu 1 rozdzielają Heavy Tank i Artillery Tank pomiędzy Driver i Career. To ważniejsza wskazówka niż zapamiętanie jednego progu dla wszystkich pojazdów. Nie przenoś wymagań czołgu na ciężarówkę, helikopter ani inną kategorię.
+| Odblokowanie | Ścieżka progresji | Poziom Season 1 |
+| --- | --- | ---: |
+| Heavy Tank | Driver | 35 |
+| Artillery Tank | Career | 90 |
+| Dune Buggy | Driver | 8 |
+| Large Hammer | Support | 8 |
+| PP-19 50-round drum magazine | Medic | 29 |
+| Deagle | Career | 85 |
 
-## Co oznaczają terminy
+To progi poziomów. Jednorazowe opłaty odblokowania z listy zmian i zakupy u sprzedawcy w meczu są osobnymi kosztami; tabela nie sugeruje ceny powtarzanego zakupu.
 
-| Termin | Jak go czytać |
-| --- | --- |
-| Driver | Ścieżka kierowcy; sprawdź, czy wymaga jej wybrany pojazd |
-| Career | Ogólna ścieżka rozwoju, odrębna od wymogu konkretnej roli |
-| XP | Doświadczenie; nie jest saldem gotówki |
-| Unlock | Dostęp do przedmiotu; sprawdź warunki i ewentualną opłatę |
-| Purchase / Buy | Zakup; przeczytaj cenę i warunki widoczne w tej chwili |
-| Wipe | Reset związany z okresem testowym lub sezonem; zakres wymaga osobnego komunikatu |
+## Oficjalne zasady resetu sezonowego i luka Season 02
 
-## Jak sprawdzić drogę do URAL-a lub innego pojazdu
+**Tak, BULKHEAD ogłosiło sezonowe resety gotówki i XP.** W [filmie Early Access & Beyond z 7 kwietnia](https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s) studio mówi, że na koniec sezonu gotówka i progresja XP są resetowane, pozostała gotówka automatycznie zamienia się w Gold Bars, a Gold Bars i kosmetyki pozostają na koncie między sezonami. To oficjalna deklaracja zasad, nie przewidywanie twórcy treści. Ten sam film opisuje trwałe Player Skills jako **planowane**; nie zakładaj, że te umiejętności już działają lub można je dziś zdobywać.
 
-1. Otwórz aktualną kartę pojazdu. Zapisz dokładną nazwę, wersję gry i nazwę ścieżki.
-2. Odczytaj wymagany poziom oraz stan dostępu. Nie zastępuj brakującej informacji poziomem z filmu beta.
-3. Zapisz wszystkie widoczne opłaty osobno: dostęp, zakup pojazdu i potrzebne zaopatrzenie.
-4. Wybierz dostępne już zadanie związane z transportem. Zapisz stan XP przed nim i po nim, aby sprawdzić, której ścieżce przypisano postęp.
-5. Zmieniaj jeden element próby naraz. Mieszanie transportu, walki, budowania i leczenia utrudnia ustalenie źródła XP.
-6. Kup pojazd dopiero wtedy, gdy masz dla niego zadanie, ekipę lub ładunek oraz rezerwę finansową.
+**Season 02 zaczyna się 15 października 2026.** Jego [wrześniowy teaser](https://steamcommunity.com/games/1867240/announcements/detail/677384059121304815) nie określa godziny przejścia, osobnego czasu zamknięcia Season 1, kursu na granicy sezonów, szczegółowej tabeli resetu każdego przedmiotu ani tego, czy wszystkie planowane trwałe systemy będą wtedy wdrożone. Zasady wskazują reset sezonowy jako ogłoszony plan; nie zamieniają brakujących szczegółów operacyjnych w fakty. Datowaną zapowiedź znajdziesz w [poradniku Season 02](/pl/guides/wardogs-season-2); rejestr należy aktualizować po opublikowaniu przez BULKHEAD komunikatu przejściowego.
 
-Nie podajemy niepotwierdzonego poziomu URAL-a ani gwarantowanej liczby kursów do odblokowania. Tempo zależy od aktualnych zasad, sposobu gry i wyników konkretnego zadania. Nie traktuj ekonomii krótkiej bety jako miary czasu potrzebnego w Early Access.
+## Porównanie z filmem bieżącego Season 1 — 17 września 2026
 
-## Dlaczego odblokowanie jeszcze nie wystarcza
+Sprawdziliśmy **WARDOGS Is Resetting Progress - And the Grind Makes This...** autorstwa **DrybearGamers** jako aktualne źródło twórcy treści, nie oficjalny dokument balansu. Film dokumentuje realne obawy graczy o grind i resety, lecz nie może ustalić harmonogramu wipe. Tylko oficjalny komunikat WARDOGS potwierdza, co się resetuje, kiedy i które odblokowania pozostają.
 
-Nowy pojazd może otworzyć możliwości, ale bez środków na zakup i obsługę pozostanie niepraktyczny. Nie zakładaj też, że raz kupiony pojazd zawsze wraca bez kosztu. Sprawdź komunikat zakupu i to, co dzieje się z wyposażeniem po użyciu, zamiast planować według niepotwierdzonej reguły.
+## Punkt kontrolny Season 1 — 17 września 2026
 
-Przed transportem ustal [rodzaj ładunku i sposób dostawy do FOB](/pl/guides/wardogs-fob-guide). Do budżetu dolicz tylko znane koszty; pozostałe oznacz jako wymagające sprawdzenia. Pomaga [poradnik ekonomii](/pl/guides/wardogs-money-guide).
+**Uwaga o aktualnym buildzie:** WARDOGS działa w Season 1 Early Access. Opublikowane okno konserwacji Patch 0.11 z 14 września minęło. Stan usługi i zmienne wartości sprawdzaj w obecnym kliencie i oficjalnych wiadomościach Steam.
 
-## Sezon i reset to osobny temat
+Oficjalna krzywa Season 1 publikuje obecnie punkty kontrolne Career XP: poziom 6 przy 9,250 XP, 10 przy 35,000, 15 przy 110,000, 20 przy 250,000, 25 przy 325,000, 30 przy 400,000, 35 przy 500,000, 40 przy 650,000, 45 przy 800,000 i 50 przy 1,000,000. Kolejność przedmiotów różni się według roli i sezonu; nie traktuj tabel odblokowań beta jako aktualnej odpowiedzi.
 
-Opis zachowywania gotówki między meczami nie jest obietnicą zachowania całego postępu na zawsze. Przed zmianą sezonu czytaj ogłoszenie dotyczące tego przejścia. Nie wyprowadzaj z daty zapowiedzi dokładnej godziny resetu, przelicznika walut ani pełnej listy zachowanych elementów.
+## Uwaga o aktualnym buildzie z 17 września
 
-Szerszy kontekst znajduje się w [angielskim poradniku o postępie i resetach](/en/guides/wardogs-progression-wipes-guide). Ta polska strona koncentruje się na decyzji o pojeździe i nie zastępuje aktualnych komunikatów studia.
+WARDOGS Early Access działa. Komunikat Patch 0.11 potwierdza poprawki kilku exploitów gotówki i ostrzega, że powtarzane nadużycia, instruktaże exploitów lub farmienie XP mogą prowadzić do resetów kont lub banów. Ten **karny reset konta** jest odrębny od **sezonowej polityki gotówki/XP** z kwietniowego filmu BULKHEAD; żadne źródło nie podaje stałego kalendarza długości sezonów.
+
+Progresja sierpniowej Closed Beta WARDOGS była celowo przyspieszona na krótki test. [Lista zmian Season 1](https://store.steampowered.com/news/app/1867240/view/701027323413004455) rozróżnia nazwane czołgi: **Heavy Tank odblokowuje się na Driver level 35**, a **Artillery Tank na Career level 90**. Stare progi beta i zrzuty menu pozostają historycznymi zapisami.
+
+## Krótka odpowiedź
+
+Nie używaj trzydniowej bety jako kalkulatora tempa zdobywania poziomów w obecnej grze. Był to skompresowany build mający udostępnić więcej broni, pojazdów, ról i etapów ekonomii w ograniczonym czasie. Przed wyborem najszybszej drogi odblokowania sprawdź aktualną ścieżkę Early Access.
+
+Przy dawnym przejściu Beta–Early Access nie zakładaj przeniesienia postępów bez deklaracji migracji. Dla przejścia **między sezonami** studio podało zasady: gotówka i XP resetują się, a Gold Bars i kosmetyki pozostają. Rozdzielaj te przejścia; potwierdzona polityka nie określa dokładnej godziny resetu Season 02 ani kursu wymiany.
+
+## Potwierdzone fakty
+
+Aktualizacja dotycząca balansu mówi, że tempo progresji Closed Beta celowo skompresowano, ponieważ wydarzenie trwało tylko trzy dni. Gracze osiągali więc progi sprzętu i pojazdów znacznie szybciej niż przewidziano dla wydanej gry. Wypowiedź o tymczasowej głównej ścieżce War Dog i planowanym przeniesieniu do Driver opisuje stan przed premierą; lista zmian Season 1 wskazuje Heavy Tank na Driver 35 i Artillery Tank na Career 90.
+
+To wyjaśnienie usuwa dwa częste nieporozumienia. Po pierwsze, poziom beta osiągnięty w kilka godzin nie wyznacza premierowego grindu. Po drugie, czołg pokazany w jednym testowym menu nie dowodzi trwałej kategorii odblokowania. Zrzuty i instruktaże twórców traktuj jako datowane zapisy buildu.
+
+Oficjalne podsumowanie beta mówiło, że progresja i szersza metagra są nadal zmieniane przed Early Access. Nie podało końcowej tabeli XP, stałej długości sezonu ani gwarantowanej polityki przeniesienia, więc aktualne menu i nowsze patch notes zastępują testowe wartości.
+
+## Czego szukają gracze
+
+Gracze zwykle potrzebują trzech odpowiedzi: czy postępy Closed Beta przeszły do Early Access, co według twórców resetuje się co sezon i które ścieżki ról Season 1 odblokowują nazwane czołgi. Driver 35 dla Heavy Tank i Career 90 dla Artillery Tank są oficjalne; nie znaleziono pełnej tabeli przejścia Season 02 ani powtarzalnego kalendarza długości sezonów.
+
+## Jak korzystać z poradnika
+
+Najpierw przeczytaj potwierdzone deklaracje, a potem użyj poniższych list ścieżek ról i kontroli premiery, by sprawdzić aktualny build. Pozostałe progi XP, ceny, kolejność odblokowań i **szczegóły resetu wykraczające poza oficjalną politykę sezonową** pozostają zależne od buildu.
+
+## Jak czytać sześć ścieżek ról
+
+Testowany projekt progresji grupuje odblokowania w sześciu ścieżkach ról, nie w jednej uniwersalnej drabinie broni. Przydatna zasada planowania brzmi: wykonuj zadanie związane z pożądanym wyposażeniem. Transport i praca przy pojazdach powinny zasilać progresję Driver, a walka i wsparcie odpowiednie ścieżki ról.
+
+Inne szczegóły ścieżek, źródła XP, progi, współdzielenie między ścieżkami i kolejność nagród zależą od buildu. Nie publikuj trwałego rankingu „najlepszej ścieżki” na podstawie bety. Wartość ścieżki może się zmienić po przeniesieniu pojazdu, zmianie nagrody XP lub kolejności odblokowań w późniejszym buildzie.
+
+Przed obraniem drogi w Early Access:
+
+1. Otwórz każdą aktualną zakładkę progresji i zapisz pierwsze praktyczne odblokowanie.
+2. Sprawdź, czy XP pochodzi z działań roli, wyniku meczu, gry pod cel czy wszystkich trzech.
+3. Potwierdź, czy zmiana zadania w meczu dzieli, czy zachowuje zaliczenie.
+4. Porównaj koszt używania odblokowania z czasem potrzebnym do jego uzyskania.
+5. Sprawdź stronę ponownie po pierwszej łatce balansu.
+
+## Ścieżki Heavy Tank i Artillery Tank
+
+Podczas Closed Beta czołgi pojawiały się na głównej ścieżce War Dog/Career jako tymczasowe rozwiązanie testowe. To kontekst historyczny. [Lista zmian Season 1 z 9 września](https://store.steampowered.com/news/app/1867240/view/701027323413004455) konkretnie przeniosła **Heavy Tank z Career level 35 na Driver level 35** i **Artillery Tank z Career level 55 na Career level 90**. To dwa nazwane odblokowania na różnych ścieżkach, nie uniwersalny poziom czołgu.
+
+Lista nie ustala, czy każdy pojazd opancerzony dzieli któryś próg, jak działają powtarzane zakupy u sprzedawcy ani jakie dokładne działania dają Driver i Career XP. Nasz [katalog pojazdów](/pl/items/vehicles), [poradnik czołgu](/pl/items/vehicles/tank) i [poradnik zarabiania](/pl/guides/wardogs-money-guide) oddzielają obserwacje beta od potwierdzonych progów Season 1.
+
+## Czy postępy zostaną zresetowane?
+
+Żadne obecne oficjalne źródło nie obiecuje przeniesienia postępów Closed Beta do Early Access. Buildy testowe zwykle używają danych tymczasowych, ale to ogólne oczekiwanie nie zastępuje deklaracji WARDOGS. Dokładny opis dla gracza jest następujący:
+
+- Gotówka, XP, odblokowania, statystyki i ustawienia beta mogą zostać zresetowane.
+- W sprawdzonych oficjalnych źródłach nie znaleziono kompletnej publicznej tabeli migracji Beta–Early Access.
+- Ogłoszona polityka sezonowa BULKHEAD resetuje gotówkę i progresję XP; reszta gotówki zamienia się w Gold Bars, natomiast Gold Bars i kosmetyki pozostają.
+- Dokładny czas granicy Season 02, kurs wymiany i pełny los poszczególnych przedmiotów nadal wymagają nowszego komunikatu przejściowego.
+- Własność kupionej gry jest odrębna od tymczasowej progresji w grze.
+
+Unikaj dwóch przeciwnych błędów. Nie obiecuj przeniesienia beta tylko dlatego, że Steam nadal pokazuje Playtest, i nie mów, że sezonowe wipe są niepotwierdzone, skoro twórcy już je opisali. Nie wymyślaj też dokładnej godziny resetu 15 października na podstawie samego teasera.
+
+## Lista resetu według rodzaju zasobu
+
+[Oficjalna polityka sezonowa](https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s) określa pierwsze cztery wyniki poniżej. Reset progresji nie dowodzi zwrotu każdej zapłaconej opłaty zakupu.
+
+| Zasób | Ogłoszona reguła / nierozstrzygnięty szczegół | Co zapisać przed przejściem |
+| --- | --- | --- |
+| Cash | Reset; pozostała gotówka automatycznie zamienia się w Gold | Saldo i czas; kurs graniczny nie został ogłoszony |
+| Career i XP ról | Progresja XP resetuje się | Career i każdą rolę osobno |
+| Gold Bars | Pozostają między sezonami | Saldo Gold; nie zastępuj go historyczną wyceną twórcy |
+| Kosmetyki | Pozostają między sezonami | Posiadane przedmioty |
+| Płatne opłaty odblokowania | W sprawdzonych materiałach przejściowych nie określono indywidualnego zachowania, ponownej opłaty lub zwrotu | Przedmiot, próg poziomu i już zapłacona kwota |
+| Osiągnięcia Steam | Nieokreślone w polityce gotówki/XP | Stan osiągnięć Steam oddzielnie od progresji gry |
+
+Zachowaj zrzuty prywatnie, jeśli widać dane konta. Zapisz stan nowego sezonu przed ponownymi wydatkami. Brakujący przedmiot lub nieoczekiwana konwersja wymagają datowanego zgłoszenia pomocy, nie powtarzanych zakupów testowych. Dokładny czas przejścia Season 02 i kurs nadal nie zostały ogłoszone.
+
+## Lista kontroli progresji Early Access
+
+W aktualnym buildzie zapisz numer wersji i przejrzyj sześć ekranów ścieżek przed dużymi wydatkami. Zapisz pierwszych pięć odblokowań, wymagane poziomy, koszty walutowe i działania przesuwające każdy pasek. Testuj jedną powtarzalną czynność naraz, zamiast mieszać eliminacje, podnoszenie, prowadzenie, dostawy i cele w jednym pomiarze.
+
+Zachowaj rezerwę gotówki zamiast kupować każdy nowo odblokowany przedmiot. Lista zmian nie rozstrzyga, czy czołg wymaga ponownego zakupu u sprzedawcy; sprawdź aktualnego sprzedawcę przed planowaniem kosztu każdego życia. Skoordynuj się z drużyną, by jedna osoba testowała Driver, a druga wsparcie lub piechotę.
+
+Po FPS Games Show i informacjach premierowych zastąp każde założenie wyłącznie z bety oficjalnym brzmieniem. Nasza [lista kontrolna premiery](/pl/guides/wardogs-launch-checklist) śledzi daty, a [poradnik początkującego](/pl/guides/wardogs-beginner-guide) wyjaśnia naukę systemów bez uznawania tymczasowych wartości za końcową metę.
+
+## Potwierdzone i nieznane
+
+**Potwierdzony kontekst historyczny:** progresję beta celowo przyspieszono, a czołgi tymczasowo umieszczono na głównej ścieżce War Dog. **Potwierdzone progi Season 1:** Heavy Tank na Driver 35 i Artillery Tank na Career 90. Nadal nie potwierdzono, czy inne czołgi dzielą te progi i czy zakupy u sprzedawcy się powtarza.
+
+**Znana polityka sezonowa:** gotówka i XP resetują się; reszta gotówki automatycznie przechodzi na Gold Bars; Gold Bars i kosmetyki pozostają. **Nadal nieznane tutaj:** dokładna godzina resetu Season 02, kurs, pełne traktowanie kupionych odblokowań i ustawień, długości przyszłych sezonów i termin wdrożenia planowanych Player Skills.
+
+## Najczęstsze pytania
+
+**Czy postępy Closed Beta 02 przeszły do Early Access?** Nie zakładaj przeniesienia testowych pieniędzy, XP, odblokowań lub statystyk bez jednoznacznego oficjalnego komunikatu. Rozstrzygająca jest obecna progresja Early Access.
+
+**Jaką rolę powinien rozwijać gracz czołgów?** Dla Heavy Tank Season 1 wskazuje Driver level 35. Artillery Tank jest osobnym odblokowaniem Career level 90; nie traktuj Driver 35 jako progu każdego czołgu.
+
+**Jakie jest źródło pierwotne polityki wipe?** Własny [film BULKHEAD Early Access & Beyond w 03:05](https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s). Podsumowania twórców treści pomagają znaleźć pytania, ale nie są potrzebne do ustalenia deklaracji studia.
+
+## Źródła i ostatnia weryfikacja
+
+[Oficjalny film polityki sezonowej](https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s), [listę zmian Season 1 z 9 września](https://store.steampowered.com/news/app/1867240/view/701027323413004455) i teaser Season 02 ponownie sprawdzono **26 września 2026**. Późniejsze oficjalne patch notes powinny zastąpić zmienione wartości Season 1 i uzupełnić brakujące szczegóły przejścia.
+
+## Powiązane poradniki
+
+- [Lista kontrolna premiery WARDOGS](/pl/guides/wardogs-launch-checklist)
+- [Poradnik zarabiania WARDOGS](/pl/guides/wardogs-money-guide)
+- [Poradnik początkującego WARDOGS](/pl/guides/wardogs-beginner-guide)
+- [Pojazdy WARDOGS](/pl/items/vehicles)
+- [Osiągnięcia Steam WARDOGS](/pl/guides/wardogs-achievements)

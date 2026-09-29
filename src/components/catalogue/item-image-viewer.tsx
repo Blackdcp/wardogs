@@ -5,13 +5,14 @@ import {useEffect, useId, useRef, useState} from "react";
 import {ExternalLink, Maximize2, RotateCcw, X, ZoomIn, ZoomOut} from "lucide-react";
 import type {CatalogueMediaSource} from "@/features/catalogue/catalogue-media-sources";
 import {assetPath} from "@/lib/assets";
+import {ItemImageInspection} from "./item-image-inspection";
 
 const english = {
   open: "Inspect image", close: "Close image", actual: "Actual pixels", fit: "Fit image", file: "Open stored image", source: "Image source", scope: "Source and processing notes",
   unknown: "No image-specific source record is available.", processing: "Displayed file is the site's stored image. Crop, re-encoding and other processing are not fully recorded; it is not presented as the untouched source original. Source attribution is not independent license certification.",
   retrieved: "Recorded", captured: "Source frame", failed: "Image could not load", retry: "Retry", loading: "Loading image",
 };
-type CompleteImageLocale = "zh-cn" | "ja" | "de" | "ru" | "pt-br";
+type CompleteImageLocale = "zh-cn" | "zh-tw" | "pl" | "ja" | "de" | "ru" | "pt-br";
 const translated: Record<CompleteImageLocale, typeof english> & Record<string, Partial<typeof english>> = {
   "zh-cn": {open: "查看大图", close: "关闭大图", actual: "原始像素", fit: "适应窗口", file: "打开本站保存图片", source: "图片来源", scope: "来源与加工说明", unknown: "暂无这张图片的独立来源记录。", processing: "展示的是本站保存的图片。裁切、重编码等加工记录尚不完整，不称为来源的未加工原图。标注来源不等于独立许可认证。", retrieved: "记录日期", captured: "来源画面", failed: "图片加载失败", retry: "重试", loading: "图片加载中"},
   "zh-tw": {open: "檢視大圖", close: "關閉大圖", actual: "原始像素", fit: "符合視窗", file: "開啟本站儲存圖片", source: "圖片來源", scope: "來源與加工說明", unknown: "尚無這張圖片的獨立來源記錄。", processing: "展示的是本站儲存的圖片。裁切、重新編碼等加工記錄尚不完整，不稱為未加工原圖。標註來源不等於獨立許可認證。", retrieved: "記錄日期", captured: "來源畫面", failed: "圖片載入失敗", retry: "重試", loading: "圖片載入中"},
@@ -39,7 +40,12 @@ const translated: Record<CompleteImageLocale, typeof english> & Record<string, P
     processing: "O arquivo exibido é a imagem armazenada neste site. Recortes, recodificação e outros processamentos não estão totalmente documentados; o arquivo não é apresentado como o original sem alterações da fonte. A atribuição da fonte não constitui uma certificação independente da licença de uso.",
     retrieved: "Data do registro", captured: "Quadro da fonte", failed: "Não foi possível carregar a imagem", retry: "Tentar novamente", loading: "Carregando imagem",
   },
-  pl: {open: "Obejrzyj obraz", close: "Zamknij obraz", actual: "Oryginalne piksele", fit: "Dopasuj obraz", file: "Otwórz zapisany obraz", source: "Źródło obrazu", retry: "Ponów"},
+  pl: {
+    open: "Obejrzyj obraz", close: "Zamknij obraz", actual: "Oryginalne piksele", fit: "Dopasuj obraz", file: "Otwórz zapisany obraz", source: "Źródło obrazu", retry: "Ponów",
+    scope: "Źródło i obróbka obrazu", unknown: "Brak osobnego zapisu źródła tego obrazu.",
+    processing: "Wyświetlany plik jest obrazem zapisanym przez ten serwis. Kadrowanie, ponowne kodowanie i pozostałe przekształcenia nie zostały w pełni udokumentowane; nie przedstawiamy go jako niezmienionego oryginału źródłowego. Podanie źródła nie jest niezależnym potwierdzeniem licencji.",
+    retrieved: "Data zapisu", captured: "Klatka źródłowa", failed: "Nie udało się wczytać obrazu", loading: "Wczytywanie obrazu",
+  },
 };
 type Props = {src: string; alt: string; locale: string; source?: CatalogueMediaSource};
 const buttonClass = "inline-flex size-11 shrink-0 items-center justify-center rounded border border-[#506459] text-white hover:bg-[#2e4538]";
@@ -90,6 +96,7 @@ export function ItemImageViewer({src, alt, locale, source}: Props) {
           {load === "ready" && <p className="font-mono text-[#9adeb4]">{dimensions.width} × {dimensions.height} px</p>}
           <h3 className="text-sm font-semibold text-white">{copy.scope}</h3>
           {source ? <><p>{copy.source}: {source.sourceUrl ? <a className="break-words text-[#9adeb4] underline" href={source.sourceUrl} title={`${copy.source}: ${source.sourceLabel}`} target="_blank" rel="noreferrer">{source.sourceLabel}</a> : source.sourceLabel}</p><p>{copy.retrieved}: {source.retrievedAt}{source.capturedAt ? ` · ${copy.captured}: ${source.capturedAt}` : ""}</p><p>{source.usageNote}</p></> : <p>{copy.unknown}</p>}
+          <ItemImageInspection inspection={source?.inspection} locale={locale} />
           <p>{copy.processing}</p>
         </section>
       </>}

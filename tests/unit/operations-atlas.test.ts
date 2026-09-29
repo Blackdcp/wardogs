@@ -70,12 +70,12 @@ describe("operations atlas", () => {
     ]);
   });
 
-  it("has complete page, filter, evidence, visual, and entry copy in all six locales", () => {
+  it("has complete page, filter, evidence, visual, and entry copy in all supported locales", () => {
     const englishTitles = Object.fromEntries(Object.entries(getOperationsAtlasCopy("en").entries).map(([id, entry]) => [id, entry.title]));
     for (const locale of locales) {
       const copy = getOperationsAtlasCopy(locale);
       expect(copy.metaTitle.length, locale).toBeGreaterThan(20);
-      const isCjk = locale === "ja" || locale === "zh-cn";
+      const isCjk = locale === "ja" || locale === "zh-cn" || locale === "zh-tw";
       expect(copy.metaDescription.length, locale).toBeGreaterThanOrEqual(isCjk ? 60 : 120);
       expect(copy.metaDescription.length, locale).toBeLessThanOrEqual(isCjk ? 110 : 160);
       expect(Object.keys(copy.filters), locale).toEqual(expect.arrayContaining([...operationsAtlasTaskOrder]));
@@ -121,6 +121,16 @@ describe("operations atlas", () => {
         "battlefield-control-zone": "Team17 官方说明确认地图面积为 256 平方公里，控制区为随机的 2×2 公里；未确认固定路线。",
         "oil-rig-hot-zone": "创作者来源展示了 Closed Beta 中建造、运输与启动的流程；具体成本、冷却时间及当前可用性仍未核验。",
         "cargo-route": "已批准的货运讲解展示了 Closed Beta 中购买、装载、运输与卸载的流程；按键、容量、价格和路线均属于历史版本信息。",
+      },
+      "zh-tw": {
+        "battlefield-control-zone": "Team17 官方說明確認地圖面積為 256 平方公里，控制區為隨機的 2×2 公里；未確認固定路線。",
+        "oil-rig-hot-zone": "創作者來源展示了 Closed Beta 中建造、運輸與啟動的流程；具體成本、冷卻時間及當前可用性仍未核驗。",
+        "cargo-route": "已批准的貨運講解展示了 Closed Beta 中購買、裝載、運輸與卸載的流程；按鍵、容量、價格和路線均屬於歷史版本資訊。",
+      },
+      pl: {
+        "battlefield-control-zone": "Oficjalny opis Team17 potwierdza mapę 256 km² i losową strefę kontroli 2×2 km; nie potwierdza stałych tras.",
+        "oil-rig-hot-zone": "Materiał twórcy pokazuje budowanie, transport i uruchamianie w zamkniętej becie; dokładne koszty, czas odnowienia i obecna dostępność są niezweryfikowane.",
+        "cargo-route": "Zaakceptowany poradnik dostaw pokazuje zakup, załadunek, transport i rozładunek w zamkniętej becie. Klawisze, pojemności, ceny i trasy dotyczą wersji historycznej.",
       },
     } as const;
     const cases = [

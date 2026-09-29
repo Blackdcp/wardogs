@@ -4,6 +4,7 @@ import {useState} from "react";
 import {ExternalLink, Play, X} from "lucide-react";
 import {candidateWatchUrl, getVideoCandidates} from "@/features/videos/video-candidates";
 import {getVideoCandidateCopy} from "@/features/videos/video-candidate-copy";
+import {CANDIDATE_EVIDENCE_CHECKED_AT, getVideoCandidateEvidence, videoTimestamp} from "@/features/videos/video-candidate-evidence";
 import {publicRoutePath} from "@/lib/public-url";
 
 export function VideoCandidateList({locale}: {locale: string}) {
@@ -13,7 +14,9 @@ export function VideoCandidateList({locale}: {locale: string}) {
     <h2 className="display-font text-3xl text-white" id="candidate-title">{ui.title}</h2>
     <p className="mt-4 max-w-4xl text-sm leading-7 text-[#a8b4ae]">{ui.summary}</p>
     <div className="mt-6 divide-y divide-[#354039]">
-      {getVideoCandidates(locale).map((video) => <article className="scroll-mt-24 py-6" id={`candidate-${video.youtubeId}`} key={video.youtubeId}>
+      {getVideoCandidates(locale).map((video) => {
+        const evidence = getVideoCandidateEvidence(video.youtubeId);
+        return <article className="scroll-mt-24 py-6" id={`candidate-${video.youtubeId}`} key={video.youtubeId}>
         <div className="flex min-w-0 flex-wrap items-start justify-between gap-4">
           <div className="min-w-0 flex-1 basis-72" style={{overflowWrap: "anywhere"}}>
             <p className="text-xs text-[#a8b4ae]">{video.channel} · <span lang={video.language}>{video.language.toUpperCase()}</span> · <time dateTime={video.publishedDate}>{video.publishedDate}</time></p>
@@ -24,6 +27,11 @@ export function VideoCandidateList({locale}: {locale: string}) {
           </button>
         </div>
         <p className="mt-3 max-w-4xl text-sm leading-6 text-[#d9b96c]">{ui.cautions[video.caution]}</p>
+        {evidence.caution && <p className="mt-2 max-w-4xl text-sm leading-6 text-[#d9b96c]"><a title={`${video.title}: ${videoTimestamp(evidence.caution.seconds)}`} className="underline underline-offset-4" href={candidateWatchUrl(video.youtubeId, evidence.caution.seconds)} target="_blank" rel="noreferrer">{videoTimestamp(evidence.caution.seconds)}</a> {ui.evidenceCautions[evidence.caution.key]}</p>}
+        <div className="mt-3 max-w-4xl space-y-1 text-sm leading-6 text-[#a8b4ae]">
+          <p>{ui.reviewed}: <time dateTime={CANDIDATE_EVIDENCE_CHECKED_AT}>{CANDIDATE_EVIDENCE_CHECKED_AT}</time> · {ui.captions[evidence.captionReview]}</p>
+          {evidence.footage.length ? <ul className="flex flex-wrap gap-x-5 gap-y-1">{evidence.footage.map(sample => <li key={sample.seconds}>{ui.footage}{sample.scope === "intro" ? ` (${ui.intro})` : ""}: <a title={`${video.title}: ${videoTimestamp(sample.seconds)}`} className="text-[#79d19c] underline underline-offset-4" href={candidateWatchUrl(video.youtubeId, sample.seconds)} target="_blank" rel="noreferrer">{videoTimestamp(sample.seconds)}</a></li>)}</ul> : <p>{ui.noFootage}</p>}
+        </div>
         <p className="mt-2 text-xs text-[#a8b4ae]">{ui.metadata}: <time dateTime={video.metadataCheckedAt}>{video.metadataCheckedAt}</time> · {video.chapters.length ? ui.chapters : ui.noChapters}</p>
         {video.chapters.length > 0 && <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#79d19c]">{video.chapters.map(chapter => <li key={chapter.seconds}><a title={`${video.title}: ${chapter.label}`} href={candidateWatchUrl(video.youtubeId, chapter.seconds)} target="_blank" rel="noreferrer">{Math.floor(chapter.seconds / 60)}:{String(chapter.seconds % 60).padStart(2, "0")} {chapter.label}</a></li>)}</ul>}
         <div className="mt-4 flex flex-wrap gap-5 text-sm text-[#79d19c]">
@@ -33,7 +41,8 @@ export function VideoCandidateList({locale}: {locale: string}) {
         <div id={`player-${video.youtubeId}`}>
           {open === video.youtubeId && <iframe className="mt-5 aspect-video w-full max-w-4xl border-0" src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`} title={`${video.title} - ${video.channel}`} loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />}
         </div>
-      </article>)}
+      </article>;
+      })}
     </div>
   </section>;
 }

@@ -9,6 +9,7 @@ import {getItemUi} from "@/features/items/item-ui";
 import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import {buildLocalizedUrl, buildPageMetadata, languageTags} from "./metadata";
 import {publicAssetUrl} from "./public-url";
+import {toTraditional} from "@/i18n/traditional";
 
 function itemPath(item: WardogsItem) {
   return `/items/${item.type}/${item.slug}`;
@@ -46,6 +47,12 @@ export function getItemCanonicalLocale(locale: Locale, item: WardogsItem): Local
 }
 
 function searchTitle(locale: Locale, item: WardogsItem): string {
+  if (locale === "zh-tw") return toTraditional(searchTitle("zh-cn", item));
+  if (locale === "pl") {
+    const historical = getCatalogueFreshness({dataAsOf: item.build, evidence: item.evidence}) === "historical";
+    const title = historical ? `WARDOGS ${item.name}: dane historyczne` : `WARDOGS ${item.name}: cena, rola i odblokowanie`;
+    return title.length <= 60 ? title : `WARDOGS ${item.name}: poradnik`;
+  }
   if (locale === "ja" && item.type === "vehicles" && item.slug === "stingray") {
     return "WARDOGS スティングレイランチャー：対車両ドローンの使い方";
   }
@@ -138,14 +145,16 @@ function clampSearchDescription(value: string, locale: Locale = "en"): string {
     de: "Prüfe Rolle, Kosten, Quellen und die Grenzen der aktuellen Version.",
     "pt-br": "Confira função, custos, fontes e limites da versão atual.",
     ja: "役割、費用、情報源、現在のビルドでの制限を確認できます。",
-    "zh-cn": "页面同时标注来源、版本边界与尚未确认的内容，便于出战前复核。"
+    "zh-cn": "页面同时标注来源、版本边界与尚未确认的内容，便于出战前复核。",
+    "zh-tw": "頁面同時標註來源、版本邊界與尚未確認的內容，便於出戰前複核。",
+    pl: "Sprawdź źródła, rolę, koszty i ograniczenia wersji przed zakupem."
   };
   const complete = normalized.length >= 140
     ? normalized
     : `${normalized} ${fillers[locale]}`;
   if (complete.length <= 160) return complete;
 
-  if (locale === "zh-cn" || locale === "ja") {
+  if (locale === "zh-cn" || locale === "zh-tw" || locale === "ja") {
     const window = complete.slice(0, 160);
     const punctuation = [..."。！？；"].reduce((last, mark) => Math.max(last, window.lastIndexOf(mark)), -1);
     if (punctuation >= 139) return window.slice(0, punctuation + 1);
@@ -167,7 +176,9 @@ function searchDescription(locale: Locale, item: WardogsItem): string {
     de: "Historischer Datenstand:",
     "pt-br": "Registro histórico:",
     ja: "過去ビルドの記録：",
-    "zh-cn": "历史版本快照："
+    "zh-cn": "历史版本快照：",
+    "zh-tw": "歷史版本快照：",
+    pl: "Dane historyczne:"
   };
 
   if (locale !== "en") {

@@ -11,7 +11,9 @@ const localeNames: Record<Locale, string> = {
   de: "German",
   "pt-br": "Brazilian Portuguese",
   ja: "Japanese",
-  "zh-cn": "Simplified Chinese"
+  "zh-cn": "Simplified Chinese",
+  "zh-tw": "Traditional Chinese",
+  pl: "Polish"
 };
 
 export function GET() {

@@ -79,6 +79,16 @@ const copy = {
     result: "检测结果", resultBelow: "低于官方公布的最低配置", resultReview: "需要手动核对", resultMinimum: "达到官方公布的最低配置", resultRecommended: "达到官方公布的推荐配置", limiting: "需要复核", share: "复制结果链接", copied: "结果链接已复制",
     cash: "可用资金", loadout: "武器、弹药和装备", vehicle: "载具或团队支出", reserve: "计划保留资金", spent: "计划支出", remaining: "剩余资金", reserveMet: "已保留预算", reserveMissed: "未达到保留目标", buildWarning: "价格和平衡会随版本变化，请输入你当前游戏客户端中显示的数值。", source: "查看 Steam 官方配置",
   },
+
+  pl: {systemTitle:"Sprawdzenie konfiguracji PC do WARDOGS", systemDescription:"Porównaj podane parametry komputera z oficjalnym minimum i konfiguracją zalecaną dla Windows. To nie test wydajności sprzętu.", budgetTitle:"Budżet wyposażenia WARDOGS", budgetDescription:"Zaplanuj jedno życie według cen z używanej wersji gry. Ceny przedpremierowego katalogu nie są dodawane automatycznie.", officialBasis:"Oficjalne wymagania", os:"System operacyjny", ram:"Zainstalowany RAM (GB)", storage:"Wolne miejsce (GB)", cpu:"Porównanie procesora", gpu:"Porównanie karty graficznej", windows10:"Windows 10, 64-bitowy", windows11:"Windows 11, 64-bitowy", unsupported:"Starszy Windows lub inny system", below:"Poniżej minimum", minimum:"Klasa minimalna", recommended:"Klasa zalecana", unknown:"Nie wiem", result:"Wynik", resultBelow:"Poniżej podanego minimum", resultReview:"Potrzebne ręczne porównanie", resultMinimum:"Spełnia podane minimum", resultRecommended:"Spełnia podane wymagania zalecane", limiting:"Do sprawdzenia", share:"Kopiuj link wyniku", copied:"Skopiowano link wyniku", cash:"Dostępna gotówka", loadout:"Broń, amunicja i wyposażenie", vehicle:"Zakup pojazdu lub dla zespołu", reserve:"Planowana rezerwa", spent:"Planowane wydatki", remaining:"Pozostała gotówka", reserveMet:"Rezerwa zachowana", reserveMissed:"Niedobór rezerwy", buildWarning:"Ceny i balans zależą od wersji. Wpisz wartości wyświetlane w obecnej grze.", source:"Otwórz oficjalne wymagania Steam"},
+  "zh-tw": {
+    systemTitle: "WARDOGS 電腦配置檢測", systemDescription: "把你填寫的電腦配置與 Steam 官方 Windows 最低、推薦配置比較。本工具不執行效能測試。",
+    budgetTitle: "WARDOGS 配裝預算工具", budgetDescription: "使用當前遊戲版本里顯示的價格規劃一次生命，不自動套用測試版本舊價格。",
+    officialBasis: "官方配置依據", os: "作業系統", ram: "記憶體容量 (GB)", storage: "可用硬碟空間 (GB)", cpu: "CPU 對比", gpu: "顯示卡對比",
+    windows10: "Windows 10 64 位", windows11: "Windows 11 64 位", unsupported: "舊版 Windows 或其他系統", below: "低於最低配置", minimum: "最低配置級別", recommended: "推薦配置級別", unknown: "不確定",
+    result: "檢測結果", resultBelow: "低於官方公佈的最低配置", resultReview: "需要手動核對", resultMinimum: "達到官方公佈的最低配置", resultRecommended: "達到官方公佈的推薦配置", limiting: "需要複核", share: "複製結果連結", copied: "結果連結已複製",
+    cash: "可用資金", loadout: "武器、彈藥和裝備", vehicle: "載具或團隊支出", reserve: "計劃保留資金", spent: "計劃支出", remaining: "剩餘資金", reserveMet: "已保留預算", reserveMissed: "未達到保留目標", buildWarning: "價格和平衡會隨版本變化，請輸入你當前遊戲客戶端中顯示的數值。", source: "檢視 Steam 官方配置",
+}
 } as const;
 
 const evidenceToolCopy = {
@@ -179,6 +189,20 @@ const evidenceToolCopy = {
     historicalWarning: "历史版本观察值不是当前版本推荐。", build: "版本", verified: "核查日期", fieldRole: "定位", fieldPrice: "已观察价格", fieldAmmunition: "弹药", fieldFireModes: "射击模式", fieldWeight: "重量", fieldProgression: "进度门槛", fieldRequiredLevel: "所需等级",
     strengths: "已记录使用背景", cautions: "证据限制", openItem: "打开证据页面", noConfirmedAmmo: "图鉴尚未记录该武器的明确弹药关系。", noConfirmedWeapons: "图鉴尚未记录该弹药的明确武器关系。", emptyMatcher: "选择武器、弹药或同时选择两者，查看已记录的对应关系。", copyToolLink: "复制工具链接", copiedToolLink: "工具链接已复制",
   },
+
+  pl: {weaponCompareTitle:"Porównanie broni WARDOGS", weaponCompareDescription:"Porównuj tylko udokumentowane parametry broni. Każda wartość zachowuje wersję źródłową i status dowodów: aktualny, historyczny lub nieznany.", weaponCompareEyebrow:"Dobór wyposażenia oparty na dowodach", ammoMatcherTitle:"Dobór amunicji WARDOGS", ammoMatcherDescription:"Sprawdzaj powiązania broni z amunicją i amunicji z bronią wyłącznie wtedy, gdy katalog zapisuje jednoznaczną zgodność.", ammoMatcherEyebrow:"Udokumentowane powiązania katalogowe", leftWeapon:"Pierwsza broń", rightWeapon:"Druga broń", selectWeapon:"Wybierz broń", selectAmmo:"Wybierz amunicję", comparison:"Porównanie udokumentowanych parametrów", weaponToAmmo:"Amunicja zapisana dla tej broni", ammoToWeapons:"Broń zapisana dla tej amunicji", currentEvidence:"Aktualne", historicalEvidence:"Historyczne", unknownEvidence:"Nieznane", imagePending:"Obraz niezweryfikowany", historicalWarning:"Obserwacje historyczne nie są zaleceniami dla obecnej wersji.", build:"Wersja", verified:"Sprawdzono", fieldRole:"Rola", fieldPrice:"Zaobserwowany koszt", fieldAmmunition:"Amunicja", fieldFireModes:"Tryby ognia", fieldWeight:"Masa", fieldProgression:"Warunek postępów", fieldRequiredLevel:"Wymagany poziom", strengths:"Udokumentowany kontekst", cautions:"Ograniczenia dowodów", openItem:"Otwórz stronę dowodów", noConfirmedAmmo:"Nie zapisano potwierdzonego powiązania amunicji z tą bronią.", noConfirmedWeapons:"Nie zapisano potwierdzonego powiązania broni z tą amunicją.", emptyMatcher:"Wybierz broń, typ amunicji lub oba, aby sprawdzić zapisane powiązania.", copyToolLink:"Kopiuj link narzędzia", copiedToolLink:"Skopiowano link narzędzia"},
+  "zh-tw": {
+    weaponCompareTitle: "WARDOGS 武器對比工具",
+    weaponCompareDescription: "只對比已經記錄的武器欄位。每個值都保留來源版本，並明確標註當前、歷史或未知狀態。",
+    weaponCompareEyebrow: "證據優先的配裝工具",
+    ammoMatcherTitle: "WARDOGS 武器彈藥匹配器",
+    ammoMatcherDescription: "僅在圖鑑存在明確關係時，查詢武器對應彈藥或彈藥對應武器，不根據名稱猜測相容性。",
+    ammoMatcherEyebrow: "圖鑑中的明確對應關係",
+    leftWeapon: "第一把武器", rightWeapon: "第二把武器", selectWeapon: "選擇武器", selectAmmo: "選擇彈藥", comparison: "已記錄欄位對比",
+    weaponToAmmo: "該武器已記錄的彈藥", ammoToWeapons: "該彈藥已記錄的武器", currentEvidence: "當前", historicalEvidence: "歷史", unknownEvidence: "未知", imagePending: "圖片待核驗",
+    historicalWarning: "歷史版本觀察值不是當前版本推薦。", build: "版本", verified: "核查日期", fieldRole: "定位", fieldPrice: "已觀察價格", fieldAmmunition: "彈藥", fieldFireModes: "射擊模式", fieldWeight: "重量", fieldProgression: "進度門檻", fieldRequiredLevel: "所需等級",
+    strengths: "已記錄使用背景", cautions: "證據限制", openItem: "開啟證據頁面", noConfirmedAmmo: "圖鑑尚未記錄該武器的明確彈藥關係。", noConfirmedWeapons: "圖鑑尚未記錄該彈藥的明確武器關係。", emptyMatcher: "選擇武器、彈藥或同時選擇兩者，檢視已記錄的對應關係。", copyToolLink: "複製工具連結", copiedToolLink: "工具連結已複製",
+}
 } as const;
 
 const evidenceProvenanceCopy = {
@@ -260,6 +284,21 @@ const evidenceProvenanceCopy = {
     confidenceCorroborated: "已交叉验证",
     confidenceUnverified: "未验证",
   },
+
+  pl: {sourceClass:"Rodzaj źródła", confidence:"Pewność", sourceOfficial:"Oficjalne", sourceLiveClient:"Aktualny klient gry", sourceCreatorCurrent:"Aktualne źródło twórcy", sourceCreatorHistorical:"Historyczne źródło twórcy", sourceCommunityReport:"Relacja społeczności", confidenceConfirmed:"Potwierdzone", confidenceObserved:"Zaobserwowane", confidenceCorroborated:"Poparte dodatkowymi źródłami", confidenceUnverified:"Niezweryfikowane"},
+  "zh-tw": {
+    sourceClass: "來源類別",
+    confidence: "可信度",
+    sourceOfficial: "官方",
+    sourceLiveClient: "當前客戶端",
+    sourceCreatorCurrent: "當前創作者資料",
+    sourceCreatorHistorical: "歷史創作者資料",
+    sourceCommunityReport: "社群報告",
+    confidenceConfirmed: "已確認",
+    confidenceObserved: "已觀察",
+    confidenceCorroborated: "已交叉驗證",
+    confidenceUnverified: "未驗證",
+}
 } as const;
 
 const plannerToolCopy = {
@@ -412,13 +451,43 @@ const plannerToolCopy = {
       recovery: {title: "回收", action: "安全时回收可复用资产，报告损失，并从团队当前需求重新开始清单。", evidenceNote: "不填入没有官方来源的回收时间、退款或残值。"},
     },
   },
+
+  pl: {
+progressionRouteTitle:"Plan postępów WARDOGS", progressionRouteDescription:"Wybierz jedną z sześciu aktywnych ścieżek ról, zapisz bieżący poziom i sprawdź tylko oficjalnie opublikowane zmiany sezonu 1. Nie wymyślamy tempa XP ani czasu odblokowań.", progressionRouteEyebrow:"Planowanie ról ze źródłami", logisticsPlannerTitle:"Planer FOB i logistyki WARDOGS", logisticsPlannerDescription:"Ułóż wielokrotnego użytku listę działań: odrodzenie, budowa, dostawy, transport, obrona i odzyskanie sprzętu. Bez niezweryfikowanych kosztów, pojemności, odległości i czasów przejazdu.", logisticsPlannerEyebrow:"Uporządkowane działania zespołu", selectRole:"Ścieżka roli", currentLevel:"Bieżący poziom widoczny w grze", currentLevelOptional:"Opcjonalnie; pozostaw puste, jeśli nieznany", routeGoal:"Cel", routeDuty:"Granice dowodów", nextUsefulAction:"Następne użyteczne działanie", durationEstimate:"Szacowany czas", unknownDuration:"Nieznany. Oficjalne źródło sezonu 1 nie podaje godzin, liczby meczów ani tempa XP na godzinę.", confirmedSeasonChanges:"Potwierdzone zmiany sezonu 1", noPublishedRoleChanges:"Opublikowana lista zmian sezonu 1 nie wskazuje przeniesienia odblokowań dla tej roli. Sprawdź obecną grę, zamiast zakładać kolejność.", previousValue:"Poprzednio", currentValue:"Sezon 1", officialSource:"Otwórz oficjalne źródło sezonu 1", checkedOn:"Sprawdzono", availableStages:"Dostępne etapy", selectedPlan:"Wybrana kolejność działań", emptyLogisticsPlan:"Nie wybrano etapów. Dodaj co najmniej jeden, aby utworzyć listę działań do udostępnienia.", includeStage:"Dodaj etap", moveEarlier:"Przesuń wcześniej", moveLater:"Przesuń później", roles:{
+assault:{label:"Szturmowiec", goal:"Zaplanuj kolejny wybór na ścieżce szturmowca według obecnego menu.", duty:"Sezon 1 wymienia tę ścieżkę, lecz opublikowane zmiany nie wskazują przeniesienia odblokowań szturmowca.", nextAction:"Otwórz ścieżkę szturmowca, wpisz widoczny poziom i sprawdź następny przedmiot przed wydatkiem."},
+medic:{label:"Medyk", goal:"Sprawdź kolejność odblokowań medyka wokół potwierdzonej zmiany magazynka PP-19.", duty:"Za aktualny dowód uznajemy tylko opublikowaną zmianę poziomu bębna PP-19 na 50 nabojów.", nextAction:"Porównaj poziom medyka z bieżącym wymaganiem magazynka PP-19 i sprawdź następne odblokowanie w grze."},
+recon:{label:"Zwiadowca", goal:"Porównaj wydatki zwiadowcy z potwierdzonymi zmianami cen lunet.", duty:"Źródło potwierdza dwie zmiany cen odblokowania lunet, nie całą kolejność ani tempo rozwoju zwiadowcy.", nextAction:"Przed wydaniem gotówki sprawdź obie lunety i kolejne odblokowanie zwiadowcy."},
+support:{label:"Wsparcie", goal:"Sprawdź ścieżkę wsparcia wokół potwierdzonych zmian młotów.", duty:"Zmiany cen i poziomów młotów są aktualne; kolejność pozostałych odblokowań wymaga sprawdzenia w grze.", nextAction:"Sprawdź wpisy średniego i dużego młota, a następnie wybierz zadanie wsparcia potrzebne zespołowi."},
+driver:{label:"Kierowca", goal:"Sprawdź ścieżkę kierowcy z uwzględnieniem zmian pojazdów i zaopatrzenia sezonu 1.", duty:"Za aktualne uznajemy wyłącznie zmiany pojazdów, skrzyń, kasety i ścieżek wymienione oficjalnie.", nextAction:"Otwórz ścieżkę kierowcy, porównaj poziom ze zmianami i potwierdź następny użyteczny pojazd w grze."},
+pilot:{label:"Pilot", goal:"Oceń wydatki pilota względem potwierdzonych zmian maszyn i skrzyń zaopatrzenia.", duty:"Źródło potwierdza wybrane ceny i przeniesienie jednego przedmiotu poza pilota, nie pełną drabinkę rozwoju.", nextAction:"Przed wydatkiem sprawdź skrzynię, Little Bird i Z20 na aktualnej ścieżce pilota."}},
+logisticsStages:{spawn:{title:"Odrodzenie", action:"Ustal potrzebne miejsce odrodzenia i sprawdź aktualny sklep FOB przed wydaniem zasobów.", evidenceNote:"Sezon 1 potwierdza zmianę ceny sklepu FOB; zasady rozmieszczania wymagają obecnej gry."}, construction:{title:"Budowanie", action:"Najpierw ustal obiekt i położenie; buduj po sprawdzeniu aktualnego młota i oferty sklepu.", evidenceNote:"Sezon 1 potwierdza cenę dużego młota, koszt odblokowania wsparcia i wymagany poziom."}, supply:{title:"Zaopatrzenie", action:"Zapytaj o potrzebny zasób, potwierdź załadunek i transfer, a następnie zmianę zapasów odbiorcy.", evidenceNote:"Sezon 1 potwierdza zmianę poziomu dużej skrzyni zaopatrzenia; nie wpisujemy pojemności ani wartości transferu."}, transport:{title:"Transport", action:"Przed ruszeniem wyznacz kierowcę, trasę, cel i plan powrotu.", evidenceNote:"Sezon 1 potwierdza wybrane zmiany pojazdów i postępów kierowcy; odległość i czas przejazdu pozostają niepodane."}, defense:{title:"Obrona", action:"Osłoń podejścia, odrodzenie, budowniczych i dostawy bez zakładania ostatecznego zasięgu ochrony.", evidenceNote:"Zaakceptowane źródło nie publikuje pełnej bieżącej tabeli kosztów, zasięgu i pojemności obrony."}, recovery:{title:"Odzyskanie", action:"Gdy jest bezpiecznie, odzyskaj sprzęt wielokrotnego użytku, zgłoś straty i rozpocznij listę od bieżących potrzeb zespołu.", evidenceNote:"Nie wpisujemy nieudokumentowanych czasów odzyskania, zwrotów ani wartości złomu."}}
+},
+  "zh-tw": {
+    progressionRouteTitle: "WARDOGS 成長路線工具", progressionRouteDescription: "選擇六條角色路線之一，填寫客戶端當前等級，只查看官方已公佈的 Season 1 變更；不編造 XP 效率、比賽場數或所需時間。", progressionRouteEyebrow: "有來源的角色規劃",
+    logisticsPlannerTitle: "WARDOGS FOB 與後勤規劃器", logisticsPlannerDescription: "按出生點、建造、補給、運輸、防守和回收編排可分享任務清單，不填入未經確認的價格、容量、距離或行程時間。", logisticsPlannerEyebrow: "有順序的團隊行動",
+    selectRole: "角色路線", currentLevel: "客戶端顯示的當前等級", currentLevelOptional: "選填；未知時留空", routeGoal: "目標", routeDuty: "證據邊界", nextUsefulAction: "下一步行動", durationEstimate: "所需時間", unknownDuration: "未知。Season 1 官方來源沒有公佈所需小時、比賽場數或每小時 XP。", confirmedSeasonChanges: "Season 1 已確認變更", noPublishedRoleChanges: "已釋出的 Season 1 更新日誌沒有列出該路線專屬的解鎖調整，請以當前客戶端為準，不猜測順序。", previousValue: "原值", currentValue: "Season 1", officialSource: "開啟 Season 1 官方來源", checkedOn: "核查日期", availableStages: "可選階段", selectedPlan: "已選行動順序", emptyLogisticsPlan: "尚未選擇階段。至少新增一個階段，才能生成可分享的行動清單。", includeStage: "加入階段", moveEarlier: "向前移動", moveLater: "向後移動",
+    roles: {
+        assault: { label: "Assault", goal: "根據當前客戶端規劃下一項 Assault 路線選擇。", duty: "Season 1 官方資料確認存在該路線，但沒有公佈 Assault 專屬解鎖調整。", nextAction: "開啟當前 Assault 路線，填入顯示等級，並在花費前核對下一項物品。" },
+        medic: { label: "Medic", goal: "圍繞已確認的 PP-19 彈匣調整核對 Medic 解鎖順序。", duty: "只有官方公佈的 PP-19 50 發彈鼓等級調整被視為當前證據。", nextAction: "將當前 Medic 等級與客戶端彈匣門檻比較，再核對下一項解鎖。" },
+        recon: { label: "Recon", goal: "根據已確認的瞄具解鎖價格規劃 Recon 支出。", duty: "官方確認了兩項瞄具價格調整，但沒有公佈完整順序或升級速度。", nextAction: "花費前在客戶端核對兩款瞄具和下一項 Recon 解鎖。" },
+        support: { label: "Support", goal: "圍繞已確認的錘子調整核對 Support 路線。", duty: "錘子的解鎖價格和等級調整是當前事實，其餘順序仍以客戶端為準。", nextAction: "核對 Medium Hammer 和 Large Hammer，再選擇團隊眼下真正需要的支援任務。" },
+        driver: { label: "Driver", goal: "結合 Season 1 載具與補給調整核對 Driver 路線。", duty: "只把官方列出的載具、補給箱、磁帶和路線遷移視為當前事實。", nextAction: "開啟 Driver 路線，將等級與已確認調整比較，再核對下一輛可用載具。" },
+        pilot: { label: "Pilot", goal: "圍繞已確認的飛行載具與補給箱價格核對 Pilot 支出。", duty: "官方確認了部分解鎖價格及一項移出 Pilot 的物品，並未公佈完整路線。", nextAction: "花費前核對補給箱、Little Bird 和 Z20 的當前 Pilot 條目。" },
+    },
+    logisticsStages: {
+        spawn: { title: "出生點", action: "先確認團隊需要出生點的位置，再核對當前 FOB 商店條目後投入資源。", evidenceNote: "Season 1 確認了 FOB 商店價格調整；放置規則仍需在當前客戶端核對。" },
+        construction: { title: "建造", action: "先統一建築與位置，再在看清當前錘子和商店條目後建造。", evidenceNote: "Season 1 確認了 Large Hammer 商店價格、Support 解鎖價格和所需等級調整。" },
+        supply: { title: "補給", action: "詢問當前所需資源，確認裝載與轉移，並檢查目的地庫存確實發生變化。", evidenceNote: "Season 1 確認了 Large Supply Crate 等級調整；不填入未公佈的容量和轉移數值。" },
+        transport: { title: "運輸", action: "移動車輛前先確定駕駛員、路線、目的地與返程方案。", evidenceNote: "Season 1 確認了部分 Driver 載具與路線調整；距離和行程時間仍未知。" },
+        defense: { title: "防守", action: "覆蓋接近路線，保護出生點、建造者和運輸，不假設最終防禦範圍。", evidenceNote: "已批准來源沒有公佈完整的當前防守價格、範圍或容量表。" },
+        recovery: { title: "回收", action: "安全時回收可複用資產，報告損失，並從團隊當前需求重新開始清單。", evidenceNote: "不填入沒有官方來源的回收時間、退款或殘值。" },
+    },
+}
 } as const;
 
 type ToolLocale = keyof typeof copy;
 
 export function resolveToolLocale(locale: string): ToolLocale {
-  // New site locales remain usable until their dedicated tool translations land.
-  if (locale === "zh-tw") return "zh-cn";
   return Object.hasOwn(copy, locale) ? locale as ToolLocale : "en";
 }
 
@@ -430,7 +499,10 @@ function localizePlannerTerms<T>(value: T, locale: ToolLocale): T {
     "pt-br": "Temporada 1",
     ja: "シーズン1",
     "zh-cn": "第 1 赛季",
-  };
+
+  pl: "Sezon 1",
+  "zh-tw": "第 1 賽季"
+};
   const roleTerms: Record<ToolLocale, Record<string, string>> = {
     en: {},
     de: {Assault: "Angriff", Medic: "Sanitäter", Recon: "Aufklärung", Support: "Unterstützung", Driver: "Fahrer", Pilot: "Pilot"},
@@ -438,7 +510,10 @@ function localizePlannerTerms<T>(value: T, locale: ToolLocale): T {
     "pt-br": {Assault: "Assalto", Medic: "Médico", Recon: "Reconhecimento", Support: "Suporte", Driver: "Motorista", Pilot: "Piloto"},
     ja: {Assault: "強襲", Medic: "衛生兵", Recon: "偵察", Support: "支援", Driver: "ドライバー", Pilot: "パイロット"},
     "zh-cn": {Assault: "突击", Medic: "医疗", Recon: "侦察", Support: "支援", Driver: "驾驶员", Pilot: "飞行员"},
-  };
+
+  pl: {Assault:"Szturmowiec", Medic:"Medyk", Recon:"Zwiadowca", Support:"Wsparcie", Driver:"Kierowca", Pilot:"Pilot"},
+  "zh-tw": { Assault: "突擊", Medic: "醫療", Recon: "偵察", Support: "支援", Driver: "駕駛員", Pilot: "飛行員" }
+};
   if (typeof value === "string") {
     let localized = value.replace(/Season[- ]1/g, terms[locale]);
     for (const [source, target] of Object.entries(roleTerms[locale])) {

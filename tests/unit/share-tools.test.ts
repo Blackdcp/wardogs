@@ -12,7 +12,7 @@ describe("shareable player tools", () => {
   it("publishes both tool entry pages in every locale", () => {
     const urls = new Set(sitemap().map((entry) => entry.url));
 
-    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn"]) {
+    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]) {
       expect(urls.has(`http://localhost:3000/${locale}/tools/system-check`)).toBe(true);
       expect(urls.has(`http://localhost:3000/${locale}/tools/loadout-budget`)).toBe(true);
       expect(urls.has(`http://localhost:3000/${locale}/tools/weapon-compare`)).toBe(true);
@@ -123,7 +123,7 @@ describe("shareable player tools", () => {
   it("provides readable source-class and confidence labels in all six locales", async () => {
     const {getToolCopy} = await import("../../src/features/tools/tool-copy");
 
-    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const) {
+    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const) {
       const copy = getToolCopy(locale);
       expect([
         copy.sourceClass,
@@ -147,7 +147,7 @@ describe("shareable player tools", () => {
     const progressionPage = await import("../../src/app/[locale]/tools/progression-route/page");
     const logisticsPage = await import("../../src/app/[locale]/tools/logistics-planner/page");
 
-    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn"]) {
+    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]) {
       const weaponMetadata = await weaponPage.generateMetadata({params: Promise.resolve({locale})});
       const ammoMetadata = await ammoPage.generateMetadata({params: Promise.resolve({locale})});
       const progressionMetadata = await progressionPage.generateMetadata({params: Promise.resolve({locale})});

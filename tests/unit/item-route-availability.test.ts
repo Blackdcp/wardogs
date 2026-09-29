@@ -36,7 +36,7 @@ describe("item detail route availability", () => {
 
     expect(routeAvailability.itemDetailRouteManifest).toHaveLength(itemLibrary.filter((item) => item.indexable).length);
     expect(routeAvailability.itemDetailRouteManifest.every(({locales}) =>
-      JSON.stringify(locales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja", "zh-cn"])
+      JSON.stringify(locales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"])
     )).toBe(true);
   });
 

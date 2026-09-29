@@ -76,10 +76,10 @@ export function buildAvailableGuideAlternates(locale: SiteLocale, slug: string, 
   return {canonical: publicRouteUrl(`/${locale}/guides/${slug}`), languages};
 }
 
-export function buildGuideIndexAlternates(locale: SiteLocale, root = contentRoot()): NonNullable<Metadata["alternates"]> {
+export function buildGuideIndexAlternates(locale: SiteLocale): NonNullable<Metadata["alternates"]> {
   const languages: Record<string, string> = {};
   for (const language of siteLocales) {
-    if (isLocale(language) || pilotGuideSlugs[language].some((slug) => hasGuideTranslation(language, slug, root))) {
+    if (isLocale(language)) {
       languages[siteLanguageTags[language]] = publicRouteUrl(`/${language}/guides`);
     }
   }

@@ -4,6 +4,8 @@ import jaMessages from "../../../messages/ja.json";
 import ptBrMessages from "../../../messages/pt-br.json";
 import ruMessages from "../../../messages/ru.json";
 import zhCnMessages from "../../../messages/zh-cn.json";
+import zhTwMessages from "../../../messages/zh-tw.json";
+import plMessages from "../../../messages/pl.json";
 import type {Locale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
 import {getGuideTaskData} from "@/features/guides/guide-task-data";
@@ -35,7 +37,9 @@ const messageCatalogues = {
   ru: ruMessages,
   "pt-br": ptBrMessages,
   ja: jaMessages,
-  "zh-cn": zhCnMessages
+  "zh-cn": zhCnMessages,
+  "zh-tw": zhTwMessages,
+  pl: plMessages
 } as const satisfies Record<Locale, object>;
 
 function getMessage(locale: Locale, key: string): string {

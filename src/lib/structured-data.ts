@@ -6,6 +6,10 @@ import {publicAssetUrl} from "@/lib/public-url";
 
 type JsonLd = Record<string, unknown>;
 
+function guideLabel(locale: Locale) {
+  return locale === "pl" ? "Poradniki" : locale === "zh-tw" ? "攻略" : "Guides";
+}
+
 function pageUrl(locale: Locale, pathname = "") {
   return buildLocalizedUrl(locale, pathname || "/");
 }
@@ -26,6 +30,16 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
   const origin = getSiteOrigin();
   const siteUrl = `${origin.replace(/\/$/, "")}/`;
   const localizedHomeUrl = pageUrl(locale);
+  const homeFaq = locale === "pl" ? [
+    {question: "Czym jest WARDOGS?", answer: "WARDOGS to taktyczna gra FPS na komputery z Windows, w której do 100 graczy walczy w trzech drużynach."},
+    {question: "Czy to oficjalna strona WARDOGS?", answer: "Nie. WARDOGS Wiki to niezależny, nieoficjalny poradnik tworzony dla graczy."}
+  ] : locale === "zh-tw" ? [
+    {question: "WARDOGS 是什麼遊戲？", answer: "WARDOGS 是 Windows PC 平台的戰術全面戰爭 FPS，最多 100 名玩家分成三支隊伍作戰。"},
+    {question: "這是 WARDOGS 官方網站嗎？", answer: "不是。WARDOGS Wiki 是獨立的非官方玩家攻略網站。"}
+  ] : [
+    {question: "What is WARDOGS?", answer: "WARDOGS is a 100-player, three-team tactical all-out warfare FPS for Windows PC."},
+    {question: "Is this the official WARDOGS website?", answer: "No. WARDOGS Wiki is an independent fan-made guide."}
+  ];
   return [
     {
       "@context": "https://schema.org",
@@ -77,10 +91,7 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        {"@type": "Question", name: "What is WARDOGS?", acceptedAnswer: {"@type": "Answer", text: "WARDOGS is a 100-player, three-team tactical all-out warfare FPS for Windows PC."}},
-        {"@type": "Question", name: "Is this the official WARDOGS website?", acceptedAnswer: {"@type": "Answer", text: "No. WARDOGS Wiki is an independent fan-made guide."}}
-      ]
+      mainEntity: homeFaq.map(({question, answer}) => ({"@type": "Question", name: question, acceptedAnswer: {"@type": "Answer", text: answer}}))
     }
   ];
 }
@@ -88,7 +99,7 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
 export function buildGuideIndexJsonLd(locale: Locale, guides: GuideSummary[]): JsonLd[] {
   const url = pageUrl(locale, "/guides");
   return [
-    {"@context": "https://schema.org", "@type": "CollectionPage", name: "WARDOGS Guides", url},
+    {"@context": "https://schema.org", "@type": "CollectionPage", name: `WARDOGS ${guideLabel(locale)}`, url},
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
@@ -104,7 +115,7 @@ export function buildGuideIndexJsonLd(locale: Locale, guides: GuideSummary[]): J
       "@type": "BreadcrumbList",
       itemListElement: [
         {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
-        {"@type": "ListItem", position: 2, name: "Guides", item: url}
+        {"@type": "ListItem", position: 2, name: guideLabel(locale), item: url}
       ]
     }
   ];
@@ -129,7 +140,7 @@ export function buildArticleJsonLd(locale: Locale, guide: GuideDocument): JsonLd
       "@type": "BreadcrumbList",
       itemListElement: [
         {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
-        {"@type": "ListItem", position: 2, name: "Guides", item: pageUrl(locale, "/guides")},
+        {"@type": "ListItem", position: 2, name: guideLabel(locale), item: pageUrl(locale, "/guides")},
         {"@type": "ListItem", position: 3, name: guide.frontmatter.title, item: url}
       ]
     },

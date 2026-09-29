@@ -163,7 +163,51 @@ const copy: Record<Locale, CurrentVideoUi> = {
       patches: {label: "Season 1 改动", summary: "创作者对补丁的解读；官方说明仍是权威记录。"},
       mortar: {label: "迫击炮", summary: "当前迫击炮操作指导；射程和伤害必须在客户端复核。"}
     }
-  }
+  },
+
+  pl: {
+allTopics: "Wszystkie zadania", filterLabel: "Filtruj sprawdzone filmy według zadania", published: "Opublikowano", reviewed: "Sprawdzono", creatorGuidance: "Sprawdzone materiały twórców. Twierdzenia zależne od wersji porównaj z obecnym klientem gry i oficjalnymi komunikatami.", viewGuide: "Otwórz powiązany poradnik", topics: {
+beginner: {label: "Pierwszy mecz", summary: "Przygotowanie do pierwszego meczu, sterowanie i nawyki pomagające przetrwać."},
+money: {label: "Pieniądze i XP", summary: "Sposoby twórców na pieniądze i XP; aktualne nagrody i ceny sprawdź w grze."},
+progression: {label: "Role i postępy", summary: "Planowanie ról i obserwacje postępów, bez gwarantowanego czasu odblokowań."},
+loadouts: {label: "Broń i wyposażenie", summary: "Porady twórców dotyczące zestawów; ponownie sprawdź balans, odblokowania i dostępność."},
+fob: {label: "Działania wokół FOB", summary: "Obserwacje rozmieszczania i przełamywania FOB w aktualnej wersji sezonu 1."},
+cargo: {label: "Zaopatrzenie i logistyka", summary: "Procedury dostaw i zaopatrzenia; menu oraz zasoby potwierdź w grze."},
+vehicles: {label: "Pojazdy", summary: "Wskazówki dotyczące ról pojazdów bez obietnic stałego tempa odblokowań."},
+helicopter: {label: "Śmigłowce", summary: "Porady pilotażu z ponowną weryfikacją sterowania i zachowania maszyny w kliencie gry."},
+building: {label: "Budowanie", summary: "Aktualny przykład twórcy dotyczący budowy FOB i koordynacji zespołu."},
+drones: {label: "Drony", summary: "Obserwacje obsługi dronów; zaopatrzenie, koszt i skuteczność zależą od wersji."},
+settings: {label: "Ustawienia i wydajność", summary: "Widoczność, FPS i przypisania klawiszy zależne od sprzętu i wersji gry."},
+teamplay: {label: "Gra zespołowa", summary: "Współpraca i praktyczne mechaniki w aktualnych nagraniach twórców."},
+controls: {label: "Sterowanie", summary: "Mniej oczywiste funkcje sterowania i interakcji; skróty sprawdź w obecnej wersji."},
+patches: {label: "Zmiany sezonu 1", summary: "Interpretacja aktualizacji przez twórcę; oficjalna lista zmian pozostaje źródłem nadrzędnym."},
+mortar: {label: "Moździerze", summary: "Aktualne porady obsługi moździerza; zasięg i obrażenia wymagają sprawdzenia w grze."}
+}},
+  "zh-tw": {
+    allTopics: "全部玩家任務",
+    filterLabel: "按玩家任務篩選已稽核影片",
+    published: "釋出日期",
+    reviewed: "稽核日期",
+    creatorGuidance: "已稽核的創作者指導。採取行動前，請在當前客戶端和官方公告中複核版本敏感結論。",
+    viewGuide: "開啟相關攻略",
+    topics: {
+        beginner: { label: "第一局", summary: "第一局準備、實用操作和生存習慣。" },
+        money: { label: "資金和 XP", summary: "創作者的資金與 XP 路線；當前獎勵和價格請在客戶端複核。" },
+        progression: { label: "職業和進度", summary: "職業規劃與進度觀察，不保證固定解鎖時間。" },
+        loadouts: { label: "武器和配裝", summary: "創作者配裝指導；平衡、解鎖和物品可用性需要重新確認。" },
+        fob: { label: "FOB 行動", summary: "當前 Season 1 客戶端中的 FOB 選址與突破觀察。" },
+        cargo: { label: "補給和後勤", summary: "直接的補給與運輸流程；選單和資源請在遊戲中確認。" },
+        vehicles: { label: "載具", summary: "載具職責指導，不承諾固定的解鎖速度。" },
+        helicopter: { label: "直升機", summary: "面向當前控制方式的飛行指導；輸入和手感需在客戶端複核。" },
+        building: { label: "建造", summary: "關於 FOB 建造和團隊協作的當前創作者案例。" },
+        drones: { label: "無人機", summary: "無人機操作觀察；補給、成本和效果均與版本相關。" },
+        settings: { label: "設定和效能", summary: "可見度、FPS 與按鍵建議取決於硬體和當前版本。" },
+        teamplay: { label: "團隊協作", summary: "來自當前創作者影片的團隊協作和實用系統指導。" },
+        controls: { label: "操作", summary: "隱藏操作和互動機制；請在當前客戶端複核快捷鍵。" },
+        patches: { label: "Season 1 改動", summary: "創作者對補丁的解讀；官方說明仍是權威記錄。" },
+        mortar: { label: "迫擊炮", summary: "當前迫擊炮操作指導；射程和傷害必須在客戶端複核。" }
+    }
+}
 };
 
 export function getCurrentVideoUi(locale: Locale) {

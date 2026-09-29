@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useRef} from "react";
+import {useEffect} from "react";
 import type {Locale} from "@/config/site";
 import {ANALYTICS_EVENTS, hasReachedScrollDepth, trackAnalyticsEvent} from "@/lib/analytics-events";
 
@@ -16,14 +16,16 @@ export function GuideEngagementTracker({
   slug: string;
   category: string;
 }) {
-  const timeReached = useRef(false);
-  const depthReached = useRef(false);
-  const sent = useRef(false);
-
   useEffect(() => {
+    let remainingMs = ENGAGEMENT_SECONDS * 1_000;
+    let visibleSince: number | null = null;
+    let timer: number | undefined;
+    let depthReached = false;
+    let sent = false;
+
     function sendWhenQualified() {
-      if (sent.current || !timeReached.current || !depthReached.current) return;
-      sent.current = true;
+      if (sent || remainingMs > 0 || !depthReached || document.visibilityState !== "visible") return;
+      sent = true;
       trackAnalyticsEvent(ANALYTICS_EVENTS.engagedGuide, {
         guide_slug: slug,
         guide_category: category,
@@ -38,7 +40,7 @@ export function GuideEngagementTracker({
         document.documentElement.scrollHeight,
         document.body?.scrollHeight ?? 0
       );
-      depthReached.current = hasReachedScrollDepth(
+      depthReached = hasReachedScrollDepth(
         window.scrollY,
         window.innerHeight,
         documentHeight,
@@ -47,16 +49,38 @@ export function GuideEngagementTracker({
       sendWhenQualified();
     }
 
-    const timer = window.setTimeout(() => {
-      timeReached.current = true;
-      sendWhenQualified();
-    }, ENGAGEMENT_SECONDS * 1_000);
+    function pauseTimer() {
+      window.clearTimeout(timer);
+      timer = undefined;
+      if (visibleSince !== null) {
+        remainingMs = Math.max(0, remainingMs - (performance.now() - visibleSince));
+        visibleSince = null;
+      }
+    }
 
-    checkDepth();
+    // Background tabs must not satisfy the reading-time threshold.
+    function handleVisibilityChange() {
+      if (document.visibilityState !== "visible") {
+        pauseTimer();
+        return;
+      }
+
+      checkDepth();
+      if (sent || remainingMs <= 0 || visibleSince !== null) return;
+      visibleSince = performance.now();
+      timer = window.setTimeout(() => {
+        pauseTimer();
+        handleVisibilityChange();
+      }, remainingMs);
+    }
+
+    handleVisibilityChange();
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("scroll", checkDepth, {passive: true});
     window.addEventListener("resize", checkDepth);
     return () => {
-      window.clearTimeout(timer);
+      pauseTimer();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("scroll", checkDepth);
       window.removeEventListener("resize", checkDepth);
     };

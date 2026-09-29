@@ -1,0 +1,151 @@
+---
+title: "WARDOGS: mikrofon, czat głosowy i znane problemy"
+description: "Rozwiąż problemy mikrofonu i czatu WARDOGS według objawów. Sprawdź kroki ponownego łączenia Team17, listę serwerów, awarie oraz ograniczenia wydajności."
+keyword: "wardogs known issues"
+category: "guide"
+slug: "wardogs-known-issues"
+order: 47
+updatedAt: "2026-09-26"
+badges:
+  - label: "Beta 02"
+    tone: "warning"
+  - label: "Zależne od wersji"
+    tone: "muted"
+faq:
+  - question: "Czy problemy Beta 02 nadal dotyczą wczesnego dostępu?"
+    answer: "Nie automatycznie. Obejście z Beta 02 można stosować do obecnego wczesnego dostępu dopiero po ponownym teście; sprawdzaj oficjalne komunikaty Steam i zapisuj dokładny błąd oraz wersję."
+  - question: "Jak diagnozować awarię WARDOGS?"
+    answer: "Uruchom ponownie Steam i Windows, sprawdź pliki gry, usuń nieobsługiwane polecenia uruchamiania, zaktualizuj sterownik GPU, zamknij nakładki i zapisz dokładny błąd przed kontaktem z oficjalnym wsparciem."
+  - question: "Dlaczego mikrofon WARDOGS działa w teście, ale nie w meczu?"
+    answer: "Sprawdź kanał głosowy, członkostwo w oddziale, klawisz nadawania i stan komunikacji. Team17 obecnie proponuje ponowne łączenie głosu w ustawieniach Audio lub tabeli wyników przy części awarii wczesnego dostępu; żadna metoda nie gwarantuje naprawy."
+  - question: "Co sprawdzić, jeśli nie słyszę innych graczy?"
+    answer: "Upewnij się, że wyjście dźwięku gry wskazuje słuchawki lub głośniki, a następnie sprawdź głośność VOIP. Jeśli stan komunikacji wskazuje rozłączenie, zastosuj obecne kroki ponownego łączenia od Team17."
+  - question: "Czy przedmioty Supporter Pack były dostępne w Closed Beta 02?"
+    answer: "Ich brak był znanym problemem dotyczącym wyłącznie bety. Supporter Pack jest teraz sprzedawany jako DLC Steam; przy brakujących przedmiotach sprawdź obecne uprawnienia DLC i aktualną wersję gry."
+sources:
+  - label: "Official Pre-Load Live and Season 1 changelog"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Official Launch Stability Hotfix #1"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Official Patch 0.11 maintenance announcement"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413005176"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Team17 Early Access voice-chat troubleshooting replies"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Team17 VOIP volume-control reply"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/562541634873781802/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Developer explanation of squad and local VOIP channels"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/766311475521529360/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Microsoft Windows microphone test and access guidance"
+    url: "https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Developer WARDOGS Closed Beta known issues"
+    url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
+    kind: "official"
+    checkedAt: "2026-09-04"
+  - label: "Official WARDOGS Steam page and Beta 02 access"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-09"
+  - label: "63-hour Beta 02 community feedback thread"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/"
+    kind: "community"
+    checkedAt: "2026-09-09"
+---
+## Zestawienie znanych problemów na 26 września
+
+WARDOGS działa we wczesnym dostępie Steam. Strona oddziela potwierdzone poprawki premierowe od zgłoszeń przeniesionych z Beta 02. **Nie zakładaj, że stare obejście nadal działa.** Przy obecnej awarii najpierw zapisz wersję, treść błędu, region i czas UTC, a potem sprawdź oficjalne komunikaty Steam oraz aktualny [poradnik awarii](/pl/guides/wardogs-crash-fix).
+
+Nie oznacza to usunięcia każdej awarii, kolejki, wyrzucenia z serwera, usterki głosu lub problemu wydajności. Zgłoszenia związane z konkretnym sprzętem pozostają obserwacjami społeczności, dopóki nie potwierdzono wersji i przyczyny. Zapisz region, wersję, CPU, GPU, sterownik, RAM, treść błędu i czas UTC.
+
+Nie wyłączaj zabezpieczeń przeciw oszustwom, nie instaluj nieznanych narzędzi sieciowych ani nie korzystaj z instrukcji wykorzystywania błędów. Oficjalne zasady mówią, że powtarzające się nadużycia gospodarki i farmienie XP mogą skutkować resetem lub blokadą.
+
+## Krótka odpowiedź
+
+Jeżeli **mikrofon lub czat głosowy WARDOGS nie działa**, przetestuj mikrofon w Windows i ustawieniach Audio gry, potwierdź kanał Squad lub Local oraz klawisz nadawania, a następnie sprawdź ikonę stanu komunikacji. Przy czerwonym krzyżyku lub zaniku głosu podczas meczu Team17 proponuje ponowne włączenie Voice Chat albo połączenie go z tabeli wyników. Są to pojedyncze kroki diagnostyczne, nie gwarantowane naprawy. Przy awariach, nieudanym logowaniu lub pustej liście serwerów sprawdź oficjalne komunikaty Steam i zapisz dokładny błąd, region oraz wersję. Nie wyłączaj Elytra ani zabezpieczeń Windows, aby testować jakiekolwiek obejście.
+
+## Potwierdzone informacje
+
+Oficjalny wątek problemów Beta 02 dokumentuje zdarzenia i obejścia z tamtego testu. Późniejsze odpowiedzi wsparcia Team17 dotyczące wczesnego dostępu podają aktualne kroki ponownego łączenia głosu dla konkretnych przypadków. Awarii usługi głosowej nie zawsze da się naprawić na komputerze gracza.
+
+## Czego szukają gracze
+
+Najważniejsze kontrole dotyczą listy serwerów, logowania, awarii, FPS i zachowania pamięci, czatu głosowego oraz brakujących przedmiotów Supporter Pack. Każda poniższa sekcja oddziela oficjalne obejście od lokalnych kroków diagnostycznych.
+
+## Jak korzystać z poradnika
+
+Zacznij od dokładnego objawu, wprowadzaj po jednej zmianie, zapisuj wynik i czas UTC, a następnie przekaż wsparciu dane sprzętu, sterownika, regionu i błędu.
+
+WARDOGS Closed Beta 02 było testem skali, dlatego kolejka, pusta przeglądarka serwerów, awaria lub brak głosu mogą wynikać z problemu usługi albo wersji, a nie z usterki komputera. Zacznij od oficjalnych kontroli poniżej, zmieniaj jedną rzecz naraz i zachowaj dokładny kod błędu przed eskalacją.
+
+## Historyczne okno bety i dostęp
+
+Closed Beta 02 trwała od **3 września, 19:00 UTC, do 6 września, 08:00 UTC** i już się zakończyła. Płatne zakupy przedpremierowe Steam zapewniały gwarantowany dostęp, natomiast darmowe zgłoszenia Playtest dopuszczano falami. Były to zasady okresu testowego; zachowane uprawnienie nie dowodzi, że serwery nadal są dostępne.
+
+Używaj pozycji biblioteki Steam udostępnionej Twojemu kontu. Nie pobieraj zastępczych programów uruchamiających, nie obchodź zabezpieczeń przeciw oszustwom, nie udostępniaj kodów Steam Guard ani nie wymuszaj wejścia nieobsługiwanymi poleceniami platformy.
+
+## Pusta przeglądarka serwerów
+
+Zacznij od aktualnej przeglądarki Patch 0.11: sprawdź, czy oglądasz serwery **Official** czy **Community**, wyczyść wyszukiwanie tekstowe lub filtr Community i sprawdź ustawienie **Show Empty/Full** na pasku szybkich opcji. W 0.11 usunięto filtry serwerów oficjalnych, a wyszukiwanie i filtry Community zmieniono. Odśwież raz i sprawdź komunikaty Steam o konserwacji. Wybranie **tylko jednego regionu** było obejściem twórców z Beta 02; jest rozsądnym oddzielnym testem, nie potwierdzoną naprawą obecnej wersji.
+
+Pusta lista może również wynikać z chwilowej przerwy technicznej, pojemności serwerów lub problemu sesji. Zrzuty z innego regionu nie dowodzą uszkodzenia konta. Zapisz wybrany region, czas lokalny, stan uprawnień Steam i wszystkie komunikaty klienta.
+
+## Awarie i zabezpieczenia przeciw oszustwom
+
+Przy powtarzalnej awarii uruchom ponownie Windows i Steam, sprawdź pliki WARDOGS, usuń nieoficjalne opcje startowe, zaktualizuj sterownik GPU od producenta i tymczasowo zamknij programy nagrywające lub nakładki. Pozostaw zabezpieczenia Windows i system przeciw oszustwom włączone. Nigdy nie usuwaj aktualizacji bezpieczeństwa ani nie uruchamiaj nieznanego programu naprawczego z czatu.
+
+Jeśli błąd wraca, zapisz widoczny kod referencyjny, czas awarii, CPU, GPU, RAM, wersję sterownika i ostatnią czynność przed awarią. Takie dowody są bardziej użyteczne dla wsparcia niż wielokrotne zmienianie niezwiązanych ustawień.
+
+## Wydajność i pamięć
+
+Gracze zgłaszają nierówną liczbę klatek, wysokie użycie RAM lub VRAM oraz różne wyniki DLSS, DLAA, cieni, jakości siatek i NVIDIA Reflex + Boost. To **obserwacje społeczności powiązane z określonym sprzętem i wersją Beta 02**, a nie potwierdzone uniwersalne rozwiązania.
+
+Zacznij od presetu w grze, monitoruj rzeczywisty czas klatki i użycie pamięci, obniżaj po jednym kosztownym ustawieniu i testuj to samo miejsce. Nie kopiuj końcowych liczb twórcy bez dopasowania rozdzielczości, GPU, CPU, sterownika i wersji.
+
+## Diagnoza mikrofonu i czatu głosowego WARDOGS
+
+Najpierw ustal, **który test nie przechodzi**. Słyszenie efektów gry nie dowodzi połączenia głosu, a udany test mikrofonu nie dowodzi, że wybrany kanał dociera do innego gracza. [Lista zmian Season 1](https://store.steampowered.com/news/app/1867240/view/701027323413004455) mówi, że głos powinien wracać po nieudanym dołączeniu, i dodaje widoczny stan komunikacji. [Patch 0.11](https://store.steampowered.com/news/app/1867240/view/701027323413005176) omawia przeglądarkę serwerów, pojemność, gotówkę i zmiany GPU; nie ogłasza kolejnej poprawki głosu.
+
+1. **Windows nie słyszy mikrofonu:** Sprawdź przełącznik wyciszenia zestawu i połączenie. W Windows otwórz **Ustawienia > System > Dźwięk > Wejście**, wybierz mikrofon i uruchom test nagrywania. Jeśli nadal jest cisza, sprawdź **Prywatność i zabezpieczenia > Mikrofon** oraz dostęp aplikacji klasycznych. Skorzystaj z [instrukcji mikrofonu Microsoft](https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems) przed zmianą ustawień WARDOGS.
+2. **Windows słyszy mikrofon, ale Test Microphone w WARDOGS milczy:** W **Settings > Audio** gry wybierz ten sam mikrofon jako **Input Device**, włącz Voice Chat, zastosuj ustawienia i powtórz test. Rozróżniaj wejście, czyli mikrofon, i wyjście, czyli słuchawki lub głośniki. Gracz zgłosił, że zapamiętane wejście nie aktywowało się przy uruchomieniu; [Team17 przekazało zgłoszenie do zbadania](https://steamcommunity.com/app/1867240/discussions/3/562541966849748491/). Nie uznawaj obejścia ze zmianą urządzenia za potwierdzoną naprawę wszystkich konfiguracji.
+3. **Test w grze działa, ale nikt Cię nie słyszy:** Sprawdź, czy używasz kanału **Squad** czy **Local** i czy należysz do oddziału. [Twórca opisuje Squad jako kanał oddziału, a Local jako głos dla pobliskich graczy](https://steamcommunity.com/app/1867240/discussions/3/766311475521529360/). W aktualnym menu sterowania sprawdź przypisanie nadawania dla każdego kanału i konflikty klawiszy, a potem wykonaj próbę z sojusznikiem we właściwym kanale. Jeśli widoczny stan komunikacji lub czerwony krzyżyk wskazuje odłączoną sesję głosu, zastosuj ponowne łączenie opisane niżej.
+4. **Słyszysz dźwięk gry, ale nie innych graczy:** W Audio wybierz właściwe **Output Device** i sprawdź **regulatory głośności VOIP**, których obecność w tej karcie [potwierdza Team17](https://steamcommunity.com/app/1867240/discussions/3/562541634873781802/). Poproś sojusznika o wypowiedź w testowanym kanale; cisza w pustym oddziale lub poza lokalnym zasięgiem niczego nie rozstrzyga.
+5. **Głos zanika w meczu lub widać czerwony krzyżyk:** [Odpowiedź wsparcia Team17 dla wczesnego dostępu](https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/) proponuje dwie próby ponownego połączenia. W **Settings > Audio** wyłącz Voice Chat i zastosuj zmianę, odczekaj kilka sekund, włącz ponownie i zastosuj, a potem dołącz lub wróć do meczu. Alternatywnie naciśnij **Tab**, aby otworzyć tabelę wyników, **U**, aby się rozłączyć, odczekaj **pięć sekund** i ponownie naciśnij **U**, aby połączyć głos. Przetestuj Squad i Local; jeśli krzyżyk pozostaje, według Team17 może być potrzebne ponowne uruchomienie gry. To sugestie wsparcia dla pojedynczych zgłoszeń, nie gwarantowane naprawy.
+
+Jeśli kilka osób traci głos równocześnie albo stan komunikacji nadal wskazuje awarię usługi, sprawdź [oficjalne komunikaty Steam](https://steamcommunity.com/app/1867240/announcements/) i [poradnik stanu serwerów](/pl/guides/wardogs-server-status). Nie zmieniaj sterowników, portów ani zabezpieczeń wyłącznie na podstawie starego wpisu o awarii. [Komunikat zamkniętej bety](https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/) wspominał możliwe awarie zewnętrznego dostawcy i to samo obejście przełącznikiem lub klawiszem U; **nie** potwierdza on trwającej awarii we wczesnym dostępie.
+
+Jeśli problem trwa, skorzystaj z forum WARDOGS [Steam **Report a Problem**](https://steamcommunity.com/app/1867240/discussions/3/) albo [wsparcia Team17](https://www.team17.com/support). Podaj wersję, czas UTC, region i serwer, dokładny komunikat stanu komunikacji lub zrzut, nazwy wejścia i wyjścia, wyniki testów mikrofonu Windows i gry, kanał oraz wynik próby nadawania, a także skutki ponownego łączenia. Usuń osobiste dane konta z publicznych zrzutów.
+
+## Supporter Pack i postępy
+
+Oficjalny komunikat bety mówił, że przedmioty Supporter Pack nie były dostępne podczas Beta 02. Pakiet jest teraz sprzedawany jako DLC Steam, więc dzisiejszy brak przedmiotów należy sprawdzać przez uprawnienie DLC, historię zakupu i aktualną wersję, a nie stary klient Playtest.
+
+Żadna strona tej wiki nie obiecuje przeniesienia gotówki, XP, odblokowań ani statystyk Beta 02 do wczesnego dostępu. Traktuj postępy testowe jako tymczasowe, dopóki oficjalny komunikat nie stwierdzi inaczej.
+
+## Lista przed kontaktem ze wsparciem
+
+Przed kontaktem zapisz dokładny błąd, czas UTC, wybrany region, stan uprawnień, specyfikację komputera, wersję sterownika i kroki odtwarzające problem. Usuń ze zrzutów adresy e-mail, tokeny konta, kody QR i dane Steam Guard.
+
+## Źródła i ostatnie sprawdzenie
+
+Historyczny komunikat bety, zmiany głosu w Season 1, ogłoszenie Patch 0.11 i późniejsze odpowiedzi Team17 o głosie we wczesnym dostępie sprawdzono **2026-09-26**. Kroki ponownego łączenia są aktualnymi sugestiami wsparcia; ani lista zmian, ani odpowiedzi nie potwierdzają uniwersalnej naprawy mikrofonu lub dzisiejszej awarii dostawcy.
+
+## Powiązane poradniki
+
+- [Dostęp do Closed Beta 02](/pl/guides/wardogs-beta)
+- [Diagnoza awarii](/pl/guides/wardogs-crash-fix)
+- [Najlepsze ustawienia](/pl/guides/wardogs-best-settings)
+- [Wymagania sprzętowe](/pl/guides/wardogs-system-requirements)
+- [Sterowanie i klawisze głosu](/pl/guides/wardogs-controls)

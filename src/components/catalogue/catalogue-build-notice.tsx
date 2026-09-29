@@ -35,7 +35,14 @@ const copy: Record<Locale, {title: string; description: string; pending: (count:
     title: "当前版本覆盖范围",
     description: "图鉴汇集了标注日期的 Alpha、Beta、官方第 1 赛季和社区资料。使用任何价格或性能数据前，请先核对该物品的来源和时间。",
     pending: (count) => `${count} 个条目仍待补充对应物品图片。`
-  }
+  },
+
+  pl: {title: "Zakres danych według wersji", description: "Katalog łączy datowane źródła z alfy, bety, oficjalnego sezonu 1 i społeczności. Zanim użyjesz cen lub parametrów we wczesnym dostępie, sprawdź datę dowodów dla danego przedmiotu.", pending: (count) => `${count} rekordów nadal wymaga ilustracji konkretnego przedmiotu.`},
+  "zh-tw": {
+    title: "當前版本覆蓋範圍",
+    description: "圖鑑彙集了標註日期的 Alpha、Beta、官方第 1 賽季和社群資料。使用任何價格或效能資料前，請先核對該物品的來源和時間。",
+    pending: (count) => `${count} 個條目仍待補充對應物品圖片。`
+}
 };
 
 export function CatalogueBuildNotice({locale}: {locale: Locale}) {

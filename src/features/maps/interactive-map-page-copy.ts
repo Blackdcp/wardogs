@@ -28,5 +28,12 @@ export const interactiveMapPageCopy: Record<string, {title: string; desc: string
     title: "WARDOGS インタラクティブマップビューア",
     desc: "Bakurani、Ozeti、Zestafona の2Dマップ画像を表示できます。ドラッグやズーム、マップの切り替えに対応しています。",
     badge: "2Dマップビューア"
-  }
+  },
+
+  pl: {title: "Interaktywna przeglądarka map WARDOGS", desc: "Oglądaj obrazy 2D map Bakurani, Ozeti i Zestafona. Przesuwaj, przybliżaj i przełączaj mapy.", badge: "Przeglądarka map 2D"},
+  "zh-tw": {
+    title: "WARDOGS 互動式戰區地圖",
+    desc: "檢視 Bakurani、Ozeti、Zestafona 三張 2D 戰場底圖。支援拖動、縮放和切換地圖。",
+    badge: "2D 戰場地圖瀏覽器"
+}
 };

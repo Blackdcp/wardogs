@@ -2,7 +2,7 @@ import {readFileSync} from "node:fs";
 import {join} from "node:path";
 import {describe, expect, it} from "vitest";
 
-const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
+const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const;
 
 function loadMessages(locale: (typeof locales)[number]) {
   return JSON.parse(readFileSync(join(process.cwd(), "messages", `${locale}.json`), "utf8")) as Record<string, unknown>;
@@ -22,11 +22,12 @@ describe("localized messages", () => {
     }
   });
 
-  it("keeps every locale structurally identical to English", () => {
+  it("keeps active full-site dictionaries structurally identical to English", () => {
     const englishPaths = leafPaths(loadMessages("en")).sort();
 
     for (const locale of locales.slice(1)) {
-      expect(leafPaths(loadMessages(locale)).sort(), locale).toEqual(englishPaths);
+      // Retained legacy pilot copy is not part of the active full-site shell.
+      expect(leafPaths(loadMessages(locale)).filter((key) => !key.startsWith("pilot.")).sort(), locale).toEqual(englishPaths);
     }
   });
 
@@ -37,7 +38,7 @@ describe("localized messages", () => {
         metaDescription: string;
         heroTitle: string;
       };
-      const cjk = locale === "ja" || locale === "zh-cn";
+      const cjk = locale === "ja" || locale === "zh-cn" || locale === "zh-tw";
       expect(home.metaTitle.length, `${locale} title`).toBeLessThanOrEqual(60);
       expect(home.metaDescription.length, `${locale} description`).toBeGreaterThanOrEqual(cjk ? 60 : 140);
       expect(home.metaDescription.length, `${locale} description`).toBeLessThanOrEqual(cjk ? 110 : 160);
@@ -67,7 +68,7 @@ describe("localized messages", () => {
         expect(messages.metaTitle, `${locale} ${namespace} title`).toBeTypeOf("string");
         expect(messages.metaDescription, `${locale} ${namespace} description`).toBeTypeOf("string");
         if (typeof messages.metaTitle !== "string" || typeof messages.metaDescription !== "string") continue;
-        const cjk = locale === "ja" || locale === "zh-cn";
+        const cjk = locale === "ja" || locale === "zh-cn" || locale === "zh-tw";
         expect(messages.metaTitle.length, `${locale} ${namespace} title`).toBeGreaterThanOrEqual(cjk ? 16 : 30);
         expect(messages.metaTitle.length, `${locale} ${namespace} title`).toBeLessThanOrEqual(60);
         expect(messages.metaDescription.length, `${locale} ${namespace} description`).toBeGreaterThanOrEqual(cjk ? 60 : 120);

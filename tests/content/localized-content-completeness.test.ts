@@ -1,13 +1,15 @@
 import {describe, expect, it} from "vitest";
 import {assertCompleteContentMatrix, listGuideSummaries, loadGuideDocument} from "../../src/content/guides";
 
-const localizedLocales = ["ru", "de", "pt-br", "ja"] as const;
+const localizedLocales = ["ru", "de", "pt-br", "ja", "zh-tw", "pl"] as const;
 
 const languageSignals = {
   ru: /[А-Яа-яЁё]/,
   de: /\b(?:der|die|das|und|mit|für|auf|Spiel|Zugang|Guide)\b/i,
   "pt-br": /\b(?:o|a|de|do|da|para|com|jogo|acesso|guia)\b/i,
-  ja: /[\u3040-\u30ff\u3400-\u9fff]/
+  ja: /[\u3040-\u30ff\u3400-\u9fff]/,
+  "zh-tw": /[\u3400-\u9fff]/,
+  pl: /\b(?:nie|jest|oraz|poradnik|graczy|przed|wersji)\b/i
 } as const;
 
 const forbiddenEnglishStructureHeadings = [
@@ -21,7 +23,7 @@ const forbiddenEnglishStructureHeadings = [
 ] as const;
 
 describe("complete localized guide library", () => {
-  it("publishes every guide as substantial localized content in all four translated languages", async () => {
+  it("publishes every guide as substantial localized content including both promoted locales", async () => {
     await expect(assertCompleteContentMatrix(["en", ...localizedLocales])).resolves.toBeUndefined();
 
     for (const locale of localizedLocales) {

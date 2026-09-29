@@ -1,0 +1,66 @@
+---
+title: "WARDOGS: liczba graczy, Steam i oficjalne rekordy"
+description: "Sprawdź liczbę graczy WARDOGS, nie myląc aktywności Steam z oficjalnym szczytem ponad 400,000 osób i dwoma milionami sprzedanych kopii. Źródła i daty."
+keyword: "wardogs player count"
+category: "guide"
+slug: "wardogs-player-count"
+order: 53
+updatedAt: "2026-09-30"
+badges:
+  - label: "Dane Steam"
+    tone: "accent"
+  - label: "Liczba bieżąca się zmienia"
+    tone: "warning"
+faq:
+  - question: "Ile osób gra teraz w WARDOGS?"
+    answer: "Statyczny artykuł nie podaje wiarygodnej liczby na tę chwilę. Otwórz wykres SteamDB lub endpoint Valve dla aktywnych graczy głównej gry, App 1867240, i zanotuj czas odczytu."
+  - question: "Czy WARDOGS przekroczyło 400,000 jednoczesnych graczy?"
+    answer: "Tak. W oficjalnym komunikacie Patch 0.11 z 12 września BULKHEAD podziękowało za osiągnięcie 400,000 użytkowników jednocześnie w szczycie. Ten historyczny rekord nie jest dzisiejszą liczbą na żywo."
+  - question: "Czy dwa miliony sprzedanych kopii oznaczają dwa miliony osób online?"
+    answer: "Nie. Oficjalny wpis z 15 września mówi o sprzedanych kopiach, czyli skumulowanej sprzedaży. Jednoczesna aktywność to chwilowy pomiar konkretnej aplikacji Steam."
+sources:
+  - label: "Oficjalne komunikaty BULKHEAD na Steam: szczyt 400,000 i dwa miliony kopii"
+    url: "https://steamcommunity.com/app/1867240/announcements/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Valve Steamworks: definicja GetNumberOfCurrentPlayers"
+    url: "https://partner.steamgames.com/doc/webapi/ISteamUserStats"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Niezależny wykres SteamDB WARDOGS dla App 1867240"
+    url: "https://steamdb.info/app/1867240/charts/"
+    kind: "community"
+    checkedAt: "2026-09-26"
+  - label: "Oficjalny sklep WARDOGS na Steam: główna App 1867240"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-26"
+---
+
+## Zapisuj wskaźnik i czas obserwacji
+
+[Oficjalne wiadomości Steam](https://steamcommunity.com/app/1867240/announcements/) ogłosiły **trzy miliony sprzedanych kopii 26 września 2026**. Poniższe ogłoszenie dwóch milionów z 15 września pozostaje historycznym kamieniem milowym, a nie najnowszą sumą sprzedaży. Żadna z tych liczb nie oznacza jednoczesnych graczy.
+
+Przy użytecznym porównaniu zapisz źródło, App **1867240**, datę i strefę czasową, odczytaną wartość oraz to, czy chodzi o bieżącą aktywność, szczyt dzienny, rekord wszech czasów czy łączną sprzedaż. Nie łącz aplikacji Playtest i komercyjnej. Liczba miejsc w przeglądarce serwerów jest jeszcze innym pomiarem, nie globalną liczbą graczy.
+
+Gdy wykres jest niedostępny lub nieaktualny, pozostaw wartość „obecnie” nieznaną. Na potrzeby tej aktualizacji nie pobrano próbki liczby graczy na żywo. [Incydenty usługi](/pl/guides/wardogs-server-status) i [wybór serwera](/pl/guides/wardogs-community-servers-guide) sprawdzaj osobno; wysoka aktywność nie dowodzi prawidłowego działania twojego regionu.
+
+## Odpowiedź, która się nie dezaktualizuje
+
+Aby sprawdzić **graczy online teraz**, otwórz [wykres SteamDB dla WARDOGS App 1867240](https://steamdb.info/app/1867240/charts/) i zwróć uwagę na czas bieżącego odczytu. Liczba skopiowana do statycznej wiki zestarzałaby się w kilka minut. SteamDB jest niezależnym serwisem śledzącym dane, nie oficjalnym komunikatem twórców. Czytelnicy techniczni mogą również odpytać [endpoint Valve bieżącej liczby graczy App 1867240](https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1867240); [dokumentacja Steamworks Valve](https://partner.steamgames.com/doc/webapi/ISteamUserStats) definiuje wynik jako liczbę osób aktywnych w podanej aplikacji Steam w danej chwili.
+
+## Liczby rzeczywiście potwierdzone przez BULKHEAD
+
+W oficjalnym **komunikacie Patch 0.11 z 12 września** BULKHEAD podziękowało graczom za **400,000 użytkowników jednocześnie w szczycie**. To historyczny rekord, nie twierdzenie, że 400,000 osób pozostaje stale online. **15 września** studio ogłosiło **dwa miliony sprzedanych kopii**. Sprzedaż jest skumulowana; nie zastępuje aktywnych graczy, unikalnych użytkowników dziennych, dostępnych miejsc na serwerach ani bieżącej liczby jednoczesnych graczy.
+
+Niezależny wykres może pokazywać dokładniejszy lub wyższy szczyt niż zaokrąglony oficjalny rekord z powodu innego próbkowania i czasu aktualizacji. Oznacz taką wartość jako obserwację strony trzeciej z czasem pomiaru. Nie przedstawiaj jej po cichu jako oficjalnej liczby BULKHEAD.
+
+## Odczytuj właściwą aplikację i wskaźnik
+
+Aktualny produkt na Steam to **WARDOGS App 1867240**. Starszy WARDOGS Playtest był osobnym klientem beta, więc aktywności weekendu beta nie należy dodawać do liczby graczy głównej gry Early Access. Metoda Valve przyjmuje identyfikator aplikacji: liczy osoby aktywne w tej konkretnej aplikacji Steam w chwili zapytania, a nie wszystkich nabywców lub wszystkich, którzy kiedykolwiek grali. Nie dowodzi też poprawnego działania kolejek logowania, matchmakingu i pojedynczych serwerów gry.
+
+Porównując dwa zrzuty, sprawdź cztery rzeczy: App ID, czas odczytu UTC, czy liczba oznacza *grających teraz*, czy *szczyt z 24 godzin/wszech czasów*, oraz czy źródłem jest Valve, niezależny serwis czy komunikat twórców. Spadek względem szczytu premierowego sam w sobie nie dowodzi niedostępności gry; wzrost nie potwierdza działania konkretnego serwera.
+
+## Co sprawdzić dalej
+
+Przy bieżącej przerwie korzystaj z [oficjalnych komunikatów Steam](https://steamcommunity.com/app/1867240/announcements/) i naszego [poradnika statusu serwerów](/pl/guides/wardogs-server-status), nie wyłącznie wykresu graczy. Aktualną wersję gry sprawdzisz w [poradniku patch notes](/pl/guides/wardogs-patch-notes). Ta strona celowo kieruje do bieżącego wykresu, zamiast zamrażać zmienną liczbę w nagłówku.

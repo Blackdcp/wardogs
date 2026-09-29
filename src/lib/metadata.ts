@@ -12,7 +12,9 @@ const languageTags: Record<Locale, string> = {
   de: "de",
   "pt-br": "pt-BR",
   ja: "ja",
-  "zh-cn": "zh-CN"
+  "zh-cn": "zh-CN",
+  "zh-tw": "zh-TW",
+  pl: "pl"
 };
 
 export function getSiteOrigin() {
@@ -49,6 +51,8 @@ export function buildAlternates(locale: Locale, pathname: string): NonNullable<M
       "pt-BR": buildLocalizedUrl("pt-br", pathname),
       ja: buildLocalizedUrl("ja", pathname),
       "zh-CN": buildLocalizedUrl("zh-cn", pathname),
+      "zh-TW": buildLocalizedUrl("zh-tw", pathname),
+      pl: buildLocalizedUrl("pl", pathname),
       "x-default": buildLocalizedUrl("en", pathname)
     }
   };

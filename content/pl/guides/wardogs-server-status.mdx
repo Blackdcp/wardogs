@@ -1,0 +1,111 @@
+---
+title: "WARDOGS: stan serwerów, kolejki i sprawdzanie awarii"
+description: "Sprawdź dostępność serwerów WARDOGS, kolejki logowania, pustą listę serwerów, wybór regionu, oficjalne komunikaty i dowody awarii z dnia premiery gry."
+keyword: "wardogs server status"
+category: "guide"
+slug: "wardogs-server-status"
+order: 49
+updatedAt: "2026-09-30"
+badges:
+  - label: "Dzień premiery"
+    tone: "accent"
+  - label: "Stan usług"
+    tone: "warning"
+faq:
+  - question: "Czy serwery WARDOGS są teraz dostępne?"
+    answer: "WARDOGS jest dostępne w Steam Early Access. Patch 0.11 to najnowsze oficjalne ogłoszenie aktualizacji; podane w nim okno konserwacji 14 września już minęło, więc nowszych przerw szukaj w oficjalnych wiadomościach Steam."
+  - question: "Dlaczego przeglądarka serwerów WARDOGS jest pusta?"
+    answer: "Wskazówki z bety zalecały wybranie dokładnie jednego regionu, jednokrotne odświeżenie i sprawdzenie oficjalnych komunikatów przed reinstalacją lub zmianą oprogramowania zabezpieczającego."
+sources:
+  - label: "Oficjalne Pre-Load Live i lista zmian Season 1"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Oficjalny Launch Stability Hotfix #1"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Oficjalna strona WARDOGS w sklepie Steam"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-10"
+  - label: "Oficjalne ogłoszenia WARDOGS na Steam"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-10"
+  - label: "Dyskusje WARDOGS na Steam"
+    url: "https://steamcommunity.com/app/1867240/discussions/"
+    kind: "community"
+    checkedAt: "2026-09-10"
+---
+
+## 24–29 września: incydenty, przywracanie usług i odpowiedź twórców
+| Data | Oficjalny zapis | Czego nie dowodzi |
+| --- | --- | --- |
+| 2026-09-24 | [Udostępniono niewłaściwy build na Steam](https://x.com/WARDOGSUpdates/status/2103051537308135694); [oficjalna odpowiedź potwierdza rozwiązanie problemu](https://x.com/WARDOGSUpdates/status/2103054159641538707) | Nowej numerowanej aktualizacji ani naprawy WD-L020 |
+| 2026-09-25 | [Prace związane z bezpieczeństwem zaplanowane na 11:00 UTC](https://x.com/WARDOGSUpdates/status/2103432101781545416); [przywracanie usług o 11:42 UTC](https://x.com/WARDOGSUpdates/status/2103450008431313221) | Że każdy region działa teraz poprawnie albo że naprawiono zgodność z Windows |
+| 2026-09-29 | [Joe Brammer publikuje odpowiedź o balansie i XP](https://x.com/Brammflakes/status/2104937869634662749) | Zweryfikowanej zmiany XP ani zobowiązania dotyczącego premiery; pełnej transkrypcji filmu nie sprawdzono |
+
+Prośba z 24 września o ponowne uruchomienie i pobranie około 16 GB dotyczyła małej grupy graczy dotkniętych wtedy problemem, a nie wszystkich dzisiaj. To datowane komunikaty, nie telemetria na żywo. Przy nowej awarii zapisz aktualny region, czas i strefę czasową, build oraz dokładny błąd, a przed reinstalacją porównaj je z najnowszym oficjalnym komunikatem. Gdy klient rzeczywiście się zamyka, skorzystaj ze [ścieżek diagnostyki awarii](/pl/guides/wardogs-crash-fix).
+
+## Krótka odpowiedź
+
+Ta strona zapisuje datowane oficjalne incydenty, a nie dostępność na żywo. Porównaj nowy problem z aktualnym oficjalnym komunikatem, regionem, buildem i dokładnym błędem. Kolejka, błąd uprawnień do gry i zamknięcie procesu wymagają odmiennych kontroli opisanych niżej.
+
+## Szybkie sprawdzenie stanu
+
+1. Otwórz oficjalny sklep Steam i sprawdź, czy przycisk zakupu zmienił się w opcję instalacji lub uruchomienia.
+2. Otwórz oficjalne ogłoszenia Steam i poszukaj informacji o pracach technicznych, opóźnieniach, kolejkach lub poprawkach.
+3. Uruchom Steam ponownie jeden raz, aby odświeżyć uprawnienia konta i gałąź wydania.
+4. Upewnij się, że uruchamiasz WARDOGS, a nie zakończoną gałąź WARDOGS Playtest.
+5. Przed zgłoszeniem awarii zapisz czas UTC, region, dokładny komunikat i numer buildu.
+
+## Pusta przeglądarka serwerów lub brak meczów
+
+Podczas Beta 02 oficjalne wskazówki diagnostyczne zalecały wybór dokładnie jednego regionu serwerów. Zaznaczenie kilku regionów mogło powodować pustą listę. Do czasu ponownego sprawdzenia w buildzie Early Access jest to wskazówka historyczna, ale nadal stanowi pierwszy test o niskim ryzyku: wybierz jeden region, odśwież raz i poczekaj na listę.
+
+Pusta lista może też oznaczać konserwację, ograniczenia pojemności, nieaktualną sesję Steam albo incydent po stronie usługi. Nie dowodzi uszkodzenia plików gry. Sprawdź oficjalne komunikaty przed reinstalacją, wyłączeniem zabezpieczeń, otwieraniem portów czy zmianą DNS.
+
+## Kolejka logowania, odmowa dostępu i uprawnienia
+
+Duże zainteresowanie premierą może powodować kolejkę nawet przy działających serwerach. Pozostań w jednej kolejce, chyba że oficjalny komunikat zaleca ponowne połączenie. Wielokrotne restarty mogą odebrać ci miejsce i utrudniają diagnozę.
+
+Jeżeli Steam nadal pokazuje zakup przedpremierowy lub klient zgłasza odmowę dostępu, sprawdź konto, edycję, status wydania i pozycję w bibliotece. Dawne uprawnienie Beta 02 nie daje obecnego dostępu. Nigdy nie pobieraj zastępczego launchera ani nie udostępniaj danych Steam Guard.
+
+## Jak oznaczamy awarię
+
+**Oficjalna:** komunikat BULKHEAD, Team17, WARDOGS lub Steam potwierdza konserwację, ograniczone działanie albo przywrócenie usług.
+
+**Zaobserwowana:** kilka datowanych zgłoszeń opisuje ten sam błąd, region i build, ale nie ma jeszcze komunikatu twórców.
+
+**Lokalna:** objaw wydaje się ograniczony do jednego konta, połączenia lub komputera, podczas gdy usługa jest poza tym osiągalna.
+
+Wpisy społeczności są wskazówkami, nie dowodem dostępności. Zrzut ekranu bez czasu, regionu, buildu i tekstu błędu nie potwierdza globalnej awarii.
+
+## Potwierdzone fakty
+
+Steam podaje 10 września jako datę Early Access. Beta 02 zakończyła się 6 września, a dawne uprawnienie Playtest nie jest obecną drogą dostępu do serwerów. W chwili tej kontroli nie znaleziono publicznego panelu dostępności prowadzonego bezpośrednio przez twórców.
+
+## Czego szukają gracze
+
+Osoby sprawdzające stan serwerów WARDOGS zwykle potrzebują jednej z czterech odpowiedzi: czy Steam odblokował grę, czy kolejki logowania dotyczą wszystkich, dlaczego lista jest pusta albo czy konkretne konto ma problem z uprawnieniami. Ta strona rozdziela te pytania.
+
+## Jak korzystać z poradnika
+
+Wykonuj kontrole po kolei i zakończ, gdy objaw zostanie wyjaśniony. Przedkładaj oficjalne komunikaty usługowe nad liczbę wpisów na forum i przy porównywaniu zgłoszeń uwzględniaj te same dane diagnostyczne.
+
+## Co zawrzeć w przydatnym zgłoszeniu
+
+Podaj czas UTC, kraj lub wybrany region, status zakupu na Steam, dokładną pozycję w bibliotece, miejsce w kolejce lub kod błędu, numer buildu oraz informację, czy filtr jednego regionu zmienił wynik. Usuń adresy e-mail, nazwy kont, kody QR, tokeny i szczegóły Steam Guard.
+
+## Źródła i ostatnia weryfikacja
+
+Sklep Steam, listę zmian Season 1, poprawkę premierową i ogłoszenie Patch 0.11 sprawdzono **13 września 2026**. To zestawienie stanu oparte na źródłach, a nie automatyczna telemetria dostępności.
+
+## Powiązane poradniki
+
+- [Liczba graczy a stan serwerów](/pl/guides/wardogs-player-count)
+- [Lista kontrolna na dzień premiery](/pl/guides/wardogs-launch-checklist)
+- [Lista znanych problemów](/pl/guides/wardogs-known-issues)
+- [Pobieranie i instalacja](/pl/guides/wardogs-download)
+- [Rozwiązywanie awarii](/pl/guides/wardogs-crash-fix)

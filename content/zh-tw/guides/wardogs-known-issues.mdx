@@ -1,0 +1,127 @@
+---
+title: "WARDOGS 上線問題觀察：Beta 02 問題複核清單"
+description: "彙總 WARDOGS Closed Beta 02 報告過的伺服器瀏覽器空白、登入佇列、崩潰與反作弊、本地語音、Supporter Pack、FPS、記憶體和視訊記憶體波動；明確區分開發者確認的臨時處理方法與受硬體、驅動和測試版本影響的社群觀察，並給出安全排查、提交支援資訊以及在搶先體驗版本中重新驗證的步驟。"
+keyword: "wardogs known issues"
+category: "guide"
+slug: "wardogs-known-issues"
+order: 47
+updatedAt: "2026-09-26"
+badges:
+  - label: "Beta 02"
+    tone: "warning"
+  - label: "版本敏感"
+    tone: "muted"
+faq:
+  - question: "Beta 02 的問題會繼續出現在搶先體驗嗎？"
+    answer: "WARDOGS 已在 Steam 搶先體驗上線。Patch 0.11 仍是最新官方補丁公告，已公佈的 9 月 14 日維護視窗已經過去；新的中斷資訊請檢視 Steam 官方動態。"
+  - question: "WARDOGS 崩潰時怎麼安全排查？"
+    answer: "重啟 Steam 和 Windows，驗證檔案，移除非官方啟動引數，從顯示卡廠商更新驅動，關閉疊加層，並一次只改一個專案，同時記錄準確報錯。"
+  - question: "本地語音失效怎麼辦？"
+    answer: "先檢查當前 Steam 補丁公告和遊戲內通訊狀態。關閉語音或按兩次 U 是 Beta 02 的舊建議，須在當前版本複測，不能當作已確認的現行修復。"
+  - question: "Beta 02 裡沒有 Supporter Pack 道具，是購買失敗嗎？"
+    answer: "這是 Beta 期間的已知限制。Supporter Pack 現已作為 Steam DLC 銷售；當前缺失應核對 DLC 權益和最新版本。"
+sources:
+  - label: "官方預載與 Season 1 更新日誌"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Launch Stability Hotfix #1 官方公告"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "Patch 0.11 維護官方公告"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413005176"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "開發者釋出的 Beta 已知問題"
+    url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
+    kind: "official"
+    checkedAt: "2026-09-04"
+  - label: "WARDOGS Closed Beta 02 官方 Steam 頁面"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-09"
+  - label: "Beta 02 體驗 63 小時的社群反饋"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/"
+    kind: "community"
+    checkedAt: "2026-09-09"
+---
+## 9 月 26 日已知問題中心
+
+Patch 0.11 仍是最新官方補丁公告，已公佈的 9 月 14 日 08:00 UTC 維護視窗已經過去。公告包含拆分 Official 與 Community 伺服器瀏覽器、改進搜尋和篩選、持久化伺服器 ID、修復現金與 GPU 問題並增加亞洲容量。新的異常請檢視 Steam 官方動態；本站不運營即時伺服器遙測。
+
+這不代表所有崩潰、掉線、語音或效能問題已解決。硬體報告在官方確認版本和原因前仍是社群觀察。記錄地區、版本、硬體、驅動、錯誤和 UTC 時間，不要關閉反作弊、安裝未知工具或照做漏洞教程。
+
+
+## Beta 02 社群報告的上線觀察清單
+
+玩家在 Beta 02 中報告過排隊與伺服器瀏覽器、可重複崩潰、幀時間波動、RAM 或 VRAM 壓力、DLSS、DLAA、陰影和 Reflex + Boost 表現差異、本地語音中斷，以及進度或權益混亂。這些是**特定硬體和 Beta 02 版本下的社群報告**，不是已經確認的搶先體驗故障，也不是通用修復結論。
+
+只把每條報告當作測試用例：在當前搶先體驗版本重新復現，記錄硬體、驅動、地區、報錯和版本號，然後核對官方公告。[63 小時 Beta 反饋帖](https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/)可以提供線索，但不能替代官方補丁說明。
+
+## 快速結論
+
+伺服器列表空白時，先核對 **Official / Community** 頁面、Community 搜尋和篩選以及 **Show Empty/Full** 選項，再看 Steam 官方維護公告。只選一個地區、按兩次 U 是 Beta 02 的舊辦法，並非已確認的現行通用修復。
+
+## 已確認事實
+
+這些處理方法來自官方 Beta 02 已知問題帖，只適用於已經結束的測試版本，必須在搶先體驗版本重新驗證。伺服器或第三方語音服務故障不一定能在玩家電腦上修復。
+
+## 玩家最常查什麼
+
+最需要快速排查的是伺服器列表、登入資格、崩潰、FPS 與記憶體、語音，以及 Supporter Pack 缺失。下面會區分官方辦法和本地診斷。
+
+## 如何使用本攻略
+
+先鎖定單一症狀，每次只改一項，記錄結果和 UTC 時間；仍失敗時帶上硬體、驅動、地區與完整報錯提交支援。
+
+
+Closed Beta 02 是一次已經結束的多人規模測試。當時的排隊、伺服器列表空白、斷線或語音失效不一定由玩家電腦造成。遇到當前問題，應先檢查 Early Access 最新補丁與維護狀態，每次只改一個專案，並保留錯誤資訊。
+
+## Beta 02 歷史時間與訪問資格
+
+Closed Beta 02 已按 **9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC** 的修訂視窗執行並結束。付費預購保證資格和免費 Steam Playtest 分批放行都是測試期規則；舊許可或“已申請訪問許可權”不能證明當前伺服器仍開放。
+
+只使用 Steam 庫裡由官方發放的 WARDOGS 條目。不要下載第三方啟動器，不要按照陌生帖子繞過反作弊，也不要向任何人提供 Steam Guard 驗證碼。測試期間出現錯誤時，來源不明的“修復工具”可能比原問題更危險。
+
+## 伺服器瀏覽器空白
+
+先按當前 Patch 0.11 的介面檢查：確認選中 **Official** 還是 **Community** 伺服器、清除 Community 搜尋詞或篩選，並檢視 **Show Empty/Full** 快捷選項。0.11 移除了 Official 瀏覽器的篩選，改進了 Community 搜尋與篩選。重新整理一次並檢視 Steam 維護公告。Beta 02 曾建議**只選擇一個區域**；現在只能把它作為單獨複測，不能保證解決當前版本的問題。
+
+伺服器已滿、地區暫未開放、會話過期、Steam 許可尚未同步和維護都可能產生相似結果。不要因為其他玩家能看到伺服器，就直接判斷自己的賬戶損壞。記錄所選區域、UTC 時間、Steam 許可狀態和客戶端顯示的完整文字，再決定是否驗證檔案或聯絡支援。
+
+## 崩潰與反作弊
+
+如果崩潰能重複出現，先重啟 Windows 和 Steam，再執行 Steam 檔案完整性驗證。移除未經官方說明的啟動引數或配置修改，從 NVIDIA、AMD 或 Intel 官方渠道更新顯示卡驅動，並暫時關閉錄屏、效能監測或聊天疊加層。Windows 安全功能和遊戲反作弊應保持啟用。
+
+再次出現問題時，儲存錯誤編號、UTC 時間、CPU、GPU、記憶體、驅動版本、解析度和崩潰前的最後一步操作。一次改變多個設定會失去對照，也不利於確認原因。不要刪除系統安全更新，也不要執行聊天群裡來源不明的執行檔。
+
+## FPS、記憶體和視訊記憶體波動
+
+玩家和影片作者報告過 FPS 不穩定、RAM 或 VRAM 佔用較高，以及 DLSS、DLAA、陰影、網格質量、NVIDIA Reflex + Boost 對幀時間產生不同影響。這些內容屬於**受 Beta 02 版本和具體硬體影響的社群觀察**，不是已經確認的搶先體驗故障或通用引數。
+
+從遊戲預設開始，在同一地點和近似戰況下觀察幀時間與記憶體，只降低一個負載較高的選項，再比較結果。引用博主測試時，必須一起核對解析度、CPU、GPU、驅動和遊戲版本。只複製一個“最佳設定”表，而不匹配硬體，可能得到完全相反的結果。
+
+## 本地語音與音訊
+
+Season 1 官方更新日誌稱已修復加入失敗後語音持續中斷的問題，並增加可見的通訊狀態。當前語音失效時，先檢查該狀態、Windows 輸入輸出裝置及最新 Steam 公告。設定裡關閉語音或在計分板按**兩次 U**來自 Beta 02 的舊公告，只能作為版本敏感的複測，不能據此認定舊故障或第三方服務中斷仍在發生。
+
+本地仍應檢查 Windows 預設輸入和輸出裝置、遊戲內語音裝置以及麥克風許可權。提交問題時說明“完全聽不到”“只能聽不能說”還是“特定頻道失效”，能讓排查更準確。
+
+## Supporter Pack 與進度
+
+官方已知問題說明，Supporter Pack 道具在 Beta 02 中不可用。該內容現已作為 Steam DLC 銷售；若當前仍看不到，應在 Steam 官方頁面檢查購買記錄、DLC 權益和正在執行的遊戲版本。
+
+目前也不能從這次測試推斷現金、經驗、解鎖和統計一定會保留到 Early Access。除非開發者正式確認，否則本攻略不會承諾測試進度繼承，也不會把社群傳言寫成已確定的清檔規則。
+
+## 聯絡支援前準備什麼
+
+整理準確錯誤、UTC 時間、伺服器區域、Steam 許可狀態、電腦配置、驅動版本和復現步驟。截圖中要遮掉郵箱、令牌、二維碼和 Steam Guard 資訊。若附帶影片，也應檢查是否包含個人資訊或未經同意的隊友語音。
+
+## 相關攻略
+
+- [Closed Beta 02 參與方法](/zh-tw/guides/wardogs-beta)
+- [WARDOGS 崩潰修復](/zh-tw/guides/wardogs-crash-fix)
+- [WARDOGS 最佳設定](/zh-tw/guides/wardogs-best-settings)
+- [WARDOGS 配置要求](/zh-tw/guides/wardogs-system-requirements)
+- [WARDOGS 操作與語音按鍵](/zh-tw/guides/wardogs-controls)

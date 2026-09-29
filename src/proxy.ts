@@ -1,7 +1,6 @@
 import createMiddleware from "next-intl/middleware";
 import {NextRequest, NextResponse} from "next/server";
-import {isLocale, isPilotLocale, isSiteLocale} from "@/config/site";
-import {isPilotPathAvailable} from "@/i18n/pilot-locales";
+import {isLocale, isSiteLocale} from "@/config/site";
 import {isItemDetailRouteAvailable} from "@/features/items/item-route-availability";
 import {getLegacyEnglishRedirectPath} from "@/i18n/legacy-paths";
 import {routing} from "@/i18n/routing";
@@ -19,17 +18,6 @@ export default function proxy(request: NextRequest) {
   if (legacyRedirectPath) return NextResponse.redirect(new URL(legacyRedirectPath, request.url), 308);
   const firstSegment = pathname.split("/")[1];
   if (firstSegment && !isSiteLocale(firstSegment)) return NextResponse.next();
-  if (isPilotLocale(firstSegment)) {
-    const pilotPath = pathname.slice(firstSegment.length + 1).replace(/\/+$/, "");
-    if (!pilotPath) {
-      const destination = request.nextUrl.clone();
-      destination.pathname = `/${firstSegment}/guides`;
-      return NextResponse.redirect(destination, 308);
-    }
-    if (!isPilotPathAvailable(firstSegment, pilotPath)) {
-      return new NextResponse(null, {status: 404, headers: {"X-Robots-Tag": "noindex"}});
-    }
-  }
   const response = handleI18n(request);
   const segments = pathname.split("/").filter(Boolean);
   if (

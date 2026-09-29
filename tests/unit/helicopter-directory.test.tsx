@@ -13,7 +13,7 @@ describe("helicopter directory", () => {
   });
 
   it("prerenders every supported locale with a canonical directory URL", async () => {
-    expect(generateStaticParams().map(({locale}) => locale)).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn"]);
+    expect(generateStaticParams().map(({locale}) => locale)).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]);
     const metadata = await generateMetadata({params: Promise.resolve({locale: "en"})});
     expect(metadata.alternates?.canonical).toBe("http://localhost:3000/en/vehicles/helicopters");
     expect(metadata.openGraph?.images).toEqual([{

@@ -3,8 +3,7 @@ import {NextIntlClientProvider} from "next-intl";
 import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import "@/app/globals.css";
-import {isPilotLocale, isSiteLocale, siteLocales} from "@/config/site";
-import {PilotLocaleShell, pilotMessages} from "@/i18n/pilot-pages";
+import {isSiteLocale, siteLocales} from "@/config/site";
 import {SiteFooter} from "@/components/layout/site-footer";
 import {SiteHeader} from "@/components/layout/site-header";
 import {GoogleAnalytics} from "@/components/seo/google-analytics";
@@ -29,26 +28,6 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
   if (!isSiteLocale(locale)) notFound();
 
   setRequestLocale(locale);
-  if (isPilotLocale(locale)) {
-    const messages = pilotMessages[locale];
-    const adLabel = messages.ads.label;
-    return <html lang={locale} data-scroll-behavior="smooth">
-      <body className="min-h-screen overflow-x-hidden">
-        <GoogleAnalytics />
-        <AdsterraBehavioralAds />
-        <AdsterraGlobalInventory label={adLabel} locale={locale} />
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="pb-[74px] min-[468px]:pb-0">
-            <PilotLocaleShell locale={locale}>
-              <div className="site-container py-1" data-global-ad-position="top"><AdsterraDisplayBanner label={adLabel} placement="horizontal" /></div>
-              {children}
-              <div className="site-container py-1" data-global-ad-position="bottom"><AdsterraDisplayBanner label={adLabel} placement="horizontal" /></div>
-            </PilotLocaleShell>
-          </div>
-        </NextIntlClientProvider>
-      </body>
-    </html>;
-  }
   const [messages, t, adsT] = await Promise.all([
     getMessages({locale}),
     getTranslations({locale, namespace: "common"}),

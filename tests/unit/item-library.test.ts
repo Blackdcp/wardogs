@@ -107,7 +107,7 @@ describe("item library", () => {
 
     expect(weaponModels.map((item) => item.slug)).toEqual(weaponSlugs);
     expect(weaponModels).toHaveLength(14);
-    expect(weaponModels.every((item) => JSON.stringify(item.indexLocales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja", "zh-cn"]))).toBe(true);
+    expect(weaponModels.every((item) => JSON.stringify(item.indexLocales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]))).toBe(true);
     expect(weaponModels.every((item) => item.facts.length >= 4)).toBe(true);
     expect(weaponModels.every((item) => item.strengths.length >= 3 && item.cautions.length >= 3)).toBe(true);
     expect(weaponModels.every((item) => item.confirmedFacts && item.confirmedFacts.length > 0)).toBe(true);
@@ -144,7 +144,7 @@ describe("item library", () => {
     });
     expect(amp9?.confirmedFacts).toContain("Observed in Alpha 1: Ammunition: 9x19mm");
     expect(amp9?.unconfirmedFacts).not.toEqual([]);
-    expect(amp9?.indexLocales).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn"]);
+    expect(amp9?.indexLocales).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]);
   });
 
   it("publishes all 20 vehicle model guides in every supported locale", () => {
@@ -157,7 +157,7 @@ describe("item library", () => {
     expect(vehicleModels.map((item) => item.slug)).toEqual(vehicleSlugs);
     expect(vehicleModels).toHaveLength(20);
     expect(vehicleModels.every((item) => item.type === "vehicles")).toBe(true);
-    expect(vehicleModels.every((item) => JSON.stringify(item.indexLocales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja", "zh-cn"]))).toBe(true);
+    expect(vehicleModels.every((item) => JSON.stringify(item.indexLocales) === JSON.stringify(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]))).toBe(true);
     expect(vehicleModels.every((item) => item.facts.length >= 4)).toBe(true);
     expect(vehicleModels.every((item) => item.strengths.length >= 3 && item.cautions.length >= 3)).toBe(true);
     expect(vehicleModels.every((item) => item.confirmedFacts && item.confirmedFacts.length > 0)).toBe(true);
@@ -219,7 +219,7 @@ describe("item library", () => {
         expect(item?.build, `${type}/${record.slug}`).toBe(record.slug === "sph-2"
           ? "Alpha 1 and Closed Beta footage checked 2026-08-28"
           : record.dataAsOf);
-        expect(item?.indexLocales, `${type}/${record.slug}`).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn"]);
+        expect(item?.indexLocales, `${type}/${record.slug}`).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]);
         expect(item?.relatedGuides, `${type}/${record.slug}`).toContain(
           type === "weapons" ? "wardogs-best-weapons-loadouts" : "wardogs-equipment-tools-guide"
         );
@@ -272,7 +272,7 @@ describe("item library", () => {
   it("indexes every authored item detail in all supported locales", () => {
     const paths = getIndexableItemPaths();
 
-    expect(paths).toHaveLength(itemLibrary.filter((item) => item.indexable).length * 6);
+    expect(paths).toHaveLength(itemLibrary.filter((item) => item.indexable).length * 8);
     expect(paths).toContainEqual({locale: "en", type: "weapons", slug: "mortar"});
     expect(paths).not.toContainEqual({locale: "ru", type: "vehicles", slug: "littlebird"});
     expect(paths).toContainEqual({locale: "de", type: "weapons", slug: "mortar"});

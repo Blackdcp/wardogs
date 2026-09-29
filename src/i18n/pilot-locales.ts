@@ -32,6 +32,7 @@ export function isPilotGuideSlug(locale: PilotLocale, slug: string): boolean {
 }
 
 export function isPilotPathAvailable(locale: PilotLocale, pathname: string): boolean {
+  if (!isPilotLocale(locale)) return true;
   const cleanPath = pathname.split(/[?#]/, 1)[0].replace(/\/+$/, "");
   if (cleanPath === "/guides") return true;
   const match = /^\/guides\/([^/]+)$/.exec(cleanPath);

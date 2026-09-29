@@ -220,6 +220,24 @@ const localizedSourceNotesByLocale: Record<
     "mortar-support": ["已批准的迫击炮演示展示了炮位及炮组交互；通信流程属于编辑建议，射程、伤害和弹药数值不作为当前值发布。"],
     "helicopter-transport": ["已批准的直升机指南展示了运输用途；航线规划属于编辑建议，操控、按键、耐久、燃料和奖励仍受版本影响。"],
   },
+
+  pl: {
+"battlefield-control-zone":["Oficjalny opis Team17 potwierdza mapę 256 km² i losową strefę kontroli 2×2 km; nie potwierdza stałych tras."],
+"tower-terminal":["Oficjalne źródło potwierdza jedynie cel związany z terminalem. Obecne komunikaty, kody, czasy i wpływ na punktację pozostają niepotwierdzone."],
+"oil-rig-hot-zone":["Materiał twórcy pokazuje budowanie, transport i uruchamianie w zamkniętej becie; dokładne koszty, czas odnowienia i obecna dostępność są niezweryfikowane."],
+"fob-network":["Oficjalny opis potwierdza budowanie baz i logistykę. Wybór miejsca, odradzanie, ulepszenia i taktyka transportu to porady redakcyjne lub obserwacje zależne od wersji."],
+"cargo-route":["Zaakceptowany poradnik dostaw pokazuje zakup, załadunek, transport i rozładunek w zamkniętej becie. Klawisze, pojemności, ceny i trasy dotyczą wersji historycznej."],
+"mortar-support":["Zaakceptowany pokaz moździerza przedstawia stanowisko i interakcję załogi. Procedura komunikacji jest poradą redakcyjną; zasięg, obrażenia i amunicja nie są publikowane jako wartości bieżące."],
+"helicopter-transport":["Zaakceptowany poradnik śmigłowca pokazuje zastosowanie transportowe. Planowanie trasy jest poradą redakcyjną; sterowanie, klawisze, wytrzymałość, paliwo i nagrody zależą od wersji."]},
+  "zh-tw": {
+    "battlefield-control-zone": ["Team17 官方說明確認地圖面積為 256 平方公里，控制區為隨機的 2×2 公里；未確認固定路線。"],
+    "tower-terminal": ["官方來源僅支援“終端目標”這一事實；當前提示、程式碼、計時及計分影響均未確認。"],
+    "oil-rig-hot-zone": ["創作者來源展示了 Closed Beta 中建造、運輸與啟動的流程；具體成本、冷卻時間及當前可用性仍未核驗。"],
+    "fob-network": ["官方遊戲說明僅確認了基地建造與後勤系統；選址、復活機制、升級和運輸戰術屬於編輯建議或受版本影響的觀察。"],
+    "cargo-route": ["已批准的貨運講解展示了 Closed Beta 中購買、裝載、運輸與卸載的流程；按鍵、容量、價格和路線均屬於歷史版本資訊。"],
+    "mortar-support": ["已批准的迫擊炮演示展示了炮位及炮組互動；通訊流程屬於編輯建議，射程、傷害和彈藥數值不作為當前值釋出。"],
+    "helicopter-transport": ["已批准的直升機指南展示了運輸用途；航線規劃屬於編輯建議，操控、按鍵、耐久、燃料和獎勵仍受版本影響。"],
+}
 };
 
 const localizedVisualUsageByLocale: Record<
@@ -261,6 +279,15 @@ const localizedVisualUsageByLocale: Record<
     "mortar-support": "来源 01:16 画面同时清楚显示 L81 迫击炮、沙袋炮位和 ENTER Mortar 交互。",
     "helicopter-transport": "驾驶舱画面仅作运输场景参考，不证明路线、降落区、操控参数或当前按键。",
   },
+
+  pl: {"battlefield-control-zone":"Baner kategorii przedstawia kontekst orientacji na mapie, a nie konkretny obiekt ani stałą mapę taktyczną.", "fob-network":"Oficjalna scena walki stanowi tylko kontekst planowania FOB, nie potwierdzony układ bazy.", "cargo-route":"Sam Ural został dopasowany, lecz ilustracja przedstawia jedynie kontekst dostaw; nie potwierdza konkretnej trasy ani ładowności.", "mortar-support":"Klatka źródłowa 01:16 wyraźnie pokazuje moździerz L81, stanowisko z worków z piaskiem oraz interakcję ENTER Mortar.", "helicopter-transport":"Widok kokpitu ilustruje transport; nie potwierdza trasy, lądowiska, parametrów lotu ani aktualnych klawiszy."},
+  "zh-tw": {
+    "battlefield-control-zone": "該分類橫幅僅用於地圖判讀場景，不作為具體物件圖片或固定戰術地圖釋出。",
+    "fob-network": "該官方戰鬥畫面僅作為 FOB 規劃的場景參考，不代表已核驗的 FOB 佈局。",
+    "cargo-route": "Ural 物件本身已匹配，但此處僅作路線場景參考，不證明任何特定路線或容量。",
+    "mortar-support": "來源 01:16 畫面同時清楚顯示 L81 迫擊炮、沙袋炮位和 ENTER Mortar 互動。",
+    "helicopter-transport": "駕駛艙畫面僅作運輸場景參考，不證明路線、降落區、操控引數或當前按鍵。",
+}
 };
 
 export function getLocalizedOperationsAtlasRecords(locale: Locale): readonly OperationsAtlasRecord[] {
@@ -396,6 +423,31 @@ const copyByLocale: Record<string, OperationsAtlasCopy> = {
       "helicopter-transport": {title: "直升机运输", objective: "运输人员或物资，并始终保留退出路线", context: "起飞点、利用地形的航线、降落区与返航路径", summary: "起飞前完成路线规划，确认降落区，避免可预测的长时间悬停，快速卸载，并保留足够燃料和空间用于中止进近。", imageAlt: "用于运输路线规划的 WARDOGS 直升机驾驶舱场景参考图"},
     },
   },
+
+  pl: {
+metaTitle:"Atlas działań WARDOGS: mapy, FOB, ładunki i cele", metaDescription:"Korzystaj ze źródłowego atlasu WARDOGS do orientacji w strefie kontroli, terminali wież, FOB, dostaw, moździerzy i transportu śmigłowcem, bez wymyślonych tras.", eyebrow:"Poradnik terenowy według zadań", title:"Atlas działań WARDOGS", description:"Wybierz zadanie potrzebne oddziałowi, przeczytaj potwierdzony kontekst i otwórz właściwy aktualizowany poradnik. To indeks procedur, nie wymyślona mapa taktyczna: współrzędne i stałe trasy pomijamy, gdy nie ma ich w źródłach.", workflowLabel:"Procedura redakcyjna", workflowNote:"Kolejność działań jest poradą autorów serwisu. Oznaczenia dowodów dotyczą wyłącznie wymienionych niżej faktów źródłowych.", sourcedFactsLabel:"Fakty ze źródeł", sourceScopeLabel:"Zakres źródła", filtersLabel:"Filtruj działania według zadania", filters:{all:"Wszystkie działania", orientation:"Orientacja", objective:"Cele", construction:"Budowanie", logistics:"Logistyka", "fire-support":"Wsparcie ogniowe", "air-operations":"Działania powietrzne"}, showing:"wyświetlonych procedur", objectiveLabel:"Zadanie", contextLabel:"Kontekst", evidenceLabel:"Dowody", sourceLabel:"Źródło", checkedLabel:"Sprawdzono", buildLabel:"Wersja", openGuide:"Otwórz właściwy poradnik", relatedGuides:"Powiązane poradniki", relatedTools:"Powiązane narzędzia", visualVerified:"Obraz obiektu zweryfikowany", visualContextual:"Obraz kontekstowy", visualPending:"Obraz jeszcze niezweryfikowany", visualPendingDescription:"Brak zaakceptowanego obrazu dopasowanego do obiektu. Procedura pozostaje udokumentowana bez zapożyczonej lub ogólnej ilustracji zastępczej.", visualSourceLabel:"Źródło ilustracji", visualUsageLabel:"Zakres użycia", visualRetrievedLabel:"Pobrano", entries:{
+"battlefield-control-zone":{title:"Pole bitwy i strefa kontroli", objective:"Sprawdź aktywny cel przed wyborem trasy", context:"Całe pole bitwy i aktywna losowa strefa kontroli", summary:"Zlokalizuj aktywną strefę kontroli, porównaj bezpieczne podejścia transportu i zaopatrzenia, a następnie wybierz trasę na ten mecz zamiast zapamiętywać jeden stały szlak.", imageAlt:"Kontekst pola bitwy WARDOGS i przebiegu aktywnych celów"},
+"tower-terminal":{title:"Terminal wieży", objective:"Zabezpiecz podejście i odczytaj komunikat terminala", context:"Cel wieży w bieżącym przebiegu strefy kontroli", summary:"Usuń bezpośrednie zagrożenia, rozpoznaj właściwą interakcję, przekaż ją zespołowi i wróć do zdobywania punktów. Kodów i czasów z bety nie traktujemy jako aktualnych stałych."},
+"oil-rig-hot-zone":{title:"Platforma wiertnicza", objective:"Zbuduj, zatankuj, uruchom i obroń platformę", context:"Prawidłowy obszar budowy FOB przy planowanym działaniu", summary:"Historyczną sekwencję obsługi platformy traktuj tylko jako listę kontrolną. Aktualne koszty, czasy odnowienia, ograniczenia rozmieszczania i zachowanie Hot Zone odczytaj w grze."},
+"fob-network":{title:"Sieć FOB", objective:"Rozmieść, zaopatrz, obroń i odzyskaj bazę wysuniętą", context:"Wysunięta pozycja powiązana z celem i trwałą trasą dostaw", summary:"Oceniaj FOB według wartości posiłków, dostępu pojazdów, miejsca rozładunku, osłony i obrony. Baza bez dostaw i drogi wyjścia nie jest użytecznym skrótem.", imageAlt:"Oficjalny kontekst działań polowych WARDOGS do planowania FOB"},
+"cargo-route":{title:"Trasa dostaw", objective:"Dostarcz zasób faktycznie potrzebny odbiorcy", context:"Baza główna, droga transportu, strefa rozładunku i powrót", summary:"Planuj zakup, załadunek, eskortę, rozładunek i odzyskanie pojazdu jako jedną pętlę. Zapisane sterowanie i pojemności palet pozostają obserwacjami z zamkniętej bety.", imageAlt:"Ural z WARDOGS jako ilustracja kontekstu trasy dostaw"},
+"mortar-support":{title:"Wsparcie moździerzowe", objective:"Połącz zaopatrzoną załogę z aktualnym meldunkiem obserwatora", context:"Osłonięte stanowisko i obserwowany obszar celu", summary:"Potwierdź cel, przekaż kierunek i odległość, oddaj strzał korygujący, zgłoś trafienie, wstrzymaj ogień dla sojuszników i zmień pozycję przed odwetem.", imageAlt:"Potwierdzone stanowisko moździerza L81 z workami z piaskiem w WARDOGS"},
+"helicopter-transport":{title:"Transport śmigłowcem", objective:"Przewieź graczy lub zapasy i zachowaj drogę odwrotu", context:"Punkt startu, osłonięta terenem trasa, lądowisko i powrót", summary:"Zaplanuj trasę przed startem, potwierdź lądowisko, ogranicz przewidywalny zawis, szybko rozładuj i zachowaj paliwo oraz miejsce na bezpieczne przerwanie podejścia.", imageAlt:"Widok kokpitu śmigłowca WARDOGS w kontekście planowania transportu"}
+}},
+  "zh-tw": {
+    metaTitle: "WARDOGS 行動地圖：地圖、FOB、貨運與目標任務",
+    metaDescription: "使用帶來源的 WARDOGS 行動地圖，查詢控制區、塔樓、FOB、貨運、迫擊炮與直升機運輸攻略；每項均標註版本、核查日期和來源，不編造座標、固定路線或當前數值。",
+    eyebrow: "按任務查詢的戰場參考", title: "WARDOGS 行動地圖", description: "先選擇小隊當前需要完成的任務，再核對適用場景、版本與來源，最後進入對應的完整攻略。這裡是行動流程索引，不是虛構戰術地圖；沒有可靠來源的座標、網格和固定路線不會被髮布。", workflowLabel: "編輯流程建議", workflowNote: "行動步驟由本站編輯整理；官方、已確認等證據標籤僅適用於下方逐條列出的來源事實。", sourcedFactsLabel: "有來源的事實", sourceScopeLabel: "來源範圍", filtersLabel: "按任務篩選行動", filters: { all: "全部行動", orientation: "地圖判讀", objective: "目標任務", construction: "建造", logistics: "後勤", "fire-support": "火力支援", "air-operations": "空中行動" }, showing: "項流程", objectiveLabel: "任務", contextLabel: "適用場景", evidenceLabel: "證據", sourceLabel: "來源", checkedLabel: "核查日期", buildLabel: "版本", openGuide: "開啟對應攻略", relatedGuides: "相關攻略", relatedTools: "相關工具", visualVerified: "物件圖片已核驗", visualContextual: "場景參考圖", visualPending: "圖片尚未核驗", visualPendingDescription: "目前沒有與該物件準確對應且已獲批准的圖片。頁面保留流程資訊，不使用競品素材、借用圖片或通用橫幅冒充實體圖。", visualSourceLabel: "視覺來源", visualUsageLabel: "使用範圍", visualRetrievedLabel: "獲取日期",
+    entries: {
+        "battlefield-control-zone": { title: "戰場與控制區", objective: "選路線前先確認本局即時目標", context: "完整戰場與本局隨機生成的控制區", summary: "先定位當前控制區，再比較運輸、補給、掩體和撤離條件，按本局局勢選擇路線，而不是死記一條每局都不變的路徑。", imageAlt: "WARDOGS 戰場與當前目標流程的場景參考圖" },
+        "tower-terminal": { title: "塔樓終端", objective: "控制入口並讀取當前終端提示", context: "控制區流程中的塔樓目標", summary: "清理近距離威脅，確認本版本實際要求的互動，及時告知隊友，然後重新關注全隊得分。測試版程式碼和計時不會被當作現行固定值。" },
+        "oil-rig-hot-zone": { title: "石油平臺與鑽井平臺", objective: "建造、供油、啟動並防守鑽井平臺", context: "靠近預定行動區域的有效 FOB 建造範圍", summary: "歷史測試流程只作為核對步驟。建造成本、冷卻、放置限制與熱點區效果必須以當前客戶端提示為準。" },
+        "fob-network": { title: "FOB 網路", objective: "部署、補給、防守並恢復前線基地", context: "連線目標區且擁有可持續補給路線的前進位置", summary: "從增援價值、車輛入口、卸貨空間、掩體和防守條件評估 FOB。無法持續補給或安全撤出的基地並不是有效捷徑。", imageAlt: "用於 FOB 規劃的 WARDOGS 官方戰場場景參考圖" },
+        "cargo-route": { title: "貨運路線", objective: "運送目的地真正需要的補給型別", context: "主基地、運輸路線、卸貨區與返程路線", summary: "把購買、裝載、護送、卸貨和返程作為一個完整迴圈來規劃。頁面記錄的按鍵和容量仍屬於封閉測試觀察值。", imageAlt: "作為貨運與補給路線場景參考的 WARDOGS Ural 卡車" },
+        "mortar-support": { title: "迫擊炮支援", objective: "讓有補給的炮組接收仍然有效的觀察員指令", context: "受保護的發射陣地與可觀察的目標區域", summary: "確認目標、方向和距離，先發射校正彈，報告落點，友軍推進時停火，並在敵人定位陣地前轉移。", imageAlt: "WARDOGS 中已核驗的 L81 迫擊炮沙袋陣地" },
+        "helicopter-transport": { title: "直升機運輸", objective: "運輸人員或物資，並始終保留退出路線", context: "起飛點、利用地形的航線、降落區與返航路徑", summary: "起飛前完成路線規劃，確認降落區，避免可預測的長時間懸停，快速卸載，並保留足夠燃料和空間用於中止進近。", imageAlt: "用於運輸路線規劃的 WARDOGS 直升機駕駛艙場景參考圖" },
+    },
+}
 };
 
 export function getOperationsAtlasCopy(locale: Locale): OperationsAtlasCopy {

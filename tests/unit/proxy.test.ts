@@ -46,7 +46,7 @@ describe("Proxy request scope", () => {
   });
 
   test("keeps all six localized routes and root on the canonical host", () => {
-    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn"]) {
+    for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]) {
       expect(matches(`https://www.wardogswiki.com/${locale}`)).toBe(true);
       expect(matches(`https://www.wardogswiki.com/${locale}/guides/not-a-real-page`)).toBe(true);
     }

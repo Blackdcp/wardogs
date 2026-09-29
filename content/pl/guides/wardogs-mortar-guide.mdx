@@ -1,73 +1,153 @@
 ---
-title: "WARDOGS: moździerz, azymut i korekta ognia"
-description: "Ustal cel, kierunek i odległość, sprawdź pierwsze trafienie i koryguj ogień. Poradnik bez niekalibrowanej tabeli nastaw i bez udawania kalkulatora moździerza."
+title: "WARDOGS: moździerz, korekta i obrona FOB"
+description: "Celuj moździerzem WARDOGS według aktualnego dystansu i azymutu, koryguj trafienia i broń FOB przez zerwanie obserwacji, znalezienie obsługi i odcięcie dostaw."
 keyword: "wardogs mortar guide"
 category: "guide"
 slug: "wardogs-mortar-guide"
 order: 29
 updatedAt: "2026-09-30"
 badges:
-  - label: "Obsługa moździerza"
+  - label: "Wsparcie ogniowe"
     tone: "accent"
-  - label: "Bez stałej tabeli nastaw"
+  - label: "Zależne od buildu"
     tone: "warning"
 faq:
-  - question: "Czy ta strona obliczy dokładną nastawę moździerza?"
-    answer: "Nie. Nie mamy zweryfikowanego kalkulatora rozwiązania ogniowego. Poradnik wyjaśnia współpracę, odczyt bieżących wskazań i korektę po zaobserwowanym trafieniu."
-  - question: "Czy można skopiować odległość z dowolnej mapy internetowej?"
-    answer: "Nie bez sprawdzenia skali i układu odniesienia. Znacznik na mapie nie jest automatycznie potwierdzoną odległością ani gotową nastawą w grze."
-  - question: "Czy obserwator jest zawsze obowiązkowy?"
-    answer: "Nie przedstawiamy tego jako wymogu gry. Osobny obserwator pomaga potwierdzać cel, chronić sojuszników i oceniać trafienia; działanie kamery trzeba sprawdzić w aktualnej wersji."
+  - question: "Czy moździerz w WARDOGS wymaga obserwatora?"
+    answer: "Gracze zgłaszają, że obecna kamera trafienia pozwala strzelcowi samodzielnie oglądać strzały, ale osobny obserwator nadal pomaga potwierdzać cele, chronić sojuszników, korygować i ostrzegać przed rajdem. Sprawdź kamerę w aktualnym kliencie."
+  - question: "Jakie informacje powinien przekazywać zespół moździerza?"
+    answer: "Opis celu, znacznik mapy, szacowany dystans i azymut, wynik pierwszego strzału, poprawkę i jasny rozkaz przerwania ognia, gdy wchodzą sojusznicy."
+  - question: "Czy obrażenia i zasięg moździerza WARDOGS są ostateczne?"
+    answer: "Nie. Obrażenia, działanie wybuchu, amunicja, limity zasięgu, koszty budowy i balans z testów mogą się zmienić przed Early Access lub w jego trakcie."
+  - question: "Jak przeciwdziałać wrogiemu moździerzowi lub artylerii?"
+    answer: "Obserwuj kierunek wystrzałów, rozpoznaj możliwe stanowiska, zakłócaj dostawy i obserwatora, wykorzystuj teren i odstępy, a potem naciskaj na obsługę lub wymuś jej przeprowadzkę."
 sources:
-  - label: "Steam: oficjalny opis walki połączonych rodzajów broni"
+  - label: "Wyjaśnienie kierowania ogniem moździerza w Closed Beta"
+    url: "https://www.reddit.com/r/WarDogs/comments/1vw2d6v/someone_explain_in_detail_how_to_use_mortars_and/"
+    kind: "community"
+    checkedAt: "2026-08-26"
+  - label: "WARDOGS na Steam"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "Team17: wsparcie ogniowe i rozbudowa pozycji"
-    url: "https://www.team17.com/games/wardogs"
-    kind: "official"
-    checkedAt: "2026-09-30"
+    checkedAt: "2026-09-24"
+  - label: "Aktualna dyskusja graczy o kamerze moździerza i presji na FOB"
+    url: "https://www.reddit.com/r/OfficialWARDOGS/comments/1wkxyob/some_of_the_biggest_issues_in_the_game_currently/"
+    kind: "community"
+    checkedAt: "2026-09-24"
+  - label: "Opinie Season 1 na Discord WARDOGS o moździerzu i kamerze pocisku"
+    url: "https://discord.com/channels/1464219389913071646/1552664903330955344/1552677067626127531"
+    kind: "community"
+    checkedAt: "2026-09-24"
+  - label: "Czy moździerze WARDOGS są zbyt mocne, czy po prostu dają frajdę?"
+    url: "https://www.youtube.com/watch?v=utnQT_Jmd5w"
+    kind: "creator"
+    checkedAt: "2026-08-26"
+  - label: "Poradnik budowy i zaopatrzenia FOB w WARDOGS"
+    url: "https://www.youtube.com/watch?v=F5YU7eaQHBU"
+    kind: "creator"
+    checkedAt: "2026-08-26"
 ---
 
-## Cel, odczyt, strzał próbny, korekta
+## Krótka odpowiedź
 
-Zacznij od aktualnego celu i położenia sojuszników. Użyj wskazań bieżącego interfejsu, oddaj kontrolowany strzał próbny, sprawdź miejsce upadku i dopiero wtedy poprawiaj nastawę. Gdy cel się przemieści lub wejdą tam sojusznicy, przerwij ostrzał i ustal sytuację od nowa.
+Aby wycelować moździerz w WARDOGS, potwierdź aktualny cel i pozycje sojuszników, użyj bieżących wskazań dystansu i azymutu, oddaj małą serię próbną i popraw nastawę na podstawie trafienia, zanim wydasz pełną salwę. Aby przetrwać wrogi ostrzał, opuść powtarzające się miejsca upadku, zerwij obserwację, rozpoznaj kierunek ognia i zakłóć trasę dostaw amunicji. Osobny obserwator jest cenny nawet wtedy, gdy obecna kamera trafienia pozwala strzelcowi samodzielnie oglądać strzał.
 
-To poradnik organizacji ognia na podstawie istniejącego materiału redakcyjnego, nie nowy test balistyki. Oficjalny opis potwierdza kontekst walki i wsparcia, ale nie stanowi tabeli zasięgu, obrażeń, kąta podniesienia ani kosztu amunicji.
+W [dyskusji graczy z 19 września](https://www.reddit.com/r/OfficialWARDOGS/comments/1wkxyob/some_of_the_biggest_issues_in_the_game_currently/) kilku uczestników zgłaszało, że kamera moździerza ułatwia obserwację obrony FOB, a powtarzany ostrzał jest przytłaczający. To relacja społeczności, **nie oficjalna informacja o balansie**. Sprawdź aktualną kamerę i mapę, zanim założysz, że dwuosobowa obsługa jest obowiązkowa lub że dowolny środek obronny zawsze działa.
 
-## Trzy różne informacje
+Podobną obawę opisano w [wątku opinii Season 1 na Discord z 24 września](https://discord.com/channels/1464219389913071646/1552664903330955344/1552677067626127531): jeden gracz uznał spam moździerzy za większe zagrożenie FOB niż drogi pojazd artyleryjski i zaproponował usunięcie kamery pocisku przy zachowaniu znaczników trafień na mapie. To propozycja balansu, nie łatka. Praktyczna odpowiedź obrońców dziś to rozdzielenie krytycznych zasobów, chroniona trasa dostaw, obserwowanie kierunku ognia i przemieszczenie przed dokładną drugą salwą.
 
-| Termin | Co opisuje | Czego nie zastępuje |
-| --- | --- | --- |
-| Azimuth | Kierunek w poziomie | Odległości ani kąta podniesienia |
-| Range | Odległość | Gotowej nastawy balistycznej |
-| Marker / Coordinates | Znacznik lub współrzędne | Potwierdzenia, że cel nadal tam jest |
+## Potwierdzone fakty
 
-Nazwy i jednostki odczytuj w aktualnym kliencie. Stara siatka mapy lub tabela z bety może używać innej skali. Nie traktuj liczenia pól na obrazku jako sprawdzonego pomiaru, jeżeli skala nie została skalibrowana.
+- WARDOGS łączy piechotę, pojazdy, logistykę, budowanie, zniszczenia i ogień pośredni w tej samej walce o cel.
+- Wartość moździerza zależy od informacji, dostaw, położenia i tego, co sojusznicy zrobią po trafieniu.
+- FOB mogą wspierać wysuniętą logistykę i stanowiska wsparcia ogniowego, ale wymagają ciągłej pracy i ochrony graczy.
+- Trzy rywalizujące zespoły narażają statyczne stanowiska na atak z więcej niż jednego kierunku.
+- Dokładne obrażenia, promień wybuchu, koszt amunicji, zasięg, wymagania budowy i balans moździerza zależą od buildu.
 
-## Podział pracy w zespole
+## Czego szukają gracze
 
-Strzelec obsługuje broń i kontroluje zapas amunicji. Obserwator identyfikuje cel, ocenia miejsce upadku i pilnuje położenia własnej drużyny. Kolejna osoba może chronić stanowisko albo utrzymywać [zaopatrzenie FOB](/pl/guides/wardogs-fob-guide).
+Osoby szukające `wardogs mortar guide` chcą wiedzieć, jak celować, czy moździerze są zbyt mocne, jak obserwator podaje poprawki i jak powstrzymać ukrytą obsługę ostrzeliwującą wieżę lub FOB. Aktualne nagrania pokazują widowiskowe trafienia, ale skrót najlepszych akcji nie ustala trwałego balansu. Ogień pośredni jest najsilniejszy przy nieruchomym celu, dokładnym obserwatorze i dostawach amunicji, które nie odsłaniają stanowiska.
 
-Osobny obserwator jest zaleceniem, nie ogłoszonym wymogiem gry. Nawet jeśli kamera pozwala oglądać lot lub trafienie, nie zastępuje informacji o wejściu sojuszników ani ostrzeżenia o ataku na stanowisko. Nie zakładamy konkretnego działania kamery w każdej wersji.
+Trwałą umiejętnością jest komunikacja. Zasady dystansu i azymutu pozostają ważne nawet wtedy, gdy między buildami beta zmieniają się interfejs, wartości broni lub reguły budowania.
 
-## Przykład bez zmyślonych liczb
+## Oddziel problem ładowania od błędu celowania
 
-1. Obserwator wskazuje rozpoznaną pozycję przeciwnika i potwierdza, że sojusznicy nie wchodzą w obszar ostrzału.
-2. Strzelec powtarza znacznik i odczytane dane. Obie osoby upewniają się, że mówią o tym samym celu i układzie odniesienia.
-3. Następuje pojedyncza próba lub mała grupa strzałów, jeżeli sytuacja na to pozwala.
-4. Obserwator opisuje wynik względem celu: za krótko, za daleko, w lewo albo w prawo. Nie miesza przy tym własnej perspektywy z perspektywą strzelca.
-5. Strzelec zmienia jeden składnik nastawy i ponownie sprawdza wynik. Nie kopiuje przypadkowej poprawki z innego dystansu.
-6. Ogień trwa tylko, dopóki cel jest potwierdzony i działania pomagają drużynie. Wejście sojuszników oznacza przerwanie zadania.
+Przed strzałem rozpoznaj konkretne stanowisko i wymaganą amunicję. Zbudowany moździerz, pobliskie zapasy i załadowany moździerz nie oznaczają tego samego. Jeśli brakuje polecenia ładowania, sprawdź wybraną interakcję, amunicję i aktualne wymagania, zanim zmienisz dystans.
 
-## Gdy nie trafiasz
+Przy celowaniu zapisz stanowisko, znacznik celu, różnicę wysokości, jeśli klient ją podaje, aktualne nastawy i upadek zaobserwowany przez obserwatora. Zmieniaj jedną nastawę na poprawkę i przerywaj, gdy pozycje sojuszników są niejasne. Nie zamieniaj tytułu rozdziału filmu w zweryfikowaną trajektorię lub obliczenie gwarantujące trafienie.
 
-Najpierw potwierdź cel, jednostki i wspólny punkt odniesienia. Sprawdź, czy znacznik się nie zdezaktualizował. Dopiero potem oceniaj nastawę. Nie da się uczciwie wywnioskować stałej poprawki z jednego nieopisanego trafienia.
+[LifeofKino: budowa/amunicja 00:10, celowanie 01:05](/pl/videos#candidate-BIvKEmXlw78) i [trzy pozycje Tactiq](/pl/videos#candidate-z8i2cQiQSjE) to wyłącznie kandydaci do nawigacji. Pełna aktualna sekwencja ładowania i zrzuty chronionych stanowisk pozostają niezweryfikowane. SPH-2 i Stingray wymagają własnych dowodów.
 
-Jeśli ostrzał trafia w pustą pozycję, problemem może być informacja, a nie sama celność. Jeżeli drużyna nie może wykorzystać efektu, przerwij zużywanie zasobów i wróć do planu [walki o cel](/pl/guides/wardogs-towers-guide).
+## Obsługa i przygotowanie
 
-## Mapa nie jest kalkulatorem balistycznym
+Jeśli to możliwe, używaj przynajmniej strzelca i obserwatora. Strzelec obsługuje broń, amunicję i lokalne zabezpieczenie; obserwator rozpoznaje cel, oznacza go, śledzi trafienie i podaje poprawki. Trzeci sojusznik może chronić stanowisko, dowozić zapasy lub pilnować prawdopodobnej trasy kontrataku.
 
-[Interaktywna mapa po angielsku](/en/tools/map) pomaga omawiać teren i pozycje. Nie przedstawiamy jej jako skalibrowanego kalkulatora odległości, azymutu i nastaw moździerza. Takie narzędzie wymagałoby osobnej walidacji dla odpowiedniej mapy i wersji gry.
+Wybierz teren ukrywający obsługę bez blokowania wymagań prowadzenia ognia aktualnej broni. Zachowaj dystans od najbardziej oczywistego rdzenia FOB, drogi, wieży lub linii horyzontu, by jeden przelot rozpoznawczy nie odsłonił wszystkich zasobów zespołu. Zaplanuj wyjście przed pierwszym strzałem i nie kładź całej rezerwy amunicji obok najbardziej widocznego sprzętu.
 
-Nie publikujemy stałych wartości obrażeń, promienia wybuchu, zasięgu ani liczby pocisków potrzebnych do zniszczenia konstrukcji. Zachowaj drogę odwrotu i rozważ zmianę stanowiska, gdy przeciwnik rozpozna kierunek ognia.
+## Zasady dystansu i azymutu
+
+Azimuth opisuje kierunek poziomy; Range opisuje odległość. Zacznij od aktualnego znacznika mapy i bieżącego interfejsu moździerza, a potem potwierdź wspólny punkt odniesienia obu osób. Nie kopiuj starej tabeli przeliczeń beta bez sprawdzenia skali mapy, jednostek, zerowania i działania celownika obecnego buildu.
+
+Gdy warunki pozwalają, oddaj jeden strzał korygujący lub celowo małą grupę. Obserwator zgłasza wtedy, czy upadek jest w lewo, w prawo, za krótko czy za daleko względem celu. Zmieniaj jeden składnik kontrolowanymi krokami, powtarzaj i zwiększ zużycie amunicji dopiero po użytecznych trafieniach. Gdy cel się poruszy, przerwij i ustal nową nastawę zamiast prowadzić pociski przez trasy sojuszników.
+
+## Pętla obserwacji
+
+Dobry meldunek zawiera typ celu, znacznik mapy, pilność, pobliskich sojuszników, szacowany kierunek i odległość oraz rezultat pomocny natarciu. „Tam są wrogowie” nie wystarcza. Przydatnym przykładem jest oznaczony dach ostrzeliwujący podejście do wieży, sojusznicy czekający poza obszarem wybuchu i prośba o jeden strzał korygujący.
+
+Po trafieniu obserwator podaje krótką poprawkę i potwierdza, kiedy cel jest przygwożdżony, zniszczony, opuszczony lub nie wart dalszej amunicji. Musi też nakazać przerwanie ognia, zanim własna piechota wejdzie w obszar. Proximity voice, kanały drużynowe, opóźnienia znaczników i zmieniający się front mogą powodować nieaktualne informacje, więc przed każdą większą salwą powtórz tożsamość celu.
+
+## Wywieranie presji na FOB
+
+Ogień pośredni może zmusić budowniczych, obrońców i załogi do opuszczenia odsłoniętych konstrukcji, ale sam ostrzał nie gwarantuje wyłączenia FOB. Zaopatrzenie, wsparcie odrodzeń, trasy i kluczowe zasoby mogą nadal działać. Koordynuj ostrzał z rozpoznaniem i natarciem piechoty lub pojazdów, które wykorzysta zakłócenie.
+
+Celuj w zaobserwowaną aktywność, nie dekoracyjne ściany. Droga dostaw, odsłonięte stanowisko obronne, punkt napraw lub skupisko obrońców mogą być ważniejsze od środka bazy. Ponieważ wytrzymałość konstrukcji i obrażenia moździerza mogą się zmieniać, poradnik nie publikuje stałej tabeli liczby strzałów do zniszczenia.
+
+## Zmiana stanowiska i przetrwanie
+
+Każdy wystrzał może ujawnić kierunek, dźwięk lub prawdopodobny obszar stanowiska. Przenieś się po skutecznym zadaniu ogniowym, pojawieniu się wrogiego rozpoznania, utracie bezpieczeństwa dostaw albo przesunięciu Control Zone poza użyteczność pozycji. Utrzymuj obsługę na tyle lekką, by mogła się przenosić, i nie polegaj na jednej trasie, którą wróg może zablokować.
+
+Trzecia frakcja jest kolejnym powodem, by nie skupiać się wyłącznie na aktualnym celu. Zespół moździerza zajęty jednym FOB może zostać znaleziony przez drugi wrogi zespół. Utrzymuj lokalną obserwację i nie zabieraj wszystkich obrońców tylko dlatego, że pierwsze trafienia były skuteczne.
+
+## Przeciwdziałanie
+
+Pod ostrzałem pośrednim rozprosz się, opuść powtarzające się punkty upadku, wykorzystuj twarde osłony i teren oraz nie skupiaj się wokół terminala, zasobu odrodzenia lub stosu zapasów. Notuj kierunek i rytm pocisków. Zwiadowcy, lotnictwo, obserwatorzy na wzniesieniach lub flankująca drużyna mogą przeszukać prawdopodobne ukryte stanowiska i trasy dostaw.
+
+Naciskaj na cały system, nie tylko lufę. Usuń lub rozprosz obserwatora, przerwij dostawy amunicji, zmuś obsługę do obrony albo przemieść cel. Dym i ruch mogą zerwać obserwację, a skoordynowane natarcie podczas cyklu korekty przeciwnika może pogorszyć celność. Ogień kontrbateryjny jest jedną opcją, nie jedyną odpowiedzią.
+
+## Zadanie ogniowe Closed Beta krok po kroku
+
+1. Obserwator oznacza cel i potwierdza, że sojusznicy są poza planowanym obszarem trafienia.
+2. Czytaj mapę zamiast szacować z horyzontu. Gracze Closed Beta opisywali małą siatkę jako około 100m, a dużą jako około 1km, ale te pomiary trzeba ponownie sprawdzać po aktualizacjach.
+3. Za pomocą znacznika i mapy ustal dystans i azymut. Strzelec powtarza obie wartości, aby obserwator mógł wychwycić błąd przed strzałem.
+4. Oddaj jeden strzał wstrzeliwujący. Obserwator podaje prostą poprawkę: za krótko, za daleko, w lewo lub w prawo, zamiast nowego opisu celu.
+5. Naprowadź pociski na cel, a potem użyj krótkiej kontrolowanej salwy. Przerwij po ruchu celu, wejściu sojuszników lub utracie wartości strategicznej.
+6. Po powtarzanym ostrzale zmień pozycję lub przygotuj zabezpieczenie. Widoczny rytm ognia zachęca do rajdów i ognia kontrbateryjnego.
+
+## Amunicja moździerza i zasoby FOB
+
+Testy społeczności podczas Closed Beta łączyły amunicję moździerza z dostępnymi zasobami amunicyjnymi FOB. Oznacza to, że obsługi nie da się oddzielić od logistyki: potwierdź właściwy zasób bazy, zanim poświęcisz czas na nastawę, i uprzedź dostawców o planowanym długim ostrzale.
+
+Dokładny koszt zasobów, typ amunicji i interakcję uzupełniania traktuj jako zależne od buildu. Trwała lekcja to procedura: obserwator, mapa, dystans, azymut, strzał próbny, poprawka, kontrolowana salwa i uzupełnienie. Taka procedura lepiej znosi zmiany balansu niż kopiowanie starej tabeli liczb.
+
+## Najczęstsze pytania
+
+**Czy mogę obsługiwać moździerz sam?**
+Możliwe, że sprzęt na to pozwala, ale obserwator znacznie poprawia wskazywanie celów, korekty, bezpieczeństwo i zużycie amunicji.
+
+**Czemu powinien służyć pierwszy strzał?**
+Potwierdzeniu nastawy. Na podstawie zaobserwowanego trafienia popraw kierunek i dystans przed większym zadaniem ogniowym.
+
+**Czy moździerze zawsze są skuteczne przeciw FOB?**
+Nie. Ich wartość zależy od obserwacji, dostaw, odsłonięcia celu, przeciwdziałania wroga i następującego po ostrzale ataku.
+
+**Jak przetrwać wrogie moździerze?**
+Rozprosz się, odchodź od powtarzających się trafień, zerwij obserwację, rozpoznaj prawdopodobne kierunki ognia i naciskaj na obsługę lub logistykę.
+
+## Źródła i ostatnia weryfikacja
+
+Oficjalny kontekst walki połączonych rodzajów wojsk, dyskusję Reddit i opinie Discord sprawdzono 2026-09-24. Starsze nagrania obsługi moździerza pozostają historyczne. Żadna wartość obrażeń, wybuchu, ceny czy zasięgu z testowego buildu nie jest przedstawiana jako trwały balans.
+
+## Powiązane poradniki
+
+- [Poradnik FOB WARDOGS](/pl/guides/wardogs-fob-guide)
+- [Poradnik wież WARDOGS](/pl/guides/wardogs-towers-guide)
+- [Rozgrywka WARDOGS](/pl/guides/wardogs-gameplay)

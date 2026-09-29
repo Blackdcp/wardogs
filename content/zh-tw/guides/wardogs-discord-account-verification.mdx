@@ -1,0 +1,110 @@
+---
+title: "WARDOGS Discord 賬號驗證與安全指南"
+description: "WARDOGS 當前遊玩許可權由 Steam 決定，不需要重走歷史 FirstLook Discord 驗證流程。本文說明舊賬號連線為何只作背景參考、Discord 角色與 Steam 庫許可權有什麼區別、9 月 2 日有限測試和 9 月 10 日搶先體驗應去哪裡確認，並提供賬號異常、缺少角色與可疑私信的安全排查順序。"
+keyword: "wardogs discord account verification"
+category: "community"
+slug: "wardogs-discord-account-verification"
+order: 18
+updatedAt: "2026-09-17"
+badges:
+  - label: "歷史流程"
+    tone: "muted"
+  - label: "賬號安全"
+    tone: "warning"
+faq:
+  - question: "現在必須驗證 Discord 才能玩 WARDOGS 嗎？"
+    answer: "沒有這種當前要求。8 月封閉測試已經結束，9 月 10 日搶先體驗的商店所有權、安裝與庫許可權由 Steam 處理。"
+  - question: "FirstLook 驗證頁面還能決定當前資格嗎？"
+    answer: "舊流程只能解釋早期測試時期的賬號連線與社群角色，不應當作今天的操作步驟。"
+  - question: "Discord 有角色但 Steam 沒有遊戲怎麼辦？"
+    answer: "Discord 角色不能替代 Steam 許可權。先確認 Steam 登入賬號、購買或邀請記錄和庫狀態，再使用官方支援渠道。"
+  - question: "管理員會索要 Steam Guard 驗證碼嗎？"
+    answer: "不會。不要向任何人傳送密碼、Steam Guard 碼、Discord 令牌、Cookie 或遠端控制權限。"
+sources:
+  - label: "WARDOGS 官方 Discord"
+    url: "https://discord.com/invite/playwardogs"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "WARDOGS Steam 官方商店頁"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "WARDOGS 9 月 2 日有限測試公告"
+    url: "https://x.com/WARDOGS/status/2094074731972419976"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "WARDOGS Closed Beta 02 官方公告"
+    url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"
+    kind: "official"
+    checkedAt: "2026-09-04"
+  - label: "Closed Beta 02 伺服器時間官方修訂"
+    url: "https://x.com/BULKHEAD/status/2095447401725153576"
+    kind: "official"
+    checkedAt: "2026-09-04"
+---
+## 9 月 17 日當前狀態
+
+Closed Beta 02 已於 **9 月 6 日 08:00 UTC** 結束；此前的預購保障和免費申請分批放行都屬於測試期規則，舊 Playtest 許可權不能證明伺服器仍開放。WARDOGS 已於 **9 月 10 日**在 Windows PC Steam 開啟搶先體驗，官方預載曾於 9 月 9 日開放。請以[當前安裝指南](/zh-tw/guides/wardogs-download)和 Steam 商店為準。
+
+
+## 快速結論
+
+現在加入 WARDOGS 官方 Discord，不會自動為 Steam 賬號增加遊戲、Playtest 或搶先體驗許可權。Discord 用於公告、社群討論、角色和管理；Steam 負責商店所有權、購買記錄、庫許可權、安裝與退款。兩套系統可以關聯，但不能相互替代。
+
+8 月 21 日至 23 日的 Closed Beta 已經結束。官方確認 9 月 2 日 17:00 UTC 進行一次容量有限的 Firing Range 測試，但沒有承諾所有賬號都能進入，也沒有釋出新的 Discord 驗證步驟。公開發行節點仍是 2026 年 9 月 10 日 Windows PC Steam 搶先體驗。
+
+## 當前是否需要驗證
+
+官方沒有要求玩家為搶先體驗重新完成 FirstLook Discord 驗證。WARDOGS 當前是 Steam 上的付費 Early Access 產品；是否擁有產品、能否安裝和當前版本，應直接在購買所用的 Steam 賬號中確認。
+
+Discord 中出現社群成員、測試者或其他角色，只能說明伺服器內的許可權或歷史狀態。它不是 Steam 購買憑證，也不能保證進入容量有限的臨時測試。
+
+## 歷史 FirstLook 流程
+
+早期社群測試曾通過 FirstLook 頁面連線 Discord 或 Steam 賬號，用於組織報名、驗證成員或分發測試資訊。這解釋了舊攻略裡的“繫結賬號”“等待角色”和“進入控制面板”等步驟。
+
+這些舊截圖不應被重建為當前教程。頁面地址、OAuth 許可權、頻道名稱、角色顏色、審批時間和支援方式都可能已經變化。若官方未來再次要求關聯賬號，應只使用當次公告給出的入口和許可權說明。
+
+## Steam/Discord
+
+**Steam 負責：**
+
+- 產品購買、預購與退款記錄；
+- Playtest 或其他應用許可權；
+- 遊戲庫、下載、安裝和檔案驗證；
+- 與商店交易相關的支援。
+
+**Discord 負責：**
+
+- 伺服器成員與頻道訪問；
+- 公告、討論、角色和社群管理；
+- 向開發團隊反饋問題；
+- 臨時活動的社群通知。
+
+因此，“Discord 有角色但 Steam 沒有遊戲”應先查 Steam；“Steam 有遊戲但看不到 Discord 頻道”應先讀伺服器規則和置頂支援說明。
+
+## 賬號問題排查
+
+1. 確認 Steam 當前登入賬號與購買或受邀賬號一致。
+2. 檢視購買歷史、郵件、許可證與遊戲庫狀態。
+3. 重啟 Steam 客戶端並檢查是否存在獨立的 Playtest 條目。
+4. 通過官方邀請重新進入 Discord，閱讀置頂規則與支援頻道。
+5. 儲存錯誤提示截圖，但不要公開賬號憑證或訂單敏感資訊。
+6. 商店與庫許可權問題交給 Steam 支援；Discord 角色問題交給官方伺服器管理渠道。
+
+## 安全邊界
+
+合法管理員不需要你的 Steam 密碼、Steam Guard 驗證碼、Discord 令牌、瀏覽器 Cookie 或遠端桌面許可權。不要執行所謂驗證器、Key 檢查器或解鎖補丁，也不要批准來源不明的 OAuth 請求。
+
+如果已經在可疑頁面登入，應立即修改密碼、退出其他會話、撤銷未知應用許可權，並檢查 Steam 與郵箱的安全記錄。
+
+## 來源和最後檢查
+
+當前發行和商店許可權核對自 Steam；社群入口核對自 WARDOGS 官方 Discord；9 月 2 日有限測試狀態來自官方 X。最後人工核查日期為 **2026-09-01**。未來若恢復賬號連線，具體步驟必須以新的官方公告為準。
+
+## 相關攻略
+
+- [WARDOGS Discord 官方入口](/zh-tw/guides/wardogs-discord)
+- [WARDOGS Alpha Key 與防騙](/zh-tw/guides/wardogs-alpha-key)
+- [WARDOGS Steam 指南](/zh-tw/guides/wardogs-steam)
+- [WARDOGS 測試狀態](/zh-tw/guides/wardogs-playtest)

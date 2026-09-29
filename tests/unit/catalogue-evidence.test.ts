@@ -156,12 +156,12 @@ describe("catalogue evidence", () => {
     expect(getItemBySlug("ural")?.indexable).toBe(true);
     expect(getItemBySlug("m4")?.indexable).toBe(false);
     expect(getItemBySlug("mortar")?.indexable).toBe(true);
-    expect(getIndexableItemPaths()).toHaveLength(itemLibrary.filter((item) => item.indexable).length * 6);
+    expect(getIndexableItemPaths()).toHaveLength(itemLibrary.filter((item) => item.indexable).length * 8);
 
     for (const authoredItem of [...weaponItems, ...vehicleItems]) {
       const item = getItemBySlug(authoredItem.slug);
       expect(item?.indexable, authoredItem.slug).toBe(true);
-      expect(item?.indexLocales, authoredItem.slug).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn"]);
+      expect(item?.indexLocales, authoredItem.slug).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]);
     }
   });
 

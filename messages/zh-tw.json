@@ -1,18 +1,675 @@
 {
-  "common": {"language": "語言", "skipToContent": "跳至主要內容", "fanMade": "獨立非官方玩家攻略"},
-  "ads": {"label": "廣告"},
-  "notFound": {"title": "找不到這個頁面", "description": "這個主題尚未提供繁體中文頁面，請前往現有攻略目錄。", "home": "攻略首頁", "guides": "瀏覽繁中攻略"},
+  "common": {
+    "fanMade": "玩家自制社群維基",
+    "language": "語言",
+    "openMenu": "開啟選單",
+    "closeMenu": "關閉選單",
+    "learnMore": "瞭解更多",
+    "updated": "更新於",
+    "official": "官方",
+    "community": "社群",
+    "skipToContent": "跳到正文",
+    "openSteam": "在 Steam 檢視 WARDOGS"
+  },
+  "liveOps": {
+    "eyebrow": "搶先體驗運營狀態",
+    "title": "第二賽季將於 10 月 15 日開啟",
+    "description": "第一賽季目前可以遊玩。檢視第二賽季已公佈的日期、刪檔資訊和尚未確認的內容，提前準備下一賽季。",
+    "windowLabel": "已公佈日期",
+    "windowValue": "2026 年 10 月 15 日，具體時間尚未確認",
+    "accessLabel": "Patch 0.11 已確認改動",
+    "accessValue": "拆分官方與社群伺服器列表，改進搜尋和篩選，保留伺服器 ID，修復現金與 GPU 問題，並增加亞洲容量。",
+    "closedBetaNote": "BULKHEAD 於 9 月 26 日宣佈銷量達到 300 萬份；這是累計銷量，不是即時線上人數。",
+    "accessCta": "檢視第二賽季詳情",
+    "issuesCta": "檢查伺服器狀態",
+    "countdown": {
+      "starts": "距離 Beta 開始",
+      "ends": "距離 Beta 結束",
+      "earlyAccess": "搶先體驗日期",
+      "reached": "計劃日期已到",
+      "checking": "正在核對日程",
+      "scheduleOnly": "根據官方日程計算，並非即時伺服器監控。",
+      "exactTimeUnconfirmed": "搶先體驗已在這一天上線；當前服務狀態請檢視 Steam 官方動態。",
+      "dateValue": "2026 年 9 月 10 日",
+      "days": "天",
+      "hours": "時",
+      "minutes": "分",
+      "seconds": "秒"
+    }
+  },
+  "nav": {
+    "game": "遊戲",
+    "guides": "攻略",
+    "catalogue": "圖鑑",
+    "playtest": "測試資格",
+    "release": "釋出資訊",
+    "releaseDate": "釋出日期",
+    "steam": "Steam",
+    "steamEarlyAccess": "Steam 與搶先體驗",
+    "gameplay": "核心玩法",
+    "factions": "陣營",
+    "community": "社群",
+    "beginnerGuide": "新手攻略",
+    "crashFix": "崩潰修復",
+    "helicopterGuide": "直升機攻略",
+    "gameplayGuide": "玩法攻略",
+    "fobLogistics": "FOB 與後勤",
+    "mortarGuide": "迫擊炮攻略",
+    "allGuides": "全部攻略",
+    "catalogueHome": "圖鑑首頁",
+    "weapons": "武器",
+    "vehicles": "載具",
+    "helicopters": "直升機",
+    "ammo": "彈藥",
+    "attachments": "配件",
+    "gear": "個人裝備",
+    "skins": "皮膚",
+    "equipment": "戰術裝備",
+    "medical": "醫療物品",
+    "supplies": "補給物資",
+    "deployables": "部署物",
+    "mechanics": "玩法機制",
+    "operationsAtlas": "行動地圖",
+    "interactiveMap": "互動地圖",
+    "loadouts": "配裝",
+    "blackMarket": "黑市",
+    "goldMarket": "黃金市場",
+    "systemCheck": "電腦配置檢測",
+    "budgetTool": "配裝預算工具",
+    "weaponCompare": "武器對比",
+    "ammoMatcher": "武器彈藥匹配",
+    "progressionRoute": "成長路線工具",
+    "logisticsPlanner": "FOB 與後勤規劃器",
+    "videos": "影片",
+    "items": "物品",
+    "news": "新聞",
+    "steamCta": "在 Steam 檢視",
+    "primaryLabel": "主導航"
+  },
+  "home": {
+    "metaTitle": "WARDOGS Wiki：搜尋攻略、武器、載具與實用工具",
+    "metaDescription": "在獨立運營的 WARDOGS Wiki 搜尋有來源的 Season 1 攻略、武器、載具、當前影片、操作、電腦修復、後勤流程與玩家工具。",
+    "heroTitle": "武器、載具、攻略與遊戲資料庫",
+    "heroDescription": "這裡整理經過來源核實的裝備、操作、當前參與狀態、故障排查與實戰策略，並明確標註所有受版本影響的資訊。",
+    "primaryCta": "檢視 Patch 0.11",
+    "secondaryCta": "檢查伺服器狀態",
+    "quickTasks": {
+      "weapons": "武器",
+      "vehicles": "載具",
+      "map": "互動地圖",
+      "status": "伺服器狀態"
+    },
+    "status": "Steam 搶先體驗已上線",
+    "statsLabel": "WARDOGS 關鍵資訊",
+    "stats": {
+      "earlyAccess": "2026 年 9 月 10 日搶先體驗",
+      "players": "最多 100 名玩家",
+      "teams": "三方對戰",
+      "controlZone": "2 × 2 公里控制區"
+    },
+    "aboutTitle": "WARDOGS 是什麼遊戲？",
+    "about": {
+      "eyebrow": "百人三方戰術射擊",
+      "imageAlt": "WARDOGS 官方實機畫面中的直升機與戰場",
+      "bodyOne": "WARDOGS 是 BULKHEAD 已在 Steam 搶先體驗上線的戰術全面戰爭 FPS，並非 2016 年電影《War Dogs》。最多 100 名玩家分成三隊，在隨機 2 x 2 公里控制區中使用步兵、載具、工事和後勤作戰。",
+      "bodyTwo": "擊殺不是唯一貢獻方式。救治、運輸、補給和目標控制也會影響團隊推進與個人經濟；具體數值和規則仍可能在搶先體驗階段調整。",
+      "officialQuote": "Every player starts their journey with $10,000.",
+      "officialQuoteSource": "Steam 上的 WARDOGS 官方介紹",
+      "points": {
+        "teams": "三支隊伍爭奪同一得分目標",
+        "battlefield": "載具、建造與可破壞路線共同改變戰局",
+        "roles": "戰鬥與支援職責都能為團隊創造價值"
+      }
+    },
+    "startEyebrow": "從這裡開始",
+    "startTitle": "準備你的第一次部署",
+    "start": {
+      "description": "這六篇當前攻略覆蓋 Season 1 開局、賺錢、進度、配裝、社群伺服器和問題排查。",
+      "cards": {
+        "beginner": {
+          "title": "新手實戰手冊",
+          "description": "理解目標、第一條命的流程、小隊職責、運輸、救人以及最燒錢的錯誤。"
+        },
+        "money": {
+          "title": "現金與經濟",
+          "description": "穩定賺錢、避開刷錢伺服器、保留備用金，並圍繞職責而不是衝動消費。"
+        },
+        "progression": {
+          "title": "進度與解鎖",
+          "description": "檢視 Season 1 經驗區間、職責進度、解鎖節奏以及仍可能改動的資料。"
+        },
+        "loadouts": {
+          "title": "武器與配裝",
+          "description": "根據射程、護甲、彈藥、功能和小隊真實任務搭配可負擔的裝備。"
+        },
+        "communityServers": {
+          "title": "社群伺服器",
+          "description": "使用 Patch 0.11 瀏覽器、篩選、固定 ID、獲批託管商與安全伺服器規則。"
+        },
+        "issues": {
+          "title": "已知問題",
+          "description": "區分官方故障與排隊、列表、崩潰、語音、賬號、地區或電腦問題。"
+        }
+      }
+    },
+    "search": {
+      "eyebrow": "搜尋戰地資料庫",
+      "title": "直接找到答案、道具或工具",
+      "description": "一次搜尋持續維護的攻略、有證據的道具頁面、已複核當前影片和全部玩家工具，並完整支援鍵盤操作。",
+      "label": "搜尋 WARDOGS Wiki",
+      "placeholder": "試試資金、直升機、FOB、操作或 AMP-9",
+      "prompt": "輸入任務、道具、兵種、問題或創作者名稱；使用方向鍵移動，按 Enter 開啟結果。",
+      "empty": "沒有匹配的持續維護內容，請嘗試更寬泛的任務或分類。",
+      "resultCount": "找到 {count} 項結果",
+      "openResult": "開啟結果",
+      "videoSummary": "已複核的當前版本創作者實機，並關聯持續維護的攻略。",
+      "videoCategory": "當前影片",
+      "toolSummary": "從全站共享導航自動發現的互動式玩家工具。",
+      "mapSummary": "按任務整理的行動地圖，串聯有來源的戰場、目標、後勤、迫擊炮和空中行動攻略。",
+      "types": {
+        "guide": "攻略",
+        "item": "道具",
+        "video": "影片",
+        "tool": "工具",
+        "map": "地圖"
+      },
+      "counts": {
+        "guides": "攻略",
+        "items": "道具頁",
+        "videos": "當前影片",
+        "tools": "工具",
+        "maps": "地圖"
+      }
+    },
+    "actions": {
+      "eyebrow": "選擇你的任務",
+      "title": "你現在最需要做什麼？",
+      "description": "不必翻完整目錄，直接進入你當前要完成的事情。所有可能隨版本變化的資料都會繼續明確標註。",
+      "firstMatch": {
+        "title": "打好第一局",
+        "description": "先學會部署、識別當前目標、跟隨小隊並完成一個有效支援迴圈。"
+      },
+      "money": {
+        "title": "賺錢並保護資金",
+        "description": "選擇可重複的團隊任務，設定虧損上限，並核對真實淨收益。"
+      },
+      "progression": {
+        "title": "規劃兵種進度",
+        "description": "確定兵種目標，並區分已確認的 Season 1 改動與歷史數值。"
+      },
+      "weapons": {
+        "title": "選擇武器與彈藥",
+        "description": "圍繞射程、護甲、彈藥和證據新鮮度配置可負擔的裝備。"
+      },
+      "logistics": {
+        "title": "執行 FOB 與後勤任務",
+        "description": "建立有效出生點、運輸補給、保護路線並恢復完整支援迴圈。"
+      },
+      "vehicles": {
+        "title": "識別與選擇載具",
+        "description": "檢視運輸、裝甲與航空載具，以及每條記錄對應的實測版本。"
+      },
+      "controls": {
+        "title": "掌握操作",
+        "description": "核對當前鍵鼠、手柄、地面載具和直升機操作。"
+      },
+      "pcFixes": {
+        "title": "修復崩潰與效能問題",
+        "description": "排查穩定性、驅動、畫面設定、排隊和電腦配置要求。"
+      }
+    },
+    "buildChanges": {
+      "eyebrow": "Season 1 官方證據",
+      "title": "花錢或升級前應核對的重要改動",
+      "description": "以下新舊數值直接來自 Season 1 官方更新；沒有被該公告改動的圖鑑數值，在重新實測前仍標記為歷史資料。",
+      "buildLabel": "版本",
+      "verifiedLabel": "核對日期",
+      "sourceCta": "檢視 Season 1 官方更新",
+      "entries": {
+        "fobVendor": {
+          "title": "FOB 商人",
+          "field": "商店價格"
+        },
+        "largeHammer": {
+          "title": "大型錘",
+          "field": "商店價格"
+        },
+        "artilleryTank": {
+          "title": "火炮坦克",
+          "field": "生涯解鎖價格"
+        },
+        "ural": {
+          "title": "URAL 卡車",
+          "field": "解鎖價格"
+        },
+        "duneBuggy": {
+          "title": "沙丘越野車",
+          "field": "解鎖價格"
+        },
+        "deagle": {
+          "title": "Deagle",
+          "field": "所需等級"
+        }
+      }
+    },
+    "priority": {
+      "eyebrow": "優先順序資訊",
+      "title": "WARDOGS 玩家本週末最需要的內容",
+      "description": "優先檢視 Season 1 實戰內容：目標、現金、進度、配裝、社群伺服器和當前修復。",
+      "top": {
+        "title": "核心攻略",
+        "description": "圍繞當前開放狀態、Steam 許可權、上線準備和高頻搜尋問題精選核心攻略。"
+      },
+      "recent": {
+        "title": "最近更新",
+        "description": "按最近一次人工核查時間排序，幫助你識別哪些頁面剛剛根據新公告更新。"
+      },
+      "status": {
+        "title": "已確認與未確認",
+        "description": "快速區分官方已經確認、仍未公佈以及社群經常誤傳的內容。",
+        "labels": {
+          "confirmed": "確認",
+          "rumor": "未確認"
+        },
+        "items": {
+          "season02": {
+            "title": "第二賽季將於 10 月 15 日上線",
+            "description": "官方預告確認了日期與雷暴畫面；現金和經驗值的賽季重置原則已有官方說明，但第 02 賽季的開放時間和兌換比例尚未公佈。"
+          },
+          "closedBeta02": {
+            "title": "Closed Beta 02 已結束",
+            "description": "9 月 3 日至 6 日的測試已成為歷史；WARDOGS 當前已通過 Steam 主應用開放搶先體驗。"
+          },
+          "clipContest": {
+            "title": "10 萬美元剪輯大賽開放報名",
+            "description": "釋出兩分鐘以內的影片，帶上 #WARDOGS100K 並標記 @WARDOGS，再通過官方表格提交連結。"
+          },
+          "paidPrepurchase": {
+            "title": "Beta 資格規則已經成為歷史",
+            "description": "預購保證和免費 Playtest 分批放行只適用於已結束測試；當前產品是 Steam 主應用的搶先體驗版。"
+          },
+          "steamEarlyAccess": {
+            "title": "Steam 搶先體驗已經上線",
+            "description": "Windows PC 版已於 9 月 10 日上線；當前安裝與補丁均由 Steam 主應用提供。"
+          },
+          "patch011": {
+            "title": "Patch 0.11 是當前官方核對點",
+            "description": "9 月 14 日維護視窗已經結束；當前改動和線上服務公告請檢視補丁說明與 Steam 官方動態。"
+          },
+          "ps5Release": {
+            "title": "PS5 和 Xbox 的具體發售日期尚未確認",
+            "description": "Team17 已將 PlayStation 5 和 Xbox Series X|S 列為計劃登陸的平臺，官方預告僅給出主機版 2028 年的整體視窗。尚未確認的是各平臺的具體釋出日期；主機版目前不可玩，跨平臺聯機和進度共享也未公佈。"
+          }
+        }
+      }
+    },
+    "catalogue": {
+      "heading": "WARDOGS 圖鑑",
+      "publishedModels": "已釋出的武器與載具條目",
+      "weapons": {
+        "title": "武器",
+        "count": "{count} 條帶版本標記的記錄",
+        "imageAlt": "WARDOGS 武器圖鑑"
+      },
+      "vehicles": {
+        "title": "載具",
+        "count": "{count} 條帶版本標記的記錄",
+        "imageAlt": "WARDOGS 載具圖鑑"
+      },
+      "ammo": {
+        "title": "彈藥",
+        "count": "{count} 個條目",
+        "imageAlt": "彈藥盒 5.56x45mm"
+      },
+      "attachments": {
+        "title": "配件",
+        "count": "{count} 條已觀察記錄",
+        "imageAlt": "WARDOGS 武器配件圖鑑"
+      },
+      "gear": {
+        "title": "裝備",
+        "count": "{count} 個裝備條目",
+        "imageAlt": "WARDOGS 裝備圖鑑"
+      },
+      "loadouts": {
+        "title": "配裝",
+        "count": "{count} 套預算方案",
+        "imageAlt": "WARDOGS 配裝方案"
+      }
+    },
+    "categories": {
+      "eyebrow": "攻略分類",
+      "title": "找到你需要的資訊",
+      "description": "按測試資格、釋出日期、商店、平臺、影片、社群、開發團隊和玩法系統瀏覽攻略。",
+      "allGuides": "檢視全部 {count} 篇攻略",
+      "items": {
+        "access": "測試資格、歷史測試和訪問許可權",
+        "release": "釋出日期與搶先體驗資訊",
+        "store": "Steam、價格、下載與安裝",
+        "platform": "PC 與主機平臺確認狀態",
+        "video": "官方預告片、直播與實機影片",
+        "community": "官方社群渠道與賬號安全",
+        "developer": "BULKHEAD 與 Team17 背景",
+        "guide": "玩法系統、兵種、陣營與戰術"
+      }
+    },
+    "media": {
+      "eyebrow": "官方媒體",
+      "title": "觀看 WARDOGS 實機內容",
+      "description": "從官方預告片和註明來源的創作者實機中檢視戰場、載具、破壞效果與三方交戰。",
+      "videoTitle": "WARDOGS 官方公佈預告片",
+      "watch": "前往 YouTube 觀看",
+      "imageAlt": "WARDOGS 官方預告片中的戰場畫面",
+      "fieldReports": "創作者實機報告"
+    },
+    "tips": {
+      "eyebrow": "第一次參戰前",
+      "title": "經過核實的新手建議",
+      "description": "這些建議只基於官方公開系統與可核查實機，不把版本敏感數值或未經證實的套路寫成定論。",
+      "items": {
+        "objective": {
+          "title": "圍繞控制區行動",
+          "description": "在活動控制區佔據人數優勢，才能持續為隊伍獲得分數。"
+        },
+        "economy": {
+          "title": "為下一局規劃預算",
+          "description": "現金會影響後續配裝選擇，不要把全部資源一次性投入高價裝備。"
+        },
+        "support": {
+          "title": "支援行動同樣有價值",
+          "description": "救治、運送友軍和控制目標可獲得現金；補給同樣有團隊價值，但獨立的現金獎勵尚未核實。"
+        },
+        "mobility": {
+          "title": "提前規劃移動路線",
+          "description": "控制區會在更大的戰場內變化，載具與後勤路線要為下一次轉移留出餘量。"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "常見問題",
+      "title": "WARDOGS 常見問題",
+      "description": "直接回答玩家在購買、安裝或進入戰場前最常問的問題。",
+      "items": {
+        "game": {
+          "question": "WARDOGS 是什麼型別的遊戲？",
+          "answer": "WARDOGS 是一款戰術第一人稱射擊遊戲，核心模式最多支援 100 名玩家分成三支隊伍作戰。"
+        },
+        "release": {
+          "question": "WARDOGS 什麼時候開啟搶先體驗？",
+          "answer": "WARDOGS 已於 2026 年 9 月 10 日在 Steam 開啟搶先體驗。"
+        },
+        "controlZone": {
+          "question": "控制區如何計分？",
+          "answer": "比賽會在 2 × 2 公里的控制區內進行。隊伍需要在活動目標內取得人數優勢並累積分數；最終規則仍以當前版本為準。"
+        },
+        "official": {
+          "question": "WARDOGS Wiki 是官方網站嗎？",
+          "answer": "不是。本站是獨立玩家攻略站；購買、測試資格和賬號操作請始終通過 WARDOGS、BULKHEAD、Team17、Steam 或官方 Discord 提供的連結完成。"
+        }
+      }
+    },
+    "finalTitle": "準備進入控制區了嗎？",
+    "finalDescription": "使用獨立攻略庫瞭解測試資格、小隊職責、載具、目標和每個已確認的釋出節點。",
+    "final": {
+      "eyebrow": "部署前準備",
+      "guidesCta": "瀏覽攻略",
+      "steamCta": "開啟 Steam"
+    },
+    "heroImageAlt": "WARDOGS 士兵和載具正在爭奪當前 Control Zone 的官方遊戲畫面"
+  },
+  "guides": {
+    "metaTitle": "WARDOGS 中文攻略大全 - 上線、玩法、武器、載具與故障修復",
+    "title": "WARDOGS 攻略",
+    "description": "瀏覽上線、貨運、彈藥、小隊、故障排除、載具、FOB 後勤、釋出和核心玩法攻略。",
+    "count": "{count} 篇攻略",
+    "read": "閱讀攻略"
+  },
+  "news": {
+    "metaTitle": "WARDOGS 新聞 - Patch 0.11、伺服器與搶先體驗",
+    "metaDescription": "追蹤 WARDOGS Patch 0.11 維護、伺服器修復、Steam 搶先體驗、主機計劃、平臺狀態和攻略更新，所有關鍵結論附第一方來源。",
+    "eyebrow": "最新更新",
+    "title": "WARDOGS 新聞與確認時間表",
+    "description": "持續更新有來源的 WARDOGS Patch 0.11、伺服器狀態、已知問題、Steam 搶先體驗、平臺、下載和玩法資訊。",
+    "timeline": {
+      "title": "確認時間表",
+      "readMore": "閱讀全文",
+      "status": {
+        "Confirmed": "確認",
+        "Not confirmed": "未確認"
+      },
+      "items": {
+        "season02": {
+          "title": "WARDOGS 第 02 賽季將於 10 月 15 日上線",
+          "description": "9 月 22 日的官方預告確認了日期與暴風雨畫面；現金和經驗值重置原則已有官方說明，具體上線時間、補丁內容和兌換比例尚未公佈。"
+        },
+        "closedBeta02": {
+          "title": "Closed Beta 02 已於 9 月 6 日結束",
+          "description": "釋出會於 18:00 UTC 開始；修訂後的伺服器從 9 月 3 日 19:00 UTC 執行至 9 月 6 日 08:00 UTC，參與規則現為歷史記錄。"
+        },
+        "clipContest": {
+          "title": "WARDOGS 官方 10 萬美元剪輯大賽開放",
+          "description": "把兩分鐘以內的影片帶 #WARDOGS100K 和 @WARDOGS 公開發布，並在 10 月 8 日前通過官方表格提交。"
+        },
+        "steamPreorder": {
+          "title": "Steam 預購曾在發售前開放",
+          "description": "Steam 是發售前購買與 Beta 資格的官方入口；當前主產品已經進入搶先體驗。"
+        },
+        "closedBeta": {
+          "title": "8 月 Closed Beta 已於 8 月 24 日結束",
+          "description": "8 月和 9 月的兩輪測試都已結束，舊資格不能代表當前仍可進入遊戲。"
+        },
+        "betaRecap": {
+          "title": "BULKHEAD 釋出第一輪封測總結",
+          "description": "總結對應已經結束的 8 月測試，不應用來判斷 Closed Beta 02 當前狀態。"
+        },
+        "earlyAccess": {
+          "title": "WARDOGS 搶先體驗已於 9 月 10 日上線",
+          "description": "Windows PC 版已可在 Steam 遊玩。首發預告宣佈主機版計劃於 2028 年推出，Team17 已將 PlayStation 5 和 Xbox Series X|S 列為目標平臺；各平臺具體日期尚未公佈。"
+        },
+        "ps5": {
+          "title": "主機版已宣佈於 2028 年推出",
+          "description": "首發預告給出 2028 年主機視窗。Team17 已將 PlayStation 5 和 Xbox Series X|S 列為目標平臺，但尚未確認各平臺具體日期、跨平臺聯機或進度共享。"
+        },
+        "preload": {
+          "title": "官方預載已於 9 月 9 日開放",
+          "description": "預載早於 9 月 10 日搶先體驗上線；當前安裝與補丁均由 Steam 主產品提供。"
+        },
+        "twitchDrops": {
+          "title": "Beta 02 曾測試 Twitch Drops",
+          "description": "該功能屬於已經結束的測試；搶先體驗是否有新獎勵、觀看時長、頻道範圍和截止時間仍未確認。"
+        },
+        "fpsGameShow": {
+          "title": "9 月 3 日釋出會已經結束",
+          "description": "釋出會公佈了 Beta 02 和剪輯大賽；9 月 10 日是否開放應以 Steam 實際狀態為準。"
+        },
+        "firingRangeTest": {
+          "title": "9 月 2 日靶場測試已經結束",
+          "description": "該次有限的後臺和佇列檢查發生在 Closed Beta 02 之前，只保留為歷史資訊。"
+        },
+        "twoMillionCopies": {
+          "title": "WARDOGS 官方宣佈銷量達到 200 萬份",
+          "description": "BULKHEAD 於 9 月 15 日公佈了這一官方銷量里程碑；它不是同時線上人數。"
+        },
+        "patch011": {
+          "title": "Patch 0.11 改進伺服器瀏覽器與社群服發現",
+          "description": "官方公佈的 9 月 14 日視窗已經過去；已確認改動包括拆分列表、篩選、固定 ID、現金與 GPU 修復以及亞洲容量擴充。"
+        },
+        "copiesSold": {
+          "title": "WARDOGS 官方宣佈銷量達到 125 萬份",
+          "description": "該資料由 Steam 官方動態在搶先體驗上線後公佈，代表銷量，不是同時線上人數。"
+        },
+        "launchHotfix": {
+          "title": "Launch Stability Hotfix #1 已上線",
+          "description": "9 月 10 日客戶端熱修復針對無法加入伺服器、遊玩中意外被踢和登入佇列過長。"
+        }
+      }
+    },
+    "checklist": {
+      "title": "上線首周檢查清單",
+      "description": "搶先體驗期間使用這些頁面檢查伺服器、安全安裝、故障排查、操作、設定與已確認補丁內容。"
+    },
+    "rules": {
+      "title": "我們如何標記更新",
+      "items": {
+        "official": {
+          "title": "優先採用官方來源",
+          "description": "日期、價格、平臺和訪問要求優先核對 Steam、Team17、BULKHEAD 與 WARDOGS 官方渠道。"
+        },
+        "rumor": {
+          "title": "傳言保持明確標籤",
+          "description": "各主機平臺的具體釋出日期、跨平臺聯機、進度共享及新的測試安排，在一手來源確認前都標為未確認。"
+        },
+        "refresh": {
+          "title": "分享前重新核對",
+          "description": "WARDOGS 正處於持續更新的搶先體驗階段；轉發舊截圖前先檢查頁面核查日期、版本標籤與最新官方公告。"
+        }
+      }
+    }
+  },
+  "article": {
+    "sources": "來源",
+    "related": "相關攻略",
+    "faq": "常見問題",
+    "back": "全部攻略",
+    "directAnswer": "快速結論",
+    "lastChecked": "最後核查",
+    "watch": "觀看影片",
+    "videoConsent": "載入隱私增強模式的 YouTube 影片",
+    "byline": "研究與維護",
+    "teamName": "WARDOGS Wiki 編輯團隊",
+    "editorialPolicy": "編輯規範",
+    "imageSource": "畫面來源",
+    "advertisement": "廣告"
+  },
+  "ads": {
+    "label": "廣告",
+    "sponsored": "贊助內容",
+    "smartlinkCta": "檢視贊助推薦",
+    "smartlinkDescription": "在新標籤頁開啟外部贊助頁面。"
+  },
+  "categories": {
+    "access": "測試資格",
+    "release": "釋出",
+    "store": "商店",
+    "platform": "平臺",
+    "video": "影片",
+    "community": "社群",
+    "developer": "開發團隊",
+    "guide": "攻略"
+  },
+  "footer": {
+    "aboutTitle": "WARDOGS Wiki",
+    "about": "WARDOGS Wiki 是玩家制作的獨立攻略站，提供經過核實的測試資格、釋出、玩法、陣營、社群與媒體資訊，與 BULKHEAD、Team17 或 Steam 無隸屬關係。",
+    "description": "面向 WARDOGS 玩家的獨立戰術 FPS 攻略。",
+    "guideLinks": "攻略連結",
+    "officialLinks": "官方連結",
+    "officialSite": "WARDOGS 官方網站",
+    "revealTrailer": "釋出預告片",
+    "legal": "法律資訊",
+    "privacy": "隱私政策",
+    "terms": "服務條款",
+    "editorialPolicy": "編輯規範",
+    "aboutLink": "關於我們",
+    "contact": "聯絡我們"
+  },
+  "aboutPage": {
+    "metaTitle": "關於 WARDOGS Wiki：獨立玩家資料站",
+    "metaDescription": "瞭解 WARDOGS Wiki 由誰維護、獨立編輯團隊如何核實遊戲資料、標記不確定資訊、區分不同版本並持續更新玩家攻略。",
+    "eyebrow": "關於本站",
+    "title": "關於 WARDOGS Wiki",
+    "intro": "WARDOGS Wiki 是獨立運營的非官方玩家資料站，目標是讓持續變化的遊戲資訊更容易核實和使用。",
+    "identityTitle": "專注於一個遊戲的社群資料",
+    "identityBody": "本站以六種語言整理 WARDOGS 的參與方式、裝備、操作、故障排查和戰術。它採用編輯稽核，而不是任何人都能直接釋出的開放百科模式。",
+    "methodTitle": "核對來源並標記版本",
+    "methodBody": "事實更新優先採用 Steam、Team17、BULKHEAD 和 WARDOGS 官方來源。創作者實機和社群報告會明確標註日期、性質與適用版本。",
+    "independenceTitle": "獨立於遊戲官方和廣告商",
+    "independenceBody": "WARDOGS Wiki 與 BULKHEAD、Team17、Steam 或內容創作者沒有隸屬關係。廣告不會影響排名、結論、來源標籤和錯誤修正。",
+    "caseStudyTitle": "這套資料庫是如何構建的",
+    "caseStudyBody": "T Salon 釋出了一篇工程復盤，介紹本站如何管理來源規則、版本化記錄、六語言內容契約、靜態匯出與生產驗證。",
+    "caseStudyCta": "閱讀工程復盤"
+  },
+  "contactPage": {
+    "metaTitle": "聯絡 WARDOGS Wiki：糾錯與資料線索",
+    "metaDescription": "如發現事實錯誤、失效來源、缺少證據或版本敏感資訊，可通過公開渠道聯絡獨立運營的 WARDOGS Wiki 編輯團隊。",
+    "eyebrow": "聯絡與糾錯",
+    "title": "聯絡 WARDOGS Wiki",
+    "intro": "網站糾錯和資料證據請使用公開 Issue Tracker；賬號、購買、封禁和伺服器問題必須聯絡 WARDOGS 官方服務。",
+    "correctionsTitle": "報告事實或網站問題",
+    "correctionsBody": "請提供頁面地址、有疑問的原文、公開來源以及對應日期或遊戲版本。提交前請刪除賬號名、令牌、訂單憑證和個人資訊。",
+    "correctionsCta": "開啟公開 Issue Tracker",
+    "gameSupportTitle": "需要官方遊戲支援？",
+    "gameSupportBody": "獨立攻略站無法修改遊戲資格、付款、社群處罰或伺服器狀態。這些問題請通過 Steam 或 WARDOGS 官方 Discord 處理。"
+  },
+  "editorial": {
+    "metaTitle": "WARDOGS Wiki 編輯規範與來源核查標準",
+    "metaDescription": "瞭解 WARDOGS Wiki 如何核對官方宣告、分析創作者實機、標註版本敏感資訊、處理社群觀察、修正錯誤並維護攻略更新日期。",
+    "eyebrow": "編輯標準",
+    "title": "我們如何研究 WARDOGS",
+    "intro": "WARDOGS Wiki 是獨立玩家攻略站。每篇攻略直接回答玩家問題，並明確區分官方事實、實機觀察、社群報告與尚未確認的細節。",
+    "teamTitle": "獨立、面向玩家的研究",
+    "teamBody": "WARDOGS Wiki 與 BULKHEAD、Team17、Steam、影片創作者及廣告商均無隸屬關係；商業關係不會決定我們的結論或來源標籤。",
+    "methodTitle": "我們的驗證方法",
+    "officialTitle": "官方來源優先",
+    "officialBody": "釋出日期、價格、平臺、訪問規則和系統要求在釋出前優先核對 Steam、Team17、BULKHEAD 或 WARDOGS 官方渠道。",
+    "footageTitle": "實機是證據，不是最終說明書",
+    "footageBody": "創作者影片用於解釋操作、對局流程、配裝、載具和戰術。Alpha 與 Beta 數值會標註錄製版本，除非被當前官方來源確認，否則不寫成永久結論。",
+    "statusTitle": "確認資訊與未知資訊分開",
+    "statusBody": "傳言、社群觀察和尚未公佈的細節都會明確標記；沒有答案不等於可以自行補全。",
+    "updatesTitle": "只有實際複核後才更新時間",
+    "updatesBody": "頁面日期只在重新核對來源或實質修改建議後更新，不會為了搜尋結果看起來新鮮而改日期。",
+    "correctionsTitle": "公開修正是維護的一部分",
+    "correctionsBody": "當來源變化或發現錯誤時，我們會修正受影響的攻略、更新狀態措辭，並保留可供讀者核查的來源連結。"
+  },
+  "privacy": {
+    "metaTitle": "WARDOGS Wiki 隱私政策：Cookie、分析與廣告",
+    "metaDescription": "瞭解 WARDOGS Wiki 如何處理 Cookie、網站分析、Adsterra 廣告、贊助連結、外部媒體，以及為何不收集遊戲賬號憑證。",
+    "title": "隱私政策",
+    "intro": "本站儘量減少資料收集，並說明外部媒體和連結的工作方式。",
+    "content": "我們不經營玩家賬戶，也不收集遊戲登入憑證。",
+    "advertising": "網站的 Adsterra 廣告形式可能包括展示橫幅、原生廣告、粘性廣告、Social Bar、Popunder 和贊助 Smartlink；並非所有形式都會同時啟用。Adsterra 及其廣告合作伙伴可能處理您的 IP 地址、瀏覽器和裝置資訊，並在需要徵得同意的地區依據您的選擇，使用 Cookie 或類似技術投放、衡量及個性化廣告。啟用時，贊助連結會在新標籤頁開啟外部廣告頁面。"
+  },
+  "terms": {
+    "metaTitle": "WARDOGS Wiki 使用條款：攻略規範與免責宣告",
+    "metaDescription": "檢視 WARDOGS Wiki 的使用規則，包括測試版本資料可能變化、官方來源核驗、購買決策、外部連結和賬號安全等重要免責宣告。",
+    "title": "服務條款",
+    "intro": "本獨立站點內容僅供玩家參考。",
+    "content": "遊戲資訊可能變化。購買、測試資格、平臺可用性與賬號操作請以 WARDOGS 官方來源為準。"
+  },
+  "notFound": {
+    "title": "頁面未找到",
+    "description": "該地址不在當前已核實的攻略庫中。",
+    "home": "返回首頁",
+    "guides": "瀏覽攻略"
+  },
   "pilot": {
     "title": "WARDOGS 繁體中文攻略",
     "description": "新手配裝預算、醫療救援、塔與控圈、FOB 貨運，以及倍鏡操作排查。保留英文介面術語，區分官方規則、操作建議與待確認細節。",
-    "allGuides": "全部繁中攻略", "read": "閱讀攻略", "related": "延伸閱讀", "sources": "資料來源",
-    "checked": "來源核對", "updated": "文章更新", "faq": "常見問題", "english": "英文完整站", "language": "語言",
-    "team": "WARDOGS Wiki 編輯", "independent": "本站為非官方玩家網站，與 BULKHEAD 或 Team17 無隸屬關係。",
+    "allGuides": "全部繁中攻略",
+    "read": "閱讀攻略",
+    "related": "延伸閱讀",
+    "sources": "資料來源",
+    "checked": "來源核對",
+    "updated": "文章更新",
+    "faq": "常見問題",
+    "english": "英文完整站",
+    "language": "語言",
+    "team": "WARDOGS Wiki 編輯",
+    "independent": "本站為非官方玩家網站，與 BULKHEAD 或 Team17 無隸屬關係。",
     "review": "文字經 AI 編輯自校，尚未經外部母語審校；未宣稱本輪已完成遊戲內實測。",
-    "image": "WARDOGS 遊戲畫面", "imageCredit": "圖片來源", "bodyNav": "本頁章節",
-    "tools": "英文工具與地圖", "budget": "配裝預算（英文）", "map": "互動地圖（英文）",
-    "logistics": "後勤規劃（英文）", "official": "官方 Steam 公告", "otherLanguage": "其他語言",
-    "sitePolicies": "網站資訊與政策（英文版）", "about": "關於本站（英文）", "contact": "聯絡我們（英文）",
-    "editorialPolicy": "編輯政策（英文）", "privacy": "隱私政策（英文）", "terms": "服務條款（英文）"
+    "image": "WARDOGS 遊戲畫面",
+    "imageCredit": "圖片來源",
+    "bodyNav": "本頁章節",
+    "tools": "英文工具與地圖",
+    "budget": "配裝預算（英文）",
+    "map": "互動地圖（英文）",
+    "logistics": "後勤規劃（英文）",
+    "official": "官方 Steam 公告",
+    "otherLanguage": "其他語言",
+    "sitePolicies": "網站資訊與政策（英文版）",
+    "about": "關於本站（英文）",
+    "contact": "聯絡我們（英文）",
+    "editorialPolicy": "編輯政策（英文）",
+    "privacy": "隱私政策（英文）",
+    "terms": "服務條款（英文）"
   }
 }

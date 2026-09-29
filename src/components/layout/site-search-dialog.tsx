@@ -10,6 +10,7 @@ import {getNextSearchSelection, searchSiteIndex, type SiteSearchEntry} from "@/f
 import {useRouter} from "@/i18n/navigation";
 
 const indexCache = new Map<Locale, readonly SiteSearchEntry[]>();
+const loadingLabels: Partial<Record<Locale, string>> = {"zh-tw": "搜尋載入中", pl: "Wczytywanie wyników"};
 
 export function SiteSearchDialog({compact = false}: {compact?: boolean}) {
   const locale = useLocale() as Locale;
@@ -114,7 +115,7 @@ export function SiteSearchDialog({compact = false}: {compact?: boolean}) {
               />
             </div>
             <div aria-live="polite" className="mt-4 min-h-6 text-sm text-[#a8b4ae]">
-              {loading ? <LoaderCircle aria-label="Loading" className="size-5 animate-spin" /> : failed ? <a className="text-[#79d19c] underline" href={`/${locale}#site-search-title`} title={t("home.search.label")}>{t("home.search.label")}</a> : !query.trim() ? t("home.search.prompt") : results.length === 0 ? t("home.search.empty") : t("home.search.resultCount", {count: results.length})}
+              {loading ? <LoaderCircle aria-label={loadingLabels[locale] ?? "Loading"} className="size-5 animate-spin" /> : failed ? <a className="text-[#79d19c] underline" href={`/${locale}#site-search-title`} title={t("home.search.label")}>{t("home.search.label")}</a> : !query.trim() ? t("home.search.prompt") : results.length === 0 ? t("home.search.empty") : t("home.search.resultCount", {count: results.length})}
             </div>
             <ul className="mt-3 max-h-[min(55vh,520px)] overflow-y-auto" id="global-site-search-results" role="listbox">
               {query.trim() && results.map((result, position) => (

@@ -216,7 +216,7 @@ const legacyItemLibrary: readonly WardogsItemInput[] = [
     detailImageAlt: "L81 mortar emplacement shown in WARDOGS pre-release gameplay",
     detailUpdatedAt: "2026-09-01",
     priority: 1,
-    indexLocales: ["en", "ru"]
+    indexLocales: ["en", "ru", "zh-tw", "pl"]
   },
   {
     slug: "mobile-fob",
@@ -251,7 +251,7 @@ const legacyItemLibrary: readonly WardogsItemInput[] = [
     relatedItems: ["mortar", "armored-transport"],
     sources: [sevenThingsVideo, officialSteam, officialTeam17],
     priority: 2,
-    indexLocales: ["en", "ru"]
+    indexLocales: ["en", "ru", "zh-tw", "pl"]
   },
   {
     slug: "littlebird",
@@ -285,7 +285,7 @@ const legacyItemLibrary: readonly WardogsItemInput[] = [
     relatedItems: ["attack-helicopter", "armored-transport"],
     sources: [gameplayVideo, sevenThingsVideo, officialSteam],
     priority: 3,
-    indexLocales: ["en", "ru"]
+    indexLocales: ["en", "ru", "zh-tw", "pl"]
   },
   {
     slug: "tank",
@@ -319,7 +319,7 @@ const legacyItemLibrary: readonly WardogsItemInput[] = [
     relatedItems: ["mortar", "armored-transport"],
     sources: [sevenThingsVideo, officialSteam, officialTeam17],
     priority: 4,
-    indexLocales: ["en", "ru"]
+    indexLocales: ["en", "ru", "zh-tw", "pl"]
   },
   {
     slug: "attack-helicopter",
@@ -353,7 +353,7 @@ const legacyItemLibrary: readonly WardogsItemInput[] = [
     relatedItems: ["littlebird", "mobile-fob"],
     sources: [sevenThingsVideo, gameplayVideo, officialSteam],
     priority: 5,
-    indexLocales: ["en", "ru"]
+    indexLocales: ["en", "ru", "zh-tw", "pl"]
   },
   {
     slug: "armored-transport",
@@ -387,7 +387,7 @@ const legacyItemLibrary: readonly WardogsItemInput[] = [
     relatedItems: ["mobile-fob", "tank"],
     sources: [sevenThingsVideo, officialSteam, officialTeam17],
     priority: 6,
-    indexLocales: ["en", "ru"]
+    indexLocales: ["en", "ru", "zh-tw", "pl"]
   }
 ] as const;
 
@@ -466,7 +466,7 @@ function catalogueRecordToItem(record: CatalogueRecord, priority: number): Wardo
     ],
     detailUpdatedAt: "2026-08-30",
     priority,
-    indexLocales: ["en", "ru", "de", "pt-br", "ja", "zh-cn"],
+    indexLocales: ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"],
   };
 }
 
@@ -484,7 +484,7 @@ export const itemLibrary: readonly WardogsItem[] = [
   evidence: getItemEvidence(item),
   changeHistory: getItemChangeHistory(item),
   indexable: isItemIndexable(item),
-  indexLocales: ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const,
+  indexLocales: ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const,
   relatedGuides: [...new Set([
     ...(item.type === "weapons" ? ["wardogs-best-weapons-loadouts", "wardogs-armor-damage-ttk-guide"] : []),
     ...(item.type === "vehicles" ? ["wardogs-equipment-tools-guide"] : []),

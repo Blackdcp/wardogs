@@ -27,6 +27,9 @@ const pendingMediaCopy: Record<Locale, {label: string; description: string}> = {
   "pt-br": {label: "Mídia em verificação", description: "Identificador registrado; a imagem exata do item ainda não foi confirmada."},
   ja: {label: "画像を検証中", description: "名称は確認済みですが、対象固有の画像はまだ確認できていません。"},
   "zh-cn": {label: "图片仍待验证", description: "已记录物品标识，但尚未确认该物品的专属图片。"},
+
+  pl: {label: "Ilustracja jeszcze niezweryfikowana", description: "Identyfikator zapisany; grafika tego przedmiotu nie została jeszcze potwierdzona."},
+  "zh-tw": { label: "圖片仍待驗證", description: "已記錄物品標識，但尚未確認該物品的專屬圖片。" }
 };
 
 function CardContent({locale, record, linked, eagerImage}: {locale: Locale; record: CatalogueRecord; linked: boolean; eagerImage: boolean}) {

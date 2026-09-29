@@ -1,12 +1,12 @@
 import links from "../../config/official-links.json";
 
-export const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
+export const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const;
 export type Locale = (typeof locales)[number];
 
-// Pilot languages have a deliberately limited route inventory, not a full-site fallback.
-export const pilotLocales = ["zh-tw", "pl"] as const;
-export type PilotLocale = (typeof pilotLocales)[number];
-export const siteLocales = [...locales, ...pilotLocales] as const;
+// Retain the former pilot type for historical content helpers, not route gating.
+export type PilotLocale = "zh-tw" | "pl";
+export const pilotLocales: readonly PilotLocale[] = [];
+export const siteLocales = locales;
 export type SiteLocale = (typeof siteLocales)[number];
 
 export function isPilotLocale(value: string): value is PilotLocale {

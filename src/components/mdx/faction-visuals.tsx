@@ -14,7 +14,10 @@ const copy: Record<Locale, {label: string; note: string; alt: (name: string) => 
   ru: {label: "Эмблемы фракций из предрелизных материалов", note: "Названия подтверждены; уникальные бонусы и закрытое снаряжение не подтверждены.", alt: (name) => `Эмблема фракции ${name} из предрелизных материалов WARDOGS`},
   "pt-br": {label: "Emblemas de facção da pré-build", note: "A identidade é confirmada; bônus únicos e equipamento bloqueado não são.", alt: (name) => `Emblema da facção ${name} em material de pré-lançamento de WARDOGS`},
   ja: {label: "発売前ビルドの派閥エンブレム", note: "派閥名は確認済みですが、固有ボーナスや装備制限は未確認です。", alt: (name) => `WARDOGS発売前資料に表示された${name}派閥エンブレム`},
-  "zh-cn": {label: "预发布版本阵营徽记", note: "阵营身份已经确认，但独有加成和阵营锁定装备仍未确认。", alt: (name) => `WARDOGS 预发布素材中的 ${name} 阵营徽记`}
+  "zh-cn": {label: "预发布版本阵营徽记", note: "阵营身份已经确认，但独有加成和阵营锁定装备仍未确认。", alt: (name) => `WARDOGS 预发布素材中的 ${name} 阵营徽记`},
+
+  pl: {label: "Emblematy frakcji z wersji przedpremierowej", note: "Tożsamość frakcji jest potwierdzona; unikalne premie i sprzęt ograniczony do frakcji nie są.", alt: (name) => `Emblemat frakcji ${name} w materiałach przedpremierowych WARDOGS`},
+  "zh-tw": { label: "預釋出版本陣營徽記", note: "陣營身份已經確認，但獨有加成和陣營鎖定裝備仍未確認。", alt: (name) => `WARDOGS 預釋出素材中的 ${name} 陣營徽記` }
 };
 
 export function FactionVisuals({locale = "en"}: {locale?: Locale}) {

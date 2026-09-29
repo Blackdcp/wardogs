@@ -9,6 +9,14 @@ const productionScriptPath = path.join(root, "scripts", "deploy-production.mjs")
 const workflowPath = path.join(root, ".github", "workflows", "deploy-pages.yml");
 
 describe("IndexNow deployment notification", () => {
+  it("notifies newly full-site languages without resubmitting unrelated old locales", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      deriveIndexNowUrls: (files: string[], urls: string[]) => string[];
+    };
+    const urls = ["/en", "/ja", "/zh-tw", "/pl", "/pl/tools/map", "/zh-tw/guides/wardogs-controls"].map((p) => `https://www.wardogswiki.com${p}`);
+    expect(indexNow.deriveIndexNowUrls(["src/config/site.ts"], urls)).toEqual(urls.slice(2));
+    expect(indexNow.deriveIndexNowUrls(["content/zh-tw/guides/wardogs-controls.mdx"], urls)).toEqual([urls[2], urls[5]]);
+  });
   it("ships a public ownership key and a tested URL selection helper", async () => {
     expect(existsSync(scriptPath)).toBe(true);
     if (!existsSync(scriptPath)) return;

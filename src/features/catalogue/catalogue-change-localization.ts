@@ -34,6 +34,14 @@ const fieldByLocale: Record<Exclude<Locale, "en">, Record<string, string>> = {
     Unlock: "解锁价格", "Driver unlock": "驾驶员解锁", "Required level": "所需等级",
     "AP career level": "AP 生涯等级", "Progression track": "成长路线",
   },
+
+  pl: {"Vendor price":"Cena u sprzedawcy", "Support unlock":"Odblokowanie wsparcia", "Career unlock":"Odblokowanie kariery", "Required career level":"Wymagany poziom kariery", "Recon unlock":"Odblokowanie zwiadowcy", "Pilot unlock":"Odblokowanie pilota", Unlock:"Odblokowanie", "Driver unlock":"Odblokowanie kierowcy", "Required level":"Wymagany poziom", "AP career level":"Poziom kariery dla AP", "Progression track":"Ścieżka postępów"},
+  "zh-tw": {
+    "Vendor price": "商店價格", "Support unlock": "支援解鎖", "Career unlock": "生涯解鎖",
+    "Required career level": "所需生涯等級", "Recon unlock": "偵察解鎖", "Pilot unlock": "飛行員解鎖",
+    Unlock: "解鎖價格", "Driver unlock": "駕駛員解鎖", "Required level": "所需等級",
+    "AP career level": "AP 生涯等級", "Progression track": "成長路線",
+}
 };
 
 const subjectById: Record<string, string> = {
@@ -88,6 +96,16 @@ const subjectOverrides: Record<Exclude<Locale, "en">, Record<string, string>> = 
     "sports-parachute-level": "运动降落伞", "large-backpack-level": "大型背包", "pp19-drum-level": "PP-19 50 发弹鼓",
     "large-supply-crate-level": "大型补给箱", "humvee-minigun-level": "机枪型 Humvee", "heavy-tank-track": "重型坦克",
   },
+
+  pl: {"fob-vendor-price":"Sklep FOB", "artillery-tank-career-unlock":"Czołg artyleryjski", "artillery-tank-career-level":"Czołg artyleryjski", "recon-mrad-scope-unlock":"Luneta MRAD 6–10×", "recon-moa-scope-unlock":"Luneta MOA 6–10×", "small-armored-crate-pilot-unlock":"Mała opancerzona skrzynia zaopatrzenia", "little-bird-miniguns-pilot-unlock":"Little Bird z minigunami", "sports-parachute-level":"Spadochron sportowy", "large-backpack-level":"Duży plecak", "pp19-drum-level":"Magazynek bębnowy PP-19 na 50 nabojów", "large-supply-crate-level":"Duża skrzynia zaopatrzenia", "humvee-minigun-level":"Humvee z minigunem", "heavy-tank-track":"Czołg ciężki", "large-hammer-vendor-price":"Duży młot", "large-hammer-support-unlock":"Duży młot", "large-hammer-support-level":"Duży młot", "medium-hammer-support-unlock":"Średni młot", "music-tape-h-driver-unlock":"Kaseta muzyczna H", "music-tape-h-track":"Kaseta muzyczna H"},
+  "zh-tw": {
+    "fob-vendor-price": "FOB 商店", "artillery-tank-career-unlock": "火炮坦克", "artillery-tank-career-level": "火炮坦克",
+    "recon-mrad-scope-unlock": "6–10 倍 MRAD 瞄具", "recon-moa-scope-unlock": "6–10 倍 MOA 瞄具",
+    "small-armored-crate-pilot-unlock": "小型裝甲補給箱", "little-bird-miniguns-pilot-unlock": "機槍型 Little Bird",
+    "sports-parachute-level": "運動降落傘", "large-backpack-level": "大型背包", "pp19-drum-level": "PP-19 50 發彈鼓",
+    "large-supply-crate-level": "大型補給箱", "humvee-minigun-level": "機槍型 Humvee", "heavy-tank-track": "重型坦克",
+    "large-hammer-vendor-price": "大型錘子", "large-hammer-support-unlock": "大型錘子", "large-hammer-support-level": "大型錘子", "medium-hammer-support-unlock": "中型錘子", "music-tape-h-driver-unlock": "音樂磁帶 H", "music-tape-h-track": "音樂磁帶 H",
+}
 };
 
 const levelTerms: Record<Exclude<Locale, "en">, Record<"Pilot" | "Driver" | "Career", string>> = {
@@ -96,6 +114,9 @@ const levelTerms: Record<Exclude<Locale, "en">, Record<"Pilot" | "Driver" | "Car
   "pt-br": {Pilot: "Nível de piloto", Driver: "Nível de motorista", Career: "Nível de carreira"},
   ja: {Pilot: "パイロットレベル", Driver: "ドライバーレベル", Career: "キャリアレベル"},
   "zh-cn": {Pilot: "飞行员等级", Driver: "驾驶员等级", Career: "生涯等级"},
+
+  pl: {Pilot:"Poziom pilota", Driver:"Poziom kierowcy", Career:"Poziom kariery"},
+  "zh-tw": { Pilot: "飛行員等級", Driver: "駕駛員等級", Career: "生涯等級" }
 };
 
 function localizeTextValue(value: string, locale: Locale): string {

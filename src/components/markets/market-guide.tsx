@@ -129,7 +129,30 @@ const copy: Record<Locale, Record<MarketKind, Copy>> = {
       unknownTitle: "本页不能提供的数值", unknown: "当前汇率、历史曲线、商品与价格，以及赛季切换时的执行汇率，需要现行客户端或新的官方通知。",
       relatedTitle: "继续了解", relatedMarket: "黑市与仓库", moneyGuide: "现金与回本指南", sourceTitle: "官方来源", checkedLabel: "来源核查于 2026 年 9 月 27 日"
     }
-  }
+  },
+
+  pl: {
+black: {title: "Czarny rynek WARDOGS", description: "Zapowiedzi BULKHEAD dotyczące czarnego rynku i skarbca, nieweryfikowane jeszcze funkcje obecnej wersji oraz planowanie gotówki.", status: "Zapowiedziany system między meczami; sprawdź aktualnego klienta", statusDetail: "BULKHEAD przedstawił czarny rynek i skarbiec jako planowane systemy wczesnego dostępu. Zapowiedź nie potwierdza dostępności każdej akcji i przedmiotu już teraz.", actionTitle: "Zanim wydasz pieniądze", steps: ["Sprawdź dostępne akcje czarnego rynku i ich dokładne warunki w bieżącym menu gry.", "Zachowaj gotówkę na następny użyteczny zestaw; pieniądze przenoszone między meczami nadal finansują sprzęt i pojazdy.", "Jeśli akcja jest zablokowana, sprawdź aktualne sposoby zarabiania i wydawania w poradniku finansowym."], evidenceTitle: "Co opisał deweloper", evidence: "Kwietniowa prezentacja Early Access & Beyond wymienia czarny rynek i skarbiec obok umiejętności gracza i wyzwań jako rozbudowaną warstwę między meczami. To zapowiedziany kierunek, nie zweryfikowany asortyment ani cennik.", unknownTitle: "Co nadal wymaga sprawdzenia w obecnej wersji", unknown: "Nie potwierdzamy tutaj dostępności, asortymentu sprzedawcy, pojemności skarbca, cen, zasad odsprzedaży ani losu przechowywanych przedmiotów przy resecie sezonu. Przed zakupem sprawdź interfejs i oficjalne zmiany.", relatedTitle: "Czytaj dalej", relatedMarket: "Rynek złota i sztabki", moneyGuide: "Poradnik gotówki i odbudowy budżetu", sourceTitle: "Oficjalne źródła", checkedLabel: "Źródła sprawdzone 27 września 2026"},
+gold: {title: "Rynek złota WARDOGS", description: "Oceń wymianę gotówki na sztabki i zakupy kosmetyczne, nie traktując starego zrzutu ekranu jako aktualnego kursu.", status: "Ta strona nie podaje kursu na żywo", statusDetail: "BULKHEAD opisuje zmienny kurs gotówki na sztabki. Statyczna strona nie zna dzisiejszego kursu ani cen kosmetyki. Przed decyzją odczytaj obie wartości na ekranie wymiany w grze.", actionTitle: "Zdecyduj, czy wymieniać", steps: ["Odłóż rezerwę na następny użyteczny zestaw i najbliższe odblokowania.", "Odczytaj aktualny kurs w grze i cenę wybranego elementu kosmetycznego na rynku złota.", "Wymieniaj tylko nadwyżkę, jeśli pasuje to do planu. Zrzuty z bety i kwoty twórców nie są bieżącymi cenami."], evidenceTitle: "Co opisał deweloper", evidence: "W publikacji Top Questions BULKHEAD opisuje wymianę zysków gotówkowych na sztabki do kosmetycznych odblokowań. Film Early Access & Beyond mówi o automatycznej wymianie pozostałej gotówki na końcu sezonu oraz zachowaniu sztabek i kosmetyki między sezonami.", unknownTitle: "Czego ten poradnik nie wycenia", unknown: "Aktualny kurs sztabek, historia notowań, asortyment i ceny kosmetyki oraz dokładny kurs przy kolejnym przejściu sezonowym wymagają danych z gry lub komunikatu o zmianie sezonu. Nie mamy zweryfikowanego strumienia notowań.", relatedTitle: "Czytaj dalej", relatedMarket: "Czarny rynek i skarbiec", moneyGuide: "Poradnik gotówki i odbudowy budżetu", sourceTitle: "Oficjalne źródła", checkedLabel: "Źródła sprawdzone 27 września 2026"}
+},
+  "zh-tw": {
+    black: {
+        title: "WARDOGS 黑市", description: "梳理 BULKHEAD 公佈的黑市與倉庫計劃，以及現行遊戲中仍需核對的功能。",
+        status: "已公佈的開發計劃；請以遊戲內為準", statusDetail: "BULKHEAD 將黑市和倉庫列為搶先體驗期間要建設的賽外系統。公佈計劃不等於每項功能現在都已開放。",
+        actionTitle: "花錢前先做三件事", steps: ["開啟當前遊戲選單，確認黑市操作是否可用，以及實際條款。", "保留下一套可用裝備所需的現金。", "若操作尚未開放，先用賺錢指南規劃現有的收入與開支。"],
+        evidenceTitle: "開發者實際說了什麼", evidence: "《Early Access & Beyond》將黑市和倉庫與玩家技能、挑戰系統一起列為賽外成長方向，並未提供已上線商品和價格清單。",
+        unknownTitle: "仍需現行版本核對", unknown: "開放狀態、商品、價格、倉庫容量以及賽季重置時倉庫存貨的處理方式，本頁均沒有可靠的現行證據。",
+        relatedTitle: "繼續瞭解", relatedMarket: "黃金市場與金條", moneyGuide: "現金與回本指南", sourceTitle: "官方來源", checkedLabel: "來源核查於 2026 年 9 月 27 日"
+    },
+    gold: {
+        title: "WARDOGS 黃金市場", description: "理解現金兌換金條和外觀購買，不把舊截圖誤當作當前匯率。",
+        status: "本頁沒有即時兌換報價", statusDetail: "BULKHEAD 說明現金兌換金條的匯率會變化。兌換前請在遊戲核心對當前匯率和目標外觀的價格。",
+        actionTitle: "兌換前怎麼判斷", steps: ["先留出下一套可用裝備及近期解鎖所需的現金。", "在遊戲內兌換介面檢視匯率，再檢視想要的外觀需要多少金條。", "只考慮兌換不影響作戰的餘款；Beta 截圖不是當前報價。"],
+        evidenceTitle: "開發者實際說了什麼", evidence: "《Top Questions》說明現金可兌換金條，用於黃金市場的外觀解鎖。《Early Access & Beyond》說明賽季末剩餘現金會自動轉換，金條和外觀跨賽季保留。",
+        unknownTitle: "本頁不能提供的數值", unknown: "當前匯率、歷史曲線、商品與價格，以及賽季切換時的執行匯率，需要現行客戶端或新的官方通知。",
+        relatedTitle: "繼續瞭解", relatedMarket: "黑市與倉庫", moneyGuide: "現金與回本指南", sourceTitle: "官方來源", checkedLabel: "來源核查於 2026 年 9 月 27 日"
+    }
+}
 };
 
 const sources = {

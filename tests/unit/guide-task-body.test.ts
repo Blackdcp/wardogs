@@ -10,7 +10,9 @@ const headings: Record<Locale, readonly string[]> = {
   ru: ["Краткий ответ", "Короткий ответ"],
   "pt-br": ["Resposta rápida", "Resposta direta"],
   ja: ["まず覚えること", "先に結論", "最初の結論", "結論", "現在の結論"],
-  "zh-cn": ["快速结论", "直接结论"]
+  "zh-cn": ["快速结论", "直接结论"],
+  "zh-tw": ["快速結論", "直接結論"],
+  pl: ["Krótka odpowiedź", "Krótka odpowiedź dla Season 1"]
 };
 
 function levelTwoSections(body: string) {

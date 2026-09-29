@@ -58,7 +58,7 @@ describe("localized shared editorial content", () => {
 
   it("localizes every Catalogue detail and publishes it in all supported languages", () => {
     for (const item of itemLibrary) {
-      expect(item.indexLocales, item.slug).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn"]);
+      expect(item.indexLocales, item.slug).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]);
 
       for (const locale of localizedLocales) {
         const localized = getLocalizedItem(item, locale);

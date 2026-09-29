@@ -13,8 +13,6 @@ import {itemHubPreviewSlugs} from "../../src/features/items/item-hub-data";
 import {videoArticles} from "../../src/features/videos/video-library";
 import {videoCandidates} from "../../src/features/videos/video-candidates";
 import {getServiceUpdates} from "../../src/features/news/service-updates";
-import {pilotGuideSlugs, siteLanguageTags} from "../../src/i18n/pilot-locales";
-import {pilotLocales} from "../../src/config/site";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "../../src/features/news/news-data";
 
 const origin = "http://localhost:3000";
@@ -27,6 +25,8 @@ function itemAlternates(pathname: string) {
     "pt-br": `${origin}/pt-br${pathname}`,
     ja: `${origin}/ja${pathname}`,
     "zh-cn": `${origin}/zh-cn${pathname}`,
+    "zh-tw": `${origin}/zh-tw${pathname}`,
+    pl: `${origin}/pl${pathname}`,
     "x-default": `${origin}/en${pathname}`
   };
 }
@@ -39,9 +39,8 @@ function pageAlternates(pathname: string) {
     "pt-BR": `${origin}/pt-br${pathname}`,
     ja: `${origin}/ja${pathname}`,
     "zh-CN": `${origin}/zh-cn${pathname}`,
-    ...Object.fromEntries(pilotLocales
-      .filter((locale) => pathname === "/guides" || (pilotGuideSlugs[locale] as readonly string[]).some((slug) => pathname === `/guides/${slug}`))
-      .map((locale) => [siteLanguageTags[locale], `${origin}/${locale}${pathname}`])),
+    "zh-TW": `${origin}/zh-tw${pathname}`,
+    pl: `${origin}/pl${pathname}`,
     "x-default": `${origin}/en${pathname}`
   };
 }
@@ -99,7 +98,7 @@ describe("sitemap", () => {
     expect(new Date(itemHome!.lastModified!).toISOString()).toBe(`${latestVisible}T00:00:00.000Z`);
   });
 
-  it("publishes full-site guides with reciprocal hreflang only for real pilot translations", () => {
+  it("publishes full-site guides with reciprocal hreflang for all eight translations", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const locale of locales) {
@@ -123,7 +122,7 @@ describe("sitemap", () => {
       .toBe(`${matter(readFileSync("content/ja/guides/wardogs-money-guide.mdx", "utf8")).data.updatedAt}T00:00:00.000Z`);
   });
 
-  it("includes the video hub and every standalone video article in all five locales", () => {
+  it("includes the video hub and every standalone video article in every locale", () => {
     const urls = new Set(sitemap().map((entry) => entry.url));
 
     for (const locale of locales) {
@@ -146,7 +145,7 @@ describe("sitemap", () => {
     }
   });
 
-  it("includes item hubs, all seven categories, and all 40 details in every locale", () => {
+  it("includes item hubs, all categories, and all indexable details in every locale", () => {
     const urls = new Set(sitemap().map((entry) => entry.url));
 
     for (const locale of locales) {
@@ -160,7 +159,7 @@ describe("sitemap", () => {
     }
   });
 
-  it("gives every item detail five localized alternates plus English x-default", () => {
+  it("gives every item detail eight localized alternates plus English x-default", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const locale of locales) {
@@ -172,7 +171,7 @@ describe("sitemap", () => {
     }
   });
 
-  it("gives catalogue hubs and categories all five language alternates", () => {
+  it("gives catalogue hubs and categories all eight language alternates", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 
     for (const pathname of ["/items", ...itemTypes.map(({id}) => `/items/${id}`)]) {
@@ -236,7 +235,7 @@ describe("sitemap", () => {
     }
   });
 
-  it("includes the interactive three-basemap tool in all six locales", () => {
+  it("includes the interactive three-basemap tool in all eight locales", () => {
     const urls = sitemap().map((entry) => entry.url);
 
     for (const locale of locales) {
@@ -286,6 +285,8 @@ describe("sitemap", () => {
         "pt-br": `https://blackdcp.github.io/wardogs/pt-br${pathname}/`,
         ja: `https://blackdcp.github.io/wardogs/ja${pathname}/`,
         "zh-cn": `https://blackdcp.github.io/wardogs/zh-cn${pathname}/`,
+        "zh-tw": `https://blackdcp.github.io/wardogs/zh-tw${pathname}/`,
+        pl: `https://blackdcp.github.io/wardogs/pl${pathname}/`,
         "x-default": `https://blackdcp.github.io/wardogs/en${pathname}/`
       });
     } finally {

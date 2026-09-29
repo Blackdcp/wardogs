@@ -59,6 +59,12 @@ const copy: Record<Locale, {intro: string; archive: string; candidate: string; p
     intro: "按外观系列整理的 21 个 WARDOGS 皮肤条目。图片来自站长提供的历史素材包；当前版本的可用性、价格与解锁条件仍需游戏内核查。",
     archive: "历史素材图片", candidate: "候选图片，物品身份未核实", pending: "图片待核对身份", note: "wepn_033 文件展示的是阵营徽标，未显示 Bushmaster 武器或皮肤效果；确认对应关系前暂不配图。",
   },
+
+  pl: {intro: "Wizualny indeks 21 wymienionych elementów kosmetycznych WARDOGS, pogrupowanych według wykończenia. Obrazy pochodzą z archiwum historycznego dostarczonego przez właściciela; bieżącą dostępność, ceny i odblokowania trzeba sprawdzić w grze.", archive: "Historyczny obraz archiwalny", candidate: "Obraz kandydujący; tożsamość przedmiotu niepotwierdzona", pending: "Obraz czeka na identyfikację", note: "Plik archiwum wepn_033 przedstawia emblemat frakcji, a nie Bushmaster ani jego wykończenie. Ilustracja Bushmaster Faction Logo nie będzie wyświetlana do czasu potwierdzenia zgodności."},
+  "zh-tw": {
+    intro: "按外觀系列整理的 21 個 WARDOGS 皮膚條目。圖片來自站長提供的歷史素材包；當前版本的可用性、價格與解鎖條件仍需遊戲核心查。",
+    archive: "歷史素材圖片", candidate: "候選圖片，物品身份未核實", pending: "圖片待核對身份", note: "wepn_033 檔案展示的是陣營徽標，未顯示 Bushmaster 武器或皮膚效果；確認對應關係前暫不配圖。",
+}
 };
 
 export function SkinGallery({locale}: {locale: Locale}) {

@@ -1,6 +1,7 @@
 import type {CatalogueMediaState, CatalogueRecord} from "./catalogue-types";
 import type {ItemTypeId} from "@/features/items/item-library";
 import {existingArtApprovals, suppliedArtApprovals} from "./supplied-art-records";
+import {legacyImageInspection, type CatalogueImageInspection} from "./catalogue-image-inspection";
 
 export type CatalogueCategoryMediaKey = ItemTypeId | "hub";
 
@@ -8,6 +9,7 @@ type CatalogueMediaSourceBase = {
   recordKey?: string;
   additionalRecordKeys?: readonly string[];
   image: string;
+  // Internal object/context matching only, never a copyright permission flag.
   approvedState: Exclude<CatalogueMediaState, "pending">;
   assetKind: "object" | "contextual";
   sourceLabel: string;
@@ -15,6 +17,7 @@ type CatalogueMediaSourceBase = {
   retrievedAt: string;
   usageNote: string;
   categoryKeys?: readonly CatalogueCategoryMediaKey[];
+  inspection?: CatalogueImageInspection;
 };
 
 export type CatalogueMediaSource = CatalogueMediaSourceBase & (
@@ -28,17 +31,19 @@ type ObjectApproval = readonly [recordKey: string, image: string, objectLabel: s
 const weaponCatalogueSource: ObjectSourceBase = {
   origin: "external-capture",
   sourceUrl: "https://www.youtube.com/watch?v=9mSvZyAk62E",
-  sourceLabel: "Every Weapon Tested in WARDOGS - approved creator catalogue footage",
+  sourceLabel: "Every Weapon Tested in WARDOGS - recorded third-party catalogue source",
   capturedAt: "Item-specific catalogue sequence",
   retrievedAt: "2026-08-18",
+  inspection: legacyImageInspection("third-party-media"),
 };
 
 const vehicleCatalogueSource: ObjectSourceBase = {
   origin: "external-capture",
   sourceUrl: "https://www.youtube.com/watch?v=ZFRrDSru7Kg",
-  sourceLabel: "Every WARDOGS Vehicle Explained - approved creator catalogue footage",
+  sourceLabel: "Every WARDOGS Vehicle Explained - recorded third-party catalogue source",
   capturedAt: "Item-specific vehicle sequence",
   retrievedAt: "2026-08-18",
+  inspection: legacyImageInspection("third-party-media"),
 };
 
 const nonObjectSpecificCatalogueSourceUrls = new Set([
@@ -133,6 +138,7 @@ function approveOwnerPack(group: "attachments" | "gear", slugs: readonly string[
     sourceLabel: "Owner-provided WARDOGS catalogue asset pack (Aug 2026)",
     capturedAt: "Historical Alpha-era item artwork; current build not verified",
     retrievedAt: ownerPackAcquiredAt,
+    inspection: legacyImageInspection("owner-provided-artwork"),
     usageNote: `Owner-provided historical item artwork approved only for ${group}/${slug}; it does not verify current-build stats or availability.`,
   }));
 }
@@ -161,6 +167,7 @@ const ownerAmmoApprovals: CatalogueMediaSource[] = [
   sourceLabel: "Owner-provided WARDOGS catalogue asset pack (Aug 2026)",
   capturedAt: "Historical Alpha-era ammunition artwork; current build not verified",
   retrievedAt: ownerPackAcquiredAt,
+  inspection: legacyImageInspection("owner-provided-artwork"),
   usageNote: `Owner-provided historical ammunition artwork approved only for ammo/${slug}; it does not verify current-build damage or pricing.`,
 }));
 
@@ -188,7 +195,8 @@ const ownerGearApprovals = approveOwnerPack("gear", [
 const pressKitUrl = "https://www.team17.com/hubfs/WARDOGS%20-%20Press%20Kit%20%28Aug%2026%29.zip";
 
 function objectOverride(recordKey: string, image: string, sourceUrl: string, sourceLabel: string, capturedAt: string, retrievedAt: string, usageNote: string, additionalRecordKeys?: readonly string[]): CatalogueMediaSource {
-  return {origin: "external-capture", recordKey, additionalRecordKeys, image, approvedState: "verified", assetKind: "object", sourceUrl, sourceLabel, capturedAt, retrievedAt, usageNote};
+  return {origin: "external-capture", recordKey, additionalRecordKeys, image, approvedState: "verified", assetKind: "object", sourceUrl, sourceLabel, capturedAt, retrievedAt, usageNote,
+    inspection: legacyImageInspection(sourceUrl === pressKitUrl ? "publisher-press-kit" : "third-party-media")};
 }
 
 const exactObjectOverrides: CatalogueMediaSource[] = [
@@ -203,7 +211,8 @@ const exactObjectOverrides: CatalogueMediaSource[] = [
 ];
 
 function contextualSource(image: string, filename: string, usageNote: string, categoryKeys: readonly CatalogueCategoryMediaKey[]): CatalogueMediaSource {
-  return {origin: "external-capture", image, approvedState: "context-only", assetKind: "contextual", sourceUrl: pressKitUrl, sourceLabel: "Team17 WARDOGS Press Kit (Aug 2026)", capturedAt: filename, retrievedAt: "2026-08-30", usageNote, categoryKeys};
+  return {origin: "external-capture", image, approvedState: "context-only", assetKind: "contextual", sourceUrl: pressKitUrl, sourceLabel: "Team17 WARDOGS Press Kit (Aug 2026)", capturedAt: filename, retrievedAt: "2026-08-30", usageNote, categoryKeys,
+    inspection: legacyImageInspection("publisher-press-kit")};
 }
 
 const contextualApprovals = [
@@ -213,7 +222,12 @@ const contextualApprovals = [
   contextualSource("/images/guide-discovery/equipment-tools.webp", "WD_Screenshot_Foundry_1_WD2.jpg", "Official indoor-combat frame approved only as equipment, supply, and deployable context; it does not verify a specific object.", ["equipment", "supplies", "deployables"]),
 ];
 
-const approvedMedia = [...weaponApprovals, ...vehicleApprovals, ...ownerAmmoApprovals, ...ownerAttachmentApprovals, ...ownerGearApprovals, ...exactObjectOverrides, ...contextualApprovals, ...suppliedArtApprovals, ...existingArtApprovals];
+const communityArtApprovals = [...suppliedArtApprovals, ...existingArtApprovals].map((source) => ({
+  ...source,
+  inspection: legacyImageInspection("supplied-community-artwork"),
+}));
+
+const approvedMedia = [...weaponApprovals, ...vehicleApprovals, ...ownerAmmoApprovals, ...ownerAttachmentApprovals, ...ownerGearApprovals, ...exactObjectOverrides, ...contextualApprovals, ...communityArtApprovals];
 
 export const catalogueMediaSources: Readonly<Record<string, CatalogueMediaSource>> = Object.fromEntries(
   approvedMedia.map((source) => [source.image, source]),

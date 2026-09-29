@@ -37,7 +37,7 @@ export default async function TacticalMapPage({params}: PageProps) {
         </p>
       </header>
 
-      <section aria-label="Interactive Map Viewer">
+      <section aria-label={c.title}>
         <WardogsMapViewer initialMap="bakurani" locale={requestedLocale} />
       </section>
     </main>

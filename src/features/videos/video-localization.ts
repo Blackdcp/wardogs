@@ -1,8 +1,11 @@
 import type {Locale} from "@/config/site";
+import {toTraditional} from "@/i18n/traditional";
 import {videoArticles, type VideoArticle} from "./video-library";
 import {getVideoUi} from "./video-ui";
+import {videoArticleCopyPl} from "./video-articles.pl";
+import {videoArticleCopyZhTw} from "./video-articles.zh-tw";
 
-type TranslatedLocale = Exclude<Locale, "en">;
+type TranslatedLocale = Exclude<Locale, "en" | "zh-tw">;
 
 export type ContextualVideoUi = {
   eyebrow: string;
@@ -16,16 +19,18 @@ export type ContextualVideoUi = {
   thumbnail: string;
 };
 
-const contextualVideoCopy: Record<Locale, Pick<ContextualVideoUi, "eyebrow" | "title" | "description" | "published" | "reviewed" | "videoHub" | "thumbnail">> = {
+const contextualVideoCopy: Record<Exclude<Locale, "zh-tw">, Pick<ContextualVideoUi, "eyebrow" | "title" | "description" | "published" | "reviewed" | "videoHub" | "thumbnail">> = {
   en: {eyebrow: "Reviewed current footage", title: "Watch the workflow in context", description: "Creator footage can demonstrate a workflow, but current menus and official notes remain authoritative for changing values.", published: "Published", reviewed: "Reviewed", videoHub: "Open in video hub", thumbnail: "video thumbnail"},
   de: {eyebrow: "Geprüfte aktuelle Aufnahmen", title: "Ablauf im Kontext ansehen", description: "Creator-Aufnahmen können einen Ablauf zeigen; für veränderliche Werte bleiben aktuelle Menüs und offizielle Hinweise maßgeblich.", published: "Veröffentlicht", reviewed: "Geprüft", videoHub: "In der Videoübersicht öffnen", thumbnail: "Video-Vorschaubild"},
   ru: {eyebrow: "Проверенные актуальные видео", title: "Посмотрите процесс в контексте", description: "Видео автора может показать порядок действий, но изменяемые значения нужно сверять с текущим меню и официальными заметками.", published: "Опубликовано", reviewed: "Проверено", videoHub: "Открыть в видеотеке", thumbnail: "обложка видео"},
   "pt-br": {eyebrow: "Vídeo atual verificado", title: "Veja o fluxo em contexto", description: "O vídeo de um criador pode demonstrar o fluxo, mas menus atuais e notas oficiais continuam sendo a referência para valores mutáveis.", published: "Publicado", reviewed: "Verificado", videoHub: "Abrir na central de vídeos", thumbnail: "miniatura do vídeo"},
   ja: {eyebrow: "確認済みの現行映像", title: "手順を映像で確認", description: "クリエイター映像は手順を示せますが、変更される数値は現在のメニューと公式ノートを優先してください。", published: "公開日", reviewed: "確認日", videoHub: "動画ハブで開く", thumbnail: "動画サムネイル"},
-  "zh-cn": {eyebrow: "已复核的当前实机", title: "结合实机理解流程", description: "创作者实机可以展示操作流程；会变化的数值仍以当前菜单和官方更新说明为准。", published: "发布日期", reviewed: "复核日期", videoHub: "在视频中心打开", thumbnail: "视频缩略图"}
+  "zh-cn": {eyebrow: "已复核的当前实机", title: "结合实机理解流程", description: "创作者实机可以展示操作流程；会变化的数值仍以当前菜单和官方更新说明为准。", published: "发布日期", reviewed: "复核日期", videoHub: "在视频中心打开", thumbnail: "视频缩略图"},
+  pl: {eyebrow: "Sprawdzone nagrania z aktualnej wersji", title: "Zobacz przebieg działań w kontekście", description: "Nagranie twórcy może pokazać przebieg działań, ale zmienne wartości należy sprawdzać w aktualnym menu i oficjalnych komunikatach.", published: "Opublikowano", reviewed: "Sprawdzono", videoHub: "Otwórz bibliotekę filmów", thumbnail: "miniatura filmu"}
 };
 
 export function getContextualVideoUi(locale: Locale): ContextualVideoUi {
+  if (locale === "zh-tw") return toTraditional(getContextualVideoUi("zh-cn"));
   const videoUi = getVideoUi(locale);
   return {
     ...contextualVideoCopy[locale],
@@ -68,7 +73,100 @@ const topics: Record<VideoArticle["slug"], Partial<Record<TranslatedLocale, stri
   "wardogs-gameplay-overview-tomographic": {ru: "комбинированные бои, три команды, транспорт, цели и поддержку", de: "Combined-Arms-Kämpfe, drei Teams, Fahrzeuge, Ziele und Support", "pt-br": "combate combinado, três equipes, veículos, objetivos e suporte", ja: "諸兵科連合、3チーム、車両、目標、支援", "zh-cn": "诸兵种协同、三方队伍、载具、目标与支援玩法"}
 };
 
+const polishTopics: Record<VideoArticle["slug"], string> = {
+  "wardogs-10-reasons-not-to-buy": "oficjalne uwagi twórców o ograniczeniach gry i oczekiwaniach przed zakupem",
+  "wardogs-7-things-you-need-to-know": "bitwy na 100 graczy, trzy drużyny, zachowywana gotówka, mobilne bazy FOB i plany premiery",
+  "wardogs-loadout-gear-guide": "broń, magazynki, środki medyczne, pancerz, plecaki, spadochrony, sprzęt specjalistyczny i budowa FOB",
+  "wardogs-gameplay-impressions": "pierwsze wrażenia autora dotyczące tempa walki, współpracy, pojazdów i celów",
+  "wardogs-alpha-gameplay-impressions": "obserwacje walki we wczesnej wersji alfa i ograniczenia tego materiału",
+  "wardogs-mortars-indirect-fire": "obsługa moździerzy, korekta ognia, ostrzał obszarowy i przeciwdziałanie",
+  "wardogs-20-hours-gameplay": "wnioski z długiej sesji dotyczące gotówki, tras, ról i kolejnych wyjść do walki",
+  "wardogs-sniping-long-range-combat": "strzelectwo wyborowe, walka na dystans, wybór pozycji, rozpoznanie i zmiana stanowiska",
+  "wardogs-first-look-gameplay": "zespołowa rozgrywka w wersji alfa, komunikacja i chaos starcia trzech drużyn",
+  "wardogs-everything-before-playing": "najważniejsze systemy gry przed pierwszym meczem",
+  "wardogs-40-tips": "czterdzieści praktycznych wskazówek na pierwsze mecze i weekend beta",
+  "wardogs-fob-building-supply": "budowa, zaopatrzenie, rozmieszczenie, ulepszanie i obrona baz FOB",
+  "wardogs-best-settings": "ustawienia wersji testowej, płynność obrazu, widoczność i ograniczenia porad sprzętowych",
+  "wardogs-first-10000": "pierwsze 10 000 dolarów dzięki celom, wsparciu, transportowi i kontroli wydatków",
+  "wardogs-helicopter-flight-guide": "podstawy pilotażu helikoptera, bezpieczny start, lądowanie, wybór trasy i wartość transportu",
+  "wardogs-vehicles-explained": "role pojazdów lądowych i powietrznych, praca załogi, zaopatrzenie i ryzyko utraty sprzętu",
+  "wardogs-weapons-tested": "praktyczny dobór broni do dystansu, roli, amunicji i kosztów ponownego zakupu",
+  "wardogs-game-mode-explained": "tryb strefy kontroli, wieże, przejmowanie terenu, odradzanie i ruch drużyny",
+  "wardogs-is-it-worth-it": "decyzja o zakupie we wczesnym dostępie z uwzględnieniem ceny, stanu gry i stylu gracza",
+  "wardogs-artillery-tank-guide": "celowanie SPH-2, stabilizacja, praca załogi, przeładowanie i zaopatrzenie artylerii",
+  "wardogs-ammo-types-tested": "dobór amunicji FMJ, przeciwpancernej i do celów nieopancerzonych",
+  "wardogs-stingray-anti-vehicle-drone": "dobór celów dla drona przeciwpojazdowego Stingray i ochrona operatora",
+  "wardogs-fast-money-routes": "regularny zarobek dzięki pilotażowi, logistyce, mobilnym punktom odradzania i pomocy medycznej",
+  "wardogs-vehicle-cargo-logistics": "interfejs ładunku, Ural, skrzynie, palety i dostawy zasobów do FOB",
+  "wardogs-havoc-helicopter-guide": "MI-28 Havoc na maksymalnym poziomie, środki przeciwdziałania, dobór celów i zagrożenie przeciwlotnicze",
+  "wardogs-deadliest-sniper-guide": "pozycja snajpera, dalmierz, dobór celów, amunicja i zmiana stanowiska po strzale",
+  "wardogs-medic-mp9-loadout": "zestaw medyka z MP9, bezpieczne reanimacje, mobilność, pozycja i ryzyko finansowe",
+  "wardogs-huge-news-progression": "zmiany postępów, zmiana ścieżki odblokowania czołgów i wiadomości o premierze",
+  "wardogs-support-skill-leveling": "rozwój umiejętności wsparcia przez logistykę, transport, naprawy i pomoc drużynie",
+  "wardogs-kamikaze-drone-guide": "drony samobójcze, dobór celu, bezpieczny start i przeciwdziałanie",
+  "wardogs-gameplay-overview-tomographic": "współdziałanie piechoty i pojazdów, trzy drużyny, cele i wsparcie"
+};
+
+// Chapter labels are editorial copy; source titles, identifiers and offsets stay intact.
+const clipNames: Record<string, Record<"pl" | "zh-cn", string>> = {
+  "100-player three-team warfare": {pl: "Walka 100 graczy w trzech drużynach", "zh-cn": "百人三方作战"},
+  "Why the third team changes every fight": {pl: "Jak trzecia drużyna zmienia przebieg walki", "zh-cn": "第三方队伍如何改变战斗"},
+  "Persistent cash and loadout loss": {pl: "Zachowywana gotówka i utrata wyposażenia", "zh-cn": "持久资金与配装损失"},
+  "Mobile FOBs and Hot Zones": {pl: "Mobilne bazy FOB i gorące strefy", "zh-cn": "移动 FOB 与热点区域"},
+  "Support roles and supply work": {pl: "Role wsparcia i zaopatrzenie", "zh-cn": "支援职责与补给工作"},
+  "Potato Mode and Overkill Mode": {pl: "Tryby Potato Mode i Overkill Mode", "zh-cn": "Potato Mode 与 Overkill Mode 模式"},
+  "Early Access timing": {pl: "Termin wczesnego dostępu", "zh-cn": "抢先体验时间安排"},
+  "Starter weapons and free resources": {pl: "Broń na początek i darmowe zasoby", "zh-cn": "初始武器与免费资源"},
+  "Explosives and breaching tools": {pl: "Materiały wybuchowe i narzędzia do wyważania", "zh-cn": "爆炸物与破障工具"},
+  "Medical equipment and armor": {pl: "Sprzęt medyczny i pancerz", "zh-cn": "医疗装备与护甲"},
+  "Tactical vests and quick slots": {pl: "Kamizelki taktyczne i pola szybkiego dostępu", "zh-cn": "战术背心与快捷栏位"},
+  "Backpacks and weapon storage": {pl: "Plecaki i przechowywanie broni", "zh-cn": "背包与武器存放"},
+  "Parachutes and specialist launchers": {pl: "Spadochrony i wyrzutnie specjalistyczne", "zh-cn": "降落伞与专用发射器"},
+  "FOB kits and construction hammers": {pl: "Zestawy FOB i młotki budowlane", "zh-cn": "FOB 套件与建造锤"},
+  "Mobile spawn vehicles": {pl: "Pojazdy z mobilnym punktem odradzania", "zh-cn": "移动出生点载具"},
+  "Capturing a tower and reading the zone": {pl: "Przejmowanie wieży i ocena strefy", "zh-cn": "占领塔楼与判断区域"},
+  "Hot Zones and healing": {pl: "Gorące strefy i leczenie", "zh-cn": "热点区域与治疗"},
+  "Building a first paid loadout": {pl: "Kompletowanie pierwszego płatnego zestawu", "zh-cn": "组建首套付费配装"},
+  "Dragging and reviving teammates": {pl: "Przeciąganie i reanimacja sojuszników", "zh-cn": "拖动与救起队友"},
+  "Helicopter pressure and squad recovery": {pl: "Ostrzał z helikoptera i powrót oddziału do walki", "zh-cn": "直升机压制与小队恢复"},
+  "FOB construction and defenses": {pl: "Budowa FOB i umocnień", "zh-cn": "FOB 建造与防御"},
+  "Anti-air emplacements": {pl: "Stanowiska przeciwlotnicze", "zh-cn": "防空阵地"},
+  "Finding enemy artillery": {pl: "Wykrywanie artylerii przeciwnika", "zh-cn": "寻找敌方炮兵"},
+  "Alpha firefight opening": {pl: "Początek starcia w wersji alfa", "zh-cn": "Alpha 交火开场"},
+  "Heavy fire and battlefield pressure": {pl: "Ciężki ostrzał i presja na polu walki", "zh-cn": "猛烈火力与战场压力"},
+  "Squad movement and recovery": {pl: "Ruch oddziału i powrót do walki", "zh-cn": "小队移动与恢复"},
+  "Vehicles changing the fight": {pl: "Wpływ pojazdów na przebieg starcia", "zh-cn": "载具如何改变战斗"},
+  "Revives and team spacing": {pl: "Reanimacja i odstępy między sojusznikami", "zh-cn": "救援与队伍间距"},
+  "Early-build combat flow": {pl: "Przebieg walki we wczesnej wersji", "zh-cn": "早期版本战斗流程"},
+  "What the alpha does not prove": {pl: "Czego wersja alfa nie potwierdza", "zh-cn": "Alpha 尚不能证明什么"},
+  "Finding an enemy mortar position": {pl: "Wykrywanie stanowiska moździerza przeciwnika", "zh-cn": "寻找敌方迫击炮阵地"},
+  "Capturing the mortar and learning the controls": {pl: "Przejęcie moździerza i poznanie sterowania", "zh-cn": "夺取迫击炮与学习操作"},
+  "Calling range to Tower 4": {pl: "Podawanie odległości do wieży 4", "zh-cn": "通报到四号塔的距离"},
+  "Using spotters for indirect fire": {pl: "Współpraca z obserwatorem przy ogniu pośrednim", "zh-cn": "利用观察员引导间接火力"},
+  "Helicopters, towers, and target priorities": {pl: "Helikoptery, wieże i priorytety celów", "zh-cn": "直升机、塔楼与目标优先级"},
+  "Reading the mortar trajectory": {pl: "Obserwacja toru lotu pocisku moździerzowego", "zh-cn": "观察迫击炮弹道"},
+  "Base pressure and direct hits": {pl: "Ostrzał bazy i trafienia bezpośrednie", "zh-cn": "基地压制与直接命中"},
+  "Mortar earnings and balance verdict": {pl: "Zarobki z moździerza i ocena balansu", "zh-cn": "迫击炮收益与平衡判断"},
+  "Large-scale firefight opening": {pl: "Początek starcia na dużą skalę", "zh-cn": "大规模交火开场"},
+  "Movement and weapon feel": {pl: "Poruszanie się i wrażenia z obsługi broni", "zh-cn": "移动与武器手感"},
+  "Progression and distinct weapons": {pl: "Postępy i różnice między bronią", "zh-cn": "进度与不同武器"},
+  "Map scale and loadout flow": {pl: "Skala mapy i przygotowanie wyposażenia", "zh-cn": "地图规模与配装流程"},
+  "Medic progression and class unlocks": {pl: "Rozwój medyka i odblokowania klasowe", "zh-cn": "医疗进度与职业解锁"},
+  "Objective flow and team contribution": {pl: "Realizacja celów i wkład w działania drużyny", "zh-cn": "目标流程与团队贡献"},
+  "Three-team scoring and persistent cash": {pl: "Punktacja trzech drużyn i zachowywana gotówka", "zh-cn": "三方计分与持久资金"},
+  "FOB building and logistics": {pl: "Budowa FOB i logistyka", "zh-cn": "FOB 建造与后勤"}
+};
+
+function localizedClips(article: VideoArticle, locale: "pl" | "zh-cn") {
+  return article.clips?.map((clip) => {
+    const name = clipNames[clip.name]?.[locale];
+    if (!name) throw new Error(`Missing ${locale} video chapter: ${article.slug}/${clip.name}`);
+    return {...clip, name};
+  });
+}
+
 const titles: Record<TranslatedLocale, Record<VideoArticle["slug"], string>> = {
+  pl: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS: omówienie filmu - ${polishTopics[article.slug]}`])) as Record<VideoArticle["slug"], string>,
   ru: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS: разбор видео — ${topics[article.slug].ru}`])) as Record<VideoArticle["slug"], string>,
   de: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS Video-Guide: ${topics[article.slug].de}`])) as Record<VideoArticle["slug"], string>,
   "pt-br": Object.fromEntries(videoArticles.map((article) => [article.slug, `Guia em vídeo de WARDOGS: ${topics[article.slug]["pt-br"]}`])) as Record<VideoArticle["slug"], string>,
@@ -77,8 +175,33 @@ const titles: Record<TranslatedLocale, Record<VideoArticle["slug"], string>> = {
 };
 
 function localizedArticle(article: VideoArticle, locale: TranslatedLocale): VideoArticle {
-  const topic = topics[article.slug][locale] ?? `“${article.title}”中的玩法、证据与实战建议`;
+  const topic = locale === "pl" ? polishTopics[article.slug] : topics[article.slug][locale] ?? `“${article.title}”中的玩法、证据与实战建议`;
   const title = titles[locale][article.slug];
+
+  if (locale === "pl") {
+    if (!topic) throw new Error(`Missing Polish video topic: ${article.slug}`);
+    return {
+      ...article,
+      title,
+      ...(article.clips ? {clips: localizedClips(article, "pl")} : {}),
+      description: `Polskie omówienie filmu o WARDOGS. Temat: ${topic}. Oddzielamy obserwacje z nagrania od zmiennych parametrów wersji alfa i beta.`,
+      quickAnswer: `Temat nagrania to: ${topic}. Materiał pomaga zrozumieć konkretną wersję testową. Pokazane działania i interfejs są mocniejszą podstawą niż przewidywania dotyczące ostatecznych wartości, balansu, ceny czy dostępności. Te informacje trzeba ponownie sprawdzić na Steam i w oficjalnych kanałach.`,
+      takeaways: [
+        `Główny temat materiału: ${topic}.`,
+        "Działania widoczne w nagraniu są bardziej wiarygodne niż przypuszczenia autora o przyszłych wersjach.",
+        "Wartości z wersji alfa i beta nie stają się automatycznie danymi aktualnego wczesnego dostępu.",
+        "Wnioski praktyczne wymagają uwzględnienia celu, gotówki, zaopatrzenia i komunikacji oddziału.",
+        "Oficjalne terminy, cenę i zasady dostępu należy osobno sprawdzać na Steam i w kanałach WARDOGS."
+      ],
+      sections: [
+        {heading: "Co przedstawia film", body: [`Zakres materiału: ${topic}. Artykuł porządkuje nagranie, aby ułatwić znalezienie mechaniki, praktycznego wniosku i ograniczeń źródła bez ponownego oglądania całości.`, "Nagranie twórcy jest przydatne, gdy pokazuje interfejs i zachowanie konkretnej wersji testowej. Nie stanowi jednak ostatecznej dokumentacji: zasady serwera, gospodarka, parametry i dostępność mogą zmienić się po nagraniu."]},
+        {heading: "Jak oceniać dowody", body: ["Za obserwację uznajemy to, co można bezpośrednio zobaczyć lub usłyszeć: działanie gracza, reakcję interfejsu, rolę pojazdu, przebieg zakupu lub komunikację drużyny. Komentarz autora bez potwierdzenia w obrazie pozostaje interpretacją.", "Jeśli starszy film przeczy aktualnej stronie Steam lub oficjalnemu komunikatowi, pierwszeństwo ma najnowsze źródło pierwotne. Data publikacji i wersja gry są równie ważne jak sam wniosek."]},
+        {heading: "Zastosowanie w meczu", body: [`Przed meczem wykorzystaj omówiony temat (${topic}) do zaplanowania roli. Ustal zadanie, akceptowalną stratę gotówki, potrzebną amunicję lub transport oraz osobę przekazującą informacje w oddziale.`, "Sprawdź wskazówki w aktualnej wersji. Nie kopiuj cudzego zestawu bez uwzględnienia mapy, składu drużyny i zmian w aktualizacji. Regularna pomoc zespołowi zwykle znaczy więcej niż pojedyncze efektowne zabójstwo."]},
+        {heading: "Co może się zmienić", body: ["Wersje przedpremierowe mogą różnić się cenami, odrzutem, obrażeniami, pojemnością, czasem odnowienia, punktacją, postępami, sterowaniem i dostępnością przedmiotów. Pojedynczy wyjątkowo mocny lub słaby fragment nie dowodzi też przeciętnego balansu.", "Dlatego zachowujemy użyteczny sposób myślenia o rolach i decyzjach, ale nie zamieniamy kadru filmu w trwałą tabelę parametrów. Przed zakupem lub zmianą ustawień sprawdź datę ostatniej aktualizacji."]},
+        {heading: "Co sprawdzić dalej", body: [`Następnie otwórz powiązany poradnik, którego tematem jest: ${topic}. Znajdziesz w nim utrzymywane instrukcje, oficjalne odnośniki i rozróżnienie informacji potwierdzonych od niepotwierdzonych.`, "Pełny kontekst, dźwięk, moment wykonania czynności i dokładne położenie elementów interfejsu sprawdzisz w oryginalnym filmie. Artykuł pomaga w wyszukiwaniu i przygotowaniu, ale nie zastępuje pracy autora nagrania."]}
+      ]
+    };
+  }
 
   if (locale === "ru") return {
     ...article,
@@ -158,6 +281,15 @@ function localizedArticle(article: VideoArticle, locale: TranslatedLocale): Vide
 
 export function getLocalizedVideoArticles(locale: Locale): VideoArticle[] {
   if (locale === "en") return [...videoArticles];
+  if (locale === "zh-tw" || locale === "pl") {
+    const translations = locale === "pl" ? videoArticleCopyPl : videoArticleCopyZhTw;
+    return videoArticles.map((article) => {
+      const copy = translations[article.slug];
+      if (!copy) throw new Error(`Missing complete ${locale} video article: ${article.slug}`);
+      const clips = localizedClips(article, locale === "pl" ? "pl" : "zh-cn");
+      return {...article, ...copy, ...(clips ? {clips: locale === "pl" ? clips : toTraditional(clips)} : {})};
+    });
+  }
   return videoArticles.map((article) => localizedArticle(article, locale));
 }
 

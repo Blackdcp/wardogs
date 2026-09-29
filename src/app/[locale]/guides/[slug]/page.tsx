@@ -3,9 +3,7 @@ import Image from "next/image";
 import {notFound} from "next/navigation";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {ArrowLeft, CalendarDays, ExternalLink} from "lucide-react";
-import {isLocale, isPilotLocale, locales, officialLinks, type Locale} from "@/config/site";
-import {PilotGuideArticle} from "@/i18n/pilot-pages";
-import {buildPilotGuideMetadata, getPilotGuideStaticParams} from "@/i18n/pilot-guides";
+import {isLocale, locales, officialLinks, type Locale} from "@/config/site";
 import {guideManifest} from "@/content/manifest";
 import {compileLocalizedGuideBody, loadGuideDocument} from "@/content/guides";
 import {mdxComponents} from "@/components/mdx/mdx-components";
@@ -35,15 +33,11 @@ import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
 export function generateStaticParams() {
-  return [
-    ...locales.flatMap((locale) => guideManifest.map(({slug}) => ({locale, slug}))),
-    ...getPilotGuideStaticParams()
-  ];
+  return locales.flatMap((locale) => guideManifest.map(({slug}) => ({locale, slug})));
 }
 
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale, slug} = await params;
-  if (isPilotLocale(locale)) return buildPilotGuideMetadata(locale, slug);
   if (!isLocale(locale)) return {};
   const guide = await loadGuideDocument(locale, slug);
   return guide ? buildArticleMetadata(locale, guide) : {};
@@ -63,10 +57,6 @@ function plainDirectAnswer(body: string) {
 
 export default async function GuideArticlePage({params}: PageProps) {
   const {locale: requestedLocale, slug} = await params;
-  if (isPilotLocale(requestedLocale)) {
-    setRequestLocale(requestedLocale);
-    return <PilotGuideArticle locale={requestedLocale} slug={slug} />;
-  }
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
   const guide = await loadGuideDocument(locale, slug);
@@ -99,7 +89,7 @@ export default async function GuideArticlePage({params}: PageProps) {
           <p className="mt-3 text-xs text-[#8b9992]">
             {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy" title={t("teamName")}>{t("teamName")}</Link>
           </p>
-          <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "ja" ? "text-3xl sm:text-4xl md:text-5xl" : locale === "zh-cn" ? "text-3xl sm:text-5xl md:text-6xl" : "text-4xl sm:text-5xl md:text-6xl"}`} style={{overflowWrap: "break-word", wordBreak: locale === "ja" ? "keep-all" : "normal"}}>{guide.frontmatter.title}</h1>
+          <h1 className={`display-font mt-5 max-w-full leading-[1.05] text-white ${locale === "ja" ? "text-3xl sm:text-4xl md:text-5xl" : locale === "zh-cn" || locale === "zh-tw" ? "text-3xl sm:text-5xl md:text-6xl" : "text-4xl sm:text-5xl md:text-6xl"}`} style={{overflowWrap: "break-word", wordBreak: locale === "ja" ? "keep-all" : "normal"}}>{guide.frontmatter.title}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]" style={{overflowWrap: "break-word", wordBreak: "normal"}}>{guide.frontmatter.description}</p>
         </div>
       </header>

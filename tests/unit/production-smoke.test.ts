@@ -7,6 +7,7 @@ import {describe, expect, it, vi} from "vitest";
 const origin = "https://www.wardogswiki.com";
 const revision = "a".repeat(40);
 const deploymentPath = path.join(process.cwd(), "scripts", "deploy-production.mjs");
+const releaseSitemap = `<urlset>${["/en", "/ja", "/en/tools/map", "/zh-tw", "/pl", "/zh-tw/guides/wardogs-controls", "/pl/guides/wardogs-controls"].map((pathname) => `<url><loc>${origin}${pathname}</loc></url>`).join("")}</urlset>`;
 
 function htmlPage(pathname: string) {
   return `<html><head><link rel="canonical" href="${origin}${pathname}" /></head><body>WARDOGS</body></html>`;
@@ -24,7 +25,8 @@ function liveResponses(overrides: Record<string, Response> = {}) {
     "/en/videos": new Response(htmlPage("/en/videos"), {status: 200}),
     "/zh-tw/guides": new Response(htmlPage("/zh-tw/guides"), {status: 200}),
     "/pl/guides": new Response(htmlPage("/pl/guides"), {status: 200}),
-    "/sitemap.xml": new Response(`<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/ja</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`, {status: 200}),
+    ...Object.fromEntries(["/zh-tw", "/pl", "/zh-tw/items/weapons", "/pl/items/weapons", "/zh-tw/tools/loadout-budget", "/pl/tools/loadout-budget"].map((pathname) => [pathname, new Response(htmlPage(pathname), {status: 200})])),
+    "/sitemap.xml": new Response(releaseSitemap, {status: 200}),
     "/maps": new Response(null, {status: 308, headers: {location: "/en/maps"}}),
     "/en/items/vehicles/littlebird": new Response("<meta name=\"robots\" content=\"noindex\">", {status: 404})
   };
@@ -68,7 +70,7 @@ describe("production release smoke", () => {
     const events: string[] = [];
     const beforeUrl = `${origin}/en/guides/newly-removed`;
     const oldSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${beforeUrl}</loc></url></urlset>`;
-    const newSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/ja</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`;
+    const newSitemap = releaseSitemap;
     const savedBefore = process.env.BEFORE_SHA;
     const savedCurrent = process.env.CURRENT_SHA;
     const base = "b".repeat(40);
@@ -145,7 +147,7 @@ describe("production release smoke", () => {
     const snapshotPath = path.join(snapshotDirectory, "snapshot.json");
     const removed = `${origin}/en/guides/removed`;
     const oldSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${removed}</loc></url></urlset>`;
-    const newSitemap = `<urlset><url><loc>${origin}/en</loc></url><url><loc>${origin}/ja</loc></url><url><loc>${origin}/en/tools/map</loc></url></urlset>`;
+    const newSitemap = releaseSitemap;
     const savedBefore = process.env.BEFORE_SHA;
     const savedCurrent = process.env.CURRENT_SHA;
     const base = "b".repeat(40);
@@ -300,7 +302,7 @@ describe("production release smoke", () => {
   it("checks live landing pages, sitemap, exact redirect, and genuine 404 before notification", async () => {
     const {result, requested} = await verifyWith(liveResponses());
 
-    expect(result).toEqual({checked: 13});
+    expect(result).toEqual({checked: 19});
     expect(requested).toEqual([
       "/api/revision",
       "/en",
@@ -312,6 +314,12 @@ describe("production release smoke", () => {
       "/en/videos",
       "/zh-tw/guides",
       "/pl/guides",
+      "/zh-tw",
+      "/pl",
+      "/zh-tw/items/weapons",
+      "/pl/items/weapons",
+      "/zh-tw/tools/loadout-budget",
+      "/pl/tools/loadout-budget",
       "/sitemap.xml",
       "/maps",
       "/en/items/vehicles/littlebird"
@@ -378,7 +386,7 @@ describe("production release smoke", () => {
     await expect(deployment.verifyProduction(fetchImpl, origin, revision, {
       revisionAttempts: 2,
       pause: async () => { pauses += 1; }
-    })).resolves.toEqual({checked: 13});
+    })).resolves.toEqual({checked: 19});
     expect(checks).toBe(2);
     expect(pauses).toBe(1);
   });
@@ -391,7 +399,7 @@ describe("production release smoke", () => {
       })
     });
 
-    await expect(verifyWith(responses)).resolves.toMatchObject({result: {checked: 13}});
+    await expect(verifyWith(responses)).resolves.toMatchObject({result: {checked: 19}});
   });
 
   it("rejects a canonical Link header on a 404", async () => {

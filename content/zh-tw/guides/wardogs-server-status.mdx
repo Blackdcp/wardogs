@@ -1,0 +1,82 @@
+---
+title: "WARDOGS 伺服器狀態、登入排隊與故障檢查指南"
+description: "檢查 WARDOGS 伺服器是否開放、登入排隊、列表為空、地區選擇、官方公告和發售日故障證據，區分全域性服務異常與本地賬號、網路或電腦問題，避免無效重灌和不安全操作。同時記錄 Steam 解鎖狀態、庫條目、錯誤碼、UTC 時間、版本號與地區，幫助玩家在重灌、修改 DNS 或關閉安全防護前，先完成低風險的第一方資訊核驗。"
+keyword: "wardogs server status"
+category: "guide"
+slug: "wardogs-server-status"
+order: 49
+updatedAt: "2026-09-30"
+badges:
+  - label: "發售日"
+    tone: "accent"
+  - label: "狀態中心"
+    tone: "warning"
+faq:
+  - question: "WARDOGS 伺服器現在開放了嗎？"
+    answer: "WARDOGS 已在 Steam 搶先體驗上線。Patch 0.11 仍是最新官方補丁公告，已公佈的 9 月 14 日維護視窗已經過去；新的中斷資訊請檢視 Steam 官方動態。"
+  - question: "WARDOGS 伺服器列表為什麼是空的？"
+    answer: "Beta 02 的官方排查建議是隻選擇一個地區並重新整理一次，然後先看官方通知，不要立刻重灌或關閉安全軟體。"
+sources:
+  - label: "官方預載與 Season 1 更新日誌"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "Launch Stability Hotfix #1 官方公告"
+    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
+    kind: "official"
+    checkedAt: "2026-09-13"
+  - label: "WARDOGS 官方 Steam 商店"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-10"
+  - label: "WARDOGS 官方 Steam 公告"
+    url: "https://steamcommunity.com/app/1867240/homecontent/"
+    kind: "official"
+    checkedAt: "2026-09-10"
+---
+## 9月24-29日：事故、恢復與開發者回應
+| 日期 | 官方記錄 | 不能據此推斷 |
+| --- | --- | --- |
+| 2026-09-24 | [Steam推送錯誤構建](https://x.com/WARDOGSUpdates/status/2103051537308135694)，隨後[官方回覆已解決](https://x.com/WARDOGSUpdates/status/2103054159641538707) | 新編號補丁或WD-L020已修 |
+| 2026-09-25 | [11:00 UTC開始安全維護](https://x.com/WARDOGSUpdates/status/2103432101781545416)，後於[11:42 UTC表示服務正在恢復](https://x.com/WARDOGSUpdates/status/2103450008431313221) | 此刻所有地區正常，或Windows相容問題已修 |
+| 2026-09-29 | [Joe Brammer釋出平衡/XP回應](https://x.com/Brammflakes/status/2104937869634662749) | 完整字幕未核，不提取具體XP改動或上線承諾 |
+
+9月24日重啟並重新下載約16 GB的要求僅針對當時少數受影響者，不是現在全體玩家的操作要求。這些是有日期的事件記錄，不是即時遙測。出現新故障時先記地區、日期/時區、構建與完整錯誤，再對照最新官方通知，不先重灌；客戶端確實退出時轉到[崩潰分診](/zh-tw/guides/wardogs-crash-fix)。
+
+
+## 一分鐘狀態檢查
+
+1. 開啟官方 Steam 商店，確認按鈕是否變為安裝或開始遊戲。
+2. 檢視官方公告是否提到維護、延遲、登入排隊或熱修復。
+3. 只重啟一次 Steam，讓賬號許可權和發售分支重新整理。
+4. 確認啟動的是 WARDOGS 正式條目，不是已經結束的 WARDOGS Playtest。
+5. 記錄 UTC 時間、所選地區、完整提示和版本號。
+
+## 伺服器列表為空
+
+Beta 02 期間，官方排查帖要求玩家只選擇一個伺服器地區。多選地區可能導致列表為空。這是歷史測試說明，在 Early Access 版本驗證前不能當成永久規則，但它仍是低風險的第一步：選擇一個地區，重新整理一次並等待列表返回。
+
+空列表也可能來自維護、容量上限、Steam 會話過期或服務端事故，並不等於遊戲檔案損壞。看到官方通知前，不要反覆重灌、關閉安全防護、開放埠或更改 DNS。
+
+## 登入排隊、拒絕訪問和許可權
+
+發售高峰可能在伺服器正常工作時產生登入排隊。除非官方要求重新連線，否則留在一個佇列中，反覆重啟可能失去位置。若提示拒絕訪問，請檢查登入賬號、購買版本、商店解鎖狀態和庫中的正確條目。舊的 Beta 02 許可權不代表當前訪問資格。
+
+## 我們如何標記故障
+
+**官方確認：** BULKHEAD、Team17、WARDOGS 或 Steam 明確確認維護、效能下降或恢復。
+
+**集中觀察：** 多個帶日期的報告具有相同錯誤、地區和版本，但暫時沒有第一方通知。
+
+**本地問題：** 服務整體可訪問，而症狀只出現在一個賬號、網路或電腦。社群帖子是排查線索，不是全球停服證明。
+
+## 提交有效報告
+
+請提供 UTC 時間、國家或地區、Steam 購買狀態、庫條目、佇列位置或錯誤碼、版本號，以及只選一個地區後的結果。截圖中刪除郵箱、賬號、二維碼、令牌和 Steam Guard 資訊。
+
+## 相關攻略
+
+- [玩家人數不等於伺服器狀態](/zh-tw/guides/wardogs-player-count)
+- [發售日檢查清單](/zh-tw/guides/wardogs-launch-checklist)
+- [已知問題觀察頁](/zh-tw/guides/wardogs-known-issues)
+- [補丁記錄](/zh-tw/guides/wardogs-patch-notes)

@@ -13,7 +13,13 @@ const livePages = [
   "/en/tools/loadout-budget",
   "/en/videos",
   "/zh-tw/guides",
-  "/pl/guides"
+  "/pl/guides",
+  "/zh-tw",
+  "/pl",
+  "/zh-tw/items/weapons",
+  "/pl/items/weapons",
+  "/zh-tw/tools/loadout-budget",
+  "/pl/tools/loadout-budget"
 ];
 const defaultSnapshotPath = path.join(process.cwd(), ".indexnow", "predeploy-sitemap.json");
 
@@ -78,8 +84,10 @@ export async function verifyProduction(fetchImpl = fetch, siteOrigin = SITE_ORIG
   if (sitemapResponse.status !== 200 ||
     !sitemapXml.includes(`<loc>${siteOrigin}/en</loc>`) ||
     !sitemapXml.includes(`<loc>${siteOrigin}/ja</loc>`) ||
-    !sitemapXml.includes(`<loc>${siteOrigin}/en/tools/map</loc>`)) {
-    throw new Error("Production smoke: sitemap.xml is unavailable or missing the English/Japanese home or map URL.");
+    !sitemapXml.includes(`<loc>${siteOrigin}/en/tools/map</loc>`) ||
+    ["zh-tw", "pl"].some((locale) => !sitemapXml.includes(`<loc>${siteOrigin}/${locale}</loc>`) ||
+      !sitemapXml.includes(`<loc>${siteOrigin}/${locale}/guides/wardogs-controls</loc>`))) {
+    throw new Error("Production smoke: sitemap.xml is unavailable or missing a required home, guide, or map URL.");
   }
 
   const redirectResponse = await fetchImpl(`${siteOrigin}/maps`, {redirect: "manual"});

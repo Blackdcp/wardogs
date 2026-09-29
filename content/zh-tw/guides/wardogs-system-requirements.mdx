@@ -1,0 +1,141 @@
+---
+title: "WARDOGS PC 配置要求：最低與推薦效能目標"
+description: "WARDOGS 官方最低配置為 Windows 10、i5-8600 或 Ryzen 5 3500、GTX 1660 或 RX 590、16 GB 記憶體和 50 GB 可用空間。本頁對照最低與推薦硬體、官方解析度和幀率目標，說明升頻、筆記本型號、硬碟餘量、網路與負載的影響，並標出仍可能隨搶先體驗版本變化的效能結論。"
+keyword: "wardogs system requirements"
+category: "guide"
+slug: "wardogs-system-requirements"
+order: 32
+updatedAt: "2026-09-26"
+badges:
+  - label: "官方配置"
+    tone: "accent"
+  - label: "僅 PC"
+    tone: "muted"
+faq:
+  - question: "GTX 1660 能玩 WARDOGS 嗎？"
+    answer: "它是官方最低顯示卡之一；搭配其餘最低配置時，官方目標為 1080p 低畫質、升頻後 60fps，但實際表現仍受當前版本和整機狀態影響。"
+  - question: "WARDOGS 需要多少記憶體？"
+    answer: "官方最低與推薦配置都列出 16 GB RAM，8 GB 低於當前最低要求。"
+  - question: "WARDOGS 需要多少硬碟空間？"
+    answer: "Steam 列出 50 GB 可用空間。建議額外預留補丁、著色器快取和臨時安裝空間，實際下載量不一定等於 50 GB。"
+  - question: "WARDOGS 必須使用 Windows 11 嗎？"
+    answer: "不必。Windows 10 64 位是最低要求，Windows 11 64 位屬於推薦配置。"
+  - question: "WARDOGS 支援 Linux 或 Steam Deck 嗎？"
+    answer: "Linux 在首發時沒有官方支援。BULKHEAD 正在開發 Proton 相容性，但尚未公佈 Steam Deck 狀態。"
+sources:
+  - label: "WARDOGS Steam 官方配置"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "BULKHEAD WARDOGS 官方頁面"
+    url: "https://bulkhead.com/games/wardogs/"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "WARDOGS 官方 Linux 相容性更新"
+    url: "https://steamcommunity.com/app/1867240/discussions/0/588436698284962639"
+    kind: "official"
+    checkedAt: "2026-09-26"
+---
+
+## WARDOGS 配置要求是什麼？
+
+官方最低配置從 **Windows 10 64 位、Core i5-8600 或 Ryzen 5 3500、16 GB RAM、GTX 1660 或 RX 590、50 GB 可用空間**起步。官方最低效能目標是 1080p 低畫質、使用升頻達到 60fps；這不是原生 1080p 或所有戰況下鎖定 60fps 的保證。
+
+## 快速結論
+
+如果電腦只剛好達到最低配置，應把目標放在低畫質、升頻和穩定幀時間，而不是最高畫質。推薦配置面向中畫質：1440p 原生 70fps 以上，或 4K 使用升頻達到 60fps 以上。大型 Control Zone 戰鬥中的玩家、載具、爆炸、建造和破壞會同時增加 CPU 與 GPU 壓力，空服或訓練場不能代表最重負載。
+
+## Linux、Proton 與 Steam Deck
+
+這裡列出的都是 **Windows PC** 配置，不是 Linux 配置。BULKHEAD 表示 WARDOGS 在首發時沒有 Linux 官方支援，官方 Proton 相容性仍在開發中；Steam Deck 狀態也尚未公佈。不要把 Windows 配置直接套到 Proton 上，購買前請先看 [WARDOGS Linux 與 Proton 支援狀態](/zh-tw/guides/wardogs-linux-proton)。
+
+開發者 2026-09-25 的補充說明仍未給出 Proton 相容時間表。下方的 Windows 效能目標不能當作 Linux 或 Steam Deck 的目標。
+
+## 已確認資訊
+
+- 當前已確認平臺是 Windows PC Steam。
+- 最低 CPU：Intel Core i5-8600 或 AMD Ryzen 5 3500。
+- 最低 GPU：Nvidia GTX 1660 或 AMD Radeon RX 590。
+- 推薦 CPU：Intel Core i7-12700K 或 AMD Ryzen 7 5700X。
+- 推薦 GPU：Nvidia RTX 3070 或 AMD Radeon RX 6700 XT。
+- 最低和推薦配置都列出 16 GB RAM、寬頻網路和 50 GB 可用空間。
+- 最低目標：1080p 低畫質、升頻、60fps。
+- 推薦目標：1440p 中畫質原生 70fps 以上，或 4K 中畫質升頻 60fps 以上。
+
+## 玩家想知道什麼
+
+搜尋 `wardogs system requirements` 的玩家需要的是整機判斷，不是隻比較顯示卡。CPU、記憶體、顯示卡、系統版本、儲存空間和散熱都可能成為限制。即使顯示卡達到最低要求，較弱 CPU 或後臺佔用也可能在百人戰鬥中造成卡頓和幀時間波動。
+
+“50 GB”也經常被誤解。Steam 寫的是可用儲存空間，不是承諾網路下載包恰好為 50 GB。安裝解壓、補丁、著色器快取、錄屏和 Windows 本身都需要額外餘量。
+
+## 如何使用本攻略
+
+先在 Windows 設定和工作管理員中確認 CPU、GPU、記憶體、系統版本與磁碟空間，然後按完整的一檔配置比較。不要把移動版顯示卡與同名桌面卡預設視為相同表現。若接近最低配置，先閱讀畫面設定攻略；若滿足要求卻無法啟動，再檢查驅動、Elytra 報錯、檔案完整性和後臺衝突。
+
+## 官方最低配置
+
+| 部件 | 官方最低要求 |
+| --- | --- |
+| 作業系統 | Windows 10 64 位 |
+| 處理器 | Intel Core i5-8600 或 AMD Ryzen 5 3500 |
+| 記憶體 | 16 GB RAM |
+| 顯示卡 | Nvidia GTX 1660 或 AMD Radeon RX 590 |
+| 網路 | 寬頻網際網路連線 |
+| 儲存 | 50 GB 可用空間 |
+| 效能目標 | 1080p 低畫質，升頻，60fps |
+
+達到最低型號意味著官方認為該整機檔位可瞄準上述條件，不代表原生解析度、高畫質或所有伺服器都能穩定達到同樣結果。驅動、溫度、雙通道記憶體、後臺軟體和預釋出構建都會影響表現。
+
+## 官方推薦配置
+
+| 部件 | 官方推薦要求 |
+| --- | --- |
+| 作業系統 | Windows 11 64 位 |
+| 處理器 | Intel Core i7-12700K 或 AMD Ryzen 7 5700X |
+| 記憶體 | 16 GB RAM |
+| 顯示卡 | Nvidia RTX 3070 或 AMD Radeon RX 6700 XT |
+| 網路 | 寬頻網際網路連線 |
+| 儲存 | 50 GB 可用空間 |
+| 效能目標 | 1440p 中畫質原生 70fps+，或 4K 中畫質升頻 60fps+ |
+
+推薦配置不是“最高畫質配置”。官方目標仍寫的是中畫質。想要高重新整理率、最高特效、超寬屏或更高原生解析度的玩家，需要為 CPU、GPU 和散熱保留更多餘量，並在實際版本上線後重新測試。
+
+## 怎麼檢視自己的電腦配置
+
+開啟 **設定 > 系統 > 系統資訊**檢視處理器、已安裝記憶體和 Windows 版本；開啟 **工作管理員 > 效能 > GPU**確認顯示卡型號；在檔案資源管理器中檢視 Steam 安裝盤剩餘空間。
+
+筆記本還要確認遊戲使用獨立顯示卡，並在接通電源後選擇合適的效能模式。同一型號的移動顯示卡會因功耗和散熱設計出現明顯差異，所以“型號相同”不等於持續效能相同。
+
+## 實戰效能怎麼判斷
+
+進入遊戲後，應該在玩家密集、載具和破壞效果較多的 Control Zone 測試，而不是隻看選單、出生點或空服的峰值幀率。記錄平均幀率的同時關注最低幀和卡頓，單次最高數字沒有太大意義。
+
+如果降低解析度後幀率明顯上升，GPU 更可能是主要限制；如果解析度降低幫助很小，但大規模戰鬥仍會掉幀，CPU、記憶體或當前構建可能更關鍵。一次只改一個設定，才能知道真正有效的是哪項。
+
+網路延遲與本地渲染也要分開判斷。畫面幀率穩定時仍可能出現橡皮筋、位置回彈或伺服器反饋延遲；反過來，低 FPS 也不一定是網路故障。官方商店頁當前標註 Elytra 核心級反作弊，啟動問題可能與反作弊服務、許可權或安全軟體有關。
+
+## 常見問題
+
+**8 GB 記憶體能玩嗎？**
+它低於官方最低要求。即使客戶端能夠啟動，也不能據此認為達到受支援配置。
+
+**GTX 1660 的目標是原生 1080p 嗎？**
+不是。Steam 寫的是 1080p 低畫質、使用升頻達到 60fps。
+
+**RTX 3070 能跑 4K 嗎？**
+官方推薦目標之一是 4K 中畫質、升頻、60fps 以上；實際結果仍取決於整機、驅動和當前版本。
+
+**50 GB 空間剛好夠嗎？**
+官方要求是 50 GB 可用空間，但為安裝、更新和快取預留更多空間更穩妥。
+
+## 來源和最後檢查
+
+所有硬體型號、系統要求和效能目標均核對自 WARDOGS Steam 官方商店頁，並與 BULKHEAD 官方產品頁面交叉確認。最後核查日期為 **2026-09-01**。搶先體驗期間最佳化和配置要求可能調整，購買硬體前應再次檢視 Steam。
+
+## 相關攻略
+
+- [WARDOGS 最佳畫面設定](/zh-tw/guides/wardogs-best-settings)
+- [WARDOGS 崩潰修復](/zh-tw/guides/wardogs-crash-fix)
+- [WARDOGS 下載與安裝](/zh-tw/guides/wardogs-download)
+- [WARDOGS Steam 購買指南](/zh-tw/guides/wardogs-steam)
+- [WARDOGS 上線準備清單](/zh-tw/guides/wardogs-launch-checklist)

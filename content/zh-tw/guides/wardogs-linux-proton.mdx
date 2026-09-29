@@ -1,0 +1,115 @@
+---
+title: "WARDOGS Linux、Proton 與 Steam Deck 支援狀態"
+description: "截至 9 月 25 日，WARDOGS 仍未官方支援 Linux。Proton 相容仍在開發，但沒有支援版本或時間表。Steam Deck 的 Verified、Playable 狀態也未確認。測試版能啟動，不等於當前客戶端獲得官方支援。購買前請核對開發者 Steam 置頂帖，勿依賴舊教程或繞過反作弊。"
+keyword: "wardogs linux proton"
+category: "guide"
+slug: "wardogs-linux-proton"
+order: 48
+updatedAt: "2026-09-30"
+badges:
+  - label: "Linux 暫不官方支援"
+    tone: "warning"
+  - label: "Proton 開發中"
+    tone: "accent"
+faq:
+  - question: "WARDOGS 現在官方支援 Linux 嗎？"
+    answer: "不支援。BULKHEAD 9 月 25 日的更新沒有宣佈 Linux 支援，也沒有公佈 Proton 相容時間表。"
+  - question: "WARDOGS 會通過 Proton 正常執行嗎？"
+    answer: "BULKHEAD 正在開發官方 Proton 相容性，但沒有公佈支援版本、日期或首發承諾。"
+  - question: "WARDOGS 是 Steam Deck Verified 或 Playable 嗎？"
+    answer: "目前沒有官方公佈 Steam Deck Verified、Playable 或效能目標，因此應視為未確認。"
+  - question: "可以用繞過 Linux 或反作弊的辦法玩嗎？"
+    answer: "不可以。不要繞過反作弊、修改遊戲執行檔，也不要把社群啟動引數當作官方修復。"
+sources:
+  - label: "WARDOGS 官方 Linux 相容性更新"
+    url: "https://steamcommunity.com/app/1867240/discussions/0/588436698284962639"
+    kind: "official"
+    checkedAt: "2026-09-26"
+  - label: "WARDOGS Steam 官方頁面"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-05"
+---
+
+{/* compatibility-matrix */}
+## 可用相容性報告需要哪些欄位
+本輪沒有新增親自復現的Linux或Steam Deck成功/失敗樣本。[9月25日開發者表態](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639)未給支援的Proton版本或時間表。
+
+樣本需日期、正式客戶端構建、系統/發行版與kernel、GPU/驅動、Proton版本、啟動修改。分別記錄程序啟動、到選單、進伺服器、完整對局、重連，不能將“到選單”寫成“多人可玩”，單次完賽也不是官方支援保證。
+
+失敗同樣留上述欄位和完整錯誤。不在空表填推測成功，不把Beta樣本搬成正式版結果；不提供反作弊繞過、替換執行檔或未核命令。
+
+## 相容性矩陣
+
+| 執行環境 | 官方狀態 | 核對來源 | 玩家建議 |
+| --- | --- | --- | --- |
+| Windows PC | 已公佈配置要求的支援平臺 | Steam 商店，2026-09-05 | 按完整的最低或推薦配置檔位比較。 |
+| 原生 Linux | 截至 9 月 25 日仍無官方支援 | BULKHEAD Steam 帖，2026-09-25 更新 | 不要在購買時假設會提供原生客戶端。 |
+| Proton | 官方相容工作進行中，未確認版本和日期 | BULKHEAD Steam 帖，2026-09-25 更新 | 等待官方明確支援的構建版本。 |
+| Steam Deck | 尚未確認 Verified 或 Playable 狀態 | Steam 商店及 BULKHEAD 帖，2026-09-25 | 將相容性和效能視為未確認。 |
+
+## 快速結論
+
+截至開發者 9 月 25 日的更新，WARDOGS **仍未官方支援 Linux**。BULKHEAD 表示正在開發官方 Linux Proton 相容性，但沒有公佈支援的 Proton 版本、支援日期或 Steam Deck 狀態。若 Linux 是你購買遊戲的必要條件，最穩妥的做法是等待 BULKHEAD 或官方 Steam 頁面給出明確更新。
+
+開發者在 [2026-09-25 更新的 Steam 置頂帖](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639)中明確說，目前沒有可公佈的相容性新訊息或時間表。Proton 支援仍是目標，並非已公佈上線日期。
+
+這不等於“某個 Linux 發行版、某臺電腦或某臺 Steam Deck 永遠無法啟動遊戲”。玩家實測、測試版構建或某條啟動引數都可能在補丁後改變，不能自動成為官方相容性保證。本頁只記錄開發方已確認的範圍，並把它與社群的個別體驗分開。
+
+## 已確認資訊
+
+- WARDOGS 當前公佈的平臺是 Steam 上的 Windows PC。
+- BULKHEAD 表示 Linux 在首發時沒有官方支援。
+- 官方 Linux Proton 相容性仍在開發中。
+- 尚未公佈首發支援承諾、支援的 Proton 版本或 Linux 支援日期。
+- 尚未公佈 Steam Deck Verified 或 Playable 狀態。
+- 平臺範圍發生變化時，應以 Steam 與 BULKHEAD 的官方資訊為準。
+
+Steam 頁面上的 Windows 硬體配置只適用於 Windows 版本。它不能證明 Linux 下會使用相同的驅動、反作弊路徑或效能目標。已確認的 Windows 硬體資訊請看 [WARDOGS PC 配置要求](/zh-tw/guides/wardogs-system-requirements)。
+
+## 這些資訊沒有確認什麼
+
+“正在開發 Proton 相容性”並不說明會支援哪一版 Proton、所有 Linux 發行版是否都能執行、Steam Deck 是否有效能目標、Steam 相容性標籤何時出現，也不等於確認會提供原生 Linux 客戶端。在官方公告給出具體細節前，這些都應視為未知。
+
+某個測試客戶端在 Linux 上執行過，也不能證明正式商店版本會有同樣結果。測試應用、伺服器配置、反作弊整合、補丁和商店構建都可能不同。玩家報告可以成為開發者的反饋，但不能作為其他玩家購買遊戲的保證。
+
+## 購買前的安全判斷
+
+如果你使用 Windows PC，請按官方配置要求和 [WARDOGS 下載攻略](/zh-tw/guides/wardogs-download) 安裝。如果 Linux 或 Steam Deck 是唯一的目標裝置，最安全的選擇是等待 Steam 或 BULKHEAD 明確宣佈官方相容性。
+
+不要下載非官方啟動器、替換遊戲檔案、繞過反作弊，或遵循聲稱能讓“不受支援的多人客戶端安全執行”的教程。這類操作可能帶來安全或賬號風險，也不會把未支援的環境變成官方支援。保持 Steam 客戶端和遊戲檔案完整，遇到真實問題時使用官方支援渠道。
+
+## 接下來該關注什麼
+
+真正有意義的更新至少會說明一項具體內容：某個明確階段的官方 Linux 支援、官方 Proton 相容性目標、Steam Deck 的驗證結果，或 Steam 商店頁上的明確改動。沒有官方來源的截圖、轉發或博主測試，不足以改變本頁的狀態。
+
+在為 Linux 專門安裝或購買前，請再次檢視 WARDOGS Steam 頁面和官方 Steam Community 更新。原生客戶端、Proton 相容、有限測試和路線圖表態是不同層級的支援，不能混為一談。
+
+## 常見問題
+
+**WARDOGS 現在官方支援 Linux 嗎？**
+
+不支援。開發者 9 月 25 日的更新沒有宣佈 Linux 支援或 Proton 相容時間表。
+
+**我能預設它會在 Proton 上執行嗎？**
+
+不能。官方 Proton 相容性仍在開發中，但沒有支援版本、日期或首發承諾。
+
+**WARDOGS 已經 Steam Deck Verified 了嗎？**
+
+本次核對時，沒有看到官方 Steam Deck 狀態、Playable 標籤或效能目標。
+
+**多人模式能用社群繞過辦法嗎？**
+
+不要把它當作官方支援，更不要繞過反作弊或修改遊戲保護機制。等待開發方的明確說明。
+
+## 來源和最後檢查
+
+原始 Linux 宣告及 2026-09-25 的補充內容，已於 2026-09-26 對照[開發者的 Steam 置頂帖](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639)核查。補充內容沒有給出相容版本或時間表。Windows PC 平臺及未來可能出現的 Steam Deck 標記仍以 Steam 商店為準。
+
+## 相關攻略
+
+- [WARDOGS PC 配置要求](/zh-tw/guides/wardogs-system-requirements)
+- [WARDOGS Steam 攻略](/zh-tw/guides/wardogs-steam)
+- [WARDOGS 下載攻略](/zh-tw/guides/wardogs-download)
+- [WARDOGS 已知問題](/zh-tw/guides/wardogs-known-issues)

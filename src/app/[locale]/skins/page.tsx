@@ -13,6 +13,8 @@ const headings: Record<Locale, {title: string; eyebrow: string; description: str
   "pt-br": {title: "Skins de WARDOGS", eyebrow: "Arquivo de visuais", description: "21 visuais listados de WARDOGS com origem das imagens e checagem de identidade."},
   ja: {title: "WARDOGS スキン", eyebrow: "外観アーカイブ", description: "掲載済みのWARDOGSスキン21件を、画像の出典と照合状況とともに確認できます。"},
   "zh-cn": {title: "WARDOGS 皮肤图鉴", eyebrow: "外观素材档案", description: "浏览 21 个已列出的 WARDOGS 皮肤，并查看图片来源与身份核对状态。"},
+  "zh-tw": {title: "WARDOGS 造型圖鑑", eyebrow: "外觀素材檔案", description: "瀏覽 21 個已列出的 WARDOGS 造型，並查看圖片來源與物件核對狀態。"},
+  pl: {title: "Skórki WARDOGS", eyebrow: "Archiwum wyglądu", description: "Przeglądaj 21 opisanych skórek WARDOGS. Sprawdź historyczne źródła obrazów oraz stan weryfikacji przedstawionych przedmiotów."},
 };
 
 export function generateStaticParams() {

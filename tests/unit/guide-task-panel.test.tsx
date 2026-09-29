@@ -34,7 +34,9 @@ const ps5UnconfirmedPatterns: Record<Locale, RegExp> = {
   ru: /.фициально не подтвержд/i,
   "pt-br": /n.o .*oficialmente confirmada/i,
   ja: /公式.*確認されていません/,
-  "zh-cn": /尚未得到官方确认/
+  "zh-cn": /尚未得到官方确认/,
+  "zh-tw": /尚未得到官方確認/,
+  pl: /nie jest oficjalnie potwierdzona/i
 };
 
 const controlsVerificationPatterns: Record<Locale, RegExp> = {
@@ -43,7 +45,9 @@ const controlsVerificationPatterns: Record<Locale, RegExp> = {
   ru: /текущ.*назнач.*игр/i,
   "pt-br": /vincula..o atual.*jogo/i,
   ja: /現在のゲーム内.*割り当て/,
-  "zh-cn": /当前游戏内绑定/
+  "zh-cn": /当前游戏内绑定/,
+  "zh-tw": /當前遊戲內(?:綁定|繫結)/,
+  pl: /bieżące przypisania ruchu oraz interakcji/i
 };
 
 describe("guide task data", () => {

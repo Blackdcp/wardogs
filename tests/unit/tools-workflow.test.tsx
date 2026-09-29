@@ -135,7 +135,7 @@ describe("catalogue reuse and usable UI", () => {
     expect(comparisonRowDiffers({...row, right: {...row.left}})).toBe(false);
     expect(comparisonRowDiffers({...row, right: {...row.left, state: "unknown"}})).toBe(true);
   });
-  it.each(["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const)("renders localized editors in %s", (locale) => {
+  it.each(["en", "de", "ru", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const)("renders localized editors in %s", (locale) => {
     const copy = getToolCopy(locale);
     expect(Object.values(getWorkflowCopy(locale)).every((value) => value.trim().length > 0)).toBe(true);
     const wrapper = LoadoutBudget({copy});
@@ -146,10 +146,11 @@ describe("catalogue reuse and usable UI", () => {
     const supply = renderToStaticMarkup(<SupplyManifest copy={copy} stages={getLogisticsStages(locale)} plan={emptySupplyPlan} onChange={() => undefined} />);
     expect(supply).toContain(getWorkflowCopy(locale).manifest);
   });
-  it("has explicit fallback for newly introduced locales", () => {
-    expect(resolveToolLocale("zh-tw")).toBe("zh-cn");
-    expect(resolveToolLocale("pl")).toBe("en");
-    expect(getWorkflowCopy("pl").purchases).toBeTruthy();
+  it("uses full native tool copy for both newly promoted locales", () => {
+    expect(resolveToolLocale("zh-tw")).toBe("zh-tw");
+    expect(resolveToolLocale("pl")).toBe("pl");
+    expect(getWorkflowCopy("pl").purchases).not.toBe(getWorkflowCopy("en").purchases);
+    expect(getWorkflowCopy("zh-tw").purchases).not.toBe(getWorkflowCopy("zh-cn").purchases);
   });
   it("discloses changed data rather than silently rewriting a plan", () => {
     const html = renderToStaticMarkup(<ToolShareNotice locale="zh-cn" search={encodeBudgetState(oldBudget, "old")} dataVersion="new" />);

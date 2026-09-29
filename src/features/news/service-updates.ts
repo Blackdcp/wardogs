@@ -41,7 +41,20 @@ const copy: Record<string, readonly (readonly [string, string])[]> = {
     ["累计销量达到三百万份", "9月26日官方宣布的是累计销量里程碑，不是实时同时在线人数，也不证明所有服务器可用。"],
     ["安全维护后发布恢复通知", "维护计划11:00 UTC开始，团队于11:42 UTC表示服务正在恢复。这是有日期的记录，不是实时遥测，也不是WD-L020 / KB5124010已修的证据。"],
     ["Steam错误构建分发事故已解决", "错误构建影响少部分玩家，团队随后回复已解决。重新下载约16 GB的提示仅适用于当时受影响者，不是当前全体玩家的要求，也未确立新补丁编号。"]
-  ]
+  ],
+
+  pl: [
+["Odpowiedź dewelopera w sprawie balansu i XP", "Joe Brammer opublikował odpowiedź. Nie zweryfikowaliśmy pełnej transkrypcji, więc nie wywodzimy z niej wartości XP, daty aktualizacji ani obietnicy serwerów z limitem poziomu."],
+["Trzy miliony sprzedanych egzemplarzy", "Oficjalne ogłoszenie z 26 września dotyczy łącznej sprzedaży, a nie obecnej liczby graczy jednocześnie ani dostępności wszystkich serwerów."],
+["Konserwacja zabezpieczeń: komunikat o przywracaniu usług", "Konserwację zaplanowano na 11:00 UTC; o 11:42 UTC zespół poinformował o przywracaniu usług. To datowany zapis, nie monitoring na żywo ani dowód naprawienia WD-L020 / KB5124010."],
+["Rozwiązano incydent z błędną wersją Steam", "Niewielka grupa otrzymała niewłaściwą wersję; później zespół poinformował o rozwiązaniu incydentu. Zalecenie ponownego pobrania około 16 GB dotyczyło wtedy poszkodowanych, a nie wszystkich graczy obecnie. Nie potwierdzono nowego numeru aktualizacji."]
+],
+  "zh-tw": [
+    ["開發者釋出平衡與XP回應", "Joe Brammer已釋出回應，本站未核完整字幕，不從中提取具體XP數值、補丁日期或等級限制服上線承諾。"],
+    ["累計銷量達到三百萬份", "9月26日官方宣佈的是累計銷量里程碑，不是即時同時線上人數，也不證明所有伺服器可用。"],
+    ["安全維護後釋出恢復通知", "維護計劃11:00 UTC開始，團隊於11:42 UTC表示服務正在恢復。這是有日期的記錄，不是即時遙測，也不是WD-L020 / KB5124010已修的證據。"],
+    ["Steam錯誤構建分發事故已解決", "錯誤構建影響少部分玩家，團隊隨後回覆已解決。重新下載約16 GB的提示僅適用於當時受影響者，不是當前全體玩家的要求，也未確立新補丁編號。"]
+]
 };
 
 export function getServiceUpdates(locale: string) {

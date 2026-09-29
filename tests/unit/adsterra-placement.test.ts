@@ -43,7 +43,7 @@ describe("aggressive Adsterra placement", () => {
       expect(messages.privacy.advertising, locale).toMatch(/Popunder/i);
       expect(messages.privacy.advertising, locale).toMatch(/Smartlink/i);
       expect(messages.privacy.advertising, locale).toMatch(/IP/i);
-      expect(messages.privacy.advertising, locale).toMatch(/browser|device|navegador|dispositivo|браузер|устройств|浏览器|设备|ブラウザ|端末/i);
+      expect(messages.privacy.advertising, locale).toMatch(/browser|device|navegador|dispositivo|браузер|устройств|浏览器|设备|瀏覽器|裝置|przeglądark|urządz|ブラウザ|端末/i);
     }
   });
 });

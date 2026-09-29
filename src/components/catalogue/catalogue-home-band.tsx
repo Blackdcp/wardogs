@@ -3,6 +3,7 @@ import {ArrowUpRight} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import type {ComponentType, ReactNode} from "react";
 import {catalogueGroups} from "@/features/catalogue/catalogue-groups";
+import {getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import type {Locale} from "@/config/site";
@@ -163,13 +164,14 @@ export async function CatalogueHomeBand({locale}: {locale: Locale}) {
     if (!record || record.detailStatus !== "published" || !record.detailHref || !record.image || !record.imageAlt) {
       throw new Error(`Missing published homepage model: ${type}/${slug}`);
     }
+    const localized = locale === "pl" || locale === "zh-tw" ? getLocalizedCatalogueRecords([record], locale)[0] : record;
     return {
       key: `${type}-${slug}` as const,
       title: record.name,
-      subtype: record.subtype,
+      subtype: localized.subtype,
       href: publicRoutePath(localizedItemRoutePath(resolveItemRouteTarget(locale, record.detailHref))),
       image: record.image,
-      imageAlt: record.imageAlt
+      imageAlt: localized.imageAlt ?? record.imageAlt
     };
   });
 

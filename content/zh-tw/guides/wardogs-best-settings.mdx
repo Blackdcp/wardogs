@@ -1,0 +1,145 @@
+---
+title: "WARDOGS 最佳畫面設定：穩定幀率與清晰度"
+description: "WARDOGS 大規模戰鬥會同時壓迫 CPU、GPU 與網路。本文按官方最低和推薦配置建立可重複基線，說明 Potato Mode、Overkill Mode 與 60+ FPS 開發目標的真實邊界，再給出解析度、升頻、陰影、特效、動態模糊、視野和幀時間的逐項調整順序，避免把創作者單機結果當成所有電腦的保證。"
+keyword: "wardogs best settings"
+category: "guide"
+slug: "wardogs-best-settings"
+order: 31
+updatedAt: "2026-09-17"
+badges:
+  - label: "效能調校"
+    tone: "accent"
+  - label: "版本相關"
+    tone: "warning"
+faq:
+  - question: "WARDOGS 最佳畫面設定是什麼？"
+    answer: "沒有適用於所有電腦的單一預設。先按官方配置選擇基線，在玩家、載具、煙霧和破壞密集的戰鬥中測試，再一次只降低一組高負載選項。"
+  - question: "Potato Mode 是什麼？"
+    answer: "BULKHEAD 官方開發日誌把 Potato Mode 描述為低端硬體的效能路徑；它不等於任何低配電腦都保證 60fps。"
+  - question: "Overkill Mode 適合競技玩嗎？"
+    answer: "它面向高效能硬體和更高視覺質量，不是預設競技預設。只有在最重負載下仍有穩定餘量時再嘗試。"
+  - question: "為什麼訓練區域流暢，正式戰鬥會掉幀？"
+    answer: "百人戰鬥中的玩家、載具、建築、破壞、煙霧和伺服器負載遠高於空場；應以擁擠 Control Zone 的最低幀與幀時間為準。"
+sources:
+  - label: "WARDOGS Steam 官方配置"
+    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "WARDOGS 七件事創作者概覽"
+    url: "https://www.youtube.com/watch?v=-k6IV0ITLDo"
+    kind: "creator"
+    checkedAt: "2026-09-01"
+  - label: "BULKHEAD 效能開發日誌"
+    url: "https://www.linkedin.com/posts/bulkhead_new-devlog-level-design-performance-activity-7483535791831478273-9DOJ"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "BULKHEAD WARDOGS 官方頁面"
+    url: "https://bulkhead.com/games/wardogs/"
+    kind: "official"
+    checkedAt: "2026-09-01"
+  - label: "WARDOGS Closed Beta 02 官方公告"
+    url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"
+    kind: "official"
+    checkedAt: "2026-09-04"
+  - label: "Closed Beta 02 伺服器時間官方修訂"
+    url: "https://x.com/BULKHEAD/status/2095447401725153576"
+    kind: "official"
+    checkedAt: "2026-09-04"
+  - label: "IceManIsaac: ULTIMATE WARDOGS SETTINGS GUIDE! Before & After Comparisons Benchmarked"
+    url: "https://www.youtube.com/watch?v=v0V69ZYMlgY"
+    kind: "creator"
+    checkedAt: "2026-09-17"
+---
+
+## Season 1 當前影片交叉核驗 - 2026 年 9 月 17 日
+
+我們將 **IceManIsaac** 的 **ULTIMATE WARDOGS SETTINGS GUIDE! Before & After Comparisons Benchmarked** 作為當前創作者證據複核，而不是官方平衡文件。它的前後對比測試適合逐組評估效能與畫質；與硬體相關的結果只代表該測試裝置，不能當成通用預設。
+
+## 在當前搶先體驗版本複測效能
+
+請在**當前搶先體驗版本**的高人數伺服器複測，而不是用空射擊場或已經結束的 Beta 02 影片判斷效能。擁擠目標區會同時考驗 CPU、GPU、網路、破壞效果、載具和資源載入。先以 Steam 官方效能目標為基線，再在同一場景中一次只調整一組設定，比較幀時間穩定性。Potato Mode 與 Overkill Mode 不是通用競技預設，博主的單機結果也不能保證另一臺電腦得到相同表現。
+
+## 快速結論
+
+WARDOGS 的最佳設定不是“全部最低”，而是讓最擁擠戰鬥中的**幀時間穩定、目標清楚、輸入一致**。先按 Steam 官方配置選擇接近自己硬體的一檔，以原生顯示器解析度和合理升頻為起點，再在真實 Control Zone 中逐項調整。
+
+BULKHEAD 官方開發日誌提到 **Potato Mode、Overkill Mode 和 60+ FPS** 的開發目標。這證明團隊在覆蓋低端與高階硬體，但不代表每臺電腦、每個伺服器和每次大規模交戰都能達到固定幀率。
+
+## 已確認資訊
+
+- 最低配置：Windows 10 64 位、i5-8600 或 Ryzen 5 3500、16 GB RAM、GTX 1660 或 RX 590、50 GB 可用空間。
+- 最低效能目標：1080p 低畫質、使用升頻、60fps。
+- 推薦配置：Windows 11 64 位、i7-12700K 或 Ryzen 7 5700X、16 GB RAM、RTX 3070 或 RX 6700 XT。
+- 推薦效能目標：1440p 中畫質原生 70fps+，或 4K 中畫質升頻 60fps+。
+- Potato Mode 與 Overkill Mode 來自官方效能開發日誌；具體選單和結果仍屬版本相關。
+
+官方目標是測試基線，不是鎖幀承諾。驅動、散熱、記憶體通道、後臺軟體、伺服器負載和當前構建都會影響結果。
+
+## 玩家想知道什麼
+
+玩家通常在找三類答案：最低配置能否穩定遊玩、怎樣減少團戰卡頓、怎樣保持遠距離目標可讀。第一類要看完整整機，第二類要區分 CPU 和 GPU 限制，第三類不能只追求最低畫質。
+
+創作者錄影可以展示某套硬體在某個預釋出版本中的表現，但如果沒有解析度、驅動、錄製方式、伺服器人數和完整配置，就不能把一個幀率數字推廣到所有玩家。
+
+## 如何使用本攻略
+
+先閱讀 [PC 配置要求](/zh-tw/guides/wardogs-system-requirements)，記錄當前 CPU、GPU、記憶體、系統、解析度和驅動版本。進入遊戲後選擇同一伺服器或相近場景，保持測試路線一致，並一次只改變一個設定組。
+
+不要在選單、出生點或空訓練區得出結論。最有代表性的場景應包含大量玩家、載具、煙霧、爆炸、建築與破壞。記錄平均 FPS 只是輔助，真正影響操作的是最低幀、幀時間尖峰和輸入延遲。
+
+## 基線測試
+
+1. 更新顯示卡驅動並重啟 Windows。
+2. 關閉非必要錄屏、瀏覽器和覆蓋層，但保留實際遊玩需要的語音。
+3. 使用全屏或遊戲當前最穩定的顯示模式。
+4. 從顯示器原生解析度和官方對應畫質檔開始。
+5. 在擁擠 Control Zone 執行固定路線至少數分鐘。
+6. 記錄平均幀率、最低幀、明顯示卡頓點與 GPU 佔用。
+7. 一次只改一個選項組，再重複同一路線。
+
+若修改後只在空場提升，卻在大規模交戰中沒有改善，就不應把它記為有效方案。
+
+## 競爭優先順序
+
+先降低陰影、體積效果、特效和高成本後處理，再判斷是否需要調整升頻或解析度比例。紋理質量主要受視訊記憶體影響，盲目降到最低可能損失清晰度，卻不一定解決 CPU 限制。
+
+動態模糊、景深和電影效果若影響跟槍，可以關閉；視野提高周邊資訊，但會讓遠處目標更小，也可能增加渲染負擔。選擇能穩定識別步兵、車輛、塔臺和 HUD 標記的組合，不要只複製主播截圖。
+
+## Potato Mode 與 Overkill Mode
+
+**Potato Mode** 是面向低端硬體的官方效能路徑。若當前版本提供它，可把它作為排錯起點，再逐步恢復紋理、視距和辨識度重要的選項。它不是“任何電腦都能穩定 60fps”的保證。
+
+**Overkill Mode** 面向更強硬體與更高視覺質量。只有在擁擠戰鬥中仍保持穩定幀時間、視訊記憶體和溫度餘量時才值得使用。截圖漂亮不等於多人對戰更合適。
+
+官方提到的 **60+ FPS** 是開發目標，需要與 Steam 配置表中的解析度、畫質和升頻條件一起理解，不能脫離條件寫成全場景承諾。
+
+## CPU、GPU 與網路診斷
+
+降低解析度後幀率明顯上升，通常說明 GPU 壓力更大；降低解析度幫助很小，但人數和破壞增加時卡頓，則更可能與 CPU、記憶體或當前構建有關。溫度過高、功耗限制和後臺程序也會造成持續降頻。
+
+網路延遲和渲染卡頓不是一回事。畫面流暢但人物回彈、命中反饋延遲，先檢查網路與伺服器；本地 FPS 下降、鏡頭不連貫，則先檢查硬體佔用和設定。不要因網路問題反覆重灌顯示卡驅動，也不要因低幀率盲目更換伺服器。
+
+## 常見問題
+
+**GTX 1660 從哪裡開始調？**
+從官方最低目標的 1080p、低畫質和升頻開始，再在真實戰鬥中檢查幀時間。
+
+**RTX 3070 應直接開 Overkill Mode 嗎？**
+不建議預設開啟。Steam 推薦目標仍是中畫質，先確認最重負載下有餘量。
+
+**所有選項調低為什麼仍卡？**
+可能是 CPU、記憶體、溫度、後臺程序、伺服器或當前構建限制。用解析度對照測試區分原因。
+
+**更新後需要重測嗎？**
+需要。效能模式、預設值、渲染器和伺服器負載都可能改變。
+
+## 來源和最後檢查
+
+配置與效能目標核對自 Steam；Potato Mode、Overkill Mode 和 60+ FPS 來自 BULKHEAD 官方效能開發日誌；創作者影片只用於補充測試場景。最後人工核查日期為 **2026-09-01**，所有具體選單與實測結果均標為版本相關。
+
+## 相關攻略
+
+- [WARDOGS PC 配置要求](/zh-tw/guides/wardogs-system-requirements)
+- [WARDOGS 崩潰與啟動修復](/zh-tw/guides/wardogs-crash-fix)
+- [WARDOGS 操作設定](/zh-tw/guides/wardogs-controls)
+- [WARDOGS Steam 指南](/zh-tw/guides/wardogs-steam)

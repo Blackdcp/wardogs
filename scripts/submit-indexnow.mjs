@@ -8,7 +8,7 @@ const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
 const INDEXNOW_DELAY_MS = 200;
 const URLS_PER_PAGE = 200;
 const MAX_REDIRECT_HOPS = 5;
-const localeIdsPattern = "en|de|ru|pt-br|ja|zh-cn";
+const localeIdsPattern = "en|de|ru|pt-br|ja|zh-cn|zh-tw|pl";
 const localizedPathPattern = `(?:${localeIdsPattern})`;
 
 function normalizedPath(url) {
@@ -30,6 +30,9 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
 
   for (const originalFile of changedFiles) {
     const file = originalFile.replaceAll("\\", "/");
+    if (file === "src/config/site.ts") {
+      wantedPatterns.push(/^\/(?:zh-tw|pl)(?:\/|$)/);
+    }
     const contentPage = file.match(new RegExp(`^content\/(${localeIdsPattern})\/(guides|news)\/([^/]+)\\.mdx$`));
     const messages = file.match(new RegExp(`^messages\/(${localeIdsPattern})\\.json$`));
 

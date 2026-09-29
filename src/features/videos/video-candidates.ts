@@ -8,7 +8,9 @@ export interface VideoCandidate {
   language: CandidateLanguage;
   publishedDate: string;
   metadataCheckedAt: "2026-09-30";
+  // Metadata provenance only; caption/frame review is in video-candidate-evidence.ts.
   evidence: "metadata-and-chapters" | "metadata-only";
+  // Exporting/reading automatic captions does not validate them against the audio.
   transcriptVerified: false;
   gameplayVerified: false;
   embedPlaybackVerified: false;

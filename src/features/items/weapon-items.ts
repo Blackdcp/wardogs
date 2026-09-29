@@ -51,7 +51,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 100,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "ak74",
@@ -102,7 +102,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 101,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "amp-9",
@@ -154,7 +154,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 102,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "amr-50",
@@ -206,7 +206,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 103,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "bmr-308",
@@ -258,7 +258,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 104,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "bushmaster-m17s",
@@ -310,7 +310,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 105,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "compound-bow",
@@ -362,7 +362,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 106,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "deagle",
@@ -412,7 +412,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-09-26",
     priority: 107,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "fal",
@@ -464,7 +464,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 108,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "galil",
@@ -516,7 +516,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 109,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "ggx-17",
@@ -565,7 +565,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 110,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "ggx-18",
@@ -614,7 +614,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 111,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "judge",
@@ -663,7 +663,7 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 112,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "kh-2002",
@@ -714,6 +714,6 @@ export const weaponItems = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 113,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   }
 ] satisfies readonly WardogsItemInput[];

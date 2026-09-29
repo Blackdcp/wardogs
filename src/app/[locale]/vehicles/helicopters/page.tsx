@@ -69,6 +69,20 @@ const copy: Record<Locale, {
     updateLabel: "Z20 Lakota パイロット解除", sourceLabel: "公式更新履歴を読む", archiveTitle: "Alpha 1 記録", archiveCopy: "Alpha 1の車両カタログには6機が記録されています。価格と条件はその時点のものです。名前や役割で絞り込み、カードから出典と注意点を確認してください。",
     searchLabel: "ヘリコプターを検索", searchPlaceholder: "機体名・役割・価格・条件", allLabel: "すべて", resultLabel: "機", transport: "輸送", combat: "戦闘・武装", guideTitle: "購入前に飛行計画を", guideCopy: "ガイドでは離陸、経路、着陸、分隊支援を扱います。操作や挙動はビルドで変わる場合があります。", guideLink: "ヘリコプターガイドを読む", vehiclesLink: "全車両"
   },
+  pl: {
+    title: "Helikoptery WARDOGS", description: "Porównaj sześć helikopterów z katalogu Alpha 1: role, zapisane ceny i wymagania. Osobno sprawdź oficjalną zmianę Z20 Lakota z sezonu 1.",
+    eyebrow: "Katalog statków powietrznych", intro: "Porównaj role transportowe i bojowe, a następnie otwórz opis modelu ze źródłami. Karty zachowują stan katalogu Alpha 1 i nie potwierdzają aktualnie dostępnej floty.",
+    currentTitle: "Oficjalna aktualizacja sezonu 1", currentCopy: "Oficjalny dziennik zmian wymienia Z20 Lakota i zmianę kosztu odblokowania na ścieżce Pilot. Nie potwierdza obecnej ceny zakupu, pełnych parametrów ani aktualnej listy helikopterów.",
+    updateLabel: "Odblokowanie Z20 Lakota na ścieżce Pilot", sourceLabel: "Oficjalny dziennik zmian", archiveTitle: "Archiwum Alpha 1", archiveCopy: "W katalogu pojazdów Alpha 1 udokumentowano sześć statków powietrznych. Ceny i wymagania dotyczą tamtej wersji. Wyszukaj model lub wybierz rolę, a następnie otwórz kartę ze źródłami i zastrzeżeniami.",
+    searchLabel: "Szukaj helikopterów", searchPlaceholder: "Model, rola, cena lub wymagania", allLabel: "Wszystkie maszyny", resultLabel: "maszyn", transport: "Transport", combat: "Bojowe i uzbrojone", guideTitle: "Zaplanuj lot przed zakupem", guideCopy: "Poradnik obejmuje start, planowanie trasy, lądowanie i wsparcie drużyny. Sterowanie oraz zachowanie maszyny mogą zależeć od wersji gry.", guideLink: "Poradnik pilotażu helikopterów", vehiclesLink: "Wszystkie pojazdy"
+  },
+  "zh-tw": {
+    title: "WARDOGS 直升機", description: "按用途、Alpha 1 記錄價格與解鎖條件比較 6 架直升機，並單獨查看第 1 賽季 Z20 Lakota 官方更新。",
+    eyebrow: "飛行載具目錄", intro: "比較運輸與戰鬥用途，開啟各機型的證據頁。下方卡片儲存的是 Alpha 1 圖鑑記錄，不代表目前可用機型名單。",
+    currentTitle: "第 1 賽季官方更新", currentCopy: "官方更新記錄提到了 Z20 Lakota 及其飛行員解鎖費用變化；該記錄並未確認目前購買價格、完整性能或現行直升機全名單。",
+    updateLabel: "Z20 Lakota 飛行員解鎖", sourceLabel: "查看官方更新記錄", archiveTitle: "Alpha 1 歷史記錄", archiveCopy: "Alpha 1 載具圖鑑記錄了 6 架飛行器。價格和解鎖條件僅適用於該歷史版本。可按機型搜尋或按用途篩選，再開啟卡片查看來源和適用範圍。",
+    searchLabel: "搜尋直升機", searchPlaceholder: "搜尋機型、用途、價格或解鎖條件", allLabel: "全部飛行器", resultLabel: "架飛行器", transport: "運輸", combat: "戰鬥與武裝", guideTitle: "購買前規劃飛行", guideCopy: "直升機指南涵蓋起飛、路線、降落與小隊支援；操控和飛行表現可能隨版本變化。", guideLink: "閱讀直升機指南", vehiclesLink: "全部載具"
+  },
   "zh-cn": {
     title: "WARDOGS 直升机", description: "按用途、Alpha 1 记录价格与解锁条件比较 6 架直升机，并单独查看第 1 赛季 Z20 Lakota 官方更新。",
     eyebrow: "飞行载具目录", intro: "比较运输与战斗用途，打开各机型的证据页。下方卡片保存的是 Alpha 1 图鉴记录，不代表当前可用机型名单。",

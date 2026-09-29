@@ -1,5 +1,6 @@
 "use client";
 
+
 import Image from "next/image";
 import {useState} from "react";
 import {ArrowUpRight, BookOpen, CalendarCheck2, ImageOff, MapPinned} from "lucide-react";
@@ -33,6 +34,9 @@ const siteMapCopy: Record<string, {heading: string; description: string; open: s
   "pt-br": {heading: "Explore os três mapas", description: "Alterne entre Bakurani, Ozeti e Zestafona e planeje sua rota com os guias abaixo.", open: "Abrir a página do mapa"},
   ja: {heading: "3つのマップを見る", description: "Bakurani、Ozeti、Zestafona を切り替え、下のガイドでルートを計画しましょう。", open: "マップの専用ページを開く"},
   "zh-cn": {heading: "查看三张战场地图", description: "切换 Bakurani、Ozeti 与 Zestafona，并结合下方攻略规划路线。", open: "打开地图独立页面"},
+
+  pl: {heading: "Poznaj trzy mapy", description: "Przełączaj między Bakurani, Ozeti i Zestafona oraz planuj trasę z pomocą poniższych poradników.", open: "Otwórz stronę mapy"},
+  "zh-tw": { heading: "檢視三張戰場地圖", description: "切換 Bakurani、Ozeti 與 Zestafona，並結合下方攻略規劃路線。", open: "開啟地圖獨立頁面" }
 };
 
 function visualLabel(copy: OperationsAtlasCopy, state: "verified" | "contextual" | "pending") {

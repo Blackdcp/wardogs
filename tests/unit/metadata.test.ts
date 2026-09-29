@@ -16,7 +16,7 @@ describe("localized metadata", () => {
     expect(String(metadata.description).length).toBeGreaterThanOrEqual(140);
     expect(String(metadata.description).length).toBeLessThanOrEqual(160);
     const alternates = buildAlternates("en", "/guides/wardogs-gameplay");
-    expect(Object.keys(alternates.languages!)).toEqual(["en", "ru", "de", "pt-BR", "ja", "zh-CN", "x-default"]);
+    expect(Object.keys(alternates.languages!)).toEqual(["en", "ru", "de", "pt-BR", "ja", "zh-CN", "zh-TW", "pl", "x-default"]);
     expect(alternates.languages?.["zh-CN"]).toBe("http://localhost:3000/zh-cn/guides/wardogs-gameplay");
   });
 

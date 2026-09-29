@@ -12,7 +12,32 @@ const sectionNames: Record<Exclude<Locale, "en">, Record<string, string>> = {
   ru: {"Assault Rifles":"Штурмовые винтовки", SMGs:"Пистолеты-пулеметы", "Shotguns and LMGs":"Дробовики и пулеметы", "Marksman and Sniper Rifles":"Марксманские и снайперские винтовки", "Bow, Sidearms, and Launchers":"Лук, пистолеты и пусковые установки", "Land Transport":"Наземный транспорт", "Armor and Artillery":"Бронетехника и артиллерия", Aircraft:"Авиация", "Every Calibre":"Все калибры", "Short Optics":"Прицелы малой кратности", "Medium Optics":"Прицелы средней кратности", "Captured Optics With Incomplete Tooltips":"Прицелы с неполными подсказками", Magazines:"Магазины", Helmets:"Шлемы", Armor:"Броня", Backpacks:"Рюкзаки", Offensive:"Наступательное", Medical:"Медицинское", "Recon and Vehicle Support":"Разведка и обслуживание транспорта", "Building and Utility":"Строительство и вспомогательные средства", "Budget Bands":"Уровни бюджета"},
   de: {"Assault Rifles":"Sturmgewehre", SMGs:"Maschinenpistolen", "Shotguns and LMGs":"Schrotflinten und leichte MGs", "Marksman and Sniper Rifles":"Präzisions- und Scharfschützengewehre", "Bow, Sidearms, and Launchers":"Bogen, Seitenwaffen und Werfer", "Land Transport":"Landtransport", "Armor and Artillery":"Panzerung und Artillerie", Aircraft:"Luftfahrzeuge", "Every Calibre":"Alle Kaliber", "Short Optics":"Optiken mit geringer Vergrößerung", "Medium Optics":"Optiken mit mittlerer Vergrößerung", "Captured Optics With Incomplete Tooltips":"Erfasste Optiken mit unvollständigen Angaben", Magazines:"Magazine", Helmets:"Helme", Armor:"Körperpanzerung", Backpacks:"Rucksäcke", Offensive:"Offensiv", Medical:"Medizinisch", "Recon and Vehicle Support":"Aufklärung und Fahrzeugunterstützung", "Building and Utility":"Bau und Hilfsmittel", "Budget Bands":"Budgetstufen"},
   "pt-br": {"Assault Rifles":"Fuzis de assalto", SMGs:"Submetralhadoras", "Shotguns and LMGs":"Escopetas e metralhadoras leves", "Marksman and Sniper Rifles":"Fuzis de precisão e de atirador", "Bow, Sidearms, and Launchers":"Arco, armas secundárias e lançadores", "Land Transport":"Transporte terrestre", "Armor and Artillery":"Blindados e artilharia", Aircraft:"Aeronaves", "Every Calibre":"Todos os calibres", "Short Optics":"Miras de curto alcance", "Medium Optics":"Miras de médio alcance", "Captured Optics With Incomplete Tooltips":"Miras registradas com dados incompletos", Magazines:"Carregadores", Helmets:"Capacetes", Armor:"Armaduras", Backpacks:"Mochilas", Offensive:"Ofensivo", Medical:"Médico", "Recon and Vehicle Support":"Reconhecimento e suporte a veículos", "Building and Utility":"Construção e utilidade", "Budget Bands":"Faixas de orçamento"},
-  ja: {"Assault Rifles":"アサルトライフル", SMGs:"サブマシンガン", "Shotguns and LMGs":"ショットガン・軽機関銃", "Marksman and Sniper Rifles":"マークスマン・スナイパーライフル", "Bow, Sidearms, and Launchers":"弓・サイドアーム・ランチャー", "Land Transport":"地上輸送車両", "Armor and Artillery":"装甲車両・砲兵", Aircraft:"航空機", "Every Calibre":"全口径", "Short Optics":"低倍率サイト", "Medium Optics":"中倍率サイト", "Captured Optics With Incomplete Tooltips":"情報が不完全な確認済みサイト", Magazines:"マガジン", Helmets:"ヘルメット", Armor:"ボディアーマー", Backpacks:"バックパック", Offensive:"攻撃装備", Medical:"医療装備", "Recon and Vehicle Support":"偵察・車両支援", "Building and Utility":"建築・汎用装備", "Budget Bands":"予算区分"}
+  ja: {"Assault Rifles":"アサルトライフル", SMGs:"サブマシンガン", "Shotguns and LMGs":"ショットガン・軽機関銃", "Marksman and Sniper Rifles":"マークスマン・スナイパーライフル", "Bow, Sidearms, and Launchers":"弓・サイドアーム・ランチャー", "Land Transport":"地上輸送車両", "Armor and Artillery":"装甲車両・砲兵", Aircraft:"航空機", "Every Calibre":"全口径", "Short Optics":"低倍率サイト", "Medium Optics":"中倍率サイト", "Captured Optics With Incomplete Tooltips":"情報が不完全な確認済みサイト", Magazines:"マガジン", Helmets:"ヘルメット", Armor:"ボディアーマー", Backpacks:"バックパック", Offensive:"攻撃装備", Medical:"医療装備", "Recon and Vehicle Support":"偵察・車両支援", "Building and Utility":"建築・汎用装備", "Budget Bands":"予算区分"},
+
+  pl: {
+  "Assault Rifles": "Karabiny szturmowe",
+  "SMGs": "Pistolety maszynowe",
+  "Shotguns and LMGs": "Strzelby i lekkie karabiny maszynowe",
+  "Marksman and Sniper Rifles": "Karabiny wyborowe i snajperskie",
+  "Bow, Sidearms, and Launchers": "Łuk, broń boczna i wyrzutnie",
+  "Land Transport": "Transport lądowy",
+  "Armor and Artillery": "Pojazdy opancerzone i artyleria",
+  "Aircraft": "Maszyny latające",
+  "Every Calibre": "Wszystkie kalibry",
+  "Short Optics": "Celowniki o małym powiększeniu",
+  "Medium Optics": "Celowniki o średnim powiększeniu",
+  "Captured Optics With Incomplete Tooltips": "Zapisane celowniki z niepełnym opisem",
+  "Magazines": "Magazynki",
+  "Helmets": "Hełmy",
+  "Armor": "Pancerz",
+  "Backpacks": "Plecaki",
+  "Offensive": "Ofensywne",
+  "Medical": "Medyczne",
+  "Recon and Vehicle Support": "Zwiad i wsparcie pojazdów",
+  "Building and Utility": "Budowa i narzędzia pomocnicze",
+  "Budget Bands": "Przedziały budżetu"
+},
+  "zh-tw": { "Assault Rifles": "突擊步槍", SMGs: "衝鋒槍", "Shotguns and LMGs": "霰彈槍與輕機槍", "Marksman and Sniper Rifles": "精確射手步槍與狙擊步槍", "Bow, Sidearms, and Launchers": "弓、副武器與發射器", "Land Transport": "地面運輸", "Armor and Artillery": "裝甲與火炮", Aircraft: "飛行器", "Every Calibre": "全部口徑", "Short Optics": "低倍率瞄具", "Medium Optics": "中倍率瞄具", "Captured Optics With Incomplete Tooltips": "資訊不完整的已記錄瞄具", Magazines: "彈匣", Helmets: "頭盔", Armor: "護甲", Backpacks: "背包", Offensive: "進攻裝備", Medical: "醫療裝備", "Recon and Vehicle Support": "偵察與載具支援", "Building and Utility": "建造與通用裝備", "Budget Bands": "預算檔位" }
 };
 
 const localeText = {
@@ -20,7 +45,19 @@ const localeText = {
   ru: {count:(n:number,l:string)=>`${n} записей: ${l}`, description:(l:string)=>`Полный наблюдаемый каталог WARDOGS: ${l}. Сравнивайте модели, роли, цены сборки и доказательства без предположений о финальном балансе.`, disclaimer:"Данные сообщества из предрелизной сборки. Цена, разблокировка, баланс и доступность могут измениться до раннего доступа.", section:(s:string,l:string)=>`${s}: наблюдаемые модели и значения для категории «${l}». Все числа относятся к указанной тестовой сборке.`, insight:(l:string)=>[`Категория «${l}» должна выбираться под конкретную роль, бюджет и план снабжения.`,"Наблюдаемые значения помогают сравнивать варианты, но не являются окончательной таблицей баланса.","Дорогой выбор оправдан только тогда, когда отряд может использовать и поддерживать его в бою."], unknown:(l:string)=>[`Финальные характеристики категории «${l}» для раннего доступа не подтверждены.`,"Цены, прогресс, доступность и баланс могут измениться после обновления сборки.","Неуказанное значение не следует восстанавливать по одному видео или скриншоту."], asOf:"Alpha 1 — 7 августа 2026", sources:["WARDOGS в Steam","Страница WARDOGS на Team17","Страница WARDOGS на BULKHEAD"]},
   de: {count:(n:number,l:string)=>`${n} Einträge: ${l}`, description:(l:string)=>`Vollständiger beobachteter WARDOGS-Katalog für ${l}. Vergleiche Modelle, Rollen, Preise der Testversion und Belege ohne Annahmen zur endgültigen Balance.`, disclaimer:"Von der Community beobachtete Vorabdaten. Preise, Freischaltungen, Balance und Verfügbarkeit können sich vor dem Early Access ändern.", section:(s:string,l:string)=>`${s}: beobachtete Modelle und Werte für ${l}. Alle Zahlen beziehen sich auf die angegebene Testversion.`, insight:(l:string)=>[`Wähle ${l} nach klarer Rolle, Budget und Versorgungsplan.`,"Beobachtete Werte ermöglichen Vergleiche, sind aber keine endgültige Balancetabelle.","Eine teure Wahl lohnt sich nur, wenn der Trupp sie im Einsatz unterstützen und versorgen kann."], unknown:(l:string)=>[`Die endgültigen Early-Access-Werte für ${l} sind nicht bestätigt.`,"Preise, Fortschritt, Verfügbarkeit und Balance können sich mit neuen Versionen ändern.","Fehlende Werte dürfen nicht aus einem einzelnen Video oder Bild ergänzt werden."], asOf:"Alpha 1 — 7. August 2026", sources:["WARDOGS auf Steam","WARDOGS bei Team17","WARDOGS bei BULKHEAD"]},
   "pt-br": {count:(n:number,l:string)=>`${n} registros de ${l}`, description:(l:string)=>`Catálogo completo observado de WARDOGS para ${l}. Compare modelos, funções, preços da build e evidências sem presumir o balanceamento final.`, disclaimer:"Dados de pré-lançamento observados pela comunidade. Preços, desbloqueios, balanceamento e disponibilidade podem mudar antes do Acesso Antecipado.", section:(s:string,l:string)=>`${s}: modelos e valores observados para ${l}. Todos os números pertencem à build de teste indicada.`, insight:(l:string)=>[`Escolha ${l} de acordo com uma função, orçamento e plano de suprimento claros.`,"Valores observados ajudam na comparação, mas não são uma tabela final de balanceamento.","Uma opção cara só compensa quando o esquadrão consegue usá-la e sustentá-la em combate."], unknown:(l:string)=>[`Os valores finais de ${l} no Acesso Antecipado não foram confirmados.`,"Preços, progressão, disponibilidade e balanceamento podem mudar com novas builds.","Um valor ausente não deve ser inventado a partir de um único vídeo ou imagem."], asOf:"Alpha 1 — 7 de agosto de 2026", sources:["WARDOGS na Steam","Página de WARDOGS na Team17","Página de WARDOGS na BULKHEAD"]},
-  ja: {count:(n:number,l:string)=>`${l} ${n}件`, description:(l:string)=>`WARDOGSで確認できた${l}の完全カタログです。最終バランスを推測せず、モデル、役割、テストビルドの価格、証拠を比較できます。`, disclaimer:"コミュニティが発売前ビルドで確認したデータです。価格、解除条件、バランス、入手可否は早期アクセス前に変更される可能性があります。", section:(s:string,l:string)=>`${s}として確認できた${l}のモデルと数値です。すべての数値は記載されたテストビルド時点の情報です。`, insight:(l:string)=>[`${l}は、明確な役割、予算、補給計画に合わせて選びます。`,"観察済みの数値は候補の比較に使えますが、最終バランス表ではありません。", "高価な選択は、分隊が実戦で運用・補給できる場合にだけ価値を持ちます。"], unknown:(l:string)=>[`${l}の早期アクセス版における最終性能は確認されていません。`,"価格、進行条件、入手可否、バランスは新しいビルドで変わる可能性があります。", "未記載の数値を1本の動画や画像から推測してはいけません。"], asOf:"Alpha 1 — 2026年8月7日", sources:["Steam版WARDOGS","Team17のWARDOGSページ","BULKHEADのWARDOGSページ"]}
+  ja: {count:(n:number,l:string)=>`${l} ${n}件`, description:(l:string)=>`WARDOGSで確認できた${l}の完全カタログです。最終バランスを推測せず、モデル、役割、テストビルドの価格、証拠を比較できます。`, disclaimer:"コミュニティが発売前ビルドで確認したデータです。価格、解除条件、バランス、入手可否は早期アクセス前に変更される可能性があります。", section:(s:string,l:string)=>`${s}として確認できた${l}のモデルと数値です。すべての数値は記載されたテストビルド時点の情報です。`, insight:(l:string)=>[`${l}は、明確な役割、予算、補給計画に合わせて選びます。`,"観察済みの数値は候補の比較に使えますが、最終バランス表ではありません。", "高価な選択は、分隊が実戦で運用・補給できる場合にだけ価値を持ちます。"], unknown:(l:string)=>[`${l}の早期アクセス版における最終性能は確認されていません。`,"価格、進行条件、入手可否、バランスは新しいビルドで変わる可能性があります。", "未記載の数値を1本の動画や画像から推測してはいけません。"], asOf:"Alpha 1 — 2026年8月7日", sources:["Steam版WARDOGS","Team17のWARDOGSページ","BULKHEADのWARDOGSページ"]},
+
+  pl: {
+  count: (n:number,l:string) => `${l}: ${n} wpisów`,
+  description: (l:string) => `Katalog WARDOGS: ${l}. Porównaj modele, role, ceny z wersji testowych i dowody bez zgadywania ostatecznego balansu.`,
+  disclaimer: "Dane zaobserwowane przez społeczność w wersjach przedpremierowych. Ceny, wymagania odblokowania, balans i dostępność mogą zmienić się przed wczesnym dostępem.",
+  section: (s:string,l:string) => `${s}: zaobserwowane modele i wartości w kategorii „${l}”. Wszystkie liczby dotyczą wyłącznie oznaczonej wersji testowej.`,
+  insight: (l:string) => [`W kategorii „${l}” wybieraj według zadania, budżetu i planu zaopatrzenia.`, "Zaobserwowane wartości pomagają porównywać opcje, ale nie są tabelą ostatecznego balansu.", "Drogi sprzęt ma sens tylko wtedy, gdy oddział może go używać i regularnie zaopatrywać."],
+  unknown: (l:string) => [`Ostateczne parametry kategorii „${l}” we wczesnym dostępie nie zostały potwierdzone.`, "Ceny, postępy, dostępność i balans mogą zmieniać się wraz z kolejnymi wersjami.", "Pojedyncze nagranie lub zrzut ekranu nie pozwalają uzupełniać brakujących wartości."],
+  asOf: "Alfa 1 - 7 sierpnia 2026",
+  sources: ["WARDOGS na Steam", "WARDOGS na stronie Team17", "WARDOGS na stronie BULKHEAD"]
+},
+  "zh-tw": { count: (n: number, l: string) => `${l}：${n} 條記錄`, description: (l: string) => `WARDOGS ${l}完整觀察圖鑑。比較型號、定位、測試版本價格和證據，不推測最終平衡。`, disclaimer: "社群在預釋出版本中觀察到的資料。價格、解鎖、平衡和可用性可能在搶先體驗前發生變化。", section: (s: string, l: string) => `${s}：${l}類別中已觀察的型號與數值。所有數字僅對應標註的測試版本。`, insight: (l: string) => [`${l}應按照明確的職責、預算和補給計劃選擇。`, "已觀察數值適合比較選項，但不是最終平衡表。", "昂貴選擇只有在小隊能持續使用和補給時才有價值。"], unknown: (l: string) => [`${l}在搶先體驗版中的最終屬性尚未確認。`, "價格、進度、可用性和平衡可能隨新版本改變。", "不能根據單個影片或截圖補寫缺失數值。"], asOf: "Alpha 1 — 2026年8月7日", sources: ["WARDOGS Steam 頁面", "Team17 WARDOGS 頁面", "BULKHEAD WARDOGS 頁面"] }
 } as const;
 
 const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -99,6 +136,37 @@ const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> =
     "Record-specific evidence pending - checked 17 Sep 2026": "個別証拠を確認中 — 2026年9月17日確認",
     "Community catalogue snapshot - 27 Sep 2026": "コミュニティ図鑑の記録 — 2026年9月27日",
   },
+
+  pl: {
+  "Alpha 1 - 7 Aug 2026": "Alfa 1 - 7 sierpnia 2026",
+  "Closed Beta - 21-23 Aug 2026": "Zamknięta beta - 21–23 sierpnia 2026",
+  "Closed Beta - 29 Aug 2026": "Zamknięta beta - 29 sierpnia 2026",
+  "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alfa 1 i zamknięta beta - 7–23 sierpnia 2026",
+  "Alpha 1 to Season 1 - checked 17 Sep 2026": "Od alfy 1 do sezonu 1 - sprawdzono 17 września 2026",
+  "Season 1": "Sezon 1",
+  "Season 1 Early Access": "Sezon 1 we wczesnym dostępie",
+  "Season 1 Early Access - checked 17 Sep 2026": "Sezon 1 we wczesnym dostępie - sprawdzono 17 września 2026",
+  "Season 1 Early Access - checked 26 Sep 2026": "Sezon 1 we wczesnym dostępie - sprawdzono 26 września 2026",
+  "Official pre-release mode explanation": "Oficjalne przedpremierowe objaśnienie trybu",
+  "Pre-release catalogue walkthrough - 20 Aug 2026": "Przegląd katalogu przed premierą - 20 sierpnia 2026",
+  "Record-specific evidence pending - checked 17 Sep 2026": "Dowód dla konkretnego rekordu oczekuje na weryfikację - sprawdzono 17 września 2026",
+  "Community catalogue snapshot - 27 Sep 2026": "Zapis katalogu społeczności - 27 września 2026"
+},
+  "zh-tw": {
+    "Alpha 1 - 7 Aug 2026": "Alpha 1 — 2026年8月7日",
+    "Closed Beta - 21-23 Aug 2026": "封閉測試 — 2026年8月21日至23日",
+    "Closed Beta - 29 Aug 2026": "封閉測試 — 2026年8月29日",
+    "Alpha 1 and Closed Beta - 7-23 Aug 2026": "Alpha 1 與封閉測試 — 2026年8月7日至23日",
+    "Alpha 1 to Season 1 - checked 17 Sep 2026": "Alpha 1 至第 1 賽季 — 2026年9月17日核查",
+    "Season 1": "第 1 賽季",
+    "Season 1 Early Access": "第 1 賽季搶先體驗",
+    "Season 1 Early Access - checked 17 Sep 2026": "第 1 賽季搶先體驗 — 2026年9月17日核查",
+    "Season 1 Early Access - checked 26 Sep 2026": "第 1 賽季搶先體驗 — 2026年9月26日核查",
+    "Official pre-release mode explanation": "官方預釋出模式說明",
+    "Pre-release catalogue walkthrough - 20 Aug 2026": "預釋出圖鑑演示 — 2026年8月20日",
+    "Record-specific evidence pending - checked 17 Sep 2026": "逐項證據待核驗 — 2026年9月17日檢查",
+    "Community catalogue snapshot - 27 Sep 2026": "社群圖鑑快照 — 2026年9月27日",
+}
 };
 
 export function localizeCatalogueBuild(value: string, locale: Locale): string {
@@ -106,7 +174,7 @@ export function localizeCatalogueBuild(value: string, locale: Locale): string {
 }
 
 export function formatCatalogueVerifiedAt(value: string, locale: Locale): string {
-  const localeTags: Record<Locale, string> = {en: "en-US", de: "de-DE", ru: "ru-RU", "pt-br": "pt-BR", ja: "ja-JP", "zh-cn": "zh-CN"};
+  const localeTags: Record<Locale, string> = {en: "en-US", de: "de-DE", ru: "ru-RU", "pt-br": "pt-BR", ja: "ja-JP", "zh-cn": "zh-CN", "zh-tw": "zh-TW", pl: "pl-PL"};
   return new Intl.DateTimeFormat(localeTags[locale], {year: "numeric", month: "short", day: "numeric", timeZone: "UTC"})
     .format(new Date(`${value}T00:00:00Z`));
 }
@@ -117,6 +185,13 @@ const evidenceBoundaryText: Record<Exclude<Locale, "en">, {current: string; hist
   de: {current: "Dies ist eine aktuelle offizielle Quelle; bestätigt sind nur die dort ausdrücklich belegten Fakten.", historical: "Dies ist ein historischer Vorabstand; Preise, Freischaltungen, Balance und Verfügbarkeit gelten nicht als aktuell.", unknown: "Die aktuelle Gültigkeit ist ungeklärt; nutze den Eintrag nur im angegebenen Quellen- und Build-Rahmen."},
   "pt-br": {current: "Esta é uma fonte oficial atual; apenas os fatos expressamente sustentados por ela estão confirmados.", historical: "Este é um registro histórico de pré-lançamento; preços, desbloqueios, equilíbrio e disponibilidade não são atuais.", unknown: "A validade atual não foi confirmada; use o registro somente no escopo da fonte e da build indicadas."},
   ja: {current: "現行の公式情報です。出典が明示的に裏付ける事実だけを確認済みとして扱います。", historical: "過去のリリース前記録です。価格、解除条件、バランス、入手可否を現行情報として扱いません。", unknown: "現行ビルドでの有効性は未確認です。記載された出典とビルドの範囲内で参照してください。"},
+
+  pl: {
+  "current": "To aktualne materiały oficjalne. Potwierdzone są tylko fakty wskazane wprost w źródle.",
+  "historical": "To historyczny zapis sprzed premiery. Ceny, wymagania odblokowania, balans i dostępność nie opisują bieżącej wersji.",
+  "unknown": "Aktualność tych danych nie została potwierdzona. Korzystaj z nich wyłącznie w zakresie wskazanego źródła i wersji."
+},
+  "zh-tw": { current: "這是當前官方資料；僅來源明確支援的事實可視為已確認。", historical: "這是歷史預釋出記錄；價格、解鎖、平衡和可用性不得視為當前版本事實。", unknown: "該資料的當前適用性尚未確認；請按標註來源與版本範圍使用。" }
 };
 
 export type CatalogueGuideEvidenceState = "current" | "historical" | "mixed";
@@ -152,6 +227,17 @@ const catalogueEvidenceDisclaimers: Record<Locale, Record<CatalogueGuideEvidence
     historical: "仅包含历史记录或未验证记录。除非较新的引用来源明确复核，否则数值和可用性均不视为当前信息。",
     mixed: "当前证据与历史证据并存。当前官方事实会单独标记；旧记录或未验证记录只适用于其标注版本。",
   },
+
+  pl: {
+  "current": "Wyłącznie aktualne dowody oficjalne. Fakt jest potwierdzony tylko wtedy, gdy podaje go cytowane źródło; brakujących wartości nie uzupełniamy domysłami.",
+  "historical": "Wyłącznie zapisy historyczne lub niezweryfikowane. Wartości i dostępność nie są uznawane za aktualne bez wyraźnego potwierdzenia w nowszym źródle.",
+  "mixed": "Połączenie dowodów aktualnych i historycznych. Bieżące oficjalne fakty są oznaczone osobno; starsze i niezweryfikowane zapisy dotyczą wyłącznie podanej wersji."
+},
+  "zh-tw": {
+    current: "僅使用當前官方證據。只有引用來源直接說明的事實才視為已確認，不補寫來源未提供的數值。",
+    historical: "僅包含歷史記錄或未驗證記錄。除非較新的引用來源明確複核，否則數值和可用性均不視為當前資訊。",
+    mixed: "當前證據與歷史證據並存。當前官方事實會單獨標記；舊記錄或未驗證記錄只適用於其標註版本。",
+}
 };
 
 export function getLocalizedCatalogueEvidenceDisclaimer(state: CatalogueGuideEvidenceState, locale: Locale): string {
@@ -197,6 +283,19 @@ const sourceNoteTemplates: Record<Exclude<Locale, "en">, {current: string; histo
     unknown: "该记录没有可定位到具体对象的已批准证据；用途、数值、标识和当前行为均未验证。",
     segment: (scope) => `已核验来源片段：${scope}。`,
   },
+
+  pl: {
+  current: "Cytowane aktualne źródło potwierdza tylko wymienione fakty; nie dopisujemy brakujących wartości.",
+  historical: "Cytowane źródło historyczne potwierdza tylko wymienione fakty dla oznaczonej wersji. Bieżące wartości i pozostałe szczegóły są niezweryfikowane.",
+  unknown: "Dla tego wpisu nie ma zatwierdzonego dowodu pozwalającego rozpoznać konkretny obiekt. Jego rola, wartości, identyfikator i bieżące działanie są niezweryfikowane.",
+  segment: (scope) => `Sprawdzony fragment źródła: ${scope}.`
+},
+  "zh-tw": {
+    current: "引用的當前來源只支援已列出的事實，不補寫來源未說明的數值。",
+    historical: "引用的歷史來源只支援標註版本中的已列事實；當前數值和未列細節仍未驗證。",
+    unknown: "該記錄沒有可定位到具體物件的已批准證據；用途、數值、標識和當前行為均未驗證。",
+    segment: (scope) => `已核驗來源片段：${scope}。`,
+}
 };
 
 function localizeCatalogueSourceNotes(record: CatalogueRecord, locale: Exclude<Locale, "en">): readonly string[] {
@@ -280,6 +379,26 @@ const expandedLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
     "Stationary defense": "固定式防衛装備",
     "Stationary weapon": "固定式兵器",
   },
+
+  pl: {
+  "LMG": "Lekki karabin maszynowy",
+  "Shotgun": "Strzelba",
+  "Launcher": "Wyrzutnia",
+  "Identifier only": "Tylko identyfikator",
+  "Stationary system": "System stacjonarny",
+  "Closed Beta price": "Cena w zamkniętej becie",
+  "Build": "Wersja",
+  "Verification": "Weryfikacja",
+  "Anti-air launcher": "Wyrzutnia przeciwlotnicza",
+  "Anti-vehicle launcher": "Wyrzutnia przeciw pojazdom",
+  "Grenade launcher": "Granatnik",
+  "Stationary support": "Wsparcie stacjonarne",
+  "Stationary anti-air": "Stacjonarna obrona przeciwlotnicza",
+  "Stationary artillery": "Artyleria stacjonarna",
+  "Stationary defense": "Obrona stacjonarna",
+  "Stationary weapon": "Broń stacjonarna"
+},
+  "zh-tw": { LMG: "輕機槍", Shotgun: "霰彈槍", Launcher: "發射器", "Identifier only": "僅記錄標識", "Stationary system": "固定式系統", "Closed Beta price": "封閉測試價格", Build: "版本", Verification: "驗證", "Anti-air launcher": "防空發射器", "Anti-vehicle launcher": "反載具發射器", "Grenade launcher": "榴彈發射器", "Stationary support": "固定式支援", "Stationary anti-air": "固定式防空", "Stationary artillery": "固定式火炮", "Stationary defense": "固定式防禦", "Stationary weapon": "固定式武器" }
 };
 
 const expandedSectionNames: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -300,6 +419,12 @@ const expandedSectionNames: Record<Exclude<Locale, "en">, Record<string, string>
     "Closed Beta Identifiers": "クローズドベータで確認した名称",
     "Closed Beta Systems and Identifiers": "クローズドベータのシステムと名称",
   },
+
+  pl: {
+  "Closed Beta Identifiers": "Identyfikatory zamkniętej bety",
+  "Closed Beta Systems and Identifiers": "Systemy i identyfikatory zamkniętej bety"
+},
+  "zh-tw": { "Closed Beta Identifiers": "封閉測試標識", "Closed Beta Systems and Identifiers": "封閉測試系統與標識" }
 };
 
 const fieldReferenceLabels: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -318,6 +443,48 @@ const fieldReferenceLabels: Record<Exclude<Locale, "en">, Record<string, string>
   ja: {
     "Vehicle support":"車両支援", "Personal recovery":"自己回復", "Squad recovery":"分隊救護", Supplies:"補給物資", Fuel:"燃料", Mechanical:"整備", "Route denial":"経路阻止", "FOB asset":"FOB施設", "Objective support":"目標支援", Objective:"目標", Economy:"経済", Support:"支援", Orientation:"状況把握", Construction:"建設", Logistics:"兵站", "Fire support":"火力支援", "Air operations":"航空作戦", "Observed role":"確認済み用途", "Observed form":"確認済み形態", "Observed dependency":"確認済み依存関係", "Observed family":"確認済み分類", "Evidence scope":"証拠の範囲", "Primary task":"主要任務", Context:"状況", "Supply Types":"補給物資の種類", "Route Denial":"経路阻止", "FOB and Objective Assets":"FOB・目標施設", "Objective and Economy Systems":"目標・経済システム", "Medical item":"医療アイテム", Supply:"補給物資", Deployable:"設置物", Mechanic:"システム", System:"分類", "Confirmed fact":"確認済み事実", "Evidence state":"証拠状態", "Evidence window":"証拠の時期"
   },
+
+  pl: {
+  "Vehicle support": "Wsparcie pojazdów",
+  "Personal recovery": "Regeneracja własna",
+  "Squad recovery": "Pomoc oddziałowi",
+  "Supplies": "Zaopatrzenie",
+  "Fuel": "Paliwo",
+  "Mechanical": "Materiały mechaniczne",
+  "Route denial": "Blokowanie trasy",
+  "FOB asset": "Obiekt FOB",
+  "Objective support": "Wsparcie celu",
+  "Objective": "Cel",
+  "Economy": "Ekonomia",
+  "Support": "Wsparcie",
+  "Orientation": "Orientacja na mapie",
+  "Construction": "Budowanie",
+  "Logistics": "Logistyka",
+  "Fire support": "Wsparcie ogniowe",
+  "Air operations": "Działania powietrzne",
+  "Observed role": "Zaobserwowana rola",
+  "Observed form": "Zaobserwowana postać",
+  "Observed dependency": "Zaobserwowana zależność",
+  "Observed family": "Zaobserwowana rodzina",
+  "Evidence scope": "Zakres dowodów",
+  "Primary task": "Główne zadanie",
+  "Context": "Kontekst",
+  "Supply Types": "Rodzaje zaopatrzenia",
+  "Route Denial": "Blokowanie tras",
+  "FOB and Objective Assets": "Obiekty FOB i celów",
+  "Objective and Economy Systems": "Systemy celów i ekonomii",
+  "Medical item": "Przedmiot medyczny",
+  "Supply": "Zaopatrzenie",
+  "Deployable": "Obiekt do rozmieszczenia",
+  "Mechanic": "Mechanika",
+  "System": "System",
+  "Confirmed fact": "Potwierdzony fakt",
+  "Evidence state": "Stan dowodów",
+  "Evidence window": "Okres dowodów"
+},
+  "zh-tw": {
+    "Vehicle support": "載具支援", "Personal recovery": "個人恢復", "Squad recovery": "小隊救治", Supplies: "補給物資", Fuel: "燃料", Mechanical: "機械補給", "Route denial": "路線封鎖", "FOB asset": "FOB 設施", "Objective support": "目標支援", Objective: "目標", Economy: "經濟", Support: "支援", Orientation: "地圖判讀", Construction: "建造", Logistics: "後勤", "Fire support": "火力支援", "Air operations": "空中行動", "Observed role": "已觀察用途", "Observed form": "已觀察形態", "Observed dependency": "已觀察依賴", "Observed family": "已觀察類別", "Evidence scope": "證據範圍", "Primary task": "主要任務", Context: "適用場景", "Supply Types": "補給型別", "Route Denial": "路線封鎖", "FOB and Objective Assets": "FOB 與目標設施", "Objective and Economy Systems": "目標與經濟系統", "Medical item": "醫療物品", Supply: "補給", Deployable: "部署物", Mechanic: "機制", System: "系統", "Confirmed fact": "已確認事實", "Evidence state": "證據狀態", "Evidence window": "證據時期"
+}
 };
 
 const fieldReferenceValues: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -336,6 +503,42 @@ const fieldReferenceValues: Record<Exclude<Locale, "en">, Record<string, string>
   ja: {
     "Recon observation":"偵察観測", "Name and catalogue category":"名称とカタログ分類", "Distance and bearing observation":"距離と方位の観測", "Item label only":"アイテム名のみ確認", "Portable fuel container":"携行燃料容器", "Fuel container segment, 01:03-02:16":"燃料容器の区間 01:03-02:16", "Repair equipment":"修理器材", "Battery-powered in the walkthrough":"映像内ではバッテリー駆動", "Portable power source":"携行電源", "Personal recovery":"自己回復", "Medical segment, 02:16-03:23":"医療区間 02:16-03:23", "Squad recovery":"分隊救護", "Improvised explosive":"即製爆発物", "Explosives segment, 01:03-02:16":"爆発物の区間 01:03-02:16", "Anti-vehicle mine":"対車両地雷", "Directional mine":"指向性地雷", "Three teams fight across a 256 km² battlefield":"3チームが256 km²の戦場で交戦", "Randomized 2 x 2 km Control Zone":"ランダムな2×2 kmのControl Zone", "Tower terminals appear in the official pre-release mode explanation":"公式発売前モード解説にタワー端末が登場", "Official pre-release footage checked 26 Aug 2026":"公式発売前映像を2026年8月26日に確認", "FOB-built objective support structure":"FOBで建設する目標支援施設", "Construction supplies and fuel in Closed Beta":"クローズドベータでの建設物資と燃料", "The official description includes base building":"公式説明に基地建設を記載", "The official description includes logistics and transport":"公式説明に兵站と輸送を記載", "Vehicles carry supply pallets to field destinations":"車両が補給パレットを現地へ輸送", "Closed Beta creator walkthrough":"クローズドベータのクリエイター解説", "Crew-operated indirect-fire emplacement":"班員が操作する間接射撃陣地", "Closed Beta creator demonstration":"クローズドベータのクリエイター実演", "Helicopter transport of players or supplies":"ヘリによるプレイヤーまたは物資の輸送", "Closed Beta creator guide":"クローズドベータのクリエイター攻略"
   },
+
+  pl: {
+  "Recon observation": "Obserwacja zwiadowcza",
+  "Name and catalogue category": "Nazwa i kategoria katalogowa",
+  "Distance and bearing observation": "Obserwacja odległości i azymutu",
+  "Item label only": "Tylko nazwa przedmiotu",
+  "Portable fuel container": "Przenośny zbiornik paliwa",
+  "Fuel container segment, 01:03-02:16": "Fragment o paliwie, 01:03-02:16",
+  "Repair equipment": "Sprzęt naprawczy",
+  "Battery-powered in the walkthrough": "Zasilane baterią w nagraniu",
+  "Portable power source": "Przenośne źródło zasilania",
+  "Personal recovery": "Regeneracja własna",
+  "Medical segment, 02:16-03:23": "Fragment medyczny, 02:16-03:23",
+  "Squad recovery": "Pomoc oddziałowi",
+  "Improvised explosive": "Improwizowany ładunek wybuchowy",
+  "Explosives segment, 01:03-02:16": "Fragment o materiałach wybuchowych, 01:03-02:16",
+  "Anti-vehicle mine": "Mina przeciw pojazdom",
+  "Directional mine": "Mina kierunkowa",
+  "Three teams fight across a 256 km² battlefield": "Trzy zespoły walczą na polu bitwy o powierzchni 256 km²",
+  "Randomized 2 x 2 km Control Zone": "Losowa strefa kontroli 2×2 km",
+  "Tower terminals appear in the official pre-release mode explanation": "Terminale wież pokazano w oficjalnym przedpremierowym objaśnieniu trybu",
+  "Official pre-release footage checked 26 Aug 2026": "Oficjalne nagranie przedpremierowe sprawdzono 26 sierpnia 2026",
+  "FOB-built objective support structure": "Obiekt wsparcia celu budowany przez FOB",
+  "Construction supplies and fuel in Closed Beta": "Materiały budowlane i paliwo w zamkniętej becie",
+  "The official description includes base building": "Oficjalny opis obejmuje budowanie baz",
+  "The official description includes logistics and transport": "Oficjalny opis obejmuje logistykę i transport",
+  "Vehicles carry supply pallets to field destinations": "Pojazdy przewożą palety zaopatrzenia do punktów na polu bitwy",
+  "Closed Beta creator walkthrough": "Przegląd twórcy z zamkniętej bety",
+  "Crew-operated indirect-fire emplacement": "Załogowe stanowisko ognia pośredniego",
+  "Closed Beta creator demonstration": "Pokaz twórcy z zamkniętej bety",
+  "Helicopter transport of players or supplies": "Transport graczy lub zapasów śmigłowcem",
+  "Closed Beta creator guide": "Poradnik twórcy z zamkniętej bety"
+},
+  "zh-tw": {
+    "Recon observation": "偵察觀察", "Name and catalogue category": "名稱與圖鑑分類", "Distance and bearing observation": "距離與方位觀察", "Item label only": "僅確認物品名稱", "Portable fuel container": "便攜燃料容器", "Fuel container segment, 01:03-02:16": "燃料容器片段 01:03-02:16", "Repair equipment": "維修器材", "Battery-powered in the walkthrough": "演示中由電池供電", "Portable power source": "便攜電源", "Personal recovery": "個人恢復", "Medical segment, 02:16-03:23": "醫療片段 02:16-03:23", "Squad recovery": "小隊救治", "Improvised explosive": "簡易爆炸物", "Explosives segment, 01:03-02:16": "爆炸物片段 01:03-02:16", "Anti-vehicle mine": "反載具地雷", "Directional mine": "定向地雷", "Three teams fight across a 256 km² battlefield": "三支隊伍在 256 平方公里戰場中作戰", "Randomized 2 x 2 km Control Zone": "隨機生成的 2×2 公里控制區", "Tower terminals appear in the official pre-release mode explanation": "官方預釋出模式說明展示了塔樓終端", "Official pre-release footage checked 26 Aug 2026": "官方預釋出畫面於 2026 年 8 月 26 日核查", "FOB-built objective support structure": "由 FOB 建造的目標支援設施", "Construction supplies and fuel in Closed Beta": "封閉測試中需要建造補給與燃料", "The official description includes base building": "官方說明包含基地建造", "The official description includes logistics and transport": "官方說明包含後勤與運輸", "Vehicles carry supply pallets to field destinations": "載具將補給托盤運往戰場目的地", "Closed Beta creator walkthrough": "封閉測試創作者演示", "Crew-operated indirect-fire emplacement": "由乘員操作的間接火力陣地", "Closed Beta creator demonstration": "封閉測試創作者演示", "Helicopter transport of players or supplies": "直升機運輸玩家或補給", "Closed Beta creator guide": "封閉測試創作者攻略"
+}
 };
 
 const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -399,7 +602,199 @@ const valueMaps: Record<Exclude<Locale, "en">, Record<string, string>> = {
     "Assault rifle":"アサルトライフル", SMG:"サブマシンガン", "Marksman rifle":"マークスマンライフル", "Sniper rifle":"スナイパーライフル", Bow:"弓", Sidearm:"サイドアーム",
     "Light transport":"軽輸送車両", "Fast transport":"高速輸送車両", "Utility transport":"汎用輸送車両", "Cargo transport":"貨物輸送車両", "Protected transport":"防護輸送車両", "Armed transport":"武装輸送車両", "Heavy armed transport":"重武装輸送車両", "Logistics truck":"兵站トラック", "Protected logistics":"防護兵站車両", "Armed logistics":"武装兵站車両", "Anti-air armor":"対空装甲車両", "Main battle tank":"主力戦車", "Self-propelled artillery":"自走砲", "Combat helicopter":"戦闘ヘリコプター", "Armed utility helicopter":"武装多用途ヘリコプター", "Rocket helicopter":"ロケットヘリコプター", "Attack helicopter":"攻撃ヘリコプター", "Light air transport":"軽航空輸送", "Air transport":"航空輸送",
     Budget:"低予算", Standard:"標準", "Full Budget":"全額投入", "Protect most of the $10,000 starting balance":"初期資金1万ドルの大半を残す", "Balance weapon, ammunition, protection, and one job":"武器、弾薬、防具、1つの役割を均衡させる", "Commit heavily to a specialist role or vehicle":"専門役または車両へ重点投資する", "Learning routes, support play, repeated lives":"ルート学習、支援、繰り返しの出撃", "Regular squad play and objective pushes":"通常の分隊行動と目標への攻勢", "Coordinated armor, air, sniper, or demolition play":"連携した装甲、航空、狙撃、爆破プレイ", "Low armor and limited specialist tools":"防具が弱く専門装備が少ない", "Can become unfocused if every slot is upgraded":"全スロットを強化すると役割がぼやける", "One bad loss can remove multiple future options":"一度の損失で今後の複数の選択肢を失う"
-  }
+  },
+
+  pl: {
+  "Weapon": "Broń",
+  "Vehicle": "Pojazd",
+  "Calibre": "Kaliber",
+  "Attachment": "Dodatek",
+  "Gear": "Wyposażenie osobiste",
+  "Equipment": "Sprzęt taktyczny",
+  "Band": "Przedział budżetu",
+  "Alpha price": "Cena w alfie",
+  "Ammunition": "Amunicja",
+  "Fire modes": "Tryby ognia",
+  "Weight": "Masa",
+  "Progression": "Postępy",
+  "Role": "Rola",
+  "Observed gate": "Zaobserwowane wymaganie",
+  "Track": "Ścieżka postępów",
+  "Base damage": "Bazowe obrażenia",
+  "Loads": "Rodzaje nabojów",
+  "Standard per round": "Cena standardowego naboju",
+  "Box price": "Cena skrzynki amunicji",
+  "Weapons": "Zgodna broń",
+  "Kind": "Typ",
+  "Zoom or capacity": "Powiększenie lub pojemność",
+  "Weight or calibre": "Masa lub kaliber",
+  "Slot": "Miejsce wyposażenia",
+  "Tier": "Poziom",
+  "Recorded identifier": "Zapisany identyfikator",
+  "Spending rule": "Zasada wydatków",
+  "Best use": "Najlepsze zastosowanie",
+  "Main risk": "Główne ryzyko",
+  "Not captured": "Nie zarejestrowano",
+  "Gate unread": "Wymaganie nieczytelne",
+  "Open purchase": "Zakup bez dodatkowych wymagań",
+  "Variable": "Zmienna",
+  "fixed": "stały",
+  "Semi / Full Auto": "Ogień pojedynczy / ciągły",
+  "Semi / Burst": "Ogień pojedynczy / seria",
+  "Semi automatic": "Samopowtarzalna",
+  "Break-action": "Łamana",
+  "Single-shot": "Jednostrzałowa",
+  "Bolt action": "Zamek ślizgowo-obrotowy",
+  "Bolt-action / Magazine": "Zamek ślizgowo-obrotowy / magazynek",
+  "Pull and Release": "Naciągnij i puść",
+  "Assault XP": "XP szturmowca",
+  "Medic XP": "XP medyka",
+  "Support XP": "XP wsparcia",
+  "Recon XP": "XP zwiadowcy",
+  "Driver XP": "XP kierowcy",
+  "Pilot XP": "XP pilota",
+  "Driver": "Kierowca",
+  "Pilot": "Pilot",
+  "Wardog": "Żołnierz",
+  "Optic": "Celownik",
+  "Magazine": "Magazynek",
+  "Helmet": "Hełm",
+  "Armor": "Pancerz",
+  "Backpack": "Plecak",
+  "Special": "Specjalne",
+  "Lightest": "Najlżejsze",
+  "Offensive": "Ofensywne",
+  "Medical": "Medyczne",
+  "Recon": "Zwiad",
+  "Building": "Budowanie",
+  "Utility": "Pomocnicze",
+  "Building / Offensive": "Budowanie / ofensywa",
+  "Assault rifle": "Karabin szturmowy",
+  "SMG": "Pistolet maszynowy",
+  "Marksman rifle": "Karabin wyborowy",
+  "Sniper rifle": "Karabin snajperski",
+  "Bow": "Łuk",
+  "Sidearm": "Broń boczna",
+  "Light transport": "Lekki transport",
+  "Fast transport": "Szybki transport",
+  "Utility transport": "Transport uniwersalny",
+  "Cargo transport": "Transport ładunków",
+  "Protected transport": "Transport chroniony",
+  "Armed transport": "Transport uzbrojony",
+  "Heavy armed transport": "Ciężki transport uzbrojony",
+  "Logistics truck": "Ciężarówka logistyczna",
+  "Protected logistics": "Logistyka chroniona",
+  "Armed logistics": "Logistyka uzbrojona",
+  "Anti-air armor": "Opancerzona obrona przeciwlotnicza",
+  "Main battle tank": "Czołg podstawowy",
+  "Self-propelled artillery": "Artyleria samobieżna",
+  "Combat helicopter": "Śmigłowiec bojowy",
+  "Armed utility helicopter": "Uzbrojony śmigłowiec wielozadaniowy",
+  "Rocket helicopter": "Śmigłowiec z rakietami",
+  "Attack helicopter": "Śmigłowiec szturmowy",
+  "Light air transport": "Lekki transport powietrzny",
+  "Air transport": "Transport powietrzny",
+  "Budget": "Niski budżet",
+  "Standard": "Standard",
+  "Full Budget": "Pełny budżet",
+
+    "Standard Arrows": "Standardowe strzały",
+    "Closed Beta": "Zamknięta beta",
+    "Anti-vehicle drone launcher": "Wyrzutnia drona przeciw pojazdom",
+    "Squad medical support": "Wsparcie medyczne oddziału",
+    "FOB construction": "Budowa FOB",
+    "Cargo pallet": "Paleta ładunkowa",
+    "Ammunition resupply": "Uzupełnianie amunicji",
+    "Ammo": "Amunicja",
+    "Fuel delivery": "Dostawa paliwa",
+    "Mechanical support": "Wsparcie techniczne",
+    "Season 1 vendor price": "Cena w sklepie w sezonie 1",
+    "Previous vendor price": "Poprzednia cena w sklepie",
+    "Hot Zone influence": "Wpływ na gorącą strefę",
+    "FOB supplies and fuel": "Zaopatrzenie i paliwo FOB",
+    "Active objective": "Aktywny cel",
+    "Win condition": "Warunek zwycięstwa",
+    "First team to 100 points": "Pierwszy zespół ze 100 punktami",
+    "Starting balance": "Gotówka początkowa",
+    "Persistence": "Zachowanie postępów",
+    "Cash carries between matches": "Gotówka przechodzi między meczami",
+    "Rewarded support": "Nagradzane wsparcie",
+    "Revive and transport": "Reanimacja i transport",
+    "Objective contribution": "Wkład w realizację celu",
+    "Control Zone presence": "Obecność w strefie kontroli",
+    "Observed reward": "Zaobserwowana nagroda",
+    "Bonus cash": "Dodatkowa gotówka",
+    "Still determined by Control Zone scoring": "Nadal zależy od punktacji strefy kontroli",
+    "Category": "Kategoria",
+    "Current price": "Bieżąca cena",
+    "Not verified": "Niezweryfikowane",
+    "Armed air transport": "Uzbrojony transport powietrzny",
+    "Vest": "Kamizelka",
+    "Parachute": "Spadochron",
+    "Tactical": "Taktyczne",
+    "Vehicle tool": "Narzędzie do pojazdów",
+    "Misc": "Różne",
+    "Other": "Pozostałe",
+    "Protect most of the $10,000 starting balance": "Zachowaj większość początkowych $10,000",
+    "Learning routes, support play, repeated lives": "Nauka tras, wsparcie i kolejne odrodzenia",
+    "Low armor and limited specialist tools": "Słaba ochrona i ograniczony sprzęt specjalistyczny",
+    "Balance weapon, ammunition, protection, and one job": "Zrównoważ broń, amunicję, ochronę i jedno zadanie",
+    "Regular squad play and objective pushes": "Zwykła gra oddziałowa i natarcie na cele",
+    "Can become unfocused if every slot is upgraded": "Ulepszanie każdego miejsca wyposażenia może rozmyć rolę zestawu",
+    "Commit heavily to a specialist role or vehicle": "Przeznacz znaczną część budżetu na rolę specjalistyczną lub pojazd",
+    "Coordinated armor, air, sniper, or demolition play": "Skoordynowane działania pancerne, powietrzne, snajperskie lub wyburzeniowe",
+    "One bad loss can remove multiple future options": "Jedna dotkliwa strata może odebrać kilka kolejnych możliwości",
+    "Operations Atlas": "Atlas działań"
+},
+  "zh-tw": { Weapon: "武器", Vehicle: "載具", Calibre: "口徑", Attachment: "配件", Gear: "個人裝備", Equipment: "戰術裝備", Band: "預算檔位", "Alpha price": "Alpha 測試價格", Ammunition: "彈藥", "Fire modes": "射擊模式", Weight: "重量", Progression: "進度", Role: "定位", "Observed gate": "已觀察解鎖條件", Track: "進度路線", "Base damage": "基礎傷害", Loads: "彈種", "Standard per round": "標準單發價格", "Box price": "彈藥箱價格", Weapons: "適用武器", Kind: "型別", "Zoom or capacity": "倍率或容量", "Weight or calibre": "重量或口徑", Slot: "欄位", Tier: "等級", "Recorded identifier": "已記錄標識", "Spending rule": "花費原則", "Best use": "最佳用途", "Main risk": "主要風險", "Not captured": "未記錄", "Gate unread": "條件無法辨認", "Open purchase": "可直接購買", Variable: "可變", fixed: "固定", "Semi / Full Auto": "半自動 / 全自動", "Semi / Burst": "半自動 / 點射", "Semi automatic": "半自動", "Break-action": "折開式", "Single-shot": "單發", "Bolt action": "栓動", "Bolt-action / Magazine": "栓動 / 彈匣", "Pull and Release": "拉弓並釋放", "Assault XP": "突擊經驗", "Medic XP": "醫療經驗", "Support XP": "支援經驗", "Recon XP": "偵察經驗", "Driver XP": "駕駛經驗", "Pilot XP": "飛行經驗", Driver: "駕駛員", Pilot: "飛行員", Wardog: "戰士", Optic: "瞄具", Magazine: "彈匣", Helmet: "頭盔", Armor: "護甲", Backpack: "背包", Special: "特殊", Lightest: "最輕", Offensive: "進攻", Medical: "醫療", Recon: "偵察", Building: "建造", Utility: "通用", "Building / Offensive": "建造 / 進攻", "Assault rifle": "突擊步槍", SMG: "衝鋒槍", "Marksman rifle": "精確射手步槍", "Sniper rifle": "狙擊步槍", Bow: "弓", Sidearm: "副武器", "Light transport": "輕型運輸", "Fast transport": "快速運輸", "Utility transport": "通用運輸", "Cargo transport": "貨運載具", "Protected transport": "防護運輸", "Armed transport": "武裝運輸", "Heavy armed transport": "重型武裝運輸", "Logistics truck": "後勤卡車", "Protected logistics": "防護後勤", "Armed logistics": "武裝後勤", "Anti-air armor": "防空裝甲載具", "Main battle tank": "主戰坦克", "Self-propelled artillery": "自行火炮", "Combat helicopter": "戰鬥直升機", "Armed utility helicopter": "武裝通用直升機", "Rocket helicopter": "火箭直升機", "Attack helicopter": "攻擊直升機", "Light air transport": "輕型空運", "Air transport": "空中運輸", Budget: "低預算", Standard: "標準", "Full Budget": "全額投入",
+    "Standard Arrows": "標準箭矢",
+    "Closed Beta": "封閉測試",
+    "Anti-vehicle drone launcher": "反載具無人機發射器",
+    "Squad medical support": "小隊醫療支援",
+    "FOB construction": "FOB 建設",
+    "Cargo pallet": "貨物棧板",
+    "Ammunition resupply": "彈藥補給",
+    "Ammo": "彈藥",
+    "Fuel delivery": "燃料運送",
+    "Mechanical support": "機械支援",
+    "Season 1 vendor price": "第 1 賽季商店價格",
+    "Previous vendor price": "先前商店價格",
+    "Hot Zone influence": "熱區影響",
+    "FOB supplies and fuel": "FOB 補給與燃料",
+    "Active objective": "當前目標",
+    "Win condition": "勝利條件",
+    "First team to 100 points": "率先達到 100 分的隊伍",
+    "Starting balance": "起始資金",
+    "Persistence": "保留狀態",
+    "Cash carries between matches": "資金在對局之間保留",
+    "Rewarded support": "可獲獎勵的支援",
+    "Revive and transport": "救援與運輸",
+    "Objective contribution": "目標貢獻",
+    "Control Zone presence": "控制區內駐留",
+    "Observed reward": "已觀察獎勵",
+    "Bonus cash": "額外資金",
+    "Still determined by Control Zone scoring": "仍由控制區得分決定",
+    "Category": "類別",
+    "Current price": "目前價格",
+    "Not verified": "尚未驗證",
+    "Armed air transport": "武裝空中運輸",
+    "Vest": "背心",
+    "Parachute": "降落傘",
+    "Tactical": "戰術裝備",
+    "Vehicle tool": "載具工具",
+    "Misc": "雜項",
+    "Other": "其他",
+    "Protect most of the $10,000 starting balance": "保留大部分 $10,000 起始資金",
+    "Learning routes, support play, repeated lives": "熟悉路線、支援作戰與多次重生",
+    "Low armor and limited specialist tools": "護甲較低，專用工具有限",
+    "Balance weapon, ammunition, protection, and one job": "平衡武器、彈藥、防護與單一職責",
+    "Regular squad play and objective pushes": "常規小隊作戰與目標推進",
+    "Can become unfocused if every slot is upgraded": "全面升級每個欄位可能使職責失焦",
+    "Commit heavily to a specialist role or vehicle": "集中投入專業職責或載具",
+    "Coordinated armor, air, sniper, or demolition play": "協同裝甲、空中、狙擊或爆破作戰",
+    "One bad loss can remove multiple future options": "一次重大損失可能耗盡多次後續選擇",
+    "Operations Atlas": "行動圖鑑"
+}
 };
 
 const evidenceTermTranslations: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -408,6 +803,17 @@ const evidenceTermTranslations: Record<Exclude<Locale, "en">, Record<string, str
   "pt-br": {Unverified: "Não verificado", "Record-specific source pending": "Fonte específica pendente", "No observed object facts retained": "Nenhum fato observado do objeto foi mantido", "No approved object-level source": "Sem fonte aprovada e específica do objeto", "Not claimed": "Não afirmado", "Current behavior": "Comportamento atual", "Pending Verification": "Verificação pendente"},
   ja: {Unverified: "未検証", "Record-specific source pending": "個別ソースを確認中", "No observed object facts retained": "観察済みの対象物情報は保持していません", "No approved object-level source": "承認済みの対象物ソースなし", "Not claimed": "未主張", "Current behavior": "現行動作", "Pending Verification": "検証待ち"},
   "zh-cn": {Unverified: "未验证", "Record-specific source pending": "逐项来源待核验", "No observed object facts retained": "未保留已观察对象事实", "No approved object-level source": "没有已批准的对象级来源", "Not claimed": "不作声明", "Current behavior": "当前行为", "Pending Verification": "待核验"},
+
+  pl: {
+  "Unverified": "Niezweryfikowane",
+  "Record-specific source pending": "Źródło konkretnego rekordu czeka na sprawdzenie",
+  "No observed object facts retained": "Brak zachowanych obserwacji obiektu",
+  "No approved object-level source": "Brak zaakceptowanego źródła dla obiektu",
+  "Not claimed": "Bez twierdzenia",
+  "Current behavior": "Bieżące działanie",
+  "Pending Verification": "Oczekuje na weryfikację"
+},
+  "zh-tw": { Unverified: "未驗證", "Record-specific source pending": "逐項來源待核驗", "No observed object facts retained": "未保留已觀察物件事實", "No approved object-level source": "沒有已批准的物件級來源", "Not claimed": "不作宣告", "Current behavior": "當前行為", "Pending Verification": "待核驗" }
 };
 
 function translateValue(value: string, locale: Exclude<Locale, "en">): string {
@@ -416,6 +822,8 @@ function translateValue(value: string, locale: Exclude<Locale, "en">): string {
 
   const rounds = value.match(/^(\d+) rounds$/);
   if (rounds) {
+    if (locale === "pl") return `${rounds[1]} nabojów`;
+    if (locale === "zh-tw") return `${rounds[1]} 發`;
     return locale === "zh-cn" ? `${rounds[1]} 发`
       : locale === "ru" ? `${rounds[1]} патронов`
       : locale === "de" ? `${rounds[1]} Schuss`
@@ -426,11 +834,15 @@ function translateValue(value: string, locale: Exclude<Locale, "en">): string {
   const level = value.match(/^(Driver|Pilot|Wardog) Level (\d+)$/);
   if (level) {
     const role: string = translateValue(level[1], locale);
+    if (locale === "pl") return `${role}, poziom ${level[2]}`;
+    if (locale === "zh-tw") return `${role}等級 ${level[2]}`;
     return locale === "ja" ? `${role}レベル${level[2]}` : locale === "zh-cn" ? `${role}等级 ${level[2]}` : `${role} ${locale === "ru" ? "уровня" : locale === "de" ? "Stufe" : "nível"} ${level[2]}`;
   }
 
   const unlock = value.match(/^(\$[\d,]+) unlock$/);
   if (unlock) {
+    if (locale === "pl") return `Odblokowanie za ${unlock[1]}`;
+    if (locale === "zh-tw") return `${unlock[1]} 解鎖`;
     return locale === "zh-cn" ? `${unlock[1]} 解锁`
       : locale === "ru" ? `Разблокировка за ${unlock[1]}`
       : locale === "de" ? `Freischaltung für ${unlock[1]}`
@@ -440,7 +852,7 @@ function translateValue(value: string, locale: Exclude<Locale, "en">): string {
 
   return value
     .replace(/\bfixed\b/g, valueMaps[locale].fixed)
-    .replace(/\brounds\b/g, locale === "zh-cn" ? "发" : locale === "ru" ? "патронов" : locale === "de" ? "Schuss" : locale === "pt-br" ? "projéteis" : "発");
+    .replace(/\brounds\b/g, locale === "pl" ? "nabojów" : locale === "zh-tw" ? "發" : locale === "zh-cn" ? "发" : locale === "ru" ? "патронов" : locale === "de" ? "Schuss" : locale === "pt-br" ? "projéteis" : "発");
 }
 
 export function localizeCatalogueFact(fact: CatalogueRecord["facts"][number], locale: Locale): CatalogueRecord["facts"][number] {
@@ -472,7 +884,8 @@ export function getLocalizedCatalogGuide(guide: CatalogGuide, locale: Locale): C
     columns: guide.columns.map((column) => translateValue(column, locale)),
     sections: guide.sections.map((section) => {
       const title = sectionNames[locale][section.title] ?? expandedSectionNames[locale][section.title] ?? fieldReferenceLabels[locale][section.title] ?? translateValue(section.title, locale);
-      return {...section, title, description: text.section(title, type.label), rows: section.rows.map((row) => ({cells: row.cells.map((cell, index) => index === 0 ? cell : translateValue(cell, locale))}))};
+      const translateBand = guide.id === "loadouts" && (locale === "pl" || locale === "zh-tw");
+      return {...section, title, description: text.section(title, type.label), rows: section.rows.map((row) => ({cells: row.cells.map((cell, index) => index === 0 && !translateBand ? cell : translateValue(cell, locale))}))};
     }),
     insights: text.insight(type.label),
     unknowns: text.unknown(type.label),
@@ -484,7 +897,7 @@ export function getLocalizedCatalogueRecords(records: readonly CatalogueRecord[]
   if (locale === "en") return [...records];
   return records.map((record) => {
     const type = getItemType(record.type);
-    const label = type ? getLocalizedItemType(type, locale).label : record.type;
+    const label = type ? getLocalizedItemType(type, locale).label : record.type === "maps" && (locale === "pl" || locale === "zh-tw") ? translateValue("Operations Atlas", locale) : record.type;
     const facts = record.facts.map((fact) => ({label: translateValue(fact.label, locale), value: translateValue(fact.value, locale)}));
     const factText = facts.map((fact) => `${fact.label}: ${fact.value}`).join("; ");
     const freshness = getCatalogueFreshness(record);
@@ -503,6 +916,6 @@ export function getLocalizedCatalogueRecords(records: readonly CatalogueRecord[]
 export function getLocalizedCatalogueGroup(group: CatalogueGroup, locale: Locale): CatalogueGroup {
   if (locale === "en") return group;
   const type = getItemType(group.type);
-  const label = type ? getLocalizedItemType(type, locale).label : group.label;
+  const label = type ? getLocalizedItemType(type, locale).label : locale === "pl" || locale === "zh-tw" ? translateValue(group.label, locale) : group.label;
   return {...group, label, filters: group.filters.map((filter) => ({...filter, label: translateValue(filter.label, locale)}))};
 }

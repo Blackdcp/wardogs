@@ -1,5 +1,10 @@
 import {expect, test} from "@playwright/test";
 
+test.beforeEach(async ({context, baseURL}) => {
+  const origin = new URL(baseURL!).origin;
+  await context.route("**/*", (route) => new URL(route.request().url()).origin === origin ? route.continue() : route.abort());
+});
+
 test("each real basemap loads and switching maps resets zoom", async ({page}) => {
   await page.goto("/en/tools/map");
   const selector = page.getByRole("combobox", {name: "Map"});

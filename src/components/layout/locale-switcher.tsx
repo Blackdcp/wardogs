@@ -1,12 +1,13 @@
 "use client";
 
-import {useId, useTransition, type ChangeEvent} from "react";
+import {useId, useState, type ChangeEvent} from "react";
 import {ChevronDown, Languages} from "lucide-react";
 import {useLocale} from "next-intl";
-import {isPilotLocale, isSiteLocale, siteLocales, type SiteLocale} from "@/config/site";
-import {getPilotSwitchPath, siteLocaleLabels} from "@/i18n/pilot-locales";
+import {isSiteLocale, siteLocales, type SiteLocale} from "@/config/site";
+import {siteLocaleLabels} from "@/i18n/pilot-locales";
 import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
-import {usePathname, useRouter} from "@/i18n/navigation";
+import {getPathname, usePathname} from "@/i18n/navigation";
+import {publicRoutePath} from "@/lib/public-url";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 const localeLabels: Record<SiteLocale, string> = {
@@ -29,22 +30,22 @@ export function LocaleSwitcher({label, compact = false}: LocaleSwitcherProps) {
   const id = useId();
   const locale = useLocale();
   const pathname = usePathname();
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
     const nextLocale = event.target.value;
     if (!isSiteLocale(nextLocale)) return;
     if (nextLocale === locale) return;
-    const target = isPilotLocale(nextLocale)
-      ? {locale: nextLocale, pathname: getPilotSwitchPath(nextLocale, pathname)}
-      : resolveItemRouteTarget(nextLocale, pathname, "localized-category");
+    const target = resolveItemRouteTarget(nextLocale, pathname, "localized-category");
+    const href = `${publicRoutePath(getPathname({href: target.pathname, locale: target.locale}))}${window.location.search}${window.location.hash}`;
     trackAnalyticsEvent(ANALYTICS_EVENTS.languageSwitch, {
       from_locale: locale,
       to_locale: nextLocale,
       page_path: pathname
     });
-    startTransition(() => router.replace(target.pathname, {locale: target.locale}));
+    // A new document prevents retained metadata from the previous locale layout.
+    setIsPending(true);
+    window.location.replace(href);
   }
 
   return (

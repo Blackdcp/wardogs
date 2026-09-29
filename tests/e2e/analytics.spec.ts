@@ -5,6 +5,25 @@ type CapturedEvent = {
   parameters: Record<string, unknown>;
 };
 
+test.use({serviceWorkers: "block"});
+
+test.beforeEach(async ({context, baseURL}) => {
+  if (!baseURL || !["localhost", "127.0.0.1", "[::1]"].includes(new URL(baseURL).hostname)) {
+    throw new Error("Analytics tests must run on a local server.");
+  }
+  const origin = new URL(baseURL).origin;
+  // Fail closed: no test page, popup, beacon, or vendor script may contact GA.
+  await context.route("**/*", (route) => {
+    if (new URL(route.request().url()).origin === origin) return route.continue();
+    return route.abort();
+  });
+  await context.routeWebSocket("**/*", (route) => {
+    const url = new URL(route.url());
+    if (url.host === new URL(origin).host) route.connectToServer();
+    else route.close();
+  });
+});
+
 async function dataLayerEvents(page: Page, eventName: string): Promise<CapturedEvent[]> {
   return page.evaluate((name) => {
     const layer = (window as Window & {dataLayer?: unknown[]}).dataLayer ?? [];
@@ -117,16 +136,11 @@ test("language switching emits before navigation", async ({page}) => {
 });
 
 test("engaged guide fires once after both time and depth thresholds", async ({page}) => {
-  await page.addInitScript(() => {
-    const nativeSetTimeout = window.setTimeout.bind(window);
-    window.setTimeout = ((handler: TimerHandler, timeout?: number, ...args: unknown[]) => {
-      return nativeSetTimeout(handler, timeout === 60_000 ? 25 : timeout, ...args);
-    }) as typeof window.setTimeout;
-  });
-
+  await page.clock.install();
   await page.goto("/en/guides/wardogs-gameplay");
   await waitForAnalyticsReady(page);
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await page.clock.fastForward(60_000);
   await expect.poll(() => dataLayerEvents(page, "engaged_guide")).toHaveLength(1);
 
   await page.evaluate(() => {
@@ -136,4 +150,48 @@ test("engaged guide fires once after both time and depth thresholds", async ({pa
   });
   await page.waitForTimeout(100);
   await expect(dataLayerEvents(page, "engaged_guide")).resolves.toHaveLength(1);
+});
+
+test("background time cannot qualify a guide or create a page view", async ({page}) => {
+  await page.clock.install();
+  await page.addInitScript(() => {
+    Object.defineProperty(document, "visibilityState", {configurable: true, get: () => "hidden"});
+  });
+  await page.goto("/en/guides/wardogs-gameplay");
+  await waitForAnalyticsReady(page);
+  await page.evaluate(() => {
+    window.scrollTo(0, document.documentElement.scrollHeight);
+    window.dispatchEvent(new Event("scroll"));
+  });
+  await page.clock.fastForward(35 * 60_000);
+  await expect(dataLayerEvents(page, "engaged_guide")).resolves.toEqual([]);
+  await page.evaluate(() => {
+    Object.defineProperty(document, "visibilityState", {configurable: true, get: () => "visible"});
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await page.clock.fastForward(59_000);
+  await expect(dataLayerEvents(page, "engaged_guide")).resolves.toEqual([]);
+  await page.clock.fastForward(1_000);
+  await expect.poll(() => dataLayerEvents(page, "engaged_guide")).toHaveLength(1);
+  await expect(dataLayerEvents(page, "page_view")).resolves.toEqual([]);
+});
+
+test("client navigation and back retain one config without manual page views", async ({page}) => {
+  await page.goto("/en");
+  await waitForAnalyticsReady(page);
+  await page.evaluate(() => { document.documentElement.dataset.analyticsDocument = "same-document"; });
+  await page.locator('a[data-home-task="weapons"]').click();
+  await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/en\/?$/);
+  const commands = await page.evaluate(() => {
+    const layer = (window as Window & {dataLayer?: unknown[]}).dataLayer ?? [];
+    return layer.map((entry) => Array.from(entry as ArrayLike<unknown>));
+  });
+  expect(commands.filter((entry) => entry[0] === "config")).toEqual([["config", "G-0GJ404WEYV"]]);
+  expect(commands.findIndex((entry) => entry[0] === "config")).toBeLessThan(
+    commands.findIndex((entry) => entry[0] === "event" && entry[1] === "home_task_click")
+  );
+  await expect(page.locator("html")).toHaveAttribute("data-analytics-document", "same-document");
+  await expect(dataLayerEvents(page, "page_view")).resolves.toEqual([]);
 });

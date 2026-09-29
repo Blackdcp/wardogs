@@ -1,4 +1,5 @@
-import {describe, expect, it} from "vitest";
+import {createContext, runInContext} from "node:vm";
+import {describe, expect, it, vi} from "vitest";
 import {
   GOOGLE_TAG_ID,
   googleAnalyticsConfigScript,
@@ -12,6 +13,30 @@ describe("Google Analytics", () => {
 
     expect(googleAnalyticsScriptSrc()).toBe("https://www.googletagmanager.com/gtag/js?id=G-0GJ404WEYV");
     expect(googleAnalyticsConfigScript()).toContain("gtag('config', 'G-0GJ404WEYV')");
+  });
+
+  it("preserves queued consent and events without overriding page or session fields", () => {
+    const pending = [
+      ["consent", "default", {analytics_storage: "denied"}],
+      ["event", "catalogue_filter", {filter_value: "assault-rifle"}]
+    ];
+    const sandbox = {dataLayer: [...pending]} as Record<string, unknown>;
+    sandbox.window = sandbox;
+    runInContext(googleAnalyticsConfigScript(), createContext(sandbox));
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    expect(commands.slice(0, 2)).toEqual(pending);
+    expect(commands.map((entry) => entry[0])).toEqual(["consent", "event", "js", "config"]);
+    expect(commands.at(-1)).toEqual(["config", GOOGLE_TAG_ID]);
+    expect(commands.filter((entry) => entry[1] === "page_view")).toEqual([]);
+  });
+
+  it("forwards a custom event once when gtag is available, without a second queued copy", () => {
+    const target = {gtag: vi.fn(), dataLayer: []};
+    googleAnalytics.trackAnalyticsEvent("catalogue_filter", {filter_value: "assault-rifle"}, target);
+    expect(target.gtag).toHaveBeenCalledExactlyOnceWith("event", "catalogue_filter", {
+      filter_value: "assault-rifle"
+    });
+    expect(target.dataLayer).toEqual([]);
   });
 
   it("builds stable custom event commands and scroll-depth checks", () => {

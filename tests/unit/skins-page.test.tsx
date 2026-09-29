@@ -33,7 +33,7 @@ describe("skins gallery", () => {
 
   it("exports all locale routes with localized canonical metadata", async () => {
     const {generateMetadata, generateStaticParams} = await import("../../src/app/[locale]/skins/page");
-    expect(generateStaticParams().map(({locale}) => locale)).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn"]);
+    expect(generateStaticParams().map(({locale}) => locale)).toEqual(["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]);
     const metadata = await generateMetadata({params: Promise.resolve({locale: "en"})});
     expect(metadata.title).toContain("WARDOGS Skins");
     expect(metadata.alternates?.canonical).toBe("http://localhost:3000/en/skins");

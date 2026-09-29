@@ -43,7 +43,18 @@ const copy: Record<Locale, {eyebrow: string; unknown: string; notice: string; ne
     notice: "官方 Patch 0.11 公告提到 9 月 14 日维护；该时间窗口已经过去，但不能据此断言现在服务器正常。",
     next: "若登录或服务器列表异常，先看官方公告，再按地区和具体报错核对近期反馈。",
     official: "Steam 官方公告"
-  }
+  },
+
+  pl: {
+eyebrow: "Stan serwerów w skrócie", unknown: "Bieżąca dostępność serwerów nie jest potwierdzona", notice: "Oficjalny komunikat o aktualizacji 0.11 dotyczył konserwacji 14 września. Ten termin już minął i nie potwierdza, że serwery działają teraz.", next: "Jeśli logowanie lub przeglądarka serwerów nie działa, sprawdź oficjalne komunikaty, a następnie porównaj region i błąd z aktualnymi zgłoszeniami.", official: "Oficjalne komunikaty Steam"
+},
+  "zh-tw": {
+    eyebrow: "伺服器狀態速覽",
+    unknown: "當前伺服器線上情況尚未核實",
+    notice: "官方 Patch 0.11 公告提到 9 月 14 日維護；該時間視窗已經過去，但不能據此斷言現在伺服器正常。",
+    next: "若登入或伺服器列表異常，先看官方公告，再按地區和具體報錯核對近期反饋。",
+    official: "Steam 官方公告"
+}
 };
 
 export function ServerStatusSignal({locale}: {locale: Locale}) {

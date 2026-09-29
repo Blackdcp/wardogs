@@ -60,7 +60,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 200,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "ah-6r-rockets",
@@ -108,7 +108,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 201,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "bobcat",
@@ -157,7 +157,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 202,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "dune-buggy",
@@ -207,7 +207,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-09-26",
     priority: 203,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "flakpanzer-gepard",
@@ -257,7 +257,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 204,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "havoc",
@@ -307,7 +307,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-09-24",
     priority: 205,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "humvee-m249",
@@ -357,7 +357,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 206,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "humvee-minigun",
@@ -405,7 +405,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 207,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "humvee",
@@ -455,7 +455,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 208,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "kodiak-m249",
@@ -505,7 +505,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 209,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "kodiak-pickup",
@@ -554,7 +554,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 210,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "kodiak",
@@ -603,7 +603,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 211,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "l2a6",
@@ -653,7 +653,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 212,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "mh-6",
@@ -702,7 +702,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 213,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "sph-2",
@@ -759,7 +759,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-09-24",
     priority: 214,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "uh-1y-miniguns",
@@ -807,7 +807,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 215,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "uh-1y",
@@ -857,7 +857,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 216,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "ural-defender-m249",
@@ -907,7 +907,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 217,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "ural-defender",
@@ -957,7 +957,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-08-18",
     priority: 218,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "ural",
@@ -1006,7 +1006,7 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-09-26",
     priority: 219,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   },
   {
     slug: "stingray",
@@ -1052,6 +1052,6 @@ export const vehicleItems: readonly WardogsItemInput[] = [
     ],
     detailUpdatedAt: "2026-09-27",
     priority: 220,
-    indexLocales: ["en"]
+    indexLocales: ["en", "zh-tw", "pl"]
   }
 ];

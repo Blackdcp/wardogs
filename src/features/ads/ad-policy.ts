@@ -22,7 +22,7 @@ export const POPUNDER_STORAGE_KEY = "wardogs-adsterra-popunder-loaded-at";
 export const BEHAVIORAL_POPUNDER_ENABLED =
   process.env.NEXT_PUBLIC_WARDOGS_ENABLE_POPUNDER === "true";
 
-const LOCALIZED_PUBLIC_PATH = /^\/(?:en|de|pt-br|ru|ja|zh-cn)(?:\/.*)?$/;
+const LOCALIZED_PUBLIC_PATH = /^\/(?:en|de|pt-br|ru|ja|zh-cn|zh-tw|pl)(?:\/.*)?$/;
 
 export function isBehavioralAdPath(pathname: string) {
   return LOCALIZED_PUBLIC_PATH.test(pathname);

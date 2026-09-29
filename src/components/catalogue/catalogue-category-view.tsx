@@ -69,6 +69,9 @@ const seasonOneVehicleCopy: Record<Locale, {title: string; description: string; 
   "pt-br": {title: "Atualização de veículos da Temporada 1", description: "O registro oficial da Temporada 1 cita o Z20 Lakota e reduz seu desbloqueio de Piloto de $50,000 para $35,000. As entradas UH-1Y abaixo vieram da loja Alpha e não são uma lista atual de helicópteros confirmada.", source: "Registro oficial da Temporada 1"},
   ja: {title: "シーズン1の車両更新", description: "公式のシーズン1更新履歴にはZ20 Lakotaが記載され、パイロットの解除費用は$50,000から$35,000に下がりました。以下のUH-1Yはアルファ版ショップの記録であり、現行ヘリ一覧として確定したものではありません。", source: "シーズン1公式更新履歴"},
   "zh-cn": {title: "第 1 赛季载具更新", description: "官方第 1 赛季更新记录已列出 Z20 Lakota，飞行员解锁费用从 $50,000 降至 $35,000。下方 UH-1Y 条目属于 Alpha 商店记录，不能当作当前直升机名单。", source: "官方第 1 赛季更新记录"},
+
+  pl: {title: "Zmiany pojazdów w sezonie 1", description: "Oficjalna lista zmian sezonu 1 wymienia Z20 Lakota i obniża koszt odblokowania dla pilota z $50,000 do $35,000. Poniższe wpisy UH-1Y pochodzą ze sklepu wersji alfa, a nie z potwierdzonej aktualnej listy śmigłowców.", source: "Oficjalna lista zmian sezonu 1"},
+  "zh-tw": { title: "第 1 賽季載具更新", description: "官方第 1 賽季更新記錄已列出 Z20 Lakota，飛行員解鎖費用從 $50,000 降至 $35,000。下方 UH-1Y 條目屬於 Alpha 商店記錄，不能當作當前直升機名單。", source: "官方第 1 賽季更新記錄" }
 };
 
 function SeasonOneVehicleUpdate({locale}: {locale: Locale}) {

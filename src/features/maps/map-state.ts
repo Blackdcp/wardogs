@@ -56,6 +56,11 @@ export function imagePoint(point: Point, view: MapView, width: number, height: n
   return {x: view.x + (point.x - width / 2) / size, y: view.y + (point.y - height / 2) / size};
 }
 
+export function viewportPoint(point: Point, view: MapView, width: number, height: number): Point {
+  const size = Math.max(1, Math.min(width, height)) * view.zoom;
+  return {x: width / 2 + (point.x - view.x) * size, y: height / 2 + (point.y - view.y) * size};
+}
+
 // Keep the same image point under the moving pinch midpoint or wheel cursor.
 export function transformView(view: MapView, from: Point, to: Point, zoom: number, width: number, height: number): MapView {
   const anchor = imagePoint(from, view, width, height);

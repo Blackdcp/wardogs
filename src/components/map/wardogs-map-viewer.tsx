@@ -5,7 +5,10 @@ import {Crosshair, Hand, LoaderCircle, MapPin, Maximize2, Minimize2, RotateCcw, 
 import type {Locale} from "@/config/site";
 import {getOperationsAtlasCopy, getLocalizedOperationsAtlasRecords} from "@/features/maps/operations-atlas";
 import {getMapViewerCopy} from "@/features/maps/map-viewer-copy";
-import {beginMapPinch, boundView, defaultView, imagePoint, initialMapState, mapHash, mapIds, mapNames, mapPinchView, MAX_MARKERS, readMapHash, transformView, type MapId, type MapMarker, type MapPinch, type MapState, type Point} from "@/features/maps/map-state";
+import {beginMapPinch, boundView, defaultView, imagePoint, initialMapState, mapHash, mapIds, mapNames, mapPinchView, MAX_MARKERS, readMapHash, transformView, viewportPoint, type MapId, type MapMarker, type MapPinch, type MapState, type Point} from "@/features/maps/map-state";
+import {initialMeasurement, measurementHash, placeMeasurementPoint, readMeasurementHash, type MapMeasurement} from "@/features/maps/map-measurement";
+import {getMapMeasurementCopy} from "@/features/maps/map-measurement-copy";
+import {MapMeasurementPanel} from "./map-measurement-panel";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
 
@@ -16,11 +19,13 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
   const [state, setState] = useState(() => initialMapState(initialMap));
   const stateRef = useRef(state);
   const markersByMap = useRef<Partial<Record<MapId, MapMarker[]>>>({});
+  const [measurement, setMeasurement] = useState(() => initialMeasurement(initialMap));
+  const measurementsByMap = useRef<Partial<Record<MapId, MapMeasurement>>>({});
   const [size, setSize] = useState({width: 1, height: 1});
   const [imageStatus, setImageStatus] = useState<{key: string; status: "ready" | "error"}>();
   const [attempt, setAttempt] = useState(0);
   const [fullscreen, setFullscreen] = useState<"native" | "fallback" | null>(null);
-  const [mode, setMode] = useState<"pan" | "marker">("pan");
+  const [mode, setMode] = useState<"pan" | "marker" | "measure" | "calibrate">("pan");
   const [panel, setPanel] = useState(false);
   const [query, setQuery] = useState("");
   const [notice, setNotice] = useState("");
@@ -36,6 +41,8 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
   const imageKey = `${state.map}-${attempt}`;
   const load = imageStatus?.key === imageKey ? imageStatus.status : "loading";
   const copy = getMapViewerCopy(locale);
+  const measurementCopy = getMapMeasurementCopy(locale);
+  const measuring = mode === "measure" || mode === "calibrate";
   const atlasCopy = getOperationsAtlasCopy(locale);
   const records = getLocalizedOperationsAtlasRecords(locale);
   const view = boundView(state.view, size.width, size.height);
@@ -51,17 +58,28 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     setState(next);
     setShareLink("");
   }, []);
+  const updateMeasurement = useCallback((next: MapMeasurement) => {
+    measurementsByMap.current[next.map] = next;
+    setMeasurement(next);
+    setShareLink("");
+  }, []);
 
   useEffect(() => {
     const restore = () => {
       const result = readMapHash(window.location.hash);
-      if (result.state) updateState(() => result.state!);
+      if (result.state) {
+        updateState(() => result.state!);
+        const ruler = readMeasurementHash(window.location.hash, result.state.map);
+        updateMeasurement(ruler.state ?? initialMeasurement(result.state.map));
+        if (ruler.state) setMode("measure");
+        if (ruler.invalid) setNotice(getMapMeasurementCopy(locale).invalidLink);
+      }
       if (result.invalid) setNotice(getMapViewerCopy(locale).invalid);
     };
     restore();
     window.addEventListener("hashchange", restore);
     return () => window.removeEventListener("hashchange", restore);
-  }, [locale, updateState]);
+  }, [locale, updateState, updateMeasurement]);
 
   useEffect(() => {
     const element = viewportRef.current;
@@ -128,6 +146,11 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     updateState((previous) => ({...previous, markers: [...previous.markers, {id: `m${crypto.randomUUID()}`, ...point, label: `${copy.marker} ${previous.markers.length + 1}`}]}));
     setPanel(true);
   }
+  function addMeasurementPoint(point: Point) {
+    if (load !== "ready" || !measuring) return;
+    const current = measurementsByMap.current[stateRef.current.map] ?? initialMeasurement(stateRef.current.map);
+    updateMeasurement(placeMeasurementPoint(current, mode, point));
+  }
   function localPoint(event: PointerEvent<HTMLDivElement>): Point {
     const rect = event.currentTarget.getBoundingClientRect();
     return {x: event.clientX - rect.left, y: event.clientY - rect.top};
@@ -158,8 +181,10 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
   }
   function onPointerEnd(event: PointerEvent<HTMLDivElement>) {
     if (!pointers.current.has(event.pointerId)) return;
-    if (event.type === "pointerup" && pointers.current.size === 1 && tap.current && !tap.current.moved && mode === "marker") {
-      addMarker(imagePoint(localPoint(event), boundView(stateRef.current.view, size.width, size.height), size.width, size.height));
+    if (event.type === "pointerup" && pointers.current.size === 1 && tap.current && !tap.current.moved) {
+      const point = imagePoint(localPoint(event), boundView(stateRef.current.view, size.width, size.height), size.width, size.height);
+      if (mode === "marker") addMarker(point);
+      else if (measuring) addMeasurementPoint(point);
     }
     pointers.current.delete(event.pointerId);
     pinch.current = null;
@@ -189,7 +214,8 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     url.pathname = publicRoutePath(`/${locale}/tools/map`);
     url.search = "";
     const shared = {...stateRef.current, view, markers: stateRef.current.markers.map((marker) => ({...marker, label: marker.label.trim() || copy.marker}))};
-    url.hash = mapHash(shared);
+    const ruler = measurementsByMap.current[shared.map];
+    url.hash = ruler ? measurementHash(mapHash(shared), ruler) : mapHash(shared);
     setShareLink(url.href);
     try { await navigator.clipboard.writeText(url.href); setNotice(copy.copied); }
     catch { setNotice(copy.shareLink); }
@@ -201,7 +227,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
       <div className="flex flex-wrap items-center gap-2 border-b border-[#43534a] bg-[#101a15] p-2">
         <label className="sr-only" htmlFor={`${id}-map`}>{copy.map}</label>
         <select id={`${id}-map`} className="h-11 min-w-0 max-w-full rounded border border-[#43534a] bg-[#18231e] px-2 text-sm text-white" value={state.map}
-          onChange={(event) => { const map = event.target.value as MapId; resetPointers(); updateState(() => ({...initialMapState(map), markers: markersByMap.current[map] ?? []})); setAttempt(0); setNotice(""); }}>
+          onChange={(event) => { const map = event.target.value as MapId; resetPointers(); updateState(() => ({...initialMapState(map), markers: markersByMap.current[map] ?? []})); updateMeasurement(measurementsByMap.current[map] ?? initialMeasurement(map)); setAttempt(0); setNotice(""); }}>
           {mapIds.map((map) => <option key={map} value={map}>{mapNames[map]}</option>)}
         </select>
         <div className="flex gap-1" role="group" aria-label={copy.map}>
@@ -219,12 +245,13 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
         </div>
       </div>
       <div ref={viewportRef} data-map-viewport tabIndex={0} aria-label={`${mapNames[state.map]} ${copy.map}`} aria-busy={load === "loading"}
-        className={`relative w-full overflow-hidden touch-none select-none bg-[#080d0b] ${mode === "marker" ? "cursor-crosshair" : "cursor-grab active:cursor-grabbing"} ${fullscreen ? "min-h-[280px] flex-1 shrink-0" : "h-[440px] md:h-[600px]"}`}
+        className={`relative w-full overflow-hidden touch-none select-none bg-[#080d0b] ${mode !== "pan" ? "cursor-crosshair" : "cursor-grab active:cursor-grabbing"} ${fullscreen ? "min-h-[280px] flex-1 shrink-0" : "h-[440px] md:h-[600px]"}`}
         onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerEnd} onPointerCancel={onPointerEnd} onLostPointerCapture={onPointerEnd}
         onKeyDown={(event) => {
           if (event.key === "+" || event.key === "=") { event.preventDefault(); zoom(1); }
           if (event.key === "-") { event.preventDefault(); zoom(-1); }
           if (event.key === "Enter" && mode === "marker") { event.preventDefault(); addMarker({x: view.x, y: view.y}); }
+          if (event.key === "Enter" && measuring) { event.preventDefault(); addMeasurementPoint({x: view.x, y: view.y}); }
           const directions: Record<string, Point> = {ArrowLeft: {x: 45, y: 0}, ArrowRight: {x: -45, y: 0}, ArrowUp: {x: 0, y: 45}, ArrowDown: {x: 0, y: -45}};
           const direction = directions[event.key];
           if (direction) {event.preventDefault(); updateState((previous) => ({...previous, view: transformView(view, {x: 0, y: 0}, direction, view.zoom, size.width, size.height)}));}
@@ -235,6 +262,15 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
           <img ref={imageRef} key={imageKey} alt={`WARDOGS ${mapNames[state.map]} map`} className="pointer-events-none size-full object-contain" draggable={false} height={2048} width={2048}
             src={`${assetPath(`/images/maps/${state.map}/overview.webp`)}${attempt ? `?retry=${attempt}` : ""}`} />
         </div>
+        {load === "ready" && <svg className="pointer-events-none absolute inset-0 size-full" aria-hidden="true" data-measurement-overlay>
+          {([{points: measurement.reference, color: "#e7bd63", label: "R"}, {points: measurement.points, color: "#8ae9ef", label: ""}]).map(({points, color, label}) => {
+            const projected = points.map((point) => viewportPoint(point, view, size.width, size.height));
+            return <g key={label} data-measurement-segment={label || "distance"}>
+              {projected.length === 2 && <line x1={projected[0].x} y1={projected[0].y} x2={projected[1].x} y2={projected[1].y} stroke={color} strokeWidth={3} strokeDasharray={label ? "6 4" : undefined} />}
+              {projected.map((point, index) => <g key={index}><circle cx={point.x} cy={point.y} r={6} fill={color} stroke="#0c110f" strokeWidth={2} /><text x={point.x + 10} y={point.y - 10} fill={color} stroke="#0c110f" strokeWidth={3} paintOrder="stroke" fontSize={14}>{label}{index + 1}</text></g>)}
+            </g>;
+          })}
+        </svg>}
         {load === "ready" && state.markers.map((marker, index) => <button key={marker.id} data-map-marker title={`${copy.manual}: ${marker.label}`} aria-label={marker.label}
           className="absolute z-10 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-[#ab3047] text-xs font-bold text-white"
           style={{left: size.width / 2 + (marker.x - view.x) * baseSize * view.zoom, top: size.height / 2 + (marker.y - view.y) * baseSize * view.zoom}}
@@ -245,12 +281,14 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
         </div>}
       </div>
       <div className="flex items-center gap-2 border-t border-[#35463b] p-3 text-xs text-[#d7bb73]">
-        <button disabled title={copy.measure} aria-label={copy.measure} className="shrink-0 opacity-60"><Ruler size={18} /></button><p>{copy.measurement}</p>
+        <button title={measurementCopy.measure} aria-label={measurementCopy.measure} aria-pressed={measuring} className={controlClass} disabled={load !== "ready"} onClick={() => {resetPointers(); setMode(measuring ? "pan" : "measure");}}><Ruler size={18} /></button><p>{measurement.calibration ? measurementCopy.calibrated : measurementCopy.uncalibrated}</p>
       </div>
+      {measuring && <MapMeasurementPanel key={state.map} state={measurement} locale={locale} mode={mode} ready={load === "ready"}
+        onChange={updateMeasurement} onMode={(next) => {resetPointers(); setMode(next);}} onCenter={() => addMeasurementPoint({x: view.x, y: view.y})} onClose={() => {resetPointers(); setMode("pan");}} />}
       <p role="status" className={notice ? "px-3 pb-3 text-sm text-[#b5e0c4]" : "sr-only"}>{notice}</p>
       {shareLink && <label className="block px-3 pb-3 text-sm text-[#bacbc0]">{copy.shareLink}<input aria-label={copy.shareLink} readOnly value={shareLink} onFocus={(event) => event.target.select()} className="mt-1 w-full min-w-0 rounded border border-[#46594d] bg-[#111b15] p-2" /></label>}
       {panel && <div id={`${id}-panel`} className="border-t border-[#35463b] p-3" data-map-reference-panel>
-        <div className="mb-3 flex items-center gap-2"><label className="sr-only" htmlFor={`${id}-search`}>{copy.search}</label><input id={`${id}-search`} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={copy.search} className="h-11 min-w-0 flex-1 rounded border border-[#46594d] bg-[#111b15] px-3 text-white" /><button aria-label="Close" title="Close" className={controlClass} onClick={() => setPanel(false)}><X size={18} /></button></div>
+        <div className="mb-3 flex items-center gap-2"><label className="sr-only" htmlFor={`${id}-search`}>{copy.search}</label><input id={`${id}-search`} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={copy.search} className="h-11 min-w-0 flex-1 rounded border border-[#46594d] bg-[#111b15] px-3 text-white" /><button aria-label={copy.close} title={copy.close} className={controlClass} onClick={() => setPanel(false)}><X size={18} /></button></div>
         <div className="grid gap-6 md:grid-cols-2">
           <section><h3 className="text-sm font-semibold text-white">{copy.references}</h3><ul className="mt-2 space-y-3">{visibleReferences.map((record) => <li key={record.id} className="border-b border-[#35463b] pb-2 text-sm" data-map-reference>
             <a className="text-[#9adeb4] underline" href={publicRoutePath(`/${locale}/guides/${record.guideSlug}`)} title={atlasCopy.entries[record.id].title}>{atlasCopy.entries[record.id].title}</a><p className="my-1 text-xs text-[#d7bb73]">{copy.unlocated}</p><a className="break-words text-xs text-[#b8c8be]" href={record.evidence.sourceUrl} title={record.sourceLabel} rel="noreferrer" target="_blank">{record.sourceLabel}</a>
