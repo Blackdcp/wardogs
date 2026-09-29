@@ -30,4 +30,15 @@ export default function proxy(request: NextRequest) {
   return response;
 }
 
-export const config = {matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"]};
+export const config = {
+  matcher: [
+    // Keep the apex-to-www redirect for every path it handled before, including 404s.
+    {
+      source: "/((?!api|_next|_vercel|.*\\..*).*)",
+      has: [{type: "host", value: "wardogswiki.com"}]
+    },
+    // Only localized pages and known legacy redirects need Proxy on the canonical host.
+    "/",
+    "/((?!.*\\..*)(?:(?:en|ru|de|pt-br|ja|zh-cn)(?:/.*)?|wardogs(?:/.*)?|(?:guides|videos|items|news|privacy|terms)(?:/.*)?|maps|about|contact|editorial-policy|tools/(?:system-check|ammo-matcher|logistics-planner|progression-route|weapon-compare|loadout-budget)))"
+  ]
+};
