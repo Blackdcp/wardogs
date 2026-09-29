@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {BookOpenCheck, ShieldCheck, Users} from "lucide-react";
+import {BookOpenCheck, ExternalLink, ShieldCheck, Users} from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {isLocale, locales} from "@/config/site";
@@ -23,6 +23,9 @@ export default async function AboutPage({params}: PageProps) {
   if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
   const t = await getTranslations({locale, namespace: "aboutPage"});
+  const caseStudyHref = locale === "zh-cn"
+    ? "https://www.tsalon.tech/articles/wardogs-wiki-verifiable-content-engineering/"
+    : "https://www.tsalon.tech/en/articles/wardogs-wiki-verifiable-content-engineering/";
   const sections = [
     {icon: Users, title: t("identityTitle"), body: t("identityBody")},
     {icon: BookOpenCheck, title: t("methodTitle"), body: t("methodBody")},
@@ -53,6 +56,15 @@ export default async function AboutPage({params}: PageProps) {
             </section>
           ))}
         </div>
+        <section className="mt-10 border border-[#31543f] bg-[#142019] p-6 md:p-8" aria-labelledby="engineering-case-study">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#79d19c]">T Salon</p>
+          <h2 className="display-font mt-3 text-2xl text-white" id="engineering-case-study">{t("caseStudyTitle")}</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-[#aebbb4]">{t("caseStudyBody")}</p>
+          <a className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#d9a93a] underline decoration-[#d9a93a]/40 underline-offset-4 hover:text-[#f0c45f]" href={caseStudyHref} title={t("caseStudyCta")}>
+            {t("caseStudyCta")}
+            <ExternalLink aria-hidden="true" className="size-4" />
+          </a>
+        </section>
       </section>
     </main>
   );

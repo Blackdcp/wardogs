@@ -548,7 +548,10 @@
     "methodTitle": "Quellengeprüft und versionsbewusst",
     "methodBody": "Offizielle Quellen von Steam, Team17, BULKHEAD und WARDOGS stehen an erster Stelle. Creator-Material und Community-Berichte erhalten klare Labels, Daten und Build-Hinweise.",
     "independenceTitle": "Unabhängig von Spiel und Werbung",
-    "independenceBody": "WARDOGS Wiki ist nicht mit BULKHEAD, Team17, Steam oder Creatorn verbunden. Werbung beeinflusst keine Bewertungen, Quellenangaben oder Korrekturen."
+    "independenceBody": "WARDOGS Wiki ist nicht mit BULKHEAD, Team17, Steam oder Creatorn verbunden. Werbung beeinflusst keine Bewertungen, Quellenangaben oder Korrekturen.",
+    "caseStudyTitle": "Wie dieses Nachschlagewerk entwickelt wird",
+    "caseStudyBody": "T Salon hat einen technischen Praxisbericht über Quellenregeln, versionsbezogene Datensätze, den sechssprachigen Inhaltsvertrag, statischen Export und Produktionsprüfung veröffentlicht.",
+    "caseStudyCta": "Technischen Praxisbericht lesen"
   },
   "contactPage": {
     "metaTitle": "WARDOGS Wiki kontaktieren: Korrekturen und Quellen",

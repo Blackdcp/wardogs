@@ -548,7 +548,10 @@
     "methodTitle": "Fontes verificadas e versões identificadas",
     "methodBody": "Fontes oficiais do Steam, Team17, BULKHEAD e WARDOGS orientam as atualizações. Vídeos e relatos da comunidade recebem datas, rótulos e ressalvas de versão.",
     "independenceTitle": "Independente do jogo e de anunciantes",
-    "independenceBody": "WARDOGS Wiki não tem vínculo com BULKHEAD, Team17, Steam ou criadores. Publicidade não altera conclusões, fontes ou correções."
+    "independenceBody": "WARDOGS Wiki não tem vínculo com BULKHEAD, Team17, Steam ou criadores. Publicidade não altera conclusões, fontes ou correções.",
+    "caseStudyTitle": "Como esta referência foi construída",
+    "caseStudyBody": "A T Salon publicou um relato técnico sobre regras de fontes, registros com versão, contrato de conteúdo em seis idiomas, exportação estática e verificação em produção.",
+    "caseStudyCta": "Ler o relato técnico"
   },
   "contactPage": {
     "metaTitle": "Contato do WARDOGS Wiki: correções e fontes",
