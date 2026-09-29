@@ -70,6 +70,7 @@
     "deployables": "部署物",
     "mechanics": "玩法机制",
     "operationsAtlas": "行动地图",
+    "interactiveMap": "交互地图",
     "loadouts": "配装",
     "blackMarket": "黑市",
     "goldMarket": "黄金市场",
@@ -92,7 +93,7 @@
     "heroDescription": "这里整理经过来源核实的装备、操作、当前参与状态、故障排查与实战策略，并明确标注所有受版本影响的信息。",
     "primaryCta": "查看 Patch 0.11",
     "secondaryCta": "检查服务器状态",
-    "quickTasks": {"weapons": "武器", "vehicles": "载具", "map": "地图规划", "status": "服务器状态"},
+    "quickTasks": {"weapons": "武器", "vehicles": "载具", "map": "交互地图", "status": "服务器状态"},
     "status": "Steam 抢先体验已上线",
     "statsLabel": "WARDOGS 关键信息",
     "stats": {
@@ -547,7 +548,10 @@
     "methodTitle": "核对来源并标记版本",
     "methodBody": "事实更新优先采用 Steam、Team17、BULKHEAD 和 WARDOGS 官方来源。创作者实机和社区报告会明确标注日期、性质与适用版本。",
     "independenceTitle": "独立于游戏官方和广告商",
-    "independenceBody": "WARDOGS Wiki 与 BULKHEAD、Team17、Steam 或内容创作者没有隶属关系。广告不会影响排名、结论、来源标签和错误修正。"
+    "independenceBody": "WARDOGS Wiki 与 BULKHEAD、Team17、Steam 或内容创作者没有隶属关系。广告不会影响排名、结论、来源标签和错误修正。",
+    "caseStudyTitle": "这套资料库是如何构建的",
+    "caseStudyBody": "T Salon 发布了一篇工程复盘，介绍本站如何管理来源规则、版本化记录、六语言内容契约、静态导出与生产验证。",
+    "caseStudyCta": "阅读工程复盘"
   },
   "contactPage": {
     "metaTitle": "联系 WARDOGS Wiki：纠错与资料线索",

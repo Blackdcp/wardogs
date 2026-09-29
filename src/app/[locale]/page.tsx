@@ -17,7 +17,7 @@ import {VideoIntelligence} from "@/components/home/video-intelligence";
 import {isLocale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
 import {getHomeFacts} from "@/features/home/home-data";
-import {buildSiteSearchIndex, getSiteSearchCounts} from "@/features/search/site-search-index";
+import {buildSiteSearchIndex} from "@/features/search/site-search-index";
 import {buildPageMetadata} from "@/lib/metadata";
 import {buildHomeJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
@@ -49,7 +49,6 @@ export default async function HomePage({params}: HomePageProps) {
     buildSiteSearchIndex(locale)
   ]);
   const facts = getHomeFacts((key) => t(`home.stats.${key}`));
-  const searchCounts = getSiteSearchCounts(searchIndex);
   const searchCopy: SiteSearchCopy = {
     eyebrow: t("home.search.eyebrow"),
     title: t("home.search.title"),
@@ -66,13 +65,6 @@ export default async function HomePage({params}: HomePageProps) {
       video: t("home.search.types.video"),
       tool: t("home.search.types.tool"),
       map: t("home.search.types.map")
-    },
-    counts: {
-      guides: t("home.search.counts.guides"),
-      items: t("home.search.counts.items"),
-      videos: t("home.search.counts.videos"),
-      tools: t("home.search.counts.tools"),
-      maps: t("home.search.counts.maps")
     }
   };
 
@@ -81,11 +73,11 @@ export default async function HomePage({params}: HomePageProps) {
       <JsonLd data={buildHomeJsonLd(locale)} />
       <HomeHero facts={facts} />
       <LiveBetaBanner compact />
-      <SiteSearch copy={searchCopy} counts={searchCounts} index={searchIndex} locale={locale} />
       <HomeActionHub />
-      <CurrentBuildChanges locale={locale} />
       <CatalogueHomeBand locale={locale} />
       <PriorityGuides guides={guides} locale={locale} />
+      <SiteSearch copy={searchCopy} index={searchIndex} locale={locale} />
+      <CurrentBuildChanges locale={locale} />
       <section className="site-container py-2" data-page-ad-inventory="home">
         <AdsterraDisplayBanner label={t("ads.label")} placement="rectangle" />
         <AdsterraNativeBanner label={t("ads.label")} />

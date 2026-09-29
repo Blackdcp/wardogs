@@ -230,6 +230,16 @@ describe("sitemap", () => {
     }
   });
 
+  it("includes the interactive three-basemap tool in all six locales", () => {
+    const urls = sitemap().map((entry) => entry.url);
+
+    for (const locale of locales) {
+      const url = `${origin}/${locale}/tools/map`;
+      expect(urls.filter((candidate) => candidate === url), url).toHaveLength(1);
+      expect(sitemap().find((entry) => entry.url === url)?.alternates?.languages).toEqual(pageAlternates("/tools/map"));
+    }
+  });
+
   it("indexes all newly published catalogue destinations in every locale", () => {
     const urls = new Set(sitemap().map(({url}) => url));
     for (const locale of locales) {

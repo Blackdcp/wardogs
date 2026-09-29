@@ -70,6 +70,7 @@
     "deployables": "設置物",
     "mechanics": "ゲームシステム",
     "operationsAtlas": "作戦アトラス",
+    "interactiveMap": "インタラクティブマップ",
     "loadouts": "ロードアウト",
     "blackMarket": "ブラックマーケット",
     "goldMarket": "ゴールドマーケット",
@@ -92,7 +93,7 @@
     "heroDescription": "装備、操作、現在の参加状況、不具合対策、実戦戦術を出典付きで確認できます。ビルド依存の情報は明確に区別しています。",
     "primaryCta": "Patch 0.11を読む",
     "secondaryCta": "サーバー状態を確認",
-    "quickTasks": {"weapons": "武器", "vehicles": "車両", "map": "マップ計画", "status": "サーバー状態"},
+    "quickTasks": {"weapons": "武器", "vehicles": "車両", "map": "インタラクティブマップ", "status": "サーバー状態"},
     "status": "Steam Early Access配信中",
     "statsLabel": "WARDOGSの重要情報",
     "stats": {
@@ -547,7 +548,10 @@
     "methodTitle": "出典とバージョンを明示",
     "methodBody": "Steam、Team17、BULKHEAD、WARDOGSの公式情報を優先します。動画やコミュニティ報告には日付、分類、ビルド上の注意を付けます。",
     "independenceTitle": "ゲーム運営と広告主から独立",
-    "independenceBody": "BULKHEAD、Team17、Steam、クリエイターとは提携していません。広告が評価、出典表示、訂正を左右することはありません。"
+    "independenceBody": "BULKHEAD、Team17、Steam、クリエイターとは提携していません。広告が評価、出典表示、訂正を左右することはありません。",
+    "caseStudyTitle": "このリファレンスの設計方法",
+    "caseStudyBody": "T Salon は、情報源ルール、ビルド別記録、6言語のコンテンツ契約、静的エクスポート、本番検証を扱う技術レポートを公開しました。",
+    "caseStudyCta": "技術レポートを読む"
   },
   "contactPage": {
     "metaTitle": "WARDOGS Wikiへの連絡：訂正と情報源",

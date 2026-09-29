@@ -7,7 +7,6 @@ import {recordSiteSearch, recordSiteSearchResult} from "@/features/search/site-s
 import {
   getSearchKeyboardAction,
   searchSiteIndex,
-  type SiteSearchCounts,
   type SiteSearchEntry,
   type SiteSearchType
 } from "@/features/search/site-search-runtime";
@@ -23,12 +22,10 @@ export type SiteSearchCopy = {
   resultCount: string;
   openResult: string;
   types: Record<SiteSearchType, string>;
-  counts: Record<keyof SiteSearchCounts, string>;
 };
 
 type SiteSearchProps = {
   copy: SiteSearchCopy;
-  counts: SiteSearchCounts;
   index: readonly SiteSearchEntry[];
   locale: Locale;
 };
@@ -41,7 +38,7 @@ function localizedHref(locale: Locale, href: string) {
   return `/${locale}${href}`;
 }
 
-export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
+export function SiteSearch({copy, index, locale}: SiteSearchProps) {
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
@@ -95,20 +92,12 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
   }
 
   return (
-    <section aria-labelledby="site-search-title" className="border-b border-[#26312c] bg-[#0d120f] py-12 sm:py-14" data-site-search>
-      <div className="site-container grid gap-8 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-12">
-        <div>
+    <section aria-labelledby="site-search-title" className="border-b border-[#26312c] bg-[#0d120f] py-6 sm:py-7" data-site-search>
+      <div className="site-container grid gap-4 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:items-center md:gap-8">
+        <div className="min-w-0">
           <p className="text-xs font-semibold uppercase text-[#79d19c]">{copy.eyebrow}</p>
-          <h2 className="display-font mt-3 text-3xl leading-tight text-white sm:text-4xl" id="site-search-title">{copy.title}</h2>
-          <p className="mt-4 max-w-xl text-sm leading-7 text-[#a9b5af] sm:text-base">{copy.description}</p>
-          <dl className="mt-7 grid grid-cols-2 border-y border-[#344039] sm:grid-cols-5 lg:grid-cols-5">
-            {(Object.keys(counts) as (keyof SiteSearchCounts)[]).map((key) => (
-              <div className="min-h-20 border-[#344039] px-3 py-4 not-last:border-r" key={key}>
-                <dt className="text-[11px] uppercase text-[#82938a]">{copy.counts[key]}</dt>
-                <dd className="display-font mt-1 text-2xl text-[#edf2ef]">{counts[key]}</dd>
-              </div>
-            ))}
-          </dl>
+          <h2 className="display-font mt-1 text-xl leading-tight text-white sm:text-2xl" id="site-search-title">{copy.title}</h2>
+          <p className="mt-1 max-w-xl text-xs leading-5 text-[#a9b5af]">{copy.description}</p>
         </div>
 
         <div className="min-w-0">
@@ -133,45 +122,43 @@ export function SiteSearch({copy, counts, index, locale}: SiteSearchProps) {
               type="search"
               value={query}
             />
+            <div className="absolute inset-x-0 top-full z-30 mt-2 max-h-80 overflow-y-auto border border-[#344039] bg-[#111613] shadow-2xl" data-site-search-results="stable" hidden={!hasResults} tabIndex={-1}>
+              <ul
+                aria-label={copy.resultCount.replace("{count}", String(results.length))}
+                id="site-search-results"
+                ref={listboxRef}
+                role="listbox"
+              >
+                {results.map((result, resultIndex) => (
+                  <li
+                    aria-selected={resultIndex === selectedIndex}
+                    className={`group grid min-h-[68px] cursor-pointer grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-[#26312c] px-4 py-3 last:border-b-0 hover:bg-[#1a221e] ${resultIndex === selectedIndex ? "bg-[#1a221e] ring-2 ring-inset ring-[#79d19c]" : ""}`}
+                    data-search-href={result.href}
+                    data-search-index={resultIndex}
+                    id={`site-search-option-${resultIndex}`}
+                    key={result.id}
+                    onClick={() => openResult(result)}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onMouseEnter={() => setActiveIndex(resultIndex)}
+                    role="option"
+                    title={`${copy.openResult}: ${result.title}`}
+                  >
+                    <span className="inline-flex min-w-14 justify-center border border-[#4b6255] px-2 py-1 text-[10px] font-semibold uppercase text-[#a9b5af]">
+                      {copy.types[result.type]}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-semibold text-[#edf2ef] group-hover:text-[#79d19c]">{result.title}</span>
+                      <span className="mt-1 block truncate text-xs text-[#82938a]">{result.category}</span>
+                    </span>
+                    <ArrowRight aria-hidden="true" className="size-4 text-[#82938a] group-hover:text-[#79d19c]" />
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-
-          <div className="h-[308px] overflow-y-auto border-x border-b border-[#344039] bg-[#111613]" data-site-search-results="stable" tabIndex={-1}>
-            <p aria-live="polite" className={`px-5 py-3 text-sm leading-6 ${hasResults ? "border-b border-[#26312c] text-xs uppercase text-[#82938a]" : "text-[#98a69f]"}`}>
-              {!hasQuery ? copy.prompt : results.length === 0 ? copy.empty : formatCount(copy.resultCount, results.length)}
-            </p>
-            <ul
-              aria-label={copy.resultCount.replace("{count}", String(results.length))}
-              hidden={!hasResults}
-              id="site-search-results"
-              ref={listboxRef}
-              role="listbox"
-            >
-              {results.map((result, resultIndex) => (
-                <li
-                  aria-selected={resultIndex === selectedIndex}
-                  className={`group grid min-h-[72px] cursor-pointer grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b border-[#26312c] px-4 py-3 last:border-b-0 hover:bg-[#1a221e] ${resultIndex === selectedIndex ? "bg-[#1a221e] ring-2 ring-inset ring-[#79d19c]" : ""}`}
-                  data-search-href={result.href}
-                  data-search-index={resultIndex}
-                  id={`site-search-option-${resultIndex}`}
-                  key={result.id}
-                  onClick={() => openResult(result)}
-                  onMouseDown={(event) => event.preventDefault()}
-                  onMouseEnter={() => setActiveIndex(resultIndex)}
-                  role="option"
-                  title={`${copy.openResult}: ${result.title}`}
-                >
-                  <span className="inline-flex min-w-14 justify-center border border-[#4b6255] px-2 py-1 text-[10px] font-semibold uppercase text-[#a9b5af]">
-                    {copy.types[result.type]}
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block truncate text-sm font-semibold text-[#edf2ef] group-hover:text-[#79d19c]">{result.title}</span>
-                    <span className="mt-1 block truncate text-xs text-[#82938a]">{result.category}</span>
-                  </span>
-                  <ArrowRight aria-hidden="true" className="size-4 text-[#82938a] group-hover:text-[#79d19c]" />
-                </li>
-              ))}
-            </ul>
-          </div>
+          <p aria-live="polite" className="mt-1 min-h-5 text-xs leading-5 text-[#98a69f]">
+            {!hasQuery ? copy.prompt : results.length === 0 ? copy.empty : formatCount(copy.resultCount, results.length)}
+          </p>
         </div>
       </div>
     </section>

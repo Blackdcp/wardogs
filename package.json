@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run content:validate && next build",
-    "deploy:prod": "node scripts/deploy-production.mjs",
+    "release:prepare": "node scripts/deploy-production.mjs prepare",
+    "release:finalize": "node scripts/deploy-production.mjs finalize",
     "build:pages": "node scripts/build-pages.mjs",
     "start": "next start",
     "lint": "eslint .",

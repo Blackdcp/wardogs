@@ -57,7 +57,7 @@ export async function HomeHero({facts}: HomeHeroProps) {
           <div className="mt-6 grid w-full max-w-2xl grid-cols-2 gap-2.5 sm:grid-cols-4">
             <ButtonLink href="/items/weapons" homeTask="weapons" className="px-2" title={t("home.quickTasks.weapons")}>{t("home.quickTasks.weapons")}</ButtonLink>
             <ButtonLink href="/items/vehicles" homeTask="vehicles" variant="secondary" className="px-2" title={t("home.quickTasks.vehicles")}>{t("home.quickTasks.vehicles")}</ButtonLink>
-            <ButtonLink href="/maps" homeTask="map" variant="secondary" className="px-2" title={t("home.quickTasks.map")}>{t("home.quickTasks.map")}</ButtonLink>
+            <ButtonLink href="/tools/map" homeTask="map" variant="secondary" className="px-2" title={t("home.quickTasks.map")}>{t("home.quickTasks.map")}</ButtonLink>
             <ButtonLink href="/guides/wardogs-server-status" homeTask="status" variant="secondary" className="px-2" title={t("home.quickTasks.status")}>{t("home.quickTasks.status")}</ButtonLink>
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm">

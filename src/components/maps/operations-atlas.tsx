@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {useState} from "react";
 import {ArrowUpRight, BookOpen, CalendarCheck2, ImageOff, MapPinned} from "lucide-react";
+import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 import type {Locale} from "@/config/site";
 import {formatCatalogueVerifiedAt, localizeCatalogueBuild, localizeCatalogueFact} from "@/features/catalogue/catalogue-localization";
 import {getCatalogueSourceClassLabel, getItemUi} from "@/features/items/item-ui";
@@ -25,19 +26,13 @@ type OperationsAtlasProps = {
 
 const visualSizes = "(min-width: 1024px) 320px, (min-width: 640px) 38vw, calc(100vw - 32px)";
 
-const communityMaps = [
-  {name: "Bakurani", href: "https://metaforge.app/wardogs/map/bakurani"},
-  {name: "Ozeti", href: "https://metaforge.app/wardogs/map/ozeti"},
-  {name: "Zestafona", href: "https://metaforge.app/wardogs/map/zestafona"},
-] as const;
-
-const communityMapCopy: Record<Locale, {heading: string; description: string; open: string; note: string}> = {
-  en: {heading: "Open the playable maps", description: "Explore the actual 2D battlegrounds, then use the sourced workflows below to plan your route.", open: "Open interactive map on MetaForge", note: "Third-party maps by MetaForge. Opens in a new tab; not hosted or operated by WARDOGS Wiki."},
-  ru: {heading: "Открыть игровые карты", description: "Изучите реальные поля боя в 2D, а затем используйте маршруты ниже для планирования.", open: "Открыть интерактивную карту на MetaForge", note: "Сторонние карты MetaForge. Откроются в новой вкладке; WARDOGS Wiki не размещает и не управляет ими."},
-  de: {heading: "Spielbare Karten öffnen", description: "Erkunde die tatsächlichen Schlachtfelder in 2D und plane anschließend deine Route mit den Anleitungen unten.", open: "Interaktive Karte bei MetaForge öffnen", note: "Karten eines Drittanbieters: MetaForge. Öffnet in einem neuen Tab; nicht von WARDOGS Wiki betrieben."},
-  "pt-br": {heading: "Abrir os mapas do jogo", description: "Explore os campos de batalha reais em 2D e use os guias abaixo para planejar sua rota.", open: "Abrir mapa interativo no MetaForge", note: "Mapas de terceiros do MetaForge. Abre em nova aba; não são hospedados nem operados pelo WARDOGS Wiki."},
-  ja: {heading: "ゲーム内マップを開く", description: "実際の戦場を2Dで確認し、下の根拠付きガイドでルートを計画しましょう。", open: "MetaForgeでインタラクティブマップを開く", note: "MetaForge提供の外部マップです。新しいタブで開き、WARDOGS Wikiは運営していません。"},
-  "zh-cn": {heading: "打开真实战场地图", description: "先查看游戏战场的 2D 交互地图，再结合下方有来源的攻略规划路线。", open: "在 MetaForge 打开交互地图", note: "地图由第三方 MetaForge 提供，将在新标签页打开；WARDOGS Wiki 不托管或运营这些地图。"},
+const siteMapCopy: Record<Locale, {heading: string; description: string; open: string}> = {
+  en: {heading: "Explore the three maps", description: "Switch between Bakurani, Ozeti, and Zestafona. Use the workflows below to plan your route.", open: "Open the full map page"},
+  ru: {heading: "Три игровые карты", description: "Переключайтесь между Bakurani, Ozeti и Zestafona. Маршруты ниже помогут спланировать движение.", open: "Открыть карту на отдельной странице"},
+  de: {heading: "Drei Karten erkunden", description: "Wechsle zwischen Bakurani, Ozeti und Zestafona und plane deine Route mit den Anleitungen unten.", open: "Karte auf eigener Seite öffnen"},
+  "pt-br": {heading: "Explore os três mapas", description: "Alterne entre Bakurani, Ozeti e Zestafona e planeje sua rota com os guias abaixo.", open: "Abrir a página do mapa"},
+  ja: {heading: "3つのマップを見る", description: "Bakurani、Ozeti、Zestafona を切り替え、下のガイドでルートを計画しましょう。", open: "マップの専用ページを開く"},
+  "zh-cn": {heading: "查看三张战场地图", description: "切换 Bakurani、Ozeti 与 Zestafona，并结合下方攻略规划路线。", open: "打开地图独立页面"},
 };
 
 function visualLabel(copy: OperationsAtlasCopy, state: "verified" | "contextual" | "pending") {
@@ -50,7 +45,7 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: Operati
   const [filter, setFilter] = useState<OperationsAtlasFilter>("all");
   const visibleRecords = filterOperationsAtlas(getLocalizedOperationsAtlasRecords(locale), filter);
   const itemUi = getItemUi(locale);
-  const mapCopy = communityMapCopy[locale];
+  const mapCopy = siteMapCopy[locale];
 
   return (
     <section aria-labelledby="operations-atlas-heading" className="border-y border-[#303b35] bg-[#101512]">
@@ -71,26 +66,11 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: Operati
           </p>
         </div>
 
-        <section aria-labelledby="community-maps-heading" className="border-b border-[#303b35] py-7" data-community-maps>
-          <h2 className="display-font text-2xl text-white" id="community-maps-heading">{mapCopy.heading}</h2>
+        <section aria-labelledby="site-maps-heading" className="border-b border-[#303b35] py-7" data-site-maps>
+          <h2 className="display-font text-2xl text-white" id="site-maps-heading">{mapCopy.heading}</h2>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[#a8b4ae]">{mapCopy.description}</p>
-          <div className="mt-5 grid gap-3 sm:grid-cols-3">
-            {communityMaps.map((map) => (
-              <a
-                className="flex min-h-24 flex-col justify-between border border-[#45604e] bg-[#16221a] p-4 transition-colors hover:border-[#69c78f] hover:bg-[#1c2d22]"
-                data-community-map-link
-                href={map.href}
-                key={map.name}
-                rel="noopener noreferrer"
-                target="_blank"
-                title={`${mapCopy.open}: ${map.name}`}
-              >
-                <span className="display-font text-xl text-white">{map.name}</span>
-                <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-[#8cdfa9]">{mapCopy.open}<ArrowUpRight aria-hidden="true" className="size-4 shrink-0" /></span>
-              </a>
-            ))}
-          </div>
-          <p className="mt-3 text-xs leading-5 text-[#89998f]">{mapCopy.note}</p>
+          <WardogsMapViewer className="mt-5" locale={locale} />
+          <Link className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#8cdfa9] hover:text-white" href="/tools/map" title={mapCopy.open}>{mapCopy.open}<ArrowUpRight aria-hidden="true" className="size-4" /></Link>
         </section>
 
         <div className="py-6">

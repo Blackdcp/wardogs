@@ -47,7 +47,8 @@ test("search options stay out of the Tab sequence and remain pointer-activatable
   await expect(options.first().locator("a, button, input, select, textarea, [tabindex]:not([tabindex='-1'])")).toHaveCount(0);
 
   await input.press("Tab");
-  await expect(page.locator('[data-home-action="firstMatch"] a')).toBeFocused();
+  await expect(input).not.toBeFocused();
+  expect(await listbox.evaluate((node) => node.contains(document.activeElement))).toBe(false);
   await expect(input).toHaveAttribute("aria-expanded", "false");
   await expect(input).not.toHaveAttribute("aria-activedescendant", /.+/);
 
