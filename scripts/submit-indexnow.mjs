@@ -61,6 +61,14 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
       }
       continue;
     }
+    if ([
+      "src/app/[locale]/tools/map/page.tsx",
+      "src/components/map/wardogs-map-viewer.tsx",
+      "src/features/maps/interactive-map-page-copy.ts"
+    ].includes(file) || /^public\/images\/maps\/[^/]+\/overview\.(?:png|webp)$/.test(file)) {
+      for (const locale of localeIdsPattern.split("|")) wantedPaths.add(`/${locale}/tools/map`);
+      continue;
+    }
     if (file === "src/features/videos/video-library.ts") {
       wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/videos(?:\/|$)`));
       continue;

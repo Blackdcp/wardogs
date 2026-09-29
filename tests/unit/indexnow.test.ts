@@ -109,6 +109,24 @@ describe("IndexNow deployment notification", () => {
       .toEqual(sitemapUrls.slice(0, 3));
   });
 
+  it("notifies all published locale map pages when the map route or basemap changes", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
+    };
+    const sitemapUrls = [
+      "https://www.wardogswiki.com/en",
+      "https://www.wardogswiki.com/en/tools/map",
+      "https://www.wardogswiki.com/ja/tools/map",
+      "https://www.wardogswiki.com/zh-cn/tools/map",
+      "https://www.wardogswiki.com/en/maps"
+    ];
+
+    expect(indexNow.deriveIndexNowUrls(["src/app/[locale]/tools/map/page.tsx"], sitemapUrls))
+      .toEqual(sitemapUrls.slice(1, 4));
+    expect(indexNow.deriveIndexNowUrls(["public/images/maps/ozeti/overview.webp"], sitemapUrls))
+      .toEqual(sitemapUrls.slice(1, 4));
+  });
+
   it("selects only URLs newly absent from the pre-deploy sitemap", async () => {
     const indexNow = await import(pathToFileURL(scriptPath).href) as {
       deriveNewlyAbsentUrls: (before: string[], after: string[]) => string[];
