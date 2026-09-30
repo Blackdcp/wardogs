@@ -25,7 +25,7 @@ test("each real basemap loads and switching maps resets zoom", async ({page}) =>
   await expect(page.getByRole("button", {name: /layers/i})).toHaveCount(0);
 });
 
-test("describes the three switchable 2D map images without claiming calibrated coordinates", async ({page}) => {
+test("describes the three switchable 2D map images without claiming calibrated coordinates", async ({page, request}) => {
   const localizedBasemapWording = [
     {locale: "en", phrase: "2D map images"},
     {locale: "de", phrase: "2D-Kartenbilder"},
@@ -36,8 +36,9 @@ test("describes the three switchable 2D map images without claiming calibrated c
   ];
 
   for (const {locale, phrase} of localizedBasemapWording) {
-    await page.goto(`/${locale}/tools/map`);
-    const description = await page.locator("main > header p").innerText();
+    const response = await request.get(`/${locale}/tools/map`);
+    expect(response.status(), locale).toBe(200);
+    const description = await page.evaluate((html) => new DOMParser().parseFromString(html, "text/html").querySelector("main > header p")?.textContent ?? "", await response.text());
 
     expect(description, locale).toContain(phrase);
     for (const mapName of ["Bakurani", "Ozeti", "Zestafona"]) {

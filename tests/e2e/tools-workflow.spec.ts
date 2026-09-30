@@ -14,8 +14,10 @@ function result(page: Page, label: string) {
   return page.locator("dl > div").filter({has: page.locator("dt").filter({hasText: new RegExp(`^${label}$`)})}).locator("dd");
 }
 
-test.beforeEach(async ({page}) => {
-  await page.route("**/*", (route) => ["localhost", "127.0.0.1"].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
+test.beforeEach(async ({context, baseURL}) => {
+  const origin = new URL(baseURL!).origin;
+  await context.route("**/*", (route) => new URL(route.request().url()).origin === origin ? route.continue() : route.abort());
+  await context.routeWebSocket("**/*", (route) => new URL(route.url()).host === new URL(origin).host ? route.connectToServer() : route.close());
 });
 
 for (const width of [1440, 390]) {

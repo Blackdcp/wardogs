@@ -45,7 +45,7 @@ for map_id in MAPS:
     webp_path = os.path.join(out_dir, "overview.webp")
     png_path = os.path.join(out_dir, "overview.png")
     
-    full_image.save(webp_path, "WEBP", quality=92)
+    full_image.save(webp_path, "WEBP", quality=85)
     full_image.save(png_path, "PNG")
     print(f"Saved: {webp_path} ({os.path.getsize(webp_path)} bytes)")
     print(f"Saved: {png_path} ({os.path.getsize(png_path)} bytes)")
