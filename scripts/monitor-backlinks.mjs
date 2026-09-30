@@ -4,7 +4,16 @@ import {pathToFileURL} from "node:url";
 
 export const DEFAULT_TARGET_URL = "https://www.wardogswiki.com";
 export const DEFAULT_BACKLINK_URLS = [
-  "https://www.moddb.com/games/wardogs/tutorials/wardogs-beginners-guide-control-zones-cash-roles-and-teamplay"
+  "https://www.moddb.com/games/wardogs/tutorials/wardogs-beginners-guide-control-zones-cash-roles-and-teamplay",
+  "https://kennel.gg/guides/reference/sources/",
+  "https://kennel.gg/guides/tasks/making-money/",
+  "https://kennel.gg/guides/reference/vehicles/",
+  "https://kennel.gg/guides/reference/gear-and-equipment/",
+  "https://wardogsmanual.wiki/tier-list",
+  "https://game.savetip.co.kr/wardogs-first-match-cash-guide/",
+  "https://antihype.com.br/c/games/wardogs-chefe-detalha-hora-extra-estudio-bulkhead/",
+  "https://wardogs-game.com/weapons",
+  "https://www.techtimes.com/articles/326774/20260906/wardogs-beta-ends-245k-players-early-access-begins-this-wednesday.htm"
 ];
 export const DEFAULT_MARGINALIA_STATUS_URL =
   "https://api2.marginalia-search.com/search?query=site%3Awardogswiki.com&count=20";
@@ -36,17 +45,46 @@ function isPrivateDashboardUrl(value) {
     || (host === "bing.com" && url.pathname.startsWith("/webmasters"));
 }
 
-function extractLinkedHosts(html, baseUrl) {
-  const hosts = [];
-  const hrefPattern = /\bhref\s*=\s*["']([^"']+)["']/gi;
-  for (const match of html.matchAll(hrefPattern)) {
+function decodeHtml(value) {
+  const named = {amp: "&", quot: '"', apos: "'", lt: "<", gt: ">", nbsp: " "};
+  return value.replace(/&(#x[\da-f]+|#\d+|amp|quot|apos|lt|gt|nbsp);/gi, (entity, code) => {
+    if (!code.startsWith("#")) return named[code.toLowerCase()];
+    const point = code[1].toLowerCase() === "x"
+      ? Number.parseInt(code.slice(2), 16)
+      : Number.parseInt(code.slice(1), 10);
+    return point > 0 && point <= 0x10ffff ? String.fromCodePoint(point) : entity;
+  });
+}
+
+function extractLinkedAnchors(html, baseUrl, targetHost) {
+  const links = [];
+  // The workflow runs without npm install; inspect static anchors, not hydration strings.
+  const markup = html.replace(/<!--[\s\S]*?(?:-->|$)|<(script|style|template)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, "");
+  const anchorPattern = /<a\b((?:"[^"]*"|'[^']*'|[^'">])*)>([\s\S]*?)<\/a\s*>/gi;
+  const attributePattern = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
+  const wantedHost = canonicalHost(targetHost);
+  for (const match of markup.matchAll(anchorPattern)) {
+    const attributes = new Map();
+    for (const attribute of match[1].matchAll(attributePattern)) {
+      const name = attribute[1].toLowerCase();
+      if (!attributes.has(name)) attributes.set(name, attribute[2] ?? attribute[3] ?? attribute[4] ?? "");
+    }
+    if (!attributes.has("href")) continue;
     try {
-      hosts.push(canonicalHost(new URL(match[1], baseUrl).hostname));
+      const destination = new URL(decodeHtml(attributes.get("href")), baseUrl);
+      const host = canonicalHost(destination.hostname);
+      if (!["http:", "https:"].includes(destination.protocol)
+        || (host !== wantedHost && !host.endsWith(`.${wantedHost}`))) continue;
+      links.push({
+        href: destination.href,
+        text: decodeHtml(match[2].replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim(),
+        rel: decodeHtml(attributes.get("rel") || "").toLowerCase().split(/\s+/).filter(Boolean)
+      });
     } catch {
       // Ignore malformed links on third-party pages.
     }
   }
-  return hosts;
+  return links;
 }
 
 function fetchOptions(signal, extraHeaders = {}) {
@@ -112,23 +150,37 @@ export async function checkPublicBacklink({
 
   try {
     return await withTimeout(async (signal) => {
-      const response = await fetchImpl(url, fetchOptions(signal));
+      let currentUrl = url;
+      let response;
+      for (let redirects = 0; redirects <= 5; redirects += 1) {
+        if (isPrivateDashboardUrl(currentUrl)) {
+          return {url, state: "skipped", reason: "Redirect to an authenticated dashboard was not fetched."};
+        }
+        response = await fetchImpl(currentUrl, {...fetchOptions(signal), redirect: "manual"});
+        if (![301, 302, 303, 307, 308].includes(response.status)) break;
+        const location = response.headers.get("location");
+        if (!location || redirects === 5) return unavailableResult(url, "Invalid or excessive redirects", response.status);
+        currentUrl = new URL(location, currentUrl).href;
+        if (!isHttpUrl(currentUrl)) return unavailableResult(url, "Non-HTTP redirect", response.status);
+      }
       if (!response.ok) {
         return unavailableResult(url, `HTTP ${response.status}`, response.status);
       }
 
       const html = await response.text();
-      const wantedHost = canonicalHost(targetHost);
-      const linkedHosts = extractLinkedHosts(html, response.url || url);
-      const hasTargetLink = linkedHosts.some((host) =>
-        host === wantedHost || host.endsWith(`.${wantedHost}`)
-      );
+      if (response.headers.get("cf-mitigated") === "challenge"
+        || /<title[^>]*>\s*(?:Just a moment|Attention Required)[^<]*<\/title>/i.test(html)) {
+        return unavailableResult(url, "Public page returned an access challenge", response.status);
+      }
+      const finalUrl = response.url || currentUrl;
+      const links = extractLinkedAnchors(html, finalUrl, targetHost);
 
       return {
         url,
-        finalUrl: response.url || url,
-        state: hasTargetLink ? "active" : "missing",
-        httpStatus: response.status
+        finalUrl,
+        state: links.length > 0 ? "active" : "missing",
+        httpStatus: response.status,
+        links
       };
     }, timeoutMs);
   } catch (error) {
@@ -157,7 +209,10 @@ export async function checkMarginalia({
         return unavailableResult(statusUrl, "Marginalia returned invalid JSON", response.status);
       }
 
-      const results = Array.isArray(data?.results) ? data.results : [];
+      if (!Array.isArray(data?.results)) {
+        return unavailableResult(statusUrl, "Marginalia returned no valid results array", response.status);
+      }
+      const results = data.results;
       const wantedHost = canonicalHost(targetHost);
       const matches = results.filter((result) => {
         try {
@@ -173,7 +228,10 @@ export async function checkMarginalia({
         state: matches.length > 0 ? "indexed" : "not-indexed",
         httpStatus: response.status,
         resultCount: matches.length,
-        matchingUrls: matches.map((result) => result.url)
+        matchingUrls: matches.map((result) => result.url),
+        reason: matches.length > 0
+          ? "Matching URLs were returned by this search query."
+          : "No matching URLs were returned by this query; this does not establish submission-review or database-admission status."
       };
     }, timeoutMs);
   } catch (error) {
@@ -206,7 +264,7 @@ function computeChanges(current, previousReport) {
 
   for (const entry of current) {
     const oldState = previous.get(entry.url);
-    if (entry.state === "active" && oldState && oldState !== "active") gained.push(entry.url);
+    if (entry.state === "active" && oldState === "missing") gained.push(entry.url);
     if (entry.state === "missing" && oldState === "active") lost.push(entry.url);
   }
 
@@ -276,13 +334,14 @@ export function formatStepSummary(report) {
     `- Gained: ${report.changes.gained.length}`,
     `- Lost: ${report.changes.lost.length}`,
     `- Marginalia: ${report.marginalia.state}`,
+    ...(report.marginalia.reason ? [`- Marginalia observation: ${report.marginalia.reason}`] : []),
     `- Google Search Console: ${report.googleSearchConsole.state} - ${report.googleSearchConsole.reason}`,
     `- Bing Webmaster: ${report.bingWebmaster.state} - ${report.bingWebmaster.reason}`,
     "",
-    "| Public URL | State | HTTP |",
-    "| --- | --- | --- |",
+    "| Public URL | State | HTTP | Verified anchor destinations / rel |",
+    "| --- | --- | --- | --- |",
     ...report.publicBacklinks.map((entry) =>
-      `| ${markdownCell(entry.url)} | ${markdownCell(entry.state)} | ${markdownCell(entry.httpStatus)} |`
+      `| ${markdownCell(entry.url)} | ${markdownCell(entry.state)} | ${markdownCell(entry.httpStatus)} | ${markdownCell(entry.links?.map((link) => `${link.href} [${link.rel.join(" ") || "no rel"}]`).join("; "))} |`
     ),
     "",
     "## Changes since previous report",
@@ -293,7 +352,8 @@ export function formatStepSummary(report) {
     ...report.changes.gained.map((url) => `- Gained: ${url}`),
     ...report.changes.lost.map((url) => `- Lost: ${url}`),
     "",
-    "The workflow only fetches public pages and public APIs. It does not scrape authenticated Google or Bing interfaces."
+    "The workflow only fetches public pages and public APIs. It does not scrape authenticated Google or Bing interfaces.",
+    "Active means a static public anchor was observed, not search-engine indexing or independent editorial endorsement. Access errors are unavailable, never lost; recovery from an unavailable check is not a gained backlink."
   ];
   return `${lines.join("\n")}\n`;
 }
