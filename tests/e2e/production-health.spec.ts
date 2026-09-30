@@ -213,8 +213,14 @@ test("original video player resolves on the published guide", async ({page, diag
   const player = page.frameLocator('iframe[src*="XUyP1GLUF5o"]');
   await expect(player.locator("body")).toContainText(/YouTube|FOB|supply|Wardogs/i);
   await expect(player.locator("body")).not.toContainText(/Video unavailable|Error 153|Error 150|Playback on other websites has been disabled/i);
-  await expect.poll(() => player.locator("video").evaluateAll((videos) => videos.some((video) => video.readyState >= 2 && video.currentTime >= 212 && !video.paused && !video.error))).toBe(true);
-  const playback = await player.locator("video").evaluateAll((videos) => videos.map((video) => ({readyState: video.readyState, currentTime: video.currentTime, paused: video.paused, error: video.error?.code ?? null})));
+  await expect.poll(() => player.locator("video").evaluateAll((videos) => videos.some((element) => {
+    const video = element as HTMLVideoElement;
+    return video.readyState >= 2 && video.currentTime >= 212 && !video.paused && !video.error;
+  }))).toBe(true);
+  const playback = await player.locator("video").evaluateAll((videos) => videos.map((element) => {
+    const video = element as HTMLVideoElement;
+    return {readyState: video.readyState, currentTime: video.currentTime, paused: video.paused, error: video.error?.code ?? null};
+  }));
   await info.attach("player-state", {body: JSON.stringify(playback, null, 2), contentType: "application/json"});
   await page.screenshot({path: info.outputPath("live-video-embed.png")});
   expect(diagnostics.pageErrors).toEqual([]);
