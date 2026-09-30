@@ -72,6 +72,8 @@ The durable skill is communication. Range and azimuth principles continue to mat
 ## Separate loading failure from aiming error
 Before firing, identify the actual emplacement and its requested ammunition. A built mortar, nearby supplies and a loaded mortar are not equivalent states. If the loading prompt is absent, inspect the selected interaction, ammunition and current requirements before changing range.
 
+The [mortar item entry](/en/items/weapons/mortar) provides emplacement context and its evidence window; historical footage there is not a current ammunition, range or damage table.
+
 For aiming, record the firing position, target marker, height difference if the client provides it, current aim settings and a spotter's observed impact. Change one setting per correction and stop when friendly positions are unclear. Do not turn a video's chapter title into a verified trajectory or a guaranteed-hit calculation.
 
 [LifeofKino: building/ammo 00:10, aiming 01:05](/en/videos#candidate-BIvKEmXlw78) and [Tactiq's three positions](/en/videos#candidate-z8i2cQiQSjE) are navigation candidates only. The full current loading sequence and protected-position screenshots remain unverified. SPH-2 and Stingray need their own evidence.
@@ -87,6 +89,15 @@ Choose ground that conceals the crew without blocking the live weapon's firing r
 Azimuth describes horizontal direction; range describes distance. Start with the current map marker and the live mortar interface, then confirm that both crew members use the same reference. Do not copy an old beta conversion table without checking the present build's map scale, units, zeroing, and sight behavior.
 
 Fire one adjustment round or a deliberately small group when conditions allow. The spotter then reports whether impact is left, right, short, or long relative to the target. Change one component in measured steps, repeat, and only commit more ammunition after impacts are useful. If the target moves, stop and acquire a new solution rather than walking rounds through friendly routes.
+
+**Map distance before the ranging shot:** our [interactive map](/en/tools/map) has a usable ruler, but no verified game-world coordinate conversion or azimuth output. Use it as follows:
+
+1. Select the matching map, wait for its image to load and open the ruler with **Measure distance**. Without calibration it reports image pixels only, not meters.
+2. Choose **Reference segment** and place two identifiable reference endpoints by clicking/tapping the image, or move the view and use **Set endpoint at view center** for each. Enter a known horizontal reference distance in meters, its distance error, each endpoint's image-pixel error, the source/observation and observed game build. Choose **Apply calibration**. If you lack a defensible reference, keep the pixel-only result; the old Beta grid estimates below are not an automatic scale.
+3. In **Measure distance**, place the firing position and target as the two endpoints. Read the estimated horizontal distance and bounds from supplied errors. This assumes uniform image scale; the bounds cover only your entered distance and point errors, not unverified projection, terrain or build differences. It is not route length or slant range.
+4. Use the share control to send the selected points and calibration to your spotter. Reference notes and build are included in the link: omit private account details. Each map has separate calibration; do not reuse another map's reference blindly.
+
+This is map geometry, **not a precise mortar or artillery calculator**. It supplies no firing elevation, shell trajectory or guaranteed-hit setting. Check direction/azimuth in the current client and confirm an observed impact; height, muzzle velocity and build-matched ballistics remain unverified here.
 
 ## Spotting Loop
 
