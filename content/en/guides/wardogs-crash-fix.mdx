@@ -50,11 +50,11 @@ sources:
   - label: "Team17 pinned WD-L020 and Windows preview update notice"
     url: "https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/"
     kind: "official"
-    checkedAt: "2026-09-26"
+    checkedAt: "2026-09-30"
   - label: "Microsoft September 22 KB5124010 preview update"
     url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update"
     kind: "official"
-    checkedAt: "2026-09-26"
+    checkedAt: "2026-09-30"
 ---
 
 ## Quick Answer
@@ -84,6 +84,12 @@ The [September 23 developer notice](https://steamcommunity.com/app/1867240/discu
 | PC restarts or powers off | Stop repeated launches and investigate system stability | Do not keep testing as if it were only a game crash |
 
 Team17 describes removing the affected preview update as optional, with security, stability and compatibility risks. Read the current notice and any managed-device policy first. If Windows offers no normal rollback, do not force-remove packages or disable security/anti-cheat. For support, include date/timezone, client build, error screenshot, launch stage, Windows build/update history, GPU driver and steps already tried; redact personal data. This is a diagnostic checklist, not a claim that a new patch fixed WD-L020.
+
+### Check the update before choosing a fix
+
+Rechecked **2026-09-30**: [Team17's WD-L020 notice](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) still describes a potential compatibility issue, not a confirmed universal fix. Search Windows for `winver` and record the version and OS build. Then open **Settings > Windows Update > Update history** and record the installed KB number and installation date. Compare those records with [Microsoft's KB5124010 preview entry](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update); “Windows updated recently” alone is not a diagnosis.
+
+If you reach a match but an action does not respond, use the [controls checks](/en/guides/wardogs-controls), not a startup rollback. If you remain at login, record whether the screen responds and check [regional service notices](/en/guides/wardogs-server-status). Keep these outcomes separate in a support report; a working menu does not prove a successful server connection.
 
 ## Confirmed Facts
 

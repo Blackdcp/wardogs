@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-26"
+updatedAt: "2026-09-30"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -17,10 +17,18 @@ faq:
   - question: "WARDOGSがクラッシュするときの安全な確認方法は？"
     answer: "SteamとWindowsを再起動し、ファイル整合性を確認し、非公式の起動オプションを外し、GPUドライバーを更新してオーバーレイを閉じます。変更は一つずつ行い、エラーを記録します。"
   - question: "近接ボイスチャットが使えない場合は？"
-    answer: "まず最新のSteam告知とゲーム内の通信状態を確認してください。音声の切り替えやUキー2回はBeta 02の案内であり、現行ビルドで確認済みの修正方法ではありません。"
+    answer: "マイク、チャンネル、通信状態を確認してください。Team17は9月19日と23日にEarly Accessでも再接続を案内していますが、個別の確認手順であり、必ず直る方法ではありません。"
   - question: "Supporter PackのアイテムがBeta 02にありません。購入失敗ですか？"
     answer: "Betaでは利用できない既知の問題でした。現在はSteam DLCとして販売されているため、見えない場合はDLC権利と最新ビルドを確認します。"
 sources:
+  - label: "Team17：Early Accessの音声サポート回答"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/"
+    kind: "official"
+    checkedAt: "2026-09-30"
+  - label: "Microsoft：マイクの確認"
+    url: "https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems"
+    kind: "official"
+    checkedAt: "2026-09-30"
   - label: "公式Pre-Load・Season 1変更履歴"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
     kind: "official"
@@ -61,11 +69,11 @@ Patch 0.11は9月12日に告知され、**9月14日08:00 UTC**の保守時間は
 
 ## 結論
 
-サーバー一覧が空なら、まず**Official / Community**の区分、Communityの検索・フィルター、**Show Empty/Full**を確認します。地域を1つにする方法と**Uを2回**押す方法はBeta 02の案内で、現行ビルド共通の修正ではありません。
+サーバー一覧が空なら、まず**Official / Community**の区分、Communityの検索・フィルター、**Show Empty/Full**を確認します。地域を1つにする方法はBeta 02の案内で、共通の修正ではありません。音声の確認手順は下の項目に分けています。
 
 ## 確認済み情報
 
-対処法は公式Known Issuesスレッドに基づき、テスト中に変更される場合があります。
+過去のBeta 02向け対処法と、その後のEarly AccessでのTeam17の音声サポート回答を区別しています。どちらも全件の解決を保証するものではありません。
 
 ## このガイドの使い方
 
@@ -102,7 +110,13 @@ Steamライブラリに正式に追加されたWARDOGSの項目だけを使い�
 
 Season 1の公式変更履歴は、参加失敗後に音声が途切れる問題の修正と通信状態の表示追加を記載しています。現在の不具合では、まずその表示、Windowsとゲーム内の入出力デバイス、マイク権限、最新のSteam告知を確認してください。
 
-設定で音声を切り替える方法やスコアボードで**Uキーを2回押す**方法、外部音声サービスの障害に関する注意はBeta 02当時の案内です。現行ビルドで試すことはできますが、古い不具合や外部障害が今も起きている証拠として扱わないでください。
+**2026-09-30確認**：[Team17は9月19日と23日にも再接続を提案](https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/)しています。Betaだけの案内ではありませんが、確実な修正でもありません。
+
+- **マイクが認識されない**：[Microsoftの手順](https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems)で録音とデスクトップアプリのアクセス許可を確認。Windowsでは録音できるのにゲームのテストが無音なら、AudioのInput Deviceを照合します。
+- **SquadかLocalの片方だけ使える**：[送信キー](/ja/guides/wardogs-controls)と[分隊への参加](/ja/guides/wardogs-squad-guide)を確認。同じ近くの味方と両チャンネルを双方向で試し、聞こえない側を記録します。
+- **赤い×が戻る**：Team17の確認手順はTab、U、5秒待ってUです。改善しなければ表示、サーバー、ビルド、UTC時刻を保存し、[サービス告知](/ja/guides/wardogs-server-status)と照合します。保護機能は無効にせず、表示だけで回線原因と断定しません。
+
+9月25日の回答では、サポートは相談者にDxDiagを求めています。求められたファイルは個人情報を確認して公式窓口へ送り、未確認のまま公開しないでください。
 
 ## Supporter Packと進行状況
 

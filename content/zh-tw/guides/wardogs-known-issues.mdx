@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-26"
+updatedAt: "2026-09-30"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -17,10 +17,18 @@ faq:
   - question: "WARDOGS 崩潰時怎麼安全排查？"
     answer: "重啟 Steam 和 Windows，驗證檔案，移除非官方啟動引數，從顯示卡廠商更新驅動，關閉疊加層，並一次只改一個專案，同時記錄準確報錯。"
   - question: "本地語音失效怎麼辦？"
-    answer: "先檢查當前 Steam 補丁公告和遊戲內通訊狀態。關閉語音或按兩次 U 是 Beta 02 的舊建議，須在當前版本複測，不能當作已確認的現行修復。"
+    answer: "先檢查麥克風、頻道和通訊狀態。Team17 在 9 月 19 日及 23 日的搶先體驗支援回覆中再次建議重新連線，但這是個案排查步驟，不保證修復所有故障。"
   - question: "Beta 02 裡沒有 Supporter Pack 道具，是購買失敗嗎？"
     answer: "這是 Beta 期間的已知限制。Supporter Pack 現已作為 Steam DLC 銷售；當前缺失應核對 DLC 權益和最新版本。"
 sources:
+  - label: "Team17：搶先體驗語音支援回覆"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/"
+    kind: "official"
+    checkedAt: "2026-09-30"
+  - label: "微軟：麥克風測試與權限"
+    url: "https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems"
+    kind: "official"
+    checkedAt: "2026-09-30"
   - label: "官方預載與 Season 1 更新日誌"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
     kind: "official"
@@ -61,11 +69,11 @@ Patch 0.11 仍是最新官方補丁公告，已公佈的 9 月 14 日 08:00 UTC 
 
 ## 快速結論
 
-伺服器列表空白時，先核對 **Official / Community** 頁面、Community 搜尋和篩選以及 **Show Empty/Full** 選項，再看 Steam 官方維護公告。只選一個地區、按兩次 U 是 Beta 02 的舊辦法，並非已確認的現行通用修復。
+伺服器列表空白時，先核對 **Official / Community** 頁面、Community 搜尋和篩選以及 **Show Empty/Full** 選項，再看 Steam 官方維護公告。只選一個地區是 Beta 02 的舊辦法，並非現行通用修復。語音問題按下方獨立步驟檢查。
 
 ## 已確認事實
 
-這些處理方法來自官方 Beta 02 已知問題帖，只適用於已經結束的測試版本，必須在搶先體驗版本重新驗證。伺服器或第三方語音服務故障不一定能在玩家電腦上修復。
+歷史 Beta 02 辦法與 Team17 後續搶先體驗語音回覆分開標註，都不保證解決每個個案。伺服器或第三方語音服務故障不一定能在玩家電腦上修復。
 
 ## 玩家最常查什麼
 
@@ -104,9 +112,13 @@ Closed Beta 02 已按 **9 月 3 日 19:00 UTC 至 9 月 6 日 08:00 UTC** 的修
 
 ## 本地語音與音訊
 
-Season 1 官方更新日誌稱已修復加入失敗後語音持續中斷的問題，並增加可見的通訊狀態。當前語音失效時，先檢查該狀態、Windows 輸入輸出裝置及最新 Steam 公告。設定裡關閉語音或在計分板按**兩次 U**來自 Beta 02 的舊公告，只能作為版本敏感的複測，不能據此認定舊故障或第三方服務中斷仍在發生。
+Season 1 官方日誌記錄了加入失敗後的語音修復和通訊狀態顯示。**2026-09-30 複核**：[Team17 在 9 月 19 日、23 日再次建議重新連線](https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/)，不再只是 Beta 舊建議，也不等於通用修復。
 
-本地仍應檢查 Windows 預設輸入和輸出裝置、遊戲內語音裝置以及麥克風許可權。提交問題時說明“完全聽不到”“只能聽不能說”還是“特定頻道失效”，能讓排查更準確。
+- **麥克風無法辨識**：按[微軟說明](https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems)測試錄音與桌面應用程式權限。Windows 能錄音但遊戲測試無聲時，再核對 Audio 的 Input Device 是否選中同一支麥克風。
+- **只有 Squad 或 Local 可用**：核對[發話按鍵](/zh-tw/guides/wardogs-controls)及[小隊成員關係](/zh-tw/guides/wardogs-squad-guide)，找同一名附近隊友分別雙向測試兩個頻道，記錄是哪一方聽不到，不只寫「語音壞了」。
+- **紅叉反覆出現**：Team17 建議的測試是 Tab、U、等待 5 秒、再按 U。仍失敗則記錄圖示、伺服器、版本和 UTC 時間，對照[服務公告](/zh-tw/guides/wardogs-server-status)。不要關閉防護，也不能僅憑紅叉認定網路原因。
+
+9 月 25 日支援回覆仍向回報者索取 DxDiag。若收到此要求，先檢查診斷檔案中的個人資訊，透過官方支援管道提供，不要未經檢查就公開上傳。
 
 ## Supporter Pack 與進度
 

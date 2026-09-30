@@ -21,6 +21,14 @@ faq:
   - question: "Devo desinstalar uma atualização de segurança para jogar?"
     answer: "Não como primeiro passo. Use as correções reversíveis deste guia e mantenha o Windows atualizado; mudanças em atualizações de segurança devem seguir orientação oficial."
 sources:
+  - label: "Team17: falha de inicialização WD-L020"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/"
+    kind: "official"
+    checkedAt: "2026-09-30"
+  - label: "Microsoft: atualização prévia KB5124010"
+    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update"
+    kind: "official"
+    checkedAt: "2026-09-30"
   - label: "WARDOGS na Steam"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
@@ -54,6 +62,12 @@ O [aviso de 23 de setembro](https://steamcommunity.com/app/1867240/discussions/0
 | PC reinicia ou desliga | Pare de repetir a abertura e investigue estabilidade do sistema | Não trate como simples crash do jogo |
 
 A remoção do preview é opcional segundo a Team17 e envolve riscos de segurança, estabilidade e compatibilidade. Leia o aviso atual e a política de computadores gerenciados. Sem rollback normal, não force remoção de pacotes nem desative proteção/anti-cheat. Ao suporte, envie data/fuso, build, código e captura, etapa da falha, Windows/histórico de updates, driver GPU e resultados, ocultando dados pessoais.
+
+### Como conferir se a atualização se aplica
+
+Conferido novamente em **2026-09-30**: o [aviso da Team17 sobre WD-L020](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) ainda descreve uma incompatibilidade potencial, não uma correção universal. Pesquise `winver` no Windows e anote a versão e a compilação do sistema. Em **Configurações > Windows Update > Histórico de atualizações**, confira o número KB instalado e a data de instalação. Compare com a [página de prévia KB5124010 da Microsoft](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update). Ter atualizado recentemente não identifica a causa por si só.
+
+Se a partida abre, mas uma ação não responde, confira os [controles](/pt-br/guides/wardogs-controls), em vez de reverter o Windows. Se o login não termina, registre se a tela responde e consulte os [avisos de serviço da região](/pt-br/guides/wardogs-server-status). Separe esses resultados no chamado: um menu funcionando não comprova conexão com o servidor.
 
 ## Como corrigir travamentos e congelamentos em WARDOGS?
 

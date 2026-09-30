@@ -21,6 +21,14 @@ faq:
   - question: "微软 KB5121003 是否确认了 WARDOGS 的问题？"
     answer: "没有。微软记录的是部分游戏与 RGB 相关组件可能出现的通用 Windows 问题，文章没有点名 WARDOGS。"
 sources:
+  - label: "Team17：启动错误 WD-L020"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/"
+    kind: "official"
+    checkedAt: "2026-09-30"
+  - label: "微软：KB5124010 预览更新"
+    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update"
+    kind: "official"
+    checkedAt: "2026-09-30"
   - label: "WARDOGS Steam 官方商店页"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
@@ -54,6 +62,12 @@ sources:
 | 整机重启或断电 | 停止反复启动，调查系统稳定性 | 不当作普通游戏闪退继续试 |
 
 Team17将卸载受影响预览更新描述为可选绕行，并提示安全、稳定性和兼容性风险。先读当前公告及受管电脑策略；若Windows没有正常回退入口，不强删系统包，不关闭系统防护或反作弊。提交支持时附日期/时区、游戏构建、完整错误截图、失败阶段、Windows版本/更新历史、显卡驱动和已尝试结果，隐去个人信息。此表不是“新补丁已修WD-L020”的声明。
+
+### 怎样核对更新是否适用
+
+**2026-09-30 复核**：[Team17 的 WD-L020 告知](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/)仍描述潜在兼容性问题，没有宣布通用修复。在 Windows 搜索中打开 `winver`，记录系统版本和 OS 构建；再到**设置 > Windows 更新 > 更新历史记录**，核对实际安装的 KB 编号与日期，并与[微软 KB5124010 预览更新页面](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update)比对。“最近更新过 Windows”本身不能确诊原因。
+
+如果能进入对局，只是某项操作无响应，先检查[操作绑定](/zh-cn/guides/wardogs-controls)，不要套用启动失败的系统回退方案。如果停在登录阶段，记录界面是否有响应，再核对[所在地区的服务公告](/zh-cn/guides/wardogs-server-status)。提交支持时分开写这些结果：菜单能显示，不等于服务器已经连接成功。
 
 ## 如何修复 WARDOGS 崩溃和卡死？
 

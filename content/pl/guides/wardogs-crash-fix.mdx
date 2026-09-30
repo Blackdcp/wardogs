@@ -69,12 +69,12 @@ sources:
   - label: Przypięty komunikat Team17 o WD-L020 i aktualizacji zapoznawczej Windows
     url: 'https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/'
     kind: official
-    checkedAt: '2026-09-26'
+    checkedAt: '2026-09-30'
   - label: Aktualizacja zapoznawcza Microsoft KB5124010 z 22 września
     url: >-
       https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update
     kind: official
-    checkedAt: '2026-09-26'
+    checkedAt: '2026-09-30'
 ---
 
 ## Krótka odpowiedź
@@ -105,6 +105,12 @@ Nie wyłączaj zabezpieczeń Windows, antywirusa ani wirtualizacji jako ogólnej
 | PC uruchamia się ponownie lub wyłącza | Przerwij ponawianie startów i zbadaj stabilność systemu | Nie testuj dalej tak, jakby była to tylko awaria gry |
 
 Team17 określa usunięcie danej aktualizacji zapoznawczej jako opcjonalne, z ryzykiem dla bezpieczeństwa, stabilności i zgodności. Najpierw przeczytaj aktualny komunikat i zasady zarządzanego urządzenia. Jeśli Windows nie udostępnia zwykłego cofnięcia, nie wymuszaj usuwania pakietów ani nie wyłączaj zabezpieczeń lub antycheata. Do zgłoszenia dołącz datę i strefę czasową, wersję klienta, zrzut błędu, etap uruchomienia, wersję Windows i historię aktualizacji, sterownik GPU oraz wykonane kroki; usuń dane osobowe. To lista diagnostyczna, nie twierdzenie, że nowa poprawka naprawiła WD-L020.
+
+### Jak sprawdzić, czy komunikat o aktualizacji dotyczy Twojego PC
+
+Sprawdzono ponownie **2026-09-30**: [komunikat Team17 o WD-L020](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) nadal opisuje potencjalną niezgodność, nie uniwersalną naprawę. Wyszukaj `winver` w Windows i zapisz wersję oraz kompilację systemu. W **Ustawienia > Windows Update > Historia aktualizacji** sprawdź numer zainstalowanej aktualizacji KB i datę instalacji. Porównaj je ze [stroną Microsoft dotyczącą wersji zapoznawczej KB5124010](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update). Samo niedawne zaktualizowanie Windows nie ustala przyczyny.
+
+Jeśli mecz się uruchamia, lecz konkretna czynność nie działa, sprawdź [przypisania sterowania](/pl/guides/wardogs-controls), zamiast cofać Windows. Gdy logowanie nie kończy się, zanotuj, czy ekran reaguje, i sprawdź [komunikaty usług dla regionu](/pl/guides/wardogs-server-status). Oddziel te wyniki w zgłoszeniu: działające menu nie potwierdza połączenia z serwerem.
 
 ## Potwierdzone fakty
 

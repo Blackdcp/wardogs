@@ -1,4 +1,4 @@
-import {officialLinks} from "@/config/site";
+import {isSiteLocale, officialLinks} from "@/config/site";
 
 export const ANALYTICS_EVENTS = {
   homeTaskClick: "home_task_click",
@@ -128,14 +128,14 @@ export function getTrackedLinkEvent(href: string, currentOrigin: string, options
     targetUrl.pathname,
     options.basePath ?? process.env.NEXT_PUBLIC_BASE_PATH ?? ""
   );
-  const itemMatch = routePathname.match(/^\/(?:en|ru|de|pt-br|ja|zh-cn)\/items\/([^/]+)\/([^/]+)\/?$/);
-  if (!itemMatch) return null;
+  const itemMatch = routePathname.match(/^\/([^/]+)\/items\/([^/]+)\/([^/]+)\/?$/);
+  if (!itemMatch || !isSiteLocale(itemMatch[1])) return null;
 
   return {
     name: ANALYTICS_EVENTS.catalogueItemOpen,
     parameters: {
-      item_slug: decodeURIComponent(itemMatch[2]),
-      item_type: decodeURIComponent(itemMatch[1]),
+      item_slug: decodeURIComponent(itemMatch[3]),
+      item_type: decodeURIComponent(itemMatch[2]),
       link_url: targetUrl.href
     }
   };

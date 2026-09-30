@@ -6,8 +6,31 @@ import {
   googleAnalyticsScriptSrc
 } from "../../src/components/seo/google-analytics";
 import * as googleAnalytics from "../../src/components/seo/google-analytics";
+import {siteLocales} from "../../src/config/site";
 
 describe("Google Analytics", () => {
+  it.each(siteLocales)("tracks catalogue details for %s with and without a base path", (locale) => {
+    for (const basePath of ["", "/wardogs"]) {
+      const href = `https://www.wardogswiki.com${basePath}/${locale}/items/weapons/ak74/`;
+      expect(googleAnalytics.getTrackedLinkEvent(href, "https://www.wardogswiki.com", {basePath})).toEqual({
+        name: "catalogue_item_open",
+        parameters: {item_slug: "ak74", item_type: "weapons", link_url: href}
+      });
+    }
+  });
+
+  it("does not track unsupported locales, list routes or external catalogue lookalikes", () => {
+    for (const href of [
+      "/xx/items/weapons/ak74",
+      "/en/items/weapons",
+      "/en/items/weapons/ak74/extra",
+      "/enough/items/weapons/ak74",
+      "https://external.example/en/items/weapons/ak74"
+    ]) {
+      expect(googleAnalytics.getTrackedLinkEvent(href, "https://www.wardogswiki.com")).toBeNull();
+    }
+  });
+
   it("uses the installable Google tag ID for the loader and config script", () => {
     expect(GOOGLE_TAG_ID).toBe("G-0GJ404WEYV");
 

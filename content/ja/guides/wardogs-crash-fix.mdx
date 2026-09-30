@@ -21,6 +21,14 @@ faq:
   - question: "Windows KB5121003はWARDOGSの不具合を証明しますか？"
     answer: "いいえ。一部ゲームとRGB関連部品の一般的問題を説明しますが、記事はWARDOGSを名指ししていません。"
 sources:
+  - label: "Team17：起動時のWD-L020"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/"
+    kind: "official"
+    checkedAt: "2026-09-30"
+  - label: "Microsoft：KB5124010プレビュー更新"
+    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update"
+    kind: "official"
+    checkedAt: "2026-09-30"
   - label: "WARDOGS Steam公式ページ"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
@@ -50,6 +58,12 @@ sources:
 | PC再起動・電源断 | 連続起動をやめ、システム安定性を調査 | 通常のゲームクラッシュとして反復しない |
 
 Team17が説明するプレビュー更新の削除は任意で、セキュリティ・安定性・互換性のリスクがあります。公式告知と管理端末の方針を先に確認。通常の削除ができなければ強制削除や保護・アンチチート無効化はしません。報告には日時/時区、ビルド、エラー画面、失敗段階、Windows更新履歴、GPUドライバー、試した結果を添え、個人情報を隠してください。
+
+### 更新の条件が自分の環境に合うか確認
+
+**2026-09-30再確認**：[Team17のWD-L020告知](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/)は、引き続き潜在的な互換性問題を説明しており、全員に効く修正の発表ではありません。Windows検索で `winver` を開き、バージョンとOSビルドを記録します。**設定 > Windows Update > 更新の履歴**で、実際に導入されたKB番号と日付を確認し、[MicrosoftのKB5124010プレビュー更新](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update)と照合してください。「最近更新した」だけでは原因を特定できません。
+
+試合に入れるのに操作だけ反応しない場合は、更新を戻す前に[キー設定](/ja/guides/wardogs-controls)を確認します。ログインから進まない場合は画面の応答状況を記録し、[地域のサービス告知](/ja/guides/wardogs-server-status)を確認してください。メニュー表示とサーバー接続成功は別の結果として報告します。
 
 ## WARDOGSのクラッシュやフリーズを直すには？
 

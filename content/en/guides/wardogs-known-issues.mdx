@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-26"
+updatedAt: "2026-09-30"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -38,7 +38,7 @@ sources:
   - label: "Team17 Early Access voice-chat troubleshooting replies"
     url: "https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/"
     kind: "official"
-    checkedAt: "2026-09-26"
+    checkedAt: "2026-09-30"
   - label: "Team17 VOIP volume-control reply"
     url: "https://steamcommunity.com/app/1867240/discussions/3/562541634873781802/"
     kind: "official"
@@ -50,7 +50,7 @@ sources:
   - label: "Microsoft Windows microphone test and access guidance"
     url: "https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems"
     kind: "official"
-    checkedAt: "2026-09-26"
+    checkedAt: "2026-09-30"
   - label: "Developer WARDOGS Closed Beta known issues"
     url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
     kind: "official"
@@ -128,6 +128,14 @@ First identify **which test fails**. Hearing game effects does not prove voice i
 If several players lose voice at once or your communication status still shows a service failure, check the [official Steam announcements](https://steamcommunity.com/app/1867240/announcements/) and the [server-status guide](/en/guides/wardogs-server-status). Avoid changing drivers, ports, or security settings based only on an old outage post. The [Closed Beta notice](https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/) mentioned possible third-party provider outages and the same toggle/U workaround; that notice does **not** confirm an ongoing Early Access outage.
 
 If the problem persists, use WARDOGS's [Steam **Report a Problem** forum](https://steamcommunity.com/app/1867240/discussions/3/) or [Team17 support](https://www.team17.com/support). Include the build, UTC time, region and server, the exact communication-status message or screenshot, input and output device names, whether Windows and the in-game mic tests passed, the voice channel and push-to-talk result, and what the reconnect tests changed. Remove personal account details from public screenshots.
+
+### Only one voice channel works, or reconnection does not last
+
+Rechecked **2026-09-30**: [Team17's September 25 follow-up](https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/) still asks the affected player for DxDiag information, rather than declaring the case solved.
+
+- If Windows and the in-game mic tests both pass, test with the **same nearby teammate**. Confirm [squad membership](/en/guides/wardogs-squad-guide), then check the separate Squad/Local [push-to-talk bindings](/en/guides/wardogs-controls). Record which direction fails: hearing them, being heard, or both. One working channel does not validate the other.
+- If reconnecting helps only briefly, record the time until the next dropout, communication icon, server and build. A repeated red cross does not identify a network cause by itself; compare [service notices](/en/guides/wardogs-server-status) before changing unrelated settings.
+- If support requests DxDiag, review it for personal information and use the official support channel. Do not post an unreviewed diagnostic file publicly.
 
 ## Supporter Pack and Progress
 

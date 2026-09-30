@@ -5,7 +5,7 @@ keyword: "wardogs known issues"
 category: "guide"
 slug: "wardogs-known-issues"
 order: 47
-updatedAt: "2026-09-26"
+updatedAt: "2026-09-30"
 badges:
   - label: "Beta 02"
     tone: "warning"
@@ -17,10 +17,18 @@ faq:
   - question: "Como investigar com segurança um travamento de WARDOGS?"
     answer: "Reinicie Steam e Windows, verifique os arquivos, remova comandos não oficiais, atualize o driver da GPU, feche overlays e anote o erro exato antes de procurar suporte."
   - question: "O que fazer quando o chat de voz local para?"
-    answer: "Confira primeiro os avisos atuais do Steam e o indicador de comunicação no jogo. Alternar a voz ou pressionar U duas vezes era uma orientação do Beta 02, não uma correção confirmada para a build atual."
+    answer: "Confira microfone, canal e indicador de comunicação. A Team17 repetiu a sugestão de reconexão no Acesso Antecipado em 19 e 23 de setembro; é um teste para casos específicos, não uma correção garantida."
   - question: "Os itens do Supporter Pack aparecem no Beta 02?"
     answer: "Essa era uma limitação do Beta. O Supporter Pack agora é vendido como DLC na Steam; se algo faltar, confira o direito ao DLC e a build atual."
 sources:
+  - label: "Team17: suporte de voz no Acesso Antecipado"
+    url: "https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/"
+    kind: "official"
+    checkedAt: "2026-09-30"
+  - label: "Microsoft: teste do microfone"
+    url: "https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems"
+    kind: "official"
+    checkedAt: "2026-09-30"
   - label: "Changelog oficial da Season 1 e preload"
     url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
     kind: "official"
@@ -61,11 +69,11 @@ Teste cada caso novamente na build atual do Acesso Antecipado e registre hardwar
 
 ## Resposta rápida
 
-Se o navegador estiver vazio, confira primeiro **Official / Community**, a busca e os filtros Community e **Show Empty/Full**. Selecionar só uma região e pressionar **U** duas vezes eram dicas do Beta 02, não correções gerais confirmadas para a build atual.
+Se o navegador estiver vazio, confira primeiro **Official / Community**, a busca e os filtros Community e **Show Empty/Full**. Selecionar só uma região era uma dica do Beta 02, não uma correção geral. Os testes de voz ficam separados abaixo.
 
 ## Fatos confirmados
 
-As orientações vêm da página oficial de problemas conhecidos e podem mudar durante o teste.
+As orientações históricas do Beta 02 ficam separadas das respostas posteriores da Team17 sobre voz no Acesso Antecipado. Nenhuma delas garante resolver todos os casos.
 
 ## Como usar este guia
 
@@ -100,7 +108,13 @@ Comece por um preset do jogo, observe tempo de quadro e memória, reduza uma op�
 
 ## Voz e áudio
 
-O changelog da Season 1 informa que a perda persistente de voz após falha ao entrar foi corrigida e que um indicador de comunicação foi adicionado. Para um problema atual, confira primeiro esse indicador, os dispositivos de entrada e saída do Windows e os avisos recentes do Steam. Alternar o chat ou pressionar **U duas vezes** veio do Beta 02: é só um teste dependente da build, não prova de que o defeito antigo ou uma falha externa voltou.
+O changelog da Season 1 registra uma correção de voz após falha ao entrar e um indicador de comunicação. **Conferido em 2026-09-30:** [a Team17 voltou a sugerir reconexão em 19 e 23 de setembro](https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/). Não é apenas uma dica do Beta, nem uma correção garantida.
+
+- **Microfone não reconhecido:** teste gravação e permissão de aplicativos desktop conforme a [Microsoft](https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems). Se funciona no Windows, mas não no jogo, compare o microfone com Input Device em Audio.
+- **Só Squad ou Local funciona:** confira [teclas de transmissão](/pt-br/guides/wardogs-controls) e [participação no esquadrão](/pt-br/guides/wardogs-squad-guide). Com o mesmo aliado próximo, teste ambos os canais nos dois sentidos. Registre qual falhou.
+- **O X vermelho volta:** o teste sugerido é Tab, U, esperar 5 segundos, U. Se falhar, registre indicador, servidor, build e horário UTC; compare [avisos de serviço](/pt-br/guides/wardogs-server-status). Mantenha as proteções ativas; o ícone não prova uma causa de rede.
+
+Em 25 de setembro, o suporte pediu DxDiag ao jogador afetado. Revise dados pessoais e envie arquivos solicitados pelo canal oficial; não publique diagnósticos sem revisão.
 
 ## Supporter Pack e progresso
 
