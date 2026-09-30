@@ -5,6 +5,7 @@ import {FactGrid} from "./fact-grid";
 import {FactionVisuals} from "./faction-visuals";
 import {Notice} from "./notice";
 import {OfficialVideo} from "./official-video";
+import {OfficialScreenshot} from "./official-screenshot";
 import {SourceNote} from "./source-note";
 import {Steps} from "./steps";
 
@@ -57,6 +58,7 @@ export const mdxComponents: MDXComponents = {
   FactGrid,
   Notice,
   OfficialVideo,
+  OfficialScreenshot,
   SourceNote,
   Steps
 };

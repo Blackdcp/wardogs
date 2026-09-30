@@ -8,6 +8,7 @@ describe("MDX components", () => {
       "FactGrid",
       "FactionVisuals",
       "Notice",
+      "OfficialScreenshot",
       "OfficialVideo",
       "SourceNote",
       "Steps",

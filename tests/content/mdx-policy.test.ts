@@ -15,7 +15,7 @@ describe("MDX policy", () => {
   });
 
   it("compiles every approved component with the caller map", async () => {
-    const names = ["FactGrid", "Notice", "Steps", "ComparisonTable", "OfficialVideo", "SourceNote", "FactionVisuals"];
+    const names = ["FactGrid", "Notice", "Steps", "ComparisonTable", "OfficialVideo", "OfficialScreenshot", "SourceNote", "FactionVisuals"];
     const components = Object.fromEntries(names.map((name) => [name, () => null]));
     const source = names.map((name) => `<${name} />`).join("\n");
     await expect(compileGuideBody(source, components)).resolves.toHaveProperty("content");

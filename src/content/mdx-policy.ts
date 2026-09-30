@@ -1,7 +1,7 @@
 import type {Root} from "mdast";
 import {visit} from "unist-util-visit";
 
-const approvedComponents = new Set(["FactGrid", "Notice", "Steps", "ComparisonTable", "OfficialVideo", "SourceNote", "FactionVisuals"]);
+const approvedComponents = new Set(["FactGrid", "Notice", "Steps", "ComparisonTable", "OfficialVideo", "OfficialScreenshot", "SourceNote", "FactionVisuals"]);
 
 type MdxNode = {type: string; name?: string | null; url?: string};
 

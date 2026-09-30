@@ -1,5 +1,7 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {renderToStaticMarkup} from "react-dom/server";
+import {readFileSync} from "node:fs";
+import {NextIntlClientProvider} from "next-intl";
 import {compileGuideBody, loadGuideDocument} from "../../src/content/guides";
 import {mdxComponents} from "../../src/components/mdx/mdx-components";
 import {VideoCandidateList} from "../../src/components/videos/video-candidate-list";
@@ -20,7 +22,12 @@ describe("September 30 evidence-bounded guide and video refresh", () => {
       expect(guide!.frontmatter.updatedAt).toBe("2026-09-30");
       expect(guide!.frontmatter.sources.some(source => source.kind === "official")).toBe(true);
       const compiled = await compileGuideBody(guide!.body, mdxComponents);
-      expect(renderToStaticMarkup(compiled.content).length).toBeGreaterThan(100);
+      const messages = JSON.parse(readFileSync(new URL(`../../messages/${locale}.json`, import.meta.url), "utf8"));
+      expect(renderToStaticMarkup(
+        <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
+          {compiled.content}
+        </NextIntlClientProvider>
+      ).length).toBeGreaterThan(100);
     }
   }, 30_000);
 
