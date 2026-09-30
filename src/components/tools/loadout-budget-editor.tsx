@@ -5,6 +5,7 @@ import {Copy, Plus, Trash2} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import type {LoadoutCatalogue} from "@/features/tools/loadout-catalogue";
+import {appendLoadoutPreset, getLoadoutPresetCopy, getLoadoutPresets, getMatchingLoadoutPresets} from "@/features/tools/loadout-presets";
 import {decodeBudgetState, encodeBudgetState, type BudgetState} from "@/features/tools/share-state";
 import {calculatePurchases, findPurchaseAmmoRelationship, isToolShareWithinLimit, maximumPlanLines, totalPurchases, type PurchaseLine} from "@/features/tools/workflow-state";
 import {getWorkflowCopy} from "@/features/tools/workflow-copy";
@@ -34,7 +35,16 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
   const [selected, setSelected] = useState("");
   const [weapon, setWeapon] = useState("");
   const [shareStatus, setShareStatus] = useState("");
+  const [presetChoice, setPresetChoice] = useState<{search: string; id: string} | null>(null);
+  const [presetStatus, setPresetStatus] = useState<{search: string; message: string} | null>(null);
   const lines = state.lines ?? [];
+  const presetCopy = getLoadoutPresetCopy(copy.locale);
+  const presets = useMemo(() => getLoadoutPresets(copy.locale), [copy.locale]);
+  const matchingPresets = getMatchingLoadoutPresets(lines, presets);
+  const presetId = presetChoice?.search === search ? presetChoice.id : state.mode === "items" ? matchingPresets[0]?.id ?? "" : "";
+  const chosenPreset = presets.find(({id}) => id === presetId);
+  const presetResult = chosenPreset ? appendLoadoutPreset(state, chosenPreset, catalogue) : null;
+  const shownPresets = chosenPreset ? [chosenPreset, ...matchingPresets.filter(({id}) => id !== chosenPreset.id)] : matchingPresets;
   const itemMap = useMemo(() => new Map(catalogue.items.map((item) => [item.id, item])), [catalogue]);
   const found = catalogue.items.filter((item) => item.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()));
   const totals = totalPurchases(lines, catalogue.items.map(({id}) => id));
@@ -53,6 +63,11 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
     if (existing >= 0) updateLine(existing, {quantity: Math.min(10_000, lines[existing].quantity + 1)});
     else if (lines.length < maximumPlanLines) commit({...state, lines: [...lines, {id: selected, quantity: 1, unit: "unknown", unitPrice: null, frequency: "repeat"}]});
   }
+  function applyPreset() {
+    if (!presetResult) return;
+    if (presetResult.status === "applied") commit(presetResult.state);
+    setPresetStatus({search, message: presetCopy[presetResult.status]});
+  }
   async function share() {
     if (tooLarge) return;
     const url = new URL(window.location.href);
@@ -66,6 +81,23 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
   return <section className="border-y border-[#354039] bg-[#111512]" aria-labelledby="loadout-budget-form">
     <ToolShareNotice locale={copy.locale} search={search} dataVersion={catalogue.dataVersion} invalid={Boolean(search && !restored && !preselected.length && new URLSearchParams(search).has("cash"))} />
     <div className="space-y-6 p-5 md:p-8">
+      <section className="min-w-0 space-y-3 border-b border-[#354039] pb-5" aria-label={presetCopy.heading}>
+        <h2 className="text-lg font-semibold text-white">{presetCopy.heading}</h2>
+        <p className="text-xs leading-5 text-[#a8b4ae]">{presetCopy.notice}</p>
+        <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
+          <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{presetCopy.choose}<select className={planInputClass} value={presetId} onChange={(event) => {setPresetChoice({search, id: event.target.value}); setPresetStatus(null);}}><option value="">{presetCopy.placeholder}</option>{presets.map(({id, title}) => <option value={id} key={id}>{title}</option>)}</select></label>
+          <button className={`${buttonClass} self-end`} type="button" disabled={!chosenPreset || presetResult?.status === "limit" || presetResult?.status === "unavailable"} onClick={applyPreset}><Plus size={16} className="shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{presetCopy.apply}</span></button>
+        </div>
+        <p className="text-xs leading-5 text-[#a8b4ae]">{presetCopy.append}</p>
+        <p className="text-xs leading-5 text-[#a8b4ae]">{presetCopy.quantities}</p>
+        {shownPresets.map((preset) => <div key={preset.id} className="space-y-2 border-l-2 border-[#397b59] pl-3 text-xs leading-5">
+          <h3 className="text-sm font-semibold text-white">{preset.title}</h3>
+          <p className="text-[#cbd5cf]">{preset.mission}</p>
+          <dl className="space-y-2 text-[#a8b4ae]"><div><dt className="font-semibold text-white">{presetCopy.unlock}</dt><dd>{preset.unlock}</dd></div><div><dt className="font-semibold text-white">{presetCopy.compatibility}</dt><dd>{preset.compatibility}</dd></div></dl>
+        </div>)}
+        {shownPresets.length ? <p className="text-xs leading-5 text-[#a8b4ae]">{presetCopy.budgets}</p> : null}
+        <p role="status" className="text-sm text-[#e4c35f]">{presetResult?.status === "limit" || presetResult?.status === "unavailable" ? presetCopy[presetResult.status] : presetStatus?.search === search ? presetStatus.message : ""}</p>
+      </section>
       <fieldset className="flex flex-wrap gap-2">
         {[{id: "total", label: t.totalMode}, {id: "items", label: t.itemsMode}].map(({id, label}) => <label className="flex min-h-11 cursor-pointer items-center gap-2 border border-[#46534d] px-4 text-sm text-white" key={id}>
           <input type="radio" name="budget-mode" checked={(state.mode ?? "total") === id} onChange={() => commit({...state, mode: id as "total" | "items", lines})} />{label}

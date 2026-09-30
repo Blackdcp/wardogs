@@ -1,8 +1,10 @@
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {AmmoMatcher} from "@/components/tools/ammo-matcher";
+import {EquipmentCompatibility} from "@/components/tools/equipment-compatibility";
 import {isLocale, locales} from "@/config/site";
 import {getAmmoMatcherDataset} from "@/features/tools/ammo-matcher-data";
+import {getCompatibilityDataset} from "@/features/tools/equipment-compatibility";
 import {decodeAmmoMatcherState} from "@/features/tools/share-state";
 import {getToolCopy} from "@/features/tools/tool-copy";
 import {buildPageMetadata} from "@/lib/metadata";
@@ -41,6 +43,7 @@ export default async function AmmoMatcherPage({params}: PageProps) {
         <p className="mt-4 text-base leading-7 text-[#a8b4ae]">{copy.ammoMatcherDescription}</p>
       </header>
       <AmmoMatcher copy={copy} dataset={dataset} initialState={initialState} />
+      <EquipmentCompatibility dataset={getCompatibilityDataset(locale)} locale={locale} />
     </main>
   );
 }

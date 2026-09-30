@@ -84,18 +84,28 @@ export function AmmoMatcher({
   const dataVersion = useMemo(() => dataFingerprint(dataset), [dataset]);
   const result = useMemo(() => matchAmmoDataset(dataset, state), [dataset, state]);
 
+  function sharedUrl(next: AmmoMatcherState) {
+    const url = new URL(window.location.href);
+    const fitSelection = new URLSearchParams();
+    for (const key of ["fitWeapon", "fitKind", "fitQuery", "fitNamed"]) {
+      const value = url.searchParams.get(key);
+      if (value !== null) fitSelection.set(key, value);
+    }
+    url.search = encodeAmmoMatcherState(next, dataVersion);
+    for (const [key, value] of fitSelection) url.searchParams.set(key, value);
+    return url;
+  }
+
   function commit(next: AmmoMatcherState) {
     setEditedState(next);
     setCopied(false);
     setShareError(false);
-    const url = new URL(window.location.href);
-    url.search = encodeAmmoMatcherState(next, dataVersion);
+    const url = sharedUrl(next);
     window.history.replaceState(null, "", url);
   }
 
   async function copyLink() {
-    const url = new URL(window.location.href);
-    url.search = encodeAmmoMatcherState(state, dataVersion);
+    const url = sharedUrl(state);
     window.history.replaceState(null, "", url);
     try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
     catch { setShareError(true); }

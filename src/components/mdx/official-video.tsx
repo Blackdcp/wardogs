@@ -27,13 +27,20 @@ const approvedVideoIds = new Set([
   "cSn5IGknapM",
   "Em9HAhrZFeI",
   "3rdbnh8P0T0",
-  "xc6JMDhlzVQ"
+  "xc6JMDhlzVQ",
+  "CfbKirbnhu8",
+  "8Mgl4FRekbg",
+  "f-B-26p8soc",
+  "XUyP1GLUF5o"
 ]);
 
-export function OfficialVideo({id, title, className = "my-8"}: {id: string; title: string; className?: string}) {
+export function OfficialVideo({id, title, className = "my-8", startSeconds = 0, endSeconds}: {id: string; title: string; className?: string; startSeconds?: number; endSeconds?: number}) {
   const [active, setActive] = useState(false);
   const t = useTranslations("article");
   if (!approvedVideoIds.has(id)) return null;
+  const start = Number.isSafeInteger(startSeconds) && startSeconds > 0 && startSeconds < 86400 ? startSeconds : 0;
+  const end = typeof endSeconds === "number" && Number.isSafeInteger(endSeconds) && endSeconds > start && endSeconds < 86400 ? endSeconds : null;
+  const timing = `${start ? `&start=${start}` : ""}${end ? `&end=${end}` : ""}`;
 
   function startVideo() {
     trackAnalyticsEvent(ANALYTICS_EVENTS.videoStart, {video_id: id, video_title: title});
@@ -46,7 +53,7 @@ export function OfficialVideo({id, title, className = "my-8"}: {id: string; titl
         {active ? (
           <iframe
             className="size-full"
-            src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
+            src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${timing}`}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
@@ -71,7 +78,7 @@ export function OfficialVideo({id, title, className = "my-8"}: {id: string; titl
       <figcaption className="border-t border-[#2c3631] px-4 py-2 text-sm text-[#79d19c]">
         <a
           className="inline-flex min-h-11 items-center gap-2 break-words underline underline-offset-4"
-          href={`https://www.youtube.com/watch?v=${id}`}
+          href={`https://www.youtube.com/watch?v=${id}${start ? `&t=${start}s` : ""}`}
           target="_blank"
           rel="noopener noreferrer"
           title={`${t("watch")}: ${title}`}

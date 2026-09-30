@@ -24,6 +24,12 @@ import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
 import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 import {ServerStatusSignal} from "@/components/live-ops/server-status-signal";
 import {GuideTaskPanel} from "@/components/guides/guide-task-panel";
+import {VisualWorkflow} from "@/components/guides/visual-workflow";
+import {MissionCase} from "@/components/guides/mission-case";
+import {ProgressionMatrix} from "@/components/guides/progression-matrix";
+import {LoadoutPresetList} from "@/components/tools/loadout-preset-list";
+import {EquipmentCompatibility} from "@/components/tools/equipment-compatibility";
+import {getCompatibilityDataset} from "@/features/tools/equipment-compatibility";
 import {prepareGuideBodyForTaskPanel} from "@/features/guides/guide-task-body";
 import {getGuideTaskData} from "@/features/guides/guide-task-data";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
@@ -84,7 +90,7 @@ export default async function GuideArticlePage({params}: PageProps) {
           </Link>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <StatusBadge>{categoryT(guide.frontmatter.category)}</StatusBadge>
-            <span className="inline-flex items-center gap-2 text-xs text-[#8b9992]"><CalendarDays aria-hidden="true" size={14} />{t("lastChecked")} {formatLocalizedDate(guide.frontmatter.updatedAt, locale)}</span>
+            <span className="inline-flex items-center gap-2 text-xs text-[#8b9992]"><CalendarDays aria-hidden="true" size={14} />{t("contentUpdated")} <time dateTime={guide.frontmatter.updatedAt}>{formatLocalizedDate(guide.frontmatter.updatedAt, locale)}</time></span>
           </div>
           <p className="mt-3 text-xs text-[#8b9992]">
             {t("byline")} <Link className="font-semibold text-[#8bb59d] hover:text-white" href="/editorial-policy" title={t("teamName")}>{t("teamName")}</Link>
@@ -129,8 +135,13 @@ export default async function GuideArticlePage({params}: PageProps) {
         <AdsterraNativeBanner label={t("advertisement")} />
         <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
+        <VisualWorkflow locale={locale} slug={slug} />
+        <MissionCase locale={locale} slug={slug} />
         <div className="guide-prose">{compiled.content}</div>
-        <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("lastChecked")} />
+        {slug === "wardogs-best-weapons-loadouts" || slug === "wardogs-money-guide" ? <LoadoutPresetList locale={locale} /> : null}
+        {slug === "wardogs-ammo-reload-guide" ? <EquipmentCompatibility dataset={getCompatibilityDataset(locale)} locale={locale} /> : null}
+        <ProgressionMatrix locale={locale} slug={slug} />
+        <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("sourceChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">
           <h2 className="display-font text-3xl text-white" id="faq-title">{t("faq")}</h2>
           <FaqList items={guide.frontmatter.faq} />
