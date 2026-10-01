@@ -1,5 +1,6 @@
-import {ADSTERRA_ENABLED} from "@/features/ads/ad-policy";
+import {ADSTERRA_ENABLED, ADSTERRA_NATIVE_ENABLED} from "@/features/ads/ad-policy";
 import {ADSTERRA_BANNER_SANDBOX, buildAdsterraBannerDocument, getApprovedAdsterraBanner} from "@/features/ads/adsterra-banner";
+import {ADSTERRA_NATIVE_ZONE_ID, buildAdsterraNativeDocument} from "@/features/ads/adsterra-native";
 
 export async function GET(request: Request, {params}: {params: Promise<{key: string}>}) {
   const host = new URL(request.url).hostname;
@@ -14,7 +15,11 @@ export async function GET(request: Request, {params}: {params: Promise<{key: str
   };
   // Never serve ad scripts on the canonical parent origin, even when opened directly.
   if (!isolatedHost) return new Response("Isolated host required", {status: 403, headers});
-  const unit = getApprovedAdsterraBanner((await params).key);
+  const key = (await params).key;
+  if (ADSTERRA_ENABLED && ADSTERRA_NATIVE_ENABLED && key === ADSTERRA_NATIVE_ZONE_ID) {
+    return new Response(buildAdsterraNativeDocument(), {headers});
+  }
+  const unit = getApprovedAdsterraBanner(key);
   if (!ADSTERRA_ENABLED || !unit) return new Response("Ad unavailable", {status: 404, headers});
   return new Response(buildAdsterraBannerDocument(unit), {headers});
 }

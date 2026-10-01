@@ -7,7 +7,11 @@ for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}])
     await context.route("https://arkgleamfox.com/**", (route) => route.fulfill({
       contentType: "application/javascript",
       body: `
-        document.body.textContent = "Sandbox test creative";
+        const native = document.getElementById("container-481d6501bcd0c27b98bc3c4776a26f6e");
+        if (native) {
+          native.style.height = "260px";
+          native.innerHTML = '<a href="https://example.com/blocked-ad-test" target="_blank">Sandbox test creative</a>';
+        } else document.body.textContent = "Sandbox test creative";
         try { parent.document.body.dataset.adEscape = "yes"; } catch { document.body.dataset.parentAccess = "blocked"; }
         try { top.location.href = "https://example.com/blocked-ad-test"; } catch { document.body.dataset.topNavigation = "blocked"; }
         document.body.dataset.popup = window.open("https://example.com/blocked-ad-test") === null ? "blocked" : "opened";
@@ -27,7 +31,18 @@ for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}])
     expect(await page.locator("body").getAttribute("data-ad-escape")).toBeNull();
     expect(context.pages()).toHaveLength(1);
     await expect(page.locator("script[src*='arkgleamfox'], script[src*='effectivecpmnetwork']")).toHaveCount(0);
-    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+    const native = page.locator('iframe[data-adsterra-native-sandbox="481d6501bcd0c27b98bc3c4776a26f6e"]');
+    await expect(native).toHaveCount(1);
+    await expect(native).toHaveAttribute("sandbox", "allow-scripts allow-same-origin");
+    await native.scrollIntoViewIfNeeded();
+    const nativeBody = page.frameLocator('iframe[data-adsterra-native-sandbox="481d6501bcd0c27b98bc3c4776a26f6e"]').locator("body");
+    await expect(nativeBody).toHaveAttribute("data-parent-access", "blocked");
+    await expect(nativeBody).toHaveAttribute("data-top-navigation", "blocked");
+    await expect(nativeBody).toHaveAttribute("data-popup", "blocked");
+    await expect(native).toHaveAttribute("height", "260");
+    await page.frameLocator('iframe[data-adsterra-native-sandbox="481d6501bcd0c27b98bc3c4776a26f6e"]').getByRole("link", {name: "Sandbox test creative"}).click();
+    expect(context.pages()).toHaveLength(1);
+    await expect(page).toHaveURL(/\/en\/guides\/wardogs-artillery-guide$/);
     if (viewport.width === 390) {
       const mobile = page.locator('[data-ad-placement="mobile-sticky-creative"] iframe');
       await expect(mobile).toBeVisible();

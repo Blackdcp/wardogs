@@ -1,6 +1,7 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {GET} from "../../src/app/api/ad-frame/[key]/route";
 import {ADSTERRA_BANNER_UNITS, getAdsterraFrameOrigin} from "../../src/features/ads/adsterra-banner";
+import {ADSTERRA_NATIVE_ZONE_ID, ADSTERRA_NATIVE_SCRIPT_SRC} from "../../src/features/ads/adsterra-native";
 
 afterEach(() => vi.unstubAllEnvs());
 const key = ADSTERRA_BANNER_UNITS.rectangle300.key;
@@ -36,10 +37,14 @@ describe("Adsterra cross-origin container", () => {
     }
   });
 
-  it("does not expose unrestricted native or arbitrary zones through the container", async () => {
-    for (const zone of ["481d6501bcd0c27b98bc3c4776a26f6e", "arbitrary"]) {
-      expect((await requestFrame("wardogswiki.com", zone)).status, zone).toBe(404);
-    }
+  it("restores native only through the same restricted isolated host", async () => {
+    const response = await requestFrame("wardogswiki.com", ADSTERRA_NATIVE_ZONE_ID);
+    expect(response.status).toBe(200);
+    expect(await response.text()).toContain(ADSTERRA_NATIVE_SCRIPT_SRC);
+    expect(response.headers.get("content-security-policy")).toContain("sandbox allow-scripts allow-same-origin;");
+    expect(response.headers.get("content-security-policy")).not.toMatch(/allow-(?:popups|top-navigation|forms|downloads)/);
+    expect((await requestFrame("www.wardogswiki.com", ADSTERRA_NATIVE_ZONE_ID)).status).toBe(403);
+    expect((await requestFrame("wardogswiki.com", "arbitrary")).status).toBe(404);
   });
 
   it("uses distinct origins in production and local tests", () => {

@@ -12,9 +12,9 @@ export const ADSTERRA_SMARTLINK_URLS = [
     url: "https://arkgleamfox.com/j7way0p0?key=a9590c5cd64a0d11f4aa2ecf617130bc"
   }
 ] as const;
-// Restore display inventory in isolated frames; keep unrestricted ad scripts off.
+// Monetize with isolated native/display inventory; keep unrestricted ad scripts off.
 export const ADSTERRA_ENABLED = true;
-export const ADSTERRA_NATIVE_ENABLED = false;
+export const ADSTERRA_NATIVE_ENABLED = true;
 export const ADSTERRA_MOBILE_STICKY_ENABLED = true;
 export const ADSTERRA_SOCIAL_BAR_ENABLED = false;
 export const ADSTERRA_SMARTLINK_ENABLED = false;
