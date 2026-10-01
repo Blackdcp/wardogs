@@ -5,6 +5,7 @@ import {ADSTERRA_ENABLED, ADSTERRA_NATIVE_ENABLED, ADSTERRA_MOBILE_STICKY_ENABLE
 import {AdsterraNativeBanner} from "../../src/components/ads/adsterra-native-banner";
 import {AdsterraDisplayBanner, AdsterraGlobalInventory} from "../../src/components/ads/adsterra-display-banner";
 import {AdsterraSmartlink} from "../../src/components/ads/adsterra-smartlink";
+import {ADSTERRA_BANNER_SANDBOX} from "../../src/features/ads/adsterra-banner";
 
 describe("Adsterra isolated native and display policy", () => {
   it("retains native and display monetization while disabling redirect-risk formats", () => {
@@ -22,13 +23,13 @@ describe("Adsterra isolated native and display policy", () => {
       <AdsterraGlobalInventory />
       <AdsterraSmartlink />
     </>);
-    expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
+    expect(html).toContain(`sandbox="${ADSTERRA_BANNER_SANDBOX}"`);
     expect(html).toContain('src="https://wardogswiki.com/api/ad-frame/');
     expect(html).not.toContain("<script");
     expect(html).toContain('data-ad-slot="adsterra-native"');
     expect(html).toContain('data-adsterra-native-sandbox="481d6501bcd0c27b98bc3c4776a26f6e"');
     expect(html).toContain("mobile-sticky");
     expect(html).not.toContain("Sponsored links");
-    expect(html).not.toMatch(/allow-(?:popups|top-navigation|forms|downloads)/);
+    expect(html).not.toMatch(/allow-(?:top-navigation|forms|downloads)/);
   });
 });

@@ -2,7 +2,7 @@
 
 import {useEffect, useRef, useState, useSyncExternalStore} from "react";
 import {ADSTERRA_ENABLED, ADSTERRA_NATIVE_ENABLED} from "@/features/ads/ad-policy";
-import {ADSTERRA_BANNER_SANDBOX, getAdsterraFrameOrigin} from "@/features/ads/adsterra-banner";
+import {ADSTERRA_BANNER_SANDBOX, ADSTERRA_FRAME_VERSION, getAdsterraFrameOrigin} from "@/features/ads/adsterra-banner";
 import {ADSTERRA_NATIVE_ZONE_ID, getAdsterraNativeFrameHeight} from "@/features/ads/adsterra-native";
 export {ADSTERRA_NATIVE_CONTAINER_ID, ADSTERRA_NATIVE_SCRIPT_SRC, ADSTERRA_NATIVE_ZONE_ID} from "@/features/ads/adsterra-native";
 
@@ -60,7 +60,7 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
       <iframe
         ref={frameRef}
         title={label}
-        src={`${frameOrigin}/api/ad-frame/${ADSTERRA_NATIVE_ZONE_ID}`}
+        src={`${frameOrigin}/api/ad-frame/${ADSTERRA_NATIVE_ZONE_ID}?v=${ADSTERRA_FRAME_VERSION}`}
         sandbox={ADSTERRA_BANNER_SANDBOX}
         className="block w-full border-0"
         height={height}

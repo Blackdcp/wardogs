@@ -2,6 +2,7 @@ import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
 import {AdsterraNativeBanner} from "../../src/components/ads/adsterra-native-banner";
+import {ADSTERRA_BANNER_SANDBOX, ADSTERRA_FRAME_VERSION} from "../../src/features/ads/adsterra-banner";
 import {
   ADSTERRA_NATIVE_CONTAINER_ID,
   ADSTERRA_NATIVE_SCRIPT_SRC,
@@ -20,13 +21,14 @@ describe("Adsterra native banner", () => {
     expect(html).toContain(`id="${ADSTERRA_NATIVE_CONTAINER_ID}"`);
     expect(html).toContain(`async="async" data-cfasync="false" src="${ADSTERRA_NATIVE_SCRIPT_SRC}"`);
     expect(html).toContain("ResizeObserver");
-    expect(html).not.toMatch(/window\.open|(?:top|parent)\.location/);
+    expect(html).toContain("navigator.userActivation?.isActive");
+    expect(html).not.toMatch(/(?:top|parent)\.location/);
   });
 
   it("does not load the ad script in the main document", () => {
     const html = renderToStaticMarkup(React.createElement(AdsterraNativeBanner, {label: "Advertisement"}));
-    expect(html).toContain(`src="https://wardogswiki.com/api/ad-frame/${ADSTERRA_NATIVE_ZONE_ID}"`);
-    expect(html).toContain('sandbox="allow-scripts allow-same-origin"');
+    expect(html).toContain(`src="https://wardogswiki.com/api/ad-frame/${ADSTERRA_NATIVE_ZONE_ID}?v=${ADSTERRA_FRAME_VERSION}"`);
+    expect(html).toContain(`sandbox="${ADSTERRA_BANNER_SANDBOX}"`);
     expect(html).not.toContain("<script");
   });
 

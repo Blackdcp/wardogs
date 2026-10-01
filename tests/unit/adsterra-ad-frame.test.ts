@@ -1,6 +1,6 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {GET} from "../../src/app/api/ad-frame/[key]/route";
-import {ADSTERRA_BANNER_UNITS, getAdsterraFrameOrigin} from "../../src/features/ads/adsterra-banner";
+import {ADSTERRA_BANNER_UNITS, ADSTERRA_BANNER_SANDBOX, getAdsterraFrameOrigin} from "../../src/features/ads/adsterra-banner";
 import {ADSTERRA_NATIVE_ZONE_ID, ADSTERRA_NATIVE_SCRIPT_SRC} from "../../src/features/ads/adsterra-native";
 
 afterEach(() => vi.unstubAllEnvs());
@@ -13,8 +13,8 @@ describe("Adsterra cross-origin container", () => {
     const response = await requestFrame("wardogswiki.com");
     expect(response.status).toBe(200);
     expect(await response.text()).toContain(ADSTERRA_BANNER_UNITS.rectangle300.src);
-    expect(response.headers.get("content-security-policy")).toContain("sandbox allow-scripts allow-same-origin;");
-    expect(response.headers.get("content-security-policy")).not.toMatch(/allow-(?:popups|top-navigation|forms|downloads)/);
+    expect(response.headers.get("content-security-policy")).toContain(`sandbox ${ADSTERRA_BANNER_SANDBOX};`);
+    expect(response.headers.get("content-security-policy")).not.toMatch(/allow-(?:top-navigation|forms|downloads)/);
     expect(response.headers.get("origin-agent-cluster")).toBe("?1");
     expect(response.headers.get("x-robots-tag")).toBe("noindex, nofollow");
   });
@@ -33,16 +33,16 @@ describe("Adsterra cross-origin container", () => {
       const response = await requestFrame("wardogswiki.com", unit.key);
       expect(response.status, unit.key).toBe(200);
       expect(await response.text()).toContain(unit.src);
-      expect(response.headers.get("content-security-policy")).toContain("sandbox allow-scripts allow-same-origin;");
+      expect(response.headers.get("content-security-policy")).toContain(`sandbox ${ADSTERRA_BANNER_SANDBOX};`);
     }
   });
 
-  it("restores native only through the same restricted isolated host", async () => {
+  it("allows native click-throughs without restoring main-page navigation", async () => {
     const response = await requestFrame("wardogswiki.com", ADSTERRA_NATIVE_ZONE_ID);
     expect(response.status).toBe(200);
     expect(await response.text()).toContain(ADSTERRA_NATIVE_SCRIPT_SRC);
-    expect(response.headers.get("content-security-policy")).toContain("sandbox allow-scripts allow-same-origin;");
-    expect(response.headers.get("content-security-policy")).not.toMatch(/allow-(?:popups|top-navigation|forms|downloads)/);
+    expect(response.headers.get("content-security-policy")).toContain(`sandbox ${ADSTERRA_BANNER_SANDBOX};`);
+    expect(response.headers.get("content-security-policy")).not.toMatch(/allow-(?:top-navigation|forms|downloads)/);
     expect((await requestFrame("www.wardogswiki.com", ADSTERRA_NATIVE_ZONE_ID)).status).toBe(403);
     expect((await requestFrame("wardogswiki.com", "arbitrary")).status).toBe(404);
   });

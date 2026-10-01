@@ -3,7 +3,7 @@
 import {useEffect, useState, useSyncExternalStore} from "react";
 import {X} from "lucide-react";
 import {ADSTERRA_ENABLED, ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_MOBILE_STICKY_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
-import {ADSTERRA_BANNER_SANDBOX, ADSTERRA_BANNER_UNITS, getAdsterraFrameOrigin, type AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
+import {ADSTERRA_BANNER_SANDBOX, ADSTERRA_BANNER_UNITS, ADSTERRA_FRAME_VERSION, getAdsterraFrameOrigin, type AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
 export {ADSTERRA_BANNER_UNITS, buildAdsterraBannerDocument} from "@/features/ads/adsterra-banner";
 export type {AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
 
@@ -44,7 +44,7 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit}: 
           height={unit.height}
           className="border-0"
           sandbox={ADSTERRA_BANNER_SANDBOX}
-          src={`${frameOrigin}/api/ad-frame/${unit.key}`}
+          src={`${frameOrigin}/api/ad-frame/${unit.key}?v=${ADSTERRA_FRAME_VERSION}`}
           loading="lazy"
           referrerPolicy="strict-origin-when-cross-origin"
           data-adsterra-sandbox={unit.key}

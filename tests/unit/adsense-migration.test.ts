@@ -21,6 +21,7 @@ describe("Adsterra monetization strategy", () => {
         expect([
           path.join("src", "features", "ads", "ad-policy.ts"),
           path.join("src", "components", "ads", "adsterra-display-banner.tsx"),
+          path.join("src", "features", "ads", "adsterra-native.ts"),
           path.join("src", "features", "ads", "adsterra-banner.ts")
         ], path.relative(root, file)).toContain(path.relative(root, file));
       }

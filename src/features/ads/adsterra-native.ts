@@ -1,3 +1,5 @@
+import {buildAdsterraClickGuard} from "./adsterra-banner";
+
 export const ADSTERRA_NATIVE_ZONE_ID = "481d6501bcd0c27b98bc3c4776a26f6e";
 export const ADSTERRA_NATIVE_CONTAINER_ID = `container-${ADSTERRA_NATIVE_ZONE_ID}`;
 export const ADSTERRA_NATIVE_SCRIPT_SRC = `https://arkgleamfox.com/${ADSTERRA_NATIVE_ZONE_ID}/invoke.js`;
@@ -15,10 +17,9 @@ export function getAdsterraNativeFrameHeight(
       typeof data.height !== "number" || !Number.isFinite(data.height) || data.height <= 0) return null;
   return Math.max(90, Math.min(1800, Math.ceil(data.height)));
 }
-
 export function buildAdsterraNativeDocument() {
-  // The frame reports layout only. It cannot ask the parent to open URLs or navigate.
-  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;overflow:hidden;background:#0d0f0e;color:#d2dfd7;font:14px/1.4 Arial,sans-serif}</style></head><body><div id="${ADSTERRA_NATIVE_CONTAINER_ID}"></div><script>
+  // Parent messages remain layout-only; advertiser links open directly from the frame.
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;overflow:hidden;background:#0d0f0e;color:#d2dfd7;font:14px/1.4 Arial,sans-serif}</style></head><body>${buildAdsterraClickGuard()}<div id="${ADSTERRA_NATIVE_CONTAINER_ID}"></div><script>
     const container = document.getElementById("${ADSTERRA_NATIVE_CONTAINER_ID}");
     let queued = false;
     function report() {

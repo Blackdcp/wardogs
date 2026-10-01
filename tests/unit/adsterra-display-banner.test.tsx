@@ -1,6 +1,7 @@
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
+import {ADSTERRA_BANNER_SANDBOX, buildAdsterraClickGuard} from "../../src/features/ads/adsterra-banner";
 
 describe("Adsterra display banner inventory", () => {
   it("registers every supplied banner zone", async () => {
@@ -31,10 +32,10 @@ describe("Adsterra display banner inventory", () => {
     const inline = renderToStaticMarkup(React.createElement(AdsterraDisplayBanner, {placement: "rectangle"}));
     const global = renderToStaticMarkup(React.createElement(AdsterraGlobalInventory));
 
-    expect(inline).toContain('sandbox="allow-scripts allow-same-origin"');
+    expect(inline).toContain(`sandbox="${ADSTERRA_BANNER_SANDBOX}"`);
     expect(inline).toContain('src="https://wardogswiki.com/api/ad-frame/');
     expect(inline).not.toContain("<script");
-    expect(inline).not.toMatch(/allow-(?:popups|top-navigation|forms|downloads)/);
+    expect(inline).not.toMatch(/allow-(?:top-navigation|forms|downloads)/);
     expect(global).toContain('data-ad-placement="left-rail"');
     expect(global).toContain("mobile-sticky");
     expect(global).toContain("right-rail");
@@ -46,5 +47,14 @@ describe("Adsterra display banner inventory", () => {
     expect(document).toContain('"key":"\\u003c/script>"');
     expect(document).toContain("&quot;&lt;script&gt;");
     expect(document).not.toContain('src="https://example.com/"<script>');
+  });
+
+  it("allows advertiser tabs but gates direct scripted opens and non-web links", () => {
+    expect(ADSTERRA_BANNER_SANDBOX.split(" ")).toContain("allow-popups");
+    expect(ADSTERRA_BANNER_SANDBOX.split(" ")).toContain("allow-popups-to-escape-sandbox");
+    const guard = buildAdsterraClickGuard();
+    expect(guard).toContain("navigator.userActivation?.isActive");
+    expect(guard).toContain('"http:", "https:"');
+    expect(guard).toContain("!event.isTrusted");
   });
 });
