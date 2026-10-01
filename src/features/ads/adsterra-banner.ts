@@ -22,7 +22,10 @@ export const ADSTERRA_BANNER_SANDBOX = "allow-scripts allow-same-origin";
 const approvedKeys = new Set<string>([
   ADSTERRA_BANNER_UNITS.horizontal468.key,
   ADSTERRA_BANNER_UNITS.rectangle300.key,
-  ADSTERRA_BANNER_UNITS.rail300.key
+  ADSTERRA_BANNER_UNITS.rail300.key,
+  ADSTERRA_BANNER_UNITS.rail600.key,
+  ADSTERRA_BANNER_UNITS.mobile320.key,
+  ADSTERRA_BANNER_UNITS.leaderboard728.key
 ]);
 
 export function getApprovedAdsterraBanner(key: string) {

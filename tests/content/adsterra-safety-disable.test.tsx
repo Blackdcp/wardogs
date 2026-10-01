@@ -10,7 +10,7 @@ describe("Adsterra isolated display policy", () => {
   it("retains display monetization while disabling redirect-risk formats", () => {
     expect(ADSTERRA_ENABLED).toBe(true);
     expect(ADSTERRA_NATIVE_ENABLED).toBe(false);
-    expect(ADSTERRA_MOBILE_STICKY_ENABLED).toBe(false);
+    expect(ADSTERRA_MOBILE_STICKY_ENABLED).toBe(true);
     expect(BEHAVIORAL_POPUNDER_ENABLED).toBe(false);
   });
 
@@ -26,7 +26,7 @@ describe("Adsterra isolated display policy", () => {
     expect(html).toContain('src="https://wardogswiki.com/api/ad-frame/');
     expect(html).not.toContain("<script");
     expect(html).not.toContain("adsterra-native");
-    expect(html).not.toContain("mobile-sticky");
+    expect(html).toContain("mobile-sticky");
     expect(html).not.toContain("Sponsored links");
     expect(html).not.toMatch(/allow-(?:popups|top-navigation|forms|downloads)/);
   });

@@ -12,14 +12,14 @@ export const ADSTERRA_SMARTLINK_URLS = [
     url: "https://arkgleamfox.com/j7way0p0?key=a9590c5cd64a0d11f4aa2ecf617130bc"
   }
 ] as const;
-// Keep isolated display ads; disable formats implicated in redirect reports.
+// Restore display inventory in isolated frames; keep unrestricted ad scripts off.
 export const ADSTERRA_ENABLED = true;
 export const ADSTERRA_NATIVE_ENABLED = false;
-export const ADSTERRA_MOBILE_STICKY_ENABLED = false;
+export const ADSTERRA_MOBILE_STICKY_ENABLED = true;
 export const ADSTERRA_SOCIAL_BAR_ENABLED = false;
 export const ADSTERRA_SMARTLINK_ENABLED = false;
-export const ADSTERRA_LEADERBOARD_ENABLED = false;
-export const ADSTERRA_RIGHT_RAIL_ENABLED = false;
+export const ADSTERRA_LEADERBOARD_ENABLED = true;
+export const ADSTERRA_RIGHT_RAIL_ENABLED = true;
 export const POPUNDER_COOLDOWN_MS = 6 * 60 * 60 * 1000;
 export const POPUNDER_STORAGE_KEY = "wardogs-adsterra-popunder-loaded-at";
 export const BEHAVIORAL_POPUNDER_ENABLED = false;

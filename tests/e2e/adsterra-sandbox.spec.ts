@@ -27,6 +27,22 @@ for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}])
     expect(await page.locator("body").getAttribute("data-ad-escape")).toBeNull();
     expect(context.pages()).toHaveLength(1);
     await expect(page.locator("script[src*='arkgleamfox'], script[src*='effectivecpmnetwork']")).toHaveCount(0);
-    await expect(page.locator('[data-ad-slot="adsterra-native"], [data-ad-placement="mobile-sticky"]')).toHaveCount(0);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+    if (viewport.width === 390) {
+      const mobile = page.locator('[data-ad-placement="mobile-sticky-creative"] iframe');
+      await expect(mobile).toBeVisible();
+      await expect(mobile).toHaveAttribute("sandbox", "allow-scripts allow-same-origin");
+      await expect(page.locator('[data-ad-placement="left-rail-creative"], [data-ad-placement="right-rail-creative"]')).toHaveCount(0);
+      await page.getByRole("button", {name: "Close advertisement", exact: true}).click();
+      await expect(page.locator('[data-ad-placement="mobile-sticky"]')).toHaveCount(0);
+    } else {
+      await expect(page.locator('[data-ad-placement="left-rail-creative"] iframe')).toBeVisible();
+      await expect(page.locator('[data-ad-placement="right-rail-creative"] iframe')).toBeVisible();
+      await expect(page.locator('[data-ad-placement="horizontal"] iframe')).toHaveCount(2);
+      for (const horizontal of await page.locator('[data-ad-placement="horizontal"] iframe').all()) {
+        await expect(horizontal).toHaveAttribute("data-adsterra-sandbox", "035c3a3eb2cdc2bcb65b641e981d4874");
+      }
+      await expect(page.locator('[data-ad-placement="mobile-sticky-creative"]')).toHaveCount(0);
+    }
   });
 }

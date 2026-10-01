@@ -27,8 +27,17 @@ describe("Adsterra cross-origin container", () => {
     }
   });
 
-  it("does not expose disabled or arbitrary zones through the container", async () => {
-    for (const zone of [ADSTERRA_BANNER_UNITS.mobile320.key, ADSTERRA_BANNER_UNITS.rail600.key, ADSTERRA_BANNER_UNITS.leaderboard728.key, "arbitrary"]) {
+  it("serves all six restored display zones through the same isolated container", async () => {
+    for (const unit of Object.values(ADSTERRA_BANNER_UNITS)) {
+      const response = await requestFrame("wardogswiki.com", unit.key);
+      expect(response.status, unit.key).toBe(200);
+      expect(await response.text()).toContain(unit.src);
+      expect(response.headers.get("content-security-policy")).toContain("sandbox allow-scripts allow-same-origin;");
+    }
+  });
+
+  it("does not expose unrestricted native or arbitrary zones through the container", async () => {
+    for (const zone of ["481d6501bcd0c27b98bc3c4776a26f6e", "arbitrary"]) {
       expect((await requestFrame("wardogswiki.com", zone)).status, zone).toBe(404);
     }
   });

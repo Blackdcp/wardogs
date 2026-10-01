@@ -16,17 +16,17 @@ describe("Adsterra display banner inventory", () => {
     });
   });
 
-  it("retains the useful 468px banner without reactivating the leaderboard", async () => {
+  it("selects the restored horizontal inventory by viewport", async () => {
     const {ADSTERRA_BANNER_UNITS, selectHorizontalBannerUnit} = await import("../../src/components/ads/adsterra-display-banner");
 
     expect(selectHorizontalBannerUnit(467)).toBeNull();
     expect(selectHorizontalBannerUnit(468)).toBe(ADSTERRA_BANNER_UNITS.horizontal468);
     expect(selectHorizontalBannerUnit(727)).toBe(ADSTERRA_BANNER_UNITS.horizontal468);
-    expect(selectHorizontalBannerUnit(728)).toBeNull();
-    expect(selectHorizontalBannerUnit(1600)).toBeNull();
+    expect(selectHorizontalBannerUnit(728)).toBe(ADSTERRA_BANNER_UNITS.leaderboard728);
+    expect(selectHorizontalBannerUnit(1600)).toBe(ADSTERRA_BANNER_UNITS.leaderboard728);
   });
 
-  it("isolates inline ads and does not render mobile sticky inventory", async () => {
+  it("isolates inline ads and restores dismissible mobile and desktop inventory", async () => {
     const {AdsterraDisplayBanner, AdsterraGlobalInventory} = await import("../../src/components/ads/adsterra-display-banner");
     const inline = renderToStaticMarkup(React.createElement(AdsterraDisplayBanner, {placement: "rectangle"}));
     const global = renderToStaticMarkup(React.createElement(AdsterraGlobalInventory));
@@ -36,8 +36,8 @@ describe("Adsterra display banner inventory", () => {
     expect(inline).not.toContain("<script");
     expect(inline).not.toMatch(/allow-(?:popups|top-navigation|forms|downloads)/);
     expect(global).toContain('data-ad-placement="left-rail"');
-    expect(global).not.toContain("mobile-sticky");
-    expect(global).not.toContain("right-rail");
+    expect(global).toContain("mobile-sticky");
+    expect(global).toContain("right-rail");
   });
 
   it("escapes script and attribute boundaries in the iframe document", async () => {
