@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect, useState, useSyncExternalStore} from "react";
 import {X} from "lucide-react";
 import {ADSTERRA_ENABLED, ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_MOBILE_STICKY_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
 import {ADSTERRA_BANNER_SANDBOX, ADSTERRA_BANNER_UNITS, getAdsterraFrameOrigin, type AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
@@ -21,9 +21,12 @@ type BannerSlotProps = {
   unit: AdsterraBannerUnit | null;
 };
 
+const subscribeToFrameOrigin = () => () => {};
+const getFrameOriginSnapshot = () => getAdsterraFrameOrigin(window.location.origin);
+const getServerFrameOrigin = () => getAdsterraFrameOrigin();
+
 function BannerSlot({className = "", label = "Advertisement", placement, unit}: BannerSlotProps) {
-  const [frameOrigin, setFrameOrigin] = useState(getAdsterraFrameOrigin());
-  useEffect(() => { setFrameOrigin(getAdsterraFrameOrigin(window.location.origin)); }, []);
+  const frameOrigin = useSyncExternalStore(subscribeToFrameOrigin, getFrameOriginSnapshot, getServerFrameOrigin);
   if (!ADSTERRA_ENABLED || !unit) return null;
   return (
     <aside
