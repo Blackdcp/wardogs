@@ -12,6 +12,21 @@ function asUtcDateTime(date: string) {
 
 export function buildVideoArticleJsonLd(locale: Locale, article: VideoArticle): JsonLdItem[] {
   const url = buildLocalizedUrl(locale, `/videos/${article.slug}`);
+  // Keep open-ended chapters in the player, but do not invent their end times for Google.
+  const clips = (article.clips ?? []).flatMap((clip) => {
+    const {startOffset, endOffset} = clip;
+    if (!Number.isFinite(startOffset) || startOffset < 0 ||
+      typeof endOffset !== "number" || !Number.isFinite(endOffset) || endOffset <= startOffset) {
+      return [];
+    }
+    return [{
+      "@type": "Clip",
+      name: clip.name,
+      startOffset,
+      endOffset,
+      url: `${url}?t=${startOffset}`
+    }];
+  });
 
   return [
     {
@@ -34,15 +49,7 @@ export function buildVideoArticleJsonLd(locale: Locale, article: VideoArticle): 
       embedUrl: `https://www.youtube-nocookie.com/embed/${article.youtubeId}`,
       url: article.sourceUrl,
       thumbnailUrl: videoThumbnailUrl(article.youtubeId),
-      ...(article.clips ? {
-        hasPart: article.clips.map((clip) => ({
-          "@type": "Clip",
-          name: clip.name,
-          startOffset: clip.startOffset,
-          ...(clip.endOffset === undefined ? {} : {endOffset: clip.endOffset}),
-          url: `${url}?t=${clip.startOffset}`
-        }))
-      } : {})
+      ...(clips.length ? {hasPart: clips} : {})
     }
   ];
 }

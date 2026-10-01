@@ -33,6 +33,41 @@ describe("video structured data", () => {
       endOffset: 63,
       url: "http://localhost:3000/en/videos/wardogs-loadout-gear-guide?t=0"
     });
-    expect(clips?.map((clip) => clip.startOffset)).toEqual([0, 63, 136, 203, 267, 343, 408, 474]);
+    expect(clips?.map((clip) => clip.startOffset)).toEqual([0, 63, 136, 203, 267, 343, 408]);
+    expect(clips?.every((clip) => typeof clip.endOffset === "number")).toBe(true);
+    expect(article!.clips?.at(-1)).toEqual({name: "Mobile spawn vehicles", startOffset: 474});
+  });
+
+  it("omits hasPart when no chapter has a verified complete interval", () => {
+    const article = getVideoArticle("wardogs-loadout-gear-guide")!;
+    const jsonLd = buildVideoArticleJsonLd("en", {
+      ...article,
+      clips: [{name: "Open-ended chapter", startOffset: 474}]
+    });
+    expect(jsonLd.find((item) => item["@type"] === "VideoObject")).not.toHaveProperty("hasPart");
+  });
+
+  it("rejects invalid ranges without deriving or guessing replacement timestamps", () => {
+    const article = getVideoArticle("wardogs-loadout-gear-guide")!;
+    const clips = [
+      {name: "Verified interval", startOffset: 0, endOffset: 63},
+      {name: "Unknown end", startOffset: 63},
+      {name: "Negative start", startOffset: -1, endOffset: 10},
+      {name: "Invalid start", startOffset: NaN, endOffset: 10},
+      {name: "Infinite start", startOffset: Infinity, endOffset: 10},
+      {name: "Invalid end", startOffset: 10, endOffset: NaN},
+      {name: "Infinite end", startOffset: 10, endOffset: Infinity},
+      {name: "Empty interval", startOffset: 10, endOffset: 10},
+      {name: "Reversed interval", startOffset: 10, endOffset: 9}
+    ];
+    const jsonLd = buildVideoArticleJsonLd("en", {...article, clips});
+    expect(jsonLd.find((item) => item["@type"] === "VideoObject")?.hasPart).toEqual([{
+      "@type": "Clip",
+      name: "Verified interval",
+      startOffset: 0,
+      endOffset: 63,
+      url: "http://localhost:3000/en/videos/wardogs-loadout-gear-guide?t=0"
+    }]);
+    expect(clips).toHaveLength(9);
   });
 });

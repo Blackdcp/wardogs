@@ -79,7 +79,7 @@ export default async function VideoArticlePage({params}: PageProps) {
       </header>
 
       <article className="site-container max-w-4xl py-10 md:py-14">
-        <OfficialVideo id={article.youtubeId} title={article.sourceLabel} className="my-0 rounded-[8px]" />
+        <OfficialVideo id={article.youtubeId} title={article.sourceLabel} className="my-0 rounded-[8px]" usePageTimestamp />
 
         <aside className="my-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>

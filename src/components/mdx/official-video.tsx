@@ -1,10 +1,23 @@
 "use client";
 
-import {useState} from "react";
+import {useState, useSyncExternalStore} from "react";
 import {ExternalLink, Play} from "lucide-react";
 import {useTranslations} from "next-intl";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {parseVideoStartTime} from "@/features/videos/video-start-time";
+
+function subscribeToVideoUrl(onChange: () => void) {
+  window.addEventListener("popstate", onChange);
+  return () => window.removeEventListener("popstate", onChange);
+}
+
+function readVideoUrlStart() {
+  return parseVideoStartTime(new URLSearchParams(window.location.search).get("t"));
+}
+
+const noVideoUrlSubscription = () => () => {};
+const defaultVideoUrlStart = () => 0;
 
 const approvedVideoIds = new Set([
   "hVtmnaUCpuQ",
@@ -34,11 +47,17 @@ const approvedVideoIds = new Set([
   "XUyP1GLUF5o"
 ]);
 
-export function OfficialVideo({id, title, className = "my-8", startSeconds = 0, endSeconds}: {id: string; title: string; className?: string; startSeconds?: number; endSeconds?: number}) {
+export function OfficialVideo({id, title, className = "my-8", startSeconds = 0, endSeconds, usePageTimestamp = false}: {id: string; title: string; className?: string; startSeconds?: number; endSeconds?: number; usePageTimestamp?: boolean}) {
   const [active, setActive] = useState(false);
+  const pageStart = useSyncExternalStore(
+    usePageTimestamp ? subscribeToVideoUrl : noVideoUrlSubscription,
+    usePageTimestamp ? readVideoUrlStart : defaultVideoUrlStart,
+    defaultVideoUrlStart
+  );
   const t = useTranslations("article");
   if (!approvedVideoIds.has(id)) return null;
-  const start = Number.isSafeInteger(startSeconds) && startSeconds > 0 && startSeconds < 86400 ? startSeconds : 0;
+  const requestedStart = usePageTimestamp ? pageStart : startSeconds;
+  const start = Number.isSafeInteger(requestedStart) && requestedStart > 0 && requestedStart < 86400 ? requestedStart : 0;
   const end = typeof endSeconds === "number" && Number.isSafeInteger(endSeconds) && endSeconds > start && endSeconds < 86400 ? endSeconds : null;
   const timing = `${start ? `&start=${start}` : ""}${end ? `&end=${end}` : ""}`;
 
