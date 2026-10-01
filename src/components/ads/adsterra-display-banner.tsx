@@ -1,71 +1,11 @@
 "use client";
 
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {X} from "lucide-react";
-import {ADSTERRA_ENABLED, ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
-
-export type AdsterraBannerUnit = {
-  height: number;
-  key: string;
-  src: string;
-  width: number;
-};
-
-function bannerUnit(key: string, width: number, height: number): AdsterraBannerUnit {
-  return {height, key, src: `https://arkgleamfox.com/${key}/invoke.js`, width};
-}
-
-export const ADSTERRA_BANNER_UNITS = {
-  horizontal468: bannerUnit("c6d1a3e01dc90e01385598a3c84dcaea", 468, 60),
-  rectangle300: bannerUnit("3342dc928824e6ed5c01555e7f9e9e0f", 300, 250),
-  rail300: bannerUnit("f6fc5667adc4cb97634312e962c199c5", 160, 300),
-  rail600: bannerUnit("b2a91c3759bccd2386763c1c71b7d7ad", 160, 600),
-  mobile320: bannerUnit("174695845dde18793bf09d3361f8af30", 320, 50),
-  leaderboard728: bannerUnit("035c3a3eb2cdc2bcb65b641e981d4874", 728, 90)
-} as const;
-
-type AdsterraWindow = Window & typeof globalThis & {
-  atOptions?: Record<string, unknown>;
-  wardogsAdsterraBannerQueue?: Promise<void>;
-};
-
-function loadBanner(container: HTMLElement, unit: AdsterraBannerUnit) {
-  if (!ADSTERRA_ENABLED) return Promise.resolve();
-  const browser = window as AdsterraWindow;
-  const run = () => new Promise<void>((resolve) => {
-    if (!container.isConnected) {
-      resolve();
-      return;
-    }
-
-    browser.atOptions = {
-      key: unit.key,
-      format: "iframe",
-      height: unit.height,
-      width: unit.width,
-      params: {}
-    };
-
-    const script = document.createElement("script");
-    script.src = unit.src;
-    script.async = false;
-    script.dataset.adsterraBanner = unit.key;
-    const finish = () => {
-      window.clearTimeout(timeoutId);
-      resolve();
-    };
-    const timeoutId = window.setTimeout(finish, 8_000);
-    script.addEventListener("load", finish, {once: true});
-    script.addEventListener("error", finish, {once: true});
-    container.appendChild(script);
-  });
-
-  const next = (browser.wardogsAdsterraBannerQueue ?? Promise.resolve())
-    .catch(() => undefined)
-    .then(run);
-  browser.wardogsAdsterraBannerQueue = next;
-  return next;
-}
+import {ADSTERRA_ENABLED, ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_MOBILE_STICKY_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
+import {ADSTERRA_BANNER_SANDBOX, ADSTERRA_BANNER_UNITS, getAdsterraFrameOrigin, type AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
+export {ADSTERRA_BANNER_UNITS, buildAdsterraBannerDocument} from "@/features/ads/adsterra-banner";
+export type {AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
 
 export function selectHorizontalBannerUnit(viewportWidth: number): AdsterraBannerUnit | null {
   if (!ADSTERRA_ENABLED) return null;
@@ -82,28 +22,30 @@ type BannerSlotProps = {
 };
 
 function BannerSlot({className = "", label = "Advertisement", placement, unit}: BannerSlotProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ADSTERRA_ENABLED) return;
-    const container = containerRef.current;
-    if (!container || !unit) return;
-    container.replaceChildren();
-    void loadBanner(container, unit);
-    return () => container.replaceChildren();
-  }, [unit]);
-
-  if (!ADSTERRA_ENABLED) return null;
+  const [frameOrigin, setFrameOrigin] = useState(getAdsterraFrameOrigin());
+  useEffect(() => { setFrameOrigin(getAdsterraFrameOrigin(window.location.origin)); }, []);
+  if (!ADSTERRA_ENABLED || !unit) return null;
   return (
     <aside
       aria-label={label}
       className={className}
       data-ad-placement={placement}
-      data-ad-unit={unit?.key ?? "responsive"}
+      data-ad-unit={unit.key}
     >
       <p className="mb-2 text-center text-[10px] font-semibold uppercase text-[#718079]">{label}</p>
-      <div className="mx-auto flex max-w-full items-center justify-center overflow-hidden" style={unit ? {height: unit.height, width: unit.width} : undefined}>
-        <div ref={containerRef} />
+      <div className="mx-auto flex max-w-full items-center justify-center overflow-hidden" style={{height: unit.height, width: unit.width}}>
+        <iframe
+          key={unit.key}
+          title={label}
+          width={unit.width}
+          height={unit.height}
+          className="border-0"
+          sandbox={ADSTERRA_BANNER_SANDBOX}
+          src={`${frameOrigin}/api/ad-frame/${unit.key}`}
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
+          data-adsterra-sandbox={unit.key}
+        />
       </div>
     </aside>
   );
@@ -173,14 +115,14 @@ export function AdsterraGlobalInventory({label = "Advertisement", locale = "en"}
   if (!ADSTERRA_ENABLED) return null;
   return (
     <>
-      <FixedBanner
+      {ADSTERRA_MOBILE_STICKY_ENABLED ? <FixedBanner
         label={label}
         media="(max-width: 467px)"
         placement="mobile-sticky"
         dismissLabel={closeAd[locale] ?? closeAd.en}
         position="fixed inset-x-0 bottom-0 z-[70] mx-auto w-[320px] border-t border-[#2c3631] bg-[#0d0f0e] pt-1 min-[468px]:hidden"
         unit={ADSTERRA_BANNER_UNITS.mobile320}
-      />
+      /> : null}
       <FixedBanner
         label={label}
         media="(min-width: 1600px) and (min-height: 500px)"

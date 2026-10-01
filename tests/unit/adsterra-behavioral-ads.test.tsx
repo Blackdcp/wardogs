@@ -12,7 +12,7 @@ describe("Adsterra behavioral ads", () => {
     vi.stubEnv("NEXT_PUBLIC_WARDOGS_ENABLE_POPUNDER", value);
     vi.resetModules();
     const {ADSTERRA_ENABLED, BEHAVIORAL_POPUNDER_ENABLED} = await import("../../src/features/ads/ad-policy");
-    expect(ADSTERRA_ENABLED).toBe(false);
+    expect(ADSTERRA_ENABLED).toBe(true);
     expect(BEHAVIORAL_POPUNDER_ENABLED).toBe(false);
   });
   it("runs behavioral ads across every localized public page", async () => {

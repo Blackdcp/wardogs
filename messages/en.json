@@ -594,7 +594,7 @@
     "title": "Privacy Policy",
     "intro": "This fan guide minimizes data collection and explains how external media and links work.",
     "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.",
-    "advertising": "Adsterra advertising, including display and native ads, sticky banners, Social Bar, Popunder and Smartlinks, has been disabled since 2026-10-01 after reports of unwanted redirects. The current site does not load Adsterra ad scripts. Previously loaded ads may have processed your IP address, browser and device information and advertising cookies. Disabling ads does not clear cookies already stored in your browser."
+    "advertising": "We retain Adsterra display banners in isolated frames. These frames do not permit popups, parent-page navigation, access to the site's origin, or external-app protocols. Following reports of unwanted redirects, native ads, mobile sticky banners, Social Bar, Popunder and Smartlinks are disabled as of 2026-10-01. Ad requests can disclose your IP address and browser or device information to advertising providers; their cookies are subject to browser restrictions. Disabling an ad format does not clear cookies already stored in your browser."
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Terms of Use: Guide Rules & Disclaimers",

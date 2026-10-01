@@ -20,7 +20,8 @@ describe("Adsterra monetization strategy", () => {
       if (/arkgleamfox/i.test(source)) {
         expect([
           path.join("src", "features", "ads", "ad-policy.ts"),
-          path.join("src", "components", "ads", "adsterra-display-banner.tsx")
+          path.join("src", "components", "ads", "adsterra-display-banner.tsx"),
+          path.join("src", "features", "ads", "adsterra-banner.ts")
         ], path.relative(root, file)).toContain(path.relative(root, file));
       }
       if (/effectivecpmnetwork/i.test(source)) {
@@ -30,7 +31,7 @@ describe("Adsterra monetization strategy", () => {
     }
   });
 
-  it("discloses the Adsterra shutdown date and former formats in every privacy policy", () => {
+  it("discloses isolated Adsterra displays and the disabled redirect formats in every privacy policy", () => {
     for (const locale of locales) {
       const messages = JSON.parse(
         fs.readFileSync(path.join(root, "messages", `${locale}.json`), "utf8")

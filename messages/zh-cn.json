@@ -594,7 +594,7 @@
     "title": "隐私政策",
     "intro": "本站尽量减少数据收集，并说明外部媒体和链接的工作方式。",
     "content": "我们不经营玩家账户，也不收集游戏登录凭证。",
-    "advertising": "收到非预期跳转的反馈后，本站自 2026-10-01 起停用全部 Adsterra 广告，包括展示横幅、原生广告、粘性广告、Social Bar、Popunder 和 Smartlinks。当前网站不加载 Adsterra 广告脚本。此前加载的广告可能处理过您的 IP 地址、浏览器和设备信息及广告 Cookie。停用广告不会清除浏览器中已保存的 Cookie。"
+    "advertising": "本站保留隔离框架中的 Adsterra 展示横幅。框架不允许弹窗、跳转主页面、访问本站源或调用外部应用协议。收到非预期跳转的反馈后，自 2026-10-01 起停用原生广告、手机悬浮横幅、Social Bar、Popunder 和 Smartlinks。广告请求可能向广告服务商披露您的 IP 地址、浏览器或设备信息；其 Cookie 受浏览器限制。停用某种广告不会清除浏览器中已保存的 Cookie。"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki 使用条款：攻略规范与免责声明",

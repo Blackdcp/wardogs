@@ -12,8 +12,10 @@ export const ADSTERRA_SMARTLINK_URLS = [
     url: "https://arkgleamfox.com/j7way0p0?key=a9590c5cd64a0d11f4aa2ecf617130bc"
   }
 ] as const;
-// Disabled after user and directory reports of unwanted mobile redirects.
-export const ADSTERRA_ENABLED = false;
+// Keep isolated display ads; disable formats implicated in redirect reports.
+export const ADSTERRA_ENABLED = true;
+export const ADSTERRA_NATIVE_ENABLED = false;
+export const ADSTERRA_MOBILE_STICKY_ENABLED = false;
 export const ADSTERRA_SOCIAL_BAR_ENABLED = false;
 export const ADSTERRA_SMARTLINK_ENABLED = false;
 export const ADSTERRA_LEADERBOARD_ENABLED = false;

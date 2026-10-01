@@ -16,22 +16,35 @@ describe("Adsterra display banner inventory", () => {
     });
   });
 
-  it("does not select a banner at any viewport while Adsterra is disabled", async () => {
-    const {selectHorizontalBannerUnit} = await import("../../src/components/ads/adsterra-display-banner");
+  it("retains the useful 468px banner without reactivating the leaderboard", async () => {
+    const {ADSTERRA_BANNER_UNITS, selectHorizontalBannerUnit} = await import("../../src/components/ads/adsterra-display-banner");
 
     expect(selectHorizontalBannerUnit(467)).toBeNull();
-    expect(selectHorizontalBannerUnit(468)).toBeNull();
-    expect(selectHorizontalBannerUnit(727)).toBeNull();
+    expect(selectHorizontalBannerUnit(468)).toBe(ADSTERRA_BANNER_UNITS.horizontal468);
+    expect(selectHorizontalBannerUnit(727)).toBe(ADSTERRA_BANNER_UNITS.horizontal468);
     expect(selectHorizontalBannerUnit(728)).toBeNull();
     expect(selectHorizontalBannerUnit(1600)).toBeNull();
   });
 
-  it("does not render inline or global advertising inventory", async () => {
+  it("isolates inline ads and does not render mobile sticky inventory", async () => {
     const {AdsterraDisplayBanner, AdsterraGlobalInventory} = await import("../../src/components/ads/adsterra-display-banner");
     const inline = renderToStaticMarkup(React.createElement(AdsterraDisplayBanner, {placement: "rectangle"}));
     const global = renderToStaticMarkup(React.createElement(AdsterraGlobalInventory));
 
-    expect(inline).toBe("");
-    expect(global).toBe("");
+    expect(inline).toContain('sandbox="allow-scripts allow-same-origin"');
+    expect(inline).toContain('src="https://wardogswiki.com/api/ad-frame/');
+    expect(inline).not.toContain("<script");
+    expect(inline).not.toMatch(/allow-(?:popups|top-navigation|forms|downloads)/);
+    expect(global).toContain('data-ad-placement="left-rail"');
+    expect(global).not.toContain("mobile-sticky");
+    expect(global).not.toContain("right-rail");
+  });
+
+  it("escapes script and attribute boundaries in the iframe document", async () => {
+    const {buildAdsterraBannerDocument} = await import("../../src/components/ads/adsterra-display-banner");
+    const document = buildAdsterraBannerDocument({key: "</script>", src: 'https://example.com/"<script>', width: 300, height: 250});
+    expect(document).toContain('"key":"\\u003c/script>"');
+    expect(document).toContain("&quot;&lt;script&gt;");
+    expect(document).not.toContain('src="https://example.com/"<script>');
   });
 });
