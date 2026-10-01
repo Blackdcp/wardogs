@@ -8,11 +8,12 @@ describe("Adsterra behavioral ads", () => {
     vi.resetModules();
   });
 
-  it.each([undefined, "false", "1", "true"])("only enables popunders with explicit true: %s", async (value) => {
+  it.each([undefined, "false", "1", "true"])("keeps popunders disabled regardless of the old environment flag: %s", async (value) => {
     vi.stubEnv("NEXT_PUBLIC_WARDOGS_ENABLE_POPUNDER", value);
     vi.resetModules();
-    const {BEHAVIORAL_POPUNDER_ENABLED} = await import("../../src/features/ads/ad-policy");
-    expect(BEHAVIORAL_POPUNDER_ENABLED).toBe(value === "true");
+    const {ADSTERRA_ENABLED, BEHAVIORAL_POPUNDER_ENABLED} = await import("../../src/features/ads/ad-policy");
+    expect(ADSTERRA_ENABLED).toBe(false);
+    expect(BEHAVIORAL_POPUNDER_ENABLED).toBe(false);
   });
   it("runs behavioral ads across every localized public page", async () => {
     const {isBehavioralAdPath} = await import("../../src/features/ads/ad-policy");
@@ -53,7 +54,7 @@ describe("Adsterra behavioral ads", () => {
     ]);
   });
 
-  it("pauses social bar on public pages while retaining the interaction popunder", async () => {
+  it("does not load social-bar scripts on public pages", async () => {
     const {getSocialBarScriptForPath, ADSTERRA_POPUNDER_SCRIPT_SRC} = await import("../../src/features/ads/ad-policy");
 
     expect(getSocialBarScriptForPath("/en/guides/wardogs-gameplay")).toBeNull();

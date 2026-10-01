@@ -16,24 +16,22 @@ describe("Adsterra display banner inventory", () => {
     });
   });
 
-  it("selects one horizontal unit without duplicating the mobile sticky zone", async () => {
+  it("does not select a banner at any viewport while Adsterra is disabled", async () => {
     const {selectHorizontalBannerUnit} = await import("../../src/components/ads/adsterra-display-banner");
 
     expect(selectHorizontalBannerUnit(467)).toBeNull();
-    expect(selectHorizontalBannerUnit(468)?.width).toBe(468);
-    expect(selectHorizontalBannerUnit(727)?.width).toBe(468);
+    expect(selectHorizontalBannerUnit(468)).toBeNull();
+    expect(selectHorizontalBannerUnit(727)).toBeNull();
     expect(selectHorizontalBannerUnit(728)).toBeNull();
     expect(selectHorizontalBannerUnit(1600)).toBeNull();
   });
 
-  it("renders stable shells for inline and global high-density inventory", async () => {
+  it("does not render inline or global advertising inventory", async () => {
     const {AdsterraDisplayBanner, AdsterraGlobalInventory} = await import("../../src/components/ads/adsterra-display-banner");
     const inline = renderToStaticMarkup(React.createElement(AdsterraDisplayBanner, {placement: "rectangle"}));
     const global = renderToStaticMarkup(React.createElement(AdsterraGlobalInventory));
 
-    expect(inline).toContain('data-ad-placement="rectangle"');
-    expect(global).toContain('data-ad-placement="mobile-sticky"');
-    expect(global).toContain('data-ad-placement="left-rail"');
-    expect(global).not.toContain('data-ad-placement="right-rail"');
+    expect(inline).toBe("");
+    expect(global).toBe("");
   });
 });

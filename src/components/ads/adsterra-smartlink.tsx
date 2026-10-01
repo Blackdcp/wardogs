@@ -1,5 +1,5 @@
 import {ExternalLink} from "lucide-react";
-import {ADSTERRA_SMARTLINK_ENABLED, ADSTERRA_SMARTLINK_URLS} from "@/features/ads/ad-policy";
+import {ADSTERRA_ENABLED, ADSTERRA_SMARTLINK_ENABLED, ADSTERRA_SMARTLINK_URLS} from "@/features/ads/ad-policy";
 
 type AdsterraSmartlinkProps = {
   cta?: string;
@@ -12,7 +12,7 @@ export function AdsterraSmartlink({
   description = "Open an external sponsored destination in a new tab.",
   label = "Sponsored"
 }: AdsterraSmartlinkProps = {}) {
-  if (!ADSTERRA_SMARTLINK_ENABLED) return null;
+  if (!ADSTERRA_ENABLED || !ADSTERRA_SMARTLINK_ENABLED) return null;
 
   return (
     <aside className="my-8 border border-[#2c3631] bg-[#111512] p-4" data-ad-slot="adsterra-smartlink">

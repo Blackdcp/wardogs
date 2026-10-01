@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useRef, useState} from "react";
+import {ADSTERRA_ENABLED} from "@/features/ads/ad-policy";
 
 export const ADSTERRA_NATIVE_ZONE_ID = "481d6501bcd0c27b98bc3c4776a26f6e";
 export const ADSTERRA_NATIVE_CONTAINER_ID = `container-${ADSTERRA_NATIVE_ZONE_ID}`;
@@ -22,6 +23,7 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
   const [active, setActive] = useState(true);
 
   useEffect(() => {
+    if (!ADSTERRA_ENABLED) return;
     const container = containerRef.current;
     if (!container) return;
 
@@ -49,7 +51,7 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
     };
   }, []);
 
-  if (!active) return null;
+  if (!ADSTERRA_ENABLED || !active) return null;
 
   return (
     <section

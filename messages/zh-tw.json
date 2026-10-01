@@ -629,7 +629,7 @@
     "title": "隱私政策",
     "intro": "本站儘量減少資料收集，並說明外部媒體和連結的工作方式。",
     "content": "我們不經營玩家賬戶，也不收集遊戲登入憑證。",
-    "advertising": "網站的 Adsterra 廣告形式可能包括展示橫幅、原生廣告、粘性廣告、Social Bar、Popunder 和贊助 Smartlink；並非所有形式都會同時啟用。Adsterra 及其廣告合作伙伴可能處理您的 IP 地址、瀏覽器和裝置資訊，並在需要徵得同意的地區依據您的選擇，使用 Cookie 或類似技術投放、衡量及個性化廣告。啟用時，贊助連結會在新標籤頁開啟外部廣告頁面。"
+    "advertising": "收到非預期跳轉的回饋後，本站自 2026-10-01 起停用全部 Adsterra 廣告，包括展示橫幅、原生廣告、黏性廣告、Social Bar、Popunder 和 Smartlinks。目前網站不載入 Adsterra 廣告指令碼。先前載入的廣告可能處理過您的 IP 位址、瀏覽器和裝置資訊及廣告 Cookie。停用廣告不會清除瀏覽器中已儲存的 Cookie。"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki 使用條款：攻略規範與免責宣告",

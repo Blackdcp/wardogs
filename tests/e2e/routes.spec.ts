@@ -148,8 +148,8 @@ test("category routes render approved heroes, complete explorers, and aggressive
     await expect(page.locator('[data-catalogue-record] img')).toHaveCount(imageCount);
     const linkedRecordCount = getIndexableCatalogueItems(records).length;
     await expect(page.locator('[data-catalogue-record] > a[aria-label]')).toHaveCount(linkedRecordCount);
-    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
-    await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(2);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+    await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(0);
     await expectImagesLoaded(page);
   }
 
@@ -158,8 +158,8 @@ test("category routes render approved heroes, complete explorers, and aggressive
   expect(loadoutHero).toBeDefined();
   await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(loadoutHero!.image.split("/").at(-1)!.split(".")[0]));
   await expect(page.locator('[data-catalogue-explorer]')).toHaveCount(0);
-  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
-  await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(2);
+  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+  await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(0);
 });
 
 test("weapon categories use locale-specific model links and keep standalone articles unique", async ({page}) => {

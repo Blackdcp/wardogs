@@ -3,6 +3,7 @@
 import {usePathname} from "next/navigation";
 import {useEffect} from "react";
 import {
+  ADSTERRA_ENABLED,
   ADSTERRA_POPUNDER_SCRIPT_SRC,
   BEHAVIORAL_POPUNDER_ENABLED,
   canLoadPopunder,
@@ -24,7 +25,7 @@ export function AdsterraBehavioralAds() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!isBehavioralAdPath(pathname)) return;
+    if (!ADSTERRA_ENABLED || !isBehavioralAdPath(pathname)) return;
 
     const socialBarSrc = getSocialBarScriptForPath(pathname);
     const socialBarScript = socialBarSrc ? appendAdScript(socialBarSrc, "social-bar") : null;

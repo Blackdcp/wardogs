@@ -30,12 +30,13 @@ describe("Adsterra monetization strategy", () => {
     }
   });
 
-  it("describes the active high-density Adsterra formats in every privacy policy", () => {
+  it("discloses the Adsterra shutdown date and former formats in every privacy policy", () => {
     for (const locale of locales) {
       const messages = JSON.parse(
         fs.readFileSync(path.join(root, "messages", `${locale}.json`), "utf8")
       ) as {privacy: {advertising: string}};
       expect(messages.privacy.advertising, locale).toMatch(/Adsterra/i);
+      expect(messages.privacy.advertising, locale).toContain("2026-10-01");
       expect(messages.privacy.advertising, locale).toMatch(/Popunder/i);
       expect(messages.privacy.advertising, locale).toMatch(/Smartlink/i);
     }

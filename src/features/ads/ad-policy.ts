@@ -12,15 +12,15 @@ export const ADSTERRA_SMARTLINK_URLS = [
     url: "https://arkgleamfox.com/j7way0p0?key=a9590c5cd64a0d11f4aa2ecf617130bc"
   }
 ] as const;
-// Seven-day revenue test: keep the low-yield formats reversible without loading them.
+// Disabled after user and directory reports of unwanted mobile redirects.
+export const ADSTERRA_ENABLED = false;
 export const ADSTERRA_SOCIAL_BAR_ENABLED = false;
 export const ADSTERRA_SMARTLINK_ENABLED = false;
 export const ADSTERRA_LEADERBOARD_ENABLED = false;
 export const ADSTERRA_RIGHT_RAIL_ENABLED = false;
 export const POPUNDER_COOLDOWN_MS = 6 * 60 * 60 * 1000;
 export const POPUNDER_STORAGE_KEY = "wardogs-adsterra-popunder-loaded-at";
-export const BEHAVIORAL_POPUNDER_ENABLED =
-  process.env.NEXT_PUBLIC_WARDOGS_ENABLE_POPUNDER === "true";
+export const BEHAVIORAL_POPUNDER_ENABLED = false;
 
 const LOCALIZED_PUBLIC_PATH = /^\/(?:en|de|pt-br|ru|ja|zh-cn|zh-tw|pl)(?:\/.*)?$/;
 
@@ -29,7 +29,7 @@ export function isBehavioralAdPath(pathname: string) {
 }
 
 export function getSocialBarScriptForPath(pathname: string): string | null {
-  return ADSTERRA_SOCIAL_BAR_ENABLED && isBehavioralAdPath(pathname)
+  return ADSTERRA_ENABLED && ADSTERRA_SOCIAL_BAR_ENABLED && isBehavioralAdPath(pathname)
     ? ADSTERRA_SOCIAL_BAR_SCRIPT_SRC
     : null;
 }

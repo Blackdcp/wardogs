@@ -2,7 +2,7 @@
 
 import {useEffect, useRef, useState} from "react";
 import {X} from "lucide-react";
-import {ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
+import {ADSTERRA_ENABLED, ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
 
 export type AdsterraBannerUnit = {
   height: number;
@@ -30,6 +30,7 @@ type AdsterraWindow = Window & typeof globalThis & {
 };
 
 function loadBanner(container: HTMLElement, unit: AdsterraBannerUnit) {
+  if (!ADSTERRA_ENABLED) return Promise.resolve();
   const browser = window as AdsterraWindow;
   const run = () => new Promise<void>((resolve) => {
     if (!container.isConnected) {
@@ -67,6 +68,7 @@ function loadBanner(container: HTMLElement, unit: AdsterraBannerUnit) {
 }
 
 export function selectHorizontalBannerUnit(viewportWidth: number): AdsterraBannerUnit | null {
+  if (!ADSTERRA_ENABLED) return null;
   if (viewportWidth >= 728) return ADSTERRA_LEADERBOARD_ENABLED ? ADSTERRA_BANNER_UNITS.leaderboard728 : null;
   if (viewportWidth >= 468) return ADSTERRA_BANNER_UNITS.horizontal468;
   return null;
@@ -83,6 +85,7 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit}: 
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!ADSTERRA_ENABLED) return;
     const container = containerRef.current;
     if (!container || !unit) return;
     container.replaceChildren();
@@ -90,6 +93,7 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit}: 
     return () => container.replaceChildren();
   }, [unit]);
 
+  if (!ADSTERRA_ENABLED) return null;
   return (
     <aside
       aria-label={label}
@@ -116,14 +120,14 @@ export function AdsterraDisplayBanner({label, placement}: AdsterraDisplayBannerP
   );
 
   useEffect(() => {
-    if (placement !== "horizontal") return;
+    if (!ADSTERRA_ENABLED || placement !== "horizontal") return;
     const update = () => setUnit(selectHorizontalBannerUnit(window.innerWidth));
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, [placement]);
 
-  if (!unit) return null;
+  if (!ADSTERRA_ENABLED || !unit) return null;
 
   return (
     <BannerSlot
@@ -166,6 +170,7 @@ function FixedBanner({label, media, placement, position, unit, dismissLabel}: {
 const closeAd: Record<string, string> = {en: "Close advertisement", ja: "広告を閉じる", ru: "Закрыть рекламу", de: "Werbung schließen", "pt-br": "Fechar anúncio", "zh-cn": "关闭广告", "zh-tw": "關閉廣告", pl: "Zamknij reklamę"};
 
 export function AdsterraGlobalInventory({label = "Advertisement", locale = "en"}: {label?: string; locale?: string} = {}) {
+  if (!ADSTERRA_ENABLED) return null;
   return (
     <>
       <FixedBanner
