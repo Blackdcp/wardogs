@@ -1,6 +1,9 @@
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {getTranslations} from "next-intl/server";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {OperationsAtlas} from "@/components/maps/operations-atlas";
 import {JsonLd} from "@/components/seo/json-ld";
 import {listGuideSummaries} from "@/content/guides";
@@ -48,9 +51,10 @@ export default async function MapsPage({params}: PageProps) {
   const {locale: requestedLocale} = await params;
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
-  const [guides, t] = await Promise.all([
+  const [guides, tNav, tAds] = await Promise.all([
     listGuideSummaries(locale),
     getTranslations({locale, namespace: "nav"}),
+    getTranslations({locale, namespace: "ads"}),
   ]);
   const copy = getOperationsAtlasCopy(locale);
   const guideTitles = Object.fromEntries(guides.map((guide) => [guide.slug, guide.title]));
@@ -62,8 +66,13 @@ export default async function MapsPage({params}: PageProps) {
         copy={copy}
         guideTitles={guideTitles}
         locale={locale}
-        toolLabels={{"/tools/logistics-planner": t("logisticsPlanner")}}
+        toolLabels={{"/tools/logistics-planner": tNav("logisticsPlanner")}}
       />
+      <section className="site-container py-8" data-page-ad-inventory="maps">
+        <AdsterraDisplayBanner label={tAds("label")} placement="rectangle" />
+        <AdsterraNativeBanner label={tAds("label")} />
+        <AdsterraSmartlink cta={tAds("smartlinkCta")} description={tAds("smartlinkDescription")} label={tAds("sponsored")} />
+      </section>
     </main>
   );
 }

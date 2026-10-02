@@ -74,15 +74,15 @@ export default async function HomePage({params}: HomePageProps) {
       <HomeHero facts={facts} />
       <LiveBetaBanner compact />
       <HomeActionHub />
-      <CatalogueHomeBand locale={locale} />
-      <PriorityGuides guides={guides} locale={locale} />
-      <SiteSearch copy={searchCopy} index={searchIndex} locale={locale} />
-      <CurrentBuildChanges locale={locale} />
-      <section className="site-container py-2" data-page-ad-inventory="home">
+      <section className="site-container py-4" data-page-ad-inventory="home">
         <AdsterraDisplayBanner label={t("ads.label")} placement="rectangle" />
         <AdsterraNativeBanner label={t("ads.label")} />
         <AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />
       </section>
+      <CatalogueHomeBand locale={locale} />
+      <PriorityGuides guides={guides} locale={locale} />
+      <SiteSearch copy={searchCopy} index={searchIndex} locale={locale} />
+      <CurrentBuildChanges locale={locale} />
       <VideoIntelligence locale={locale} />
       <CategoryGrid guideCount={guides.length} />
       <AboutGame />

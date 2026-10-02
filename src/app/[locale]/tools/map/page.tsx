@@ -1,5 +1,10 @@
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
+import {getTranslations} from "next-intl/server";
+import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
+import {MapTacticalIntel} from "@/components/map/map-tactical-intel";
 import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {interactiveMapPageCopy} from "@/features/maps/interactive-map-page-copy";
@@ -21,7 +26,9 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
 export default async function TacticalMapPage({params}: PageProps) {
   const {locale: requestedLocale} = await params;
   if (!isLocale(requestedLocale)) notFound();
-  const c = interactiveMapPageCopy[requestedLocale] ?? interactiveMapPageCopy.en;
+  const locale: Locale = requestedLocale;
+  const c = interactiveMapPageCopy[locale] ?? interactiveMapPageCopy.en;
+  const t = await getTranslations({locale, namespace: "ads"});
 
   return (
     <main className="site-container py-8 md:py-12">
@@ -38,8 +45,18 @@ export default async function TacticalMapPage({params}: PageProps) {
       </header>
 
       <section aria-label={c.title}>
-        <WardogsMapViewer initialMap="bakurani" locale={requestedLocale} />
+        <WardogsMapViewer initialMap="bakurani" locale={locale} />
       </section>
+
+      {/* Dwell-Time Monetization: High viewability for players running maps on secondary monitors */}
+      <section className="mt-8 pt-6 border-t border-[#2b3530]" data-page-ad-inventory="tools-map">
+        <AdsterraDisplayBanner label={t("label")} placement="rectangle" />
+        <AdsterraNativeBanner label={t("label")} />
+        <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
+      </section>
+
+      {/* Second-Monitor Tactical Intel, Ballistics Tables & Theater Guide */}
+      <MapTacticalIntel locale={locale} />
     </main>
   );
 }
