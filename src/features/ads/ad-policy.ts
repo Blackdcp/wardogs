@@ -6,6 +6,10 @@ export const ADSTERRA_SMARTLINK_URLS = [
   {
     id: "smartlink-1",
     url: "https://arkgleamfox.com/sfg4tmdn?key=88f0d659df423718bd107ca16b5284cd"
+  },
+  {
+    id: "smartlink-2",
+    url: "https://arkgleamfox.com/jvxhi4z3ts?key=678e9aeab41077b9e6a3e5626292c434"
   }
 ] as const;
 // Monetize with isolated native/display inventory; keep unrestricted ad scripts off.
