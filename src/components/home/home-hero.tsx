@@ -6,12 +6,15 @@ import {ButtonLink} from "@/components/ui/button-link";
 import {StatsGrid} from "@/components/ui/stats-grid";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {CURRENT_EVENT} from "@/features/live-ops/current-event";
+import {HeroSearchBox} from "./hero-search-box";
+import type {Locale} from "@/config/site";
 
 type HomeHeroProps = {
   facts: readonly string[];
+  locale?: Locale;
 };
 
-export async function HomeHero({facts}: HomeHeroProps) {
+export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
   const t = await getTranslations();
 
   return (
@@ -53,6 +56,13 @@ export async function HomeHero({facts}: HomeHeroProps) {
           <p className="mt-5 max-w-2xl text-sm leading-7 text-[#d6ded9] sm:text-base sm:leading-8">
             {t("home.heroDescription")}
           </p>
+
+          {/* 1. Hero 战术聚焦区：智能搜索框 + 5 个免打字热搜标签 */}
+          <HeroSearchBox
+            locale={locale}
+            placeholder={t("home.search.placeholder")}
+            hotTagsLabel={locale === "zh-cn" || locale === "zh-tw" ? "热搜" : "HOT"}
+          />
 
           <div className="mt-6 grid w-full max-w-2xl grid-cols-2 gap-2.5 sm:grid-cols-4">
             <ButtonLink href="/items/weapons" homeTask="weapons" className="px-2" title={t("home.quickTasks.weapons")}>{t("home.quickTasks.weapons")}</ButtonLink>

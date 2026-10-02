@@ -1,4 +1,4 @@
-import {ArrowUpRight, Boxes, Crosshair, DollarSign, Keyboard, ListChecks, Play, Truck, Wrench} from "lucide-react";
+import {ArrowUpRight, Boxes, Crosshair, DollarSign, Hourglass, Keyboard, ListChecks, type LucideIcon, Map, Play, Radio, Truck, Wrench} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import type {ComponentType, ReactNode} from "react";
 import {HOME_ACTIONS} from "@/features/home/home-data";
@@ -20,6 +20,15 @@ type HomeActionHubViewProps = {
   description: string;
   actions: readonly HomeActionHubEntry[];
   LinkComponent?: ActionLinkComponent;
+  tacticalCards?: readonly {
+    title: string;
+    description: string;
+    badge: string;
+    href: string;
+    cta: string;
+    icon: LucideIcon;
+    accent: string;
+  }[];
 };
 
 const actionPresentation = {
@@ -37,7 +46,46 @@ function NativeLink({children, ...props}: {className: string; href: string; titl
   return <a {...props}>{children}</a>;
 }
 
-export function HomeActionHubView({eyebrow, title, description, actions, LinkComponent = NativeLink}: HomeActionHubViewProps) {
+const defaultTacticalCards = [
+  {
+    title: "战术交互地图",
+    description: "256km² 高清底图、迫击炮与重炮密位射表及点位测距",
+    badge: "HD 2048px",
+    href: "/tools/map",
+    cta: "立即调取",
+    icon: Map,
+    accent: "text-[#69c78f]"
+  },
+  {
+    title: "武器载具图鉴",
+    description: "11大类装备库、枪械伤害属性与出战预算精算",
+    badge: "11 大类",
+    href: "/items",
+    cta: "查验图鉴",
+    icon: Crosshair,
+    accent: "text-[#ef8585]"
+  },
+  {
+    title: "实时服务监控",
+    description: "官方停机维护动态、匹配队列监测与跨区延迟雷达",
+    badge: "Live Radar",
+    href: "/guides/wardogs-server-status",
+    cta: "查看状态",
+    icon: Radio,
+    accent: "text-[#7bb7e8]"
+  },
+  {
+    title: "第二赛季删档",
+    description: "赛季清零规则矩阵、12 天避险策略与现金兑换率",
+    badge: "S2 Wipe",
+    href: "/guides/wardogs-season-2",
+    cta: "查看应对",
+    icon: Hourglass,
+    accent: "text-[#f0be55]"
+  }
+] as const;
+
+export function HomeActionHubView({eyebrow, title, description, actions, LinkComponent = NativeLink, tacticalCards = defaultTacticalCards}: HomeActionHubViewProps) {
   return (
     <section aria-labelledby="home-action-title" className="border-b border-[#2b3530] bg-[#0b0e0c] py-12 sm:py-14" data-home-action-hub="true">
       <div className="site-container">
@@ -49,6 +97,42 @@ export function HomeActionHubView({eyebrow, title, description, actions, LinkCom
             </h2>
           </div>
           <p className="max-w-2xl text-sm leading-7 text-[#a9b5af] sm:text-base lg:justify-self-end">{description}</p>
+        </div>
+
+        {/* 四大战术中枢大卡 (Four Primary Strategic Tactical Hub Cards) */}
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" data-tactical-cards="true">
+          {tacticalCards.map((card) => {
+            const Icon = card.icon;
+            return (
+              <LinkComponent
+                key={card.href}
+                className="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-[#30543e] bg-gradient-to-b from-[#14231b] to-[#0c1410] p-5 shadow-lg transition-all hover:border-[#69c78f] hover:shadow-[0_0_20px_rgba(76,217,136,0.15)]"
+                href={card.href}
+                title={card.title}
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className={`flex size-10 items-center justify-center rounded-md border border-[#3b684c] bg-[#1a3326] ${card.accent}`}>
+                      <Icon aria-hidden="true" className="size-5" />
+                    </div>
+                    <span className="rounded bg-[#203a2b] px-2 py-0.5 font-mono text-[11px] font-semibold text-[#8ce2ad]">
+                      {card.badge}
+                    </span>
+                  </div>
+                  <h3 className="display-font mt-4 text-lg font-bold text-white group-hover:text-[#69c78f]">
+                    {card.title}
+                  </h3>
+                  <p className="mt-1.5 text-xs leading-5 text-[#a3afa9]">
+                    {card.description}
+                  </p>
+                </div>
+                <div className="mt-5 flex items-center gap-1.5 text-xs font-semibold text-[#8ce2ad] group-hover:text-white">
+                  <span>{card.cta}</span>
+                  <ArrowUpRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
+              </LinkComponent>
+            );
+          })}
         </div>
 
         <ul className="mt-8 grid gap-x-6 sm:grid-cols-2 lg:grid-cols-4">

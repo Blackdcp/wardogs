@@ -116,8 +116,8 @@ const ui: Record<Locale, ItemUi> = {
 
 const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
   en: {
-    hubMetaTitle: "WARDOGS Weapons & Vehicles: 11-Category Item Index",
-    hubMetaDescription: "Find WARDOGS weapons, vehicles, ammo, gear, supplies and loadouts in 11 searchable categories. Each record labels its source and build; Alpha values are not live prices.",
+    hubMetaTitle: "WARDOGS Weapons & Vehicles: Tactical FPS Database & Stats",
+    hubMetaDescription: "Explore WARDOGS weapons, vehicles, armor stats, ammunition, attachments, gear, and loadouts across 11 categories. Sourced guides with live-check caveats.",
     hubTitle: "WARDOGS Weapons, Vehicles & Items",
     hubDescription: "Looking for a weapon, vehicle or supply item? Browse all 11 categories and check the source and observed build before treating an Alpha price or unlock as current.",
     indexesEyebrow: "Field indexes",
@@ -173,6 +173,7 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
     unconfirmedRelease: "現行Early Accessビルドでは未再確認"
   },
   "zh-cn": {
+    hubMetaTitle: "WARDOGS 武器与载具全图鉴：11类配装、装甲与伤害数据库",
     hubMetaDescription: "浏览 WARDOGS 11 类图鉴：武器、载具、弹药、配件、装备、器材、医疗、补给、部署物、机制与配装，并核对来源和版本。",
     hubDescription: "比较全部 11 类战地索引：武器、载具、弹药、配件、装备、器材、医疗、补给、部署物、机制与配装；每类均保留来源和版本标记。",
     indexesEyebrow: "战地索引",
@@ -186,6 +187,7 @@ const earlyAccessOverrides: Record<Locale, Partial<ItemUi>> = {
 
   pl: {hubMetaTitle:"Broń i pojazdy WARDOGS: indeks 11 kategorii", hubMetaDescription:"Znajdź broń, pojazdy, amunicję, sprzęt, zapasy i zestawy WARDOGS w 11 przeszukiwalnych kategoriach. Rekordy wskazują źródło i wersję; ceny alfy nie są cenami bieżącymi.", hubTitle:"Broń, pojazdy i przedmioty WARDOGS", hubDescription:"Szukasz broni, pojazdu lub zaopatrzenia? Przeglądaj 11 kategorii i sprawdzaj źródło oraz wersję obserwacji przed uznaniem ceny lub odblokowania z alfy za aktualne.", indexesEyebrow:"Indeksy terenowe", alphaSnapshot:"Historyczny punkt odniesienia: alfa 1", preRelease:"Historyczny zapis testowy", preReleaseDescription:"Zaobserwowane przed wczesnym dostępem; parametry, odblokowania i balans wymagają ponownego sprawdzenia w obecnej wersji.", featuredVehiclesDescription:"Przykładowe rekordy transportu, pojazdów opancerzonych i maszyn latających z jasno oznaczoną wersją obserwacji.", officialSourcesDescription:"Oficjalne strony potwierdzają działającą grę, platformę i ogólne mechaniki. Każdy rekord zachowuje wersję obserwacji do ponownej weryfikacji we wczesnym dostępie.", unconfirmedRelease:"Nie sprawdzono ponownie w aktualnym wczesnym dostępie"},
   "zh-tw": {
+    hubMetaTitle: "WARDOGS 武器與載具全圖鑑：11類配裝、裝甲與傷害數據庫",
     hubMetaDescription: "瀏覽 WARDOGS 11 類圖鑑：武器、載具、彈藥、配件、裝備、器材、醫療、補給、部署物、機制與配裝，並核對來源和版本。",
     hubDescription: "比較全部 11 類戰地索引：武器、載具、彈藥、配件、裝備、器材、醫療、補給、部署物、機制與配裝；每類均保留來源和版本標記。",
     indexesEyebrow: "戰地索引",
