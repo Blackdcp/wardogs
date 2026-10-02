@@ -2,15 +2,10 @@ import type {Metadata} from "next";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {CatalogueHomeBand} from "@/components/catalogue/catalogue-home-band";
-import {AboutGame} from "@/components/home/about-game";
-import {BeginnerTips} from "@/components/home/beginner-tips";
 import {CategoryGrid} from "@/components/home/category-grid";
 import {CurrentBuildChanges} from "@/components/home/current-build-changes";
-import {FinalCta} from "@/components/home/final-cta";
-import {HomeFaq} from "@/components/home/home-faq";
 import {HomeActionHub} from "@/components/home/home-action-hub";
 import {HomeHero} from "@/components/home/home-hero";
-import {OfficialMedia} from "@/components/home/official-media";
 import {PriorityGuides} from "@/components/home/priority-guides";
 import {SiteSearch, type SiteSearchCopy} from "@/components/home/site-search";
 import {VideoIntelligence} from "@/components/home/video-intelligence";
@@ -85,11 +80,6 @@ export default async function HomePage({params}: HomePageProps) {
       <CurrentBuildChanges locale={locale} />
       <VideoIntelligence locale={locale} />
       <CategoryGrid guideCount={guides.length} />
-      <AboutGame />
-      <OfficialMedia />
-      <BeginnerTips />
-      <HomeFaq />
-      <FinalCta />
     </main>
   );
 }
