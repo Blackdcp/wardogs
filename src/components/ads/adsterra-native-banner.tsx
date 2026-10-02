@@ -1,52 +1,48 @@
 "use client";
 
-import {useEffect, useRef, useState, useSyncExternalStore} from "react";
+import {useEffect, useRef} from "react";
 import {ADSTERRA_ENABLED, ADSTERRA_NATIVE_ENABLED} from "@/features/ads/ad-policy";
-import {ADSTERRA_BANNER_SANDBOX, ADSTERRA_FRAME_VERSION, getAdsterraFrameOrigin} from "@/features/ads/adsterra-banner";
-import {ADSTERRA_NATIVE_ZONE_ID, getAdsterraNativeFrameHeight} from "@/features/ads/adsterra-native";
-export {ADSTERRA_NATIVE_CONTAINER_ID, ADSTERRA_NATIVE_SCRIPT_SRC, ADSTERRA_NATIVE_ZONE_ID} from "@/features/ads/adsterra-native";
+import {
+  ADSTERRA_NATIVE_CONTAINER_ID,
+  ADSTERRA_NATIVE_SCRIPT_SRC,
+  configureAdsterraNativeScript
+} from "@/features/ads/adsterra-native";
 
-const subscribeToFrameOrigin = () => () => {};
-const getFrameOriginSnapshot = () => getAdsterraFrameOrigin(window.location.origin);
-const getServerFrameOrigin = () => getAdsterraFrameOrigin();
+export {
+  ADSTERRA_NATIVE_CONTAINER_ID,
+  ADSTERRA_NATIVE_SCRIPT_SRC,
+  ADSTERRA_NATIVE_ZONE_ID,
+  configureAdsterraNativeScript
+} from "@/features/ads/adsterra-native";
 
 type AdsterraNativeBannerProps = {
   label: string;
 };
 
 export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
-  const frameRef = useRef<HTMLIFrameElement>(null);
-  const frameOrigin = useSyncExternalStore(subscribeToFrameOrigin, getFrameOriginSnapshot, getServerFrameOrigin);
-  const noFillTimer = useRef<number | null>(null);
-  const filled = useRef(false);
-  const [height, setHeight] = useState(320);
-  const [active, setActive] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!ADSTERRA_ENABLED || !ADSTERRA_NATIVE_ENABLED) return;
-    const onMessage = (event: MessageEvent) => {
-      const nextHeight = getAdsterraNativeFrameHeight(event, frameOrigin, frameRef.current?.contentWindow ?? null);
-      if (nextHeight === null) return;
-      filled.current = true;
-      if (noFillTimer.current !== null) window.clearTimeout(noFillTimer.current);
-      setHeight(nextHeight);
-    };
-    window.addEventListener("message", onMessage);
+    const container = containerRef.current;
+    if (!container) return;
+
+    const existingScript = container.querySelector(
+      `script[src="${ADSTERRA_NATIVE_SCRIPT_SRC}"]`
+    );
+    if (existingScript) return;
+
+    const script = document.createElement("script");
+    configureAdsterraNativeScript(script);
+    container.appendChild(script);
+
     return () => {
-      window.removeEventListener("message", onMessage);
-      if (noFillTimer.current !== null) window.clearTimeout(noFillTimer.current);
+      script.remove();
+      container.innerHTML = "";
     };
-  }, [frameOrigin]);
+  }, []);
 
-  const onLoad = () => {
-    if (filled.current) return;
-    if (noFillTimer.current !== null) window.clearTimeout(noFillTimer.current);
-    noFillTimer.current = window.setTimeout(() => {
-      if (!filled.current) setActive(false);
-    }, 30_000);
-  };
-
-  if (!ADSTERRA_ENABLED || !ADSTERRA_NATIVE_ENABLED || !active) return null;
+  if (!ADSTERRA_ENABLED || !ADSTERRA_NATIVE_ENABLED) return null;
 
   return (
     <section
@@ -57,18 +53,10 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
       <p className="mb-3 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7f8e87]">
         {label}
       </p>
-      <iframe
-        ref={frameRef}
-        title={label}
-        src={`${frameOrigin}/api/ad-frame/${ADSTERRA_NATIVE_ZONE_ID}?v=${ADSTERRA_FRAME_VERSION}`}
-        sandbox={ADSTERRA_BANNER_SANDBOX}
-        className="block w-full border-0"
-        height={height}
-        loading="lazy"
-        referrerPolicy="strict-origin-when-cross-origin"
-        onLoad={onLoad}
-        onError={() => setActive(false)}
-        data-adsterra-native-sandbox={ADSTERRA_NATIVE_ZONE_ID}
+      <div
+        ref={containerRef}
+        id={ADSTERRA_NATIVE_CONTAINER_ID}
+        className="min-h-[90px] w-full"
       />
     </section>
   );

@@ -1,0 +1,3 @@
+# Adsterra ads.txt
+# Replace or append the authorized seller lines from your Adsterra Publisher Dashboard:
+# Dashboard -> Websites -> Get ads.txt

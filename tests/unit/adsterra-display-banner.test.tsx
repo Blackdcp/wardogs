@@ -1,7 +1,6 @@
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
-import {ADSTERRA_BANNER_SANDBOX, buildAdsterraClickGuard} from "../../src/features/ads/adsterra-banner";
 
 describe("Adsterra display banner inventory", () => {
   it("registers every supplied banner zone", async () => {
@@ -27,34 +26,37 @@ describe("Adsterra display banner inventory", () => {
     expect(selectHorizontalBannerUnit(1600)).toBe(ADSTERRA_BANNER_UNITS.leaderboard728);
   });
 
-  it("isolates inline ads and restores dismissible mobile and desktop inventory", async () => {
+  it("renders inline ads and restores dismissible mobile and desktop inventory", async () => {
     const {AdsterraDisplayBanner, AdsterraGlobalInventory} = await import("../../src/components/ads/adsterra-display-banner");
     const inline = renderToStaticMarkup(React.createElement(AdsterraDisplayBanner, {placement: "rectangle"}));
     const global = renderToStaticMarkup(React.createElement(AdsterraGlobalInventory));
 
-    expect(inline).toContain(`sandbox="${ADSTERRA_BANNER_SANDBOX}"`);
-    expect(inline).toContain('src="https://wardogswiki.com/api/ad-frame/');
-    expect(inline).not.toContain("<script");
-    expect(inline).not.toMatch(/allow-(?:top-navigation|forms|downloads)/);
+    expect(inline).toContain('data-ad-placement="rectangle"');
+    expect(inline).toContain('data-ad-unit="3342dc928824e6ed5c01555e7f9e9e0f"');
+    expect(inline).not.toContain("<iframe");
     expect(global).toContain('data-ad-placement="left-rail"');
     expect(global).toContain("mobile-sticky");
     expect(global).toContain("right-rail");
   });
 
-  it("escapes script and attribute boundaries in the iframe document", async () => {
-    const {buildAdsterraBannerDocument} = await import("../../src/components/ads/adsterra-display-banner");
-    const document = buildAdsterraBannerDocument({key: "</script>", src: 'https://example.com/"<script>', width: 300, height: 250});
-    expect(document).toContain('"key":"\\u003c/script>"');
-    expect(document).toContain("&quot;&lt;script&gt;");
-    expect(document).not.toContain('src="https://example.com/"<script>');
-  });
+  it("creates valid configuration options and code for ad units", async () => {
+    const {
+      buildAdsterraBannerOptions,
+      buildAdsterraBannerConfigCode,
+      ADSTERRA_BANNER_UNITS
+    } = await import("../../src/features/ads/adsterra-banner");
 
-  it("allows advertiser tabs but gates direct scripted opens and non-web links", () => {
-    expect(ADSTERRA_BANNER_SANDBOX.split(" ")).toContain("allow-popups");
-    expect(ADSTERRA_BANNER_SANDBOX.split(" ")).toContain("allow-popups-to-escape-sandbox");
-    const guard = buildAdsterraClickGuard();
-    expect(guard).toContain("navigator.userActivation?.isActive");
-    expect(guard).toContain('"http:", "https:"');
-    expect(guard).toContain("!event.isTrusted");
+    const options = buildAdsterraBannerOptions(ADSTERRA_BANNER_UNITS.rectangle300);
+    expect(options).toEqual({
+      key: "3342dc928824e6ed5c01555e7f9e9e0f",
+      format: "iframe",
+      height: 250,
+      width: 300,
+      params: {}
+    });
+
+    const code = buildAdsterraBannerConfigCode(ADSTERRA_BANNER_UNITS.rectangle300);
+    expect(code).toContain('atOptions = {"key":"3342dc928824e6ed5c01555e7f9e9e0f"');
+    expect(code).toContain('"format":"iframe"');
   });
 });

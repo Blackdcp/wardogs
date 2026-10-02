@@ -47,7 +47,10 @@ describe("Adsterra monetization strategy", () => {
 
   it("does not ship Google advertising code or a Google seller record", () => {
     expect(fs.existsSync(path.join(root, "src", "components", "ads", "google-adsense.tsx"))).toBe(false);
-    expect(fs.existsSync(path.join(root, "public", "ads.txt"))).toBe(false);
+    if (fs.existsSync(path.join(root, "public", "ads.txt"))) {
+      const adsTxt = fs.readFileSync(path.join(root, "public", "ads.txt"), "utf8");
+      expect(adsTxt).not.toMatch(/google\.com|pub-9912575932665397/i);
+    }
     for (const file of walk(path.join(root, "src"))) {
       expect(fs.readFileSync(file, "utf8"), path.relative(root, file)).not.toMatch(
         /googlesyndication|google-adsense-account|ca-pub-/i

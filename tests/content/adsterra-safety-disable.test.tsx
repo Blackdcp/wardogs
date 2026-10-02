@@ -1,13 +1,18 @@
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
-import {ADSTERRA_ENABLED, ADSTERRA_NATIVE_ENABLED, ADSTERRA_MOBILE_STICKY_ENABLED, BEHAVIORAL_POPUNDER_ENABLED} from "../../src/features/ads/ad-policy";
+import {
+  ADSTERRA_ENABLED,
+  ADSTERRA_NATIVE_ENABLED,
+  ADSTERRA_MOBILE_STICKY_ENABLED,
+  BEHAVIORAL_POPUNDER_ENABLED
+} from "../../src/features/ads/ad-policy";
 import {AdsterraNativeBanner} from "../../src/components/ads/adsterra-native-banner";
 import {AdsterraDisplayBanner, AdsterraGlobalInventory} from "../../src/components/ads/adsterra-display-banner";
 import {AdsterraSmartlink} from "../../src/components/ads/adsterra-smartlink";
-import {ADSTERRA_BANNER_SANDBOX} from "../../src/features/ads/adsterra-banner";
+import {ADSTERRA_NATIVE_CONTAINER_ID} from "../../src/features/ads/adsterra-native";
 
-describe("Adsterra isolated native and display policy", () => {
+describe("Adsterra standard native and display policy", () => {
   it("retains native and display monetization while disabling redirect-risk formats", () => {
     expect(ADSTERRA_ENABLED).toBe(true);
     expect(ADSTERRA_NATIVE_ENABLED).toBe(true);
@@ -15,21 +20,20 @@ describe("Adsterra isolated native and display policy", () => {
     expect(BEHAVIORAL_POPUNDER_ENABLED).toBe(false);
   });
 
-  it("emits only sandboxed display inventory without top-document ad scripts", () => {
-    const html = renderToStaticMarkup(<>
-      <AdsterraNativeBanner label="Advertisement" />
-      <AdsterraDisplayBanner placement="horizontal" />
-      <AdsterraDisplayBanner placement="rectangle" />
-      <AdsterraGlobalInventory />
-      <AdsterraSmartlink />
-    </>);
-    expect(html).toContain(`sandbox="${ADSTERRA_BANNER_SANDBOX}"`);
-    expect(html).toContain('src="https://wardogswiki.com/api/ad-frame/');
-    expect(html).not.toContain("<script");
+  it("emits standard container inventory without nested custom iframe wrappers", () => {
+    const html = renderToStaticMarkup(
+      <>
+        <AdsterraNativeBanner label="Advertisement" />
+        <AdsterraDisplayBanner placement="horizontal" />
+        <AdsterraDisplayBanner placement="rectangle" />
+        <AdsterraGlobalInventory />
+        <AdsterraSmartlink />
+      </>
+    );
+    expect(html).toContain(`id="${ADSTERRA_NATIVE_CONTAINER_ID}"`);
     expect(html).toContain('data-ad-slot="adsterra-native"');
-    expect(html).toContain('data-adsterra-native-sandbox="481d6501bcd0c27b98bc3c4776a26f6e"');
+    expect(html).not.toContain("<iframe");
     expect(html).toContain("mobile-sticky");
     expect(html).not.toContain("Sponsored links");
-    expect(html).not.toMatch(/allow-(?:top-navigation|forms|downloads)/);
   });
 });

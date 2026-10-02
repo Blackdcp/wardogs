@@ -1,10 +1,20 @@
 "use client";
 
-import {useEffect, useState, useSyncExternalStore} from "react";
+import {useEffect, useRef, useState} from "react";
 import {X} from "lucide-react";
-import {ADSTERRA_ENABLED, ADSTERRA_LEADERBOARD_ENABLED, ADSTERRA_MOBILE_STICKY_ENABLED, ADSTERRA_RIGHT_RAIL_ENABLED} from "@/features/ads/ad-policy";
-import {ADSTERRA_BANNER_SANDBOX, ADSTERRA_BANNER_UNITS, ADSTERRA_FRAME_VERSION, getAdsterraFrameOrigin, type AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
-export {ADSTERRA_BANNER_UNITS, buildAdsterraBannerDocument} from "@/features/ads/adsterra-banner";
+import {
+  ADSTERRA_ENABLED,
+  ADSTERRA_LEADERBOARD_ENABLED,
+  ADSTERRA_MOBILE_STICKY_ENABLED,
+  ADSTERRA_RIGHT_RAIL_ENABLED
+} from "@/features/ads/ad-policy";
+import {
+  ADSTERRA_BANNER_UNITS,
+  buildAdsterraBannerConfigCode,
+  type AdsterraBannerUnit
+} from "@/features/ads/adsterra-banner";
+
+export {ADSTERRA_BANNER_UNITS} from "@/features/ads/adsterra-banner";
 export type {AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
 
 export function selectHorizontalBannerUnit(viewportWidth: number): AdsterraBannerUnit | null {
@@ -21,13 +31,33 @@ type BannerSlotProps = {
   unit: AdsterraBannerUnit | null;
 };
 
-const subscribeToFrameOrigin = () => () => {};
-const getFrameOriginSnapshot = () => getAdsterraFrameOrigin(window.location.origin);
-const getServerFrameOrigin = () => getAdsterraFrameOrigin();
-
 function BannerSlot({className = "", label = "Advertisement", placement, unit}: BannerSlotProps) {
-  const frameOrigin = useSyncExternalStore(subscribeToFrameOrigin, getFrameOriginSnapshot, getServerFrameOrigin);
+  const slotRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!ADSTERRA_ENABLED || !unit) return;
+    const el = slotRef.current;
+    if (!el) return;
+
+    el.innerHTML = "";
+
+    const configScript = document.createElement("script");
+    configScript.type = "text/javascript";
+    configScript.innerHTML = buildAdsterraBannerConfigCode(unit);
+
+    const invokeScript = document.createElement("script");
+    invokeScript.type = "text/javascript";
+    invokeScript.src = unit.src;
+
+    el.append(configScript, invokeScript);
+
+    return () => {
+      el.innerHTML = "";
+    };
+  }, [unit]);
+
   if (!ADSTERRA_ENABLED || !unit) return null;
+
   return (
     <aside
       aria-label={label}
@@ -36,20 +66,12 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit}: 
       data-ad-unit={unit.key}
     >
       <p className="mb-2 text-center text-[10px] font-semibold uppercase text-[#718079]">{label}</p>
-      <div className="mx-auto flex max-w-full items-center justify-center overflow-hidden" style={{height: unit.height, width: unit.width}}>
-        <iframe
-          key={unit.key}
-          title={label}
-          width={unit.width}
-          height={unit.height}
-          className="border-0"
-          sandbox={ADSTERRA_BANNER_SANDBOX}
-          src={`${frameOrigin}/api/ad-frame/${unit.key}?v=${ADSTERRA_FRAME_VERSION}`}
-          loading="lazy"
-          referrerPolicy="strict-origin-when-cross-origin"
-          data-adsterra-sandbox={unit.key}
-        />
-      </div>
+      <div
+        ref={slotRef}
+        className="mx-auto flex max-w-full items-center justify-center overflow-hidden"
+        style={{minHeight: unit.height, minWidth: unit.width}}
+        data-adsterra-unit={unit.key}
+      />
     </aside>
   );
 }
@@ -106,26 +128,50 @@ function FixedBanner({label, media, placement, position, unit, dismissLabel}: {
   if (dismissed) return null;
   return (
     <div className={position} data-ad-placement={placement}>
-      {enabled && dismissLabel ? <button type="button" className="absolute bottom-full right-0 flex size-11 items-center justify-center rounded-t border border-[#46534d] bg-[#0d0f0e] text-white hover:bg-[#223329]" onClick={() => setDismissed(true)} aria-label={dismissLabel} title={dismissLabel}><X aria-hidden="true" size={18} /></button> : null}
+      {enabled && dismissLabel ? (
+        <button
+          type="button"
+          className="absolute bottom-full right-0 flex size-11 items-center justify-center rounded-t border border-[#46534d] bg-[#0d0f0e] text-white hover:bg-[#223329]"
+          onClick={() => setDismissed(true)}
+          aria-label={dismissLabel}
+          title={dismissLabel}
+        >
+          <X aria-hidden="true" size={18} />
+        </button>
+      ) : null}
       {enabled ? <BannerSlot label={label} placement={`${placement}-creative`} unit={unit} /> : null}
     </div>
   );
 }
 
-const closeAd: Record<string, string> = {en: "Close advertisement", ja: "広告を閉じる", ru: "Закрыть рекламу", de: "Werbung schließen", "pt-br": "Fechar anúncio", "zh-cn": "关闭广告", "zh-tw": "關閉廣告", pl: "Zamknij reklamę"};
+const closeAd: Record<string, string> = {
+  en: "Close advertisement",
+  ja: "広告を閉じる",
+  ru: "Закрыть рекламу",
+  de: "Werbung schließen",
+  "pt-br": "Fechar anúncio",
+  "zh-cn": "关闭广告",
+  "zh-tw": "關閉廣告",
+  pl: "Zamknij reklamę"
+};
 
-export function AdsterraGlobalInventory({label = "Advertisement", locale = "en"}: {label?: string; locale?: string} = {}) {
+export function AdsterraGlobalInventory({
+  label = "Advertisement",
+  locale = "en"
+}: {label?: string; locale?: string} = {}) {
   if (!ADSTERRA_ENABLED) return null;
   return (
     <>
-      {ADSTERRA_MOBILE_STICKY_ENABLED ? <FixedBanner
-        label={label}
-        media="(max-width: 467px)"
-        placement="mobile-sticky"
-        dismissLabel={closeAd[locale] ?? closeAd.en}
-        position="fixed inset-x-0 bottom-0 z-[70] mx-auto w-[320px] border-t border-[#2c3631] bg-[#0d0f0e] pt-1 min-[468px]:hidden"
-        unit={ADSTERRA_BANNER_UNITS.mobile320}
-      /> : null}
+      {ADSTERRA_MOBILE_STICKY_ENABLED ? (
+        <FixedBanner
+          label={label}
+          media="(max-width: 467px)"
+          placement="mobile-sticky"
+          dismissLabel={closeAd[locale] ?? closeAd.en}
+          position="fixed inset-x-0 bottom-0 z-[70] mx-auto w-[320px] border-t border-[#2c3631] bg-[#0d0f0e] pt-1 min-[468px]:hidden"
+          unit={ADSTERRA_BANNER_UNITS.mobile320}
+        />
+      ) : null}
       <FixedBanner
         label={label}
         media="(min-width: 1600px) and (min-height: 500px)"
