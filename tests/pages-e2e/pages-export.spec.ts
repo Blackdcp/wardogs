@@ -217,7 +217,6 @@ test("locale switching uses only exported item routes", async ({page}) => {
 
 test("crawls every catalogue-facing internal link across all locales", async ({page, request}) => {
   test.setTimeout(180_000);
-  await page.route("**/pagead2.googlesyndication.com/**", (route) => route.abort("blockedbyclient"));
   const categories = ["weapons", "vehicles", "ammo", "attachments", "gear", "equipment", "loadouts"] as const;
   const sourcePaths = [
     ...locales.flatMap((locale) => [

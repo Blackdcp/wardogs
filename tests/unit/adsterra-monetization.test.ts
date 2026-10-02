@@ -36,25 +36,22 @@ describe("Adsterra monetization strategy", () => {
     for (const locale of locales) {
       const messages = JSON.parse(
         fs.readFileSync(path.join(root, "messages", `${locale}.json`), "utf8")
-      ) as {privacy: {advertising: string}};
+      ) as {privacy: {advertising: string; metaDescription: string}};
       expect(messages.privacy.advertising, locale).toMatch(/Adsterra/i);
       expect(messages.privacy.advertising, locale).toContain("2026-10-01");
       expect(messages.privacy.advertising, locale).toMatch(/Popunder/i);
       expect(messages.privacy.advertising, locale).toMatch(/Smartlink/i);
+      expect(messages.privacy.metaDescription, locale).toMatch(/Adsterra/i);
     }
   });
 
-  it("removes the rejected AdSense loader from the active locale layout", () => {
-    const layout = fs.readFileSync(path.join(root, "src", "app", "[locale]", "layout.tsx"), "utf8");
-    expect(layout).not.toContain("GoogleAdsense");
-    expect(layout).toContain("AdsterraBehavioralAds");
-    expect(layout).toContain("AdsterraGlobalInventory");
-  });
-
-  it("retains the authorized Google seller record for a possible future review", () => {
-    const adsTxt = fs.readFileSync(path.join(root, "public", "ads.txt"), "utf8").trim();
-    expect(adsTxt).toBe(
-      "google.com, pub-9912575932665397, DIRECT, f08c47fec0942fa0"
-    );
+  it("does not ship Google advertising code or a Google seller record", () => {
+    expect(fs.existsSync(path.join(root, "src", "components", "ads", "google-adsense.tsx"))).toBe(false);
+    expect(fs.existsSync(path.join(root, "public", "ads.txt"))).toBe(false);
+    for (const file of walk(path.join(root, "src"))) {
+      expect(fs.readFileSync(file, "utf8"), path.relative(root, file)).not.toMatch(
+        /googlesyndication|google-adsense-account|ca-pub-/i
+      );
+    }
   });
 });
