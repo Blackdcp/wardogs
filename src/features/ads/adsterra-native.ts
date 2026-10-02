@@ -19,7 +19,7 @@ export function getAdsterraNativeFrameHeight(
 }
 export function buildAdsterraNativeDocument() {
   // Parent messages remain layout-only; advertiser links open directly from the frame.
-  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;overflow:hidden;background:#0d0f0e;color:#d2dfd7;font:14px/1.4 Arial,sans-serif}</style></head><body>${buildAdsterraClickGuard()}<div id="${ADSTERRA_NATIVE_CONTAINER_ID}"></div><script>
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;overflow:hidden;background:#0d0f0e;color:#d2dfd7;font:14px/1.4 Arial,sans-serif}</style></head><body>${buildAdsterraClickGuard(`${ADSTERRA_NATIVE_CONTAINER_ID}__link`)}<div id="${ADSTERRA_NATIVE_CONTAINER_ID}"></div><script>
     const container = document.getElementById("${ADSTERRA_NATIVE_CONTAINER_ID}");
     let queued = false;
     function report() {

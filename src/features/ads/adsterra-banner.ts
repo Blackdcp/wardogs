@@ -21,7 +21,7 @@ export const ADSTERRA_BANNER_UNITS = {
 // Keep the embedded creative isolated, but do not sandbox the advertiser's new tab.
 // Popup permission also relaxes custom-protocol restrictions: this is not a universal SMS blocker.
 export const ADSTERRA_BANNER_SANDBOX = "allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox";
-export const ADSTERRA_FRAME_VERSION = "20261001-clicks";
+export const ADSTERRA_FRAME_VERSION = "20261002-native-clicks";
 const approvedKeys = new Set<string>([
   ADSTERRA_BANNER_UNITS.horizontal468.key,
   ADSTERRA_BANNER_UNITS.rectangle300.key,
@@ -50,9 +50,10 @@ export function buildAdsterraBannerDocument(unit: AdsterraBannerUnit) {
   return `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;padding:0;overflow:hidden}</style></head><body>${buildAdsterraClickGuard()}<script>window.atOptions=${options};</script><script src="${src}"></script></body></html>`;
 }
 
-export function buildAdsterraClickGuard() {
+export function buildAdsterraClickGuard(deferredLinkClass?: string) {
   // First-hop checks cover this document, not cross-origin child frames or advertiser destinations.
   return `<script>(() => {
+    const deferredLinkClass = ${JSON.stringify(deferredLinkClass ?? null)};
     const open = window.open.bind(window);
     const webLink = (value) => {
       try { return ["http:", "https:"].includes(new URL(value, location.href).protocol); }
@@ -63,10 +64,12 @@ export function buildAdsterraClickGuard() {
       if (!navigator.userActivation?.isActive || (value !== "about:blank" && value !== "" && !webLink(value))) return null;
       return open(value, target === "_top" || target === "_parent" ? "_blank" : target, features);
     };
-    const onClick = (event) => {
+    const onClick = (event, allowDeferred = false) => {
       const link = event.target instanceof Element ? event.target.closest("a[href],area[href]") : null;
       if (!link) return;
-      if (!event.isTrusted || !webLink(link.href)) {
+      // Native creatives replace their placeholder in the target's click listener.
+      const deferred = allowDeferred && deferredLinkClass && link.classList.contains(deferredLinkClass) && link.getAttribute("href") === "//";
+      if (!event.isTrusted || (!webLink(link.href) && !deferred)) {
         event.preventDefault();
         event.stopImmediatePropagation();
         return;
@@ -74,7 +77,9 @@ export function buildAdsterraClickGuard() {
       link.target = "_blank";
       link.relList.add("noopener");
     };
-    document.addEventListener("click", onClick, true);
-    document.addEventListener("auxclick", onClick, true);
+    document.addEventListener("click", (event) => onClick(event, true), true);
+    document.addEventListener("auxclick", (event) => onClick(event, true), true);
+    document.addEventListener("click", onClick);
+    document.addEventListener("auxclick", onClick);
   })();</script>`;
 }

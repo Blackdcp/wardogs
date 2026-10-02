@@ -23,6 +23,13 @@ for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}])
         'container.innerHTML += \'<a href="https://example.com/ad-click-test" target="_blank">Sandbox test creative</a><button id="script-click">Script click</button><a href="sms:123">SMS test</a><button id="script-sms">SMS script test</button>\';',
         'document.getElementById("script-click").onclick = () => window.open("https://example.com/script-click-test", "_blank");',
         'document.getElementById("script-sms").onclick = () => document.body.dataset.smsOpen = window.open("sms:123") === null ? "blocked" : "opened";',
+        'if (native) {',
+        'for (const [id, destination] of [["deferred-web", "https://example.com/native-tracked-click"], ["deferred-sms", "sms:123"], ["deferred-empty", "//"]]) {',
+        'const link = document.createElement("a"); link.id = id; link.className = native.id + "__link"; link.href = "//"; link.target = "_blank"; link.textContent = id;',
+        'link.addEventListener("click", () => { document.body.dataset.lastDeferred = id; link.href = destination; setTimeout(() => { link.href = "//"; }); });',
+        'native.appendChild(link);',
+        '}',
+        '}',
         'try { parent.document.body.dataset.adEscape = "yes"; } catch { document.body.dataset.parentAccess = "blocked"; }',
         'try { top.location.href = "https://example.com/blocked-ad-test"; } catch { document.body.dataset.topNavigation = "blocked"; }',
         'document.body.dataset.popup = window.open("https://example.com/blocked-ad-test") === null ? "blocked" : "opened";',
@@ -33,7 +40,7 @@ for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}])
     const bannerSelector = 'iframe[data-adsterra-sandbox="3342dc928824e6ed5c01555e7f9e9e0f"]';
     const banner = page.locator(bannerSelector);
     await expect(banner).toHaveAttribute("sandbox", ADSTERRA_BANNER_SANDBOX);
-    await expect(banner).toHaveAttribute("src", /^http:\/\/localhost:\d+\/api\/ad-frame\/.*\?v=20261001-clicks$/);
+    await expect(banner).toHaveAttribute("src", /^http:\/\/localhost:\d+\/api\/ad-frame\/.*\?v=20261002-native-clicks$/);
     await banner.scrollIntoViewIfNeeded();
     const display = page.frameLocator(bannerSelector);
     await expect(display.locator("body")).toHaveAttribute("data-parent-access", "blocked");
@@ -68,6 +75,17 @@ for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}])
     await nativeLanding.getByRole("button", {name: "Submit", exact: true}).click();
     await expect(nativeLanding.getByRole("heading")).toHaveText("Submitted");
     await nativeLanding.close();
+
+    const deferredPopup = context.waitForEvent("page", {timeout: 15_000});
+    await nativeFrame.getByRole("link", {name: "deferred-web", exact: true}).click();
+    const deferredLanding = await deferredPopup;
+    await expect(deferredLanding).toHaveURL("https://example.com/native-tracked-click");
+    await deferredLanding.close();
+    await nativeFrame.getByRole("link", {name: "deferred-sms", exact: true}).click();
+    await expect(nativeFrame.locator("body")).toHaveAttribute("data-last-deferred", "deferred-sms");
+    await nativeFrame.getByRole("link", {name: "deferred-empty", exact: true}).click();
+    await expect(nativeFrame.locator("body")).toHaveAttribute("data-last-deferred", "deferred-empty");
+    expect(context.pages()).toHaveLength(1);
 
     const scriptPopup = context.waitForEvent("page", {timeout: 15_000});
     await nativeFrame.getByRole("button", {name: "Script click", exact: true}).click();
