@@ -91,6 +91,21 @@ Rechecked **2026-09-30**: [Team17's WD-L020 notice](https://steamcommunity.com/a
 
 If you reach a match but an action does not respond, use the [controls checks](/en/guides/wardogs-controls), not a startup rollback. If you remain at login, record whether the screen responds and check [regional service notices](/en/guides/wardogs-server-status). Keep these outcomes separate in a support report; a working menu does not prove a successful server connection.
 
+### 4-Step WD-L020 Resolution & Anticheat Verification Flow
+
+When facing an immediate crash accompanied by code **WD-L020** or a silent exit during initial EAC initialization, apply this ordered sequence before altering operating system packages:
+
+1. **Verify Windows 11 Build & Update State**: Run `winver` to confirm whether your system runs Windows 11 24H2/25H2 preview builds. If KB5124010 was recently installed, confirm whether the crash coincides with that update date.
+2. **Execute Elytra / Anti-Cheat Clean Service Repair**:
+   - In Steam, right-click **WARDOGS** > **Manage** > **Browse local files**.
+   - Open the bundled anti-cheat subfolder (`EasyAntiCheat` / `Elytra`).
+   - Right-click the service installer executable, select **Run as Administrator**, choose **Repair Service**, and restart your PC.
+3. **Configure Temporary Steam Launch Parameters**:
+   - Right-click **WARDOGS** in Steam > **Properties** > **General** > **Launch Options**.
+   - Input `-eac-fallback` or `-dx11` to prevent pipeline stalls if shader compile conflicts occur during the initial driver handshake.
+4. **Antivirus & Kernel Isolation Exception**:
+   - Ensure your endpoint security software whitelists `WARDOGS.exe` and its anti-cheat driver rather than terminating the process silently.
+
 ## Confirmed Facts
 
 - WARDOGS is a live Early Access Windows PC game whose build, server load, performance profile, and settings can change.
