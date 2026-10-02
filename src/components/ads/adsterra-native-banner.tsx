@@ -25,16 +25,16 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
   useEffect(() => {
     if (!ADSTERRA_ENABLED || !ADSTERRA_NATIVE_ENABLED) return;
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || !container.parentNode) return;
 
-    const existingScript = container.querySelector(
+    const existingScript = container.parentNode.querySelector(
       `script[src="${ADSTERRA_NATIVE_SCRIPT_SRC}"]`
     );
     if (existingScript) return;
 
     const script = document.createElement("script");
     configureAdsterraNativeScript(script);
-    container.appendChild(script);
+    container.parentNode.insertBefore(script, container);
 
     return () => {
       script.remove();

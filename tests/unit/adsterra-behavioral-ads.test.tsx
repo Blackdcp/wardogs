@@ -49,8 +49,7 @@ describe("Adsterra behavioral ads", () => {
       "https://arkgleamfox.com/9c/cb/05/9ccb058d9d56da7b7f2e39d95a819b02.js"
     );
     expect(ads.ADSTERRA_SMARTLINK_URLS).toEqual([
-      {id: "smartlink-2", url: "https://arkgleamfox.com/jvxhi4z3ts?key=678e9aeab41077b9e6a3e5626292c434"},
-      {id: "smartlink-1", url: "https://arkgleamfox.com/j7way0p0?key=a9590c5cd64a0d11f4aa2ecf617130bc"}
+      {id: "smartlink-1", url: "https://arkgleamfox.com/sfg4tmdn?key=88f0d659df423718bd107ca16b5284cd"}
     ]);
   });
 
