@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   output: isGitHubPages ? "export" : undefined,
   basePath,
   trailingSlash: isGitHubPages,
+  typescript: {
+    tsconfigPath: isGitHubPages ? "tsconfig.pages.json" : "tsconfig.json"
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [{protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**"}],

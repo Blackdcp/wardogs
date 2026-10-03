@@ -55,6 +55,14 @@ if (existsSync(disabledProxyPath)) {
   throw new Error(`Temporary proxy file already exists at ${disabledProxyPath}`);
 }
 
+const typecheck = spawnSync(process.execPath, [npmCliPath, "run", "typecheck"], {
+  cwd: process.cwd(),
+  env: process.env,
+  stdio: "inherit"
+});
+if (typecheck.error) throw typecheck.error;
+if (typecheck.status !== 0) process.exit(typecheck.status ?? 1);
+
 renameSync(proxyPath, disabledProxyPath);
 
 let status = 1;
