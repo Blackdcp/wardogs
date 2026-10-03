@@ -39,6 +39,6 @@ export const config = {
     },
     // Only localized pages and known legacy redirects need Proxy on the canonical host.
     "/",
-    "/((?!.*\\..*)(?:(?:en|ru|de|pt-br|ja|zh-cn|zh-tw|pl)(?:/.*)?|wardogs(?:/.*)?|(?:guides|videos|items|news|privacy|terms)(?:/.*)?|maps|about|contact|editorial-policy|tools/(?:system-check|ammo-matcher|logistics-planner|progression-route|weapon-compare|loadout-budget)))"
+    "/((?!.*\\..*)(?:(?:en|ru|de|pt-br|ja|zh-cn|zh-tw|pl)(?:/.*)?|wardogs(?:/.*)?|(?:guides|videos|items|news|privacy|terms)(?:/.*)?|maps|about|contact|editorial-policy|tools/(?:system-check|ammo-matcher|logistics-planner|progression-route|weapon-compare|loadout-budget|artillery-calculator|map)))"
   ]
 };

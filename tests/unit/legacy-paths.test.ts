@@ -17,6 +17,8 @@ describe("legacy unprefixed paths", () => {
     expect(getLegacyEnglishRedirectPath("/news")).toBe("/en/news");
     expect(getLegacyEnglishRedirectPath("/maps")).toBe("/en/maps");
     expect(getLegacyEnglishRedirectPath("/tools/ammo-matcher")).toBe("/en/tools/ammo-matcher");
+    expect(getLegacyEnglishRedirectPath("/tools/artillery-calculator")).toBe("/en/tools/artillery-calculator");
+    expect(getLegacyEnglishRedirectPath("/tools/map")).toBe("/en/tools/map");
     expect(getLegacyEnglishRedirectPath("/editorial-policy")).toBe("/en/editorial-policy");
     expect(getLegacyEnglishRedirectPath("/about")).toBe("/en/about");
     expect(getLegacyEnglishRedirectPath("/contact")).toBe("/en/contact");

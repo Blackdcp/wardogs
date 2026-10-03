@@ -4,7 +4,7 @@ const legacyEnglishSegments = new Set(["guides", "videos", "items", "news", "pri
 const legacyEnglishPages = new Set(["maps", "about", "contact", "editorial-policy"]);
 const legacyEnglishTools = new Set([
   "system-check", "ammo-matcher", "logistics-planner", "progression-route",
-  "weapon-compare", "loadout-budget"
+  "weapon-compare", "loadout-budget", "artillery-calculator", "map"
 ]);
 
 export function getLegacyEnglishRedirectPath(pathname: string): string | null {
