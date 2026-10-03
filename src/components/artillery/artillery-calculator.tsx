@@ -537,7 +537,7 @@ export function ArtilleryCalculator({locale}: Props) {
               <circle
                 cx={gunPoint.x * 100}
                 cy={gunPoint.y * 100}
-                r={(weapon.maxRangeMeters / mapSpec.sizeMeters) * 100}
+                r={(rangeEnvelope.maxRangeMeters / mapSpec.sizeMeters) * 100}
                 fill="rgba(124, 235, 158, 0.04)"
                 stroke="#68c58f"
                 strokeWidth="0.4"
@@ -548,7 +548,7 @@ export function ArtilleryCalculator({locale}: Props) {
               <circle
                 cx={gunPoint.x * 100}
                 cy={gunPoint.y * 100}
-                r={(weapon.minRangeMeters / mapSpec.sizeMeters) * 100}
+                r={(rangeEnvelope.minRangeMeters / mapSpec.sizeMeters) * 100}
                 fill="none"
                 stroke="#f87171"
                 strokeWidth="0.3"

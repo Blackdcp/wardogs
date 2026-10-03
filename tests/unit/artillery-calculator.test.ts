@@ -174,4 +174,22 @@ describe("Artillery & Mortar Ballistics Engine", () => {
       expect(entry.tof).toBe(sol.timeOfFlightSeconds);
     }
   });
+
+  it("verifies SPH-2 steep ballistic drop in extreme range and radius scaling", () => {
+    // 2500m to 2600m delta check (must be exactly 103 mils)
+    const sol2500 = calculateFiringSolution({weaponId: "sph2", mode: "high", distanceMeters: 2500, heightDeltaMeters: 0});
+    const sol2600 = calculateFiringSolution({weaponId: "sph2", mode: "high", distanceMeters: 2600, heightDeltaMeters: 0});
+    expect(sol2500.elevationMil - sol2600.elevationMil).toBe(103);
+
+    // Map circle radius scaling (Bakurani 16km size = 16000m)
+    const bakuraniSize = 16000;
+    const lowEnvelope = getWeaponRangeEnvelope("sph2", "low");
+    const highEnvelope = getWeaponRangeEnvelope("sph2", "high");
+
+    const lowMinRadius = (lowEnvelope.minRangeMeters / bakuraniSize) * 100;
+    const highMinRadius = (highEnvelope.minRangeMeters / bakuraniSize) * 100;
+
+    expect(lowMinRadius).toBeCloseTo(7.38125, 4);
+    expect(highMinRadius).toBeCloseTo(4.59375, 4);
+  });
 });

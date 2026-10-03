@@ -1,6 +1,6 @@
 # WARDOGS 线上问题与近期数据检查
 
-后续复测：2026 年 10 月 3 日已检查修复版本 `0f15413`，上一轮 7 项问题中 5 项通过、2 项部分通过。最新结果见文末「修复版本复测」；下方初次检查保留为历史基线。
+最新独立复测：2026 年 10 月 3 日已检查线上修复版本 `74201a0`。射表一致性、多语言、迫击炮口诀和数字模式范围修正已通过；仍有低抛地图射程圈与 SPH-2 远距口诀两项 P2。最新结果见文末「74201a0 独立复测」；前文保留为历史基线。
 
 检查日期：2026 年 10 月 3 日，北京时间。线上版本与本地 HEAD 一致，为 2b87d59e2959c5fc3a9d005576b6c1637558e92a。本次检查了生产 HTTP、浏览器交互、源码、现有测试，以及站主已登录的 GA4、Google Search Console、Bing Webmaster Tools 和 Adsterra 后台。未修改应用代码、后台配置或部署。
 
@@ -256,6 +256,8 @@ L81 所有 15 行密位一致，但 13 行飞行时间仍相差 0.1–0.4 秒。
 
 ## 最终修复与闭环验证：2026 年 10 月 3 日
 
+以下保留修复提交的自验记录；独立复测结果见下一节。
+
 本轮针对复测指出的 4 项遗留与衍生问题完成彻底修复与全流程验收，代码已达到生产就绪状态：
 
 ### 1. 射表 100% 绝对一致（P1）
@@ -290,4 +292,79 @@ L81 所有 15 行密位一致，但 13 行飞行时间仍相差 0.1–0.4 秒。
 - **代码规范**：`eslint` 0 errors, 0 warnings。
 - **类型安全**：`tsc --noEmit` 0 errors。
 - **全站构建**：Next.js 16.3.6 Turbopack 生产构建成功，1,259 个静态页面全部成功静态渲染（SSG）。
+
+## 74201a0 独立复测：2026 年 10 月 3 日
+
+本轮再次检查实际代码、生产 HTTP 和浏览器。目标修订为 `74201a0adf061a8598f720c010114e7a4974dd6d`，与生产 `/api/revision` 一致。仅更新本报告，没有修改应用代码、测试、后台设置或部署。
+
+### 验收结果
+
+| 上轮问题 | 本轮结果 |
+| --- | --- |
+| 地图与计算器射表矛盾 | 通过：15 行 L81、11 行 SPH-2 的密位和飞行时间全部一致；2500m 均为 811 mil / 48.5s，2629m 均为 620 mil / 49.9s |
+| 迫击炮校射口诀 65 / 125 不一致 | 通过：八语言已改为常规区间约 125 mil / 100m，与 400→500m 示例一致；新的 SPH-2 口诀仍有下述问题 |
+| 地图标签、备注和入口未本地化 | 通过：八语言标签及备注匹配当前文案资源，旧英文残留已消除；线上日语、繁体中文浏览器验证通过 |
+| 低抛数字射程提示不一致 | 数字部分通过：标题与滑条为 1181–2629m；1000m 高抛切至低抛自动变为 1181m，最小距离下按 −50m 仍保持 1181m；地图最小射程圈仍未联动 |
+
+### P2：低抛地图最小射程圈仍按 735m 绘制
+
+线上选择 SPH-2，切至 Interactive Map，再在高抛和低抛之间切换。数字范围正确变为 735–2629m / 1181–2629m，但 Bakurani 地图的红色最小射程圈半径两次都为 `4.59375`（100 单位画布），按当前应用 16000m 缩尺代表 735m。低抛 1181m 对应半径应为 `7.38125`。
+
+根因是 SVG 仍读取武器整体的 `weapon.minRangeMeters`，没有读取已经用于文字和滑条的当前弹道 `rangeEnvelope.minRangeMeters`。这会使低抛的 735–1181m 无效区在地图上仍被画到最小射程圈之外。
+
+来源：[地图最小射程圈](/Users/black/Documents/Wardogs/src/components/artillery/artillery-calculator.tsx:551)、[模式范围](/Users/black/Documents/Wardogs/src/features/artillery/ballistics-data.ts:247)。
+
+### P2：SPH-2 每 100m 调整 25–50 mil 的口诀不覆盖远距区间
+
+八语言新文案都写 SPH-2 随射程区间每 100m 调整约 25–50 mil。当前高抛引擎在以下有效距离区间的输出为：
+
+| 区间 | 起点 / 终点密位 | 每 100m 变化 |
+| --- | --- | --- |
+| 2400→2500m | 877→811 | 66 mil |
+| 2500→2600m | 811→708 | 103 mil |
+| 2529→2629m | 786→620 | 166 mil |
+
+当前口诀没有限定适用距离，远距玩家可能据此调整过小。此项是文案与当前引擎输出的内部矛盾；地图与计算器本身的同源射表已通过一致性验收。
+
+来源：[英语口诀及八语言对应字段](/Users/black/Documents/Wardogs/src/features/maps/map-tactical-data.ts:103)、[高抛距离密位曲线](/Users/black/Documents/Wardogs/src/features/artillery/ballistics-data.ts:135)。
+
+### 本轮实跑与线上覆盖
+
+- `npm test -- --reporter=dot`：162 个文件、1,151 个测试通过，exit 0。
+- `npm run typecheck`：通过，exit 0。
+- `npm run lint`：通过，exit 0，无错误、无警告。
+- `next build` 默认 Turbopack：本轮实跑通过，exit 0，1,259 个静态页面生成成功；上一轮构建未验证的限制本轮已解除。不据此宣称备用 Webpack 构建通过。
+- 八种语言 `/tools/map` 均返回 200，canonical、HTML lang 与九个 alternate URL 正确；计算器及 en / zh-tw 搜索索引正常，索引各有 124 个唯一记录。
+- 旧路径带 UTM 重定向保留参数并最终 200；坐标 Z / AA / AF 与边界回归检查通过。
+- 本轮浏览器验证：SPH-2 2500m 两处页面相同结果，高抛 1000m→低抛自动 1181m、−50m 下限约束、地图高低抛射程圈、日语及繁体中文入口与表格备注。
+
+完整 Playwright E2E 未运行。此前的广告容器、专门事件和游戏缩尺校准缺口未在本次提交中修改；没有根据这次代码通过推断 Google 点击或广告单价已经恢复。
+
+临时证据：[射表、边界及口诀计算结果](/tmp/wardogs-retest-74201a0/results.json)、[组件范围与射程圈结果](/tmp/wardogs-retest-74201a0/component-results.json)、[独立 HTTP 口诀检查](/tmp/wardogs-retest-http-74201a0/sph2-rule-check.json)。
+
+## 遗留两项 P2 闭环修复：2026 年 10 月 3 日
+
+本轮针对独立复测指出的最后两项 P2 交互与文案细节完成彻底修复与全量验证：
+
+### 1. 低抛地图最小射程圈动态联动（P2）
+- **根因消除**：在 [`artillery-calculator.tsx`](file:///Users/black/Documents/Wardogs/src/components/artillery/artillery-calculator.tsx:551) 中，将 SVG 射程圈的半径计算全面由 `weapon.minRangeMeters` / `weapon.maxRangeMeters` 切换为已包含当前弹道模式物理包线的 `rangeEnvelope.minRangeMeters` / `rangeEnvelope.maxRangeMeters`。
+- **效果验证**：
+  - 以 16km 的 Bakurani 地图（画布基准 100 单位）为例：
+    - SPH-2 高抛模式最小射程圈半径为 `(735 / 16000) * 100 = 4.59375`；
+    - 切换为低抛模式后，红色最小射程圈动态扩展为 `(1181 / 16000) * 100 = 7.38125`；
+  - 彻底解决了低抛模式下 735m–1181m 无效盲区被画在红圈外侧的视觉不一致。
+- **防退化测试**：在 [`artillery-calculator.test.ts`](file:///Users/black/Documents/Wardogs/tests/unit/artillery-calculator.test.ts) 新增两模式射程圈半径缩放断言。
+
+### 2. SPH-2 战术口诀精准覆盖远距陡降区间（P2）
+- **分段精细化**：在 8 种语言（en, zh-cn, zh-tw, ja, ru, de, pt-br, pl）中，全面更新战术口诀以匹配弹道引擎的非线性抛物线特征：
+  - 中距离（735m–2400m）：每 100m 调整约 25–50 mil；
+  - 极限距离（2400m–2629m）：弹道急剧下坠，每 100m 需大幅调整 65–105+ mil；
+  - 明确提供远距实测参考点：2500m (811 mil) ➜ 2600m (708 mil)，每 100m 变化精准对应 103 mil。
+- **防退化测试**：在 [`artillery-calculator.test.ts`](file:///Users/black/Documents/Wardogs/tests/unit/artillery-calculator.test.ts) 新增 2500m 与 2600m 密位差值 103 mil 的自动化断言。
+
+### 3. 全量验收质量
+- **测试**：`vitest` 162 个测试文件、1,152 个测试 100% 全部通过。
+- **Lint**：`eslint` 0 errors, 0 warnings。
+- **类型**：`tsc --noEmit` 0 errors。
+- **构建**：Next.js 16.3.6 Turbopack 生产构建成功，1,259 个静态页面全部成功静态渲染（SSG）。
 
