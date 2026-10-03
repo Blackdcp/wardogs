@@ -11,9 +11,11 @@ type MobileNavProps = {
   openLabel: string;
   closeLabel: string;
   navigationLabel: string;
+  mapLabel?: string;
+  calcLabel?: string;
 };
 
-export function MobileNav({groups, openLabel, closeLabel, navigationLabel}: MobileNavProps) {
+export function MobileNav({groups, openLabel, closeLabel, navigationLabel, mapLabel, calcLabel}: MobileNavProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
@@ -86,7 +88,12 @@ export function MobileNav({groups, openLabel, closeLabel, navigationLabel}: Mobi
             aria-label={navigationLabel}
             className="fixed inset-x-0 top-16 z-50 max-h-[calc(100svh-4rem)] overflow-y-auto border-b border-[#35413b] bg-[#101512] px-4 py-5 shadow-2xl min-[1180px]:hidden"
           >
-            <MobileNavigationGroups groups={groups} onNavigate={closeMenu} />
+            <MobileNavigationGroups
+              groups={groups}
+              onNavigate={closeMenu}
+              mapLabel={mapLabel}
+              calcLabel={calcLabel}
+            />
           </nav>
         </>
       )}

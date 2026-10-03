@@ -86,7 +86,9 @@
     "steamCta": "Открыть в Steam",
     "primaryLabel": "Основная навигация",
     "mapsAndTools": "Карты и инструменты",
-    "artilleryCalculator": "Калькулятор артиллерии и минометов"
+    "artilleryCalculator": "Калькулятор артиллерии и минометов",
+    "mapPill": "Карта",
+    "calcPill": "Калькулятор"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: поиск гайдов, оружия, техники и инструментов",

@@ -86,7 +86,9 @@
     "steamCta": "Zobacz na Steam",
     "primaryLabel": "Nawigacja główna",
     "mapsAndTools": "Mapy i narzędzia",
-    "artilleryCalculator": "Kalkulator artylerii i moździerzy"
+    "artilleryCalculator": "Kalkulator artylerii i moździerzy",
+    "mapPill": "Mapa",
+    "calcPill": "Kalkulator"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: poradniki, broń, pojazdy i narzędzia",

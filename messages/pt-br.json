@@ -86,7 +86,9 @@
     "steamCta": "Ver na Steam",
     "primaryLabel": "Navegação principal",
     "mapsAndTools": "Mapas e Ferramentas",
-    "artilleryCalculator": "Calculadora de Artilharia e Morteiro"
+    "artilleryCalculator": "Calculadora de Artilharia e Morteiro",
+    "mapPill": "Mapa",
+    "calcPill": "Calculadora"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: pesquise guias, armas, veículos e ferramentas",

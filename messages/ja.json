@@ -86,7 +86,9 @@
     "steamCta": "Steamで見る",
     "primaryLabel": "メインナビゲーション",
     "mapsAndTools": "マップ＆ツール",
-    "artilleryCalculator": "迫撃砲・曲射砲計算ツール"
+    "artilleryCalculator": "迫撃砲・曲射砲計算ツール",
+    "mapPill": "戦術マップ",
+    "calcPill": "密位計算"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki：攻略・武器・車両・ツールを検索",

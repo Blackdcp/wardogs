@@ -86,7 +86,9 @@
     "steamCta": "Auf Steam ansehen",
     "primaryLabel": "Hauptnavigation",
     "mapsAndTools": "Karten & Werkzeuge",
-    "artilleryCalculator": "Artillerie- und Mörser-Rechner"
+    "artilleryCalculator": "Artillerie- und Mörser-Rechner",
+    "mapPill": "Karte",
+    "calcPill": "Mörser-Rechner"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: Guides, Waffen, Fahrzeuge & Tools durchsuchen",

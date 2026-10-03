@@ -86,7 +86,9 @@
     "steamCta": "在 Steam 查看",
     "primaryLabel": "主导航",
     "mapsAndTools": "地图与工具",
-    "artilleryCalculator": "火炮与迫击炮计算器"
+    "artilleryCalculator": "火炮与迫击炮计算器",
+    "mapPill": "战术地图",
+    "calcPill": "密位计算"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki 中文维基：战术射击全图鉴与开荒地图攻略",

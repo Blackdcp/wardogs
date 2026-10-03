@@ -1,4 +1,4 @@
-import {ExternalLink, Gamepad2, Map} from "lucide-react";
+import {Crosshair, ExternalLink, Gamepad2, Map} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {officialLinks} from "@/config/site";
 import {buildNavigation} from "@/features/navigation/navigation-data";
@@ -53,11 +53,13 @@ export async function SiteHeader() {
               openLabel={t("common.openMenu")}
               closeLabel={t("common.closeMenu")}
               navigationLabel={t("nav.primaryLabel")}
+              mapLabel={t("nav.mapPill")}
+              calcLabel={t("nav.calcPill")}
             />
           </div>
         </div>
 
-        <div className="hidden w-full min-w-0 items-center gap-4 min-[1180px]:flex">
+        <div className="hidden w-full min-w-0 items-center gap-3 min-[1360px]:gap-4 min-[1180px]:flex">
           <Link
             href="/"
             aria-label={t("footer.aboutTitle")}
@@ -67,6 +69,31 @@ export async function SiteHeader() {
             <SiteBrand markClassName="w-[136px] min-[1360px]:w-[150px]" />
           </Link>
           <DesktopNavigation groups={navigation} label={t("nav.primaryLabel")} />
+
+          {/* 战术双核心高绿胶囊 (Tactical Twin Capsule: Map & Artillery) */}
+          <div
+            className="inline-flex min-h-10 shrink-0 items-center overflow-hidden rounded-[6px] border border-[#30543e] bg-[#122319] p-0.5 shadow-[0_0_15px_rgba(76,217,136,0.12)] transition-colors hover:border-[#4cd988]"
+            data-tactical-capsule="true"
+          >
+            <Link
+              href="/tools/map"
+              title={t("nav.interactiveMap")}
+              className="inline-flex h-9 items-center gap-1.5 rounded-[4px] px-2.5 text-xs font-semibold text-[#8be2ad] transition-colors hover:bg-[#1b3626] hover:text-[#d8f4e4]"
+            >
+              <Map aria-hidden="true" className="size-3.5 text-[#4cd988]" />
+              <span className="whitespace-nowrap">{t("nav.mapPill")}</span>
+            </Link>
+            <span aria-hidden="true" className="h-4 w-px bg-[#264432]" />
+            <Link
+              href="/tools/artillery-calculator"
+              title={t("nav.artilleryCalculator")}
+              className="inline-flex h-9 items-center gap-1.5 rounded-[4px] px-2.5 text-xs font-semibold text-[#8be2ad] transition-colors hover:bg-[#1b3626] hover:text-[#d8f4e4]"
+            >
+              <Crosshair aria-hidden="true" className="size-3.5 text-[#4cd988]" />
+              <span className="whitespace-nowrap">{t("nav.calcPill")}</span>
+            </Link>
+          </div>
+
           <SiteSearchDialog compact />
           <LocaleSwitcher label={t("common.language")} />
           <a

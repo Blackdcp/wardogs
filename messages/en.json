@@ -86,7 +86,9 @@
     "steamCta": "View on Steam",
     "primaryLabel": "Primary navigation",
     "mapsAndTools": "Maps & Tools",
-    "artilleryCalculator": "Artillery & Mortar Calculator"
+    "artilleryCalculator": "Artillery & Mortar Calculator",
+    "mapPill": "Map",
+    "calcPill": "Mortar Calc"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: Tactical FPS Game Database & Guides",
