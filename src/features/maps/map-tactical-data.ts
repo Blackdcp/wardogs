@@ -1,43 +1,35 @@
 import type {Locale} from "@/config/site";
+import {calculateFiringSolution} from "@/features/artillery/ballistics-data";
 
 export type BallisticRow = {
   range: number;
   mils: number;
   tof: number;
-  notes?: string;
+  notes?: "minRange" | "maxEffective";
 };
 
-export const MORTAR_81MM_BALLISTICS: readonly BallisticRow[] = [
-  {range: 80, mils: 950, tof: 15.0, notes: "Min range"},
-  {range: 100, mils: 925, tof: 15.3},
-  {range: 150, mils: 862, tof: 15.9},
-  {range: 200, mils: 800, tof: 16.6},
-  {range: 250, mils: 738, tof: 17.2},
-  {range: 300, mils: 675, tof: 17.9},
-  {range: 350, mils: 613, tof: 18.5},
-  {range: 400, mils: 550, tof: 19.1},
-  {range: 450, mils: 488, tof: 19.8},
-  {range: 500, mils: 425, tof: 20.4},
-  {range: 550, mils: 363, tof: 21.1},
-  {range: 600, mils: 295, tof: 21.7},
-  {range: 650, mils: 208, tof: 22.4},
-  {range: 684, mils: 150, tof: 22.8},
-  {range: 697, mils: 120, tof: 23.0, notes: "Max effective"}
-];
+const MORTAR_RANGES = [80, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 684, 697] as const;
+const ARTILLERY_RANGES = [735, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300, 2500, 2629] as const;
 
-export const ARTILLERY_155MM_BALLISTICS: readonly BallisticRow[] = [
-  {range: 735, mils: 1400, tof: 22.0, notes: "Min range"},
-  {range: 900, mils: 1363, tof: 23.3},
-  {range: 1100, mils: 1316, tof: 24.8},
-  {range: 1300, mils: 1266, tof: 26.4},
-  {range: 1500, mils: 1215, tof: 27.9},
-  {range: 1700, mils: 1157, tof: 29.5},
-  {range: 1900, mils: 1094, tof: 31.0},
-  {range: 2100, mils: 1021, tof: 32.6},
-  {range: 2300, mils: 929, tof: 34.1},
-  {range: 2500, mils: 800, tof: 35.7},
-  {range: 2629, mils: 600, tof: 36.7, notes: "Max effective"}
-];
+export const MORTAR_81MM_BALLISTICS: readonly BallisticRow[] = MORTAR_RANGES.map((range, index) => {
+  const sol = calculateFiringSolution({weaponId: "mortar", distanceMeters: range});
+  return {
+    range,
+    mils: sol.elevationMil,
+    tof: sol.timeOfFlightSeconds,
+    ...(index === 0 ? {notes: "minRange"} : index === MORTAR_RANGES.length - 1 ? {notes: "maxEffective"} : {})
+  };
+});
+
+export const ARTILLERY_155MM_BALLISTICS: readonly BallisticRow[] = ARTILLERY_RANGES.map((range, index) => {
+  const sol = calculateFiringSolution({weaponId: "sph2", distanceMeters: range, mode: "high"});
+  return {
+    range,
+    mils: sol.elevationMil,
+    tof: sol.timeOfFlightSeconds,
+    ...(index === 0 ? {notes: "minRange"} : index === ARTILLERY_RANGES.length - 1 ? {notes: "maxEffective"} : {})
+  };
+});
 
 export type MapTheaterIntel = {
   id: "bakurani" | "ozeti" | "zestafona";
@@ -51,6 +43,7 @@ export type TacticalIntelCopy = {
   secondScreenTitle: string;
   secondScreenDesc: string;
   features: readonly {title: string; desc: string}[];
+  fireControlBadge: string;
   ballisticsTitle: string;
   ballisticsSubtitle: string;
   mortarTab: string;
@@ -59,11 +52,19 @@ export type TacticalIntelCopy = {
   milsCol: string;
   tofCol: string;
   notesCol: string;
+  minRangeLabel: string;
+  maxEffectiveLabel: string;
+  standardMortarAmmo: string;
+  standardArtilleryAmmo: string;
   ballisticsRuleTitle: string;
   ballisticsRuleDesc: string;
+  theaterIntelBadge: string;
   theatersTitle: string;
   theatersSubtitle: string;
+  keySectorsLabel: string;
+  tacticalSopLabel: string;
   theaters: readonly MapTheaterIntel[];
+  doctrineBadge: string;
   relatedGuidesTitle: string;
   guides: readonly {title: string; href: string; desc: string}[];
 };
@@ -85,6 +86,7 @@ const tacticalIntelEn: TacticalIntelCopy = {
       desc: "Click 'Share view and markers' to generate a persistent URL hash with marked waypoints, artillery targets, or rally points for your team."
     }
   ],
+  fireControlBadge: "Indirect Fire Control",
   ballisticsTitle: "Artillery & Mortar Elevation Quick Reference",
   ballisticsSubtitle: "Community-verified range-to-mil elevation conversion tables for indirect fire support",
   mortarTab: "81mm Mortar (L81)",
@@ -93,10 +95,18 @@ const tacticalIntelEn: TacticalIntelCopy = {
   milsCol: "Elevation (mils)",
   tofCol: "Time of Flight (s)",
   notesCol: "Operational Notes",
+  minRangeLabel: "Min range",
+  maxEffectiveLabel: "Max effective",
+  standardMortarAmmo: "Standard 81mm HE",
+  standardArtilleryAmmo: "155mm Heavy HE",
   ballisticsRuleTitle: "Field Correction Rule of Thumb",
-  ballisticsRuleDesc: "For 81mm Mortars, adjust ~65 mils per 100m range delta. For 155mm Artillery, adjust ~50 mils per 100m. Always fire one ranging round, observe the impact via spotter or shell camera, and adjust elevation/azimuth before expending battery volleys.",
+  ballisticsRuleDesc: "For 81mm Mortars (L81), adjust ~125 mils per 100m range delta (e.g. 400m is 550 mils, 500m is 425 mils). For 155mm Artillery (SPH-2), adjust ~25–50 mils per 100m depending on range envelope. Always fire one ranging round, observe the impact via spotter or shell camera, and adjust elevation/azimuth before expending battery volleys.",
+  theaterIntelBadge: "Theater Intel",
   theatersTitle: "Strategic Theater Operational Profiles",
   theatersSubtitle: "Terrain breakdown, fortified sectors, and tactical considerations across all three active maps",
+  keySectorsLabel: "Key Sectors:",
+  tacticalSopLabel: "Tactical SOP:",
+  doctrineBadge: "Doctrine & SOP",
   theaters: [
     {
       id: "bakurani",
@@ -174,6 +184,7 @@ const tacticalIntelZhCn: TacticalIntelCopy = {
       desc: "点击“分享当前视角与标记”即可生成带有点位、火炮标定与集结点的 URL 哈希链接，秒发队友。"
     }
   ],
+  fireControlBadge: "曲射火力控制",
   ballisticsTitle: "迫击炮与自行火炮密位射表速查",
   ballisticsSubtitle: "社区实测验证的距离-密位换算与弹道飞行时间参考表",
   mortarTab: "81mm 迫击炮 (L81)",
@@ -182,10 +193,17 @@ const tacticalIntelZhCn: TacticalIntelCopy = {
   milsCol: "射角密位 (mils)",
   tofCol: "飞行时间 (秒)",
   notesCol: "实战说明",
+  minRangeLabel: "最小射程",
+  maxEffectiveLabel: "最大有效射程",
+  standardMortarAmmo: "标准 81mm 高爆弹",
+  standardArtilleryAmmo: "155mm 重型高爆弹",
   ballisticsRuleTitle: "实战快速射击法则 (Rule of Thumb)",
-  ballisticsRuleDesc: "81mm 迫击炮每增减 100 米距离，密位调整约 65 mils；155mm 自行火炮每 100 米调整约 50 mils。第一发务必使用单发校射弹，结合观察手报点或炮弹视角修正密位与方位角，确认命中后再进行整连效力射击。",
+  ballisticsRuleDesc: "81mm 迫击炮 (L81) 在常规交战射程内每 100 米约需调整 125 密位（如 400m 为 550 mil，500m 为 425 mil）；155mm 自行火炮 (SPH-2) 随射程不同每 100 米约需调整 25–50 密位。务必先发射单发校射弹，由观察手或炮弹视角确认弹着点并修正射角与方向角后，再进行多发效力射。",
+  theaterIntelBadge: "战区态势情报",
   theatersTitle: "三大核心战区战略情报与地形指南",
   theatersSubtitle: "Bakurani、Ozeti、Zestafona 三大战场的地形特征、核心隘口与战术建议",
+  keySectorsLabel: "关键要点分区：",
+  tacticalSopLabel: "战术标准作业程序 (SOP)：",
   theaters: [
     {
       id: "bakurani",
@@ -221,6 +239,7 @@ const tacticalIntelZhCn: TacticalIntelCopy = {
       tactics: "开阔的沿海水域极易遭遇侧翼登岛袭击；利用集装箱构筑坚固的步兵防守交叉火力网，限制敌方装甲穿插。"
     }
   ],
+  doctrineBadge: "战术条令与实战 SOP",
   relatedGuidesTitle: "战场指挥官核心实战攻略",
   guides: [
     {
@@ -263,6 +282,7 @@ const tacticalIntelZhTw: TacticalIntelCopy = {
       desc: "點擊「分享當前視角與標記」即可生成帶有點位、火砲標定與集結點的 URL 哈希連結，秒發隊友。"
     }
   ],
+  fireControlBadge: "曲射火力控制",
   ballisticsTitle: "迫擊砲與自行火砲密位射表速查",
   ballisticsSubtitle: "社區實測驗證的距離-密位換算與彈道飛行時間參考表",
   mortarTab: "81mm 迫擊砲 (L81)",
@@ -271,10 +291,17 @@ const tacticalIntelZhTw: TacticalIntelCopy = {
   milsCol: "射角密位 (mils)",
   tofCol: "飛行時間 (秒)",
   notesCol: "實戰說明",
+  minRangeLabel: "最小射程",
+  maxEffectiveLabel: "最大有效射程",
+  standardMortarAmmo: "標準 81mm 高爆彈",
+  standardArtilleryAmmo: "155mm 重型高爆彈",
   ballisticsRuleTitle: "實戰快速射擊法則 (Rule of Thumb)",
-  ballisticsRuleDesc: "81mm 迫擊砲每增減 100 米距離，密位調整約 65 mils；155mm 自行火砲每 100 米調整約 50 mils。第一發務必使用單發校射彈，結合觀察手報點或砲彈視角修正密位與方位角，確認命中後再進行整連效力射擊。",
+  ballisticsRuleDesc: "81mm 迫擊砲 (L81) 在常規交戰射程內每 100 公尺約需調整 125 密位（如 400m 為 550 mil，500m 為 425 mil）；155mm 自行火砲 (SPH-2) 隨射程不同每 100 公尺約需調整 25–50 密位。務必先發射單發校射彈，由觀察手或砲彈視角確認彈著點並修正射角與方位角後，再進行多發效力射。",
+  theaterIntelBadge: "戰區態勢情報",
   theatersTitle: "三大核心戰區戰略情報與地形指南",
   theatersSubtitle: "Bakurani、Ozeti、Zestafona 三大戰場的地形特徵、核心隘口與戰術建議",
+  keySectorsLabel: "關鍵要點分區：",
+  tacticalSopLabel: "戰術標準作業程序 (SOP)：",
   theaters: [
     {
       id: "bakurani",
@@ -310,6 +337,7 @@ const tacticalIntelZhTw: TacticalIntelCopy = {
       tactics: "開闊的沿海水域極易遭遇側翼登島襲擊；利用貨櫃構築堅固的步兵防守交叉火力網，限制敵方裝甲穿插。"
     }
   ],
+  doctrineBadge: "戰術條令與實戰 SOP",
   relatedGuidesTitle: "戰場指揮官核心實戰攻略",
   guides: [
     {
@@ -352,6 +380,7 @@ const tacticalIntelJa: TacticalIntelCopy = {
       desc: "「視点とマーカーを共有」をクリックすると、指定したウェイポイント、砲撃目標、集結地点を含むURLハッシュを生成します。"
     }
   ],
+  fireControlBadge: "間接射撃統制",
   ballisticsTitle: "迫撃砲・自走砲 仰角クイックリファレンス",
   ballisticsSubtitle: "間接射撃支援のためのコミュニティ検証済み距離・ミル対照表",
   mortarTab: "81mm迫撃砲 (L81)",
@@ -360,10 +389,17 @@ const tacticalIntelJa: TacticalIntelCopy = {
   milsCol: "仰角 (mils)",
   tofCol: "着弾時間 (秒)",
   notesCol: "運用ノート",
+  minRangeLabel: "最短射程",
+  maxEffectiveLabel: "最大有効射程",
+  standardMortarAmmo: "標準 81mm 榴弾 (HE)",
+  standardArtilleryAmmo: "155mm 重榴弾 (HE)",
   ballisticsRuleTitle: "実戦照準補正の基本法則",
-  ballisticsRuleDesc: "81mm迫撃砲は距離100mにつき約65ミル、155mm自走砲は約50ミル調整します。必ず初弾（試射弾）を撃ち、観測手または砲弾カメラで弾着を確認してから斉射に移行してください。",
+  ballisticsRuleDesc: "81mm迫撃砲（L81）は通常交戦距離において100mあたり約125ミル調整します（例：400mで550ミル、500mで425ミル）。155mm自走砲（SPH-2）は射程帯に応じて100mあたり約25〜50ミル調整します。必ず初弾（試射弾）を撃ち、観測手または砲弾カメラで弾着を確認・修正してから斉射に移行してください。",
+  theaterIntelBadge: "戦域情報",
   theatersTitle: "作戦戦域別タクティカルプロファイル",
   theatersSubtitle: "3つの稼働マップにおける地形特性、要衝セクター、戦術的留意点",
+  keySectorsLabel: "重要セクター：",
+  tacticalSopLabel: "戦術標準手順 (SOP)：",
   theaters: [
     {
       id: "bakurani",
@@ -399,6 +435,7 @@ const tacticalIntelJa: TacticalIntelCopy = {
       tactics: "開けた海側からの迂回強襲に注意。コンテナヤードを活用して強固な歩兵防衛ラインを構築し、敵装甲の突破を阻止します。"
     }
   ],
+  doctrineBadge: "教本＆標準手順 (SOP)",
   relatedGuidesTitle: "戦場指揮官のための重要戦術ガイド",
   guides: [
     {
@@ -441,6 +478,7 @@ const tacticalIntelRu: TacticalIntelCopy = {
       desc: "Нажмите «Поделиться видом и метками», чтобы получить постоянную ссылку с отмеченными точками маршрута, целями и сбором."
     }
   ],
+  fireControlBadge: "Управление огнем",
   ballisticsTitle: "Таблицы возвышения для минометов и артиллерии",
   ballisticsSubtitle: "Проверенные сообществом таблицы перевода дистанции в тысячные для огня с закрытых позиций",
   mortarTab: "81-мм миномет (L81)",
@@ -449,10 +487,17 @@ const tacticalIntelRu: TacticalIntelCopy = {
   milsCol: "Прицел (тыс.)",
   tofCol: "Время полета (с)",
   notesCol: "Примечания",
+  minRangeLabel: "Мин. дистанция",
+  maxEffectiveLabel: "Макс. эфф. дальность",
+  standardMortarAmmo: "Стандартный 81-мм ОФ",
+  standardArtilleryAmmo: "155-мм тяжелый ОФ",
   ballisticsRuleTitle: "Полевое правило корректировки",
-  ballisticsRuleDesc: "Для 81-мм миномета поправка составляет ~65 тыс. на каждые 100 м дистанции; для 155-мм САУ — ~50 тыс. на 100 м. Всегда делайте пристрелочный выстрел, корректируйте наводку по докладу корректировщика или камере снаряда, и только затем ведите огонь на поражение.",
+  ballisticsRuleDesc: "Для 81-мм миномета (L81) поправка составляет около 125 тыс. на каждые 100 м дистанции (например, 400 м — 550 тыс., 500 м — 425 тыс.); для 155-мм САУ (SPH-2) — около 25–50 тыс. на 100 м в зависимости от дальности. Всегда делайте пристрелочный выстрел и корректируйте наводку перед ведением огня на поражение.",
+  theaterIntelBadge: "Разведданные ТВД",
   theatersTitle: "Оперативные профили театров военных действий",
   theatersSubtitle: "Анализ рельефа, ключевых секторов и тактики на всех трех активных картах",
+  keySectorsLabel: "Ключевые секторы:",
+  tacticalSopLabel: "Тактический регламент (SOP):",
   theaters: [
     {
       id: "bakurani",
@@ -488,6 +533,7 @@ const tacticalIntelRu: TacticalIntelCopy = {
       tactics: "Открытая вода позволяет совершать фланговые десантные высадки. Используйте контейнерные терминалы для организации перекрестного огня пехоты против вражеской брони."
     }
   ],
+  doctrineBadge: "Тактическая доктрина и SOP",
   relatedGuidesTitle: "Ключевые тактические руководства для командиров",
   guides: [
     {
@@ -530,6 +576,7 @@ const tacticalIntelDe: TacticalIntelCopy = {
       desc: "Klicken Sie auf 'Ansicht und Markierungen teilen', um eine persistente URL mit Wegpunkten, Zielen und Sammelpunkten zu erstellen."
     }
   ],
+  fireControlBadge: "Indirekte Feuerleitung",
   ballisticsTitle: "Schnellübersicht Artillerie- und Mörsererhöhung",
   ballisticsSubtitle: "Community-geprüfte Schusstafeln für indirektes Feuer",
   mortarTab: "81mm Mörser (L81)",
@@ -538,10 +585,17 @@ const tacticalIntelDe: TacticalIntelCopy = {
   milsCol: "Erhöhung (Strich)",
   tofCol: "Flugzeit (s)",
   notesCol: "Einsatzhinweise",
+  minRangeLabel: "Min. Reichweite",
+  maxEffectiveLabel: "Max. effektive Reichweite",
+  standardMortarAmmo: "Standard 81mm HE",
+  standardArtilleryAmmo: "155mm schwere HE",
   ballisticsRuleTitle: "Faustregel für Feldkorrekturen",
-  ballisticsRuleDesc: "Für 81mm-Mörser korrigieren Sie ~65 Strich pro 100m Reichweitenunterschied; für 155mm-Artillerie ~50 Strich pro 100m. Schießen Sie stets einen Einschießschuss und korrigieren Sie vor vollen Salven.",
+  ballisticsRuleDesc: "Für 81mm-Mörser (L81) korrigieren Sie ~125 Strich pro 100m Reichweitenunterschied (z. B. 400m = 550 Strich, 500m = 425 Strich); für 155mm-Artillerie (SPH-2) je nach Distanz ~25–50 Strich pro 100m. Schießen Sie stets einen Einschießschuss, beobachten Sie den Einschlag und korrigieren Sie vor vollen Salven.",
+  theaterIntelBadge: "Kriegsschauplatz-Aufklärung",
   theatersTitle: "Strategische Einsatzprofile der Kriegsschauplätze",
   theatersSubtitle: "Geländeanalysen, befestigte Sektoren und taktische Aspekte auf allen drei aktiven Karten",
+  keySectorsLabel: "Schlüsselsektoren:",
+  tacticalSopLabel: "Taktische Standardverfahren (SOP):",
   theaters: [
     {
       id: "bakurani",
@@ -577,6 +631,7 @@ const tacticalIntelDe: TacticalIntelCopy = {
       tactics: "Offenes Küstenwasser begünstigt amphibische Flankenangriffe. Nutzen Sie Containerdepots für Infanterie-Abwehrzonen gegen feindliche Vorstöße."
     }
   ],
+  doctrineBadge: "Doktrin & SOP",
   relatedGuidesTitle: "Wichtige Taktikleitfäden für Kommandanten",
   guides: [
     {
@@ -619,6 +674,7 @@ const tacticalIntelPtBr: TacticalIntelCopy = {
       desc: "Clique em 'Compartilhar visão e marcadores' para gerar uma URL persistente com pontos de rota, alvos e locais de reagrupamento."
     }
   ],
+  fireControlBadge: "Controle de Fogo Indireto",
   ballisticsTitle: "Referência Rápida de Elevação de Morteiros e Artilharia",
   ballisticsSubtitle: "Tabelas de conversão de alcance para mils verificadas pela comunidade",
   mortarTab: "Morteiro 81mm (L81)",
@@ -627,10 +683,17 @@ const tacticalIntelPtBr: TacticalIntelCopy = {
   milsCol: "Elevação (mils)",
   tofCol: "Tempo de Voo (s)",
   notesCol: "Notas Operacionais",
+  minRangeLabel: "Alcance Mínimo",
+  maxEffectiveLabel: "Alcance Máx. Efetivo",
+  standardMortarAmmo: "81mm HE Padrão",
+  standardArtilleryAmmo: "155mm HE Pesado",
   ballisticsRuleTitle: "Regra Prática de Correção em Campo",
-  ballisticsRuleDesc: "Para morteiros de 81mm, ajuste ~65 mils a cada 100m de variação de alcance; para artilharia de 155mm, ajuste ~50 mils a cada 100m. Sempre dispare um tiro de calibragem antes de rajadas completas.",
+  ballisticsRuleDesc: "Para morteiros de 81mm (L81), ajuste ~125 mils a cada 100m de variação de alcance (ex.: 400m = 550 mils, 500m = 425 mils); para artilharia de 155mm (SPH-2), ajuste ~25–50 mils a cada 100m dependendo da distância. Sempre dispare um tiro de calibragem antes de rajadas completas.",
+  theaterIntelBadge: "Inteligência de Teatro",
   theatersTitle: "Perfis Operacionais dos Teatros Estratégicos",
   theatersSubtitle: "Análise de terreno, setores fortificados e táticas nos três mapas ativos",
+  keySectorsLabel: "Setores Críticos:",
+  tacticalSopLabel: "Procedimento Padrão (SOP):",
   theaters: [
     {
       id: "bakurani",
@@ -666,6 +729,7 @@ const tacticalIntelPtBr: TacticalIntelCopy = {
       tactics: "As águas abertas facilitam investidas de flanco. Use terminais de contêineres para formar zonas de contenção de infantaria e travar blindados inimigos."
     }
   ],
+  doctrineBadge: "Doutrina e SOP",
   relatedGuidesTitle: "Guias Táticos Essenciais para Comandantes de Campo",
   guides: [
     {
@@ -708,6 +772,7 @@ const tacticalIntelPl: TacticalIntelCopy = {
       desc: "Kliknij 'Udostępnij widok i znaczniki', aby wygenerować link z zapisanymi punktami trasy, celami artyleryjskimi i punktami zbiórki."
     }
   ],
+  fireControlBadge: "Kierowanie Ogniem Pośrednim",
   ballisticsTitle: "Szybka ściąga kątów podniesienia artylerii i moździerzy",
   ballisticsSubtitle: "Zweryfikowane przez społeczność tabele przeliczania zasięgu na tysięczne",
   mortarTab: "Moździerz 81mm (L81)",
@@ -716,10 +781,17 @@ const tacticalIntelPl: TacticalIntelCopy = {
   milsCol: "Kąt podniesienia (tys.)",
   tofCol: "Czas lotu (s)",
   notesCol: "Uwagi operacyjne",
+  minRangeLabel: "Minimalny zasięg",
+  maxEffectiveLabel: "Maks. zasięg skuteczny",
+  standardMortarAmmo: "Standardowy 81mm HE",
+  standardArtilleryAmmo: "Ciężki 155mm HE",
   ballisticsRuleTitle: "Praktyczna zasada korekty ognia",
-  ballisticsRuleDesc: "Dla moździerza 81mm koryguj o ~65 tysięcznych na każde 100m różnicy zasięgu; dla artylerii 155mm o ~50 tysięcznych na 100m. Zawsze wystrzel pocisk wstrzeliwujący przed przejściem do salw bateryjnych.",
+  ballisticsRuleDesc: "Dla moździerza 81mm (L81) koryguj o ~125 tysięcznych na każde 100m różnicy zasięgu (np. 400m = 550 tys., 500m = 425 tys.); dla artylerii 155mm (SPH-2) o ~25–50 tysięcznych na 100m w zależności od dystansu. Zawsze wystrzel pocisk wstrzeliwujący przed przejściem do salw bateryjnych.",
+  theaterIntelBadge: "Wywiad Teatru Działań",
   theatersTitle: "Profile operacyjne teatrów działań",
   theatersSubtitle: "Analiza terenu, ufortyfikowane sektory i taktyka na wszystkich trzech aktywnych mapach",
+  keySectorsLabel: "Kluczowe sektory:",
+  tacticalSopLabel: "Standardowe procedury (SOP):",
   theaters: [
     {
       id: "bakurani",
@@ -755,6 +827,7 @@ const tacticalIntelPl: TacticalIntelCopy = {
       tactics: "Otwarte wody przybrzeżne ułatwiają ataki z flanki. Wykorzystaj place kontenerowe do stworzenia strefy ognia zaporowego piechoty przeciwko pojazdom wroga."
     }
   ],
+  doctrineBadge: "Doktryna i SOP",
   relatedGuidesTitle: "Niezbędne poradniki taktyczne dla dowódców polowych",
   guides: [
     {

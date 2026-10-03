@@ -4,9 +4,14 @@ import {
   calculateDistanceMeters,
   calculateFiringSolution,
   formatGridCoordinate,
+  getWeaponRangeEnvelope,
   interpolateMil,
   toGridColumnLabel
 } from "../../src/features/artillery/ballistics-data";
+import {
+  MORTAR_81MM_BALLISTICS,
+  ARTILLERY_155MM_BALLISTICS
+} from "../../src/features/maps/map-tactical-data";
 
 describe("Artillery & Mortar Ballistics Engine", () => {
   it("interpolates L81 Mortar elevation mils accurately", () => {
@@ -120,5 +125,53 @@ describe("Artillery & Mortar Ballistics Engine", () => {
     expect(formatGridCoordinate(pZ, "ozeti")).toMatch(/^Z[0-9]{1,2}-[1-9]$/);
     expect(formatGridCoordinate(pAA, "ozeti")).toMatch(/^AA[0-9]{1,2}-[1-9]$/);
     expect(formatGridCoordinate(pAF, "ozeti")).toMatch(/^AF[0-9]{1,2}-[1-9]$/);
+  });
+
+  it("provides correct physical range envelopes for all weapon modes", () => {
+    expect(getWeaponRangeEnvelope("mortar", "single")).toEqual({
+      minRangeMeters: 80,
+      maxRangeMeters: 697
+    });
+    expect(getWeaponRangeEnvelope("sph2", "high")).toEqual({
+      minRangeMeters: 735,
+      maxRangeMeters: 2629
+    });
+    expect(getWeaponRangeEnvelope("sph2", "low")).toEqual({
+      minRangeMeters: 1181,
+      maxRangeMeters: 2629
+    });
+  });
+
+  it("guarantees 100% parity between map tactical table and calculator ballistics engine", () => {
+    // Mortar table verification
+    for (const entry of MORTAR_81MM_BALLISTICS) {
+      const sol = calculateFiringSolution({
+        weaponId: "mortar",
+        mode: "single",
+        distanceMeters: entry.range,
+        heightDeltaMeters: 0
+      });
+      expect(sol.valid).toBe(true);
+      expect(entry.mils).toBe(sol.elevationMil);
+      expect(entry.tof).toBe(sol.timeOfFlightSeconds);
+    }
+
+    // SPH-2 table verification (2500m must be 811 mils, 48.5s)
+    const sph2_2500 = ARTILLERY_155MM_BALLISTICS.find((r) => r.range === 2500);
+    expect(sph2_2500).toBeDefined();
+    expect(sph2_2500?.mils).toBe(811);
+    expect(sph2_2500?.tof).toBe(48.5);
+
+    for (const entry of ARTILLERY_155MM_BALLISTICS) {
+      const sol = calculateFiringSolution({
+        weaponId: "sph2",
+        mode: "high",
+        distanceMeters: entry.range,
+        heightDeltaMeters: 0
+      });
+      expect(sol.valid).toBe(true);
+      expect(entry.mils).toBe(sol.elevationMil);
+      expect(entry.tof).toBe(sol.timeOfFlightSeconds);
+    }
   });
 });

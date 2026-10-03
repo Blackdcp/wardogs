@@ -10,6 +10,7 @@ import {
   calculateDistanceMeters,
   calculateFiringSolution,
   formatGridCoordinate,
+  getWeaponRangeEnvelope,
   MAP_DIMENSIONS,
   WEAPON_REGISTRY,
   type FiringSolution,
@@ -51,6 +52,8 @@ export function ArtilleryCalculator({locale}: Props) {
 
   const effectiveTrajectoryMode: TrajectoryMode =
     weaponId === "mortar" ? "single" : trajectoryMode === "single" ? "high" : trajectoryMode;
+
+  const rangeEnvelope = getWeaponRangeEnvelope(weaponId, effectiveTrajectoryMode);
 
   // Compute Solution
   let solution: FiringSolution;
@@ -220,6 +223,7 @@ export function ArtilleryCalculator({locale}: Props) {
                 onClick={() => {
                   setWeaponId("mortar");
                   setTrajectoryMode("single");
+                  setDirectDistance((prev) => Math.max(80, Math.min(697, prev)));
                 }}
                 className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                   weaponId === "mortar"
@@ -233,7 +237,10 @@ export function ArtilleryCalculator({locale}: Props) {
                 type="button"
                 onClick={() => {
                   setWeaponId("sph2");
+                  const nextMode = trajectoryMode === "single" ? "high" : trajectoryMode;
                   if (trajectoryMode === "single") setTrajectoryMode("high");
+                  const min = nextMode === "low" ? 1181 : 735;
+                  setDirectDistance((prev) => Math.max(min, Math.min(2629, prev)));
                 }}
                 className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                   weaponId === "sph2"
@@ -260,7 +267,10 @@ export function ArtilleryCalculator({locale}: Props) {
                 <>
                   <button
                     type="button"
-                    onClick={() => setTrajectoryMode("high")}
+                    onClick={() => {
+                      setTrajectoryMode("high");
+                      setDirectDistance((prev) => Math.max(735, Math.min(2629, prev)));
+                    }}
                     className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                       trajectoryMode === "high"
                         ? "border-[#e0a256] bg-[#2d2114] text-[#f8be77]"
@@ -271,7 +281,10 @@ export function ArtilleryCalculator({locale}: Props) {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setTrajectoryMode("low")}
+                    onClick={() => {
+                      setTrajectoryMode("low");
+                      setDirectDistance((prev) => Math.max(1181, Math.min(2629, prev)));
+                    }}
                     className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                       trajectoryMode === "low"
                         ? "border-[#e0a256] bg-[#2d2114] text-[#f8be77]"
@@ -351,7 +364,7 @@ export function ArtilleryCalculator({locale}: Props) {
                 <span className="text-base text-[#8ca094]"> {copy.meters}</span>
               </div>
               <span className="font-mono text-[10px] text-[#6b8577]">
-                {weapon.minRangeMeters}m - {weapon.maxRangeMeters}m
+                {rangeEnvelope.minRangeMeters}m - {rangeEnvelope.maxRangeMeters}m
               </span>
             </div>
 
@@ -595,8 +608,8 @@ export function ArtilleryCalculator({locale}: Props) {
               <div className="mt-2 flex items-center gap-3">
                 <input
                   type="range"
-                  min={weapon.minRangeMeters}
-                  max={weapon.maxRangeMeters}
+                  min={rangeEnvelope.minRangeMeters}
+                  max={rangeEnvelope.maxRangeMeters}
                   value={directDistance}
                   onChange={(e) => setDirectDistance(Number(e.target.value))}
                   className="h-2 flex-1 cursor-pointer accent-[#62b984]"
@@ -615,7 +628,7 @@ export function ArtilleryCalculator({locale}: Props) {
                     type="button"
                     onClick={() =>
                       setDirectDistance((prev) =>
-                        Math.max(weapon.minRangeMeters, Math.min(weapon.maxRangeMeters, prev + delta))
+                        Math.max(rangeEnvelope.minRangeMeters, Math.min(rangeEnvelope.maxRangeMeters, prev + delta))
                       )
                     }
                     className="flex-1 rounded border border-[#34463b] bg-[#131c16] py-1 text-xs font-semibold text-[#8ce2ad] hover:bg-[#202e25]"

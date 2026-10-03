@@ -51,21 +51,15 @@ export default async function TacticalMapPage({params}: PageProps) {
           <div className="flex items-center gap-2">
             <Crosshair className="size-5 text-[#8ce2ad]" />
             <span className="text-xs sm:text-sm font-semibold text-white">
-              {locale === "zh-cn" || locale === "zh-tw"
-                ? "需要 L81 迫击炮 / SPH-2 自行火炮的高精度密位射表解算？"
-                : "Looking for L81 Mortar & SPH-2 Artillery Mil firing solutions?"}
+              {c.calcPrompt}
             </span>
           </div>
           <Link
             href="/tools/artillery-calculator"
-            title={locale === "zh-cn" || locale === "zh-tw" ? "打开战术火控计算器" : "Open Artillery Calculator"}
+            title={c.calcTitle}
             className="inline-flex items-center gap-1.5 rounded-md bg-[#254533] px-3 py-1.5 text-xs font-bold text-[#8ce2ad] hover:bg-[#346247] hover:text-white transition-all shadow"
           >
-            <span>
-              {locale === "zh-cn" || locale === "zh-tw"
-                ? "打开战术火控计算器 ➜"
-                : "Open Artillery Calculator ➜"}
-            </span>
+            <span>{c.calcCta}</span>
           </Link>
         </div>
       </header>

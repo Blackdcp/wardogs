@@ -244,6 +244,16 @@ export const WEAPON_REGISTRY: Record<WeaponId, WeaponSpec> = {
   }
 };
 
+export function getWeaponRangeEnvelope(weaponId: WeaponId, mode?: TrajectoryMode): {minRangeMeters: number; maxRangeMeters: number} {
+  if (weaponId === "mortar") {
+    return {minRangeMeters: 80, maxRangeMeters: 697};
+  }
+  if (mode === "low") {
+    return {minRangeMeters: 1181, maxRangeMeters: 2629};
+  }
+  return {minRangeMeters: 735, maxRangeMeters: 2629};
+}
+
 export function interpolateMil(table: [number, number][], distance: number): number | null {
   if (!table.length || distance < table[0][0] || distance > table[table.length - 1][0]) {
     return null;

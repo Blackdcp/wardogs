@@ -58,7 +58,7 @@ export function MapTacticalIntel({locale}: MapTacticalIntelProps) {
           <div>
             <div className="inline-flex items-center gap-2 font-mono text-xs uppercase text-[#d9a93a]">
               <Crosshair aria-hidden="true" className="size-4" />
-              <span>Indirect Fire Control</span>
+              <span>{copy.fireControlBadge}</span>
             </div>
             <h3 className="display-font mt-1 text-2xl font-bold text-white">
               {copy.ballisticsTitle}
@@ -113,7 +113,11 @@ export function MapTacticalIntel({locale}: MapTacticalIntelProps) {
                   <td className="px-4 py-3 font-mono font-bold text-[#69c78f]">{row.mils} mils</td>
                   <td className="px-4 py-3 font-mono text-[#d9a93a]">{row.tof}s</td>
                   <td className="px-4 py-3 text-xs text-[#8f9d96]">
-                    {row.notes ?? (activeWeapon === "mortar" ? "Standard 81mm HE" : "155mm Heavy HE")}
+                    {row.notes === "minRange"
+                      ? copy.minRangeLabel
+                      : row.notes === "maxEffective"
+                      ? copy.maxEffectiveLabel
+                      : (activeWeapon === "mortar" ? copy.standardMortarAmmo : copy.standardArtilleryAmmo)}
                   </td>
                 </tr>
               ))}
@@ -136,7 +140,7 @@ export function MapTacticalIntel({locale}: MapTacticalIntelProps) {
         <div className="border-b border-[#2b3530] pb-5">
           <div className="inline-flex items-center gap-2 font-mono text-xs uppercase text-[#69c78f]">
             <Compass aria-hidden="true" className="size-4" />
-            <span>Theater Intel</span>
+            <span>{copy.theaterIntelBadge}</span>
           </div>
           <h3 className="display-font mt-1 text-2xl font-bold text-white">
             {copy.theatersTitle}
@@ -160,7 +164,7 @@ export function MapTacticalIntel({locale}: MapTacticalIntelProps) {
                 <p className="mt-1 text-xs text-[#d9a93a]">{theater.type}</p>
 
                 <div className="mt-4">
-                  <p className="text-xs font-semibold uppercase text-[#8f9d96]">Key Sectors:</p>
+                  <p className="text-xs font-semibold uppercase text-[#8f9d96]">{copy.keySectorsLabel}</p>
                   <ul className="mt-2 space-y-1.5 text-xs text-[#a0aea6]">
                     {theater.sectors.map((sec, idx) => (
                       <li key={idx} className="flex items-start gap-1.5">
@@ -173,7 +177,7 @@ export function MapTacticalIntel({locale}: MapTacticalIntelProps) {
               </div>
 
               <div className="mt-4 pt-3 border-t border-[#243129]">
-                <p className="text-xs font-semibold uppercase text-[#8f9d96]">Tactical SOP:</p>
+                <p className="text-xs font-semibold uppercase text-[#8f9d96]">{copy.tacticalSopLabel}</p>
                 <p className="mt-1 text-xs leading-5 text-[#b0c0b8]">{theater.tactics}</p>
               </div>
             </div>
@@ -185,7 +189,7 @@ export function MapTacticalIntel({locale}: MapTacticalIntelProps) {
       <div className="rounded-lg border border-[#303b35] bg-[#101512] p-6 md:p-8">
         <div className="flex items-center gap-2 font-mono text-xs uppercase text-[#69c78f]">
           <BookOpen aria-hidden="true" className="size-4" />
-          <span>Doctrine & SOP</span>
+          <span>{copy.doctrineBadge}</span>
         </div>
         <h3 className="display-font mt-1 text-2xl font-bold text-white">
           {copy.relatedGuidesTitle}
