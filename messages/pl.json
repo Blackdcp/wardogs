@@ -17,8 +17,8 @@
     "description": "Season 1 jest już dostępny. Przygotuj się na Season 2: sprawdź potwierdzony harmonogram, informacje o resetach i kwestie, których jeszcze nie ogłoszono.",
     "windowLabel": "Ogłoszona data",
     "windowValue": "15 października 2026 - dokładna godzina niepotwierdzona",
-    "accessLabel": "Zweryfikowane zmiany Patch 0.11",
-    "accessValue": "Oddzielne przeglądarki Official i Community, lepsze wyszukiwanie i filtry, stałe identyfikatory serwerów, poprawki gotówki i GPU oraz większa pojemność w Azji.",
+    "accessLabel": "Potwierdzone zmiany Update 0.1.2",
+    "accessValue": "Aktualizacja z 30 września naprawia WD-L020 z KB5124010, exploity gotówki/XP i Deploy; zaawansowane filtry Official wróciły.",
     "closedBetaNote": "26 września BULKHEAD poinformował o sprzedaży trzech milionów egzemplarzy. To wynik sprzedaży, nie liczba graczy online.",
     "accessCta": "Szczegóły Season 2",
     "issuesCta": "Sprawdź stan serwerów",
@@ -95,7 +95,7 @@
     "metaDescription": "Przeszukaj niezależną WARDOGS Wiki: poradniki Season 1 ze źródłami, indeksowane strony broni i pojazdów, filmy, sterowanie, naprawy PC, logistykę i narzędzia.",
     "heroTitle": "Broń, pojazdy, poradniki i baza danych gry",
     "heroDescription": "Korzystaj ze sprawdzonej w źródłach bazy WARDOGS: wyposażenie, sterowanie, bieżący dostęp, rozwiązywanie problemów i praktyczna taktyka, z wyraźnym oznaczeniem danych zależnych od wersji.",
-    "primaryCta": "Przeczytaj o Patch 0.11",
+    "primaryCta": "Czytaj Update 0.1.2",
     "secondaryCta": "Sprawdź stan serwerów",
     "quickTasks": {
       "weapons": "Broń",
@@ -148,7 +148,7 @@
         },
         "communityServers": {
           "title": "Serwery społecznościowe",
-          "description": "Korzystaj z przeglądarki Patch 0.11, filtrów, stałych identyfikatorów, zatwierdzonych dostawców i bezpiecznych zasad serwerów."
+          "description": "Korzystaj z przeglądarki Update 0.1.2, filtrów, stałych identyfikatorów, zatwierdzonych dostawców i bezpiecznych zasad serwerów."
         },
         "issues": {
           "title": "Znane problemy",
@@ -229,10 +229,10 @@
       "buildLabel": "Wersja",
       "verifiedLabel": "Zweryfikowano",
       "sourceCta": "Przeczytaj oficjalną aktualizację Season 1",
-      "s2WipeEyebrow": "Plan wipe'a i resetu Sezonu 2",
-      "s2WipeDesc": "Zaplanowano na 15 października 2026 r. Przygotuj zabezpieczenie kapitału, rezerwy gotówkowe i transfer ról.",
-      "s2WipeCta": "Strategia wipe'a",
-      "s2WipeTitle": "Zobacz poradnik strategii wipe'a w Sezonie 2",
+      "s2WipeEyebrow": "Season 2 · 15 października",
+      "s2WipeDesc": "Season 2 rusza 15 października 2026. Gotówka/XP są resetowane; Gold Bars i kosmetyka pozostają. Dokładna godzina resetu i los poszczególnych odblokowań nie są potwierdzone.",
+      "s2WipeCta": "Czytaj zasady resetu",
+      "s2WipeTitle": "Season 2: polityka resetu i szczegóły przejścia",
       "entries": {
         "fobVendor": {
           "title": "Sprzedawca FOB",
@@ -300,13 +300,13 @@
             "title": "Steam Early Access jest dostępny",
             "description": "Early Access na Windows PC wystartował 10 września; Steam dostarcza teraz aktualną instalację i poprawki."
           },
-          "patch011": {
-            "title": "Patch 0.11 to obecny oficjalny punkt odniesienia",
-            "description": "Okno konserwacji z 14 września minęło; bieżące zmiany i komunikaty o usługach sprawdzaj w informacjach o aktualizacji oraz oficjalnym kanale Steam."
-          },
           "ps5Release": {
             "title": "Dokładne daty premier na PS5 i Xbox niepotwierdzone",
             "description": "Team17 wymienia PlayStation 5 i Xbox Series X|S jako planowane platformy, a zwiastun podaje ogólne okno konsolowe w 2028 roku. Niepotwierdzona pozostaje data premiery na każdej platformie; żadna wersja konsolowa nie jest jeszcze dostępna, a cross-play i cross-progression nie potwierdzono."
+          },
+          "patch012": {
+            "title": "Update 0.1.2 to ostatni sprawdzony oficjalny patch",
+            "description": "Aktualizacja z 30 września naprawia WD-L020 z KB5124010, exploity gotówki/XP i Deploy; zaawansowane filtry Official wróciły."
           }
         }
       }
@@ -440,16 +440,16 @@
         "cta": "Przeglądaj bazę"
       },
       "radar": {
-        "title": "Radar stanu serwerów",
-        "description": "Oficjalne przerwy techniczne, monitorowanie kolejek i radar opóźnień",
-        "badge": "Live Radar",
-        "cta": "Sprawdź status"
+        "title": "Komunikaty serwerów",
+        "description": "Datowane oficjalne komunikaty o konserwacji i awariach; bez kolejek i pingów na żywo",
+        "badge": "Datowane komunikaty",
+        "cta": "Czytaj komunikaty"
       },
       "wipe": {
-        "title": "Reset Sezonu 2 (Wipe)",
-        "description": "Zasady pełnego resetu, 12-dniowa strategia zabezpieczenia kapitału",
-        "badge": "S2 Wipe",
-        "cta": "Zobacz strategię"
+        "title": "Polityka resetu Season 2",
+        "description": "Potwierdzony reset gotówki/XP i zachowanie Gold/kosmetyki; szczegóły przejścia nieznane",
+        "badge": "Polityka S2",
+        "cta": "Czytaj zasady"
       }
     }
   },
@@ -465,7 +465,7 @@
     "metaDescription": "Śledź potwierdzoną datę Season 02 WARDOGS 15 października, najnowsze informacje o poprawkach, serwery, Steam Early Access i poradniki ze źródłami.",
     "eyebrow": "Najnowsze aktualizacje",
     "title": "Aktualności WARDOGS i potwierdzona chronologia",
-    "description": "Aktualne informacje WARDOGS ze źródłami: Season 02, Patch 0.11, stan serwerów, znane problemy, Steam Early Access i rozgrywka.",
+    "description": "Aktualne informacje WARDOGS ze źródłami: Season 02, Update 0.1.2, stan serwerów, znane problemy, Steam Early Access i rozgrywka.",
     "timeline": {
       "title": "Potwierdzona chronologia",
       "readMore": "Przeczytaj pełny poradnik",
@@ -526,10 +526,6 @@
           "title": "WARDOGS informuje o dwóch milionach sprzedanych kopii",
           "description": "BULKHEAD ogłosił oficjalny wynik sprzedaży 15 września po weekendzie premierowym. To łączna sprzedaż, nie liczba jednoczesnych graczy."
         },
-        "patch011": {
-          "title": "Patch 0.11 usprawnia przeglądarkę i wyszukiwanie serwerów społecznościowych",
-          "description": "Opublikowane okno konserwacji z 14 września minęło. Potwierdzone zmiany obejmują oddzielne przeglądarki Official i Community, filtry, stałe identyfikatory, poprawki gotówki, stabilności GPU i pojemności w Azji."
-        },
         "copiesSold": {
           "title": "WARDOGS informuje o 1.25 miliona sprzedanych kopii",
           "description": "Oficjalny kanał Steam ogłosił wynik sprzedaży po premierze Early Access 10 września; to wynik sprzedaży, nie liczba jednoczesnych graczy."
@@ -537,6 +533,10 @@
         "launchHotfix": {
           "title": "Wdrożono Launch Stability Hotfix #1",
           "description": "Poprawka klienta z 10 września dotyczyła nieudanych połączeń z serwerami, niespodziewanych wyrzuceń i długich kolejek logowania. Późniejsze oficjalne komunikaty podały, że kolejka premierowa została rozładowana."
+        },
+        "patch012": {
+          "title": "Update 0.1.2 to ostatni sprawdzony oficjalny patch",
+          "description": "Aktualizacja z 30 września naprawia WD-L020 z KB5124010, exploity gotówki/XP i Deploy; zaawansowane filtry Official wróciły."
         }
       }
     },
@@ -663,9 +663,10 @@
     "metaTitle": "WARDOGS Wiki: prywatność, cookies, analityka i reklamy",
     "metaDescription": "Przeczytaj, jak WARDOGS Wiki obsługuje cookies, analitykę, reklamy Adsterra, linki sponsorowane, media zewnętrzne oraz dane logowania do kont w grze.",
     "title": "Polityka prywatności",
-    "intro": "Ten poradnik fanowski ogranicza zbieranie danych i wyjaśnia działanie zewnętrznych mediów oraz odnośników.",
-    "content": "Nie prowadzimy kont graczy i nie zbieramy danych logowania do gry. Gdy zdecydujesz się otworzyć usługę zewnętrzną, może ona stosować własną politykę prywatności.",
-    "advertising": "Reklamy natywne i banery Adsterra, w tym poziome banery na komputery, panele boczne oraz zamykany baner mobilny, są ładowane bezpośrednio przez skrypty wydawcy. Kliknięcia otwierają strony reklamodawców w nowych kartach. Uciążliwe formaty, takie jak Popunder, Social Bar i Smartlink, pozostają całkowicie wyłączone od 2026-10-01. Żądania reklamowe przesyłają Twój adres IP, dane przeglądarki i informacje o urządzeniu do sieci reklamowych; pliki cookie podlegają ustawieniom prywatności Twojej przeglądarki."
+    "intro": "Ta strona opisuje analitykę, reklamy, zewnętrzne media i linki witryny.",
+    "content": "Nie prowadzimy kont graczy ani nie zbieramy danych logowania do gry. Na wardogswiki.com i www.wardogswiki.com Google Analytics ładuje się automatycznie przy otwarciu strony. Tag używa cookies i zbiera odsłony, interakcje w witrynie oraz informacje o przeglądarce/urządzeniu do analizy użytkowania. Analityka i bezpośrednie żądania Adsterra mogą wystąpić przed kliknięciem zewnętrznego linku; zasady dostawców dotyczą także tych żądań. Ustawienia przeglądarki mogą ograniczać cookies i identyfikatory.",
+    "advertising": "Reklamy natywne i banery Adsterra, w tym poziome banery na komputery, panele boczne oraz zamykany baner mobilny, są ładowane bezpośrednio przez skrypty wydawcy. Kliknięcia otwierają strony reklamodawców w nowych kartach. Uciążliwe formaty, takie jak Popunder, Social Bar i Smartlink, pozostają całkowicie wyłączone od 2026-10-01. Żądania reklamowe przesyłają Twój adres IP, dane przeglądarki i informacje o urządzeniu do sieci reklamowych; pliki cookie podlegają ustawieniom prywatności Twojej przeglądarki.",
+    "googlePolicy": "Polityka prywatności Google"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki: warunki korzystania i zastrzeżenia",

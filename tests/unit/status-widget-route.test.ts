@@ -12,9 +12,9 @@ describe("embed/status", () => {
     expect(body).toContain("Season 2 is announced for October 15");
     expect(body).toContain("exact start time is not confirmed");
     expect(body).toContain("not live server telemetry");
-    expect(body).toContain("2026-09-30");
+    expect(body).toContain("2026-10-03");
     expect(body).not.toContain("September 17");
-    expect(body).toContain("steamcommunity.com/app/1867240/homecontent");
+    expect(body).toContain("store.steampowered.com/news/app/1867240/view/712287592723252267");
     expect(body).not.toContain("Maintenance in");
     expect(body).not.toContain("setInterval");
   });

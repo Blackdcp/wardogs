@@ -3,6 +3,7 @@ import {officialLinks, type Locale} from "@/config/site";
 import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
 import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 import {publicAssetUrl} from "@/lib/public-url";
+import {HOME_UPDATED_AT} from "@/features/home/home-data";
 
 type JsonLd = Record<string, unknown>;
 
@@ -30,16 +31,6 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
   const origin = getSiteOrigin();
   const siteUrl = `${origin.replace(/\/$/, "")}/`;
   const localizedHomeUrl = pageUrl(locale);
-  const homeFaq = locale === "pl" ? [
-    {question: "Czym jest WARDOGS?", answer: "WARDOGS to taktyczna gra FPS na komputery z Windows, w której do 100 graczy walczy w trzech drużynach."},
-    {question: "Czy to oficjalna strona WARDOGS?", answer: "Nie. WARDOGS Wiki to niezależny, nieoficjalny poradnik tworzony dla graczy."}
-  ] : locale === "zh-tw" ? [
-    {question: "WARDOGS 是什麼遊戲？", answer: "WARDOGS 是 Windows PC 平台的戰術全面戰爭 FPS，最多 100 名玩家分成三支隊伍作戰。"},
-    {question: "這是 WARDOGS 官方網站嗎？", answer: "不是。WARDOGS Wiki 是獨立的非官方玩家攻略網站。"}
-  ] : [
-    {question: "What is WARDOGS?", answer: "WARDOGS is a 100-player, three-team tactical all-out warfare FPS for Windows PC."},
-    {question: "Is this the official WARDOGS website?", answer: "No. WARDOGS Wiki is an independent fan-made guide."}
-  ];
   return [
     {
       "@context": "https://schema.org",
@@ -64,7 +55,7 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
       url: localizedHomeUrl,
       inLanguage: locale,
       datePublished: "2026-08-13",
-      dateModified: "2026-09-26",
+      dateModified: HOME_UPDATED_AT,
       author: {"@type": "Organization", name: "WARDOGS Wiki Editorial Team", url: pageUrl(locale, "/editorial-policy")},
       publisher: {"@type": "Organization", name: "WARDOGS Wiki", url: pageUrl(locale, "/about")},
       isPartOf: {"@type": "WebSite", name: "WARDOGS Wiki", url: siteUrl},
@@ -87,11 +78,6 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
       applicationCategory: "Tactical all-out warfare FPS",
       publisher: {"@type": "Organization", name: "Team17", url: officialLinks.team17},
       author: {"@type": "Organization", name: "BULKHEAD"}
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: homeFaq.map(({question, answer}) => ({"@type": "Question", name: question, acceptedAnswer: {"@type": "Answer", text: answer}}))
     }
   ];
 }

@@ -2,10 +2,10 @@
 
 import {ArrowRight, LoaderCircle, Search, X} from "lucide-react";
 import {useLocale, useTranslations} from "next-intl";
-import {useEffect, useMemo, useRef, useState} from "react";
+import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {createPortal} from "react-dom";
 import type {Locale} from "@/config/site";
-import {recordSiteSearch, recordSiteSearchResult} from "@/features/search/site-search-analytics";
+import {createSiteSearchRecorder, recordSiteSearchResult} from "@/features/search/site-search-analytics";
 import {getNextSearchSelection, searchSiteIndex, type SiteSearchEntry} from "@/features/search/site-search-runtime";
 import {useRouter} from "@/i18n/navigation";
 
@@ -24,40 +24,48 @@ export function SiteSearchDialog({compact = false}: {compact?: boolean}) {
   const [failed, setFailed] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const results = useMemo(() => searchSiteIndex(index, query, 8), [index, query]);
+  const recordSearch = useMemo(() => createSiteSearchRecorder(locale, "header"), [locale]);
+  const closeSearch = useCallback(() => {
+    if (!loading && !failed) recordSearch(query, results.length);
+    setOpen(false);
+  }, [loading, failed, recordSearch, query, results.length]);
 
   useEffect(() => {
     if (!open) return;
     inputRef.current?.focus();
     if (indexCache.has(locale)) return;
     const controller = new AbortController();
+    let active = true;
     fetch(`/api/search-index/${locale}`, {signal: controller.signal})
       .then((response) => {
         if (!response.ok) throw new Error("Search index unavailable");
         return response.json() as Promise<SiteSearchEntry[]>;
       })
       .then((entries) => {
+        if (!active) return;
         indexCache.set(locale, entries);
         setIndex(entries);
       })
       .catch((error: unknown) => {
+        if (!active) return;
         if (error instanceof DOMException && error.name === "AbortError") return;
         setFailed(true);
       })
-      .finally(() => setLoading(false));
-    return () => controller.abort();
+      .finally(() => {if (active) setLoading(false);});
+    return () => {active = false; controller.abort();};
   }, [open, locale]);
 
   useEffect(() => {
     if (!open) return;
     function closeOnEscape(event: globalThis.KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closeSearch();
     }
     document.addEventListener("keydown", closeOnEscape);
     return () => document.removeEventListener("keydown", closeOnEscape);
-  }, [open]);
+  }, [open, closeSearch]);
 
   function openResult(result: SiteSearchEntry) {
-    recordSiteSearch(query, results.length, locale, "header");
+    recordSearch(query, results.length);
     recordSiteSearchResult(query, result, locale, "header");
     setOpen(false);
     setQuery("");
@@ -70,7 +78,12 @@ export function SiteSearchDialog({compact = false}: {compact?: boolean}) {
         aria-label={t("home.search.label")}
         className={`inline-flex shrink-0 items-center justify-center gap-2 rounded-[6px] border border-[#344c3b] text-[#d8f4e4] transition-colors hover:bg-[#244332] ${compact ? "size-11" : "min-h-11 px-3"}`}
         onClick={() => {
-          if (!indexCache.has(locale)) {
+          const cachedIndex = indexCache.get(locale);
+          if (cachedIndex) {
+            setIndex(cachedIndex);
+            setLoading(false);
+            setFailed(false);
+          } else {
             setLoading(true);
             setFailed(false);
           }
@@ -83,11 +96,11 @@ export function SiteSearchDialog({compact = false}: {compact?: boolean}) {
         {!compact && <span className="text-xs font-semibold">{t("home.search.label")}</span>}
       </button>
       {open && createPortal(
-        <div className="fixed inset-0 z-[200] overflow-y-auto bg-black/75 px-4 py-14" onMouseDown={(event) => {if (event.target === event.currentTarget) setOpen(false);}}>
+        <div className="fixed inset-0 z-[200] overflow-y-auto bg-black/75 px-4 py-14" onMouseDown={(event) => {if (event.target === event.currentTarget) closeSearch();}}>
           <section aria-label={t("home.search.label")} aria-modal="true" className="mx-auto w-full max-w-2xl border border-[#536a58] bg-[#111713] p-4 shadow-2xl sm:p-6" role="dialog">
             <div className="mb-4 flex items-center justify-between gap-3">
               <h2 className="display-font text-2xl text-white">{t("home.search.title")}</h2>
-              <button aria-label={t("common.closeMenu")} className="inline-flex size-11 items-center justify-center text-[#b8c3bd] hover:text-white" onClick={() => setOpen(false)} type="button"><X aria-hidden="true" /></button>
+              <button aria-label={t("common.closeMenu")} className="inline-flex size-11 items-center justify-center text-[#b8c3bd] hover:text-white" onClick={closeSearch} type="button"><X aria-hidden="true" /></button>
             </div>
             <div className="relative">
               <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[#82938a]" />
@@ -103,7 +116,7 @@ export function SiteSearchDialog({compact = false}: {compact?: boolean}) {
                   if (event.key === "Enter") {
                     event.preventDefault();
                     if (results[selected]) openResult(results[selected]);
-                    else if (!loading && query.trim()) recordSiteSearch(query, 0, locale, "header");
+                    else if (!loading && !failed && query.trim()) recordSearch(query, 0);
                   } else if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
                     event.preventDefault();
                     setSelected(getNextSearchSelection(selected, event.key as "ArrowDown" | "ArrowUp" | "Home" | "End", results.length));

@@ -107,7 +107,7 @@ describe("homepage data", () => {
     expect(result.status).toEqual([
       expect.objectContaining({titleKey: "season02", status: "confirmed"}),
       expect.objectContaining({titleKey: "steamEarlyAccess", status: "confirmed"}),
-      expect.objectContaining({titleKey: "patch011", status: "confirmed"}),
+      expect.objectContaining({titleKey: "patch012", status: "confirmed"}),
       expect.objectContaining({titleKey: "ps5Release", status: "rumor"})
     ]);
   });

@@ -1,5 +1,7 @@
 "use client";
 
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+
 import Image from "next/image";
 import {Copy, ExternalLink} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
@@ -140,7 +142,7 @@ export function WeaponCompare({
     const url = new URL(window.location.href);
     url.search = encodeWeaponCompareState(state, dataVersion);
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "weapon-compare", action: "share", result: "copied"}); setCopied(true); }
     catch { setShareError(true); }
   }
 

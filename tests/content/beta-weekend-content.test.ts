@@ -46,7 +46,7 @@ describe("WARDOGS Closed Beta reference content", () => {
     expect(CONFIRMED_RUMOR_ITEMS).toEqual(expect.arrayContaining([
       expect.objectContaining({status: "confirmed", titleKey: "season02", slug: "wardogs-season-2"}),
       expect.objectContaining({status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"}),
-      expect.objectContaining({status: "confirmed", titleKey: "patch011", slug: "wardogs-patch-notes"}),
+      expect.objectContaining({status: "confirmed", titleKey: "patch012", slug: "wardogs-patch-notes"}),
       expect.objectContaining({status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}),
     ]));
     expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toEqual(expect.arrayContaining([

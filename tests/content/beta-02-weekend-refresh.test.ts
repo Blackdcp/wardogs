@@ -43,8 +43,8 @@ describe("Closed Beta 02 weekend release contract", () => {
     expect(source).toContain('endsAt: "2026-09-06T08:00:00Z"');
     expect(source).toContain('earlyAccessAt: "2026-09-10"');
     expect(source).toContain('status: "live"');
-    expect(source).toContain('latestPatchVersion: "0.11"');
-    expect(source).toContain('maintenanceStartsAt: "2026-09-14T08:00:00Z"');
+    expect(source).toContain('latestPatchVersion: "0.1.2"');
+    expect(source).toContain('maintenanceStartsAt: "2026-09-30T08:00:00Z"');
   });
 
   it("publishes the contest and known-issues guides in every language while promoting only current help", async () => {

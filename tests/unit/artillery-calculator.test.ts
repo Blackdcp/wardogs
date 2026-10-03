@@ -58,6 +58,12 @@ describe("Artillery & Mortar Ballistics Engine", () => {
     expect(west.mils).toBe(4800); // 270/360 * 6400 = 4800
   });
 
+  it("wraps a near-north map bearing when mil rounding crosses a full turn", () => {
+    const bearing = calculateAzimuth({x: 0.5, y: 0.5}, {x: 0.499999, y: 0.2});
+    expect(bearing.degrees).toBeLessThan(360);
+    expect(bearing.mils).toBe(0);
+  });
+
   it("validates physical range boundaries and height delta compensation", () => {
     // Too close (<80m for mortar)
     const tooClose = calculateFiringSolution({

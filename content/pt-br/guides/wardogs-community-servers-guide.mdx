@@ -1,11 +1,11 @@
 ---
 title: "WARDOGS: servidores da comunidade e RCON"
-description: "Veja como servidores da comunidade WARDOGS funcionam no lançamento, os três hosts aprovados, limites de hospedagem própria e controles RCON ainda planejados."
+description: "Veja como servidores da comunidade WARDOGS funcionam no lançamento, os três hosts aprovados, limites de hospedagem própria e controles RCON publicados em 0.1.2."
 keyword: "wardogs community servers guide"
 category: "guide"
 slug: "wardogs-community-servers-guide"
 order: 45
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "Guia de servidor"
     tone: "accent"
@@ -17,7 +17,7 @@ faq:
   - question: "Quais empresas hospedarão servidores WARDOGS?"
     answer: "Os três provedores aprovados são QONZER, BisectHosting e xREALM. Use o anúncio oficial para chegar aos links de compra atuais."
   - question: "Os servidores WARDOGS terão RCON?"
-    answer: "Uma ferramenta própria de administração RCON está em desenvolvimento. Data e conjunto completo de comandos não foram confirmados."
+    answer: "Update 0.1.2 confirma RCON AllowedHosts, limites de mensagens/broadcasts e respostas Standard sem dados internos do servidor na configuração. O conjunto completo de comandos e uma ferramenta separada não foram verificados aqui."
   - question: "O que o dono poderá alterar no primeiro dia?"
     answer: "Servidores aprovados poderão escolher mapas e modos; mais controles devem chegar depois quando forem compatíveis com a economia."
 sources:
@@ -41,7 +41,17 @@ sources:
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
     checkedAt: "2026-09-01"
+  - label: "Atualização oficial 0.1.2"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
+
+## Update 0.1.2: atualização menor de 30 de setembro
+
+**Referência atual de patch:** [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) foi anunciado em 30 de setembro de 2026. Patch 0.11 é histórico. Confira cliente e feed oficial para builds e avisos mais recentes.
+
+No [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267), Deploy oferece **Official**, **Community**, **Infantry Mode** e **Low-Level**; os filtros avançados de **Official** foram restaurados. Limpe busca/filtros, confira **Show Empty/Full**, atualize uma vez e compare avisos atuais. **Uma região** era um contorno do Beta 02 e continua apenas um teste isolado.
 
 ## Escolha servidor com registro datado
 Anote ID, região, idioma, modo exibido, oficial/comunidade, restrições e horário. Em lista vazia, remova filtros um por vez. Título e descrição do operador não são regras globais oficiais; confira o limite de nível alegado nas condições atuais de entrada.
@@ -64,7 +74,7 @@ O anúncio oficial do Patch 0.11 lista navegadores separados para servidores **O
 
 Favoritos, filas prioritárias em níveis, Message of the Day, controles de AFK para seeding, troca de equipe e atividades de aquecimento melhores foram anunciados para depois e ainda não fazem parte do Patch 0.11.
 
-Os servidores da comunidade de WARDOGS usam **três provedores de hospedagem aprovados**. O código não está disponível para qualquer VPS ou computador doméstico. Servidores aprovados podem escolher mapas e modos, uma ferramenta RCON está em desenvolvimento e controles adicionais só devem chegar onde não prejudiquem a economia persistente.
+Os servidores da comunidade de WARDOGS usam **três provedores de hospedagem aprovados**. O código não está disponível para qualquer VPS ou computador doméstico. Servidores aprovados podem escolher mapas e modos, controles de segurança RCON estão documentados no Update 0.1.2 e controles adicionais só devem chegar onde não prejudiquem a economia persistente.
 
 <OfficialScreenshot id="patch-0-11-deploy-picker" locale="pt-br" alt="Tela Deploy com opções Official e Community" caption="Escolha Official ou Community antes de procurar um servidor. Imagem oficial do anúncio do Patch 0.11, não uma lista de servidores ao vivo; build da captura não identificada." />
 
@@ -85,7 +95,7 @@ A atualização informa:
 - três provedores aprovados no lançamento;
 - nenhum código livre para self-hosting no primeiro dia;
 - escolha de mapas e modos;
-- ferramenta de administração RCON em desenvolvimento.
+- controles RCON no Update 0.1.2; ferramenta separada completa não verificada aqui.
 
 Os hosts foram testados em desempenho e segurança. Ainda não foram detalhados regiões, preços, pacotes de slots, filas, comandos e condições comerciais.
 
@@ -111,7 +121,7 @@ O desenvolvedor alertou contra pré-vendas não oficiais. Não arrisque dinheiro
 
 ## RCON e administração
 
-RCON permite administrar o servidor à distância. WARDOGS desenvolve uma ferramenta própria, mas comandos, permissões, logs, painel e data de lançamento ainda são desconhecidos.
+RCON administra remotamente um servidor em execução. [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) adiciona AllowedHosts, limita mensagens/broadcasts, usa Standard em vez de Full e remove dados internos das respostas de configuração. São controles publicados; referência completa de comandos, autenticação, logs de auditoria e painel web separado não são estabelecidos por essa nota.
 
 Prepare funções de proprietário e moderador, armazenamento seguro, regras de banimento e canal de recurso. Não copie comandos de outro jogo. Depois do lançamento, teste primeiro leitura de status e jogadores antes de ações destrutivas.
 
@@ -135,7 +145,7 @@ Compare qualquer alegação de parceria com o anúncio oficial. Denuncie imitaç
 
 ## Confirmado e desconhecido
 
-**Confirmado:** três hosts aprovados; sem self-hosting arbitrário no lançamento; testes de segurança e desempenho; escolha de mapas e modos; RCON em desenvolvimento.
+**Confirmado:** três hosts aprovados; sem self-hosting arbitrário no lançamento; testes de segurança e desempenho; escolha de mapas e modos; controles RCON no Update 0.1.2.
 
 **Desconhecido:** preços e links atuais, preços, regiões, slots, comandos RCON, Linux/SteamCMD, mods, mapas personalizados, progressão e roteiro futuro de self-hosting.
 
@@ -144,6 +154,8 @@ Compare qualquer alegação de parceria com o anúncio oficial. Denuncie imitaç
 As datas se aplicam separadamente às fontes listadas abaixo, não ao artigo inteiro. A atualização do conteúdo não certifica todos os fatos. Notas antigas datadas mantêm seu escopo original de evidência, sem confirmar o cliente ou os servidores atuais.
 
 O anúncio oficial dos provedores, o post do Patch 0.11 e a página Steam foram revisados em 17 de setembro de 2026. Preços, regiões e instruções continuam sensíveis ao provedor e à build.
+
+Update 0.1.2 conferido em **2026-10-03**. O registro do patch não mede disponibilidade ao vivo.
 
 ## Guias relacionados
 

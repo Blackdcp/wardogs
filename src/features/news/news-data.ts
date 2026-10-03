@@ -1,5 +1,11 @@
 export const NEWS_UPDATES = [
   {
+    date: "2026-09-30",
+    status: "Confirmed",
+    titleKey: "patch012",
+    guideSlug: "wardogs-patch-notes"
+  },
+  {
     date: "2026-09-22",
     status: "Confirmed",
     titleKey: "season02",
@@ -10,12 +16,6 @@ export const NEWS_UPDATES = [
     status: "Confirmed",
     titleKey: "twoMillionCopies",
     guideSlug: "wardogs-early-access"
-  },
-  {
-    date: "2026-09-12",
-    status: "Confirmed",
-    titleKey: "patch011",
-    guideSlug: "wardogs-patch-notes"
   },
   {
     date: "2026-09-10",

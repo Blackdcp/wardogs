@@ -49,10 +49,10 @@ describe("September 17 Early Access operations", () => {
 
     const status = getPublicStatus();
     expect(status.schemaVersion).toBe(2);
-    expect(status.dataAsOf).toBe("2026-09-30");
+    expect(status.dataAsOf).toBe("2026-10-03");
     expect(status.currentEvent).toMatchObject({
-      id: "early-access-patch-0-11",
-      name: "Early Access - Patch 0.11",
+      id: "early-access-patch-0-1-2",
+      name: "Early Access - Patch 0.1.2",
       status: "live",
       launchedOn: "2026-09-10",
     });
@@ -73,8 +73,8 @@ describe("September 17 Early Access operations", () => {
     });
     expect(status.maintenance).toMatchObject({
       status: "window-passed",
-      patchVersion: "0.11",
-      startsAt: "2026-09-14T08:00:00Z",
+      patchVersion: "0.1.2",
+      startsAt: "2026-09-30T08:00:00Z",
       expectedDurationMinutes: 60,
     });
   });

@@ -46,6 +46,7 @@ export type ToolSearchParams = Record<string, string | string[] | undefined>;
 
 const hardwareTiers = new Set<HardwareTier>(["below", "minimum", "recommended", "unknown"]);
 const windowsVersions = new Set<WindowsVersion>(["windows-10", "windows-11", "unsupported"]);
+export const SYSTEM_CHECK_LIMITS = {ramGb: 1_024, storageGb: 100_000} as const;
 
 function parseBoundedInteger(value: string | null, maximum = 1_000_000) {
   if (value === null || !/^\d+$/.test(value)) return null;
@@ -63,6 +64,13 @@ function readSingleBoundedIntegerParam(params: URLSearchParams, key: string, max
   const values = params.getAll(key);
   if (values.length !== 1) return null;
   return parseBoundedInteger(values[0], maximum);
+}
+
+function readSingleBoundedNumberParam(params: URLSearchParams, key: string, maximum: number) {
+  const values = params.getAll(key);
+  if (values.length !== 1 || !/^(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(values[0])) return null;
+  const parsed = Number(values[0]);
+  return Number.isFinite(parsed) && parsed >= 0 && parsed <= maximum ? parsed : null;
 }
 
 export function serializeToolSearchParams(searchParams: ToolSearchParams) {
@@ -85,15 +93,15 @@ export function encodeSystemCheckState(state: SystemCheckState) {
 }
 
 export function decodeSystemCheckState(value: string): SystemCheckState | null {
-  if (inspectToolState(value).status === "unsupported") return null;
+  if (!isToolShareWithinLimit(value) || inspectToolState(value).status === "unsupported") return null;
   const params = new URLSearchParams(value.replace(/^\?/, ""));
-  const os = params.get("os") as WindowsVersion;
-  const cpuTier = params.get("cpu") as HardwareTier;
-  const gpuTier = params.get("gpu") as HardwareTier;
-  const ramGb = parseBoundedInteger(params.get("ram"), 1_024);
-  const storageGb = parseBoundedInteger(params.get("storage"), 100_000);
+  const os = readSingleAllowedParam(params, "os", windowsVersions) as WindowsVersion | null;
+  const cpuTier = readSingleAllowedParam(params, "cpu", hardwareTiers) as HardwareTier | null;
+  const gpuTier = readSingleAllowedParam(params, "gpu", hardwareTiers) as HardwareTier | null;
+  const ramGb = readSingleBoundedNumberParam(params, "ram", SYSTEM_CHECK_LIMITS.ramGb);
+  const storageGb = readSingleBoundedNumberParam(params, "storage", SYSTEM_CHECK_LIMITS.storageGb);
 
-  if (!windowsVersions.has(os) || !hardwareTiers.has(cpuTier) || !hardwareTiers.has(gpuTier) || ramGb === null || storageGb === null) {
+  if (!os || !cpuTier || !gpuTier || ramGb === null || storageGb === null) {
     return null;
   }
   return {os, ramGb, storageGb, cpuTier, gpuTier};

@@ -1,14 +1,11 @@
 ---
 title: 'WARDOGS: serwery społecznościowe, RCON i hosting'
-description: >-
-  Poznaj serwery społecznościowe WARDOGS, ofertę trzech zatwierdzonych
-  dostawców, zasady samodzielnego hostowania i funkcje RCON, które nadal są
-  planowane.
+description: "Poznaj serwery społecznościowe WARDOGS, ofertę trzech zatwierdzonych dostawców, zasady samodzielnego hostowania i ustawienia RCON opublikowane w 0.1.2."
 keyword: wardogs community servers guide
 category: guide
 slug: wardogs-community-servers-guide
 order: 45
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: Poradnik serwerów
     tone: accent
@@ -25,9 +22,7 @@ faq:
       Trzej zatwierdzeni dostawcy na premierę to QONZER, BisectHosting i xREALM;
       aktualne odnośniki zamówień sprawdzaj w oficjalnym ogłoszeniu.
   - question: Czy serwery społecznościowe WARDOGS będą obsługiwać RCON?
-    answer: >-
-      Narzędzie administracyjne RCON jest w przygotowaniu. Nie potwierdzono
-      jeszcze daty wydania ani pełnego zestawu poleceń.
+    answer: "Update 0.1.2 potwierdza RCON AllowedHosts, limity wiadomości/broadcastów i odpowiedzi Standard bez danych wewnętrznych serwera w konfiguracji. Pełny zestaw poleceń i osobne narzędzie nie zostały tu zweryfikowane."
   - question: Co właściciele serwerów mogą zmieniać od pierwszego dnia?
     answer: >-
       Według dewelopera zatwierdzone serwery społecznościowe mogą na premierę
@@ -62,7 +57,17 @@ sources:
     url: 'https://store.steampowered.com/app/1867240/WARDOGS/'
     kind: official
     checkedAt: '2026-09-01'
+  - label: "Oficjalna aktualizacja 0.1.2"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
+
+## Update 0.1.2: mała aktualizacja z 30 września
+
+**Aktualny punkt kontroli patcha:** [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) ogłoszono 30 września 2026. Patch 0.11 pozostaje historyczny. Nowe buildy i stan usług sprawdzaj w kliencie oraz oficjalnych ogłoszeniach.
+
+W [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) Deploy oferuje **Official**, **Community**, **Infantry Mode** i **Low-Level**; zaawansowane filtry **Official** przywrócono. Wyczyść wyszukiwanie/filtry, sprawdź **Show Empty/Full**, odśwież raz i porównaj aktualne komunikaty. **Jeden region** był obejściem Beta 02 i pozostaje tylko osobnym testem diagnostycznym.
 
 ## Historyczny punkt kontrolny: Stan Season 1 - 17 września 2026
 
@@ -80,7 +85,7 @@ Oficjalna zapowiedź Patch 0.11 wymienia osobne przeglądarki **Official** i **C
 
 Ulubione, wielopoziomowe kolejki priorytetowe, Message of the Day, kontrola AFK przy zapełnianiu, zmiana zespołu i ulepszona rozgrzewka są zapowiedziane na później i nie stanowią jeszcze części Patch 0.11.
 
-Serwery społecznościowe WARDOGS korzystają z **trzech zatwierdzonych dostawców hostingu**. Deweloper nie planuje rozpowszechniania kodu serwera do dowolnego samodzielnego hostowania. Zatwierdzone serwery mogą wybierać mapy i tryby, narzędzie administracyjne RCON jest w przygotowaniu, a dalsze ustawienia mogą się pojawić tam, gdzie nie podważą trwałej gospodarki.
+Serwery społecznościowe WARDOGS korzystają z **trzech zatwierdzonych dostawców hostingu**. Deweloper nie planuje rozpowszechniania kodu serwera do dowolnego samodzielnego hostowania. Zatwierdzone serwery mogą wybierać mapy i tryby, ustawienia bezpieczeństwa RCON opisano w Update 0.1.2, a dalsze ustawienia mogą się pojawić tam, gdzie nie podważą trwałej gospodarki.
 
 <OfficialScreenshot id="patch-0-11-deploy-picker" locale="pl" alt="Ekran Deploy z wyborem Official i Community" caption="Przed szukaniem serwera wybierz Official albo Community. Oficjalny obraz z zapowiedzi Patch 0.11, nie bieżąca lista serwerów; wersja nagrania nieznana." />
 
@@ -101,13 +106,13 @@ Komunikat dewelopera o serwerach społecznościowych potwierdza cztery praktyczn
 - Zatwierdzono trzy firmy hostingowe na premierę.
 - Kod serwera nie zostanie na premierę udostępniony do dowolnego samodzielnego hostowania.
 - Zatwierdzone serwery społecznościowe mogą od pierwszego dnia wybierać mapy i tryby.
-- Powstaje dedykowane narzędzie administracyjne RCON.
+- Ustawienia RCON opisano w Update 0.1.2; pełne osobne narzędzie niezweryfikowane.
 
 Dostawców przetestowano pod względem wydajności i bezpieczeństwa. Pomaga to utrzymać zachowanie serwera bliskie wspieranej wersji, lecz nie oznacza, że wszystkie regiony, liczby slotów, ceny, funkcje kolejek i polecenia moderacyjne są już publiczne.
 
 ## Czego szukają gracze
 
-Główne pytania dotyczą samodzielnego hostowania, zatwierdzonych dostawców, wyboru map i trybów, dostępności RCON pierwszego dnia oraz wpływu postępów z prywatnych serwerów na publiczną gospodarkę. Dziś potwierdzono jedynie model startowy trzech dostawców oraz wybór map i trybów od pierwszego dnia.
+Główne pytania dotyczą samodzielnego hostowania, zatwierdzonych dostawców, wyboru map i trybów, dostępności RCON pierwszego dnia oraz wpływu postępów z prywatnych serwerów na publiczną gospodarkę. Zapis premiery potwierdza trzech dostawców i wybór map/trybów; Update 0.1.2 osobno opisuje ustawienia RCON.
 
 ## Wybieraj serwer z datowaną dokumentacją
 
@@ -139,7 +144,7 @@ Nie zamawiaj nieoficjalnego serwera przedpremierowo tylko dla zarezerwowania naz
 
 ## RCON i administracja
 
-RCON to interfejs zdalnej administracji służący monitorowaniu i zarządzaniu działającym serwerem gry. WARDOGS informuje, że własne narzędzie RCON jest w przygotowaniu. Uzasadnia to oczekiwanie zdalnej moderacji, ale dokładny zestaw poleceń, model uwierzytelniania, dziennik audytu, panel WWW, zgodność konsoli i data wydania pozostają nieznane.
+RCON służy zdalnej administracji działającym serwerem. [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) dodaje AllowedHosts, ogranicza długość wiadomości/broadcastów, ustawia Standard zamiast Full i usuwa dane wewnętrzne serwera z odpowiedzi konfiguracji. To opublikowane ustawienia; pełna lista poleceń, model uwierzytelniania, dziennik audytu i osobny panel WWW nie są potwierdzone tą notą.
 
 Odpowiedzialna lista startowa obejmuje przygotowanie ról administratorów, przechowywania haseł, zasad eskalacji, dowodów blokad i drogi kontaktu, zanim założy się istnienie poleceń. Nie publikuj komend RCON skopiowanych z innej gry; nawet znajome nazwy mogą działać inaczej.
 
@@ -171,9 +176,9 @@ Jeśli oferta twierdzi, że jest oficjalna, zapisz URL i porównaj go z ogłosze
 
 ## Potwierdzone i nieznane
 
-**Potwierdzone:** trzech zatwierdzonych dostawców na premierę; brak kodu do dowolnego samodzielnego hostowania na start; testy wydajności i bezpieczeństwa dostawców; wybór map i trybów pierwszego dnia; RCON w przygotowaniu; dalsze ustawienia rozważane później.
+**Potwierdzone:** trzech zatwierdzonych dostawców na premierę; brak kodu do dowolnego samodzielnego hostowania na start; testy wydajności i bezpieczeństwa dostawców; wybór map i trybów pierwszego dnia; ustawienia RCON w Update 0.1.2; dalsze ustawienia rozważane później.
 
-**Nieznane:** cenniki dostawców i bieżące linki zamówień, ceny, regiony, poziomy liczby slotów, data i polecenia RCON, obsługa Linux lub SteamCMD, modyfikacje, własne mapy, ustawienia postępów i późniejszy plan samodzielnego hostowania.
+**Nieznane:** cenniki dostawców i bieżące linki zamówień, ceny, regiony, poziomy liczby slotów, pełna lista poleceń i osobne narzędzie RCON, obsługa Linux lub SteamCMD, modyfikacje, własne mapy, ustawienia postępów i późniejszy plan samodzielnego hostowania.
 
 ## Najczęstsze pytania
 
@@ -188,6 +193,8 @@ Jeśli oferta twierdzi, że jest oficjalna, zapisz URL i porównaj go z ogłosze
 Daty sprawdzenia dotyczą osobno źródeł wymienionych poniżej, nie całego artykułu. Data aktualizacji treści nie poświadcza wszystkich faktów. Starsze datowane notatki zachowują dawny zakres dowodów, bez potwierdzania obecnego klienta lub stanu serwerów.
 
 Wpis Patch 0.11 sprawdzono ponownie 26 września 2026; pozostałe daty źródeł są powyżej. Ceny, regiony i instrukcje techniczne nadal zależą od dostawcy oraz wersji.
+
+Update 0.1.2 sprawdzono **2026-10-03**. Zapis aktualizacji nie mierzy dostępności na żywo.
 
 ## Powiązane poradniki
 

@@ -17,8 +17,8 @@
     "description": "シーズン1は現在プレイ可能です。シーズン2の公式日程、ワイプ情報、まだ発表されていない内容を確認できます。",
     "windowLabel": "発表済みの日程",
     "windowValue": "2026年10月15日 - 開始時刻は未発表",
-    "accessLabel": "Patch 0.11の確認済み変更",
-    "accessValue": "公式・Communityブラウザーの分離、検索とフィルター、固定サーバーID、キャッシュとGPU修正、アジア地域の容量増加。",
+    "accessLabel": "Update 0.1.2の公式変更点",
+    "accessValue": "9月30日の更新はKB5124010によるWD-L020、Cash/XP不正獲得、Deployを修正。Officialの高度なフィルターが復活。",
     "closedBetaNote": "BULKHEADは9月26日に販売300万本を発表しました。同時接続数ではなく販売本数です。",
     "accessCta": "シーズン2の詳細",
     "issuesCta": "サーバー状態を確認",
@@ -95,7 +95,7 @@
     "metaDescription": "独立運営の WARDOGS Wiki で、出典付きSeason 1攻略、武器、車両、現行動画、操作、PC対策、兵站、プレイヤーツールをまとめて検索できます。",
     "heroTitle": "武器・車両・攻略・ゲームデータベース",
     "heroDescription": "装備、操作、現在の参加状況、不具合対策、実戦戦術を出典付きで確認できます。ビルド依存の情報は明確に区別しています。",
-    "primaryCta": "Patch 0.11を読む",
+    "primaryCta": "Update 0.1.2を読む",
     "secondaryCta": "サーバー状態を確認",
     "quickTasks": {
       "weapons": "武器",
@@ -148,7 +148,7 @@
         },
         "communityServers": {
           "title": "コミュニティサーバー",
-          "description": "Patch 0.11の一覧、フィルター、固定ID、承認ホスト、安全なルールを確認します。"
+          "description": "Update 0.1.2の一覧、フィルター、固定ID、承認ホスト、安全なルールを確認します。"
         },
         "issues": {
           "title": "既知の問題",
@@ -229,10 +229,10 @@
       "buildLabel": "ビルド",
       "verifiedLabel": "確認日",
       "sourceCta": "Season 1公式アップデートを読む",
-      "s2WipeEyebrow": "シーズン2 ワイプ＆リセットロードマップ",
-      "s2WipeDesc": "2026年10月15日に予定。資産保全、ヘッジ、役職引き継ぎの準備を進めましょう。",
-      "s2WipeCta": "ワイプ対策ガイド",
-      "s2WipeTitle": "シーズン2 ワイプ対策ガイドを見る",
+      "s2WipeEyebrow": "Season 2 · 10月15日",
+      "s2WipeDesc": "Season 2は2026年10月15日開始。Cash・XPはリセットされ、Gold Barsとコスメは維持されます。正確なリセット時刻と個別解除の扱いは未確認です。",
+      "s2WipeCta": "リセット方針を読む",
+      "s2WipeTitle": "Season 2のリセット方針と移行詳細",
       "entries": {
         "fobVendor": {
           "title": "FOBベンダー",
@@ -300,13 +300,13 @@
             "title": "Steam Early Accessは配信中",
             "description": "Windows PC版は9月10日に開始され、現在のインストールとパッチはSteamから提供されます。"
           },
-          "patch011": {
-            "title": "現在の公式確認点はPatch 0.11",
-            "description": "9月14日のメンテナンス時間は終了済みです。現在の変更と運用告知はパッチノートとSteam公式フィードで確認してください。"
-          },
           "ps5Release": {
             "title": "PS5・Xboxの機種別発売日は未発表",
             "description": "Team17はPlayStation 5とXbox Series X|Sを予定機種として明記し、公式トレーラーはコンソール全体の2028年枠を示しています。未確認なのは機種別の発売日です。コンソール版はまだプレイできず、クロスプレイと進行共有も未発表です。"
+          },
+          "patch012": {
+            "title": "確認済み最新公式パッチはUpdate 0.1.2",
+            "description": "9月30日の更新はKB5124010によるWD-L020、Cash/XP不正獲得、Deployを修正。Officialの高度なフィルターが復活。"
           }
         }
       }
@@ -440,16 +440,16 @@
         "cta": "図鑑を確認"
       },
       "radar": {
-        "title": "リアルタイムサーバー監視",
-        "description": "公式メンテ情報、マッチ待機列監視および地域Pingレーダー",
-        "badge": "Live Radar",
-        "cta": "状態を確認"
+        "title": "サーバー告知",
+        "description": "日付付きの公式メンテナンス・障害告知。待機列やPingのライブ計測なし",
+        "badge": "日付付き告知",
+        "cta": "告知を読む"
       },
       "wipe": {
-        "title": "シーズン2 ワイプ対策",
-        "description": "全リセット規定マトリクス、12日間の資産保全ヘッジ策",
-        "badge": "S2 Wipe",
-        "cta": "対策を見る"
+        "title": "Season 2リセット方針",
+        "description": "確定済みCash/XPリセットとGold・コスメ維持、未発表の移行詳細",
+        "badge": "S2方針",
+        "cta": "方針を読む"
       }
     }
   },
@@ -461,11 +461,11 @@
     "read": "攻略を読む"
   },
   "news": {
-    "metaTitle": "WARDOGSニュース - Patch 0.11・サーバー・Early Access",
-    "metaDescription": "Patch 0.11メンテナンス、サーバー修正、Steam Early Access、コンソール計画、プラットフォーム状況、更新ガイドを一次情報で追跡します。",
+    "metaTitle": "WARDOGSニュース - Update 0.1.2・サーバー・Early Access",
+    "metaDescription": "Update 0.1.2メンテナンス、サーバー修正、Steam Early Access、コンソール計画、プラットフォーム状況、更新ガイドを一次情報で追跡します。",
     "eyebrow": "最新情報",
     "title": "WARDOGSニュースと確認済みスケジュール",
-    "description": "Patch 0.11、サーバー状態、既知の問題、Steam Early Access、プラットフォーム、ダウンロード、ゲームプレイの最新情報です。",
+    "description": "Update 0.1.2、サーバー状態、既知の問題、Steam Early Access、プラットフォーム、ダウンロード、ゲームプレイの最新情報です。",
     "timeline": {
       "title": "確認済みスケジュール",
       "readMore": "詳しい攻略を読む",
@@ -526,10 +526,6 @@
           "title": "WARDOGSが販売200万本を発表",
           "description": "BULKHEADが9月15日に発表した公式販売記録です。同時接続プレイヤー数ではありません。"
         },
-        "patch011": {
-          "title": "Patch 0.11でサーバー一覧とCommunity検索を改善",
-          "description": "9月14日に告知された時間は経過しました。公式・Community一覧の分離、フィルター、固定ID、資金とGPUの修正、アジア地域容量が確認済みです。"
-        },
         "copiesSold": {
           "title": "WARDOGSが125万本販売を発表",
           "description": "Early Access開始後にSteam公式フィードで発表された販売本数であり、同時接続プレイヤー数ではありません。"
@@ -537,6 +533,10 @@
         "launchHotfix": {
           "title": "Launch Stability Hotfix #1配信",
           "description": "9月10日のクライアント修正は、サーバー参加失敗、予期しない切断、長いログイン待機列を対象にしました。"
+        },
+        "patch012": {
+          "title": "確認済み最新公式パッチはUpdate 0.1.2",
+          "description": "9月30日の更新はKB5124010によるWD-L020、Cash/XP不正獲得、Deployを修正。Officialの高度なフィルターが復活。"
         }
       }
     },
@@ -663,9 +663,10 @@
     "metaTitle": "WARDOGS Wikiプライバシーポリシー：Cookie・解析・広告",
     "metaDescription": "WARDOGS WikiにおけるCookie、解析、Adsterra広告、スポンサーリンク、外部メディア、ゲームアカウント情報を収集しない方針を説明します。",
     "title": "プライバシーポリシー",
-    "intro": "このファン攻略はデータ収集を最小限にし、外部メディアとリンクの動作を説明します。",
-    "content": "当サイトはプレイヤーアカウントを運営せず、ゲームの認証情報を収集しません。外部サービスを開いた後は各社のプライバシーポリシーが適用されます。",
-    "advertising": "Adsterraのネイティブ広告およびディスプレイバナー（PC向け水平バナー、サイドバー、非表示可能なモバイル固定バナーを含む）は、広告スクリプトを介して直接読み込まれます。クリックすると新しいタブで広告主のページが開きます。Popunder、Social Bar、Smartlinkなどの迷惑な広告フォーマットは2026-10-01より完全に無効化されています。広告配信リクエストにより、IPアドレス、ブラウザ情報、端末データが広告事業者に送信される場合があり、Cookieの取り扱いはブラウザの設定に準拠します。"
+    "intro": "このページではサイトの解析、広告、外部メディアとリンクについて説明します。",
+    "content": "当サイトはゲームアカウントを運営せず、ゲーム認証情報を収集しません。wardogswiki.comとwww.wardogswiki.comではページを開くとGoogle Analyticsが自動的に読み込まれます。タグはCookieを使い、閲覧ページ、サイト内の操作、ブラウザ・端末情報を利用状況の解析のため収集します。解析と直接のAdsterraリクエストは外部リンクのクリック前にも発生し、それらのリクエストにも各社の方針が適用されます。ブラウザ設定でCookieや識別子を制限できます。",
+    "advertising": "Adsterraのネイティブ広告およびディスプレイバナー（PC向け水平バナー、サイドバー、非表示可能なモバイル固定バナーを含む）は、広告スクリプトを介して直接読み込まれます。クリックすると新しいタブで広告主のページが開きます。Popunder、Social Bar、Smartlinkなどの迷惑な広告フォーマットは2026-10-01より完全に無効化されています。広告配信リクエストにより、IPアドレス、ブラウザ情報、端末データが広告事業者に送信される場合があり、Cookieの取り扱いはブラウザの設定に準拠します。",
+    "googlePolicy": "Googleプライバシーポリシー"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki利用規約：攻略情報の注意事項と免責",

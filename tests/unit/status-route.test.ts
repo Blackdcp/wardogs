@@ -30,11 +30,11 @@ describe("api/status.json", () => {
     expect(response.headers.get("access-control-allow-origin")).toBe("*");
     expect(payload).toMatchObject({
       schemaVersion: 2,
-      dataAsOf: "2026-09-30",
+      dataAsOf: "2026-10-03",
       game: "WARDOGS",
       currentEvent: {
-        id: "early-access-patch-0-11",
-        name: "Early Access - Patch 0.11",
+        id: "early-access-patch-0-1-2",
+        name: "Early Access - Patch 0.1.2",
         status: "live",
         launchedOn: "2026-09-10"
       },
@@ -46,8 +46,8 @@ describe("api/status.json", () => {
       },
       maintenance: {
         status: "window-passed",
-        patchVersion: "0.11",
-        startsAt: "2026-09-14T08:00:00Z",
+        patchVersion: "0.1.2",
+        startsAt: "2026-09-30T08:00:00Z",
         expectedDurationMinutes: 60
       },
       nextSeason: {
@@ -64,7 +64,7 @@ describe("api/status.json", () => {
     }));
     expect(payload.sources).toEqual(expect.arrayContaining([
       expect.objectContaining({kind: "official", url: "https://store.steampowered.com/app/1867240/WARDOGS/"}),
-      expect.objectContaining({kind: "official", url: "https://steamcommunity.com/app/1867240/homecontent/"})
+      expect.objectContaining({kind: "official", url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"})
     ]));
   });
 });

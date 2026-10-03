@@ -1,5 +1,7 @@
 import {seasonOneChanges, type SeasonOneChange} from "@/features/catalogue/catalogue-evidence";
 
+export const HOME_UPDATED_AT = "2026-10-03";
+
 export const HOME_FACT_KEYS = ["earlyAccess", "players", "teams", "controlZone"] as const;
 export type HomeFactKey = (typeof HOME_FACT_KEYS)[number];
 
@@ -79,7 +81,7 @@ export function getRecentlyUpdatedGuides<T extends RecentlyUpdatedGuideInput>(gu
 export const CONFIRMED_RUMOR_ITEMS = [
   {status: "confirmed", titleKey: "season02", slug: "wardogs-season-2"},
   {status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"},
-  {status: "confirmed", titleKey: "patch011", slug: "wardogs-patch-notes"},
+  {status: "confirmed", titleKey: "patch012", slug: "wardogs-patch-notes"},
   {status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}
 ] as const;
 

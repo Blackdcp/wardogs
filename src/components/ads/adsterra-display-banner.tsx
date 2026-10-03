@@ -4,24 +4,24 @@ import {useEffect, useRef, useState} from "react";
 import {X} from "lucide-react";
 import {
   ADSTERRA_ENABLED,
-  ADSTERRA_LEADERBOARD_ENABLED,
   ADSTERRA_MOBILE_STICKY_ENABLED,
   ADSTERRA_RIGHT_RAIL_ENABLED
 } from "@/features/ads/ad-policy";
 import {
   ADSTERRA_BANNER_UNITS,
-  buildAdsterraBannerConfigCode,
+  mountAdsterraBanner,
+  observeAdContainerWidth,
+  observeAdSlot,
+  selectAdsterraDisplayUnit,
   type AdsterraBannerUnit
 } from "@/features/ads/adsterra-banner";
+import {isProductionHostname} from "@/lib/analytics-events";
 
 export {ADSTERRA_BANNER_UNITS} from "@/features/ads/adsterra-banner";
 export type {AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
 
-export function selectHorizontalBannerUnit(viewportWidth: number): AdsterraBannerUnit | null {
-  if (!ADSTERRA_ENABLED) return null;
-  if (viewportWidth >= 728) return ADSTERRA_LEADERBOARD_ENABLED ? ADSTERRA_BANNER_UNITS.leaderboard728 : null;
-  if (viewportWidth >= 468) return ADSTERRA_BANNER_UNITS.horizontal468;
-  return null;
+export function selectHorizontalBannerUnit(contentWidth: number): AdsterraBannerUnit | null {
+  return selectAdsterraDisplayUnit("horizontal", contentWidth);
 }
 
 type BannerSlotProps = {
@@ -29,32 +29,24 @@ type BannerSlotProps = {
   label?: string;
   placement: string;
   unit: AdsterraBannerUnit | null;
+  loadEnabled?: boolean;
 };
 
-function BannerSlot({className = "", label = "Advertisement", placement, unit}: BannerSlotProps) {
+function BannerSlot({className = "", label = "Advertisement", placement, unit, loadEnabled = true}: BannerSlotProps) {
   const slotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ADSTERRA_ENABLED || !unit) return;
+    if (!ADSTERRA_ENABLED || !unit || !loadEnabled || !isProductionHostname(window.location.hostname)) return;
     const el = slotRef.current;
     if (!el) return;
 
-    el.innerHTML = "";
-
-    const configScript = document.createElement("script");
-    configScript.type = "text/javascript";
-    configScript.innerHTML = buildAdsterraBannerConfigCode(unit);
-
-    const invokeScript = document.createElement("script");
-    invokeScript.type = "text/javascript";
-    invokeScript.src = unit.src;
-
-    el.append(configScript, invokeScript);
-
+    const observation = observeAdSlot(el, placement, "display");
+    const cancelLoad = mountAdsterraBanner(el, unit, observation.report);
     return () => {
-      el.innerHTML = "";
+      observation.cleanup();
+      cancelLoad();
     };
-  }, [unit]);
+  }, [loadEnabled, placement, unit]);
 
   if (!ADSTERRA_ENABLED || !unit) return null;
 
@@ -68,8 +60,8 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit}: 
       <p className="mb-2 text-center text-[10px] font-semibold uppercase text-[#718079]">{label}</p>
       <div
         ref={slotRef}
-        className="mx-auto flex max-w-full items-center justify-center overflow-hidden"
-        style={{minHeight: unit.height, minWidth: unit.width}}
+        className="mx-auto flex items-center justify-center"
+        style={{minHeight: unit.height, width: unit.width, maxWidth: loadEnabled ? undefined : "100%"}}
         data-adsterra-unit={unit.key}
       />
     </aside>
@@ -82,27 +74,32 @@ type AdsterraDisplayBannerProps = {
 };
 
 export function AdsterraDisplayBanner({label, placement}: AdsterraDisplayBannerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [measured, setMeasured] = useState(false);
   const [unit, setUnit] = useState<AdsterraBannerUnit | null>(
     placement === "rectangle" ? ADSTERRA_BANNER_UNITS.rectangle300 : null
   );
 
   useEffect(() => {
-    if (!ADSTERRA_ENABLED || placement !== "horizontal") return;
-    const update = () => setUnit(selectHorizontalBannerUnit(window.innerWidth));
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    if (!ADSTERRA_ENABLED || !containerRef.current) return;
+    return observeAdContainerWidth(containerRef.current, (width) => {
+      setUnit(selectAdsterraDisplayUnit(placement, width));
+      setMeasured(true);
+    });
   }, [placement]);
 
-  if (!ADSTERRA_ENABLED || !unit) return null;
+  if (!ADSTERRA_ENABLED) return null;
 
   return (
-    <BannerSlot
-      className={placement === "rectangle" ? "my-10" : "my-6 min-h-0"}
-      label={label}
-      placement={placement}
-      unit={unit}
-    />
+    <div ref={containerRef} className="min-w-0 w-full" data-ad-container={placement}>
+      <BannerSlot
+        className={placement === "rectangle" ? "my-10" : "my-6 min-h-0"}
+        label={label}
+        placement={placement}
+        unit={unit}
+        loadEnabled={measured}
+      />
+    </div>
   );
 }
 

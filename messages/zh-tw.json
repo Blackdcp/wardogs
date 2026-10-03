@@ -17,8 +17,8 @@
     "description": "第一賽季目前可以遊玩。檢視第二賽季已公佈的日期、刪檔資訊和尚未確認的內容，提前準備下一賽季。",
     "windowLabel": "已公佈日期",
     "windowValue": "2026 年 10 月 15 日，具體時間尚未確認",
-    "accessLabel": "Patch 0.11 已確認改動",
-    "accessValue": "拆分官方與社群伺服器列表，改進搜尋和篩選，保留伺服器 ID，修復現金與 GPU 問題，並增加亞洲容量。",
+    "accessLabel": "已確認 Update 0.1.2 調整",
+    "accessValue": "9 月 30 日小型修補修復 KB5124010 相關 WD-L020、現金/XP 漏洞並調整 Deploy；Official 進階篩選已恢復。",
     "closedBetaNote": "BULKHEAD 於 9 月 26 日宣佈銷量達到 300 萬份；這是累計銷量，不是即時線上人數。",
     "accessCta": "檢視第二賽季詳情",
     "issuesCta": "檢查伺服器狀態",
@@ -95,7 +95,7 @@
     "metaDescription": "WARDOGS 獨立中文維基資料庫。提供 S2 刪檔清零倒計時、武器載具屬性實測、迫擊砲與火砲密位射表、WD-L020 報錯修復與 256km² 戰區高清互動地圖。",
     "heroTitle": "武器、載具、攻略與遊戲資料庫",
     "heroDescription": "這裡整理經過來源核實的裝備、操作、當前參與狀態、故障排查與實戰策略，並明確標註所有受版本影響的資訊。",
-    "primaryCta": "檢視 Patch 0.11",
+    "primaryCta": "閱讀 Update 0.1.2",
     "secondaryCta": "檢查伺服器狀態",
     "quickTasks": {
       "weapons": "武器",
@@ -148,7 +148,7 @@
         },
         "communityServers": {
           "title": "社群伺服器",
-          "description": "使用 Patch 0.11 瀏覽器、篩選、固定 ID、獲批託管商與安全伺服器規則。"
+          "description": "使用 Update 0.1.2 瀏覽器、篩選、固定 ID、獲批託管商與安全伺服器規則。"
         },
         "issues": {
           "title": "已知問題",
@@ -229,10 +229,10 @@
       "buildLabel": "版本",
       "verifiedLabel": "核對日期",
       "sourceCta": "檢視 Season 1 官方更新",
-      "s2WipeEyebrow": "第二賽季刪檔動態 (S2 Wipe Countdown)",
-      "s2WipeDesc": "官方宣佈 2026年10月15日 全服重置清零，立即查閱裝備避險與資產對沖策略",
-      "s2WipeCta": "查看刪檔應對指南",
-      "s2WipeTitle": "查閱 S2 賽季刪檔應對指南",
+      "s2WipeEyebrow": "第二賽季 · 10 月 15 日",
+      "s2WipeDesc": "Season 2 於 2026 年 10 月 15 日上線。已公布政策為現金/XP 重置，Gold Bars 與外觀保留；具體重置時刻及逐項解鎖處理仍待確認。",
+      "s2WipeCta": "閱讀重置政策",
+      "s2WipeTitle": "第二賽季重置政策與換季細節",
       "entries": {
         "fobVendor": {
           "title": "FOB 商人",
@@ -300,13 +300,13 @@
             "title": "Steam 搶先體驗已經上線",
             "description": "Windows PC 版已於 9 月 10 日上線；當前安裝與補丁均由 Steam 主應用提供。"
           },
-          "patch011": {
-            "title": "Patch 0.11 是當前官方核對點",
-            "description": "9 月 14 日維護視窗已經結束；當前改動和線上服務公告請檢視補丁說明與 Steam 官方動態。"
-          },
           "ps5Release": {
             "title": "PS5 和 Xbox 的具體發售日期尚未確認",
             "description": "Team17 已將 PlayStation 5 和 Xbox Series X|S 列為計劃登陸的平臺，官方預告僅給出主機版 2028 年的整體視窗。尚未確認的是各平臺的具體釋出日期；主機版目前不可玩，跨平臺聯機和進度共享也未公佈。"
+          },
+          "patch012": {
+            "title": "Update 0.1.2 是最新核對的官方修補",
+            "description": "9 月 30 日小型修補修復 KB5124010 相關 WD-L020、現金/XP 漏洞並調整 Deploy；Official 進階篩選已恢復。"
           }
         }
       }
@@ -440,16 +440,16 @@
         "cta": "查驗圖鑑"
       },
       "radar": {
-        "title": "實時服務監控",
-        "description": "官方停機維護動態、匹配隊列監測與跨區延遲雷達",
-        "badge": "Live Radar",
-        "cta": "查看狀態"
+        "title": "伺服器公告",
+        "description": "帶日期的官方維護與異常記錄；不提供即時佇列或延遲遙測",
+        "badge": "公告記錄",
+        "cta": "閱讀公告"
       },
       "wipe": {
-        "title": "第二賽季刪檔",
-        "description": "賽季清零規則矩陣、12 天避險策略與現金兌換率",
-        "badge": "S2 Wipe",
-        "cta": "查看應對"
+        "title": "第二賽季重置政策",
+        "description": "已確認現金/XP 重置與 Gold/外觀保留，換季細節仍待公布",
+        "badge": "S2 政策",
+        "cta": "閱讀政策"
       }
     }
   },
@@ -461,11 +461,11 @@
     "read": "閱讀攻略"
   },
   "news": {
-    "metaTitle": "WARDOGS 新聞 - Patch 0.11、伺服器與搶先體驗",
-    "metaDescription": "追蹤 WARDOGS Patch 0.11 維護、伺服器修復、Steam 搶先體驗、主機計劃、平臺狀態和攻略更新，所有關鍵結論附第一方來源。",
+    "metaTitle": "WARDOGS 新聞 - Update 0.1.2、伺服器與搶先體驗",
+    "metaDescription": "追蹤 WARDOGS Update 0.1.2 維護、伺服器修復、Steam 搶先體驗、主機計劃、平臺狀態和攻略更新，所有關鍵結論附第一方來源。",
     "eyebrow": "最新更新",
     "title": "WARDOGS 新聞與確認時間表",
-    "description": "持續更新有來源的 WARDOGS Patch 0.11、伺服器狀態、已知問題、Steam 搶先體驗、平臺、下載和玩法資訊。",
+    "description": "持續更新有來源的 WARDOGS Update 0.1.2、伺服器狀態、已知問題、Steam 搶先體驗、平臺、下載和玩法資訊。",
     "timeline": {
       "title": "確認時間表",
       "readMore": "閱讀全文",
@@ -526,10 +526,6 @@
           "title": "WARDOGS 官方宣佈銷量達到 200 萬份",
           "description": "BULKHEAD 於 9 月 15 日公佈了這一官方銷量里程碑；它不是同時線上人數。"
         },
-        "patch011": {
-          "title": "Patch 0.11 改進伺服器瀏覽器與社群服發現",
-          "description": "官方公佈的 9 月 14 日視窗已經過去；已確認改動包括拆分列表、篩選、固定 ID、現金與 GPU 修復以及亞洲容量擴充。"
-        },
         "copiesSold": {
           "title": "WARDOGS 官方宣佈銷量達到 125 萬份",
           "description": "該資料由 Steam 官方動態在搶先體驗上線後公佈，代表銷量，不是同時線上人數。"
@@ -537,6 +533,10 @@
         "launchHotfix": {
           "title": "Launch Stability Hotfix #1 已上線",
           "description": "9 月 10 日客戶端熱修復針對無法加入伺服器、遊玩中意外被踢和登入佇列過長。"
+        },
+        "patch012": {
+          "title": "Update 0.1.2 是最新核對的官方修補",
+          "description": "9 月 30 日小型修補修復 KB5124010 相關 WD-L020、現金/XP 漏洞並調整 Deploy；Official 進階篩選已恢復。"
         }
       }
     },
@@ -663,9 +663,10 @@
     "metaTitle": "WARDOGS Wiki 隱私政策：Cookie、分析與廣告",
     "metaDescription": "瞭解 WARDOGS Wiki 如何處理 Cookie、網站分析、Adsterra 廣告、贊助連結、外部媒體，以及為何不收集遊戲賬號憑證。",
     "title": "隱私政策",
-    "intro": "本站儘量減少資料收集，並說明外部媒體和連結的工作方式。",
-    "content": "我們不經營玩家賬戶，也不收集遊戲登入憑證。",
-    "advertising": "Adsterra 原生廣告與展示橫幅（包括桌面橫幅、側邊欄和可關閉的行動端懸浮條）直接透過廣告腳本載入。使用者點擊將在新分頁中開啟廣告主頁面。自 2026-10-01 起，本站已徹底停用 Popunder 彈窗、Social Bar 與 Smartlink 等干擾性廣告格式。請求廣告內容時，您的 IP 位址以及瀏覽器與裝置軟硬體資訊將傳輸給廣告網路以完成廣告渲染；相關 Cookie 遵循您的瀏覽器隱私設定。"
+    "intro": "本頁說明本站的統計分析、廣告、外部媒體與連結。",
+    "content": "我們不經營玩家帳戶，也不收集遊戲登入憑證。在 wardogswiki.com 和 www.wardogswiki.com 開啟頁面時，Google Analytics 會自動載入。其標籤使用 Cookie，收集頁面瀏覽、站內互動及瀏覽器/裝置資訊，用於分析網站使用情況。統計與直接 Adsterra 請求可能在點擊外部連結之前發生；第三方政策也適用於這些請求。瀏覽器設定可限制 Cookie 與識別碼。",
+    "advertising": "Adsterra 原生廣告與展示橫幅（包括桌面橫幅、側邊欄和可關閉的行動端懸浮條）直接透過廣告腳本載入。使用者點擊將在新分頁中開啟廣告主頁面。自 2026-10-01 起，本站已徹底停用 Popunder 彈窗、Social Bar 與 Smartlink 等干擾性廣告格式。請求廣告內容時，您的 IP 位址以及瀏覽器與裝置軟硬體資訊將傳輸給廣告網路以完成廣告渲染；相關 Cookie 遵循您的瀏覽器隱私設定。",
+    "googlePolicy": "Google 隱私權政策"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki 使用條款：攻略規範與免責宣告",

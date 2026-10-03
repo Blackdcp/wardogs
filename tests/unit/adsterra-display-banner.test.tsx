@@ -16,7 +16,7 @@ describe("Adsterra display banner inventory", () => {
     });
   });
 
-  it("selects the restored horizontal inventory by viewport", async () => {
+  it("selects horizontal inventory by available content width", async () => {
     const {ADSTERRA_BANNER_UNITS, selectHorizontalBannerUnit} = await import("../../src/components/ads/adsterra-display-banner");
 
     expect(selectHorizontalBannerUnit(467)).toBeNull();
@@ -24,6 +24,8 @@ describe("Adsterra display banner inventory", () => {
     expect(selectHorizontalBannerUnit(727)).toBe(ADSTERRA_BANNER_UNITS.horizontal468);
     expect(selectHorizontalBannerUnit(728)).toBe(ADSTERRA_BANNER_UNITS.leaderboard728);
     expect(selectHorizontalBannerUnit(1600)).toBe(ADSTERRA_BANNER_UNITS.leaderboard728);
+    expect(selectHorizontalBannerUnit(436)).toBeNull();
+    expect(selectHorizontalBannerUnit(704)).toBe(ADSTERRA_BANNER_UNITS.horizontal468);
   });
 
   it("renders inline ads and restores dismissible mobile and desktop inventory", async () => {
@@ -34,9 +36,20 @@ describe("Adsterra display banner inventory", () => {
     expect(inline).toContain('data-ad-placement="rectangle"');
     expect(inline).toContain('data-ad-unit="3342dc928824e6ed5c01555e7f9e9e0f"');
     expect(inline).not.toContain("<iframe");
+    expect(inline).toContain('data-ad-container="rectangle"');
+    expect(inline).toContain("max-width:100%");
+    expect(inline).not.toContain("min-width:300px");
+    expect(inline).not.toContain("overflow-hidden");
     expect(global).toContain('data-ad-placement="left-rail"');
     expect(global).toContain("mobile-sticky");
     expect(global).toContain("right-rail");
+  });
+
+  it("keeps a measurement target when no horizontal unit is selected", async () => {
+    const {AdsterraDisplayBanner} = await import("../../src/components/ads/adsterra-display-banner");
+    const html = renderToStaticMarkup(React.createElement(AdsterraDisplayBanner, {placement: "horizontal"}));
+    expect(html).toContain('data-ad-container="horizontal"');
+    expect(html).not.toContain("<script");
   });
 
   it("creates valid configuration options and code for ad units", async () => {

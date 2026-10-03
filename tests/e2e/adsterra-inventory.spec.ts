@@ -13,7 +13,7 @@ test("mobile inventory keeps the sticky banner shell visible without horizontal 
 
   await expect(page.locator('[data-ad-placement="mobile-sticky"]')).toBeVisible();
   await expect(page.locator('[data-ad-placement="horizontal"]')).toHaveCount(0);
-  await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(2);
+  await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(0);
   await expectNoHorizontalOverflow(page);
 });
 
@@ -22,10 +22,10 @@ test("desktop and wide layouts expose inline, global, and rail inventory", async
   await page.setViewportSize({height: 1200, width: 1920});
   await page.goto("/en/guides/wardogs-gameplay");
 
-  await expect(page.locator('[data-ad-placement="horizontal"]')).toHaveCount(2);
+  await expect(page.locator('[data-ad-placement="horizontal"]')).toHaveCount(1);
   await expect(page.locator('[data-ad-placement="rectangle"]')).toBeVisible();
   await expect(page.locator('[data-ad-placement="left-rail"]')).toBeVisible();
   await expect(page.locator('[data-ad-placement="right-rail"]')).toBeVisible();
-  await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(2);
+  await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(0);
   await expectNoHorizontalOverflow(page);
 });

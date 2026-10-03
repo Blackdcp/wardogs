@@ -75,7 +75,7 @@ describe("sitemap", () => {
     expect(dateOf("/videos")).toBe(videoDates.sort().at(-1));
     expect(dateOf("/news")).toBe([...NEWS_UPDATES.map(({date}) => date), ...getServiceUpdates("en").map(({date}) => date), ...NEWS_CHECKLIST_SLUGS.map(guideDate)].sort().at(-1));
     for (const pathname of ["/tools/loadout-budget", "/tools/logistics-planner", "/tools/map"]) {
-      expect(dateOf(pathname)).toBe("2026-09-30");
+      expect(dateOf(pathname)).toBe("2026-10-03");
     }
     for (const pathname of ["/guides", "/videos", "/maps", "/items", "/news"]) {
       expect(dateOf("") >= dateOf(pathname), pathname).toBe(true);

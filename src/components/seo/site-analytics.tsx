@@ -12,7 +12,7 @@ export function SiteAnalytics({locale}: {locale: Locale}) {
       if (!link) return;
 
       const homeTask = link.dataset.homeTask;
-      if (homeTask && ["weapons", "vehicles", "map", "status"].includes(homeTask)) {
+      if (homeTask && ["weapons", "vehicles", "map", "status", "catalogue", "season2", "firstMatch", "money", "progression", "logistics", "controls", "pcFixes"].includes(homeTask)) {
         trackAnalyticsEvent(ANALYTICS_EVENTS.homeTaskClick, {
           task: homeTask,
           placement: link.dataset.homePlacement || "unknown",

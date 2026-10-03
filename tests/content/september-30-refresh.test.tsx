@@ -19,7 +19,7 @@ describe("September 30 evidence-bounded guide and video refresh", () => {
     for (const suffix of slugs) {
       const guide = await loadGuideDocument(locale, `wardogs-${suffix}`);
       expect(guide, `${locale}/${suffix}`).not.toBeNull();
-      expect(guide!.frontmatter.updatedAt).toBe("2026-09-30");
+      expect(guide!.frontmatter.updatedAt >= "2026-09-30").toBe(true);
       expect(guide!.frontmatter.sources.some(source => source.kind === "official")).toBe(true);
       const compiled = await compileGuideBody(guide!.body, mdxComponents);
       const messages = JSON.parse(readFileSync(new URL(`../../messages/${locale}.json`, import.meta.url), "utf8"));
@@ -37,7 +37,11 @@ describe("September 30 evidence-bounded guide and video refresh", () => {
     const wipes = await loadGuideDocument(locale, "wardogs-progression-wipes-guide");
     const artillery = await loadGuideDocument(locale, "wardogs-artillery-guide");
     expect(crash!.body).toContain("KB5124010");
-    expect(crash!.body).toContain("585060903246928845");
+    expect(crash!.frontmatter.sources).toContainEqual(expect.objectContaining({
+      url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267",
+      kind: "official",
+      checkedAt: "2026-10-03"
+    }));
     expect(patches!.body).toContain("2103054159641538707");
     expect(patches!.body).toContain("2103450008431313221");
     expect(wipes!.body).toContain("Steam");

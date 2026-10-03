@@ -1,5 +1,7 @@
 "use client";
 
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+
 import {Copy, ExternalLink} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
 import type {ProgressionRoleRoute, ProgressionRoleId} from "@/features/tools/progression-routes";
@@ -53,7 +55,7 @@ export function ProgressionRoute({
     const url = new URL(window.location.href);
     url.search = encodeProgressionRouteState(state, dataVersion);
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "progression-route", action: "share", result: "copied"}); setCopied(true); }
     catch { setShareError(true); }
   }
 

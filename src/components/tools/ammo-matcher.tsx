@@ -1,5 +1,7 @@
 "use client";
 
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+
 import Image from "next/image";
 import {ArrowRight, Copy, ImageOff} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
@@ -107,7 +109,7 @@ export function AmmoMatcher({
   async function copyLink() {
     const url = sharedUrl(state);
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "ammo-matcher", action: "share", result: "copied"}); setCopied(true); }
     catch { setShareError(true); }
   }
 

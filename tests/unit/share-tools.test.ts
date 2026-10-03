@@ -43,6 +43,27 @@ describe("shareable player tools", () => {
     expect(decodeBudgetState("cash=-1&loadout=oops")).toBeNull();
   });
 
+  it("round-trips finite bounded system-check decimals including small scientific notation", async () => {
+    const {decodeSystemCheckState, encodeSystemCheckState} = await import("../../src/features/tools/share-state");
+    for (const [ramGb, storageGb] of [[16.5, 84.5], [0, 0], [1024, 100000], [1e-7, 50.25]]) {
+      const state = {os: "windows-11", ramGb, storageGb, cpuTier: "recommended", gpuTier: "recommended"} as const;
+      expect(decodeSystemCheckState(encodeSystemCheckState(state))).toEqual(state);
+    }
+  });
+
+  it.each(["", " ", "NaN", "Infinity", "-1", "100000.1", "0x50", "84.5GB", "1e999"])("rejects malformed or out-of-bounds system storage %j", async (storage) => {
+    const {decodeSystemCheckState} = await import("../../src/features/tools/share-state");
+    const params = new URLSearchParams({os: "windows-11", ram: "16", storage, cpu: "recommended", gpu: "recommended"});
+    expect(decodeSystemCheckState(params.toString())).toBeNull();
+  });
+
+  it.each(["os", "ram", "storage", "cpu", "gpu"])("rejects repeated system-check parameter %s", async (key) => {
+    const {decodeSystemCheckState} = await import("../../src/features/tools/share-state");
+    const params = new URLSearchParams({os: "windows-11", ram: "16", storage: "84", cpu: "recommended", gpu: "recommended"});
+    params.append(key, params.get(key)!);
+    expect(decodeSystemCheckState(params.toString())).toBeNull();
+  });
+
   it("round-trips and calculates a loadout budget without using unverified item prices", async () => {
     expect(existsSync(helperPath), "share-state helper must exist").toBe(true);
     if (!existsSync(helperPath)) return;

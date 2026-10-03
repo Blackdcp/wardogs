@@ -1,5 +1,7 @@
 "use client";
 
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+
 import {ArrowDown, ArrowUp, Copy, ExternalLink} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
 import type {LogisticsStage, LogisticsEvidenceState} from "@/features/tools/logistics-plan";
@@ -85,7 +87,7 @@ export function LogisticsPlanner({
     url.search = encodedState;
     window.history.replaceState(null, "", url);
     setEditedState({search: url.search, value: state});
-    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "logistics-planner", action: "share", result: "copied"}); setCopied(true); }
     catch { setShareError(true); }
   }
 

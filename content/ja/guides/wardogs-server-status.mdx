@@ -1,11 +1,11 @@
 ---
-title: "WARDOGS サーバー状況・ログイン待機列・障害確認ガイド"
-description: "WARDOGS のサーバー稼働、ログイン待機列、空の一覧、地域選択、公式告知、発売日の障害根拠を安全に確認し、ローカル問題とサービス障害を区別します。Steam の解禁状況、正しいライブラリ項目、エラー時刻、ビルド番号、地域別報告も記録し、再インストールや安全機能の無効化を始める前に一次情報を照合できる実用ページです。"
+title: "WARDOGSサーバー状況：公式告知と待機列の確認"
+description: "WARDOGSのサーバー状況を、日付付きの公式メンテナンス・障害告知と待機列、空のサーバー一覧、地域選択の確認方法から整理します。Update 0.1.2のDeploy変更とOfficialフィルター復活も説明。現在の稼働率、待機列の位置、地域Pingを測定するライブ監視ではありません。"
 keyword: "wardogs server status"
 category: "guide"
 slug: "wardogs-server-status"
 order: 49
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "発売日"
     tone: "accent"
@@ -13,7 +13,7 @@ badges:
     tone: "warning"
 faq:
   - question: "WARDOGS のサーバーは現在稼働していますか？"
-    answer: "WARDOGSはSteam Early Accessで配信中です。日付付きのPatch 0.11告知を資料として残しており、9月14日に公開されたメンテナンス時間帯は終了しています。新しい停止情報はSteam公式フィードで確認してください。"
+    answer: "WARDOGSはSteam Early Accessで配信中です。Update 0.1.2は9月30日に告知され、公開されたメンテナンス時間は終了しています。このページは日付付き告知を整理し、現在の稼働・待機列・地域Pingは計測しません。"
   - question: "サーバー一覧が空なのはなぜですか？"
     answer: "Beta 02 では地域を一つだけ選んで一度更新する案内がありました。再インストール前に公式告知も確認してください。"
 sources:
@@ -33,7 +33,18 @@ sources:
     url: "https://steamcommunity.com/app/1867240/homecontent/"
     kind: "official"
     checkedAt: "2026-09-10"
+  - label: "公式Update 0.1.2"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
+
+## Update 0.1.2：9月30日の小規模パッチ
+
+[9月30日の公式Update 0.1.2告知](https://store.steampowered.com/news/app/1867240/view/712287592723252267)は、Windows 11 KB5124010によるWD-L020、Cash/XPの不正獲得、Deployの変更を説明しています。08:00 UTCから約1時間というメンテナンスは日付付きの配信記録で、現在の稼働状況ではありません。
+
+[Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267)のDeployは **Official**、**Community**、**Infantry Mode**、**Low-Level** を用意し、**Official**の高度なフィルターも復活しています。検索・フィルターと **Show Empty/Full** を確認し、一度更新して公式告知と照合します。**地域を一つにする**方法はBeta 02の旧対処で、個別の診断テストにとどまります。
+
 ## 9月24-29日：事故・復旧・開発者応答
 | 日付 | 公式記録 | これだけでは言えないこと |
 | --- | --- | --- |
@@ -69,6 +80,8 @@ Beta 02 では、公式案内で地域を一つだけ選ぶよう求められま
 ## 有用な報告内容
 
 UTC 時刻、国または地域、Steam の購入状態、ライブラリ項目、待機位置またはエラーコード、ビルド、一地域テストの結果を記載します。メール、トークン、QR コード、Steam Guard 情報は削除してください。
+
+Update 0.1.2の確認日は **2026-10-03** です。パッチ記録はライブ稼働状況の確認ではありません。
 
 ## 関連ページ
 

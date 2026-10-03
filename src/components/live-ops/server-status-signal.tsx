@@ -18,7 +18,7 @@ const copy: Record<Locale, {
   en: {
     eyebrow: "Server status at a glance",
     unknown: "Live server uptime is not verified",
-    notice: "The official Patch 0.11 notice covered a September 14 maintenance window. That window has passed; it does not prove servers are online now.",
+    notice: "The official Patch 0.1.2 notice covered a September 30 maintenance window. That window has passed; it does not prove servers are online now.",
     next: "If login or the server browser fails, check the official feed, then compare your region and error with other current reports.",
     official: "Official Steam notices",
     steamStatus: "Steam Platform",
@@ -26,12 +26,12 @@ const copy: Record<Locale, {
     telemetryStatus: "Game Server Telemetry",
     telemetryStatusVal: "Unverified / Check Feed",
     maintenanceStatus: "Last Maintenance Window",
-    maintenanceStatusVal: "Patch 0.11 (Sep 14) Concluded"
+    maintenanceStatusVal: "Patch 0.1.2 (Sep 30) Concluded"
   },
   de: {
     eyebrow: "Serverstatus auf einen Blick",
     unknown: "Der aktuelle Serverbetrieb ist nicht verifiziert",
-    notice: "Die offizielle Mitteilung zu Patch 0.11 nannte eine Wartung am 14. September. Das Zeitfenster ist vorbei; daraus folgt kein aktueller Online-Status.",
+    notice: "Die offizielle Mitteilung zu Patch 0.1.2 nannte eine Wartung am 30. September. Das Zeitfenster ist vorbei; daraus folgt kein aktueller Online-Status.",
     next: "Bei Login- oder Browserproblemen zuerst offizielle Meldungen prüfen, dann Region und Fehlermeldung mit aktuellen Berichten vergleichen.",
     official: "Offizielle Steam-Meldungen",
     steamStatus: "Steam-Plattform",
@@ -39,12 +39,12 @@ const copy: Record<Locale, {
     telemetryStatus: "Server-Telemetrie",
     telemetryStatusVal: "Unbestätigt / Feed prüfen",
     maintenanceStatus: "Letzte Wartung",
-    maintenanceStatusVal: "Patch 0.11 (14. Sept.) beendet"
+    maintenanceStatusVal: "Patch 0.1.2 (30. Sept.) beendet"
   },
   ru: {
     eyebrow: "Состояние серверов",
     unknown: "Работа серверов прямо сейчас не подтверждена",
-    notice: "Официальное сообщение о Patch 0.11 указывало обслуживание 14 сентября. Оно уже завершилось, но это не подтверждает доступность серверов сейчас.",
+    notice: "Официальное сообщение о Patch 0.1.2 указывало обслуживание 30 сентября. Оно уже завершилось, но это не подтверждает доступность серверов сейчас.",
     next: "При проблемах со входом или списком серверов проверьте официальные новости, регион и точную ошибку.",
     official: "Официальные новости Steam",
     steamStatus: "Платформа Steam",
@@ -52,12 +52,12 @@ const copy: Record<Locale, {
     telemetryStatus: "Телеметрия серверов",
     telemetryStatusVal: "Не подтверждена / лента",
     maintenanceStatus: "Последнее обслуживание",
-    maintenanceStatusVal: "Patch 0.11 (14 сент.) завершено"
+    maintenanceStatusVal: "Patch 0.1.2 (30 сент.) завершено"
   },
   "pt-br": {
     eyebrow: "Status dos servidores",
     unknown: "A disponibilidade dos servidores agora não foi verificada",
-    notice: "O aviso oficial do Patch 0.11 incluía manutenção em 14 de setembro. A janela passou, mas isso não confirma que os servidores estejam online agora.",
+    notice: "O aviso oficial do Patch 0.1.2 incluía manutenção em 30 de setembro. A janela passou, mas isso não confirma que os servidores estejam online agora.",
     next: "Se o login ou navegador de servidores falhar, confira os avisos oficiais e compare região e erro com relatos atuais.",
     official: "Avisos oficiais na Steam",
     steamStatus: "Plataforma Steam",
@@ -65,12 +65,12 @@ const copy: Record<Locale, {
     telemetryStatus: "Telemetria de servidores",
     telemetryStatusVal: "Não verificada / veja avisos",
     maintenanceStatus: "Última manutenção",
-    maintenanceStatusVal: "Patch 0.11 (14 de set.) concluída"
+    maintenanceStatusVal: "Patch 0.1.2 (30 de set.) concluída"
   },
   ja: {
     eyebrow: "サーバー状態の要点",
     unknown: "現在の稼働状況は確認できていません",
-    notice: "公式のPatch 0.11告知には9月14日のメンテナンス予定がありました。予定時刻は過ぎていますが、現在の稼働を保証するものではありません。",
+    notice: "公式のPatch 0.1.2告知には9月30日のメンテナンス予定がありました。予定時刻は過ぎていますが、現在の稼働を保証するものではありません。",
     next: "ログインやサーバー一覧に問題がある場合は、公式告知を確認し、地域とエラーを最近の報告と照合してください。",
     official: "Steam公式告知",
     steamStatus: "Steamプラットフォーム",
@@ -78,12 +78,12 @@ const copy: Record<Locale, {
     telemetryStatus: "サーバーテレメトリ",
     telemetryStatusVal: "未確認 / 公式告知参照",
     maintenanceStatus: "前回のメンテナンス",
-    maintenanceStatusVal: "Patch 0.11 (9月14日) 終了"
+    maintenanceStatusVal: "Patch 0.1.2 (9月30日) 終了"
   },
   "zh-cn": {
     eyebrow: "服务器状态速览",
     unknown: "当前服务器在线情况尚未核实",
-    notice: "官方 Patch 0.11 公告提到 9 月 14 日维护；该时间窗口已经过去，但不能据此断言现在服务器正常。",
+    notice: "官方 Patch 0.1.2 公告提到 9 月 30 日维护；该时间窗口已经过去，但不能据此断言现在服务器正常。",
     next: "若登录或服务器列表异常，先看官方公告，再按地区和具体报错核对近期反馈。",
     official: "Steam 官方公告",
     steamStatus: "Steam 平台状态",
@@ -91,12 +91,12 @@ const copy: Record<Locale, {
     telemetryStatus: "游戏服务器遥测",
     telemetryStatusVal: "未核实 / 查看动态",
     maintenanceStatus: "最近计划维护",
-    maintenanceStatusVal: "Patch 0.11 (9月14日) 已结束"
+    maintenanceStatusVal: "Patch 0.1.2 (9月30日) 已结束"
   },
   pl: {
     eyebrow: "Stan serwerów w skrócie",
     unknown: "Bieżąca dostępność serwerów nie jest potwierdzona",
-    notice: "Oficjalny komunikat o aktualizacji 0.11 dotyczył konserwacji 14 września. Ten termin już minął i nie potwierdza, że serwery działają teraz.",
+    notice: "Oficjalny komunikat o aktualizacji 0.1.2 dotyczył konserwacji 30 września. Ten termin już minął i nie potwierdza, że serwery działają teraz.",
     next: "Jeśli logowanie lub przeglądarka serwerów nie działa, sprawdź oficjalne komunikaty, a następnie porównaj region i błąd z aktualnymi zgłoszeniami.",
     official: "Oficjalne komunikaty Steam",
     steamStatus: "Platforma Steam",
@@ -104,12 +104,12 @@ const copy: Record<Locale, {
     telemetryStatus: "Telemetria serwerów",
     telemetryStatusVal: "Niepotwierdzona / sprawdź wpisy",
     maintenanceStatus: "Ostatnia konserwacja",
-    maintenanceStatusVal: "Patch 0.11 (14 wrz) zakończona"
+    maintenanceStatusVal: "Patch 0.1.2 (30 wrz) zakończona"
   },
   "zh-tw": {
     eyebrow: "伺服器狀態速覽",
     unknown: "當前伺服器線上情況尚未核實",
-    notice: "官方 Patch 0.11 公告提到 9 月 14 日維護；該時間視窗已經過去，但不能據此斷言現在伺服器正常。",
+    notice: "官方 Patch 0.1.2 公告提到 9 月 30 日維護；該時間視窗已經過去，但不能據此斷言現在伺服器正常。",
     next: "若登入或伺服器列表異常，先看官方公告，再按地區和具體報錯核對近期反饋。",
     official: "Steam 官方公告",
     steamStatus: "Steam 平台狀態",
@@ -117,7 +117,7 @@ const copy: Record<Locale, {
     telemetryStatus: "遊戲伺服器遙測",
     telemetryStatusVal: "未核實 / 查看動態",
     maintenanceStatus: "最近計劃維護",
-    maintenanceStatusVal: "Patch 0.11 (9月14日) 已結束"
+    maintenanceStatusVal: "Patch 0.1.2 (9月30日) 已結束"
   }
 };
 

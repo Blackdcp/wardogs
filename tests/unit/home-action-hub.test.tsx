@@ -28,5 +28,8 @@ describe("HomeActionHubView", () => {
     expect(html).not.toContain("<img");
     expect(html).toContain('href="/items/vehicles"');
     expect(html).toContain('href="/guides/wardogs-crash-fix"');
+    expect(html.match(/data-home-task=/g)).toHaveLength(12);
+    expect(html.match(/data-home-placement="tactical-hub"/g)).toHaveLength(4);
+    expect(html.match(/data-home-placement="action-hub"/g)).toHaveLength(8);
   });
 });

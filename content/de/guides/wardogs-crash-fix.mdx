@@ -5,7 +5,7 @@ keyword: "wardogs crash fix"
 category: "guide"
 slug: "wardogs-crash-fix"
 order: 25
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "Fehlerbehebung"
     tone: "accent"
@@ -49,23 +49,29 @@ sources:
     url: "https://x.com/BULKHEAD/status/2095447401725153576"
     kind: "official"
     checkedAt: "2026-09-04"
+  - label: "Offizielles Update 0.1.2"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
 
 ## WD-L020 oder Login-Problem?
-Die [Entwicklermeldung vom 23. September](https://steamcommunity.com/app/1867240/discussions/0/585060903246928845/) beschreibt eine **mögliche**, nicht allgemeingültige Verbindung mit Windows 11 KB5124010. Die behobene Verteilung vom 24. September und Service-Rückkehr vom 25. September belegen keine Kompatibilitätskorrektur.
+Die [Meldung zu Update 0.1.2 vom 30. September](https://store.steampowered.com/news/app/1867240/view/712287592723252267) bestätigt die Korrektur des durch Windows 11 KB5124010 verursachten WD-L020-Problems. Aktualisiere das Steam-Hauptspiel und prüfe die Dateien vor dem alten Preview-Rollback. Die Korrektur gilt für diesen Zweig; andere WD-L020-Ursachen, Fehlercodes, Freezes oder PC-Neustarts müssen getrennt untersucht werden.
 
 | Beobachtung | Nächster Schritt | Grenze |
 | --- | --- | --- |
-| WD-L020, KB5124010 installiert, Beginn danach | Updateverlauf mit dem Hinweis vergleichen; auf einen Spiel-Fix warten lässt Windows-Schutz unverändert | Rollback nicht als sichere Lösung versprechen |
+| WD-L020, KB5124010 installiert, Beginn danach | Auf 0.1.2 oder neuer aktualisieren und Steam-Dateien prüfen | Bei weiterem Fehler Build und Fehlerbild für Support erfassen; keine allgemeine Absturzlösung voraussetzen |
 | KB fehlt oder anderer Fehlercode | Steam-Dateien, offiziellen GPU-Treiber und mitgelieferte Elytra-Reparatur einzeln prüfen | Keine fremden Updates entfernen |
 | Reagierende Queue, feststehender Login oder Berechtigungsfehler | Phase notieren; [gleiche Region](/de/guides/wardogs-server-status), Steam-Konto und Hauptspiel prüfen | Windows-Neuinstallation schafft keine Serverplätze |
 | Ganzer PC startet neu oder geht aus | Wiederholte Starts stoppen und Systemstabilität prüfen | Nicht als normalen Spielabsturz weiter testen |
 
-Team17 nennt die Entfernung des Preview-Updates optional und weist auf Sicherheits-, Stabilitäts- und Kompatibilitätsrisiken hin. Aktuelle Meldung und Regeln verwalteter Geräte zuerst lesen. Ohne reguläre Rücknahme keine Pakete erzwingen, keine Schutzfunktionen oder Anti-Cheat deaktivieren. Supportbericht: Datum/Zeitzone, Spiel-Build, Fehlerbild, Startphase, Windows-Build/Updateverlauf, GPU-Treiber und bisherige Ergebnisse; persönliche Daten schwärzen.
+Vor Update 0.1.2 nannte Team17 die Entfernung des Preview-Updates optional und weist auf Sicherheits-, Stabilitäts- und Kompatibilitätsrisiken hin. Aktuelle Meldung und Regeln verwalteter Geräte zuerst lesen. Ohne reguläre Rücknahme keine Pakete erzwingen, keine Schutzfunktionen oder Anti-Cheat deaktivieren. Supportbericht: Datum/Zeitzone, Spiel-Build, Fehlerbild, Startphase, Windows-Build/Updateverlauf, GPU-Treiber und bisherige Ergebnisse; persönliche Daten schwärzen.
 
 ### Passt das Windows-Update zum Fehler?
 
-Erneut geprüft am **2026-09-30**: [Team17s WD-L020-Hinweis](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) beschreibt weiterhin eine mögliche Inkompatibilität, keine allgemeine Lösung. Suche in Windows nach `winver` und notiere Version und Betriebssystembuild. Prüfe unter **Einstellungen > Windows Update > Updateverlauf** die installierte KB-Nummer und das Installationsdatum. Vergleiche beides mit [Microsofts Preview-Eintrag zu KB5124010](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update). Ein kürzlich installiertes Update allein beweist keine Ursache.
+Notiere `winver`, KB-Nummer und Installationsdatum, Spiel-Build und Fehlercode. Der ältere Team17-Hinweis dokumentiert die Untersuchung und optionale Rücknahme vor 0.1.2; er beschreibt nicht den neuen Patchstand. Für diesen Zweig zuerst das Spiel aktualisieren, keine fremden Windows-Updates entfernen.
+
+**2026-09-30**: [Team17: WD-L020](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) · [Microsoft: KB5124010](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update).
 
 Lädt das Match, aber eine Aktion reagiert nicht, prüfe die [Tastenbelegung](/de/guides/wardogs-controls), statt Windows zurückzusetzen. Bleibt der Login stehen, notiere, ob der Bildschirm noch reagiert, und prüfe [regionale Dienstmeldungen](/de/guides/wardogs-server-status). Trenne diese Ergebnisse im Supportbericht: Ein funktionierendes Menü bestätigt noch keine Verbindung zum Server.
 
@@ -149,6 +155,8 @@ Nein. Microsoft beschreibt ein allgemeines Spieleproblem mit bestimmten Komponen
 Prüfdaten gelten einzeln für die unten aufgeführten Quellen, nicht für den ganzen Artikel. Das Inhaltsdatum bestätigt nicht jeden Fakt. Frühere datierte Notizen behalten ihren damaligen Belegumfang und sind kein Test des heutigen Clients oder Serverstatus.
 
 Bei einem **Startabsturz** zuerst Shader-Vorbereitung, Steam-Dateien, Grafiktreiber und Overlays prüfen. Wenn WARDOGS den ganzen PC neu startet, wiederholte Starts stoppen und Temperaturen, Standardtakte, Windows-Zuverlässigkeitsverlauf sowie RGB- oder Monitoring-Tools kontrollieren. Bei Rucklern eine feste Testszene und ein haltbares FPS-Limit verwenden. Steam-Produktstatus und Microsoft KB5121003 wurden am 2026-08-25 erneut geprüft; Microsoft bestätigt keine spezielle WARDOGS-Ursache.
+
+Update 0.1.2 wurde am **2026-10-03** geprüft. Der Patchhinweis ist keine Live-Statusmessung.
 
 ## Verwandte Guides
 

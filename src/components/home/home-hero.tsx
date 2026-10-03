@@ -23,7 +23,8 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
         src={assetPath("/images/wardogs-hero.jpg")}
         alt={t("home.heroImageAlt")}
         fill
-        priority
+        loading="eager"
+        fetchPriority="high"
         sizes="100vw"
         className="-z-20 object-cover object-[43%_center]"
       />
@@ -44,7 +45,7 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
             width={2468}
             height={490}
             alt="WARDOGS"
-            priority
+            loading="eager"
             className="mt-6 h-auto w-[260px] sm:w-[360px] lg:w-[430px]"
           />
           <h1 id="home-hero-title" className="display-font mt-2 text-4xl leading-none text-white sm:text-5xl lg:text-6xl">

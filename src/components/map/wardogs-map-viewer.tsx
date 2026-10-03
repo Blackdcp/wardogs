@@ -11,6 +11,7 @@ import {getMapMeasurementCopy} from "@/features/maps/map-measurement-copy";
 import {MapMeasurementPanel} from "./map-measurement-panel";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 type Props = {initialMap?: MapId; locale?: Locale; className?: string};
 const controlClass = "inline-flex size-11 shrink-0 items-center justify-center rounded border border-[#43534a] bg-[#18231e] text-white hover:bg-[#304538] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#91d8ad] disabled:opacity-40 aria-pressed:bg-[#3b654b]";
@@ -144,12 +145,21 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     if (load !== "ready" || point.x < 0 || point.x > 1 || point.y < 0 || point.y > 1) return;
     if (stateRef.current.markers.length >= MAX_MARKERS) { setNotice(copy.limit); return; }
     updateState((previous) => ({...previous, markers: [...previous.markers, {id: `m${crypto.randomUUID()}`, ...point, label: `${copy.marker} ${previous.markers.length + 1}`}]}));
+    trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: stateRef.current.map, action: "marker_added"});
     setPanel(true);
   }
   function addMeasurementPoint(point: Point) {
     if (load !== "ready" || !measuring) return;
     const current = measurementsByMap.current[stateRef.current.map] ?? initialMeasurement(stateRef.current.map);
-    updateMeasurement(placeMeasurementPoint(current, mode, point));
+    const next = placeMeasurementPoint(current, mode, point);
+    updateMeasurement(next);
+    if ((mode === "calibrate" ? next.reference : next.points).length === 2) {
+      trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {
+        map_id: next.map,
+        action: mode === "calibrate" ? "reference_set" : "measure",
+        result: next.calibration ? "user_calibrated" : "pixels_only"
+      });
+    }
   }
   function localPoint(event: PointerEvent<HTMLDivElement>): Point {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -217,8 +227,14 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     const ruler = measurementsByMap.current[shared.map];
     url.hash = ruler ? measurementHash(mapHash(shared), ruler) : mapHash(shared);
     setShareLink(url.href);
-    try { await navigator.clipboard.writeText(url.href); setNotice(copy.copied); }
-    catch { setNotice(copy.shareLink); }
+    try {
+      await navigator.clipboard.writeText(url.href);
+      setNotice(copy.copied);
+      trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: shared.map, action: "share", result: "copied"});
+    } catch {
+      setNotice(copy.shareLink);
+      trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: shared.map, action: "share", result: "manual_copy"});
+    }
   }
 
   return (

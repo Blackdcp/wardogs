@@ -20,9 +20,14 @@ import {
 import {getArtilleryCopy} from "@/features/artillery/artillery-copy";
 import {assetPath} from "@/lib/assets";
 import {Link} from "@/i18n/navigation";
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 interface Props {
   locale: Locale;
+}
+
+function normalizeAzimuth(value: number) {
+  return Number.isFinite(value) ? ((value % 360) + 360) % 360 : 0;
 }
 
 export function ArtilleryCalculator({locale}: Props) {
@@ -36,6 +41,7 @@ export function ArtilleryCalculator({locale}: Props) {
   const [gunPoint, setGunPoint] = useState<Point>({x: 0.48, y: 0.52});
   const [targetPoint, setTargetPoint] = useState<Point>({x: 0.50, y: 0.50});
   const [placeTargetNext, setPlaceTargetNext] = useState(true);
+  const [mapCursor, setMapCursor] = useState<Point>({x: 0.50, y: 0.50});
 
   // Manual direct parameters
   const [directDistance, setDirectDistance] = useState<number>(380);
@@ -47,6 +53,10 @@ export function ArtilleryCalculator({locale}: Props) {
   const [countdown, setCountdown] = useState<number | null>(null);
   const [splashTriggered, setSplashTriggered] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const resultPending = useRef(false);
+  const lastTrackedResult = useRef<string | null>(null);
+  const audioEnabledRef = useRef(audioEnabled);
+  useEffect(() => { audioEnabledRef.current = audioEnabled; }, [audioEnabled]);
 
   const weapon = WEAPON_REGISTRY[weaponId];
 
@@ -69,20 +79,44 @@ export function ArtilleryCalculator({locale}: Props) {
       azimuthMil: azimuth.mils
     });
   } else {
-    const azimuthMil = Math.round((directAzimuth / 360) * 6400);
+    const azimuthDegrees = normalizeAzimuth(directAzimuth);
+    const azimuthMil = Math.round((azimuthDegrees / 360) * 6400) % 6400;
     solution = calculateFiringSolution({
       weaponId,
       mode: effectiveTrajectoryMode,
       distanceMeters: directDistance,
       heightDeltaMeters: directHeightDelta,
-      azimuthDegrees: directAzimuth,
+      azimuthDegrees,
       azimuthMil
     });
   }
 
+  useEffect(() => {
+    if (!resultPending.current) return;
+    resultPending.current = false;
+    const verdict = solution.valid ? "valid" : "invalid";
+    if (lastTrackedResult.current !== verdict) {
+      lastTrackedResult.current = verdict;
+      trackAnalyticsEvent(ANALYTICS_EVENTS.toolResult, {tool: "artillery-calculator", result: verdict});
+    }
+  });
+
+  function cancelCountdown() {
+    if (timerRef.current !== null) clearInterval(timerRef.current);
+    timerRef.current = null;
+    setCountdown(null);
+    setSplashTriggered(false);
+  }
+
+  function updateInputs(update: () => void) {
+    cancelCountdown();
+    resultPending.current = true;
+    update();
+  }
+
   // Audio Synth Beep Helper (using Web Audio API)
   const playBeep = useCallback((frequency: number, duration: number) => {
-    if (!audioEnabled || typeof window === "undefined") return;
+    if (!audioEnabledRef.current || typeof window === "undefined") return;
     try {
       const ctx = new (window.AudioContext || (window as unknown as {webkitAudioContext: typeof AudioContext}).webkitAudioContext)();
       const osc = ctx.createOscillator();
@@ -95,23 +129,25 @@ export function ArtilleryCalculator({locale}: Props) {
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + duration);
+      osc.onended = () => { void ctx.close(); };
     } catch {
       // AudioContext unavailable or blocked
     }
-  }, [audioEnabled]);
+  }, []);
 
   // Start Splash Countdown
   const startFireCountdown = () => {
     if (!solution.valid || solution.timeOfFlightSeconds <= 0) return;
-    if (timerRef.current) clearInterval(timerRef.current);
+    cancelCountdown();
 
-    setSplashTriggered(false);
-    let remaining = solution.timeOfFlightSeconds;
-    setCountdown(remaining);
+    const deadline = performance.now() + solution.timeOfFlightSeconds * 1000;
+    let previousRemaining = solution.timeOfFlightSeconds;
+    setCountdown(previousRemaining);
     playBeep(880, 0.15); // Launch shot cue
+    trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "artillery-calculator", action: "fire", result: "valid"});
 
     timerRef.current = setInterval(() => {
-      remaining = Math.round((remaining - 0.1) * 10) / 10;
+      const remaining = Math.max(0, (deadline - performance.now()) / 1000);
       if (remaining <= 0) {
         clearInterval(timerRef.current!);
         timerRef.current = null;
@@ -119,33 +155,50 @@ export function ArtilleryCalculator({locale}: Props) {
         setSplashTriggered(true);
         playBeep(440, 0.4); // Impact splash cue
       } else {
-        setCountdown(remaining);
-        // Beep at 3, 2, 1 seconds before impact
-        if (Math.abs(remaining - 3.0) < 0.05 || Math.abs(remaining - 2.0) < 0.05 || Math.abs(remaining - 1.0) < 0.05) {
+        setCountdown(Math.max(0.1, Math.round(remaining * 10) / 10));
+        // A delayed callback may cross several cues; play one current warning.
+        if ([3, 2, 1].some((seconds) => previousRemaining > seconds && remaining <= seconds)) {
           playBeep(660, 0.1);
         }
       }
+      previousRemaining = remaining;
     }, 100);
   };
 
   useEffect(() => {
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current !== null) clearInterval(timerRef.current);
+      timerRef.current = null;
     };
   }, []);
 
-  // Map Click Handler
+  function placeMapPoint(point: Point) {
+    updateInputs(() => {
+      if (!placeTargetNext) setGunPoint(point);
+      else setTargetPoint(point);
+      setPlaceTargetNext(!placeTargetNext);
+    });
+  }
+
   const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = Math.max(0.01, Math.min(0.99, (e.clientX - rect.left) / rect.width));
-    const y = Math.max(0.01, Math.min(0.99, (e.clientY - rect.top) / rect.height));
+    const point = {
+      x: Math.max(0.01, Math.min(0.99, (e.clientX - rect.left) / rect.width)),
+      y: Math.max(0.01, Math.min(0.99, (e.clientY - rect.top) / rect.height))
+    };
+    setMapCursor(point);
+    placeMapPoint(point);
+  };
 
-    if (!placeTargetNext) {
-      setGunPoint({x, y});
-      setPlaceTargetNext(true);
-    } else {
-      setTargetPoint({x, y});
-      setPlaceTargetNext(false);
+  const handleMapKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const movement: Record<string, Point> = {ArrowLeft: {x: -0.01, y: 0}, ArrowRight: {x: 0.01, y: 0}, ArrowUp: {x: 0, y: -0.01}, ArrowDown: {x: 0, y: 0.01}};
+    if (movement[e.key]) {
+      e.preventDefault();
+      const delta = movement[e.key];
+      setMapCursor((point) => ({x: Math.max(0.01, Math.min(0.99, point.x + delta.x)), y: Math.max(0.01, Math.min(0.99, point.y + delta.y))}));
+    } else if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      placeMapPoint(mapCursor);
     }
   };
 
@@ -186,7 +239,7 @@ export function ArtilleryCalculator({locale}: Props) {
             <div className="flex rounded-lg border border-[#394a40] bg-[#0f1712] p-1">
               <button
                 type="button"
-                onClick={() => setInputMode("map")}
+                onClick={() => updateInputs(() => setInputMode("map"))}
                 className={`rounded-md px-3 py-1.5 text-xs font-medium transition-all ${
                   inputMode === "map"
                     ? "bg-[#274433] text-white shadow"
@@ -197,7 +250,7 @@ export function ArtilleryCalculator({locale}: Props) {
               </button>
               <button
                 type="button"
-                onClick={() => setInputMode("direct")}
+                onClick={() => updateInputs(() => setInputMode("direct"))}
                 className={`rounded-md px-3 py-1.5 text-xs font-medium transition-all ${
                   inputMode === "direct"
                     ? "bg-[#274433] text-white shadow"
@@ -220,11 +273,11 @@ export function ArtilleryCalculator({locale}: Props) {
             <div className="mt-1.5 flex gap-2">
               <button
                 type="button"
-                onClick={() => {
+                onClick={() => updateInputs(() => {
                   setWeaponId("mortar");
                   setTrajectoryMode("single");
                   setDirectDistance((prev) => Math.max(80, Math.min(697, prev)));
-                }}
+                })}
                 className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                   weaponId === "mortar"
                     ? "border-[#62b984] bg-[#1d3527] text-[#8ce2ad] shadow-[0_0_12px_rgba(98,185,132,0.2)]"
@@ -235,13 +288,13 @@ export function ArtilleryCalculator({locale}: Props) {
               </button>
               <button
                 type="button"
-                onClick={() => {
+                onClick={() => updateInputs(() => {
                   setWeaponId("sph2");
                   const nextMode = trajectoryMode === "single" ? "high" : trajectoryMode;
                   if (trajectoryMode === "single") setTrajectoryMode("high");
                   const min = nextMode === "low" ? 1181 : 735;
                   setDirectDistance((prev) => Math.max(min, Math.min(2629, prev)));
-                }}
+                })}
                 className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                   weaponId === "sph2"
                     ? "border-[#d88f48] bg-[#352516] text-[#f2ad6f] shadow-[0_0_12px_rgba(216,143,72,0.2)]"
@@ -267,10 +320,10 @@ export function ArtilleryCalculator({locale}: Props) {
                 <>
                   <button
                     type="button"
-                    onClick={() => {
+                    onClick={() => updateInputs(() => {
                       setTrajectoryMode("high");
                       setDirectDistance((prev) => Math.max(735, Math.min(2629, prev)));
-                    }}
+                    })}
                     className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                       trajectoryMode === "high"
                         ? "border-[#e0a256] bg-[#2d2114] text-[#f8be77]"
@@ -281,10 +334,10 @@ export function ArtilleryCalculator({locale}: Props) {
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
+                    onClick={() => updateInputs(() => {
                       setTrajectoryMode("low");
                       setDirectDistance((prev) => Math.max(1181, Math.min(2629, prev)));
-                    }}
+                    })}
                     className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                       trajectoryMode === "low"
                         ? "border-[#e0a256] bg-[#2d2114] text-[#f8be77]"
@@ -308,7 +361,7 @@ export function ArtilleryCalculator({locale}: Props) {
                 <button
                   key={m}
                   type="button"
-                  onClick={() => setMapId(m)}
+                  onClick={() => updateInputs(() => setMapId(m))}
                   className={`flex-1 rounded-lg border py-2 text-xs font-semibold capitalize transition-all ${
                     mapId === m
                       ? "border-[#62b984] bg-[#1a3023] text-white"
@@ -347,7 +400,7 @@ export function ArtilleryCalculator({locale}: Props) {
                 {copy.azimuth}
               </span>
               <div className="display-font mt-1 text-2xl font-extrabold text-white sm:text-3xl">
-                {solution.azimuthDegrees.toFixed(1)}°
+                {((Math.round(solution.azimuthDegrees * 10) / 10) % 360).toFixed(1)}°
               </div>
               <span className="font-mono text-[11px] text-[#8ce2ad]">
                 {solution.azimuthMil} {copy.mils}
@@ -400,6 +453,9 @@ export function ArtilleryCalculator({locale}: Props) {
                     }}
                   />
                 </div>
+                <button type="button" onClick={cancelCountdown} className="mt-2 rounded-lg border border-[#34453b] px-3 py-1 text-xs text-[#c4d2ca]">
+                  {copy.cancelCountdown}
+                </button>
               </div>
             ) : splashTriggered ? (
               <div className="flex flex-col items-center text-center">
@@ -443,7 +499,7 @@ export function ArtilleryCalculator({locale}: Props) {
             <div className="flex items-center gap-1 font-mono">
               <button
                 type="button"
-                onClick={() => setDirectHeightDelta((prev) => prev - 5)}
+                onClick={() => updateInputs(() => setDirectHeightDelta((prev) => prev - 5))}
                 className="rounded border border-[#3b4e42] bg-[#141d17] px-2 py-0.5 hover:bg-[#223328]"
               >
                 -5m
@@ -453,7 +509,7 @@ export function ArtilleryCalculator({locale}: Props) {
               </span>
               <button
                 type="button"
-                onClick={() => setDirectHeightDelta((prev) => prev + 5)}
+                onClick={() => updateInputs(() => setDirectHeightDelta((prev) => prev + 5))}
                 className="rounded border border-[#3b4e42] bg-[#141d17] px-2 py-0.5 hover:bg-[#223328]"
               >
                 +5m
@@ -476,6 +532,7 @@ export function ArtilleryCalculator({locale}: Props) {
               <button
                 type="button"
                 onClick={() => setPlaceTargetNext(false)}
+                aria-pressed={!placeTargetNext}
                 className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all ${
                   !placeTargetNext
                     ? "border-[#52a473] bg-[#1c3827] text-white"
@@ -488,6 +545,7 @@ export function ArtilleryCalculator({locale}: Props) {
               <button
                 type="button"
                 onClick={() => setPlaceTargetNext(true)}
+                aria-pressed={placeTargetNext}
                 className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all ${
                   placeTargetNext
                     ? "border-[#e05d5d] bg-[#3a1a1a] text-white"
@@ -501,11 +559,12 @@ export function ArtilleryCalculator({locale}: Props) {
 
             <button
               type="button"
-              onClick={() => {
+              onClick={() => updateInputs(() => {
                 setGunPoint({x: 0.48, y: 0.52});
                 setTargetPoint({x: 0.50, y: 0.50});
+                setMapCursor({x: 0.50, y: 0.50});
                 setPlaceTargetNext(true);
-              }}
+              })}
               className="flex items-center gap-1 rounded-lg border border-[#34453b] bg-[#141c18] px-2.5 py-1 text-xs text-[#8da095] hover:bg-[#202e26]"
             >
               <RotateCcw size={13} />
@@ -514,9 +573,18 @@ export function ArtilleryCalculator({locale}: Props) {
           </div>
 
           {/* Interactive Map Canvas Area */}
+          <p id="artillery-map-instructions" className="mb-2 text-xs text-[#a8b8ae]">{copy.mapKeyboardInstructions}</p>
+          <p id="artillery-map-cursor" role="status" className="mb-3 text-xs text-[#8ce2ad]">
+            {copy.mapCursor}: {formatGridCoordinate(mapCursor, mapId)} · {placeTargetNext ? copy.targetPosition : copy.gunPosition}
+          </p>
           <div
             onClick={handleMapClick}
-            className="group relative aspect-square w-full cursor-crosshair overflow-hidden rounded-lg border border-[#394d40] bg-black select-none"
+            onKeyDown={handleMapKeyDown}
+            tabIndex={0}
+            role="button"
+            aria-label={copy.selectMap}
+            aria-describedby="artillery-map-instructions artillery-map-cursor"
+            className="group relative aspect-square w-full cursor-crosshair overflow-hidden rounded-lg border border-[#394d40] bg-black select-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8ce2ad]"
           >
             {/* Basemap Image */}
             <Image
@@ -564,6 +632,7 @@ export function ArtilleryCalculator({locale}: Props) {
                 stroke={solution.valid ? "#8ce2ad" : "#f87171"}
                 strokeWidth="0.6"
               />
+              <circle cx={mapCursor.x * 100} cy={mapCursor.y * 100} r="1.2" fill="none" stroke="white" strokeWidth="0.4" className="opacity-0 group-focus:opacity-100" />
             </svg>
 
             {/* Gun Marker (HTML Overlay) */}
@@ -602,22 +671,24 @@ export function ArtilleryCalculator({locale}: Props) {
           <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
             {/* Distance Slider & Quick Adjusters */}
             <div>
-              <label className="text-xs font-semibold text-[#8ca094]">
+              <label id="artillery-distance-label" htmlFor="artillery-distance" className="text-xs font-semibold text-[#8ca094]">
                 {copy.directDistanceLabel}
               </label>
               <div className="mt-2 flex items-center gap-3">
                 <input
                   type="range"
+                  aria-labelledby="artillery-distance-label"
                   min={rangeEnvelope.minRangeMeters}
                   max={rangeEnvelope.maxRangeMeters}
                   value={directDistance}
-                  onChange={(e) => setDirectDistance(Number(e.target.value))}
+                  onChange={(e) => updateInputs(() => setDirectDistance(Number(e.target.value)))}
                   className="h-2 flex-1 cursor-pointer accent-[#62b984]"
                 />
                 <input
                   type="number"
+                  id="artillery-distance"
                   value={directDistance}
-                  onChange={(e) => setDirectDistance(Number(e.target.value))}
+                  onChange={(e) => updateInputs(() => setDirectDistance(Number(e.target.value)))}
                   className="w-24 rounded border border-[#384c3f] bg-[#141e17] px-2 py-1 text-center font-mono text-sm font-bold text-white"
                 />
               </div>
@@ -626,11 +697,11 @@ export function ArtilleryCalculator({locale}: Props) {
                   <button
                     key={delta}
                     type="button"
-                    onClick={() =>
+                    onClick={() => updateInputs(() =>
                       setDirectDistance((prev) =>
                         Math.max(rangeEnvelope.minRangeMeters, Math.min(rangeEnvelope.maxRangeMeters, prev + delta))
                       )
-                    }
+                    )}
                     className="flex-1 rounded border border-[#34463b] bg-[#131c16] py-1 text-xs font-semibold text-[#8ce2ad] hover:bg-[#202e25]"
                   >
                     {delta > 0 ? `+${delta}m` : `${delta}m`}
@@ -641,22 +712,26 @@ export function ArtilleryCalculator({locale}: Props) {
 
             {/* Azimuth Angle Input */}
             <div>
-              <label className="text-xs font-semibold text-[#8ca094]">
+              <label id="artillery-azimuth-label" htmlFor="artillery-azimuth" className="text-xs font-semibold text-[#8ca094]">
                 {copy.directAzimuthLabel}
               </label>
               <div className="mt-2 flex items-center gap-3">
                 <input
                   type="range"
+                  aria-labelledby="artillery-azimuth-label"
                   min={0}
                   max={359}
-                  value={directAzimuth}
-                  onChange={(e) => setDirectAzimuth(Number(e.target.value))}
+                  value={normalizeAzimuth(directAzimuth)}
+                  onChange={(e) => updateInputs(() => setDirectAzimuth(Number(e.target.value)))}
                   className="h-2 flex-1 cursor-pointer accent-[#62b984]"
                 />
                 <input
                   type="number"
+                  id="artillery-azimuth"
+                  step="any"
                   value={directAzimuth}
-                  onChange={(e) => setDirectAzimuth(Number(e.target.value))}
+                  onChange={(e) => updateInputs(() => setDirectAzimuth(Number(e.target.value)))}
+                  onBlur={() => setDirectAzimuth(normalizeAzimuth(directAzimuth))}
                   className="w-24 rounded border border-[#384c3f] bg-[#141e17] px-2 py-1 text-center font-mono text-sm font-bold text-white"
                 />
               </div>
@@ -665,7 +740,7 @@ export function ArtilleryCalculator({locale}: Props) {
                   <button
                     key={deg}
                     type="button"
-                    onClick={() => setDirectAzimuth(deg)}
+                    onClick={() => updateInputs(() => setDirectAzimuth(deg))}
                     className="flex-1 rounded border border-[#34463b] bg-[#131c16] py-1 text-xs font-semibold text-[#8ce2ad] hover:bg-[#202e25]"
                   >
                     {deg === 0 ? "N (0°)" : deg === 90 ? "E (90°)" : deg === 180 ? "S (180°)" : "W (270°)"}

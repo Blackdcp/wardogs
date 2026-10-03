@@ -5,6 +5,11 @@ export const ANALYTICS_EVENTS = {
   engagedGuide: "engaged_guide",
   catalogueItemOpen: "catalogue_item_open",
   videoStart: "video_start",
+  videoEmbedOpen: "video_embed_open",
+  toolResult: "tool_result",
+  toolAction: "tool_action",
+  mapAction: "map_action",
+  adStatus: "ad_status",
   officialOutboundClick: "official_outbound_click",
   languageSwitch: "language_switch",
   catalogueFilter: "catalogue_filter",
@@ -12,6 +17,12 @@ export const ANALYTICS_EVENTS = {
   siteSearchNoResults: "site_search_no_results",
   siteSearchResultOpen: "site_search_result_open"
 } as const;
+
+export const PRODUCTION_HOSTNAMES = ["wardogswiki.com", "www.wardogswiki.com"] as const;
+
+export function isProductionHostname(hostname: string) {
+  return PRODUCTION_HOSTNAMES.some((allowed) => allowed === hostname.toLowerCase());
+}
 
 export type AnalyticsEventName = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];
 export type AnalyticsParameters = Record<string, string | number | boolean>;

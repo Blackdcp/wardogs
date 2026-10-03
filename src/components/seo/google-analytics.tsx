@@ -1,4 +1,5 @@
 import Script from "next/script";
+import {PRODUCTION_HOSTNAMES} from "@/lib/analytics-events";
 
 export {
   createAnalyticsEventCommand,
@@ -15,23 +16,27 @@ export function googleAnalyticsScriptSrc() {
 
 export function googleAnalyticsConfigScript() {
   return `
+        (function () {
+          if (!${JSON.stringify(PRODUCTION_HOSTNAMES)}.includes(window.location.hostname.toLowerCase())) return;
+          if (document.getElementById('wardogs-google-tag')) return;
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
+          window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+          var gtag = window.gtag;
           gtag('js', new Date());
           gtag('config', '${GOOGLE_TAG_ID}');
+          var loader = document.createElement('script');
+          loader.id = 'wardogs-google-tag';
+          loader.async = true;
+          loader.src = '${googleAnalyticsScriptSrc()}';
+          document.head.appendChild(loader);
+        })();
         `;
 }
 
 export function GoogleAnalytics() {
   return (
-    <>
-      <Script
-        src={googleAnalyticsScriptSrc()}
-        strategy="afterInteractive"
-      />
       <Script id="google-analytics" strategy="afterInteractive">
         {googleAnalyticsConfigScript()}
       </Script>
-    </>
   );
 }

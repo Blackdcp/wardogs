@@ -36,10 +36,9 @@ async function dataLayerEvents(page: Page, eventName: string): Promise<CapturedE
 }
 
 async function waitForAnalyticsReady(page: Page) {
-  await page.waitForFunction(() => {
-    const layer = (window as Window & {dataLayer?: unknown[]}).dataLayer ?? [];
-    return layer.some((entry) => Array.from(entry as ArrayLike<unknown>)[0] === "config");
-  });
+  // The production tag is deliberately disabled locally. Events remain in the
+  // in-memory queue so this suite can verify interactions without sending data.
+  await page.locator("#google-analytics").waitFor({state: "attached"});
 }
 
 test("delegated official and catalogue links emit analytics events", async ({page}) => {
@@ -84,7 +83,7 @@ test("homepage priority links emit a task click before navigation", async ({page
       if ((event.target as Element | null)?.closest("a[data-home-task]")) event.preventDefault();
     }, true);
   });
-  await page.locator('a[data-home-task="weapons"]').click();
+  await page.locator('a[data-home-task="weapons"][data-home-placement="hero"]').click();
   await expect.poll(() => dataLayerEvents(page, "home_task_click")).toEqual([
     expect.objectContaining({
       parameters: expect.objectContaining({task: "weapons", placement: "hero", locale: "en"})
@@ -92,11 +91,12 @@ test("homepage priority links emit a task click before navigation", async ({page
   ]);
 });
 
-test("video starts and catalogue filters emit their dedicated events", async ({page}) => {
+test("video embed activation and catalogue filters emit their dedicated events", async ({page}) => {
   await page.goto("/en/videos/wardogs-everything-before-playing");
   await waitForAnalyticsReady(page);
   await page.getByRole("button", {name: /WARDOGS - Everything You Need to Know/}).click();
-  await expect.poll(() => dataLayerEvents(page, "video_start")).toHaveLength(1);
+  await expect.poll(() => dataLayerEvents(page, "video_embed_open")).toHaveLength(1);
+  await expect(dataLayerEvents(page, "video_start")).resolves.toEqual([]);
 
   await page.goto("/en/items/weapons");
   await waitForAnalyticsReady(page);
@@ -176,11 +176,11 @@ test("background time cannot qualify a guide or create a page view", async ({pag
   await expect(dataLayerEvents(page, "page_view")).resolves.toEqual([]);
 });
 
-test("client navigation and back retain one config without manual page views", async ({page}) => {
+test("local navigation and back send no production config or manual page views", async ({page}) => {
   await page.goto("/en");
   await waitForAnalyticsReady(page);
   await page.evaluate(() => { document.documentElement.dataset.analyticsDocument = "same-document"; });
-  await page.locator('a[data-home-task="weapons"]').click();
+  await page.locator('a[data-home-task="weapons"][data-home-placement="hero"]').click();
   await expect(page).toHaveURL(/\/en\/items\/weapons\/?$/);
   await page.goBack();
   await expect(page).toHaveURL(/\/en\/?$/);
@@ -188,10 +188,9 @@ test("client navigation and back retain one config without manual page views", a
     const layer = (window as Window & {dataLayer?: unknown[]}).dataLayer ?? [];
     return layer.map((entry) => Array.from(entry as ArrayLike<unknown>));
   });
-  expect(commands.filter((entry) => entry[0] === "config")).toEqual([["config", "G-0GJ404WEYV"]]);
-  expect(commands.findIndex((entry) => entry[0] === "config")).toBeLessThan(
-    commands.findIndex((entry) => entry[0] === "event" && entry[1] === "home_task_click")
-  );
+  expect(commands.filter((entry) => entry[0] === "config")).toEqual([]);
+  expect(commands.filter((entry) => entry[0] === "event" && entry[1] === "home_task_click")).toHaveLength(1);
+  await expect(page.locator('script[src*="googletagmanager.com"]')).toHaveCount(0);
   await expect(page.locator("html")).toHaveAttribute("data-analytics-document", "same-document");
   await expect(dataLayerEvents(page, "page_view")).resolves.toEqual([]);
 });

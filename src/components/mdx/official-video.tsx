@@ -62,7 +62,7 @@ export function OfficialVideo({id, title, className = "my-8", startSeconds = 0, 
   const timing = `${start ? `&start=${start}` : ""}${end ? `&end=${end}` : ""}`;
 
   function startVideo() {
-    trackAnalyticsEvent(ANALYTICS_EVENTS.videoStart, {video_id: id, video_title: title});
+    trackAnalyticsEvent(ANALYTICS_EVENTS.videoEmbedOpen, {video_id: id, video_title: title});
     setActive(true);
   }
 

@@ -1,11 +1,11 @@
 ---
-title: "WARDOGS 伺服器狀態：實時停機維護、登入排隊與延遲雷達"
-description: "檢查 WARDOGS 伺服器是否開放、登入排隊、列表為空、地區選擇、官方公告和發售日故障證據，區分全域性服務異常與本地賬號、網路或電腦問題，避免無效重灌和不安全操作。同時記錄 Steam 解鎖狀態、庫條目、錯誤碼、UTC 時間、版本號與地區，幫助玩家在重灌、修改 DNS 或關閉安全防護前，先完成低風險的第一方資訊核驗。"
+title: "WARDOGS 伺服器狀態：官方公告與佇列排查"
+description: "查看帶日期的 WARDOGS 官方維護與異常公告，並按佇列、空白伺服器清單、地區選擇與帳戶權限分別排查。說明 Update 0.1.2 的 Deploy 分類與 Official 進階篩選恢復，保留舊公告的日期與來源。本站不提供目前上線率、即時佇列位置或跨區延遲遙測；新故障應核對客戶端版本、準確錯誤與最新官方公告。"
 keyword: "wardogs server status"
 category: "guide"
 slug: "wardogs-server-status"
 order: 49
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "發售日"
     tone: "accent"
@@ -13,7 +13,7 @@ badges:
     tone: "warning"
 faq:
   - question: "WARDOGS 伺服器現在開放了嗎？"
-    answer: "WARDOGS 已在 Steam 搶先體驗上線。此處保留的是帶日期的 Patch 0.11 公告記錄，已公佈的 9 月 14 日維護視窗已經過去；新的中斷資訊請檢視 Steam 官方動態。"
+    answer: "WARDOGS 已在 Steam 搶先體驗上線。Update 0.1.2 於 9 月 30 日公布，公告中的維護時間已過。本站整理帶日期的公告，不提供即時上線狀態、佇列位置或地區延遲。"
   - question: "WARDOGS 伺服器列表為什麼是空的？"
     answer: "Beta 02 的官方排查建議是隻選擇一個地區並重新整理一次，然後先看官方通知，不要立刻重灌或關閉安全軟體。"
 sources:
@@ -33,7 +33,18 @@ sources:
     url: "https://steamcommunity.com/app/1867240/homecontent/"
     kind: "official"
     checkedAt: "2026-09-10"
+  - label: "官方 Update 0.1.2 小型修補"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
+
+## Update 0.1.2：9 月 30 日小型修補
+
+[9 月 30 日官方 Update 0.1.2 公告](https://store.steampowered.com/news/app/1867240/view/712287592723252267)確認修復 Windows 11 KB5124010 引起的 WD-L020、現金與 XP 漏洞，並調整 Deploy 伺服器入口。公告中的 08:00 UTC、預計一小時維護是帶日期的部署記錄，不代表目前服務狀態。
+
+[Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267)的 Deploy 提供 **Official**、**Community**、**Infantry Mode** 和 **Low-Level**，且 **Official** 進階篩選已恢復。清除相關搜尋與篩選，核對 **Show Empty/Full**，重新整理一次並查看目前官方告知。**只選一個地區**是 Beta 02 的舊辦法，只能作為單獨診斷測試。
+
 ## 9月24-29日：事故、恢復與開發者回應
 | 日期 | 官方記錄 | 不能據此推斷 |
 | --- | --- | --- |
@@ -73,6 +84,8 @@ Beta 02 期間，官方排查帖要求玩家只選擇一個伺服器地區。多
 ## 提交有效報告
 
 請提供 UTC 時間、國家或地區、Steam 購買狀態、庫條目、佇列位置或錯誤碼、版本號，以及只選一個地區後的結果。截圖中刪除郵箱、賬號、二維碼、令牌和 Steam Guard 資訊。
+
+Update 0.1.2 公告核對日期為 **2026-10-03**。修補記錄不等於即時上線狀態檢查。
 
 ## 相關攻略
 

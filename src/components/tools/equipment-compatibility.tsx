@@ -1,5 +1,7 @@
 "use client";
 
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+
 import Image from "next/image";
 import {Check, Copy, ExternalLink, ImageOff, Search} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
@@ -37,7 +39,7 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
   async function copySelection() {
     const url = writeCompatibilitySelection(new URL(window.location.href), selection);
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); setCopyState("copied"); }
+    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "equipment-compatibility", action: "share", result: "copied"}); setCopyState("copied"); }
     catch { setCopyState("failed"); }
   }
 

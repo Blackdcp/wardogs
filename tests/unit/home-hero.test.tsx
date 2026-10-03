@@ -34,6 +34,9 @@ describe("HomeHero", () => {
 
     expect(html).toMatch(/<h1[^>]*>WARDOGS Wiki<\/h1>/);
     expect(html).toContain('alt="WARDOGS"');
+    const hero = html.match(/<img[^>]*alt="WARDOGS combat scene"[^>]*>/)?.[0];
+    expect(hero).toContain('fetchPriority="high"');
+    expect(hero).toContain('loading="eager"');
     expect(html).toContain('href="/guides/wardogs-patch-notes"');
     expect(html).toContain('href="/guides/wardogs-server-status"');
     expect(html).toContain('href="/items/weapons"');

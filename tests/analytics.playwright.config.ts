@@ -1,7 +1,5 @@
-import {existsSync} from "node:fs";
 import {defineConfig} from "@playwright/test";
 
-const chrome = process.env.PLAYWRIGHT_EXECUTABLE_PATH ?? "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const baseURL = process.env.ANALYTICS_BASE_URL ?? "http://127.0.0.1:3127";
 
 // Reuse the integration server; do not start or stop shared Next.js processes.
@@ -16,7 +14,9 @@ export default defineConfig({
   use: {
     baseURL,
     serviceWorkers: "block",
-    launchOptions: existsSync(chrome) ? {executablePath: chrome} : {},
+    launchOptions: process.env.PLAYWRIGHT_EXECUTABLE_PATH
+      ? {executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH}
+      : undefined,
     trace: "retain-on-failure"
   }
 });

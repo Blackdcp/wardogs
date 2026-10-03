@@ -1,11 +1,11 @@
 ---
 title: "WARDOGS Community Servers, RCON and Hosting"
-description: "Learn how WARDOGS community servers work, what three approved hosts offer, whether self-hosting is allowed, and which RCON controls remain planned."
+description: "Learn how WARDOGS community servers work, what three approved hosts offer, whether self-hosting is allowed, and the RCON controls documented in 0.1.2."
 keyword: "wardogs community servers guide"
 category: "guide"
 slug: "wardogs-community-servers-guide"
 order: 45
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "Server Guide"
     tone: "accent"
@@ -17,7 +17,7 @@ faq:
   - question: "Which companies host WARDOGS servers?"
     answer: "The three approved launch providers are QONZER, BisectHosting and xREALM; verify current ordering links through the official announcement."
   - question: "Will WARDOGS community servers support RCON?"
-    answer: "An RCON administration tool is in development. Its release date and complete command set have not yet been confirmed."
+    answer: "Update 0.1.2 confirms RCON AllowedHosts restrictions, message/broadcast length caps and Standard response detail without server internals in config responses. The full command set and any separate administration tool remain unverified here."
   - question: "What can server owners change on day one?"
     answer: "The developer says approved community servers can choose maps and modes at launch, with broader controls planned later where the game economy permits."
   - question: "Do community servers still pay 5% bonus cash?"
@@ -43,7 +43,17 @@ sources:
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
     checkedAt: "2026-09-01"
+  - label: "Official Update 0.1.2 minor patch"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
+
+## Update 0.1.2: September 30 minor patch
+
+**Current build checkpoint:** [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) was announced September 30, 2026. Patch 0.11 remains historical. Check the client and official feed for newer builds and live service notices.
+
+In [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267), Deploy offers **Official**, **Community**, **Infantry Mode** and **Low-Level** choices, and advanced filters are restored to **Official**. Clear relevant search/filter settings, check **Show Empty/Full**, refresh once and compare current official notices. Selecting **one region only** was a Beta 02 workaround; it remains an isolated diagnostic test, not a guaranteed live-build fix.
 
 ## Historical checkpoint: Season 1 checkpoint - September 17, 2026
 
@@ -61,7 +71,7 @@ The official Patch 0.11 announcement lists separate **Official** and **Community
 
 Favourites, tiered priority queues, Message of the Day, seeding AFK controls, team switching, and improved warmup activities are announced for later and are not part of Patch 0.11 yet.
 
-WARDOGS community servers use **three approved hosting providers**. The developer does not plan to distribute server code for arbitrary self-hosting. Approved servers can select maps and modes, an RCON administration tool is in development, and more controls may arrive where they do not undermine the persistent economy.
+WARDOGS community servers use **three approved hosting providers**. The developer does not plan to distribute server code for arbitrary self-hosting. Approved servers can select maps and modes, RCON security controls are documented in Update 0.1.2, and more controls may arrive where they do not undermine the persistent economy.
 
 <OfficialScreenshot id="patch-0-11-deploy-picker" locale="en" alt="Deploy screen offering Official and Community servers" caption="Choose Official or Community before looking for a server. Official Patch 0.11 announcement image, not a live server list; capture build is not identified." />
 
@@ -82,13 +92,13 @@ The developer community-server update confirms four practical points:
 - Three hosting companies have been approved for launch.
 - Server code will not be released for arbitrary self-hosting at launch.
 - Approved community servers can choose maps and modes on day one.
-- A dedicated RCON tool is being developed for administration.
+- Update 0.1.2 documents RCON security controls; a complete separate tool is not verified here.
 
 The providers have been tested for performance and security. This helps keep server behavior closer to the supported build, but it does not mean every region, slot count, price, queue feature, or moderation command is already public.
 
 ## What Players Search For
 
-The main questions are whether players can self-host, which providers are approved, which maps and modes can be selected, whether RCON works on day one, and whether private-server progress affects the public economy. Only the three-provider launch model and day-one map/mode selection are confirmed today.
+The main questions are whether players can self-host, which providers are approved, which maps and modes can be selected, whether RCON works on day one, and whether private-server progress affects the public economy. The launch record confirms three providers and day-one map/mode selection; Update 0.1.2 separately documents RCON security controls.
 
 ## Select a server with a dated record
 Record server ID, region, language, displayed mode, official/community status, visible entry restrictions and observation time. Clear filters one at a time if no suitable result appears. A server's title or operator description is not an official global rule; verify a claimed level limit in the current server's entry requirements before purchasing anything.
@@ -119,7 +129,7 @@ Do not preorder an unofficial server merely to secure a name. The developer expl
 
 ## RCON and Administration
 
-RCON is a remote administration interface used to monitor and manage a running game server. WARDOGS says its own RCON tool is in development. That supports the expectation of remote moderation, but the exact command set, authentication model, audit log, web panel, console compatibility, and release date remain unknown.
+RCON remotely administers a running server. [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) adds AllowedHosts restrictions, caps message/broadcast lengths, defaults responses to Standard rather than Full, and removes server internals from config responses. These are shipped controls; a complete command reference, authentication model, audit log and separate web panel are not established by that note.
 
 A responsible launch checklist should prepare administrator roles, password storage, escalation rules, ban evidence, and a contact route before assuming commands exist. Do not publish copied RCON commands from another game; even familiar command names can behave differently.
 
@@ -151,9 +161,9 @@ If a listing claims official status, save the URL and compare it with the WARDOG
 
 ## Confirmed vs Unknown
 
-**Confirmed:** three approved launch hosts; no arbitrary self-hosted server code at launch; provider testing for performance and security; map and mode selection on day one; RCON in development; additional controls considered later.
+**Confirmed:** three approved launch hosts; no arbitrary self-hosted server code at launch; provider testing for performance and security; map and mode selection on day one; RCON security controls in Update 0.1.2; additional controls considered later.
 
-**Unknown:** provider pricing and current order links, prices, regions, slot tiers, RCON launch date and commands, Linux or SteamCMD support, modding, custom maps, progression settings, and any later self-hosting roadmap.
+**Unknown:** provider pricing and current order links, prices, regions, slot tiers, complete RCON command reference and any separate tool release, Linux or SteamCMD support, modding, custom maps, progression settings, and any later self-hosting roadmap.
 
 ## FAQ
 
@@ -168,6 +178,8 @@ If a listing claims official status, save the URL and compare it with the WARDOG
 Check dates apply separately to the sources listed below, not to the whole article. The content update date does not certify every fact. Earlier dated notes retain their original evidence scope, not a live-client or service-status check.
 
 The Patch 0.11 post was rechecked on September 26, 2026; the other source dates appear above. Prices, regions and technical instructions remain provider- and build-sensitive.
+
+Update 0.1.2 was checked on **2026-10-03**. This is a dated official patch record, not a live uptime check.
 
 ## Related Guides
 

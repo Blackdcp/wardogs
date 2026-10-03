@@ -5,7 +5,7 @@ keyword: "wardogs patch notes"
 category: "guide"
 slug: "wardogs-patch-notes"
 order: 50
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "Official Sources"
     tone: "accent"
@@ -13,7 +13,7 @@ badges:
     tone: "warning"
 faq:
   - question: "Are official WARDOGS launch patch notes available?"
-    answer: "WARDOGS is live in Steam Early Access. The dated Patch 0.11 announcement is retained as a source checkpoint; its published September 14 maintenance window has passed, so check the official Steam feed for newer interruptions."
+    answer: "WARDOGS is in Steam Early Access. Update 0.1.2 was announced September 30; its published maintenance window has passed. This page records dated official notices and cannot confirm live uptime, queue position or regional ping."
   - question: "Are Beta 02 balance values current?"
     answer: "No. Beta prices, balance, access rules, and workarounds remain historical until the live Early Access build or an official note confirms them."
 sources:
@@ -45,7 +45,21 @@ sources:
     url: "https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s"
     kind: "official"
     checkedAt: "2026-09-26"
+  - label: "Official Update 0.1.2 minor patch"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
+
+## Update 0.1.2: September 30 minor patch
+
+The [official September 30 Update 0.1.2 announcement](https://store.steampowered.com/news/app/1867240/view/712287592723252267) records a fix for the Windows 11 KB5124010 issue causing WD-L020 crashes, cash/XP exploit fixes, and changes to the Deploy server browser. Its announced 08:00 UTC maintenance window, estimated at one hour, is a dated deployment notice, not current service telemetry.
+
+- **WD-L020:** the fix targets the KB5124010-related Windows 11 branch; it does not guarantee that every startup error or crash is resolved.
+- **Cash and XP:** revive validity checks are now server authoritative; vehicle fly-through rewards are capped; rewards for destroying buildables scale with build progress; depositing pallets into a FOB outside the zone gives reduced rewards.
+- **Deploy:** choose Official, Community, Infantry Mode or Low-Level servers. Official advanced filters are restored. The browser shows connecting/queue state after Join, full names on hover, selected-region counts and gamepad support on the Deploy selection screen.
+- **Other changes:** community-server restart scheduling and RCON/security controls, server stability/security hotfixes, enclosed-seat throwable restrictions, crosshair and buildable crit-spot fixes, a Havoc 20mm/30mm damage fix and localisation improvements.
+
 ## September 24-29: incidents, recovery and developer response
 | Date | Official record | What it does not prove |
 | --- | --- | --- |
@@ -54,15 +68,6 @@ sources:
 | 2026-09-29 | [Joe Brammer publishes a balancing/XP response](https://x.com/Brammflakes/status/2104937869634662749) | A verified XP change or release commitment; full video transcript not reviewed |
 
 The September 24 request to restart and download approximately 16 GB applied to the small affected group at that time, not everyone today. These are dated notices, not live telemetry. For a new failure, capture the current region, time/timezone, build and exact error, then compare the latest official notice before reinstalling. Use the [crash branches](/en/guides/wardogs-crash-fix) for a client that actually exits.
-
-## Update 0.1.2 Hotfix Notes: Stability & Fair-Play Safeguards
-
-On September 30, 2026, the development team distributed Update 0.1.2 focusing on crash mitigations and exploit closures following community reports:
-
-- **Exploit & Abuse Mitigation**: Closed the revive cash payout loop and crate duplication mechanisms; accounts repeatedly generating abnormal economy transactions remain subject to automated investigation.
-- **Anti-Cheat Handshake Stability**: Addressed initial handshake timeouts with the Elytra service during high concurrency windows, mitigating early crash occurrences for Windows 11 preview systems.
-- **Deployment Interface Refinement**: Enhanced latency sort order in the server browser and improved tactical spawn markers on the deployment overview map.
-- **Diagnostics**: For unresolved startup crashes, cross-reference our [WD-L020 crash troubleshooting guide](/en/guides/wardogs-crash-fix).
 
 ## Season 02: date and transition are separate
 [Season 02 is dated October 15, 2026](https://steamcommunity.com/games/1867240/announcements/detail/677384059121304815); an exact launch hour, patch number and full feature list are not in that teaser. [The earlier official policy](https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s) already confirms that cash and XP reset, remaining cash converts to Gold Bars, and Gold Bars and cosmetics persist. The conversion rate and item-by-item paid unlock treatment still need a transition notice. See the [Season 02 decision table](/en/guides/wardogs-season-2).
@@ -88,7 +93,7 @@ Finish a match before maintenance, let Steam update the main WARDOGS app, and ch
 
 ## Quick Answer
 
-The dated Patch 0.11 announcement is retained as a source checkpoint. Its published September 14 08:00 UTC maintenance window has passed. The announcement covered separate Official and Community server browsers, search and filter improvements, persistent server IDs, cash and GPU fixes, and additional Asia capacity. Check the official Steam feed for newer incidents; this site does not operate live telemetry.
+The [official September 30 Update 0.1.2 announcement](https://store.steampowered.com/news/app/1867240/view/712287592723252267) records a fix for the Windows 11 KB5124010 issue causing WD-L020 crashes, cash/XP exploit fixes, and changes to the Deploy server browser. Its announced 08:00 UTC maintenance window, estimated at one hour, is a dated deployment notice, not current service telemetry.
 
 ## What counts as an official patch note
 
@@ -173,6 +178,8 @@ Record the Steam download time, visible build identifier, and any reset settings
 Check dates apply separately to the sources listed below, not to the whole article. The content update date does not certify every fact. Earlier dated notes retain their original evidence scope, not a live-client or service-status check.
 
 The official Steam store, Season 1 changelog, launch hotfix, and Patch 0.11 notice were checked on **September 13, 2026**. The tracker changes only when a first-party note or a clearly dated build provides new evidence.
+
+Update 0.1.2 was checked on **2026-10-03**. This is a dated official patch record, not a live uptime check.
 
 ## Related Guides
 

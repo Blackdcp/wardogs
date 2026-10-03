@@ -19,6 +19,20 @@ export function recordSiteSearch(query: string, resultCount: number, locale: Loc
   if (resultCount === 0) trackAnalyticsEvent(ANALYTICS_EVENTS.siteSearchNoResults, parameters);
 }
 
+// One query can finish through Enter, blur and a result click. Record that
+// outcome once per mounted search surface; never record each keystroke.
+export function createSiteSearchRecorder(locale: Locale, source: "home" | "header") {
+  let previous: string | null = null;
+  return (query: string, resultCount: number) => {
+    const term = safeSearchTerm(query);
+    if (!term) return;
+    const key = JSON.stringify([term, resultCount]);
+    if (key === previous) return;
+    previous = key;
+    recordSiteSearch(term, resultCount, locale, source);
+  };
+}
+
 export function recordSiteSearchResult(query: string, result: SiteSearchEntry, locale: Locale, source: "home" | "header") {
   const searchTerm = safeSearchTerm(query);
   if (!searchTerm) return;

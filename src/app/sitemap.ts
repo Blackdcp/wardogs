@@ -16,6 +16,7 @@ import {videoArticles} from "@/features/videos/video-library";
 import {videoCandidates} from "@/features/videos/video-candidates";
 import {buildAlternates} from "@/lib/metadata";
 import {getPilotSitemapEntries} from "@/i18n/pilot-guides";
+import {HOME_UPDATED_AT} from "@/features/home/home-data";
 
 const staticPaths = [
   "",
@@ -128,7 +129,8 @@ function editorialHubSources(locale: string): EditorialHubSources {
 
 function resolvePageLastModified(locale: string, pathname: string) {
   if (pathname === "" || pathname === "/guides" || pathname === "/news") {
-    return resolveEditorialHubLastModified(pathname, editorialHubSources(locale));
+    const lastModified = resolveEditorialHubLastModified(pathname, editorialHubSources(locale));
+    return pathname === "" ? new Date(Math.max(lastModified.getTime(), Date.parse(HOME_UPDATED_AT))) : lastModified;
   }
   if (pathname === "/videos") {
     return new Date(`${latestDate(editorialHubSources(locale).videos)}T00:00:00.000Z`);
@@ -140,7 +142,7 @@ function resolvePageLastModified(locale: string, pathname: string) {
     return new Date(`${itemHubDate(pathname === "/items" ? undefined : pathname.slice("/items/".length))}T00:00:00.000Z`);
   }
   if (freshHubPaths.has(pathname)) {
-    return new Date("2026-09-30T00:00:00.000Z");
+    return new Date("2026-10-03T00:00:00.000Z");
   }
   return new Date("2026-08-16T00:00:00.000Z");
 }

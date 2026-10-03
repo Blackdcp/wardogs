@@ -4,9 +4,10 @@ import {useEffect, useRef} from "react";
 import {ADSTERRA_ENABLED, ADSTERRA_NATIVE_ENABLED} from "@/features/ads/ad-policy";
 import {
   ADSTERRA_NATIVE_CONTAINER_ID,
-  ADSTERRA_NATIVE_SCRIPT_SRC,
-  configureAdsterraNativeScript
+  mountAdsterraNative
 } from "@/features/ads/adsterra-native";
+import {observeAdSlot} from "@/features/ads/adsterra-banner";
+import {isProductionHostname} from "@/lib/analytics-events";
 
 export {
   ADSTERRA_NATIVE_CONTAINER_ID,
@@ -23,22 +24,15 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ADSTERRA_ENABLED || !ADSTERRA_NATIVE_ENABLED) return;
+    if (!ADSTERRA_ENABLED || !ADSTERRA_NATIVE_ENABLED || !isProductionHostname(window.location.hostname)) return;
     const container = containerRef.current;
     if (!container || !container.parentNode) return;
 
-    const existingScript = container.parentNode.querySelector(
-      `script[src="${ADSTERRA_NATIVE_SCRIPT_SRC}"]`
-    );
-    if (existingScript) return;
-
-    const script = document.createElement("script");
-    configureAdsterraNativeScript(script);
-    container.parentNode.insertBefore(script, container);
-
+    const observation = observeAdSlot(container, "native", "native");
+    const cancelLoad = mountAdsterraNative(container, observation.report);
     return () => {
-      script.remove();
-      container.innerHTML = "";
+      observation.cleanup();
+      cancelLoad();
     };
   }, []);
 

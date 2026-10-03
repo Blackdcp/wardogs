@@ -1,5 +1,7 @@
 "use client";
 
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+
 import Image from "next/image";
 import {Copy, Plus, Trash2} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
@@ -74,7 +76,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
     url.search = encodedState;
     window.history.replaceState(null, "", url);
     setEdited({search: url.search, value: state});
-    try { await navigator.clipboard.writeText(url.toString()); setShareStatus(copy.copied); }
+    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "loadout-budget", action: "share", result: "copied"}); setShareStatus(copy.copied); }
     catch { setShareStatus(t.shareFailed); }
   }
 

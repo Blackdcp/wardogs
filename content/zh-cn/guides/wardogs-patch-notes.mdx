@@ -5,7 +5,7 @@ keyword: "wardogs patch notes"
 category: "guide"
 slug: "wardogs-patch-notes"
 order: 50
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "官方来源"
     tone: "accent"
@@ -13,7 +13,7 @@ badges:
     tone: "warning"
 faq:
   - question: "WARDOGS 发售补丁说明已经发布了吗？"
-    answer: "WARDOGS 已在 Steam 抢先体验上线。此处保留的是带日期的 Patch 0.11 公告记录，已公布的 9 月 14 日维护窗口已经过去；新的中断信息请查看 Steam 官方动态。"
+    answer: "WARDOGS 已在 Steam 抢先体验上线。Update 0.1.2 于 9 月 30 日公布，公告中的维护窗口已过去。本站整理带日期的公告，不提供实时在线状态、队列位置或地区延迟。"
   - question: "Beta 02 的武器和经济数值现在还有效吗？"
     answer: "不能直接当作当前数值。价格、平衡、访问规则和排障办法必须由正式版本或官方更新重新确认。"
 sources:
@@ -41,7 +41,21 @@ sources:
     url: "https://steamcommunity.com/games/1867240/announcements/detail/677384059121304815"
     kind: "official"
     checkedAt: "2026-09-23"
+  - label: "官方 Update 0.1.2 小型补丁"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
+
+## Update 0.1.2：9 月 30 日小型补丁
+
+[9 月 30 日官方 Update 0.1.2 公告](https://store.steampowered.com/news/app/1867240/view/712287592723252267)确认修复 Windows 11 KB5124010 引起的 WD-L020、现金与 XP 漏洞，并调整 Deploy 服务器入口。公告中的 08:00 UTC、预计一小时维护是带日期的部署记录，不代表当前服务状态。
+
+- **WD-L020：**修复针对 Windows 11 KB5124010 相关分支，不保证所有启动错误或崩溃都已解决。
+- **现金与 XP：**复活有效性改由服务器验证；限制载具飞越漏洞的奖励；摧毁建造物的收益按建造进度计算；向区域外 FOB 存放托盘的收益降低。
+- **Deploy：**可选择 Official、Community、Infantry Mode 或 Low-Level；Official 高级筛选已恢复。加入后显示连接和队列状态，悬停可看完整服务器名，显示已选地区数量，并支持在 Deploy 选择界面使用手柄。
+- **其他调整：**社区服每日重启与 RCON 安全控制、服务器稳定与安全热修、封闭载具座位投掷物限制、准星与建造物弱点、Havoc 承受 20/30mm 机炮伤害及翻译修正。
+
 ## 9月24-29日：事故、恢复与开发者回应
 | 日期 | 官方记录 | 不能据此推断 |
 | --- | --- | --- |
@@ -50,15 +64,6 @@ sources:
 | 2026-09-29 | [Joe Brammer发布平衡/XP回应](https://x.com/Brammflakes/status/2104937869634662749) | 完整字幕未核，不提取具体XP改动或上线承诺 |
 
 9月24日重启并重新下载约16 GB的要求仅针对当时少数受影响者，不是现在全体玩家的操作要求。这些是有日期的事件记录，不是实时遥测。出现新故障时先记地区、日期/时区、构建与完整错误，再对照最新官方通知，不先重装；客户端确实退出时转到[崩溃分诊](/zh-cn/guides/wardogs-crash-fix)。
-
-## Update 0.1.2 热修复说明：稳定性与公平机制加固
-
-2026 年 9 月 30 日，开发团队推出了针对客户端稳定性和漏洞防范的 Update 0.1.2 热修补丁：
-
-- **经济与漏洞防范**：彻底封堵了反复救援刷取现金漏洞与补给箱复制机制；系统加强了对异常资产变动的服务端校验。
-- **反作弊驱动握手稳定性**：优化了高并发登录阶段 Elytra 反作弊服务的握手超时机制，改善了部分 Windows 11 预览版环境下的启动崩溃现象。
-- **部署界面与服务器列表优化**：改进了服务器浏览器的延迟排序逻辑，并优化了前线重生点的标识清晰度。
-- **故障排查**：若启动阶段仍遭遇异常崩溃，请参阅[WD-L020 崩溃排查指南](/zh-cn/guides/wardogs-crash-fix)。
 
 ## Season 02日期与过渡细则分开记录
 [Season 02确认2026年10月15日开始](https://steamcommunity.com/games/1867240/announcements/detail/677384059121304815)，预告未给开放时刻、补丁编号或全功能表。[此前官方原则](https://www.youtube.com/watch?v=PQvtvAvl-78&t=185s)已确认现金/XP重置、余额转Gold、Gold与外观保留，不能写成“重置政策完全未知”。边界汇率和已购解锁的逐项处理仍待过渡公告，详见[Season 02决策表](/zh-cn/guides/wardogs-season-2)。
@@ -131,6 +136,8 @@ Closed Beta 02 已于 9 月 6 日结束。其临时访问规则、价格、平�
 ## 下载更新后的玩家检查
 
 记录 Steam 下载时间、可见版本号和被重置的设置。重新检查地区、语音输入、画质预设、按键、物品价格与成长状态。不要为了恢复访问而关闭反作弊或安装来源不明的修复程序。
+
+Update 0.1.2 公告核对日期为 **2026-10-03**。补丁记录不等于实时在线状态检查。
 
 ## 相关攻略
 

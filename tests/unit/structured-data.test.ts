@@ -1,7 +1,8 @@
 import {describe, expect, it} from "vitest";
 import {buildArticleJsonLd, buildHomeJsonLd} from "../../src/lib/structured-data";
 import {loadGuideDocument} from "../../src/content/guides";
-import {officialLinks} from "../../src/config/site";
+import {officialLinks, siteLocales} from "../../src/config/site";
+import sitemap from "../../src/app/sitemap";
 
 describe("structured data", () => {
   it("marks the site as independent and exposes article FAQs", async () => {
@@ -48,7 +49,6 @@ describe("structured data", () => {
     expect(page).toMatchObject({
       url: "http://localhost:3000/en",
       datePublished: "2026-08-13",
-      dateModified: "2026-09-26",
       author: {
         name: "WARDOGS Wiki Editorial Team",
         url: "http://localhost:3000/en/editorial-policy"
@@ -58,6 +58,14 @@ describe("structured data", () => {
         url: "http://localhost:3000/en/about"
       }
     });
+  });
+
+  it.each(siteLocales)("keeps homepage schema consistent with the visible page and sitemap for %s", (locale) => {
+    const home = buildHomeJsonLd(locale);
+    expect(home.some((item) => item["@type"] === "FAQPage")).toBe(false);
+    const page = home.find((item) => item["@type"] === "WebPage")!;
+    const entry = sitemap().find((item) => item.url === page.url)!;
+    expect(page.dateModified).toBe(new Date(entry.lastModified!).toISOString().slice(0, 10));
   });
 
   it("uses an absolute source-audited image URL for new catalogue guides", async () => {

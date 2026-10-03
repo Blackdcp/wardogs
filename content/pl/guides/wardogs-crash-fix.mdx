@@ -7,7 +7,7 @@ keyword: wardogs crash fix
 category: guide
 slug: wardogs-crash-fix
 order: 25
-updatedAt: '2026-09-30'
+updatedAt: "2026-10-03"
 badges:
   - label: Rozwiązywanie problemów
     tone: accent
@@ -30,11 +30,7 @@ faq:
       sterowniki GPU, napraw Elytra z folderu instalacji gry i uruchom ponownie
       komputer. Przed dalszymi zmianami sprawdź dokładny kod błędu.
   - question: Czy usunięcie aktualizacji Windows KB5124010 zawsze naprawia WD-L020?
-    answer: >-
-      Nie. Team17 zgłasza potencjalną niezgodność z aktualizacją zapoznawczą
-      Windows 11 z 22 września i bada problem. Czekanie na poprawkę gry
-      zachowuje aktualny Windows; cofnięcie aktualizacji jest opcjonalne i wiąże
-      się z ryzykiem.
+    answer: "Nie. Update 0.1.2 naprawia WD-L020 związany z Windows 11 KB5124010. Najpierw zaktualizuj grę; inne przyczyny WD-L020 lub awarii wymagają osobnej diagnozy."
   - question: Czy Microsoft KB5121003 potwierdza błąd WARDOGS?
     answer: >-
       Nie. Microsoft opisuje ogólny problem Windows z niektórymi grami i
@@ -75,13 +71,17 @@ sources:
       https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update
     kind: official
     checkedAt: '2026-09-30'
+  - label: "Oficjalna aktualizacja 0.1.2"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
 
 ## Krótka odpowiedź
 
 Jeśli WARDOGS zamyka się lub nie startuje w aktualnym Early Access, zapisz **dokładny kod błędu**. [Przypięta instrukcja awarii Team17](https://steamcommunity.com/app/1867240/discussions/3/562541634873810804/) zaczyna od sprawdzenia plików Steam, aktualizacji sterowników GPU, naprawy Elytra z folderu instalacji gry i restartu PC. Reagująca kolejka logowania nie jest awarią. Restart całego PC to osobny, poważniejszy objaw: przerwij ponawianie uruchomień i zbadaj stabilność systemu.
 
-Jeśli kod to **WD-L020**, a problem zaczął się po aktualizacji zapoznawczej Windows 11 **KB5124010** z 22 września, przeczytaj [osobny komunikat Team17](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/). Team17 określa związek jako *potencjalny* i informuje o badaniu; nie obiecuje, że jedno obejście naprawi każdy przypadek WD-L020. Oczekiwanie na poprawkę gry zachowuje normalny stan aktualizacji Windows. Usunięcie aktualizacji zapoznawczej Team17 opisuje jako **opcjonalną alternatywę na własne ryzyko**, nie wymagany pierwszy krok.
+[Update 0.1.2 z 30 września](https://store.steampowered.com/news/app/1867240/view/712287592723252267) potwierdza poprawkę WD-L020 wywołanego przez Windows 11 KB5124010. Najpierw zaktualizuj główną aplikację Steam i sprawdź pliki, zanim zastosujesz stary rollback wersji zapoznawczej. Poprawka dotyczy tej przyczyny; inne WD-L020, kody, zawieszenia i restarty całego PC wymagają osobnej diagnozy.
 
 ## Jak naprawiać awarie i zawieszenia WARDOGS?
 
@@ -95,27 +95,29 @@ Nie wyłączaj zabezpieczeń Windows, antywirusa ani wirtualizacji jako ogólnej
 
 ## WD-L020: wybierz pasującą ścieżkę
 
-[Komunikat dewelopera z 23 września](https://steamcommunity.com/app/1867240/discussions/0/585060903246928845/) opisuje **potencjalny**, nie uniwersalny związek z Windows 11 KB5124010. Naprawa dystrybucji z 24 września i przywrócenie usług 25 września nie potwierdzają naprawienia tej niezgodności.
+[Update 0.1.2 z 30 września](https://store.steampowered.com/news/app/1867240/view/712287592723252267) potwierdza poprawkę WD-L020 wywołanego przez Windows 11 KB5124010. Najpierw zaktualizuj główną aplikację Steam i sprawdź pliki, zanim zastosujesz stary rollback wersji zapoznawczej. Poprawka dotyczy tej przyczyny; inne WD-L020, kody, zawieszenia i restarty całego PC wymagają osobnej diagnozy.
 
 | Obserwacja | Następna czynność | Granica działania |
 | --- | --- | --- |
-| WD-L020; KB5124010 obecna; problem zaczął się po instalacji | Porównaj daty z oficjalnym komunikatem; czekanie na poprawkę gry nie zmienia stanu zabezpieczeń Windows | Nie nazywaj cofnięcia potwierdzoną naprawą |
+| WD-L020; KB5124010 obecna; problem zaczął się po instalacji | Zaktualizuj do 0.1.2 lub nowszej i sprawdź pliki Steam | Przy dalszym błędzie zapisz build i kod dla pomocy; nie zakładaj uniwersalnej poprawki |
 | Brak KB5124010 lub inny kod | Sprawdź pliki Steam, oficjalny sterownik GPU i dołączoną naprawę Elytra; zapisz każdy wynik | Nie odinstalowuj niepowiązanych aktualizacji |
 | Reagująca kolejka, niezmieniony ekran logowania lub błąd uprawnienia | Zapisz dokładny etap i porównaj [komunikaty usług](/pl/guides/wardogs-server-status) dla tego samego regionu; sprawdź konto Steam i główną aplikację | Reinstalacja Windows nie zwiększa pojemności serwerów |
 | PC uruchamia się ponownie lub wyłącza | Przerwij ponawianie startów i zbadaj stabilność systemu | Nie testuj dalej tak, jakby była to tylko awaria gry |
 
-Team17 określa usunięcie danej aktualizacji zapoznawczej jako opcjonalne, z ryzykiem dla bezpieczeństwa, stabilności i zgodności. Najpierw przeczytaj aktualny komunikat i zasady zarządzanego urządzenia. Jeśli Windows nie udostępnia zwykłego cofnięcia, nie wymuszaj usuwania pakietów ani nie wyłączaj zabezpieczeń lub antycheata. Do zgłoszenia dołącz datę i strefę czasową, wersję klienta, zrzut błędu, etap uruchomienia, wersję Windows i historię aktualizacji, sterownik GPU oraz wykonane kroki; usuń dane osobowe. To lista diagnostyczna, nie twierdzenie, że nowa poprawka naprawiła WD-L020.
+Przed Update 0.1.2 Team17 określał usunięcie danej aktualizacji zapoznawczej jako opcjonalne, z ryzykiem dla bezpieczeństwa, stabilności i zgodności. Najpierw przeczytaj aktualny komunikat i zasady zarządzanego urządzenia. Jeśli Windows nie udostępnia zwykłego cofnięcia, nie wymuszaj usuwania pakietów ani nie wyłączaj zabezpieczeń lub antycheata. Do zgłoszenia dołącz datę i strefę czasową, wersję klienta, zrzut błędu, etap uruchomienia, wersję Windows i historię aktualizacji, sterownik GPU oraz wykonane kroki; usuń dane osobowe. Poprawka 0.1.2 obejmuje przypadek KB5124010, nie wszystkie przyczyny awarii.
 
 ### Jak sprawdzić, czy komunikat o aktualizacji dotyczy Twojego PC
 
-Sprawdzono ponownie **2026-09-30**: [komunikat Team17 o WD-L020](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) nadal opisuje potencjalną niezgodność, nie uniwersalną naprawę. Wyszukaj `winver` w Windows i zapisz wersję oraz kompilację systemu. W **Ustawienia > Windows Update > Historia aktualizacji** sprawdź numer zainstalowanej aktualizacji KB i datę instalacji. Porównaj je ze [stroną Microsoft dotyczącą wersji zapoznawczej KB5124010](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update). Samo niedawne zaktualizowanie Windows nie ustala przyczyny.
+Zapisz `winver`, numer KB i datę instalacji, build gry oraz dokładny kod. Starszy komunikat Team17 opisuje badanie i opcjonalny rollback przed 0.1.2, nie stan nowej poprawki. Dla tego przypadku najpierw aktualizuj grę; nie usuwaj niepowiązanych aktualizacji Windows.
+
+**2026-09-30**: [Team17: WD-L020](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) · [Microsoft: KB5124010](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update).
 
 Jeśli mecz się uruchamia, lecz konkretna czynność nie działa, sprawdź [przypisania sterowania](/pl/guides/wardogs-controls), zamiast cofać Windows. Gdy logowanie nie kończy się, zanotuj, czy ekran reaguje, i sprawdź [komunikaty usług dla regionu](/pl/guides/wardogs-server-status). Oddziel te wyniki w zgłoszeniu: działające menu nie potwierdza połączenia z serwerem.
 
 ## Potwierdzone fakty
 
 - WARDOGS to dostępna gra Early Access na Windows PC, której wersja, obciążenie serwerów, profil wydajności i ustawienia mogą się zmieniać.
-- Przypięte wpisy Team17 na Steam potwierdzają wiele kodów uruchomienia WARDOGS i potencjalny problem zgodności WD-L020 po KB5124010; żaden nie potwierdza uniwersalnej naprawy.
+- Update 0.1.2 potwierdza poprawkę WD-L020 związanego z KB5124010; inne kody i przyczyny wymagają osobnej diagnozy.
 - Steam może sprawdzić zainstalowane pliki bez usuwania postępów konta gracza.
 - Przygotowanie shaderów może wydłużyć pierwszy start lub start po aktualizacji względem zwykłego uruchomienia.
 - Microsoft KB5121003 dokumentuje ogólny problem Windows, w którym niektóre gry mogą się zawieszać, wyłączać lub restartować przy obecności określonych komponentów związanych z RGB.
@@ -184,6 +186,8 @@ Przerwij ponawianie startów, gdy cały PC się restartuje, przegrzewa, traci za
 Daty sprawdzenia dotyczą osobno źródeł wymienionych poniżej, nie całego artykułu. Data aktualizacji treści nie poświadcza wszystkich faktów. Starsze datowane notatki zachowują dawny zakres dowodów, bez potwierdzania obecnego klienta lub stanu serwerów.
 
 Przypiętą instrukcję awarii Team17, komunikat WD-L020 i stronę aktualizacji zapoznawczej Microsoft KB5124010 sprawdzono 2026-09-26. Microsoft KB5121003 zachowano tylko ze względu na ogólne wskazówki Windows. Starszy film twórcy o wydajności i źródła Beta 02 pozostają kontekstem historycznym, nie dowodem bieżącej uniwersalnej naprawy.
+
+Update 0.1.2 sprawdzono **2026-10-03**. Zapis aktualizacji nie mierzy dostępności na żywo.
 
 ## Powiązane poradniki
 

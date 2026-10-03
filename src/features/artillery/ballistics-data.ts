@@ -284,9 +284,9 @@ export function calculateAzimuth(p1: Point, p2: Point): {degrees: number; mils: 
   const rad = Math.atan2(dx, -dy);
   let deg = (rad * 180) / Math.PI;
   if (deg < 0) deg += 360;
-  deg = Math.round(deg * 10) / 10;
+  deg = (Math.round(deg * 10) / 10) % 360;
   // NATO 6400 mils in 360 degrees
-  const mils = Math.round((deg / 360) * 6400);
+  const mils = Math.round((deg / 360) * 6400) % 6400;
   return {degrees: deg, mils};
 }
 

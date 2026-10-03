@@ -1,11 +1,11 @@
 ---
 title: "WARDOGS Community-Server, RCON und Hosting"
-description: "Erfahre, wie WARDOGS Community-Server zum Start funktionieren, was drei geprüfte Hoster bieten, ob Self-Hosting möglich ist und welche RCON-Funktionen folgen."
+description: "Erfahre, wie WARDOGS Community-Server zum Start funktionieren, was drei geprüfte Hoster bieten, ob Self-Hosting möglich ist und was RCON in 0.1.2 bietet."
 keyword: "wardogs community servers guide"
 category: "guide"
 slug: "wardogs-community-servers-guide"
 order: 45
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "Server-Guide"
     tone: "accent"
@@ -17,7 +17,7 @@ faq:
   - question: "Welche Firmen hosten WARDOGS-Server?"
     answer: "Drei Launch-Anbieter sind genehmigt: QONZER, BisectHosting und xREALM. Aktuelle Bestelllinks kommen aus der offiziellen Meldung."
   - question: "Unterstützen WARDOGS Community-Server RCON?"
-    answer: "Ein eigenes RCON-Verwaltungswerkzeug ist in Entwicklung. Veröffentlichungstermin und vollständiger Befehlssatz sind noch offen."
+    answer: "Update 0.1.2 bestätigt RCON AllowedHosts, begrenzte Nachrichten/Broadcasts und Standard-Antworten ohne Serverinternas in Konfigurationsantworten. Vollständiger Befehlssatz und ein separates Verwaltungstool bleiben hier ungeprüft."
   - question: "Was können Serverbesitzer am ersten Tag ändern?"
     answer: "Genehmigte Server können zum Start Karten und Modi wählen; weitere Kontrollen sollen später folgen, soweit die Ökonomie es zulässt."
 sources:
@@ -41,7 +41,17 @@ sources:
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
     checkedAt: "2026-09-01"
+  - label: "Offizielles Update 0.1.2"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
+
+## Update 0.1.2: kleines Update vom 30. September
+
+**Aktueller Patch-Prüfpunkt:** [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) wurde am 30. September 2026 angekündigt. Patch 0.11 bleibt historisch. Neuere Builds und Dienstmeldungen im Client und offiziellen Feed prüfen.
+
+[Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) bietet in Deploy **Official**, **Community**, **Infantry Mode** und **Low-Level**; erweiterte **Official**-Filter sind wieder verfügbar. Suche und Filter leeren, **Show Empty/Full** prüfen, einmal aktualisieren und aktuelle Meldungen vergleichen. **Eine Region** war ein Beta-02-Workaround und bleibt nur ein einzelner Diagnosetest.
 
 ## Serverwahl mit datiertem Nachweis
 Server-ID, Region, Sprache, angezeigten Modus, offiziell/Community, Zugangsbedingungen und Zeitpunkt erfassen. Bei leerem Ergebnis Filter einzeln lösen. Betreiberbeschreibung oder Titel sind keine allgemeine offizielle Regel; behauptete Levelgrenzen am aktuellen Zugang prüfen.
@@ -64,7 +74,7 @@ Die offizielle Patch-0.11-Meldung nennt getrennte Browser für **offizielle** un
 
 Favoriten, gestaffelte Prioritätswarteschlangen, Message of the Day, AFK-Regeln für Seeding, Teamwechsel und bessere Aufwärmaktivitäten sind spätere Vorhaben und noch kein Bestandteil von Patch 0.11.
 
-WARDOGS Community-Server laufen über **drei genehmigte Hosting-Anbieter**. Ein frei nutzbarer Dedicated-Server-Code für beliebige eigene Rechner oder VPS ist derzeit nicht vorgesehen. Serverbesitzer können Karten und Modi wählen, ein RCON-Werkzeug ist in Entwicklung, und weitere Optionen sollen nur dort folgen, wo sie die persistente Ökonomie nicht beschädigen.
+WARDOGS Community-Server laufen über **drei genehmigte Hosting-Anbieter**. Ein frei nutzbarer Dedicated-Server-Code für beliebige eigene Rechner oder VPS ist derzeit nicht vorgesehen. Serverbesitzer können Karten und Modi wählen, RCON-Sicherheitskontrollen sind in Update 0.1.2 dokumentiert, und weitere Optionen sollen nur dort folgen, wo sie die persistente Ökonomie nicht beschädigen.
 
 <OfficialScreenshot id="patch-0-11-deploy-picker" locale="de" alt="Deploy-Auswahl zwischen Official und Community" caption="Vor der Serversuche Official oder Community auswählen. Offizielles Bild zur Ankündigung von Patch 0.11, keine Live-Serverliste; Aufnahme-Build unbekannt." />
 
@@ -85,7 +95,7 @@ Das Entwickler-Update bestätigt:
 - drei geprüfte Hosting-Unternehmen zum Start;
 - keinen frei verteilten Servercode für Self-Hosting am ersten Tag;
 - Auswahl von Karten und Modi auf genehmigten Servern;
-- ein eigenes RCON-Verwaltungswerkzeug in Entwicklung.
+- RCON-Sicherheitskontrollen in Update 0.1.2; vollständiges separates Tool hier ungeprüft.
 
 Die Hoster wurden auf Leistung und Sicherheit getestet. Noch offen sind Regionen, Slot-Pakete, Preise, Warteschlangen, genaue Moderationsbefehle und Vertragsbedingungen.
 
@@ -111,7 +121,7 @@ Der Entwickler warnt ausdrücklich vor inoffiziellen Vorbestellungen für Server
 
 ## RCON und Verwaltung
 
-RCON ermöglicht die entfernte Verwaltung eines laufenden Servers. Für WARDOGS ist ein eigenes Werkzeug in Arbeit. Welche Befehle, Rollen, Protokolle, Weboberflächen oder Audit-Logs verfügbar werden, ist noch nicht dokumentiert.
+RCON verwaltet laufende Server aus der Ferne. [Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267) ergänzt AllowedHosts, begrenzt Nachrichten und Broadcasts, setzt Standard statt Full als Antwortdetail und entfernt Serverinternas aus Konfigurationsantworten. Das sind veröffentlichte Kontrollen; vollständige Befehlsreferenz, Authentifizierung, Audit-Logs und ein separates Webpanel sind damit nicht bestätigt.
 
 Bereite trotzdem Besitzer- und Moderatorrollen, sichere Passwortablage, Eskalationsregeln und Nachweise für Sperren vor. Kopiere keine Befehle aus einem anderen Spiel. Ähnliche Namen garantieren keine gleiche Wirkung.
 
@@ -143,15 +153,17 @@ Vergleiche eine behauptete Partnerschaft mit der offiziellen Ankündigung. Melde
 
 ## Bestätigt und offen
 
-**Bestätigt:** drei geprüfte Launch-Hoster; kein beliebiges Self-Hosting zum Start; Leistungs- und Sicherheitstests; Karten-/Moduswahl; RCON in Entwicklung; spätere Optionen unter Economy-Vorbehalt.
+**Bestätigt:** drei geprüfte Launch-Hoster; kein beliebiges Self-Hosting zum Start; Leistungs- und Sicherheitstests; Karten-/Moduswahl; RCON-Sicherheitskontrollen in Update 0.1.2; spätere Optionen unter Economy-Vorbehalt.
 
-**Offen:** aktuelle Preise und Bestelllinks, Preise, Regionen, Slots, RCON-Termin und Befehle, Linux/SteamCMD, Mods, eigene Karten, Fortschrittseinstellungen und eine spätere Self-Hosting-Roadmap.
+**Offen:** aktuelle Preise und Bestelllinks, Preise, Regionen, Slots, vollständige RCON-Befehle und separates Tool, Linux/SteamCMD, Mods, eigene Karten, Fortschrittseinstellungen und eine spätere Self-Hosting-Roadmap.
 
 ## Quellen und Prüfdatum
 
 Prüfdaten gelten einzeln für die unten aufgeführten Quellen, nicht für den ganzen Artikel. Das Inhaltsdatum bestätigt nicht jeden Fakt. Frühere datierte Notizen behalten ihren damaligen Belegumfang und sind kein Test des heutigen Clients oder Serverstatus.
 
 Die offizielle Provider-Meldung, der Patch-0.11-Beitrag und die Steam-Produktseite wurden am 17. September 2026 erneut geprüft. Preise, Regionen und Technik bleiben provider- und buildabhängig.
+
+Update 0.1.2 wurde am **2026-10-03** geprüft. Der Patchhinweis ist keine Live-Statusmessung.
 
 ## Verwandte Guides
 

@@ -6,31 +6,31 @@ import {compileLocalizedGuideBody} from "../../src/content/guides";
 import type {Locale} from "../../src/config/site";
 
 const baseline: Record<string, string> = {
-  "content/en/guides/wardogs-progression-wipes-guide.mdx": "3465e44127c2ad1a3e992048433ae81843cc44deec7cd86d7899b6d7d02c93f1",
-  "content/en/guides/wardogs-season-2.mdx": "e92f893abcdf4d8914081bf5276d6669cf229a0d9ee6927bf1042a188fe3fe1a",
-  "content/ru/guides/wardogs-progression-wipes-guide.mdx": "b870136dade3f616f7bca13775fb4878f7e1d9f4cabdad9005774740f2258260",
-  "content/ru/guides/wardogs-season-2.mdx": "57507699a044f555c54b107eb95a60b6e53d791f3b2be2b1b459afc703ef1c2a",
-  "content/de/guides/wardogs-progression-wipes-guide.mdx": "d676b18d778a9028a9b5512c796dfe666de43ea16de2efa692d9300858aeb02e",
-  "content/de/guides/wardogs-season-2.mdx": "211b61afe5a731cb478332e84dddcc43ac3546ba52c6e6b6770d9d6c4b1dc5dd",
-  "content/pt-br/guides/wardogs-progression-wipes-guide.mdx": "6da5c944db88e3ec5d69004e10e38344e7d679a95344f67b77b3eb0f66981a42",
-  "content/pt-br/guides/wardogs-season-2.mdx": "a9d5acb81826b5b6f4c61681523f3eaa9702883e420aa9d956622a8c4a3c331e",
-  "content/ja/guides/wardogs-progression-wipes-guide.mdx": "dcaddbebeab7dbc6d16deaf61ccb9093e5fbcb4f677d9706423a9ff75271d7b9",
-  "content/ja/guides/wardogs-season-2.mdx": "13f8a4d3aa360223f86c2dd3b99252c5ee8e5bc738e4597f6126736e0b1e32df",
-  "content/zh-cn/guides/wardogs-progression-wipes-guide.mdx": "b28e39faf675a781c6a7423482b9b0cc8d7c3c07072b13031dcfec88384c3a96",
-  "content/zh-cn/guides/wardogs-season-2.mdx": "ee864ce0392cbb653e19e6268b6e5bbddb8eaf3413d2250c4366ee7a56b1808b",
-  "content/zh-tw/guides/wardogs-progression-wipes-guide.mdx": "028455f6d53958eaef8cd2059e5a91199eab37a4df5ad5114c65a5176203c7bb",
-  "content/zh-tw/guides/wardogs-season-2.mdx": "4db00700343328cca4d6ce11cbdbf906f9835feb94094db6d0fe26082c366a12",
-  "content/pl/guides/wardogs-progression-wipes-guide.mdx": "40b0dfa340df4efcbf77727c7d445bb53efcc946db1982dbc4810f0bafa42e0d",
-  "content/pl/guides/wardogs-season-2.mdx": "fe70ac2408dd6ae09a5c6f67fdc818b2e21253dda931996ff038a9ffb4ab4219"
+  "content/en/guides/wardogs-progression-wipes-guide.mdx": "42e012b5cda33ed1ee30288d470f9c946db0e6f5e17ea72b0fe842c635f9d7d8",
+  "content/en/guides/wardogs-season-2.mdx": "98b74d7b7f3f37e7cf211cda5343050f0e8c9ea777681195505b6e53a91bef16",
+  "content/ru/guides/wardogs-progression-wipes-guide.mdx": "4f1c7c49f1b8db80f404b80089e4cf69d7095c0085fc2c0d799200a183d0629f",
+  "content/ru/guides/wardogs-season-2.mdx": "867c7ed06dbe35415f795205e9d6ded4c0f9e1dcca7c8a7e3b337417dc589938",
+  "content/de/guides/wardogs-progression-wipes-guide.mdx": "baabfef91cfbdfe75ee36181b06eec9472062344fbde541b7d152c687fa96165",
+  "content/de/guides/wardogs-season-2.mdx": "a0833e45c4bfb7dccf959f35f38d49045d3f57c845cef64b61941dd61781490f",
+  "content/pt-br/guides/wardogs-progression-wipes-guide.mdx": "a10247a2286c607ed720acc71d88f8bab5c3b5612918981c1fff799d93795c79",
+  "content/pt-br/guides/wardogs-season-2.mdx": "0968acd4fdf3f98115050b75fcb83a0d5e68a1da14c440e3c10ef6205de79384",
+  "content/ja/guides/wardogs-progression-wipes-guide.mdx": "511012033f0c27f60573e6554dc11a3e74ef3e60b9d2d5bdd88ae22d72f83d07",
+  "content/ja/guides/wardogs-season-2.mdx": "85720b2dbd7ebb4f09a1a27bb69c695bd8f600d6e54afe5f56db8770af74b3c0",
+  "content/zh-cn/guides/wardogs-progression-wipes-guide.mdx": "185adb694e86ec8a655afabcb46f2841e4ee536e2dfc06df156409e2f8be61e7",
+  "content/zh-cn/guides/wardogs-season-2.mdx": "b879b89be11dbf0399b8de87769362ea74eab06dcfa62598b3943610c7564245",
+  "content/zh-tw/guides/wardogs-progression-wipes-guide.mdx": "3c0ba944a11aac75a4aa75eec864ff0beb0b81b1893d12ded32f3592bb118dc7",
+  "content/zh-tw/guides/wardogs-season-2.mdx": "ac91d7d527caf9f9bd996205bddd1df299a3982fd8d84ade9fc39643e1531675",
+  "content/pl/guides/wardogs-progression-wipes-guide.mdx": "17140bbfa0232e00903df1d5ca50c219a2a9995e9bf11fc7e908f897b3648537",
+  "content/pl/guides/wardogs-season-2.mdx": "84e084164eff9c7ec0590026bfcb453f01e18628d123d3f8c4a66bfdd28ca7c1"
 };
 
 describe("progression and season comparison content boundaries", () => {
-  it.each(Object.entries(baseline))("preserves TDK, slug and individual source dates: %s", async (file, expected) => {
+  it.each(Object.entries(baseline))("validates reviewed TDK, slug and individual source dates: %s", async (file, expected) => {
     const {data, content} = matter(await readFile(file, "utf8"));
     const {title, description, keyword, slug, sources} = data;
     const digest = createHash("sha256").update(JSON.stringify({title, description, keyword, slug, sources})).digest("hex");
     expect(digest).toBe(expected);
-    expect(data.updatedAt).toBe("2026-09-30");
+    expect(data.updatedAt).toBe("2026-10-03");
     const sections = [...content.matchAll(/^## .+$/gm)];
     const footer = content.slice(sections.at(-2)!.index, sections.at(-1)!.index);
     for (const source of sources) {

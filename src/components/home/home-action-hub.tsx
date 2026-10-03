@@ -12,7 +12,8 @@ export type HomeActionHubEntry = {
   description: string;
 };
 
-type ActionLinkComponent = ComponentType<{className: string; href: string; title: string; children: ReactNode}>;
+type ActionLinkProps = {className: string; href: string; title: string; children: ReactNode; "data-home-task"?: string; "data-home-placement"?: string};
+type ActionLinkComponent = ComponentType<ActionLinkProps>;
 
 type HomeActionHubViewProps = {
   eyebrow: string;
@@ -42,7 +43,7 @@ const actionPresentation = {
   pcFixes: {icon: Wrench, accent: "text-[#ef8585]"}
 } as const;
 
-function NativeLink({children, ...props}: {className: string; href: string; title: string; children: ReactNode}) {
+function NativeLink({children, ...props}: ActionLinkProps) {
   return <a {...props}>{children}</a>;
 }
 
@@ -66,9 +67,9 @@ const defaultTacticalCards = [
     accent: "text-[#ef8585]"
   },
   {
-    title: "实时服务监控",
-    description: "官方停机维护动态、匹配队列监测与跨区延迟雷达",
-    badge: "Live Radar",
+    title: "服务器公告",
+    description: "查看带日期的官方维护与服务恢复公告",
+    badge: "Official notices",
     href: "/guides/wardogs-server-status",
     cta: "查看状态",
     icon: Radio,
@@ -76,7 +77,7 @@ const defaultTacticalCards = [
   },
   {
     title: "第二赛季删档",
-    description: "赛季清零规则矩阵、12 天避险策略与现金兑换率",
+    description: "区分已确认的赛季政策与仍待公布的过渡细节",
     badge: "S2 Wipe",
     href: "/guides/wardogs-season-2",
     cta: "查看应对",
@@ -109,6 +110,8 @@ export function HomeActionHubView({eyebrow, title, description, actions, LinkCom
                 className="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-[#30543e] bg-gradient-to-b from-[#14231b] to-[#0c1410] p-5 shadow-lg transition-all hover:border-[#69c78f] hover:shadow-[0_0_20px_rgba(76,217,136,0.15)]"
                 href={card.href}
                 title={card.title}
+                data-home-task={card.href === "/tools/map" ? "map" : card.href === "/items" ? "catalogue" : card.href.endsWith("server-status") ? "status" : "season2"}
+                data-home-placement="tactical-hub"
               >
                 <div>
                   <div className="flex items-center justify-between">
@@ -145,6 +148,8 @@ export function HomeActionHubView({eyebrow, title, description, actions, LinkCom
                   className="group flex min-h-[150px] flex-col border-t border-[#3a473f] py-5 outline-none hover:border-[#79d19c] focus-visible:ring-2 focus-visible:ring-[#79d19c]"
                   href={action.href}
                   title={action.title}
+                  data-home-task={action.key}
+                  data-home-placement="action-hub"
                 >
                   <span className="flex items-start justify-between gap-4">
                     <Icon aria-hidden="true" className={`size-6 ${presentation.accent}`} />
@@ -211,8 +216,8 @@ export async function HomeActionHub() {
     }
   ];
 
-  const LocalizedLink: ActionLinkComponent = ({children, href, className, title}) => (
-    <Link aria-label={title} className={className} href={href} title={title}>{children}</Link>
+  const LocalizedLink: ActionLinkComponent = ({children, title, ...props}) => (
+    <Link aria-label={title} title={title} {...props}>{children}</Link>
   );
 
   return (

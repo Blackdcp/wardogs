@@ -17,8 +17,8 @@
     "description": "Season 1 is playable now. Prepare for Season 2 with the confirmed schedule, wipe information and what is still unannounced.",
     "windowLabel": "Announced date",
     "windowValue": "October 15, 2026 - exact time unconfirmed",
-    "accessLabel": "Verified Patch 0.11 changes",
-    "accessValue": "Separate Official and Community browsers, better search and filters, persistent server IDs, cash and GPU fixes, and more Asia capacity.",
+    "accessLabel": "Verified Update 0.1.2 changes",
+    "accessValue": "The September 30 minor patch fixes the KB5124010-related WD-L020 branch, cash/XP exploits and Deploy discovery; Official advanced filters are restored.",
     "closedBetaNote": "BULKHEAD reported three million copies sold on September 26. That is a sales milestone, not a live player count.",
     "accessCta": "Season 2 details",
     "issuesCta": "Check server status",
@@ -95,7 +95,7 @@
     "metaDescription": "The definitive WARDOGS tactical FPS database. Access Season 1 and 2 wipe schedules, weapon stats, 81mm mortar mil tables, PC error fixes, and interactive maps.",
     "heroTitle": "Weapons, Vehicles, Guides & Game Database",
     "heroDescription": "Use a source-checked WARDOGS reference for equipment, controls, current access, troubleshooting, and practical tactics, with build-sensitive details clearly labeled.",
-    "primaryCta": "Read Patch 0.11",
+    "primaryCta": "Read Update 0.1.2",
     "secondaryCta": "Check Server Status",
     "quickTasks": {
       "weapons": "Weapons",
@@ -148,7 +148,7 @@
         },
         "communityServers": {
           "title": "Community Servers",
-          "description": "Use the Patch 0.11 browser, filters, persistent IDs, approved hosts, and safe server rules."
+          "description": "Use the Update 0.1.2 browser, filters, persistent IDs, approved hosts, and safe server rules."
         },
         "issues": {
           "title": "Known Issues",
@@ -229,10 +229,10 @@
       "buildLabel": "Build",
       "verifiedLabel": "Verified",
       "sourceCta": "Read the official Season 1 update",
-      "s2WipeEyebrow": "Season 2 Wipe & Reset Roadmap",
-      "s2WipeDesc": "Scheduled for October 15, 2026. Prepare capital hedging, cash preservation & role carryover.",
-      "s2WipeCta": "Wipe Strategy",
-      "s2WipeTitle": "View Season 2 Wipe Strategy Guide",
+      "s2WipeEyebrow": "Season 2 · October 15",
+      "s2WipeDesc": "Season 2 starts October 15, 2026. Cash/XP reset; Gold Bars and cosmetics persist. The exact reset time and individual unlock treatment remain unconfirmed.",
+      "s2WipeCta": "Read reset policy",
+      "s2WipeTitle": "Season 2 reset policy and transition details",
       "entries": {
         "fobVendor": {
           "title": "FOB vendor",
@@ -300,13 +300,13 @@
             "title": "Steam Early Access is live",
             "description": "The Windows PC Early Access release launched September 10; Steam now supplies the current install and patches."
           },
-          "patch011": {
-            "title": "Patch 0.11 is the current official checkpoint",
-            "description": "The September 14 maintenance window has passed; use the patch notes and official Steam feed for current changes and live-service notices."
-          },
           "ps5Release": {
             "title": "Exact PS5 and Xbox release dates remain unconfirmed",
             "description": "Team17 names PlayStation 5 and Xbox Series X|S as planned targets, and the trailer gives a broad 2028 console window. The unconfirmed part is each platform's release date; neither console version is available yet, and cross-play and cross-progression are unconfirmed."
+          },
+          "patch012": {
+            "title": "Update 0.1.2 is the latest checked official patch",
+            "description": "The September 30 minor patch fixes the KB5124010-related WD-L020 branch, cash/XP exploits and Deploy discovery; Official advanced filters are restored."
           }
         }
       }
@@ -440,16 +440,16 @@
         "cta": "Browse Hub"
       },
       "radar": {
-        "title": "Live Server Status Radar",
-        "description": "Official maintenance windows, queue tracking & regional ping radar",
-        "badge": "Live Radar",
-        "cta": "Check Radar"
+        "title": "Server Notices",
+        "description": "Dated official maintenance and incident notices; no live queue or ping telemetry",
+        "badge": "Dated Notices",
+        "cta": "Read Notices"
       },
       "wipe": {
-        "title": "Season 2 Wipe Matrix",
-        "description": "Full wipe reset rules, 12-day capital hedge strategies & payout rates",
-        "badge": "S2 Wipe",
-        "cta": "View Strategy"
+        "title": "Season 2 Reset Policy",
+        "description": "Confirmed cash/XP reset and Gold/cosmetic retention, with transition details still unknown",
+        "badge": "S2 Policy",
+        "cta": "Read Policy"
       }
     }
   },
@@ -465,7 +465,7 @@
     "metaDescription": "Track the confirmed October 15 WARDOGS Season 02 date, the latest published patch notes, server updates, Steam Early Access, and sourced guide links.",
     "eyebrow": "Latest Updates",
     "title": "WARDOGS News and Confirmed Timeline",
-    "description": "Current, sourced WARDOGS updates for Season 02, Patch 0.11, server status, known issues, Steam Early Access, and gameplay.",
+    "description": "Current, sourced WARDOGS updates for Season 02, Update 0.1.2, server status, known issues, Steam Early Access, and gameplay.",
     "timeline": {
       "title": "Confirmed Timeline",
       "readMore": "Read the full guide",
@@ -526,10 +526,6 @@
           "title": "WARDOGS reports two million copies sold",
           "description": "BULKHEAD posted the official sales milestone on September 15 after the launch weekend. It is a sales total, not a concurrent-player count."
         },
-        "patch011": {
-          "title": "Patch 0.11 improves the server browser and community discovery",
-          "description": "The published September 14 maintenance window has passed. Confirmed changes cover separate Official and Community browsers, filters, persistent IDs, cash fixes, GPU stability, and Asia capacity."
-        },
         "copiesSold": {
           "title": "WARDOGS reports 1.25 million copies sold",
           "description": "The official Steam feed reported the sales milestone after the September 10 Early Access launch; it is a sales figure, not a concurrent-player count."
@@ -537,6 +533,10 @@
         "launchHotfix": {
           "title": "Launch Stability Hotfix #1 deployed",
           "description": "The September 10 client hotfix targeted failed server joins, unexpected kicks, and long login queues. Later official updates said the launch queue had cleared."
+        },
+        "patch012": {
+          "title": "Update 0.1.2 is the latest checked official patch",
+          "description": "The September 30 minor patch fixes the KB5124010-related WD-L020 branch, cash/XP exploits and Deploy discovery; Official advanced filters are restored."
         }
       }
     },
@@ -663,9 +663,10 @@
     "metaTitle": "WARDOGS Wiki Privacy Policy: Cookies, Analytics & Ads",
     "metaDescription": "Read how WARDOGS Wiki handles cookies, analytics, Adsterra advertising, sponsored links, external media, and game account credentials.",
     "title": "Privacy Policy",
-    "intro": "This fan guide minimizes data collection and explains how external media and links work.",
-    "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.",
-    "advertising": "Adsterra native ads and display banners, including desktop horizontal and side rail units and a dismissible mobile bottom banner, are loaded directly via publisher scripts. User clicks open advertiser destinations in new tabs. Intrusive ad formats such as Popunder, Social Bar, and Smartlink remain strictly disabled since 2026-10-01. Loading ad units may transmit your IP address, browser headers, and device technical telemetry to advertising service providers; cookies and identifiers are subject to your browser privacy controls."
+    "intro": "This page describes the site’s analytics, advertising, external media and links.",
+    "content": "We do not operate player accounts or collect game credentials. On wardogswiki.com and www.wardogswiki.com, Google Analytics loads automatically when a page opens. Its tag uses cookies and collects page views, site interactions and browser/device information for usage analysis. Analytics and direct Adsterra requests can occur before you click an external link; third-party policies apply to those requests as well as to destinations you choose to open. Browser settings can limit cookies and identifiers.",
+    "advertising": "Adsterra native ads and display banners, including desktop horizontal and side rail units and a dismissible mobile bottom banner, are loaded directly via publisher scripts. User clicks open advertiser destinations in new tabs. Intrusive ad formats such as Popunder, Social Bar, and Smartlink remain strictly disabled since 2026-10-01. Loading ad units may transmit your IP address, browser headers, and device technical telemetry to advertising service providers; cookies and identifiers are subject to your browser privacy controls.",
+    "googlePolicy": "Google Privacy Policy"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Terms of Use: Guide Rules & Disclaimers",

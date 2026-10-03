@@ -16,6 +16,8 @@ export default defineConfig({
     navigationTimeout: 45_000,
     actionTimeout: 20_000,
     screenshot: "only-on-failure",
-    launchOptions: {executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe"}
+    launchOptions: process.env.PLAYWRIGHT_EXECUTABLE_PATH
+      ? {executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH}
+      : undefined
   }
 });

@@ -6,7 +6,7 @@ describe("official news timeline", () => {
     const dates = Object.fromEntries(NEWS_UPDATES.map(({titleKey, date}) => [titleKey, date]));
 
     expect(dates.season02).toBe("2026-09-22");
-    expect(dates.patch011).toBe("2026-09-12");
+    expect(dates.patch012).toBe("2026-09-30");
     expect(dates.preload).toBe("2026-09-09");
     expect(dates.steamPreorder).toBe("2026-08-11");
   });

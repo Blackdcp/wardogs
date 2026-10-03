@@ -131,8 +131,8 @@ export default async function VideoArticlePage({params}: PageProps) {
         </div>
 
         <div className="mt-12 flex flex-wrap gap-3 border-t border-[#2c3631] pt-8">
-          <ButtonLink href={`/${locale}/videos`} title={ui.allVideos}>{ui.allVideos}</ButtonLink>
-          <ButtonLink href={`/${locale}/guides/${article.internalGuideSlug}`} title={relatedGuide?.frontmatter.title ?? ui.relatedGuide} variant="secondary">{ui.relatedGuide}</ButtonLink>
+          <ButtonLink href="/videos" title={ui.allVideos}>{ui.allVideos}</ButtonLink>
+          <ButtonLink href={`/guides/${article.internalGuideSlug}`} title={relatedGuide?.frontmatter.title ?? ui.relatedGuide} variant="secondary">{ui.relatedGuide}</ButtonLink>
         </div>
       </article>
     </main>

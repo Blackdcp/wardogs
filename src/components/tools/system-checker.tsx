@@ -1,7 +1,8 @@
 "use client";
 
 import {CheckCircle2, Copy, ExternalLink, TriangleAlert} from "lucide-react";
-import {useMemo, useState, useSyncExternalStore} from "react";
+import {useMemo, useRef, useState, useSyncExternalStore} from "react";
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {ToolShareNotice} from "./tool-share-notice";
 import {getWorkflowCopy} from "@/features/tools/workflow-copy";
@@ -9,6 +10,7 @@ import {
   decodeSystemCheckState,
   encodeSystemCheckState,
   evaluateSystemCheck,
+  SYSTEM_CHECK_LIMITS,
   type HardwareTier,
   type SystemCheckState,
   type WindowsVersion,
@@ -30,6 +32,24 @@ export function SystemChecker({copy}: {copy: ToolCopy}) {
   const [copied, setCopied] = useState(false);
   const [shareError, setShareError] = useState(false);
   const result = useMemo(() => evaluateSystemCheck(state), [state]);
+  const lastTrackedResult = useRef<string | null>(null);
+  const hasInvalidShare = !sharedState && ["os", "ram", "storage", "cpu", "gpu"].some((key) => new URLSearchParams(search).has(key));
+
+  function updateState(next: SystemCheckState) {
+    if ((Object.keys(defaults) as (keyof SystemCheckState)[]).every((key) => next[key] === state[key])) return;
+    setEditedState(next);
+    setCopied(false);
+    setShareError(false);
+    const verdict = evaluateSystemCheck(next).level;
+    if (lastTrackedResult.current !== verdict) {
+      lastTrackedResult.current = verdict;
+      trackAnalyticsEvent(ANALYTICS_EVENTS.toolResult, {tool: "system-checker", result: verdict});
+    }
+  }
+
+  function updateCapacity(field: "ramGb" | "storageGb", value: number) {
+    updateState({...state, [field]: Number.isFinite(value) ? Math.max(0, Math.min(SYSTEM_CHECK_LIMITS[field], value)) : 0});
+  }
 
   const tierOptions: {value: HardwareTier; label: string}[] = [
     {value: "unknown", label: copy.unknown}, {value: "below", label: copy.below},
@@ -41,26 +61,26 @@ export function SystemChecker({copy}: {copy: ToolCopy}) {
     const url = new URL(window.location.href);
     url.search = encodeSystemCheckState(state);
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "system-checker", action: "share", result: "copied"}); setCopied(true); }
     catch { setShareError(true); }
   }
 
   return (
     <section className="border-y border-[#354039] bg-[#111512]" aria-labelledby="system-check-form">
-      <ToolShareNotice locale={copy.locale} search={search} />
+      <ToolShareNotice locale={copy.locale} search={search} invalid={hasInvalidShare} />
       {shareError ? <p role="status" className="px-5 text-sm text-[#e4c35f]">{getWorkflowCopy(copy.locale).shareFailed}</p> : null}
       <div className="grid gap-8 p-5 md:grid-cols-2 md:p-8">
         <div className="grid content-start gap-5">
           <label className="grid gap-2 text-sm text-[#cbd5cf]">{copy.os}
-            <select className="min-h-11 border border-[#3a473f] bg-[#0c100e] px-3 text-white" value={state.os} onChange={(event) => setEditedState({...state, os: event.target.value as WindowsVersion})}>
+            <select className="min-h-11 border border-[#3a473f] bg-[#0c100e] px-3 text-white" value={state.os} onChange={(event) => updateState({...state, os: event.target.value as WindowsVersion})}>
               <option value="windows-10">{copy.windows10}</option><option value="windows-11">{copy.windows11}</option><option value="unsupported">{copy.unsupported}</option>
             </select>
           </label>
           <div className="grid gap-5 sm:grid-cols-2">
-            <label className="grid gap-2 text-sm text-[#cbd5cf]">{copy.ram}<input className="min-h-11 border border-[#3a473f] bg-[#0c100e] px-3 text-white" min="0" max="1024" type="number" value={state.ramGb} onChange={(event) => setEditedState({...state, ramGb: Number.isFinite(event.target.valueAsNumber) ? event.target.valueAsNumber : 0})} /></label>
-            <label className="grid gap-2 text-sm text-[#cbd5cf]">{copy.storage}<input className="min-h-11 border border-[#3a473f] bg-[#0c100e] px-3 text-white" min="0" max="100000" type="number" value={state.storageGb} onChange={(event) => setEditedState({...state, storageGb: Number.isFinite(event.target.valueAsNumber) ? event.target.valueAsNumber : 0})} /></label>
+            <label className="grid gap-2 text-sm text-[#cbd5cf]">{copy.ram}<input className="min-h-11 border border-[#3a473f] bg-[#0c100e] px-3 text-white" min="0" max={SYSTEM_CHECK_LIMITS.ramGb} step="any" type="number" value={state.ramGb} onChange={(event) => updateCapacity("ramGb", event.target.valueAsNumber)} /></label>
+            <label className="grid gap-2 text-sm text-[#cbd5cf]">{copy.storage}<input className="min-h-11 border border-[#3a473f] bg-[#0c100e] px-3 text-white" min="0" max={SYSTEM_CHECK_LIMITS.storageGb} step="any" type="number" value={state.storageGb} onChange={(event) => updateCapacity("storageGb", event.target.valueAsNumber)} /></label>
           </div>
-          {(["cpuTier", "gpuTier"] as const).map((field) => <label className="grid gap-2 text-sm text-[#cbd5cf]" key={field}>{field === "cpuTier" ? copy.cpu : copy.gpu}<select className="min-h-11 border border-[#3a473f] bg-[#0c100e] px-3 text-white" value={state[field]} onChange={(event) => setEditedState({...state, [field]: event.target.value as HardwareTier})}>{tierOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>)}
+          {(["cpuTier", "gpuTier"] as const).map((field) => <label className="grid gap-2 text-sm text-[#cbd5cf]" key={field}>{field === "cpuTier" ? copy.cpu : copy.gpu}<select className="min-h-11 border border-[#3a473f] bg-[#0c100e] px-3 text-white" value={state[field]} onChange={(event) => updateState({...state, [field]: event.target.value as HardwareTier})}>{tierOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>)}
         </div>
         <div className="flex min-h-72 flex-col justify-between border-l-0 border-[#354039] md:border-l md:pl-8">
           <div aria-live="polite">

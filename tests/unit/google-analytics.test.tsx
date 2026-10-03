@@ -8,6 +8,21 @@ import {
 import * as googleAnalytics from "../../src/components/seo/google-analytics";
 import {siteLocales} from "../../src/config/site";
 
+function analyticsSandbox(hostname: string, pending: unknown[] = []) {
+  const scripts: Record<string, unknown>[] = [];
+  const sandbox: Record<string, unknown> = {
+    location: {hostname},
+    dataLayer: [...pending],
+    document: {
+      getElementById: (id: string) => scripts.find((script) => script.id === id),
+      createElement: () => ({}),
+      head: {appendChild: (script: Record<string, unknown>) => scripts.push(script)}
+    }
+  };
+  sandbox.window = sandbox;
+  return {sandbox, scripts, context: createContext(sandbox)};
+}
+
 describe("Google Analytics", () => {
   it.each(siteLocales)("tracks catalogue details for %s with and without a base path", (locale) => {
     for (const basePath of ["", "/wardogs"]) {
@@ -43,14 +58,31 @@ describe("Google Analytics", () => {
       ["consent", "default", {analytics_storage: "denied"}],
       ["event", "catalogue_filter", {filter_value: "assault-rifle"}]
     ];
-    const sandbox = {dataLayer: [...pending]} as Record<string, unknown>;
-    sandbox.window = sandbox;
-    runInContext(googleAnalyticsConfigScript(), createContext(sandbox));
+    const {sandbox, context} = analyticsSandbox("www.wardogswiki.com", pending);
+    runInContext(googleAnalyticsConfigScript(), context);
     const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
     expect(commands.slice(0, 2)).toEqual(pending);
     expect(commands.map((entry) => entry[0])).toEqual(["consent", "event", "js", "config"]);
     expect(commands.at(-1)).toEqual(["config", GOOGLE_TAG_ID]);
     expect(commands.filter((entry) => entry[1] === "page_view")).toEqual([]);
+  });
+
+  it.each(["localhost", "127.0.0.1", "wardogs.pages.dev", "preview.wardogswiki.com", "wardogswiki.com.evil.example"])("does not configure or load production Analytics on %s", (hostname) => {
+    const {sandbox, scripts, context} = analyticsSandbox(hostname);
+    runInContext(googleAnalyticsConfigScript(), context);
+    expect(sandbox.dataLayer).toEqual([]);
+    expect(scripts).toEqual([]);
+  });
+
+  it.each(["wardogswiki.com", "www.wardogswiki.com"])("configures and loads Analytics once on %s", (hostname) => {
+    const {sandbox, scripts, context} = analyticsSandbox(hostname);
+    runInContext(googleAnalyticsConfigScript(), context);
+    runInContext(googleAnalyticsConfigScript(), context);
+    expect(scripts).toHaveLength(1);
+    expect(scripts[0]).toMatchObject({src: "https://www.googletagmanager.com/gtag/js?id=G-0GJ404WEYV", async: true});
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    expect(commands.map((entry) => entry[0])).toEqual(["js", "config"]);
+    expect(commands.at(-1)).toEqual(["config", "G-0GJ404WEYV"]);
   });
 
   it("forwards a custom event once when gtag is available, without a second queued copy", () => {

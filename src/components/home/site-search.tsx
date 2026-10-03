@@ -3,7 +3,7 @@
 import {ArrowRight, Search} from "lucide-react";
 import {useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent} from "react";
 import type {Locale} from "@/config/site";
-import {recordSiteSearch, recordSiteSearchResult} from "@/features/search/site-search-analytics";
+import {createSiteSearchRecorder, recordSiteSearchResult} from "@/features/search/site-search-analytics";
 import {
   getSearchKeyboardAction,
   searchSiteIndex,
@@ -44,6 +44,7 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
   const [isOpen, setIsOpen] = useState(false);
   const listboxRef = useRef<HTMLUListElement>(null);
   const results = useMemo(() => searchSiteIndex(index, query, 6), [index, query]);
+  const recordSearch = useMemo(() => createSiteSearchRecorder(locale, "home"), [locale]);
   const selectedIndex = results.length === 0 ? -1 : Math.min(Math.max(activeIndex, 0), results.length - 1);
   const activeResult = selectedIndex >= 0 ? results[selectedIndex] : undefined;
   const hasQuery = query.trim().length > 0;
@@ -57,7 +58,7 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
   }, [selectedIndex]);
 
   function openResult(result: SiteSearchEntry) {
-    recordSiteSearch(query, results.length, locale, "home");
+    recordSearch(query, results.length);
     recordSiteSearchResult(query, result, locale, "home");
     window.location.assign(localizedHref(locale, result.href));
   }
@@ -71,7 +72,7 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter" && results.length === 0 && query.trim()) {
-      recordSiteSearch(query, 0, locale, "home");
+      recordSearch(query, 0);
       return;
     }
     const action = getSearchKeyboardAction(event.key, selectedIndex, results);
@@ -81,6 +82,7 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
       setActiveIndex(action.index);
       setIsOpen(true);
     } else if (action.type === "clear") {
+      recordSearch(query, results.length);
       setQuery("");
       setActiveIndex(-1);
       setIsOpen(false);
@@ -113,7 +115,7 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
               autoComplete="off"
               className="h-14 w-full border border-[#526159] bg-[#151b18] pl-12 pr-4 text-base text-white outline-none transition placeholder:text-[#75827b] focus:border-[#79d19c] focus:ring-2 focus:ring-[#79d19c]/35"
               id="site-search-input"
-              onBlur={() => setIsOpen(false)}
+              onBlur={() => {recordSearch(query, results.length); setIsOpen(false);}}
               onChange={handleChange}
               onFocus={() => setIsOpen(Boolean(query.trim()))}
               onKeyDown={handleKeyDown}

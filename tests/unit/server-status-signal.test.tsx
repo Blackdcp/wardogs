@@ -6,10 +6,10 @@ describe("ServerStatusSignal", () => {
   it("distinguishes the published maintenance notice from unverified live uptime", () => {
     const html = renderToStaticMarkup(<ServerStatusSignal locale="en" />);
     expect(html).toContain("Live server uptime is not verified");
-    expect(html).toContain("Patch 0.11");
-    expect(html).toContain("September 14");
+    expect(html).toContain("Patch 0.1.2");
+    expect(html).toContain("September 30");
     expect(html).toContain("Official Steam notices");
-    expect(html).toContain("https://steamcommunity.com/app/1867240/homecontent/");
+    expect(html).toContain("https://store.steampowered.com/news/app/1867240/view/712287592723252267");
     expect(html).toContain('data-server-status-signal="unverified"');
     expect(html).not.toContain("All servers operational");
   });

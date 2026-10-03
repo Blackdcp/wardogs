@@ -37,11 +37,11 @@ export function getPublicStatus() {
       startsAt: CURRENT_EVENT.maintenanceStartsAt,
       expectedDurationMinutes: CURRENT_EVENT.maintenanceDurationMinutes,
       scope: [
-        "server-browser",
-        "community-server-discoverability",
-        "cash-exploit-fixes",
-        "gpu-crash-mitigation",
-        "asia-capacity"
+        "wd-l020-windows-11-crash-fix",
+        "cash-and-xp-exploit-fixes",
+        "deploy-server-browser-and-official-filters",
+        "community-server-security",
+        "server-stability-and-gameplay-fixes"
       ],
       officialUrl: CURRENT_EVENT.latestOfficialUrl
     },
@@ -67,8 +67,7 @@ export function getPublicStatus() {
       widget: `${origin}/embed/status`
     },
     sources: [
-      {kind: "official", label: "Patch 0.11 and the published maintenance window", url: CURRENT_EVENT.latestOfficialUrl},
-      {kind: "official", label: CURRENT_EVENT.latestMilestone, url: CURRENT_EVENT.latestOfficialUrl},
+      {kind: "official", label: `Patch ${CURRENT_EVENT.latestPatchVersion} and the published maintenance window`, url: CURRENT_EVENT.latestOfficialUrl},
       {kind: "official", label: "Season 02 announced for October 15", url: CURRENT_EVENT.nextSeasonUrl},
       {kind: "official", label: "Steam Early Access store", url: CURRENT_EVENT.storeUrl},
       {kind: "official", label: "Pre-Load Live and Season 1 changelog", url: CURRENT_EVENT.seasonOnePatchUrl},
