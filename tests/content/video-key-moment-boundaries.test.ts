@@ -1,10 +1,17 @@
-import {describe, expect, it} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
 import {locales} from "../../src/config/site";
 import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
 import {buildVideoArticleJsonLd} from "../../src/features/videos/video-structured-data";
 
-describe.each(locales)("%s video key moment boundaries", (locale) => {
-  it("only emits complete Clip intervals for every localized video article", () => {
+describe.each([
+  {deployment: "Vercel", githubPages: "false", pathSuffix: ""},
+  {deployment: "GitHub Pages", githubPages: "true", pathSuffix: "/"}
+])("$deployment video key moment boundaries", ({githubPages, pathSuffix}) => {
+  afterEach(() => vi.unstubAllEnvs());
+
+  it.each(locales)("%s only emits complete Clip intervals with deployment-specific URLs", (locale) => {
+    vi.stubEnv("GITHUB_PAGES", githubPages);
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "");
     const articles = getLocalizedVideoArticles(locale);
     for (const article of articles) {
       const video = buildVideoArticleJsonLd(locale, article).find((item) => item["@type"] === "VideoObject")!;
@@ -19,7 +26,7 @@ describe.each(locales)("%s video key moment boundaries", (locale) => {
         expect(clip.endOffset, article.slug).toBeGreaterThan(clip.startOffset as number);
         expect(clip.name, article.slug).toBeTruthy();
         const url = new URL(clip.url as string);
-        expect(url.pathname, article.slug).toBe(`/${locale}/videos/${article.slug}`);
+        expect(url.pathname, article.slug).toBe(`/${locale}/videos/${article.slug}${pathSuffix}`);
         expect(url.searchParams.get("t"), article.slug).toBe(String(clip.startOffset));
       }
     }
