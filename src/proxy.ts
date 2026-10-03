@@ -13,9 +13,17 @@ export default function proxy(request: NextRequest) {
   if (canonicalHostRedirect) return NextResponse.redirect(canonicalHostRedirect, 308);
 
   const {pathname} = request.nextUrl;
-  if (pathname === "/") return NextResponse.redirect(new URL("/en", request.url), 308);
+  if (pathname === "/") {
+    const targetUrl = request.nextUrl.clone();
+    targetUrl.pathname = "/en";
+    return NextResponse.redirect(targetUrl, 308);
+  }
   const legacyRedirectPath = getLegacyEnglishRedirectPath(pathname);
-  if (legacyRedirectPath) return NextResponse.redirect(new URL(legacyRedirectPath, request.url), 308);
+  if (legacyRedirectPath) {
+    const targetUrl = request.nextUrl.clone();
+    targetUrl.pathname = legacyRedirectPath;
+    return NextResponse.redirect(targetUrl, 308);
+  }
   const firstSegment = pathname.split("/")[1];
   if (firstSegment && !isSiteLocale(firstSegment)) return NextResponse.next();
   const response = handleI18n(request);

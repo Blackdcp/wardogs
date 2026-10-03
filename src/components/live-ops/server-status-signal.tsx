@@ -1,4 +1,4 @@
-import {Activity, AlertCircle, CheckCircle2, Clock, ExternalLink, Radio} from "lucide-react";
+import {AlertCircle, CheckCircle2, Clock, ExternalLink, Radio} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {CURRENT_EVENT} from "@/features/live-ops/current-event";
 

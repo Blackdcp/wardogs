@@ -229,6 +229,10 @@
       "buildLabel": "Build",
       "verifiedLabel": "Verificado",
       "sourceCta": "Ler a atualização oficial da Season 1",
+      "s2WipeEyebrow": "Roteiro de Wipe e Reset da Temporada 2",
+      "s2WipeDesc": "Programado para 15 de outubro de 2026. Prepare proteção de capital, reserva de fundos e transição de funções.",
+      "s2WipeCta": "Estratégia de Wipe",
+      "s2WipeTitle": "Ver guia de estratégia de wipe da Temporada 2",
       "entries": {
         "fobVendor": {
           "title": "Vendedor de FOB",
@@ -661,7 +665,7 @@
     "title": "Política de Privacidade",
     "intro": "Este guia de fãs reduz a coleta de dados e explica como funcionam mídias e links externos.",
     "content": "Não operamos contas de jogadores nem coletamos credenciais do jogo. Ao abrir um serviço externo, a política de privacidade dele passa a valer.",
-    "advertising": "Os anúncios nativos e banners Adsterra, incluindo banners horizontais e laterais no computador e um banner inferior que pode ser fechado no celular, funcionam em quadros isolados. Cliques podem abrir sites dos anunciantes em novas abas, sem herdar as restrições do quadro do anúncio. Os quadros incorporados não podem acessar a origem do site nem redirecionar a página principal para outra página HTTP(S). Nosso documento contêiner rejeita links diretos com protocolos não web e popups por script sem ação do usuário; isso não abrange subquadros de outra origem nem páginas de destino dos anunciantes. O comportamento de aplicativos externos depende de terceiros e do navegador e não é bloqueado em todos os casos. Após relatos de redirecionamentos indesejados, scripts de anúncios sem isolamento, Social Bar, Popunder e Smartlinks permanecem desativados desde 2026-10-01. As solicitações de anúncios podem divulgar seu endereço IP e informações do navegador ou dispositivo aos provedores; os cookies deles estão sujeitos às restrições do navegador. Desativar um formato não apaga cookies já armazenados."
+    "advertising": "Anúncios nativos e banners do Adsterra, incluindo banners horizontais para desktop, barras laterais e banner móvel fixo dispensável, são carregados diretamente por scripts de exibição. Cliques de usuários abrem sites de anunciantes em novas abas. Formatos invasivos como Popunder, Social Bar e Smartlink permanecem totalmente desativados desde 2026-10-01. As solicitações de anúncios transmitem seu endereço IP, dados do navegador e informações do dispositivo para as redes de publicidade; cookies estão sujeitos aos controles de privacidade do navegador."
   },
   "terms": {
     "metaTitle": "Termos do WARDOGS Wiki: Regras e Avisos do Guia",

@@ -59,6 +59,8 @@ export function SiteSearchDialog({compact = false}: {compact?: boolean}) {
   function openResult(result: SiteSearchEntry) {
     recordSiteSearch(query, results.length, locale, "header");
     recordSiteSearchResult(query, result, locale, "header");
+    setOpen(false);
+    setQuery("");
     router.push(result.href);
   }
 

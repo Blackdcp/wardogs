@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import {Activity, BookOpen, Compass, Crosshair, ExternalLink, HelpCircle, Monitor, ShieldAlert} from "lucide-react";
+import {BookOpen, Compass, Crosshair, ExternalLink, HelpCircle, Monitor} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {
   ARTILLERY_155MM_BALLISTICS,

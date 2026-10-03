@@ -82,7 +82,9 @@ describe("Proxy request scope", () => {
     const cases = [
       ["https://wardogswiki.com/not-a-real-page?source=bing", "https://www.wardogswiki.com/not-a-real-page?source=bing"],
       ["https://www.wardogswiki.com/", "https://www.wardogswiki.com/en"],
-      ["https://www.wardogswiki.com/guides/wardogs-playtest", "https://www.wardogswiki.com/en/guides/wardogs-playtest"]
+      ["https://www.wardogswiki.com/?utm_source=twitter&utm_medium=cpc", "https://www.wardogswiki.com/en?utm_source=twitter&utm_medium=cpc"],
+      ["https://www.wardogswiki.com/guides/wardogs-playtest", "https://www.wardogswiki.com/en/guides/wardogs-playtest"],
+      ["https://www.wardogswiki.com/tools/loadout-budget?cash=8000&loadout=2000", "https://www.wardogswiki.com/en/tools/loadout-budget?cash=8000&loadout=2000"]
     ];
     for (const [source, destination] of cases) {
       const response = proxy(new NextRequest(source));

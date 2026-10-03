@@ -57,9 +57,7 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
             <div id="main-content" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
               {children}
             </div>
-            <div className="site-container py-1" data-global-ad-position="bottom">
-              <AdsterraDisplayBanner label={adsT("label")} placement="horizontal" />
-            </div>
+            <div className="site-container py-1" data-global-ad-position="bottom" />
             <SiteFooter />
           </div>
         </NextIntlClientProvider>

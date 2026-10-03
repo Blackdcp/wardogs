@@ -5,7 +5,7 @@ import {
   calculateFiringSolution,
   formatGridCoordinate,
   interpolateMil,
-  WEAPON_REGISTRY
+  toGridColumnLabel
 } from "../../src/features/artillery/ballistics-data";
 
 describe("Artillery & Mortar Ballistics Engine", () => {
@@ -63,14 +63,14 @@ describe("Artillery & Mortar Ballistics Engine", () => {
     expect(tooClose.reason).toBe("too_close");
 
     // Out of range (>697m for mortar)
-    const outOfRange = calculateFiringSolution({
+    const tooFar = calculateFiringSolution({
       weaponId: "mortar",
-      distanceMeters: 800
+      distanceMeters: 750
     });
-    expect(outOfRange.valid).toBe(false);
-    expect(outOfRange.reason).toBe("out_of_range");
+    expect(tooFar.valid).toBe(false);
+    expect(tooFar.reason).toBe("out_of_range");
 
-    // Valid firing solution at 400m flat
+    // Valid flat ground solution
     const flat = calculateFiringSolution({
       weaponId: "mortar",
       distanceMeters: 400,
@@ -103,5 +103,22 @@ describe("Artillery & Mortar Ballistics Engine", () => {
     const center = {x: 0.5, y: 0.5};
     const grid = formatGridCoordinate(center, "bakurani");
     expect(grid).toMatch(/^[A-P][0-9]{1,2}-[1-9]$/);
+  });
+
+  it("formats 32-column maps beyond column 26 without collision on Z", () => {
+    expect(toGridColumnLabel(0)).toBe("A");
+    expect(toGridColumnLabel(25)).toBe("Z");
+    expect(toGridColumnLabel(26)).toBe("AA");
+    expect(toGridColumnLabel(27)).toBe("AB");
+    expect(toGridColumnLabel(31)).toBe("AF");
+
+    // Ozeti has 32 columns; check coordinates on cols 25, 26, 31
+    const pZ = {x: 25.1 / 32, y: 0.1};
+    const pAA = {x: 26.1 / 32, y: 0.1};
+    const pAF = {x: 31.1 / 32, y: 0.1};
+
+    expect(formatGridCoordinate(pZ, "ozeti")).toMatch(/^Z[0-9]{1,2}-[1-9]$/);
+    expect(formatGridCoordinate(pAA, "ozeti")).toMatch(/^AA[0-9]{1,2}-[1-9]$/);
+    expect(formatGridCoordinate(pAF, "ozeti")).toMatch(/^AF[0-9]{1,2}-[1-9]$/);
   });
 });

@@ -49,14 +49,8 @@ export function ArtilleryCalculator({locale}: Props) {
 
   const weapon = WEAPON_REGISTRY[weaponId];
 
-  // Keep trajectory mode in sync when switching weapon
-  useEffect(() => {
-    if (weaponId === "mortar") {
-      setTrajectoryMode("single");
-    } else if (trajectoryMode === "single") {
-      setTrajectoryMode("high");
-    }
-  }, [weaponId, trajectoryMode]);
+  const effectiveTrajectoryMode: TrajectoryMode =
+    weaponId === "mortar" ? "single" : trajectoryMode === "single" ? "high" : trajectoryMode;
 
   // Compute Solution
   let solution: FiringSolution;
@@ -65,7 +59,7 @@ export function ArtilleryCalculator({locale}: Props) {
     const azimuth = calculateAzimuth(gunPoint, targetPoint);
     solution = calculateFiringSolution({
       weaponId,
-      mode: trajectoryMode,
+      mode: effectiveTrajectoryMode,
       distanceMeters,
       heightDeltaMeters: directHeightDelta,
       azimuthDegrees: azimuth.degrees,
@@ -75,7 +69,7 @@ export function ArtilleryCalculator({locale}: Props) {
     const azimuthMil = Math.round((directAzimuth / 360) * 6400);
     solution = calculateFiringSolution({
       weaponId,
-      mode: trajectoryMode,
+      mode: effectiveTrajectoryMode,
       distanceMeters: directDistance,
       heightDeltaMeters: directHeightDelta,
       azimuthDegrees: directAzimuth,
@@ -223,7 +217,10 @@ export function ArtilleryCalculator({locale}: Props) {
             <div className="mt-1.5 flex gap-2">
               <button
                 type="button"
-                onClick={() => setWeaponId("mortar")}
+                onClick={() => {
+                  setWeaponId("mortar");
+                  setTrajectoryMode("single");
+                }}
                 className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                   weaponId === "mortar"
                     ? "border-[#62b984] bg-[#1d3527] text-[#8ce2ad] shadow-[0_0_12px_rgba(98,185,132,0.2)]"
@@ -234,7 +231,10 @@ export function ArtilleryCalculator({locale}: Props) {
               </button>
               <button
                 type="button"
-                onClick={() => setWeaponId("sph2")}
+                onClick={() => {
+                  setWeaponId("sph2");
+                  if (trajectoryMode === "single") setTrajectoryMode("high");
+                }}
                 className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                   weaponId === "sph2"
                     ? "border-[#d88f48] bg-[#352516] text-[#f2ad6f] shadow-[0_0_12px_rgba(216,143,72,0.2)]"

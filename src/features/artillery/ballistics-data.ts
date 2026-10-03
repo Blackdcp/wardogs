@@ -394,18 +394,28 @@ export function calculateFiringSolution(params: {
   };
 }
 
+export function toGridColumnLabel(colIndex: number): string {
+  const safeIndex = Math.max(0, colIndex);
+  if (safeIndex < 26) {
+    return String.fromCharCode(65 + safeIndex);
+  }
+  const first = String.fromCharCode(65 + Math.floor(safeIndex / 26) - 1);
+  const second = String.fromCharCode(65 + (safeIndex % 26));
+  return `${first}${second}`;
+}
+
 export function formatGridCoordinate(point: Point, mapId: MapId): string {
   const spec = MAP_DIMENSIONS[mapId] ?? MAP_DIMENSIONS.bakurani;
   const cols = spec.gridCols;
-  const colIndex = Math.floor(point.x * cols);
-  const rowIndex = Math.floor(point.y * cols);
+  const colIndex = Math.max(0, Math.min(cols - 1, Math.floor(point.x * cols)));
+  const rowIndex = Math.max(0, Math.min(cols - 1, Math.floor(point.y * cols)));
 
-  const colLetter = String.fromCharCode(65 + Math.min(25, colIndex));
+  const colLetter = toGridColumnLabel(colIndex);
   const rowNumber = rowIndex + 1;
 
   // Keypad 1-9 subgrid
-  const subX = (point.x * cols) - colIndex;
-  const subY = (point.y * cols) - rowIndex;
+  const subX = Math.max(0, Math.min(0.9999, (point.x * cols) - colIndex));
+  const subY = Math.max(0, Math.min(0.9999, (point.y * cols) - rowIndex));
   const kpCol = Math.min(2, Math.floor(subX * 3));
   const kpRow = Math.min(2, Math.floor(subY * 3));
   // Numpad: 7 8 9 (row 0), 4 5 6 (row 1), 1 2 3 (row 2)

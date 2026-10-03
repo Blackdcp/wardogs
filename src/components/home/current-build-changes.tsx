@@ -9,7 +9,6 @@ import {Link} from "@/i18n/navigation";
 export async function CurrentBuildChanges({locale}: {locale: Locale}) {
   const t = await getTranslations("home.buildChanges");
   const changes = getHomeCurrentBuildChanges();
-  const isZh = locale === "zh-cn" || locale === "zh-tw";
 
   return (
     <section aria-labelledby="current-build-changes-title" className="border-b border-[#26312c] bg-[#151b18] py-12 sm:py-14" data-current-build-changes>
@@ -58,21 +57,19 @@ export async function CurrentBuildChanges({locale}: {locale: Locale}) {
               </div>
               <div>
                 <p className="text-xs font-bold uppercase tracking-wider text-[#d9a93a]">
-                  {isZh ? "第二赛季删档动态 (S2 Wipe Countdown)" : "Season 2 Wipe & Reset Roadmap"}
+                  {t("s2WipeEyebrow")}
                 </p>
                 <p className="mt-0.5 text-xs text-[#dbe5df] sm:text-sm">
-                  {isZh
-                    ? "官方宣布 2026年10月15日 全服重置清零，立即查阅装备避险与资产对冲策略"
-                    : "Scheduled for October 15, 2026. Prepare capital hedging, cash preservation & role carryover."}
+                  {t("s2WipeDesc")}
                 </p>
               </div>
             </div>
             <Link
               href={`/guides/${CURRENT_EVENT.nextSeasonGuideSlug}`}
-              title={isZh ? "查阅 S2 赛季删档应对指南" : "View Season 2 Wipe Strategy Guide"}
+              title={t("s2WipeTitle")}
               className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-[6px] border border-[#68bd8d] bg-[#24583a] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#2c6a46]"
             >
-              <span>{isZh ? "查看删档应对指南" : "Wipe Strategy"}</span>
+              <span>{t("s2WipeCta")}</span>
               <ArrowUpRight aria-hidden="true" className="size-4" />
             </Link>
           </div>

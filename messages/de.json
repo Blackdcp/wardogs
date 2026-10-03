@@ -229,6 +229,10 @@
       "buildLabel": "Build",
       "verifiedLabel": "Geprüft",
       "sourceCta": "Offizielles Season-1-Update lesen",
+      "s2WipeEyebrow": "Saison 2 Wipe & Reset-Roadmap",
+      "s2WipeDesc": "Geplant für den 15. Oktober 2026. Bereiten Sie Kapitalabsicherung, Gelderhaltung und Rollenübertrag vor.",
+      "s2WipeCta": "Wipe-Strategie",
+      "s2WipeTitle": "Leitfaden zur Saison 2 Wipe-Strategie anzeigen",
       "entries": {
         "fobVendor": {
           "title": "FOB-Händler",
@@ -661,7 +665,7 @@
     "title": "Datenschutzerklärung",
     "intro": "Dieser Fan-Guide minimiert die Datenerfassung und erklärt externe Medien und Links.",
     "content": "Wir verwalten keine Spielerkonten und erfassen keine Zugangsdaten. Nach dem Öffnen eines externen Dienstes gelten dessen Datenschutzbestimmungen.",
-    "advertising": "Adsterra-Native-Ads und Displaybanner, einschließlich horizontaler und seitlicher Desktopbanner sowie eines schließbaren mobilen Banners am unteren Rand, laufen in isolierten Frames. Klicks können Werbekunden-Websites in neuen Tabs öffnen, die die Einschränkungen des Werbeframes nicht übernehmen. Eingebettete Frames können nicht auf den Ursprung der Website zugreifen oder die Hauptseite auf eine andere HTTP(S)-Seite umleiten. Unser Containerdokument lehnt direkte Nicht-Web-Protokoll-Links und skriptgesteuerte Popups ohne Nutzeraktivierung ab; dies gilt nicht für fremde Unterframes oder Zielseiten der Werbekunden. Das Verhalten externer Apps hängt von Dritten und dem Browser ab und wird nicht ausnahmslos blockiert. Nach Meldungen unerwünschter Weiterleitungen bleiben uneingeschränkte Werbeskripte, Social Bar, Popunder und Smartlinks seit 2026-10-01 deaktiviert. Anzeigenanfragen können Ihre IP-Adresse sowie Browser- oder Geräteinformationen an Werbeanbieter übermitteln; deren Cookies unterliegen den Browserbeschränkungen. Die Deaktivierung eines Formats löscht keine bereits gespeicherten Cookies."
+    "advertising": "Adsterra Native Ads und Display-Banner, einschließlich Desktop-Horizontalbanner, Seitenleisten und mobiler Einheiten, werden direkt über Publisher-Skripte geladen. Klicks öffnen Werbeseiten in neuen Tabs. Aufdringliche Formate wie Popunder, Social Bar und Smartlink bleiben seit dem 2026-10-01 dauerhaft deaktiviert. Werbeanfragen übermitteln Ihre IP-Adresse, Browser-Header und Geräte-Informationen an Werbenetzwerke; Cookies unterliegen den Datenschutzeinstellungen Ihres Browsers."
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Nutzungsbedingungen und Haftungshinweise",

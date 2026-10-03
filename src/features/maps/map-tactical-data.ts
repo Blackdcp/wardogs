@@ -8,33 +8,35 @@ export type BallisticRow = {
 };
 
 export const MORTAR_81MM_BALLISTICS: readonly BallisticRow[] = [
-  {range: 100, mils: 1420, tof: 12},
-  {range: 200, mils: 1355, tof: 14},
-  {range: 300, mils: 1290, tof: 16},
-  {range: 400, mils: 1225, tof: 18},
-  {range: 500, mils: 1160, tof: 20},
-  {range: 600, mils: 1095, tof: 22},
-  {range: 700, mils: 1030, tof: 24},
-  {range: 800, mils: 965, tof: 26},
-  {range: 900, mils: 900, tof: 28},
-  {range: 1000, mils: 835, tof: 30},
-  {range: 1100, mils: 770, tof: 32},
-  {range: 1200, mils: 700, tof: 34, notes: "Max effective"}
+  {range: 80, mils: 950, tof: 15.0, notes: "Min range"},
+  {range: 100, mils: 925, tof: 15.3},
+  {range: 150, mils: 862, tof: 15.9},
+  {range: 200, mils: 800, tof: 16.6},
+  {range: 250, mils: 738, tof: 17.2},
+  {range: 300, mils: 675, tof: 17.9},
+  {range: 350, mils: 613, tof: 18.5},
+  {range: 400, mils: 550, tof: 19.1},
+  {range: 450, mils: 488, tof: 19.8},
+  {range: 500, mils: 425, tof: 20.4},
+  {range: 550, mils: 363, tof: 21.1},
+  {range: 600, mils: 295, tof: 21.7},
+  {range: 650, mils: 208, tof: 22.4},
+  {range: 684, mils: 150, tof: 22.8},
+  {range: 697, mils: 120, tof: 23.0, notes: "Max effective"}
 ];
 
 export const ARTILLERY_155MM_BALLISTICS: readonly BallisticRow[] = [
-  {range: 200, mils: 1380, tof: 16},
-  {range: 400, mils: 1280, tof: 20},
-  {range: 600, mils: 1180, tof: 24},
-  {range: 800, mils: 1080, tof: 28},
-  {range: 1000, mils: 980, tof: 31},
-  {range: 1200, mils: 880, tof: 34},
-  {range: 1400, mils: 780, tof: 37},
-  {range: 1600, mils: 680, tof: 40},
-  {range: 1800, mils: 580, tof: 43},
-  {range: 2000, mils: 480, tof: 46},
-  {range: 2200, mils: 410, tof: 49},
-  {range: 2500, mils: 350, tof: 52, notes: "Extended envelope"}
+  {range: 735, mils: 1400, tof: 22.0, notes: "Min range"},
+  {range: 900, mils: 1363, tof: 23.3},
+  {range: 1100, mils: 1316, tof: 24.8},
+  {range: 1300, mils: 1266, tof: 26.4},
+  {range: 1500, mils: 1215, tof: 27.9},
+  {range: 1700, mils: 1157, tof: 29.5},
+  {range: 1900, mils: 1094, tof: 31.0},
+  {range: 2100, mils: 1021, tof: 32.6},
+  {range: 2300, mils: 929, tof: 34.1},
+  {range: 2500, mils: 800, tof: 35.7},
+  {range: 2629, mils: 600, tof: 36.7, notes: "Max effective"}
 ];
 
 export type MapTheaterIntel = {
@@ -333,8 +335,468 @@ const tacticalIntelZhTw: TacticalIntelCopy = {
   ]
 };
 
+const tacticalIntelJa: TacticalIntelCopy = {
+  secondScreenTitle: "サブモニター戦術指揮＆実戦ワークフロー",
+  secondScreenDesc: "レイドやクラン戦の際、本インタラクティブマップをサブモニターに表示。定規で射程を計測し、敵FOBを偵察し、曲射支援射撃をリアルタイムで誘導できます。",
+  features: [
+    {
+      title: "サブモニター専用設計",
+      desc: "20〜40分の戦闘中常時表示可能。Alt+Tabによる画面切り替えを行わずに、地形ルート、補給線、チョークポイントを瞬時に確認できます。"
+    },
+    {
+      title: "迫撃砲・重砲 仰角射表",
+      desc: "インタラクティブマップの直下にL81 81mm迫撃砲とSPH-2 155mm自走榴弾砲の距離・ミル照準対照表を常備。"
+    },
+    {
+      title: "分隊共有URL即時発行",
+      desc: "「視点とマーカーを共有」をクリックすると、指定したウェイポイント、砲撃目標、集結地点を含むURLハッシュを生成します。"
+    }
+  ],
+  ballisticsTitle: "迫撃砲・自走砲 仰角クイックリファレンス",
+  ballisticsSubtitle: "間接射撃支援のためのコミュニティ検証済み距離・ミル対照表",
+  mortarTab: "81mm迫撃砲 (L81)",
+  artilleryTab: "155mm榴弾砲 (SPH-2)",
+  rangeCol: "距離 (m)",
+  milsCol: "仰角 (mils)",
+  tofCol: "着弾時間 (秒)",
+  notesCol: "運用ノート",
+  ballisticsRuleTitle: "実戦照準補正の基本法則",
+  ballisticsRuleDesc: "81mm迫撃砲は距離100mにつき約65ミル、155mm自走砲は約50ミル調整します。必ず初弾（試射弾）を撃ち、観測手または砲弾カメラで弾着を確認してから斉射に移行してください。",
+  theatersTitle: "作戦戦域別タクティカルプロファイル",
+  theatersSubtitle: "3つの稼働マップにおける地形特性、要衝セクター、戦術的留意点",
+  theaters: [
+    {
+      id: "bakurani",
+      name: "バクラニ (Bakurani)",
+      type: "山岳・盆地峡谷 (256 km²)",
+      sectors: [
+        "通信鉄塔尾根 (グリッド D4/E4) - 全域を見渡す最高観測拠点",
+        "南側水力発電サブステーション - 枢要電力拠点・補給トラック幹線",
+        "河谷チョークポイント - 装甲車両や補給車列を奇襲するキルゾーン"
+      ],
+      tactics: "敵の直射や対砲兵射撃を防ぐため、迫撃砲は逆斜面谷地に展開。尾根には対空兵器を配置し、敵攻撃ヘリの進入を遮断します。"
+    },
+    {
+      id: "ozeti",
+      name: "オゼティ (Ozeti)",
+      type: "河川合流点・重工業コンプレックス",
+      sectors: [
+        "中央鉄道操車場 - 密集コンテナ群と近接市街戦の要所",
+        "渡河バージ船着場 - 重装甲車両の唯一の渡河ボトルネック",
+        "変電サブステーション - 前線作業基地 (FOB) 建設の最適地"
+      ],
+      tactics: "SPH-2自走砲は1,200m離れた対岸から安全に渡河拠点を封鎖可能。自軍側岸辺に兵站倉庫を設置し、155mm砲弾を絶やさず補給します。"
+    },
+    {
+      id: "zestafona",
+      name: "ゼスタフォナ (Zestafona)",
+      type: "沿岸半島・要塞港湾",
+      sectors: [
+        "コンテナガントリークレーン - 狙撃手と弾着観測手の垂直制高点",
+        "沿岸製油所 - 燃料集積所および高引火性爆発危険エリア",
+        "飛行場滑走路・格納庫 - 車両スポーン工廠およびヘリ着陸帯 (LZ)"
+      ],
+      tactics: "開けた海側からの迂回強襲に注意。コンテナヤードを活用して強固な歩兵防衛ラインを構築し、敵装甲の突破を阻止します。"
+    }
+  ],
+  relatedGuidesTitle: "戦場指揮官のための重要戦術ガイド",
+  guides: [
+    {
+      title: "迫撃砲照準＆対FOB砲撃ガイド",
+      href: "/guides/wardogs-mortar-guide",
+      desc: "ミル測距、観測連携、対砲兵レーダー回避、砲弾カメラ運用の全手順。"
+    },
+    {
+      title: "SPH-2 自走砲装甲車両 実戦ガイド",
+      href: "/guides/wardogs-artillery-guide",
+      desc: "レベル90解放条件、$8,000配備コスト精算、3人乗員の装填連携。"
+    },
+    {
+      title: "ヘリコプター操縦＆空挺降下ガイド",
+      href: "/guides/wardogs-helicopter-guide",
+      desc: "操縦特性、着陸ゾーン離脱手順、スティンガー防空ミサイル回避術。"
+    },
+    {
+      title: "前線基地 (FOB) 建設＆兵站補給ガイド",
+      href: "/guides/wardogs-fob-guide",
+      desc: "堅固な前哨拠点の構築、トラック補給線の開拓、間接火力への弾薬供給。"
+    }
+  ]
+};
+
+const tacticalIntelRu: TacticalIntelCopy = {
+  secondScreenTitle: "Тактическое управление и рабочий процесс для второго экрана",
+  secondScreenDesc: "Используйте интерактивную карту на втором мониторе во время рейдов и клановых войн. Измеряйте дистанции линейкой, находите вражеские FOB и координируйте артиллерию в реальном времени.",
+  features: [
+    {
+      title: "Оптимизация для второго экрана",
+      desc: "Держите карту открытой на протяжении 20–40 минут рейда: следите за маршрутами, логистикой и узкими местами без переключения окон через Alt+Tab."
+    },
+    {
+      title: "Таблицы стрельбы минометов и артиллерии",
+      desc: "Мгновенные таблицы перевода дистанции в тысячные для 81-мм миномета L81 и 155-мм САУ SPH-2 прямо под картой."
+    },
+    {
+      title: "Ссылка для отряда в один клик",
+      desc: "Нажмите «Поделиться видом и метками», чтобы получить постоянную ссылку с отмеченными точками маршрута, целями и сбором."
+    }
+  ],
+  ballisticsTitle: "Таблицы возвышения для минометов и артиллерии",
+  ballisticsSubtitle: "Проверенные сообществом таблицы перевода дистанции в тысячные для огня с закрытых позиций",
+  mortarTab: "81-мм миномет (L81)",
+  artilleryTab: "155-мм артиллерия (SPH-2)",
+  rangeCol: "Дистанция (м)",
+  milsCol: "Прицел (тыс.)",
+  tofCol: "Время полета (с)",
+  notesCol: "Примечания",
+  ballisticsRuleTitle: "Полевое правило корректировки",
+  ballisticsRuleDesc: "Для 81-мм миномета поправка составляет ~65 тыс. на каждые 100 м дистанции; для 155-мм САУ — ~50 тыс. на 100 м. Всегда делайте пристрелочный выстрел, корректируйте наводку по докладу корректировщика или камере снаряда, и только затем ведите огонь на поражение.",
+  theatersTitle: "Оперативные профили театров военных действий",
+  theatersSubtitle: "Анализ рельефа, ключевых секторов и тактики на всех трех активных картах",
+  theaters: [
+    {
+      id: "bakurani",
+      name: "Бакурани (Bakurani)",
+      type: "Горно-долинный бассейн (256 км²)",
+      sectors: [
+        "Хребет радиомачты (Grid D4/E4) — высшая точка наблюдения и разведки",
+        "Южная гидроподстанция — ключевой энергообъект и трасса снабжения",
+        "Узкое речное ущелье — опасная зона засад на бронетехнику и грузовики"
+      ],
+      tactics: "Размещайте минометы на обратных склонах для защиты от прямой наводки и контрбатарейного огня. Держите расчеты ПЗРК на хребтах для прикрытия от ударных вертолетов."
+    },
+    {
+      id: "ozeti",
+      name: "Озети (Ozeti)",
+      type: "Речной узел и промышленный комплекс",
+      sectors: [
+        "Центральный железнодорожный узел — плотные укрытия и ближний бой",
+        "Баржевая переправа — единственное горлышко для тяжелой техники",
+        "Электрораспределительная подстанция — идеальное место для возведения FOB"
+      ],
+      tactics: "САУ SPH-2 может подавлять переправу через реку с безопасного расстояния 1200 м. Держите склад боеприпасов на своем берегу для бесперебойного снабжения 155-мм снарядами."
+    },
+    {
+      id: "zestafona",
+      name: "Зестафона (Zestafona)",
+      type: "Прибрежный полуостров и портовая крепость",
+      sectors: [
+        "Портальные краны — вертикальные позиции для снайперов и наводчиков",
+        "Прибрежный НПЗ — база хранения топлива и зона повышенной взрывоопасности",
+        "Ангары летного поля — зона спавна техники и вертолетные площадки (LZ)"
+      ],
+      tactics: "Открытая вода позволяет совершать фланговые десантные высадки. Используйте контейнерные терминалы для организации перекрестного огня пехоты против вражеской брони."
+    }
+  ],
+  relatedGuidesTitle: "Ключевые тактические руководства для командиров",
+  guides: [
+    {
+      title: "Наведение минометов и обстрел вражеских FOB",
+      href: "/guides/wardogs-mortar-guide",
+      desc: "Расчет дистанции в тысячных, работа с наводчиком, радар контрбатарейной борьбы и камера снаряда."
+    },
+    {
+      title: "Боевое применение САУ SPH-2 (155 мм)",
+      href: "/guides/wardogs-artillery-guide",
+      desc: "Требование 90-го уровня, затраты на развертывание $8,000 и слаженная работа экипажа из 3 человек."
+    },
+    {
+      title: "Пилотирование вертолетов и тактический десант",
+      href: "/guides/wardogs-helicopter-guide",
+      desc: "Управление полетом, процедуры эвакуации с зоны посадки и уклонение от ракет ПЗРК."
+    },
+    {
+      title: "Строительство FOB и логистика снабжения",
+      href: "/guides/wardogs-fob-guide",
+      desc: "Как возвести укрепленный аванпост, наладить цепочку поставок и обеспечить снарядами артиллерию."
+    }
+  ]
+};
+
+const tacticalIntelDe: TacticalIntelCopy = {
+  secondScreenTitle: "Taktische Einsatzführung auf dem Zweitbildschirm",
+  secondScreenDesc: "Nutzen Sie diese interaktive Karte bei Raids und Clan-Gefechten auf dem zweiten Monitor. Messen Sie Distanzen, klären Sie gegnerische FOBs auf und leiten Sie Artillerieunterstützung in Echtzeit.",
+  features: [
+    {
+      title: "Optimiert für Zweitmonitore",
+      desc: "Lassen Sie die Karte während des gesamten 20–40-minütigen Raids geöffnet, um Routen, Logistik und Engpässe ohne Alt-Tab zu prüfen."
+    },
+    {
+      title: "Mörser- & Artillerie-Schusstafeln",
+      desc: "Sofortige Strich-zu-Reichweite-Erhöhungstabellen für L81 81mm-Mörser und SPH-2 155mm-Haubitzen direkt unter der Karte."
+    },
+    {
+      title: "Squad-Freigabe-URL per Klick",
+      desc: "Klicken Sie auf 'Ansicht und Markierungen teilen', um eine persistente URL mit Wegpunkten, Zielen und Sammelpunkten zu erstellen."
+    }
+  ],
+  ballisticsTitle: "Schnellübersicht Artillerie- und Mörsererhöhung",
+  ballisticsSubtitle: "Community-geprüfte Schusstafeln für indirektes Feuer",
+  mortarTab: "81mm Mörser (L81)",
+  artilleryTab: "155mm Artillerie (SPH-2)",
+  rangeCol: "Reichweite (m)",
+  milsCol: "Erhöhung (Strich)",
+  tofCol: "Flugzeit (s)",
+  notesCol: "Einsatzhinweise",
+  ballisticsRuleTitle: "Faustregel für Feldkorrekturen",
+  ballisticsRuleDesc: "Für 81mm-Mörser korrigieren Sie ~65 Strich pro 100m Reichweitenunterschied; für 155mm-Artillerie ~50 Strich pro 100m. Schießen Sie stets einen Einschießschuss und korrigieren Sie vor vollen Salven.",
+  theatersTitle: "Strategische Einsatzprofile der Kriegsschauplätze",
+  theatersSubtitle: "Geländeanalysen, befestigte Sektoren und taktische Aspekte auf allen drei aktiven Karten",
+  theaters: [
+    {
+      id: "bakurani",
+      name: "Bakurani",
+      type: "Berg- und Talkessel (256 km²)",
+      sectors: [
+        "Funkmast-Bergkamm (Grid D4/E4) – Höchster Beobachtungspunkt der Karte",
+        "Südliches Umspannwerk – Strategisches Energieziel und Nachschubroute",
+        "Flusstal-Engpass – Gefährliche Hinterhaltszone für Panzer und Konvois"
+      ],
+      tactics: "Positionieren Sie Mörser an Gegenhängen, um sie vor direktem Gegenfeuer zu schützen. Sichern Sie Bergkämme mit Flugabwehr gegen Erdkampfhubschrauber."
+    },
+    {
+      id: "ozeti",
+      name: "Ozeti",
+      type: "Flusskreuzung & Industriekomplex",
+      sectors: [
+        "Zentraler Rangierbahnhof – Dichte Industriedeckung und Nahkampfzone",
+        "Fähranleger – Einziger Flussübergang für schwere Panzerfahrzeuge",
+        "Energieverteiler-Umspannwerk – Hervorragender Standort für den Bau einer FOB"
+      ],
+      tactics: "SPH-2 Artillerie kann die Flussüberquerung aus 1.200m Entfernung dominieren. Richten Sie am eigenen Ufer ein Munitionsdepot für 155mm-Granaten ein."
+    },
+    {
+      id: "zestafona",
+      name: "Zestafona",
+      type: "Küstenhalbinsel & Hafenfeste",
+      sectors: [
+        "Container-Portalkräne – Vertikale Aussichtspunkte für Scharfschützen und Beobachter",
+        "Küsten-Treibstoffraffinerie – Treibstofflager und explosionsgefährdeter Bereich",
+        "Flugfeld-Hangars – Fahrzeug-Spawnwerkstatt und Hubschrauberlandeplätze (LZ)"
+      ],
+      tactics: "Offenes Küstenwasser begünstigt amphibische Flankenangriffe. Nutzen Sie Containerdepots für Infanterie-Abwehrzonen gegen feindliche Vorstöße."
+    }
+  ],
+  relatedGuidesTitle: "Wichtige Taktikleitfäden für Kommandanten",
+  guides: [
+    {
+      title: "Mörser-Zielen & Beschuss feindlicher FOBs",
+      href: "/guides/wardogs-mortar-guide",
+      desc: "Entfernungsermittlung in Strich, Spotter-Koordination, Artillerieradar und Granatenkamera."
+    },
+    {
+      title: "SPH-2 155mm Selbstfahrlafette im Feldeinsatz",
+      href: "/guides/wardogs-artillery-guide",
+      desc: "Stufe-90-Voraussetzung, $8.000 Bereitstellungskosten und Dreier-Besatzungsabläufe."
+    },
+    {
+      title: "Hubschrauber-Pilotierung & Luftlandetaktik",
+      href: "/guides/wardogs-helicopter-guide",
+      desc: "Flugeigenschaften, LZ-Evakuierungsverfahren und Ausweichen von Flugabwehrraketen."
+    },
+    {
+      title: "FOB-Bau & Nachschub-Logistik",
+      href: "/guides/wardogs-fob-guide",
+      desc: "Errichtung befestigter Vorposten, Lkw-Versorgungslinien und Munitionsnachschub für Artillerie."
+    }
+  ]
+};
+
+const tacticalIntelPtBr: TacticalIntelCopy = {
+  secondScreenTitle: "Comando Tático e Fluxo de Batalha no Segundo Monitor",
+  secondScreenDesc: "Abra este mapa interativo no segundo monitor durante invasões e guerras de clãs. Calcule distâncias com a régua, localize FOBs inimigas e coordene apoio de artilharia em tempo real.",
+  features: [
+    {
+      title: "Otimizado para Segunda Tela",
+      desc: "Mantenha o mapa aberto durante as partidas de 20–40 minutos para planejar rotas logísticas e gargalos sem usar Alt+Tab."
+    },
+    {
+      title: "Tabelas de Elevação para Morteiros e Artilharia",
+      desc: "Conversão direta de distância para mils para o morteiro L81 de 81mm e obuseiro autopropulsado SPH-2 de 155mm logo abaixo do mapa."
+    },
+    {
+      title: "Link Instantâneo de Compartilhamento de Esquadrão",
+      desc: "Clique em 'Compartilhar visão e marcadores' para gerar uma URL persistente com pontos de rota, alvos e locais de reagrupamento."
+    }
+  ],
+  ballisticsTitle: "Referência Rápida de Elevação de Morteiros e Artilharia",
+  ballisticsSubtitle: "Tabelas de conversão de alcance para mils verificadas pela comunidade",
+  mortarTab: "Morteiro 81mm (L81)",
+  artilleryTab: "Artilharia 155mm (SPH-2)",
+  rangeCol: "Alcance (m)",
+  milsCol: "Elevação (mils)",
+  tofCol: "Tempo de Voo (s)",
+  notesCol: "Notas Operacionais",
+  ballisticsRuleTitle: "Regra Prática de Correção em Campo",
+  ballisticsRuleDesc: "Para morteiros de 81mm, ajuste ~65 mils a cada 100m de variação de alcance; para artilharia de 155mm, ajuste ~50 mils a cada 100m. Sempre dispare um tiro de calibragem antes de rajadas completas.",
+  theatersTitle: "Perfis Operacionais dos Teatros Estratégicos",
+  theatersSubtitle: "Análise de terreno, setores fortificados e táticas nos três mapas ativos",
+  theaters: [
+    {
+      id: "bakurani",
+      name: "Bakurani",
+      type: "Bacia de Montanhas e Vales (256 km²)",
+      sectors: [
+        "Crista da Torre de Comunicação (Grid D4/E4) – Ponto de observação supremo",
+        "Subestação Hidroelétrica Sul – Alvo elétrico essencial e rota de comboios",
+        "Gargalo do Vale do Rio – Zona de emboscada para blindados e caminhões"
+      ],
+      tactics: "Posicione baterias de morteiro em contra-encostas para protegê-las de contrabateria direta. Mantenha equipes antiaéreas nos cumes contra helicópteros de ataque."
+    },
+    {
+      id: "ozeti",
+      name: "Ozeti",
+      type: "Cruzamento Fluvial e Complexo Industrial",
+      sectors: [
+        "Pátio Ferroviário Central – Cobertura pesada e combate a curta distância",
+        "Travessia de Balsa do Rio – Principal gargalo para veículos pesados",
+        "Subestação de Distribuição de Energia – Local ideal para construção de FOB"
+      ],
+      tactics: "A artilharia SPH-2 pode cobrir a travessia do rio a 1.200m de distância segura. Mantenha depósitos de suprimentos na margem amiga para alimentar obuseiros de 155mm."
+    },
+    {
+      id: "zestafona",
+      name: "Zestafona",
+      type: "Península Costeira e Porto Fortificado",
+      sectors: [
+        "Guindastes de Contêineres – Plataformas elevadas para atiradores e observadores",
+        "Refinaria Costeira – Centro de combustível e área de alto risco de explosão",
+        "Hangares do Aeródromo – Fábrica de veículos e zonas de pouso de helicópteros (LZ)"
+      ],
+      tactics: "As águas abertas facilitam investidas de flanco. Use terminais de contêineres para formar zonas de contenção de infantaria e travar blindados inimigos."
+    }
+  ],
+  relatedGuidesTitle: "Guias Táticos Essenciais para Comandantes de Campo",
+  guides: [
+    {
+      title: "Mira de Morteiro e Bombardeio de FOBs Inimigas",
+      href: "/guides/wardogs-mortar-guide",
+      desc: "Cálculo de mils, trabalho de observador, radar de contrabateria e câmera de projétil."
+    },
+    {
+      title: "Guia Operacional do Blindado de Artilharia SPH-2 (155mm)",
+      href: "/guides/wardogs-artillery-guide",
+      desc: "Requisito de nível 90, custo de $8.000 e coordenação de tripulação de 3 operadores."
+    },
+    {
+      title: "Pilotagem de Helicópteros e Desembarque Tático",
+      href: "/guides/wardogs-helicopter-guide",
+      desc: "Manuseio de voo, evacuação em zonas de pouso e evasão de mísseis antiaéreos."
+    },
+    {
+      title: "Construção de FOBs e Logística de Suprimentos",
+      href: "/guides/wardogs-fob-guide",
+      desc: "Como erguer postos avançados, manter linhas de comboios e abastecer munição pesada."
+    }
+  ]
+};
+
+const tacticalIntelPl: TacticalIntelCopy = {
+  secondScreenTitle: "Dowodzenie taktyczne i przepływ pracy na drugim ekranie",
+  secondScreenDesc: "Uruchom interaktywną mapę na drugim monitorze podczas rajdów i wojen klanowych. Mierz odległości linijką, wykrywaj wrogie FOB-y i koordynuj ogień artylerii w czasie rzeczywistym.",
+  features: [
+    {
+      title: "Optymalizacja pod drugi monitor",
+      desc: "Miej mapę pod ręką przez cały 20–40 minutowy rajd: sprawdzaj trasy zaopatrzenia i wąskie gardła bez konieczności przełączania okien Alt+Tab."
+    },
+    {
+      title: "Tabele kątów podniesienia moździerzy i artylerii",
+      desc: "Natychmiastowe tabele przeliczania zasięgu na tysięczne dla moździerza L81 81mm oraz haubicy SPH-2 155mm tuż pod mapą."
+    },
+    {
+      title: "Błyskawiczne udostępnianie widoku drużynie",
+      desc: "Kliknij 'Udostępnij widok i znaczniki', aby wygenerować link z zapisanymi punktami trasy, celami artyleryjskimi i punktami zbiórki."
+    }
+  ],
+  ballisticsTitle: "Szybka ściąga kątów podniesienia artylerii i moździerzy",
+  ballisticsSubtitle: "Zweryfikowane przez społeczność tabele przeliczania zasięgu na tysięczne",
+  mortarTab: "Moździerz 81mm (L81)",
+  artilleryTab: "Artyleria 155mm (SPH-2)",
+  rangeCol: "Zasięg (m)",
+  milsCol: "Kąt podniesienia (tys.)",
+  tofCol: "Czas lotu (s)",
+  notesCol: "Uwagi operacyjne",
+  ballisticsRuleTitle: "Praktyczna zasada korekty ognia",
+  ballisticsRuleDesc: "Dla moździerza 81mm koryguj o ~65 tysięcznych na każde 100m różnicy zasięgu; dla artylerii 155mm o ~50 tysięcznych na 100m. Zawsze wystrzel pocisk wstrzeliwujący przed przejściem do salw bateryjnych.",
+  theatersTitle: "Profile operacyjne teatrów działań",
+  theatersSubtitle: "Analiza terenu, ufortyfikowane sektory i taktyka na wszystkich trzech aktywnych mapach",
+  theaters: [
+    {
+      id: "bakurani",
+      name: "Bakurani",
+      type: "Kotlina górska i doliny (256 km²)",
+      sectors: [
+        "Grzbiet masztu radiowego (Grid D4/E4) – Główny punkt obserwacyjny na mapie",
+        "Południowa podstacja hydroelektryczna – Strategiczny cel energetyczny i trasa konwojów",
+        "Wąwóz w dolinie rzeki – Niebezpieczna strefa zasadzek na pojazdy opancerzone"
+      ],
+      tactics: "Ustawiaj moździerze na stokach przeciwstoku, aby chronić je przed bezpośrednim ogniem kontrbateryjnym. Na grzbietach rozmieść zespoły plot. przeciwko śmigłowcom."
+    },
+    {
+      id: "ozeti",
+      name: "Ozeti",
+      type: "Węzeł rzeczny i kompleks przemysłowy",
+      sectors: [
+        "Centralna stacja rozrządowa – Gęsta osłona przemysłowa i walka na krótkim dystansie",
+        "Przeprawa promowa – Jedyne wąskie gardło dla ciężkich pojazdów przez rzekę",
+        "Podstacja rozdzielcza energii – Idealna lokalizacja pod budowę wysuniętej bazy (FOB)"
+      ],
+      tactics: "Artyleria SPH-2 może ryglować przeprawę rzeczną z bezpiecznej odległości 1200m. Utrzymuj skład zaopatrzenia na własnym brzegu, by zasilać haubice w pociski 155mm."
+    },
+    {
+      id: "zestafona",
+      name: "Zestafona",
+      type: "Nadmorski półwysep i portowa twierdza",
+      sectors: [
+        "Suwnice kontenerowe – Pionowe punkty obserwacyjne dla snajperów i spotterów",
+        "Nadmorska rafineria paliw – Magazyn paliwa i strefa podwyższonego ryzyka wybuchu",
+        "Hangary lotniska – Warsztat pojazdów i lądowiska dla śmigłowców (LZ)"
+      ],
+      tactics: "Otwarte wody przybrzeżne ułatwiają ataki z flanki. Wykorzystaj place kontenerowe do stworzenia strefy ognia zaporowego piechoty przeciwko pojazdom wroga."
+    }
+  ],
+  relatedGuidesTitle: "Niezbędne poradniki taktyczne dla dowódców polowych",
+  guides: [
+    {
+      title: "Celowanie moździerzem i ostrzał wrogich FOB-ów",
+      href: "/guides/wardogs-mortar-guide",
+      desc: "Wyznaczanie odległości w tysięcznych, współpraca ze spotterem, radar kontrbateryjny i kamera pocisku."
+    },
+    {
+      title: "Działo samobieżne SPH-2 (155mm) w boju",
+      href: "/guides/wardogs-artillery-guide",
+      desc: "Wymóg 90. poziomu, koszt wystawienia $8,000 i zgranie 3-osobowej załogi."
+    },
+    {
+      title: "Pilotaż śmigłowców i desant taktyczny",
+      href: "/guides/wardogs-helicopter-guide",
+      desc: "Sterowanie, procedury ewakuacji ze strefy lądowania i unikanie rakiet plot."
+    },
+    {
+      title: "Budowa baz FOB i logistyka zaopatrzenia",
+      href: "/guides/wardogs-fob-guide",
+      desc: "Jak stawiać umocnione posterunki, utrzymywać linie dostaw i zaopatrywać baterie w amunicję."
+    }
+  ]
+};
+
 export function getTacticalIntelCopy(locale: Locale): TacticalIntelCopy {
-  if (locale === "zh-cn") return tacticalIntelZhCn;
-  if (locale === "zh-tw") return tacticalIntelZhTw;
-  return tacticalIntelEn;
+  switch (locale) {
+    case "zh-cn":
+      return tacticalIntelZhCn;
+    case "zh-tw":
+      return tacticalIntelZhTw;
+    case "ja":
+      return tacticalIntelJa;
+    case "ru":
+      return tacticalIntelRu;
+    case "de":
+      return tacticalIntelDe;
+    case "pt-br":
+      return tacticalIntelPtBr;
+    case "pl":
+      return tacticalIntelPl;
+    default:
+      return tacticalIntelEn;
+  }
 }

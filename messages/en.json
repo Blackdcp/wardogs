@@ -229,6 +229,10 @@
       "buildLabel": "Build",
       "verifiedLabel": "Verified",
       "sourceCta": "Read the official Season 1 update",
+      "s2WipeEyebrow": "Season 2 Wipe & Reset Roadmap",
+      "s2WipeDesc": "Scheduled for October 15, 2026. Prepare capital hedging, cash preservation & role carryover.",
+      "s2WipeCta": "Wipe Strategy",
+      "s2WipeTitle": "View Season 2 Wipe Strategy Guide",
       "entries": {
         "fobVendor": {
           "title": "FOB vendor",
@@ -661,7 +665,7 @@
     "title": "Privacy Policy",
     "intro": "This fan guide minimizes data collection and explains how external media and links work.",
     "content": "We do not operate player accounts or collect game credentials. External services may apply their own privacy policies after you choose to open them.",
-    "advertising": "Adsterra native ads and display banners, including desktop horizontal and side banners and a dismissible mobile bottom banner, run in isolated frames. User clicks can open advertiser sites in new tabs, without inheriting the ad frame's restrictions. Embedded frames cannot access the site's origin or redirect the main page to another HTTP(S) page. Direct non-web links and scripted opens without user activation are rejected in our container document; this does not cover cross-origin child frames or advertiser destination pages. External-app behavior depends on third parties and the browser and is not universally blocked. Following reports of unwanted redirects, unrestricted ad scripts, Social Bar, Popunder and Smartlinks remain disabled as of 2026-10-01. Ad requests can disclose your IP address and browser or device information to advertising providers; their cookies are subject to browser restrictions. Disabling an ad format does not clear cookies already stored in your browser."
+    "advertising": "Adsterra native ads and display banners, including desktop horizontal and side rail units and a dismissible mobile bottom banner, are loaded directly via publisher scripts. User clicks open advertiser destinations in new tabs. Intrusive ad formats such as Popunder, Social Bar, and Smartlink remain strictly disabled since 2026-10-01. Loading ad units may transmit your IP address, browser headers, and device technical telemetry to advertising service providers; cookies and identifiers are subject to your browser privacy controls."
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Terms of Use: Guide Rules & Disclaimers",

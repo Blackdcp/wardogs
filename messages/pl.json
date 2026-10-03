@@ -229,6 +229,10 @@
       "buildLabel": "Wersja",
       "verifiedLabel": "Zweryfikowano",
       "sourceCta": "Przeczytaj oficjalną aktualizację Season 1",
+      "s2WipeEyebrow": "Plan wipe'a i resetu Sezonu 2",
+      "s2WipeDesc": "Zaplanowano na 15 października 2026 r. Przygotuj zabezpieczenie kapitału, rezerwy gotówkowe i transfer ról.",
+      "s2WipeCta": "Strategia wipe'a",
+      "s2WipeTitle": "Zobacz poradnik strategii wipe'a w Sezonie 2",
       "entries": {
         "fobVendor": {
           "title": "Sprzedawca FOB",
@@ -661,7 +665,7 @@
     "title": "Polityka prywatności",
     "intro": "Ten poradnik fanowski ogranicza zbieranie danych i wyjaśnia działanie zewnętrznych mediów oraz odnośników.",
     "content": "Nie prowadzimy kont graczy i nie zbieramy danych logowania do gry. Gdy zdecydujesz się otworzyć usługę zewnętrzną, może ona stosować własną politykę prywatności.",
-    "advertising": "Reklamy natywne i banery Adsterra, w tym poziome i boczne banery na komputerach oraz zamykany dolny baner mobilny, działają w izolowanych ramkach. Kliknięcia mogą otwierać strony reklamodawców w nowych kartach, bez dziedziczenia ograniczeń ramki reklamy. Osadzone ramki nie mogą uzyskać dostępu do źródła witryny ani przekierować strony głównej na inną stronę HTTP(S). Nasz dokument kontenera odrzuca bezpośrednie linki z protokołami innymi niż internetowe oraz programowe otwieranie okien bez działania użytkownika; nie obejmuje to ramek podrzędnych z innego źródła ani stron docelowych reklamodawców. Działanie aplikacji zewnętrznych zależy od stron trzecich i przeglądarki i nie jest blokowane w każdym przypadku. Po zgłoszeniach niechcianych przekierowań nieizolowane skrypty reklamowe, Social Bar, Popunder i Smartlinks pozostają wyłączone od 2026-10-01. Żądania reklam mogą ujawniać dostawcom adres IP i informacje o przeglądarce lub urządzeniu; ich cookies podlegają ograniczeniom przeglądarki. Wyłączenie formatu nie usuwa zapisanych cookies."
+    "advertising": "Reklamy natywne i banery Adsterra, w tym poziome banery na komputery, panele boczne oraz zamykany baner mobilny, są ładowane bezpośrednio przez skrypty wydawcy. Kliknięcia otwierają strony reklamodawców w nowych kartach. Uciążliwe formaty, takie jak Popunder, Social Bar i Smartlink, pozostają całkowicie wyłączone od 2026-10-01. Żądania reklamowe przesyłają Twój adres IP, dane przeglądarki i informacje o urządzeniu do sieci reklamowych; pliki cookie podlegają ustawieniom prywatności Twojej przeglądarki."
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki: warunki korzystania i zastrzeżenia",
