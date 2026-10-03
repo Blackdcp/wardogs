@@ -10,6 +10,9 @@ import {isLocale, locales, type Locale} from "@/config/site";
 import {interactiveMapPageCopy} from "@/features/maps/interactive-map-page-copy";
 import {buildPageMetadata} from "@/lib/metadata";
 
+import {Link} from "@/i18n/navigation";
+import {Crosshair} from "lucide-react";
+
 type PageProps = {params: Promise<{locale: string}>};
 
 export function generateStaticParams() {
@@ -42,6 +45,29 @@ export default async function TacticalMapPage({params}: PageProps) {
         <p className="mt-3 text-base leading-7 text-slate-300">
           {c.desc}
         </p>
+
+        {/* Tactical Cross-Tool Callout: Quick Jump to Artillery Calculator */}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#3b5946] bg-[#122119] p-3">
+          <div className="flex items-center gap-2">
+            <Crosshair className="size-5 text-[#8ce2ad]" />
+            <span className="text-xs sm:text-sm font-semibold text-white">
+              {locale === "zh-cn" || locale === "zh-tw"
+                ? "需要 L81 迫击炮 / SPH-2 自行火炮的高精度密位射表解算？"
+                : "Looking for L81 Mortar & SPH-2 Artillery Mil firing solutions?"}
+            </span>
+          </div>
+          <Link
+            href="/tools/artillery-calculator"
+            title={locale === "zh-cn" || locale === "zh-tw" ? "打开战术火控计算器" : "Open Artillery Calculator"}
+            className="inline-flex items-center gap-1.5 rounded-md bg-[#254533] px-3 py-1.5 text-xs font-bold text-[#8ce2ad] hover:bg-[#346247] hover:text-white transition-all shadow"
+          >
+            <span>
+              {locale === "zh-cn" || locale === "zh-tw"
+                ? "打开战术火控计算器 ➜"
+                : "Open Artillery Calculator ➜"}
+            </span>
+          </Link>
+        </div>
       </header>
 
       <section aria-label={c.title}>
