@@ -8,7 +8,7 @@ keyword: wardogs controls
 category: guide
 slug: wardogs-controls
 order: 33
-updatedAt: '2026-09-30'
+updatedAt: '2026-10-03'
 badges:
   - label: Poradnik sterowania
     tone: accent
@@ -70,6 +70,10 @@ sources:
     url: 'https://x.com/BULKHEAD/status/2095447401725153576'
     kind: official
     checkedAt: '2026-09-04'
+  - label: "Zgłoszenie graczy: podwójne wejście kontrolera po aktualizacji"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wu3eln/todays_update_broke_controllers/"
+    kind: "community"
+    checkedAt: "2026-10-03"
 ---
 
 ## Głos i sterowanie w Beta 02
@@ -140,6 +144,30 @@ Pojazdy naziemne i lotnicze dodają zmianę stanowisk, czynności silnika lub in
 Sprawdzone tu oficjalne strony nie potwierdzają HOTAS. Urządzenie może zostać wykryte przez Steam lub zewnętrzne mapowanie bez natywnych komunikatów, ustawień martwej strefy albo pełnej obsługi osi. To nie jest oficjalny profil HOTAS. Miej klawiaturę i mysz pod ręką, dopóki aktualna wersja nie potwierdzi działania każdej wymaganej czynności.
 
 [Poradnik śmigłowców WARDOGS](/pl/guides/wardogs-helicopter-guide) omawia decyzje w locie i priorytety lądowania, nie deklaruje jednego stałego układu klawiszy.
+
+### Działania helikoptera: przypisanie i oś zamiast stałych klawiszy
+
+To wykaz działań, a nie niezmienna tabela domyślnych klawiszy. Porównaj każdą czynność z bieżącym menu helikoptera, urządzeniem i własnym mapowaniem.
+
+| Działanie | Co sprawdzić osobno |
+| --- | --- |
+| Skok ogólny / ciąg | Zwiększanie i zmniejszanie siły nośnej, osobno od pochylenia |
+| Pochylenie | Nos do przodu/tyłu, kierunek i odwrócenie osi |
+| Przechylenie | Bank w lewo/prawo; jedna oś na próbę |
+| Odchylenie | Obrót nosa w lewo/prawo, osobno od przechylenia |
+| Swobodny widok | Kamera; czy mysz steruje widokiem, czy maszyną? |
+| Zmiana miejsca / wyjście | Odczytaj bieżące komunikaty dla miejsca i wyjścia |
+
+W bezpiecznym miejscu wykonaj mały ruch, zwolnij wejście i obserwuj wynik. Czułość zmieniaj dopiero po sprawdzeniu działania i kierunku, następnie zapisz profil. [Poradnik helikopterów](/pl/guides/wardogs-helicopter-guide) opisuje ćwiczenia startu i lądowania. Nie podajemy zweryfikowanego profilu HOTAS ani stałego układu przycisków myszy.
+
+### Kontroler rejestruje naciśnięcie dwa razy po aktualizacji
+
+[Dyskusja graczy z 30 września](https://www.reddit.com/r/WarDogs/comments/1wu3eln/todays_update_broke_controllers/) zgłasza podwójne skoki menu i brak wejścia. Komentarz proponuje wyłączenie Steam Input: to próba społeczności, nie oficjalna uniwersalna poprawka ani potwierdzona przyczyna.
+
+1. Zapisz model, połączenie, wersje Steam/gry i wadliwe menu; zachowaj mapowanie.
+2. W **bibliotece Steam → WARDOGS → Właściwości → Kontroler** przetestuj **wyłączenie Steam Input** tylko dla tej gry. Uruchom ponownie i powtórz pojedyncze naciśnięcie.
+3. Jeśli wejście znika lub jest gorzej, przywróć poprzednią opcję. Dodatkowy program mapujący zamknij w osobnej próbie, zmieniając jeden czynnik naraz.
+4. Osobno sprawdź menu, deployment i lot; miej klawiaturę/mysz pod ręką i zgłoś wyniki.
 
 ## Sterowanie spadochronem
 

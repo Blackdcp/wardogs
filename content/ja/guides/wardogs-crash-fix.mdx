@@ -1,6 +1,6 @@
 ---
 title: "WARDOGS クラッシュ対策ガイド：起動失敗、PC再起動、カクつき"
-description: "WARDOGSの起動クラッシュ、ブラックスクリーン、シェーダー待ち、フリーズ、強制再起動、カクつきを症状別に切り分けます。Steamファイル確認、GPUドライバー、Overlay、RGBソフト、OC、温度、Windowsログを安全な順番で試し、サーバー待機列をクラッシュと誤認しない日本語対処ガイドです。"
+description: "WARDOGSが起動しない時のWD-L014・WD-L018の対応状況と、0.1.2で修正されたWindows更新KB5124010によるWD-L020を切り分けます。Steamファイル、GPU、Elytraを安全な順に確認し、認証エラー、待機列、フリーズ、PC再起動を区別して、ビルドと症状を報告する手順を説明します。"
 keyword: "wardogs crash fix"
 category: "guide"
 slug: "wardogs-crash-fix"
@@ -49,6 +49,10 @@ sources:
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
     kind: "official"
     checkedAt: "2026-10-03"
+  - label: "開発者：WD-L014・WD-L018の起動問題"
+    url: "https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
 
 ## WD-L020とログイン停止を切り分ける
@@ -70,6 +74,12 @@ Update 0.1.2以前、Team17が説明したプレビュー更新の削除は任�
 **2026-09-30**: [Team17: WD-L020](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) · [Microsoft: KB5124010](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update).
 
 試合に入れるのに操作だけ反応しない場合は、更新を戻す前に[キー設定](/ja/guides/wardogs-controls)を確認します。ログインから進まない場合は画面の応答状況を記録し、[地域のサービス告知](/ja/guides/wardogs-server-status)を確認してください。メニュー表示とサーバー接続成功は別の結果として報告します。
+
+### WD-L014・WD-L018は修正済みですか？
+
+[9月30日の開発者告知](https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/)は、10月3日の再確認時点でも**WD-L014とWD-L018の起動問題を認識し、修正を準備中**としています。0.1.2のKB5124010対策はWD-L020の該当原因に対する修正で、この二つのコードの解決を意味しません。コード、現行ビルド、Windowsの版、起動が止まる段階を一緒に記録してください。
+
+SteamのWARDOGS本体を更新し、整合性確認と既存のサポート手順を一つずつ試します。同じコードが残る場合は、告知スレッドの続報を確認し、試した結果をサポートへ提出します。「オンラインサーバーの認証に失敗」なら、プロセスが動いたままか記録して[サービス告知](/ja/guides/wardogs-server-status)も照合します。
 
 ## WARDOGSのクラッシュやフリーズを直すには？
 

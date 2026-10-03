@@ -5,7 +5,7 @@ keyword: "wardogs controls"
 category: "guide"
 slug: "wardogs-controls"
 order: 33
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "Input Guide"
     tone: "accent"
@@ -53,6 +53,10 @@ sources:
     url: "https://x.com/BULKHEAD/status/2095447401725153576"
     kind: "official"
     checkedAt: "2026-09-04"
+  - label: "Player report: controller double input after an update"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wu3eln/todays_update_broke_controllers/"
+    kind: "community"
+    checkedAt: "2026-10-03"
 ---
 
 ## Beta 02 voice and input note
@@ -122,6 +126,30 @@ Ground and air vehicles add seat switching, engine or interaction actions, camer
 The official pages checked here do not confirm HOTAS support. A device may be detected through Steam or third-party mapping without providing native prompts, dead-zone controls or complete axis support. That is not the same as an official HOTAS profile. Keep keyboard and mouse available until the current build proves every required action works.
 
 The [WARDOGS Helicopter Guide](/en/guides/wardogs-helicopter-guide) covers flight decisions and landing priorities rather than claiming one permanent key layout.
+
+### Helicopter flight actions: verify the binding, then the axis
+
+This is an action reference, not a default key chart. Match each action to the current helicopter controls menu, its assigned device and any remapping before takeoff.
+
+| Action | What to distinguish in the controls check |
+| --- | --- |
+| Collective / thrust | Increase or decrease lift; check this separately from pitch |
+| Pitch | Nose forward or back; verify the direction and any inversion |
+| Roll | Bank left or right; verify one axis without changing several settings |
+| Yaw | Turn the nose left or right; distinguish this from roll |
+| Free-look | Move the camera; check whether mouse movement controls the view or the aircraft |
+| Seat change / exit | Read the current seat and exit prompts before using them |
+
+Test one small input at a time in a safe area, then release it and observe the result. Once the correct action and direction work, adjust sensitivity and save the mapping. Use the [helicopter practice sequence](/en/guides/wardogs-helicopter-guide) for takeoff and landing; no verified HOTAS preset or permanent mouse-button layout is supplied here.
+
+### Controller buttons register twice after an update
+
+The [September 30 player discussion](https://www.reddit.com/r/WarDogs/comments/1wu3eln/todays_update_broke_controllers/) reports menus skipping twice and missing input. A commenter suggests disabling Steam Input; it is a community troubleshooting suggestion, not a confirmed universal fix or proof that the game update caused every case.
+
+1. Record the controller model, connection type, Steam/client builds and failing menu. Save the current mapping.
+2. In **Steam Library → WARDOGS → Properties → Controller**, test **Disable Steam Input** for this game only. Restart the game and repeat the same single-button action.
+3. If input is lost or the result is worse, restore the previous setting. Close any additional controller remapper for a separate test so only one change is being compared.
+4. Retest menu selection, deployment and flight separately. Keep the keyboard/mouse available and report the results; Deploy-screen gamepad support does not guarantee every action works.
 
 ## Parachute Controls
 

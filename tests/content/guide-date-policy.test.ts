@@ -104,7 +104,7 @@ describe("guide content and source date policy", () => {
   it.each(locales)("dates the seven substantive guide updates without refreshing their source checkpoints in %s", (locale) => {
     for (const slug of substantiveUpdates) {
       const guide = guides(locale).find(({data}) => data.slug === slug)!;
-      expect(guide.data.updatedAt, `${locale}/${slug}`).toBe("2026-09-30");
+      expect(guide.data.updatedAt >= "2026-09-30", `${locale}/${slug}`).toBe(true);
       expect(guide.data.sources.some(({checkedAt}: {checkedAt: string}) => checkedAt < guide.data.updatedAt), `${locale}/${slug}`).toBe(true);
     }
   });

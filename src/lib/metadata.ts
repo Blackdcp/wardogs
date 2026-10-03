@@ -3,6 +3,7 @@ import type {GuideDocument} from "@/content/guides";
 import type {Locale} from "@/config/site";
 import {assetPath} from "@/lib/assets";
 import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
+import {getGuideIntentKeywords} from "@/features/guides/guide-search-intents";
 import {getPublicSiteBase, publicAssetUrl, publicRoutePath, publicRouteUrl} from "@/lib/public-url";
 import {buildAvailableGuideAlternates, buildGuideIndexAlternates} from "@/i18n/pilot-guides";
 
@@ -123,10 +124,12 @@ export function buildSiteMetadata(): Metadata {
   };
 }
 
-function buildGuideKeywords(guide: GuideDocument): string {
+function buildGuideKeywords(locale: Locale, guide: GuideDocument): string {
   const parts = new Set<string>(["WARDOGS", "WARDOGS wiki"]);
   // Add the guide's primary keyword (e.g. "wardogs mortar guide")
   parts.add(guide.frontmatter.keyword);
+  parts.add(guide.frontmatter.title);
+  for (const intent of getGuideIntentKeywords(locale, guide.frontmatter.slug)) parts.add(intent);
   // Extract individual meaningful words from the keyword for broader matching
   for (const word of guide.frontmatter.keyword.split(/\s+/)) {
     if (word.length > 2 && word.toLowerCase() !== "wardogs") parts.add(word);
@@ -157,7 +160,7 @@ export function buildArticleMetadata(locale: Locale, guide: GuideDocument): Meta
     guide.frontmatter.title,
     guide.frontmatter.description,
     discoveryImage ? {...discoveryImage, url: publicAssetUrl(discoveryImage.url)} : undefined,
-    buildGuideKeywords(guide)
+    buildGuideKeywords(locale, guide)
   );
 }
 

@@ -20,6 +20,19 @@ describe("localized metadata", () => {
     expect(alternates.languages?.["zh-CN"]).toBe("http://localhost:3000/zh-cn/guides/wardogs-gameplay");
   });
 
+  it.each([
+    ["ja", "wardogs-squad-guide", "フレンドと遊ぶ"],
+    ["zh-cn", "wardogs-crash-fix", "启动报错"],
+    ["de", "wardogs-best-settings", "FPS erhöhen"]
+  ] as const)("keeps the primary keyword and localized search intent for %s/%s", async (locale, slug, intent) => {
+    const guide = await loadGuideDocument(locale, slug);
+    const metadata = buildArticleMetadata(locale, guide!);
+    expect(metadata.keywords).toContain(guide!.frontmatter.keyword);
+    expect(metadata.keywords).toContain(intent);
+    expect(metadata.title).toBe(guide!.frontmatter.title);
+    expect(metadata.description).toBe(guide!.frontmatter.description);
+  });
+
   it("prefixes favicon and manifest metadata for a GitHub Pages deployment", () => {
     process.env.NEXT_PUBLIC_BASE_PATH = "/wardogs";
     process.env.NEXT_PUBLIC_SITE_URL = "https://blackdcp.github.io/wardogs";

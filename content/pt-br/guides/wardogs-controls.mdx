@@ -5,7 +5,7 @@ keyword: "wardogs controls"
 category: "guide"
 slug: "wardogs-controls"
 order: 33
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "Configuração de entrada"
     tone: "accent"
@@ -45,6 +45,10 @@ sources:
     url: "https://x.com/BULKHEAD/status/2095447401725153576"
     kind: "official"
     checkedAt: "2026-09-04"
+  - label: "Relato de jogadores: entrada duplicada no controle após atualizar"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wu3eln/todays_update_broke_controllers/"
+    kind: "community"
+    checkedAt: "2026-10-03"
 ---
 
 ## Identifique a ação antes da tecla
@@ -108,6 +112,30 @@ Se teclas e botões se alternarem no HUD, desconecte entradas não usadas, reini
 Para HOTAS, o material da comunidade relata que alguns eixos e pedais funcionam em builds de teste e que o jogo pode fazer troca automática entre manche e mouse/teclado ao entrar ou sair de um helicóptero. O mesmo relato aponta limitações de binding ou remapeamento. Trate isso como uma experiência comunitária, não como uma lista de dispositivos certificados.
 
 Conecte o HOTAS antes de iniciar, confira a detecção no Windows e teste pitch, roll, yaw e potência no solo ou em voo seguro. Reinicie uma vez para verificar se os bindings permanecem. Se o perfil não persistir, registre o que funcionou e acompanhe as opções atuais em vez de forçar arquivos ou mapeadores de origem desconhecida.
+
+### Ações de voo: confirme a atribuição e o eixo
+
+Esta é uma referência de ações, não uma tabela de teclas padrão permanentes. Confira cada ação no menu atual do helicóptero, junto do dispositivo e remapeamento.
+
+| Ação | O que verificar separadamente |
+| --- | --- |
+| Coletivo / empuxo | Aumentar ou diminuir sustentação; separar da arfagem |
+| Arfagem | Nariz para frente/trás; direção e inversão |
+| Rolagem | Inclinar para esquerda/direita; um eixo por teste |
+| Guinada | Girar o nariz para esquerda/direita; separar da rolagem |
+| Visão livre | Câmera; o mouse está ligado à visão ou à aeronave? |
+| Trocar assento / sair | Ler os comandos atuais de assento e saída |
+
+Em área segura, faça uma pequena entrada, solte e observe. Ajuste sensibilidade depois que ação e direção estiverem corretas e salve a configuração. O [guia de helicópteros](/pt-br/guides/wardogs-helicopter-guide) traz a sequência de decolagem e pouso. Não há aqui perfil HOTAS verificado ou esquema permanente de botões do mouse.
+
+### Controle registra duas entradas após atualizar
+
+A [discussão de jogadores de 30 de setembro](https://www.reddit.com/r/WarDogs/comments/1wu3eln/todays_update_broke_controllers/) relata menus pulando duas opções e entradas ausentes. Um comentário sugere desativar Steam Input: é um teste comunitário, não uma correção oficial universal nem uma causa confirmada.
+
+1. Registre modelo, conexão, versões de Steam/jogo e menu afetado; salve o mapeamento.
+2. Em **Biblioteca Steam → WARDOGS → Propriedades → Controle**, teste **Desativar Steam Input** só para este jogo. Reinicie e repita a mesma ação de um botão.
+3. Se perder entrada ou piorar, restaure a opção anterior. Feche outro remapeador em um teste separado, alterando apenas um fator.
+4. Teste menus, deployment e voo separadamente; mantenha teclado/mouse disponíveis e relate os resultados.
 
 ## Paraquedas e ações contextuais
 

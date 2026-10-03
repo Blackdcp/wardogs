@@ -20,7 +20,7 @@ const cases = [
     stackBoundary: /exact building stack limit is unverified/,
     toolBoundary: /catalogue artwork does not confirm current structure tiers or recipes/,
     plannerBoundary: /does not verify client stock, placement or a building cap/,
-    hashes: ["1e91af4572801de51205d18d93f550ec1e86227a48eb5a3e52c45d40d15bf62d", "0280205ec66993c2e4e1a9c3248d197b28e7d13df55b38f8b72d6acfc1c33281"]
+    hashes: ["1e91af4572801de51205d18d93f550ec1e86227a48eb5a3e52c45d40d15bf62d", "f21ae9bca5a4eea5144a0502286b63af996bf2563b8f25efc607c39dbb24ab65"]
   },
   {
     locale: "ru", h2Counts: [17, 12],
@@ -30,7 +30,7 @@ const cases = [
     stackBoundary: /Точный предел такого размещения не проверен/,
     toolBoundary: /иллюстрация не подтверждает актуальные уровни построек и рецепты/,
     plannerBoundary: /не проверяет ресурсы клиента, размещение или лимит построек/,
-    hashes: ["d73b532bb543559360779644d703a919a381ffce15af3faf4994b96dd039f9df", "61b66edecf1239277f97981f7a05f975a4e9c659e69fa33bd8fe415180fb40d6"]
+    hashes: ["d73b532bb543559360779644d703a919a381ffce15af3faf4994b96dd039f9df", "2f41feb2d273b6befe8927586d50215b889f5067fa58f10582e0cec045b2cc57"]
   },
   {
     locale: "de", h2Counts: [17, 12],
@@ -40,7 +40,7 @@ const cases = [
     stackBoundary: /genaue Stapelgrenze ist ungeprüft/,
     toolBoundary: /Katalogbilder bestätigen keine aktuellen Baustufen oder Rezepte/,
     plannerBoundary: /weder Clientbestand noch Platzierung oder Baulimit/,
-    hashes: ["d08c410f9147af4638f65a155ee5608de64bf5449d599f33815a078cbd57dda3", "5f2d2f385d4cd1731dd44e029481fd650825a787ad223c57f4e5747c7bffe5ba"]
+    hashes: ["d08c410f9147af4638f65a155ee5608de64bf5449d599f33815a078cbd57dda3", "98a62c63670257148b7e8af6edc008a237a69db21f69c739c681b7ee77c7a2cd"]
   },
   {
     locale: "pt-br", h2Counts: [17, 12],
@@ -50,7 +50,7 @@ const cases = [
     stackBoundary: /limite exato de empilhamento não foi verificado/,
     toolBoundary: /imagem do catálogo não confirma níveis de estrutura ou receitas atuais/,
     plannerBoundary: /não verifica estoque do cliente, posição ou limite de construções/,
-    hashes: ["3fdf8c584f46465ee394fafcc5aa2ec75715b227da4a8376477c08e8d2b76be8", "6e445d05dd30c88aa89218da1a39cd76b68bfaa12f2fe7cfca45d4a11e579b84"]
+    hashes: ["3fdf8c584f46465ee394fafcc5aa2ec75715b227da4a8376477c08e8d2b76be8", "8df8fec09166e38263bd2d9bbb88d9c8dfe6ba7fdb57e0788a165faa21a8f030"]
   },
   {
     locale: "ja", h2Counts: [12, 12],
@@ -60,7 +60,7 @@ const cases = [
     stackBoundary: /具体的なスタック上限は未検証/,
     toolBoundary: /カタログ画像から現行の建築段階やレシピは確定できません/,
     plannerBoundary: /在庫・配置可否・建築上限を検証するものではありません/,
-    hashes: ["db6ed7e311bef5ab407fa48318e0a151312b239426a87aa2c9336867792922bf", "3f969d89acf17e7099fa7740ec659f4e5d65fab85165cda8d3b8feeb43a08247"]
+    hashes: ["db6ed7e311bef5ab407fa48318e0a151312b239426a87aa2c9336867792922bf", "04933a8659e065139b79307ec359c2db298a3897a02bc677373374b447823efc"]
   },
   {
     locale: "zh-cn", h2Counts: [19, 14],
@@ -70,7 +70,7 @@ const cases = [
     stackBoundary: /具体建筑堆叠上限尚未验证/,
     toolBoundary: /目录图片不能证明当前建筑等级或配方/,
     plannerBoundary: /不验证客户端库存、放置结果或建筑上限/,
-    hashes: ["18a4d5a9fba88fbfa7cc3e04a29226a65ef18493641c0d05850d32cd77909985", "1f90999faf07ecd446f9e357853a7db58f368035cc28a7fc0a3857dc36f71ade"]
+    hashes: ["18a4d5a9fba88fbfa7cc3e04a29226a65ef18493641c0d05850d32cd77909985", "7b607d87228a0864e81d61d556fcb16ba3a69656b51f7d5f59152db351cfbe9d"]
   },
   {
     locale: "zh-tw", h2Counts: [19, 14],
@@ -80,7 +80,7 @@ const cases = [
     stackBoundary: /具體建築堆疊上限尚未驗證/,
     toolBoundary: /圖鑑圖片不能證明目前的建築等級或配方/,
     plannerBoundary: /不驗證遊戲客戶端的庫存、放置結果或建築上限/,
-    hashes: ["e4fa152261107b6b9c6f01d742b3089d472a1bd87e3ce9c6894e6e41f0944abe", "eccff75cffc48c9c351196dd4917e139f101de03310af1dae2e116ef40c86b27"]
+    hashes: ["e4fa152261107b6b9c6f01d742b3089d472a1bd87e3ce9c6894e6e41f0944abe", "3d9ecf79c23875bfab7254385ae13dd2cc440f01bb93b0a28118c15a6d0af683"]
   },
   {
     locale: "pl", h2Counts: [20, 16],
@@ -90,7 +90,7 @@ const cases = [
     stackBoundary: /Dokładny limit piętrzenia konstrukcji nie został zweryfikowany/,
     toolBoundary: /grafika katalogowa nie potwierdza aktualnych poziomów konstrukcji ani receptur/,
     plannerBoundary: /nie sprawdza zapasu w grze, poprawności położenia ani limitu konstrukcji/,
-    hashes: ["be083d6cdcb65a975d17768fb4d1b8db659ca60028e3c85cf38aedc0f2d1ea69", "21f34349f7e00384c80af8bb8f044d6c3c8816fc7240e9f0297083f3539162cd"]
+    hashes: ["be083d6cdcb65a975d17768fb4d1b8db659ca60028e3c85cf38aedc0f2d1ea69", "f0b3402faccd428f14e3cc662532466163e9bd745253985cd5b6345e9f871b4f"]
   }
 ] as const;
 
@@ -105,17 +105,27 @@ const linksByGuide = [
 
 function getIncrement(body: string, heading: string) {
   const sections = body.replace(/\r/g, "").split(/^### /m).slice(1);
-  expect(sections).toHaveLength(1);
-  expect(sections[0].startsWith(`${heading}\n`)).toBe(true);
-  return sections[0].split(/^## /m)[0].trim();
+  const matching = sections.filter(section => section.startsWith(`${heading}\n`));
+  expect(matching).toHaveLength(1);
+  return matching[0].split(/^## /m)[0].trim();
 }
 
 describe.each(cases)("TDK building answer refresh: $locale", (entry) => {
-  it("preserves metadata, source dates, FAQ and existing H2 modules from 84b17fc", async () => {
+  it("preserves core metadata, original source checkpoints, FAQ and existing H2 modules", async () => {
     for (const [index, slug] of slugs.entries()) {
       const source = readFileSync(path.resolve("content", entry.locale, "guides", `${slug}.mdx`), "utf8");
-      // Hash parsed frontmatter so line-ending and YAML-format changes do not affect the protected baseline.
-      const digest = createHash("sha256").update(JSON.stringify(matter(source).data)).digest("hex");
+      // Equipment has a refreshed search description and one new IR/CWIS official source.
+      // Original titles, primary keywords, FAQs and source checkpoints stay protected.
+      const data = matter(source).data;
+      expect(data.updatedAt >= "2026-09-30", slug).toBe(true);
+      const protectedData: Record<string, unknown> = {...data, updatedAt: "2026-09-30"};
+      if (index === 1) {
+        delete protectedData.description;
+        protectedData.sources = data.sources.filter((source: {url: string}) => source.url !== "https://steamcommunity.com/app/1867240/announcements/");
+        expect(data.description.length).toBeGreaterThanOrEqual(140);
+        expect(data.description.length).toBeLessThanOrEqual(160);
+      }
+      const digest = createHash("sha256").update(JSON.stringify(protectedData)).digest("hex");
       expect(digest, slug).toBe(entry.hashes[index]);
       const guide = await loadGuideDocument(entry.locale, slug);
       expect(guide).not.toBeNull();

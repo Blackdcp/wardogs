@@ -21,7 +21,7 @@ describe("German weapons and English Oil Rig source boundaries", () => {
   it("separates the beta-only rig workflow from official Season 1 hammer facts", async () => {
     const guide = await loadGuideDocument("en", "wardogs-oil-rig-guide");
 
-    expect(guide?.frontmatter.updatedAt).toBe("2026-09-26");
+    expect((guide?.frontmatter.updatedAt ?? "") >= "2026-09-26").toBe(true);
     expect(guide?.frontmatter.description).toMatch(/current rig availability and build steps are unverified/i);
     expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({
       url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455",

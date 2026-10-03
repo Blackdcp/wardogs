@@ -1,6 +1,6 @@
 ---
 title: "WARDOGS Crash Fix: Start, Neustarts & Ruckler"
-description: "Behebe WARDOGS-Startabstürze, PC-Neustarts, Freezes und Ruckler mit einer sicheren Reihenfolge für Steam-Dateien, Treiber, Overlays und Windows."
+description: "WARDOGS startet nicht? Prüfe WD-L014/WD-L018, den WD-L020-Fix in 0.1.2, Steam-Dateien und Elytra; trenne Warteschlange, Absturz und PC-Neustart."
 keyword: "wardogs crash fix"
 category: "guide"
 slug: "wardogs-crash-fix"
@@ -53,6 +53,10 @@ sources:
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
     kind: "official"
     checkedAt: "2026-10-03"
+  - label: "Entwicklermeldung zu WD-L014 und WD-L018"
+    url: "https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
 
 ## WD-L020 oder Login-Problem?
@@ -74,6 +78,12 @@ Notiere `winver`, KB-Nummer und Installationsdatum, Spiel-Build und Fehlercode. 
 **2026-09-30**: [Team17: WD-L020](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) · [Microsoft: KB5124010](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update).
 
 Lädt das Match, aber eine Aktion reagiert nicht, prüfe die [Tastenbelegung](/de/guides/wardogs-controls), statt Windows zurückzusetzen. Bleibt der Login stehen, notiere, ob der Bildschirm noch reagiert, und prüfe [regionale Dienstmeldungen](/de/guides/wardogs-server-status). Trenne diese Ergebnisse im Supportbericht: Ein funktionierendes Menü bestätigt noch keine Verbindung zum Server.
+
+### WD-L014 oder WD-L018 nach dem Update
+
+Die [Entwicklermeldung vom 30. September](https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/) nennt bei der erneuten Prüfung am 3. Oktober weiterhin **WD-L014 und WD-L018 als bekannte Startprobleme; Korrekturen sind in Arbeit**. Der KB5124010-Fix aus 0.1.2 betrifft WD-L020 und bestätigt keine Behebung dieser beiden Codes. Halte Fehlercode, Client-Build, Windows-Version und den gescheiterten Startschritt zusammen fest.
+
+Aktualisiere das WARDOGS-Hauptspiel in Steam, prüfe die Dateien und teste die vorhandenen Support-Schritte einzeln. Bleibt der Code, verfolge die angeheftete Meldung und sende dem Support deine Ergebnisse. Bei einer fehlgeschlagenen Authentifizierung an Online-Servern notiere, ob der Client weiterläuft, und vergleiche zuerst die [Dienstmeldungen](/de/guides/wardogs-server-status).
 
 ## Wie behebt man Abstürze und Einfrieren in WARDOGS?
 

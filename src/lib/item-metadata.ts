@@ -139,6 +139,36 @@ function searchTitle(locale: Locale, item: WardogsItem): string {
 
 function clampSearchDescription(value: string, locale: Locale = "en"): string {
   const normalized = value.replace(/\s+/g, " ").trim();
+  if (locale === "zh-cn" || locale === "zh-tw" || locale === "ja") {
+    // Keep source sentences intact. A character limit is not a word boundary in CJK.
+    const sentences = normalized.match(/[^。！？]+[。！？]/g) ?? [];
+    let prefix = "";
+    for (const sentence of sentences) {
+      if ((prefix + sentence).length > 160) break;
+      prefix += sentence;
+    }
+    if (prefix.length >= 140) return prefix.trim();
+    const supplements = locale === "ja"
+      ? ["装備前に役割を確認できます。", "弾薬と予算の計画に役立ちます。", "関連する装備も比較できます。", "購入前にゲーム内表示を確認しましょう。", "出典とビルド別の記録を掲載しています。"]
+      : locale === "zh-cn"
+        ? ["装备前可查看角色定位。", "可结合弹药和预算规划配装。", "也可对比同类装备的用途。", "购买前请核对游戏内显示。", "页面提供来源与版本记录，方便查阅。"]
+        : ["裝備前可查看角色定位。", "可結合彈藥和預算規劃配裝。", "也可對比同類裝備的用途。", "購買前請核對遊戲內顯示。", "頁面提供來源與版本記錄，方便查閱。"];
+    const complete = (base: string, start: number): string | undefined => {
+      if (base.length >= 140 && base.length <= 160) return base;
+      for (let index = start; index < supplements.length; index++) {
+        const candidate = base + supplements[index];
+        if (candidate.length > 160) continue;
+        const result = complete(candidate, index + 1);
+        if (result) return result;
+      }
+      return undefined;
+    };
+    const fitted = complete(prefix.trim(), 0);
+    if (fitted) return fitted;
+    // An unusually long first sentence can be shortened at a clause boundary.
+    const clause = normalized.slice(0, 130).replace(/[^、，,：:；;]*$/, "").replace(/[、，,：:；;]$/, "");
+    return complete(`${clause}。`, 0) ?? prefix.trim();
+  }
   const fillers: Record<Locale, string> = {
     en: "Review the source-checked role, costs, and pre-release limits.",
     ru: "Сверяйте роль, стоимость, источники и ограничения текущей версии.",
@@ -153,13 +183,6 @@ function clampSearchDescription(value: string, locale: Locale = "en"): string {
     ? normalized
     : `${normalized} ${fillers[locale]}`;
   if (complete.length <= 160) return complete;
-
-  if (locale === "zh-cn" || locale === "zh-tw" || locale === "ja") {
-    const window = complete.slice(0, 160);
-    const punctuation = [..."。！？；"].reduce((last, mark) => Math.max(last, window.lastIndexOf(mark)), -1);
-    if (punctuation >= 139) return window.slice(0, punctuation + 1);
-    return `${complete.slice(0, 159).replace(/[、，；。]+$/, "")}。`;
-  }
 
   const boundary = complete.lastIndexOf(" ", 159);
   return `${complete.slice(0, boundary).replace(/[,:;.-]+$/, "")}.`;
@@ -235,12 +258,23 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   const description = intent?.description ?? searchDescription(locale, localizedItem);
   const image = publicAssetUrl(localizedItem.detailImage ?? "/images/og-wardogs.jpg");
   const imageAlt = localizedItem.detailImageAlt ?? `WARDOGS ${localizedItem.name}`;
+  const nativeTerms: Record<Locale, readonly string[]> = {
+    en: ["price", "stats", "unlock"],
+    ja: ["価格", "性能", "解除条件"],
+    "zh-cn": ["价格", "属性", "解锁"],
+    "zh-tw": ["價格", "屬性", "解鎖"],
+    ru: ["цена", "характеристики", "открытие"],
+    de: ["Preis", "Werte", "Freischaltung"],
+    "pt-br": ["preço", "atributos", "desbloqueio"],
+    pl: ["cena", "parametry", "odblokowanie"]
+  };
+  const nativeKeywords = nativeTerms[locale].map((term) => `${localizedItem.name} ${term}`).join(", ");
 
   return {
     title,
     description,
     alternates: {canonical, languages},
-    keywords: `WARDOGS ${localizedItem.name}, ${localizedItem.name} stats, ${localizedItem.name} damage, ${localizedItem.name} unlock, WARDOGS ${localizedItem.type}, ${localizedItem.subtype ? `WARDOGS ${localizedItem.subtype}, ` : ""}WARDOGS items, WARDOGS guide`,
+    keywords: `WARDOGS ${localizedItem.name}, ${localizedItem.name} stats, ${localizedItem.name} damage, ${localizedItem.name} unlock, WARDOGS ${localizedItem.type}, ${localizedItem.subtype ? `WARDOGS ${localizedItem.subtype}, ` : ""}WARDOGS items, WARDOGS guide, ${nativeKeywords}`,
     openGraph: {
       type: "article",
       locale: languageTags[canonicalLocale],

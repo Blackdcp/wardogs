@@ -1,6 +1,6 @@
 ---
 title: "WARDOGS Crashing or Won't Launch? WD-L020 & Safe Fixes"
-description: "WARDOGS won't launch or keeps crashing? Start with Team17's Steam, GPU and Elytra checks; separate WD-L020 after KB5124010 from freezes and full PC reboots."
+description: "WARDOGS won't launch? Check WD-L014/WD-L018 status, the 0.1.2 WD-L020 Windows fix, Steam files and Elytra; separate queues, freezes and PC reboots."
 keyword: "wardogs crash fix"
 category: "guide"
 slug: "wardogs-crash-fix"
@@ -59,6 +59,10 @@ sources:
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
     kind: "official"
     checkedAt: "2026-10-03"
+  - label: "Developer WD-L014 and WD-L018 launch notice"
+    url: "https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
 
 ## Quick Answer
@@ -76,6 +80,12 @@ The [September 30 Update 0.1.2 announcement](https://store.steampowered.com/news
 5. **Whole PC reboot or power loss:** Stop launching the game repeatedly and check Windows reliability events, temperatures, stock clocks, power and hardware stability.
 
 Do not disable Windows security features, antivirus, or virtualization as a blanket “crash fix.” Such changes can weaken protection or disrupt other software and are not necessary to run the first-line checks. The official support post lists several possible workarounds, not one confirmed universal cure.
+
+### WD-L014 or WD-L018 after updating
+
+The developer's [September 30 notice](https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/), rechecked October 3, still lists **WD-L014 and WD-L018 as launch issues with fixes in progress**. The 0.1.2 KB5124010 fix is for WD-L020; it does not establish a fix for either of these codes. Keep the code, current client build, Windows version and the point where startup stops together in your report.
+
+Update Steam's main WARDOGS app, verify its files and follow the existing support checks one at a time. If the same code remains, follow the pinned thread and submit the recorded results to support. For “failed to authenticate with online servers,” record whether the client stays open and compare [service notices](/en/guides/wardogs-server-status) before treating it as a local crash.
 
 ## WD-L020: choose the matching branch
 The [September 30 Update 0.1.2 announcement](https://store.steampowered.com/news/app/1867240/view/712287592723252267) states that the Windows 11 KB5124010 issue causing WD-L020 crashes was fixed. Update the main Steam app and verify its files before applying the older preview-update workaround. This confirmed fix is specific to that branch; WD-L020 with another cause, other error codes, freezes and whole-PC restarts still require separate diagnosis.

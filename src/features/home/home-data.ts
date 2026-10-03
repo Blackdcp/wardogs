@@ -86,9 +86,14 @@ export const CONFIRMED_RUMOR_ITEMS = [
 ] as const;
 
 const LOCALIZED_PRIORITY_SLUGS: Readonly<Record<string, readonly string[]>> = {
-  en: ["wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-ammo-reload-guide", "wardogs-artillery-guide", "wardogs-achievements"],
-  ja: ["wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-helicopter-guide", "wardogs-cargo-guide", "wardogs-fob-guide", "wardogs-controls"],
-  ru: ["wardogs-crash-fix", "wardogs-squad-guide", "wardogs-progression-wipes-guide", "wardogs-mortar-guide", "wardogs-cargo-guide", "wardogs-money-guide"]
+  en: ["wardogs-community-servers-guide", "wardogs-crash-fix", "wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-mortar-guide", "wardogs-achievements"],
+  ja: ["wardogs-squad-guide", "wardogs-towers-guide", "wardogs-best-weapons-loadouts", "wardogs-cargo-guide", "wardogs-best-settings", "wardogs-helicopter-guide"],
+  ru: ["wardogs-crash-fix", "wardogs-best-settings", "wardogs-mortar-guide", "wardogs-progression-wipes-guide", "wardogs-squad-guide", "wardogs-money-guide"],
+  de: ["wardogs-best-weapons-loadouts", "wardogs-best-settings", "wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-season-2", "wardogs-cargo-guide"],
+  "zh-cn": ["wardogs-map", "wardogs-mortar-guide", "wardogs-equipment-tools-guide", "wardogs-crash-fix", "wardogs-money-guide", "wardogs-season-2"],
+  "zh-tw": ["wardogs-map", "wardogs-mortar-guide", "wardogs-equipment-tools-guide", "wardogs-crash-fix", "wardogs-money-guide", "wardogs-season-2"],
+  "pt-br": ["wardogs-beginner-guide", "wardogs-squad-guide", "wardogs-money-guide", "wardogs-best-settings", "wardogs-mortar-guide", "wardogs-progression-wipes-guide"],
+  pl: ["wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-ammo-reload-guide", "wardogs-community-servers-guide", "wardogs-season-2", "wardogs-best-weapons-loadouts"]
 };
 
 export function getHomePriorityGuides<T extends RecentlyUpdatedGuideInput>(guides: readonly T[], locale?: string) {

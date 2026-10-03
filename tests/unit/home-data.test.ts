@@ -12,13 +12,16 @@ import {
 
 describe("homepage data", () => {
   it("prioritizes each language's tasks without inventing missing guides", () => {
-    const guides = [...TOP_GUIDE_SLUGS, "wardogs-helicopter-guide", "wardogs-cargo-guide"].map((slug) => ({slug, updatedAt: "2026-09-30"}));
+    const guides = [...TOP_GUIDE_SLUGS, "wardogs-helicopter-guide", "wardogs-cargo-guide", "wardogs-squad-guide", "wardogs-towers-guide", "wardogs-best-settings", "wardogs-mortar-guide"].map((slug) => ({slug, updatedAt: "2026-09-30"}));
     const result = getHomePriorityGuides(guides, "ja");
     expect(result.top.map((guide) => guide.slug)).toEqual([
-      "wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-helicopter-guide",
-      "wardogs-cargo-guide", "wardogs-fob-guide", "wardogs-controls"
+      "wardogs-squad-guide", "wardogs-towers-guide", "wardogs-best-weapons-loadouts",
+      "wardogs-cargo-guide", "wardogs-best-settings", "wardogs-helicopter-guide"
     ]);
-    expect(getHomePriorityGuides(guides, "de").top.map((guide) => guide.slug)).toEqual(TOP_GUIDE_SLUGS.slice(0, 6));
+    expect(getHomePriorityGuides(guides, "de").top.map((guide) => guide.slug)).toEqual([
+      "wardogs-best-weapons-loadouts", "wardogs-best-settings", "wardogs-progression-wipes-guide",
+      "wardogs-crash-fix", "wardogs-season-2", "wardogs-cargo-guide"
+    ]);
     const sparse = getHomePriorityGuides([guides[0]], "ja");
     expect(sparse.top).toEqual([guides[0]]);
   });

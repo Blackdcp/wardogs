@@ -1,6 +1,6 @@
 ---
 title: "WARDOGS 崩溃修复：启动失败、重启与卡顿排查"
-description: "WARDOGS 排队、首次着色器准备、客户端闪退和整机重启不是同一种故障。本攻略按低风险顺序排查 Steam 文件、显卡驱动、叠加层、超频、Windows 可靠性、温度、电源和 RGB 监控软件，并解释 KB5121003 只是微软记录的通用问题，尚未确认是 WARDOGS 专属原因；每次只改一项并保留可复现信息。"
+description: "WARDOGS 无法启动时，按 WD-L014、WD-L018 与 WD-L020 分支排查：前两项仍在官方修复中，0.1.2 已修复 Windows KB5124010 相关 WD-L020。核对 Steam 文件、显卡驱动和 Elytra，区分在线认证、排队、闪退、卡死与整机重启，记录版本和失败步骤再提交支持报告。"
 keyword: "wardogs crash fix"
 category: "guide"
 slug: "wardogs-crash-fix"
@@ -53,6 +53,10 @@ sources:
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
     kind: "official"
     checkedAt: "2026-10-03"
+  - label: "开发者 WD-L014 与 WD-L018 启动问题公告"
+    url: "https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/"
+    kind: "official"
+    checkedAt: "2026-10-03"
 ---
 
 ## WD-L020与登录卡住的分诊
@@ -74,6 +78,12 @@ sources:
 **2026-09-30**: [Team17: WD-L020](https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/) · [Microsoft: KB5124010](https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update).
 
 如果能进入对局，只是某项操作无响应，先检查[操作绑定](/zh-cn/guides/wardogs-controls)，不要套用启动失败的系统回退方案。如果停在登录阶段，记录界面是否有响应，再核对[所在地区的服务公告](/zh-cn/guides/wardogs-server-status)。提交支持时分开写这些结果：菜单能显示，不等于服务器已经连接成功。
+
+### WD-L014、WD-L018 更新后仍无法启动
+
+[开发者 9 月 30 日置顶公告](https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/)在 10 月 3 日复查时仍表示，**WD-L014 和 WD-L018 属于已知启动问题，两项修复正在制作中**。0.1.2 针对 KB5124010 的修复属于 WD-L020 分支，不能据此说这两个代码已经解决。记录代码、客户端版本、Windows 版本以及启动停在哪一步。
+
+先更新 Steam 中的 WARDOGS 本体并验证文件，再逐项执行已有支持步骤。同一代码仍出现时，关注置顶帖进展，把已试操作与结果交给支持团队。若提示“无法通过在线服务器身份验证”，还应记录进程是否仍在运行，先比对[服务公告](/zh-cn/guides/wardogs-server-status)，再判断是否本地崩溃。
 
 ## 如何修复 WARDOGS 崩溃和卡死？
 

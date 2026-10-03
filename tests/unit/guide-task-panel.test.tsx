@@ -93,6 +93,24 @@ describe("guide task data", () => {
   it("does not create task data for an unrelated guide", () => {
     expect(getGuideTaskData("wardogs-release-date", "en")).toBeUndefined();
   });
+
+  it.each([
+    ["wardogs-ammo-reload-guide", "/tools/ammo-matcher"],
+    ["wardogs-best-weapons-loadouts", "/tools/weapon-compare"],
+    ["wardogs-mortar-guide", "/tools/artillery-calculator"],
+    ["wardogs-map", "/tools/map"],
+    ["wardogs-cargo-guide", "/tools/logistics-planner"],
+    ["wardogs-fob-guide", "/tools/logistics-planner"],
+    ["wardogs-progression-wipes-guide", "/tools/progression-route"]
+  ])("renders the task's matching tool in every language: %s", (slug, href) => {
+    for (const locale of locales) {
+      const data = getGuideTaskData(slug, locale)!;
+      expect(data.relatedTool?.href, locale).toBe(href);
+      const html = renderToStaticMarkup(<GuideTaskPanel data={data} locale={locale} />);
+      expect(html, locale).toContain(`/${locale}${href}`);
+      expect(data.relatedTool?.label.trim().length, locale).toBeGreaterThan(0);
+    }
+  });
 });
 
 describe("GuideTaskPanel", () => {

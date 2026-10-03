@@ -156,6 +156,20 @@ describe("item metadata", () => {
     expect(description).not.toContain("Check its role");
     expect(description.length).toBeGreaterThanOrEqual(140);
     expect(description.length).toBeLessThanOrEqual(160);
+    expect(metadata.keywords).toContain("Mortar 解锁");
+  });
+
+  it.each([
+    ["ja", "amp-9", "現在のゲームビ。"],
+    ["zh-cn", "mortar", "尚未确认的内。"],
+    ["zh-tw", "mortar", "尚未確認的內。"]
+  ] as const)("does not cut a sentence or word in %s/%s search snippets", (locale, slug, fragment) => {
+    const metadata = buildItemMetadata(locale, getItemBySlug(slug)!);
+    const description = String(metadata.description);
+    expect(description).not.toContain(fragment);
+    expect(description).toMatch(/[。！？]$/);
+    expect(description.length).toBeGreaterThanOrEqual(140);
+    expect(description.length).toBeLessThanOrEqual(160);
   });
 
   it("keeps every localized item snippet complete and within search limits", () => {
@@ -165,9 +179,11 @@ describe("item metadata", () => {
       "pt-br": /\b(?:o|a|de|do|da|para|com|jogo|guia)\b/i,
       ja: /[\u3040-\u30ff\u3400-\u9fff]/,
       "zh-cn": /[\u3400-\u9fff]/,
+      "zh-tw": /[\u3400-\u9fff]/,
+      pl: /[ąćęłńóśźż]|\b(?:i|do|na|z|w|broni|poradnik)\b/i,
     } as const;
 
-    for (const locale of ["ru", "de", "pt-br", "ja", "zh-cn"] as const) {
+    for (const locale of ["ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const) {
       for (const item of itemLibrary) {
         const metadata = buildItemMetadata(locale, item);
         const title = String(metadata.title);

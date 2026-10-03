@@ -5,7 +5,7 @@ keyword: "wardogs controls"
 category: "guide"
 slug: "wardogs-controls"
 order: 33
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-03"
 badges:
   - label: "Steuerungs-Guide"
     tone: "accent"
@@ -49,6 +49,10 @@ sources:
     url: "https://x.com/BULKHEAD/status/2095447401725153576"
     kind: "official"
     checkedAt: "2026-09-04"
+  - label: "Spielerbericht: doppelte Controller-Eingabe nach Update"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wu3eln/todays_update_broke_controllers/"
+    kind: "community"
+    checkedAt: "2026-10-03"
 ---
 
 ## Erst die Aktion, dann die Taste
@@ -115,6 +119,30 @@ Lass beim Test nicht gleichzeitig mehrere Pads, Joysticks und Pedale angeschloss
 Ein **HOTAS** kann für Helikopterrollen sinnvoll sein. Creator- und Community-Berichte zeigen Achsen für Pitch, Roll, Yaw und Schub in Test-Builds; sie dokumentieren aber keine vollständige offizielle Kompatibilitätsliste. Prüfe jede Achse am Boden, setze eine kleine Totzone bei Zittern und kontrolliere, ob ein Pedal oder ein zweiter Controller eine Achse doppelt sendet.
 
 Einige Beobachtungen erwähnen automatischen Wechsel zwischen HOTAS und Maus/Tastatur beim Ein- oder Aussteigen. Behandle das als buildabhängig. Prüfe nach einem Neustart, ob die Belegung erhalten blieb, und notiere Modell, Treiber und Schritte, falls Bindings verschwinden. Für sichere Starts, Landungen und Transportaufgaben ergänzt der [WARDOGS Helicopter Guide](/de/guides/wardogs-helicopter-guide) diese Einrichtung.
+
+### Helikopteraktionen: Belegung und Achse prüfen
+
+Dies ist eine Aktionsübersicht ohne feste Standardtasten. Gleiche jede Aktion mit dem aktuellen Helikoptermenü, zugewiesenem Gerät und eigenen Änderungen ab.
+
+| Aktion | Getrennt prüfen |
+| --- | --- |
+| Kollektiv / Schub | Auftrieb erhöhen oder verringern; getrennt vom Nicken |
+| Nicken | Nase vor/zurück; Richtung und Achsenumkehr |
+| Rollen | Links/rechts neigen; jeweils eine Achse testen |
+| Gieren | Nase links/rechts drehen; von Rollen unterscheiden |
+| Freelook | Kamera; steuert die Maus Ansicht oder Maschine? |
+| Sitzwechsel / Aussteigen | Aktuelle Sitz- und Ausstiegshinweise lesen |
+
+Teste sicher eine kleine Eingabe, lasse sie los und beobachte das Ergebnis. Ändere Empfindlichkeit erst, wenn Aktion und Richtung stimmen, und speichere das Profil. Der [Helikopterguide](/de/guides/wardogs-helicopter-guide) enthält die Start- und Landeübungen. Ein geprüftes HOTAS-Profil oder dauerhaftes Maustastenlayout liegt hier nicht vor.
+
+### Controller löst nach einem Update doppelt aus
+
+Die [Spielerdiskussion vom 30. September](https://www.reddit.com/r/WarDogs/comments/1wu3eln/todays_update_broke_controllers/) beschreibt doppelte Menüsprünge und ausbleibende Eingaben. Ein Kommentar empfiehlt, Steam Input auszuschalten. Das ist ein einzelner Community-Test, kein offizieller allgemeiner Fix oder gesicherter Ursachennachweis.
+
+1. Notiere Modell, Anschlussart, Steam-/Spielversion und betroffenen Menüpunkt; sichere die Belegung.
+2. Teste unter **Steam-Bibliothek → WARDOGS → Eigenschaften → Controller** für dieses Spiel **Steam Input deaktivieren**. Starte neu und wiederhole dieselbe einzelne Eingabe.
+3. Fehlt die Eingabe oder wird es schlechter, stelle den bisherigen Wert wieder her. Zusätzliche Remapper erst in einem getrennten Test schließen.
+4. Prüfe Menü, Deployment und Flug jeweils separat, halte Maus/Tastatur bereit und melde die Ergebnisse.
 
 ## Fallschirm und sichere Absprünge
 

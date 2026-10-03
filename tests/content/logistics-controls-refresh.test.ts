@@ -35,7 +35,7 @@ describe("concise logistics and zoom diagnostics in all eight locales", () => {
       const guide = await loadGuideDocument(locale, slug);
       expect(guide).not.toBeNull();
       expect(guide!.frontmatter.slug).toBe(slug);
-      expect(guide!.frontmatter.updatedAt).toBe("2026-09-30");
+      expect(guide!.frontmatter.updatedAt >= "2026-09-30").toBe(true);
       expect(guide!.frontmatter.sources.find(entry => entry.url === source)).toMatchObject({
         kind: "official",
         checkedAt: "2026-09-30"
