@@ -240,7 +240,7 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
     title,
     description,
     alternates: {canonical, languages},
-    keywords: `WARDOGS ${localizedItem.name}, WARDOGS items, WARDOGS ${localizedItem.type}, WARDOGS guide`,
+    keywords: `WARDOGS ${localizedItem.name}, ${localizedItem.name} stats, ${localizedItem.name} damage, ${localizedItem.name} unlock, WARDOGS ${localizedItem.type}, ${localizedItem.subtype ? `WARDOGS ${localizedItem.subtype}, ` : ""}WARDOGS items, WARDOGS guide`,
     openGraph: {
       type: "article",
       locale: languageTags[canonicalLocale],
@@ -255,13 +255,28 @@ export function buildItemMetadata(locale: Locale, item: WardogsItem): Metadata {
   };
 }
 
+const CATALOG_KEYWORDS: Record<string, string> = {
+  weapons: "WARDOGS weapons, guns, rifles, pistols, weapon stats, damage, recoil, DPS, attachment slots, gun tier list",
+  vehicles: "WARDOGS vehicles, tanks, helicopters, transport, armor values, vehicle speed, vehicle combat, vehicle guide",
+  ammo: "WARDOGS ammo, ammunition, caliber, armor penetration, bullet drop, damage stats, ammo matcher",
+  attachments: "WARDOGS attachments, optics, scopes, suppressors, grips, weapon mods, recoil reduction",
+  gear: "WARDOGS gear, armor vests, helmets, plate carriers, protection levels, damage reduction, tactical gear",
+  equipment: "WARDOGS equipment, tactical tools, backpacks, night vision, NVG, field gear",
+  medical: "WARDOGS medical, medkit, bandages, revive, healing, bleed fix, health regeneration",
+  supplies: "WARDOGS supplies, cargo, pallets, FOB resources, logistics, crates, supply crates",
+  deployables: "WARDOGS deployables, mortars, FOB construction, sandbags, fortifications, heavy artillery",
+  mechanics: "WARDOGS mechanics, ballistics, armor penetration, stamina, health system, game mechanics",
+  loadouts: "WARDOGS loadouts, best builds, starter loadout, budget loadout, meta weapons, squad roles"
+};
+
 export function buildCatalogGuideMetadata(locale: Locale, guide: CatalogGuide): Metadata {
   return buildLocalizedItemPageMetadata(
     locale,
     `/items/${guide.id}`,
     guide.title,
     guide.description,
-    getCatalogueCategoryMedia(guide.id)?.image
+    getCatalogueCategoryMedia(guide.id)?.image,
+    CATALOG_KEYWORDS[guide.id] ?? `WARDOGS ${guide.id}, WARDOGS items, WARDOGS catalogue`
   );
 }
 
@@ -272,12 +287,13 @@ export function buildItemHubMetadata(locale: Locale): Metadata {
     "/items",
     ui.hubMetaTitle,
     ui.hubMetaDescription,
-    getCatalogueCategoryMedia("hub")?.image
+    getCatalogueCategoryMedia("hub")?.image,
+    "WARDOGS weapons, WARDOGS vehicles, WARDOGS items database, weapon stats, armor values, ammo types, loadout planner, WARDOGS catalogue, tactical FPS gear"
   );
 }
 
-function buildLocalizedItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath?: string): Metadata {
-  const metadata = buildPageMetadata(locale, pathname, title, description);
+function buildLocalizedItemPageMetadata(locale: Locale, pathname: string, title: string, description: string, imagePath?: string, keywords?: string): Metadata {
+  const metadata = buildPageMetadata(locale, pathname, title, description, keywords);
   const image = imagePath ? publicAssetUrl(imagePath) : undefined;
 
   return {

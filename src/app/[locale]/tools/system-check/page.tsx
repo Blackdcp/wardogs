@@ -13,7 +13,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const copy = getToolCopy(locale);
-  return buildPageMetadata(locale, "/tools/system-check", copy.systemTitle, copy.systemDescription);
+  return buildPageMetadata(locale, "/tools/system-check", copy.systemTitle, copy.systemDescription, "WARDOGS system requirements, can I run WARDOGS, PC specs, minimum requirements, recommended specs, FPS performance");
 }
 
 export default async function SystemCheckPage({params}: PageProps) {

@@ -17,7 +17,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({locale, namespace: "editorial"});
-  return buildPageMetadata(locale, "/editorial-policy", t("metaTitle"), t("metaDescription"));
+  return buildPageMetadata(locale, "/editorial-policy", t("metaTitle"), t("metaDescription"), "WARDOGS wiki editorial policy, game wiki standards, source verification, WARDOGS research, independent wiki");
 }
 
 export default async function EditorialPolicyPage({params}: PageProps) {

@@ -58,8 +58,10 @@ export function buildAlternates(locale: Locale, pathname: string): NonNullable<M
   };
 }
 
-export function buildPageMetadata(locale: Locale, pathname: string, title: string, description: string): Metadata {
-  return buildPageMetadataWithImage(locale, pathname, title, description);
+const DEFAULT_KEYWORDS = "WARDOGS, WARDOGS wiki, tactical FPS, Steam, early access, guides";
+
+export function buildPageMetadata(locale: Locale, pathname: string, title: string, description: string, keywords?: string): Metadata {
+  return buildPageMetadataWithImage(locale, pathname, title, description, undefined, keywords);
 }
 
 type SocialImage = {url: string; width: number; height: number; alt: string};
@@ -69,7 +71,8 @@ export function buildPageMetadataWithImage(
   pathname: string,
   title: string,
   description: string,
-  image?: SocialImage
+  image?: SocialImage,
+  keywords?: string
 ): Metadata {
   const canonical = buildLocalizedUrl(locale, pathname);
   const socialImage = image ?? {
@@ -82,7 +85,7 @@ export function buildPageMetadataWithImage(
     title,
     description,
     alternates: buildAlternates(locale, pathname),
-    keywords: "WARDOGS, Steam, playtest, gameplay, factions, release date, guides",
+    keywords: keywords ?? DEFAULT_KEYWORDS,
     openGraph: {
       type: "website",
       locale: languageTags[locale],
@@ -120,6 +123,32 @@ export function buildSiteMetadata(): Metadata {
   };
 }
 
+function buildGuideKeywords(guide: GuideDocument): string {
+  const parts = new Set<string>(["WARDOGS", "WARDOGS wiki"]);
+  // Add the guide's primary keyword (e.g. "wardogs mortar guide")
+  parts.add(guide.frontmatter.keyword);
+  // Extract individual meaningful words from the keyword for broader matching
+  for (const word of guide.frontmatter.keyword.split(/\s+/)) {
+    if (word.length > 2 && word.toLowerCase() !== "wardogs") parts.add(word);
+  }
+  // Add category-specific terms
+  const categoryKeywords: Record<string, string[]> = {
+    guide: ["guide", "tips", "how to", "tutorial"],
+    access: ["early access", "download", "Steam", "free to play"],
+    release: ["release date", "launch", "update", "patch"],
+    store: ["price", "buy", "Steam store", "free to play"],
+    platform: ["PC", "Steam", "system requirements"],
+    video: ["gameplay", "trailer", "video"],
+    community: ["community", "Discord", "Reddit"],
+    developer: ["Bulkhead", "developer", "studio"]
+  };
+  for (const kw of categoryKeywords[guide.frontmatter.category] ?? []) {
+    parts.add(kw);
+  }
+  parts.add("tactical FPS");
+  return [...parts].join(", ");
+}
+
 export function buildArticleMetadata(locale: Locale, guide: GuideDocument): Metadata {
   const discoveryImage = getGuideDiscoveryImage(guide.frontmatter.slug);
   return buildPageMetadataWithImage(
@@ -127,7 +156,8 @@ export function buildArticleMetadata(locale: Locale, guide: GuideDocument): Meta
     `/guides/${guide.frontmatter.slug}`,
     guide.frontmatter.title,
     guide.frontmatter.description,
-    discoveryImage ? {...discoveryImage, url: publicAssetUrl(discoveryImage.url)} : undefined
+    discoveryImage ? {...discoveryImage, url: publicAssetUrl(discoveryImage.url)} : undefined,
+    buildGuideKeywords(guide)
   );
 }
 

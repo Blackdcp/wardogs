@@ -21,7 +21,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const copy = getOperationsAtlasCopy(locale);
-  return buildPageMetadata(locale, "/maps", copy.metaTitle, copy.metaDescription);
+  return buildPageMetadata(locale, "/maps", copy.metaTitle, copy.metaDescription, "WARDOGS map, WARDOGS interactive map, control zone, hot zone, FOB locations, logistics route, WARDOGS tactical map, mortar range");
 }
 
 function buildAtlasJsonLd(locale: Locale) {

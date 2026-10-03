@@ -24,7 +24,7 @@ export function generateStaticParams() {
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
-  return buildPageMetadata(locale, "/skins", headings[locale].title, headings[locale].description);
+  return buildPageMetadata(locale, "/skins", headings[locale].title, headings[locale].description, "WARDOGS skins, WARDOGS cosmetics, weapon skins, vehicle skins, WARDOGS customization, skin gallery");
 }
 
 export default async function SkinsPage({params}: PageProps) {

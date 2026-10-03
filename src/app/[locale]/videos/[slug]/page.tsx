@@ -28,12 +28,19 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const article = getLocalizedVideoArticle(locale, slug);
   const ui = getVideoUi(locale);
-  return article ? buildPageMetadataWithImage(locale, `/videos/${article.slug}`, article.title, article.description, {
-    url: videoThumbnailUrl(article.youtubeId),
-    width: 1280,
-    height: 720,
-    alt: `${article.sourceLabel} ${ui.thumbnail}`
-  }) : {};
+  return article ? buildPageMetadataWithImage(
+    locale,
+    `/videos/${article.slug}`,
+    article.title,
+    article.description,
+    {
+      url: videoThumbnailUrl(article.youtubeId),
+      width: 1280,
+      height: 720,
+      alt: `${article.sourceLabel} ${ui.thumbnail}`
+    },
+    `WARDOGS ${article.title}, WARDOGS video, WARDOGS gameplay, WARDOGS guide, ${article.sourceLabel}`
+  ) : {};
 }
 
 export default async function VideoArticlePage({params}: PageProps) {

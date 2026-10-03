@@ -21,7 +21,7 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const copy = getToolCopy(locale);
-  return buildPageMetadata(locale, "/tools/progression-route", copy.progressionRouteTitle, copy.progressionRouteDescription);
+  return buildPageMetadata(locale, "/tools/progression-route", copy.progressionRouteTitle, copy.progressionRouteDescription, "WARDOGS progression, level up, unlock guide, WARDOGS XP, rank rewards, progression planner");
 }
 
 export default async function ProgressionRoutePage({params}: PageProps) {

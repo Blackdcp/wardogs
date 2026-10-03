@@ -36,7 +36,8 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
       width: 1280,
       height: 720,
       alt: `${featured.sourceLabel} ${ui.thumbnail}`
-    }
+    },
+    "WARDOGS videos, WARDOGS gameplay, WARDOGS trailer, video guides, tactical FPS footage, creator videos, WARDOGS highlights"
   );
 }
 

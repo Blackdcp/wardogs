@@ -10,7 +10,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({locale, namespace: "terms"});
-  return buildPageMetadata(locale, "/terms", t("metaTitle"), t("metaDescription"));
+  return buildPageMetadata(locale, "/terms", t("metaTitle"), t("metaDescription"), "WARDOGS wiki terms, terms of use, disclaimer, game wiki rules");
 }
 
 export default async function TermsPage({params}: Props) {

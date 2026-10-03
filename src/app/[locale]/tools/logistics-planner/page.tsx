@@ -21,7 +21,7 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const copy = getToolCopy(locale);
-  return buildPageMetadata(locale, "/tools/logistics-planner", copy.logisticsPlannerTitle, copy.logisticsPlannerDescription);
+  return buildPageMetadata(locale, "/tools/logistics-planner", copy.logisticsPlannerTitle, copy.logisticsPlannerDescription, "WARDOGS logistics, supply route, cargo delivery, WARDOGS Ural truck, FOB supply, logistics planner tool");
 }
 
 export default async function LogisticsPlannerPage({params}: PageProps) {

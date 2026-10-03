@@ -13,7 +13,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const copy = getToolCopy(locale);
-  return buildPageMetadata(locale, "/tools/loadout-budget", copy.budgetTitle, copy.budgetDescription);
+  return buildPageMetadata(locale, "/tools/loadout-budget", copy.budgetTitle, copy.budgetDescription, "WARDOGS loadout, WARDOGS budget calculator, gear cost, loadout planner, WARDOGS equipment, cheapest loadout");
 }
 
 export default async function LoadoutBudgetPage({params}: PageProps) {

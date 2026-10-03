@@ -27,7 +27,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     getTranslations({locale, namespace: "guides"}),
     buildGuideIndex(locale)
   ]);
-  return buildPageMetadata(locale, "/guides", t("metaTitle"), t("description", {count: guides.length}));
+  return buildPageMetadata(locale, "/guides", t("metaTitle"), t("description", {count: guides.length}), "WARDOGS guides, WARDOGS tips, WARDOGS beginner guide, WARDOGS how to play, WARDOGS tutorial, tactical FPS guide, WARDOGS wiki, WARDOGS walkthrough");
 }
 
 export default async function GuidesPage({params}: PageProps) {

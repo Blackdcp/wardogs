@@ -14,7 +14,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const {title, description} = getMarketCopy(locale, "gold");
-  return buildPageMetadata(locale, "/gold-market", title, description);
+  return buildPageMetadata(locale, "/gold-market", title, description, "WARDOGS gold market, gold bars, gold exchange rate, cash to gold, cosmetic shop, WARDOGS economy, season wipe currency");
 }
 
 export default async function GoldMarketPage({params}: PageProps) {

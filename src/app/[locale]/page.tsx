@@ -30,7 +30,7 @@ export async function generateMetadata({params}: HomePageProps): Promise<Metadat
   if (!isLocale(locale)) notFound();
 
   const t = await getTranslations({locale, namespace: "home"});
-  return buildPageMetadata(locale, "/", t("metaTitle"), t("metaDescription"));
+  return buildPageMetadata(locale, "/", t("metaTitle"), t("metaDescription"), "WARDOGS wiki, WARDOGS database, tactical FPS wiki, WARDOGS guides, WARDOGS weapons, WARDOGS vehicles, WARDOGS map, WARDOGS season 2, WARDOGS server status, Steam early access");
 }
 
 export default async function HomePage({params}: HomePageProps) {

@@ -15,7 +15,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({locale, namespace: "aboutPage"});
-  return buildPageMetadata(locale, "/about", t("metaTitle"), t("metaDescription"));
+  return buildPageMetadata(locale, "/about", t("metaTitle"), t("metaDescription"), "WARDOGS wiki, about WARDOGS wiki, WARDOGS community, independent game wiki, WARDOGS editorial team, game database");
 }
 
 export default async function AboutPage({params}: PageProps) {

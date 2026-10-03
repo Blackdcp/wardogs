@@ -14,7 +14,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const {title, description} = getMarketCopy(locale, "black");
-  return buildPageMetadata(locale, "/black-market", title, description);
+  return buildPageMetadata(locale, "/black-market", title, description, "WARDOGS black market, WARDOGS vault, black market dealer, WARDOGS economy, cash storage, market guide, weapon smuggling");
 }
 
 export default async function BlackMarketPage({params}: PageProps) {

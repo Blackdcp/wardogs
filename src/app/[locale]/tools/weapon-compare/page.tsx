@@ -19,7 +19,7 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const copy = getToolCopy(locale);
-  return buildPageMetadata(locale, "/tools/weapon-compare", copy.weaponCompareTitle, copy.weaponCompareDescription);
+  return buildPageMetadata(locale, "/tools/weapon-compare", copy.weaponCompareTitle, copy.weaponCompareDescription, "WARDOGS weapon comparison, damage stats, DPS calculator, best weapons, WARDOGS gun stats, weapon tier list");
 }
 
 export default async function WeaponComparePage({params}: PageProps) {

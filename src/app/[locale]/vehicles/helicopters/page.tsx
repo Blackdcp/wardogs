@@ -100,10 +100,19 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const {title, description} = copy[locale];
-  return buildPageMetadataWithImage(locale, "/vehicles/helicopters", title, description, {
-    url: publicAssetUrl("/images/catalogue/banners/vehicles-1280.webp"), width: 1280, height: 720,
-    alt: "WARDOGS vehicle catalogue"
-  });
+  return buildPageMetadataWithImage(
+    locale,
+    "/vehicles/helicopters",
+    title,
+    description,
+    {
+      url: publicAssetUrl("/images/catalogue/banners/vehicles-1280.webp"),
+      width: 1280,
+      height: 720,
+      alt: "WARDOGS vehicle catalogue"
+    },
+    "WARDOGS helicopters, WARDOGS choppers, Z20 Lakota, MH-6, UH-1Y, air vehicles, flight guide, pilot unlock, helicopter combat"
+  );
 }
 
 export default async function HelicoptersPage({params}: PageProps) {

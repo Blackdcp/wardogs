@@ -21,7 +21,7 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const copy = getToolCopy(locale);
-  return buildPageMetadata(locale, "/tools/ammo-matcher", copy.ammoMatcherTitle, copy.ammoMatcherDescription);
+  return buildPageMetadata(locale, "/tools/ammo-matcher", copy.ammoMatcherTitle, copy.ammoMatcherDescription, "WARDOGS ammo, WARDOGS ammunition, ammo matcher, bullet types, WARDOGS caliber, weapon ammo compatibility");
 }
 
 export default async function AmmoMatcherPage({params}: PageProps) {

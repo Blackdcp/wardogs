@@ -20,7 +20,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const c = interactiveMapPageCopy[locale] ?? interactiveMapPageCopy.en;
-  return buildPageMetadata(locale as Locale, "/tools/map", c.title, c.desc);
+  return buildPageMetadata(locale as Locale, "/tools/map", c.title, c.desc, "WARDOGS interactive map, WARDOGS map tool, mortar calculator, artillery range, FOB placement, control zone map, WARDOGS tactical map");
 }
 
 export default async function TacticalMapPage({params}: PageProps) {

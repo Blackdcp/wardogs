@@ -25,7 +25,7 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({locale, namespace: "news"});
-  return buildPageMetadata(locale, "/news", t("metaTitle"), t("metaDescription"));
+  return buildPageMetadata(locale, "/news", t("metaTitle"), t("metaDescription"), "WARDOGS news, WARDOGS patch notes, WARDOGS update, WARDOGS season 2, server maintenance, WARDOGS release date, WARDOGS changelog");
 }
 
 export default async function NewsPage({params}: PageProps) {
