@@ -164,12 +164,52 @@ export function HomeActionHubView({eyebrow, title, description, actions, LinkCom
 
 export async function HomeActionHub() {
   const t = await getTranslations("home.actions");
+  const tHub = await getTranslations("home.tacticalHub");
   const {Link} = await import("@/i18n/navigation");
   const actions: HomeActionHubEntry[] = HOME_ACTIONS.map((action) => ({
     ...action,
     title: t(`${action.key}.title`),
     description: t(`${action.key}.description`)
   }));
+
+  const tacticalCards = [
+    {
+      title: tHub("map.title"),
+      description: tHub("map.description"),
+      badge: tHub("map.badge"),
+      href: "/tools/map",
+      cta: tHub("map.cta"),
+      icon: Map,
+      accent: "text-[#69c78f]"
+    },
+    {
+      title: tHub("catalogue.title"),
+      description: tHub("catalogue.description"),
+      badge: tHub("catalogue.badge"),
+      href: "/items",
+      cta: tHub("catalogue.cta"),
+      icon: Crosshair,
+      accent: "text-[#ef8585]"
+    },
+    {
+      title: tHub("radar.title"),
+      description: tHub("radar.description"),
+      badge: tHub("radar.badge"),
+      href: "/guides/wardogs-server-status",
+      cta: tHub("radar.cta"),
+      icon: Radio,
+      accent: "text-[#7bb7e8]"
+    },
+    {
+      title: tHub("wipe.title"),
+      description: tHub("wipe.description"),
+      badge: tHub("wipe.badge"),
+      href: "/guides/wardogs-season-2",
+      cta: tHub("wipe.cta"),
+      icon: Hourglass,
+      accent: "text-[#f0be55]"
+    }
+  ];
 
   const LocalizedLink: ActionLinkComponent = ({children, href, className, title}) => (
     <Link aria-label={title} className={className} href={href} title={title}>{children}</Link>
@@ -181,6 +221,7 @@ export async function HomeActionHub() {
       description={t("description")}
       eyebrow={t("eyebrow")}
       LinkComponent={LocalizedLink}
+      tacticalCards={tacticalCards}
       title={t("title")}
     />
   );

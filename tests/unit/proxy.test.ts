@@ -60,7 +60,8 @@ describe("Proxy request scope", () => {
       "/videos/example", "/items/weapons/example", "/news/example",
       "/privacy", "/terms", "/maps", "/about", "/contact", "/editorial-policy",
       "/tools/system-check", "/tools/ammo-matcher", "/tools/logistics-planner",
-      "/tools/progression-route", "/tools/weapon-compare", "/tools/loadout-budget"
+      "/tools/progression-route", "/tools/weapon-compare", "/tools/loadout-budget",
+      "/tools/artillery-calculator", "/tools/map"
     ]) {
       expect(matches(`https://www.wardogswiki.com${path}`)).toBe(true);
     }
@@ -68,7 +69,7 @@ describe("Proxy request scope", () => {
 
   test("skips irrelevant canonical-host paths and assets", () => {
     for (const path of [
-      "/not-a-real-page", "/tools/map", "/api/status", "/_next/static/app.js",
+      "/not-a-real-page", "/api/status", "/_next/static/app.js",
       "/_vercel/insights/script.js", "/robots.txt", "/sitemap.xml",
       "/images/maps/bakurani/map.webp", "/en/image.webp"
     ]) {

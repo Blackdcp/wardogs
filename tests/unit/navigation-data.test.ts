@@ -9,9 +9,9 @@ import {
 } from "../../src/features/navigation/navigation-data";
 
 describe("grouped navigation", () => {
-  it("exposes five primary destinations with catalogue children", () => {
+  it("exposes primary destinations with catalogue and maps & tools children", () => {
     const groups = buildNavigation((key) => key);
-    expect(groups.map((group) => group.id)).toEqual(["game", "guides", "catalogue", "videos", "news"]);
+    expect(groups.map((group) => group.id)).toEqual(["guides", "catalogue", "mapsAndTools", "news"]);
     expect(groups.find((group) => group.id === "catalogue")?.items.map((item) => item.href)).toEqual([
       "/items",
       "/items/weapons",
@@ -28,10 +28,18 @@ describe("grouped navigation", () => {
       "/items/mechanics",
       "/items/loadouts",
       "/black-market",
-      "/gold-market",
-      "/tools/loadout-budget",
+      "/gold-market"
+    ]);
+    expect(groups.find((group) => group.id === "mapsAndTools")?.items.map((item) => item.href)).toEqual([
+      "/tools/map",
+      "/tools/artillery-calculator",
+      "/maps",
+      "/tools/ammo-matcher",
       "/tools/weapon-compare",
-      "/tools/ammo-matcher"
+      "/tools/logistics-planner",
+      "/tools/loadout-budget",
+      "/tools/system-check",
+      "/tools/progression-route"
     ]);
     expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.beginnerGuide")?.href)
       .toBe("/guides/wardogs-beginner-guide");
@@ -41,10 +49,12 @@ describe("grouped navigation", () => {
       .toBe("/guides/wardogs-crash-fix");
     expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.helicopterGuide")?.href)
       .toBe("/guides/wardogs-helicopter-guide");
-    expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.systemCheck")?.href)
+    expect(groups.find((group) => group.id === "mapsAndTools")?.items.find(({label}) => label === "nav.systemCheck")?.href)
       .toBe("/tools/system-check");
-    expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.interactiveMap")?.href)
+    expect(groups.find((group) => group.id === "mapsAndTools")?.items.find(({label}) => label === "nav.interactiveMap")?.href)
       .toBe("/tools/map");
+    expect(groups.find((group) => group.id === "mapsAndTools")?.items.find(({label}) => label === "nav.artilleryCalculator")?.href)
+      .toBe("/tools/artillery-calculator");
   });
 
   it("keeps every guide link on the current locale", () => {
@@ -65,6 +75,7 @@ describe("grouped navigation", () => {
     expect(byHref.get("/tools/loadout-budget")).toBe("tool");
     expect(byHref.get("/tools/weapon-compare")).toBe("tool");
     expect(byHref.get("/tools/ammo-matcher")).toBe("tool");
+    expect(byHref.get("/tools/artillery-calculator")).toBe("tool");
     expect(byHref.get("/maps")).toBe("map");
     expect(byHref.get("/tools/map")).toBe("map");
   });
@@ -73,7 +84,7 @@ describe("grouped navigation", () => {
     for (const locale of locales) {
       const messages = JSON.parse(readFileSync(resolve(`messages/${locale}.json`), "utf8"));
       const groups = buildNavigation((key) => key === "nav.interactiveMap" ? messages.nav.interactiveMap : key);
-      const mapLink = groups.find((group) => group.id === "guides")?.items.find(({href}) => href === "/tools/map");
+      const mapLink = groups.find((group) => group.id === "mapsAndTools")?.items.find(({href}) => href === "/tools/map");
 
       expect(mapLink?.label, locale).toBe(messages.nav.interactiveMap);
       expect(mapLink?.label, locale).not.toBe("nav.interactiveMap");

@@ -84,7 +84,9 @@
     "items": "Items",
     "news": "News",
     "steamCta": "View on Steam",
-    "primaryLabel": "Primary navigation"
+    "primaryLabel": "Primary navigation",
+    "mapsAndTools": "Maps & Tools",
+    "artilleryCalculator": "Artillery & Mortar Calculator"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: Tactical FPS Game Database & Guides",
@@ -93,7 +95,12 @@
     "heroDescription": "Use a source-checked WARDOGS reference for equipment, controls, current access, troubleshooting, and practical tactics, with build-sensitive details clearly labeled.",
     "primaryCta": "Read Patch 0.11",
     "secondaryCta": "Check Server Status",
-    "quickTasks": {"weapons": "Weapons", "vehicles": "Vehicles", "map": "Interactive map", "status": "Server status"},
+    "quickTasks": {
+      "weapons": "Weapons",
+      "vehicles": "Vehicles",
+      "map": "Interactive map",
+      "status": "Server status"
+    },
     "status": "Steam Early Access is live",
     "statsLabel": "Key WARDOGS facts",
     "stats": {
@@ -161,8 +168,20 @@
       "videoCategory": "Current video",
       "toolSummary": "Interactive player tool discovered from the shared site navigation.",
       "mapSummary": "Task-focused operations map linking sourced battlefield, objective, logistics, mortar, and air-operation guidance.",
-      "types": {"guide": "Guide", "item": "Item", "video": "Video", "tool": "Tool", "map": "Map"},
-      "counts": {"guides": "Guides", "items": "Item pages", "videos": "Current videos", "tools": "Tools", "maps": "Maps"}
+      "types": {
+        "guide": "Guide",
+        "item": "Item",
+        "video": "Video",
+        "tool": "Tool",
+        "map": "Map"
+      },
+      "counts": {
+        "guides": "Guides",
+        "items": "Item pages",
+        "videos": "Current videos",
+        "tools": "Tools",
+        "maps": "Maps"
+      }
     },
     "actions": {
       "eyebrow": "Choose your mission",
@@ -209,12 +228,30 @@
       "verifiedLabel": "Verified",
       "sourceCta": "Read the official Season 1 update",
       "entries": {
-        "fobVendor": {"title": "FOB vendor", "field": "Vendor price"},
-        "largeHammer": {"title": "Large Hammer", "field": "Vendor price"},
-        "artilleryTank": {"title": "Artillery Tank", "field": "Career unlock"},
-        "ural": {"title": "URAL", "field": "Unlock"},
-        "duneBuggy": {"title": "Dune Buggy", "field": "Unlock"},
-        "deagle": {"title": "Deagle", "field": "Required level"}
+        "fobVendor": {
+          "title": "FOB vendor",
+          "field": "Vendor price"
+        },
+        "largeHammer": {
+          "title": "Large Hammer",
+          "field": "Vendor price"
+        },
+        "artilleryTank": {
+          "title": "Artillery Tank",
+          "field": "Career unlock"
+        },
+        "ural": {
+          "title": "URAL",
+          "field": "Unlock"
+        },
+        "duneBuggy": {
+          "title": "Dune Buggy",
+          "field": "Unlock"
+        },
+        "deagle": {
+          "title": "Deagle",
+          "field": "Required level"
+        }
       }
     },
     "priority": {
@@ -380,7 +417,35 @@
       "guidesCta": "Explore the Guides",
       "steamCta": "Open Steam"
     },
-    "heroImageAlt": "WARDOGS soldiers and vehicles fighting across the active Control Zone"
+    "heroImageAlt": "WARDOGS soldiers and vehicles fighting across the active Control Zone",
+    "tacticalHub": {
+      "eyebrow": "TACTICAL HUBS",
+      "title": "Four Strategic Command Centers",
+      "map": {
+        "title": "Tactical Interactive Map",
+        "description": "256km² HD basemaps, artillery/mortar mil firing tables & rangefinding",
+        "badge": "HD 2048px",
+        "cta": "Open Map"
+      },
+      "catalogue": {
+        "title": "Weapons & Vehicles Hub",
+        "description": "11 categories database, damage profiles & loadout budget calculator",
+        "badge": "11 Categories",
+        "cta": "Browse Hub"
+      },
+      "radar": {
+        "title": "Live Server Status Radar",
+        "description": "Official maintenance windows, queue tracking & regional ping radar",
+        "badge": "Live Radar",
+        "cta": "Check Radar"
+      },
+      "wipe": {
+        "title": "Season 2 Wipe Matrix",
+        "description": "Full wipe reset rules, 12-day capital hedge strategies & payout rates",
+        "badge": "S2 Wipe",
+        "cta": "View Strategy"
+      }
+    }
   },
   "guides": {
     "metaTitle": "WARDOGS Guides - Launch, Gameplay, Weapons & Fixes",

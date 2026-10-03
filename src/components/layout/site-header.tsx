@@ -67,14 +67,6 @@ export async function SiteHeader() {
             <SiteBrand markClassName="w-[136px] min-[1360px]:w-[150px]" />
           </Link>
           <DesktopNavigation groups={navigation} label={t("nav.primaryLabel")} />
-          <Link
-            href="/tools/map"
-            title={t("nav.interactiveMap")}
-            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-[6px] border border-[#30543e] bg-[#16271e] px-3 text-xs font-semibold text-[#8be2ad] transition-colors hover:border-[#45946c] hover:bg-[#1e382b] hover:text-[#d8f4e4] min-[1360px]:text-sm"
-          >
-            <Map aria-hidden="true" className="size-4 text-[#4cd988]" />
-            <span>{t("nav.interactiveMap")}</span>
-          </Link>
           <SiteSearchDialog compact />
           <LocaleSwitcher label={t("common.language")} />
           <a

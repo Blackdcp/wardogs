@@ -84,7 +84,9 @@
     "items": "アイテム",
     "news": "ニュース",
     "steamCta": "Steamで見る",
-    "primaryLabel": "メインナビゲーション"
+    "primaryLabel": "メインナビゲーション",
+    "mapsAndTools": "マップ＆ツール",
+    "artilleryCalculator": "迫撃砲・曲射砲計算ツール"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki：攻略・武器・車両・ツールを検索",
@@ -93,7 +95,12 @@
     "heroDescription": "装備、操作、現在の参加状況、不具合対策、実戦戦術を出典付きで確認できます。ビルド依存の情報は明確に区別しています。",
     "primaryCta": "Patch 0.11を読む",
     "secondaryCta": "サーバー状態を確認",
-    "quickTasks": {"weapons": "武器", "vehicles": "車両", "map": "インタラクティブマップ", "status": "サーバー状態"},
+    "quickTasks": {
+      "weapons": "武器",
+      "vehicles": "車両",
+      "map": "インタラクティブマップ",
+      "status": "サーバー状態"
+    },
     "status": "Steam Early Access配信中",
     "statsLabel": "WARDOGSの重要情報",
     "stats": {
@@ -161,8 +168,20 @@
       "videoCategory": "現行動画",
       "toolSummary": "サイト共通ナビゲーションから取得したインタラクティブツールです。",
       "mapSummary": "戦場、目標、兵站、迫撃砲、航空作戦を出典付きで結ぶ任務別の作戦アトラスです。",
-      "types": {"guide": "攻略", "item": "装備", "video": "動画", "tool": "ツール", "map": "マップ"},
-      "counts": {"guides": "攻略", "items": "装備ページ", "videos": "現行動画", "tools": "ツール", "maps": "マップ"}
+      "types": {
+        "guide": "攻略",
+        "item": "装備",
+        "video": "動画",
+        "tool": "ツール",
+        "map": "マップ"
+      },
+      "counts": {
+        "guides": "攻略",
+        "items": "装備ページ",
+        "videos": "現行動画",
+        "tools": "ツール",
+        "maps": "マップ"
+      }
     },
     "actions": {
       "eyebrow": "目的を選択",
@@ -209,12 +228,30 @@
       "verifiedLabel": "確認日",
       "sourceCta": "Season 1公式アップデートを読む",
       "entries": {
-        "fobVendor": {"title": "FOBベンダー", "field": "販売価格"},
-        "largeHammer": {"title": "Large Hammer", "field": "販売価格"},
-        "artilleryTank": {"title": "Artillery Tank", "field": "キャリア解除"},
-        "ural": {"title": "URAL", "field": "解除条件"},
-        "duneBuggy": {"title": "Dune Buggy", "field": "解除条件"},
-        "deagle": {"title": "Deagle", "field": "必要レベル"}
+        "fobVendor": {
+          "title": "FOBベンダー",
+          "field": "販売価格"
+        },
+        "largeHammer": {
+          "title": "Large Hammer",
+          "field": "販売価格"
+        },
+        "artilleryTank": {
+          "title": "Artillery Tank",
+          "field": "キャリア解除"
+        },
+        "ural": {
+          "title": "URAL",
+          "field": "解除条件"
+        },
+        "duneBuggy": {
+          "title": "Dune Buggy",
+          "field": "解除条件"
+        },
+        "deagle": {
+          "title": "Deagle",
+          "field": "必要レベル"
+        }
       }
     },
     "priority": {
@@ -380,7 +417,35 @@
       "guidesCta": "攻略を見る",
       "steamCta": "Steamを開く"
     },
-    "heroImageAlt": "WARDOGSの兵士と車両がControl Zoneで戦っている公式ゲーム画面"
+    "heroImageAlt": "WARDOGSの兵士と車両がControl Zoneで戦っている公式ゲーム画面",
+    "tacticalHub": {
+      "eyebrow": "戦術ハブ",
+      "title": "4大戦略指揮ハブ",
+      "map": {
+        "title": "戦術インタラクティブマップ",
+        "description": "256km²高解像度マップ、迫撃砲・曲射砲密位射表および測距",
+        "badge": "HD 2048px",
+        "cta": "マップを開く"
+      },
+      "catalogue": {
+        "title": "武器・車両図鑑",
+        "description": "11カテゴリーの装備データベース、ダメージ特性および出撃予算試算",
+        "badge": "11分類",
+        "cta": "図鑑を確認"
+      },
+      "radar": {
+        "title": "リアルタイムサーバー監視",
+        "description": "公式メンテ情報、マッチ待機列監視および地域Pingレーダー",
+        "badge": "Live Radar",
+        "cta": "状態を確認"
+      },
+      "wipe": {
+        "title": "シーズン2 ワイプ対策",
+        "description": "全リセット規定マトリクス、12日間の資産保全ヘッジ策",
+        "badge": "S2 Wipe",
+        "cta": "対策を見る"
+      }
+    }
   },
   "guides": {
     "metaTitle": "WARDOGS 攻略ガイド - 発売準備、ゲームプレイ、武器、トラブル対策",

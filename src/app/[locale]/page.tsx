@@ -66,20 +66,30 @@ export default async function HomePage({params}: HomePageProps) {
   return (
     <main>
       <JsonLd data={buildHomeJsonLd(locale)} />
-      <HomeHero facts={facts} />
+
+      {/* 1. Hero 战术聚焦区 */}
+      <HomeHero facts={facts} locale={locale} />
       <LiveBetaBanner compact />
+
+      {/* 2. 四大战术中枢大卡 (直接拉动内页 PV 裂变) */}
       <HomeActionHub />
-      <section className="site-container py-4" data-page-ad-inventory="home">
+
+      {/* 3. 💰 黄金变现广告区 (首屏下第一视觉停顿点) */}
+      <section className="site-container py-6" data-page-ad-inventory="home">
         <AdsterraDisplayBanner label={t("ads.label")} placement="rectangle" />
         <AdsterraNativeBanner label={t("ads.label")} />
         <AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />
       </section>
-      <CatalogueHomeBand locale={locale} />
-      <PriorityGuides guides={guides} locale={locale} />
-      <SiteSearch copy={searchCopy} index={searchIndex} locale={locale} />
+
+      {/* 4. 时效与版本动态区 (随版本迭代更新) */}
       <CurrentBuildChanges locale={locale} />
+
+      {/* 5. 深度内容瀑布流 (沉淀长尾 SEO) */}
+      <PriorityGuides guides={guides} locale={locale} />
       <VideoIntelligence locale={locale} />
+      <CatalogueHomeBand locale={locale} />
       <CategoryGrid guideCount={guides.length} />
+      <SiteSearch copy={searchCopy} index={searchIndex} locale={locale} />
     </main>
   );
 }

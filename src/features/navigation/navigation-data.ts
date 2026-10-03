@@ -9,8 +9,10 @@ export type NavigationItem = {
   searchType: NavigationSearchType;
 };
 
+export type NavigationGroupId = "guides" | "catalogue" | "mapsAndTools" | "news" | "videos" | "game";
+
 export type NavigationGroup = {
-  id: "game" | "guides" | "catalogue" | "videos" | "news";
+  id: NavigationGroupId;
   label: string;
   href?: string;
   items: readonly NavigationItem[];
@@ -30,18 +32,6 @@ function isSearchNavigationItem(item: NavigationItem): item is NavigationItem & 
 export function buildNavigation(t: Translate): NavigationGroup[] {
   return [
     {
-      id: "game",
-      label: t("nav.game"),
-      items: [
-        {href: "/guides/wardogs-playtest", label: t("nav.playtest"), searchType: "guide"},
-        {href: "/guides/wardogs-release-date", label: t("nav.releaseDate"), searchType: "guide"},
-        {href: "/guides/wardogs-steam", label: t("nav.steamEarlyAccess"), searchType: "guide"},
-        {href: "/guides/wardogs-gameplay", label: t("nav.gameplay"), searchType: "guide"},
-        {href: "/guides/wardogs-factions", label: t("nav.factions"), searchType: "guide"},
-        {href: "/guides/wardogs-discord", label: t("nav.community"), searchType: "guide"}
-      ]
-    },
-    {
       id: "guides",
       label: t("nav.guides"),
       items: [
@@ -51,11 +41,12 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
         {href: "/guides/wardogs-gameplay", label: t("nav.gameplayGuide"), searchType: "guide"},
         {href: "/guides/wardogs-fob-guide", label: t("nav.fobLogistics"), searchType: "guide"},
         {href: "/guides/wardogs-mortar-guide", label: t("nav.mortarGuide"), searchType: "guide"},
-        {href: "/maps", label: t("nav.operationsAtlas"), searchType: "map"},
-        {href: "/tools/map", label: t("nav.interactiveMap"), searchType: "map"},
-        {href: "/tools/system-check", label: t("nav.systemCheck"), searchType: "tool"},
-        {href: "/tools/progression-route", label: t("nav.progressionRoute"), searchType: "tool"},
-        {href: "/tools/logistics-planner", label: t("nav.logisticsPlanner"), searchType: "tool"},
+        {href: "/guides/wardogs-playtest", label: t("nav.playtest"), searchType: "guide"},
+        {href: "/guides/wardogs-release-date", label: t("nav.releaseDate"), searchType: "guide"},
+        {href: "/guides/wardogs-steam", label: t("nav.steamEarlyAccess"), searchType: "guide"},
+        {href: "/guides/wardogs-factions", label: t("nav.factions"), searchType: "guide"},
+        {href: "/guides/wardogs-discord", label: t("nav.community"), searchType: "guide"},
+        {href: "/videos", label: t("nav.videos"), searchType: "guide"},
         {href: "/guides", label: t("nav.allGuides"), searchType: "guide"}
       ]
     },
@@ -78,13 +69,24 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
         {href: "/items/mechanics", label: t("nav.mechanics"), searchType: "item"},
         {href: "/items/loadouts", label: t("nav.loadouts"), searchType: "item"},
         {href: "/black-market", label: t("nav.blackMarket"), searchType: "item"},
-        {href: "/gold-market", label: t("nav.goldMarket"), searchType: "item"},
-        {href: "/tools/loadout-budget", label: t("nav.budgetTool"), searchType: "tool"},
-        {href: "/tools/weapon-compare", label: t("nav.weaponCompare"), searchType: "tool"},
-        {href: "/tools/ammo-matcher", label: t("nav.ammoMatcher"), searchType: "tool"}
+        {href: "/gold-market", label: t("nav.goldMarket"), searchType: "item"}
       ]
     },
-    {id: "videos", label: t("nav.videos"), href: "/videos", items: []},
+    {
+      id: "mapsAndTools",
+      label: t("nav.mapsAndTools"),
+      items: [
+        {href: "/tools/map", label: t("nav.interactiveMap"), searchType: "map"},
+        {href: "/tools/artillery-calculator", label: t("nav.artilleryCalculator"), searchType: "tool"},
+        {href: "/maps", label: t("nav.operationsAtlas"), searchType: "map"},
+        {href: "/tools/ammo-matcher", label: t("nav.ammoMatcher"), searchType: "tool"},
+        {href: "/tools/weapon-compare", label: t("nav.weaponCompare"), searchType: "tool"},
+        {href: "/tools/logistics-planner", label: t("nav.logisticsPlanner"), searchType: "tool"},
+        {href: "/tools/loadout-budget", label: t("nav.budgetTool"), searchType: "tool"},
+        {href: "/tools/system-check", label: t("nav.systemCheck"), searchType: "tool"},
+        {href: "/tools/progression-route", label: t("nav.progressionRoute"), searchType: "tool"}
+      ]
+    },
     {id: "news", label: t("nav.news"), href: "/news", items: []}
   ];
 }

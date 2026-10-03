@@ -3,16 +3,18 @@ import path from "node:path";
 import {describe, expect, it} from "vitest";
 
 describe("homepage composition", () => {
-  it("puts task navigation, catalogue, and featured guides before the compact search and updates", () => {
+  it("arranges the homepage according to the tactical wireframe structure", () => {
     const source = readFileSync(path.resolve("src/app/[locale]/page.tsx"), "utf8");
     const primarySections = [
       "<HomeHero",
       "<LiveBetaBanner",
       "<HomeActionHub",
-      "<CatalogueHomeBand",
+      "<CurrentBuildChanges",
       "<PriorityGuides",
-      "<SiteSearch",
-      "<CurrentBuildChanges"
+      "<VideoIntelligence",
+      "<CatalogueHomeBand",
+      "<CategoryGrid",
+      "<SiteSearch"
     ].map((component) => source.indexOf(component));
 
     expect(primarySections.every((position) => position >= 0)).toBe(true);
@@ -22,7 +24,7 @@ describe("homepage composition", () => {
   it("keeps the branded visual hero before the compact operational status surface", () => {
     const source = readFileSync(path.resolve("src/app/[locale]/page.tsx"), "utf8");
 
-    expect(source).toContain("<HomeHero facts={facts} />");
+    expect(source).toContain("<HomeHero facts={facts}");
     expect(source).toContain("<LiveBetaBanner compact />");
     expect(source.indexOf("<HomeHero")).toBeLessThan(source.indexOf("<LiveBetaBanner"));
     expect(source.indexOf("<LiveBetaBanner")).toBeLessThan(source.indexOf("<HomeActionHub"));

@@ -84,7 +84,9 @@
     "items": "Przedmioty",
     "news": "Aktualności",
     "steamCta": "Zobacz na Steam",
-    "primaryLabel": "Nawigacja główna"
+    "primaryLabel": "Nawigacja główna",
+    "mapsAndTools": "Mapy i narzędzia",
+    "artilleryCalculator": "Kalkulator artylerii i moździerzy"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: poradniki, broń, pojazdy i narzędzia",
@@ -415,7 +417,35 @@
       "guidesCta": "Przeglądaj poradniki",
       "steamCta": "Otwórz Steam"
     },
-    "heroImageAlt": "Żołnierze i pojazdy WARDOGS walczący w aktywnej Control Zone"
+    "heroImageAlt": "Żołnierze i pojazdy WARDOGS walczący w aktywnej Control Zone",
+    "tacticalHub": {
+      "eyebrow": "CENTRALE TAKTYCZNE",
+      "title": "Cztery strategiczne centrale dowodzenia",
+      "map": {
+        "title": "Interaktywna mapa taktyczna",
+        "description": "Mapy bazowe HD 256 km², tabele strzelania z moździerzy i artylerii",
+        "badge": "HD 2048px",
+        "cta": "Otwórz mapę"
+      },
+      "catalogue": {
+        "title": "Baza broni i pojazdów",
+        "description": "11 kategorii wyposażenia, profile obrażeń i kalkulator budżetu",
+        "badge": "11 kategorii",
+        "cta": "Przeglądaj bazę"
+      },
+      "radar": {
+        "title": "Radar stanu serwerów",
+        "description": "Oficjalne przerwy techniczne, monitorowanie kolejek i radar opóźnień",
+        "badge": "Live Radar",
+        "cta": "Sprawdź status"
+      },
+      "wipe": {
+        "title": "Reset Sezonu 2 (Wipe)",
+        "description": "Zasady pełnego resetu, 12-dniowa strategia zabezpieczenia kapitału",
+        "badge": "S2 Wipe",
+        "cta": "Zobacz strategię"
+      }
+    }
   },
   "guides": {
     "metaTitle": "Poradniki WARDOGS: premiera, rozgrywka, broń i naprawy",

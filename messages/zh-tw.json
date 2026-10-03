@@ -84,7 +84,9 @@
     "items": "物品",
     "news": "新聞",
     "steamCta": "在 Steam 檢視",
-    "primaryLabel": "主導航"
+    "primaryLabel": "主導航",
+    "mapsAndTools": "地圖與工具",
+    "artilleryCalculator": "火砲與迫擊砲計算器"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki 中文維基：戰術射擊全圖鑑與開荒地圖攻略",
@@ -415,7 +417,35 @@
       "guidesCta": "瀏覽攻略",
       "steamCta": "開啟 Steam"
     },
-    "heroImageAlt": "WARDOGS 士兵和載具正在爭奪當前 Control Zone 的官方遊戲畫面"
+    "heroImageAlt": "WARDOGS 士兵和載具正在爭奪當前 Control Zone 的官方遊戲畫面",
+    "tacticalHub": {
+      "eyebrow": "戰術中樞",
+      "title": "四大學術指揮中樞",
+      "map": {
+        "title": "戰術交互地圖",
+        "description": "256km² 高清底圖、迫擊砲與重砲密位射表及點位測距",
+        "badge": "HD 2048px",
+        "cta": "立即調取"
+      },
+      "catalogue": {
+        "title": "武器載具圖鑑",
+        "description": "11大類裝備庫、槍械傷害屬性與出戰預算精算",
+        "badge": "11 大類",
+        "cta": "查驗圖鑑"
+      },
+      "radar": {
+        "title": "實時服務監控",
+        "description": "官方停機維護動態、匹配隊列監測與跨區延遲雷達",
+        "badge": "Live Radar",
+        "cta": "查看狀態"
+      },
+      "wipe": {
+        "title": "第二賽季刪檔",
+        "description": "賽季清零規則矩陣、12 天避險策略與現金兌換率",
+        "badge": "S2 Wipe",
+        "cta": "查看應對"
+      }
+    }
   },
   "guides": {
     "metaTitle": "WARDOGS 中文攻略大全 - 上線、玩法、武器、載具與故障修復",

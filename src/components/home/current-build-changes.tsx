@@ -1,12 +1,15 @@
-import {ArrowUpRight, History} from "lucide-react";
+import {ArrowUpRight, History, Hourglass} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import type {Locale} from "@/config/site";
 import {getHomeCurrentBuildChanges} from "@/features/home/home-data";
 import {formatLocalizedDate} from "@/lib/localized-date";
+import {CURRENT_EVENT} from "@/features/live-ops/current-event";
+import {Link} from "@/i18n/navigation";
 
 export async function CurrentBuildChanges({locale}: {locale: Locale}) {
   const t = await getTranslations("home.buildChanges");
   const changes = getHomeCurrentBuildChanges();
+  const isZh = locale === "zh-cn" || locale === "zh-tw";
 
   return (
     <section aria-labelledby="current-build-changes-title" className="border-b border-[#26312c] bg-[#151b18] py-12 sm:py-14" data-current-build-changes>
@@ -46,15 +49,46 @@ export async function CurrentBuildChanges({locale}: {locale: Locale}) {
           ))}
         </ul>
 
-        <a
-          title={t("sourceCta")}
-          className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba]"
-          href={changes[0]!.sourceUrl}
-          rel="noreferrer"
-          target="_blank"
-        >
-          {t("sourceCta")}<ArrowUpRight aria-hidden="true" className="size-4" />
-        </a>
+        {/* 4. 时效与版本动态区：Update 0.1.2 修复报告与 S2 倒计时动态 */}
+        <div className="mt-8 rounded-lg border border-[#3b5744] bg-gradient-to-r from-[#172b20] to-[#101913] p-5 shadow-lg">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3.5">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-md border border-[#3b684c] bg-[#1a3326] text-[#f0be55]">
+                <Hourglass aria-hidden="true" className="size-5" />
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-[#d9a93a]">
+                  {isZh ? "第二赛季删档动态 (S2 Wipe Countdown)" : "Season 2 Wipe & Reset Roadmap"}
+                </p>
+                <p className="mt-0.5 text-xs text-[#dbe5df] sm:text-sm">
+                  {isZh
+                    ? "官方宣布 2026年10月15日 全服重置清零，立即查阅装备避险与资产对冲策略"
+                    : "Scheduled for October 15, 2026. Prepare capital hedging, cash preservation & role carryover."}
+                </p>
+              </div>
+            </div>
+            <Link
+              href={`/guides/${CURRENT_EVENT.nextSeasonGuideSlug}`}
+              title={isZh ? "查阅 S2 赛季删档应对指南" : "View Season 2 Wipe Strategy Guide"}
+              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-[6px] border border-[#68bd8d] bg-[#24583a] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#2c6a46]"
+            >
+              <span>{isZh ? "查看删档应对指南" : "Wipe Strategy"}</span>
+              <ArrowUpRight aria-hidden="true" className="size-4" />
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-4 flex items-center justify-between">
+          <a
+            title={t("sourceCta")}
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#79d19c] hover:text-[#a0e0ba]"
+            href={changes[0]!.sourceUrl}
+            rel="noreferrer"
+            target="_blank"
+          >
+            {t("sourceCta")}<ArrowUpRight aria-hidden="true" className="size-4" />
+          </a>
+        </div>
       </div>
     </section>
   );

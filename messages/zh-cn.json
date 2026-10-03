@@ -84,7 +84,9 @@
     "items": "物品",
     "news": "新闻",
     "steamCta": "在 Steam 查看",
-    "primaryLabel": "主导航"
+    "primaryLabel": "主导航",
+    "mapsAndTools": "地图与工具",
+    "artilleryCalculator": "火炮与迫击炮计算器"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki 中文维基：战术射击全图鉴与开荒地图攻略",
@@ -93,7 +95,12 @@
     "heroDescription": "这里整理经过来源核实的装备、操作、当前参与状态、故障排查与实战策略，并明确标注所有受版本影响的信息。",
     "primaryCta": "查看 Patch 0.11",
     "secondaryCta": "检查服务器状态",
-    "quickTasks": {"weapons": "武器", "vehicles": "载具", "map": "交互地图", "status": "服务器状态"},
+    "quickTasks": {
+      "weapons": "武器",
+      "vehicles": "载具",
+      "map": "交互地图",
+      "status": "服务器状态"
+    },
     "status": "Steam 抢先体验已上线",
     "statsLabel": "WARDOGS 关键信息",
     "stats": {
@@ -161,8 +168,20 @@
       "videoCategory": "当前视频",
       "toolSummary": "从全站共享导航自动发现的交互式玩家工具。",
       "mapSummary": "按任务整理的行动地图，串联有来源的战场、目标、后勤、迫击炮和空中行动攻略。",
-      "types": {"guide": "攻略", "item": "道具", "video": "视频", "tool": "工具", "map": "地图"},
-      "counts": {"guides": "攻略", "items": "道具页", "videos": "当前视频", "tools": "工具", "maps": "地图"}
+      "types": {
+        "guide": "攻略",
+        "item": "道具",
+        "video": "视频",
+        "tool": "工具",
+        "map": "地图"
+      },
+      "counts": {
+        "guides": "攻略",
+        "items": "道具页",
+        "videos": "当前视频",
+        "tools": "工具",
+        "maps": "地图"
+      }
     },
     "actions": {
       "eyebrow": "选择你的任务",
@@ -209,12 +228,30 @@
       "verifiedLabel": "核对日期",
       "sourceCta": "查看 Season 1 官方更新",
       "entries": {
-        "fobVendor": {"title": "FOB 商人", "field": "商店价格"},
-        "largeHammer": {"title": "大型锤", "field": "商店价格"},
-        "artilleryTank": {"title": "火炮坦克", "field": "生涯解锁价格"},
-        "ural": {"title": "URAL 卡车", "field": "解锁价格"},
-        "duneBuggy": {"title": "沙丘越野车", "field": "解锁价格"},
-        "deagle": {"title": "Deagle", "field": "所需等级"}
+        "fobVendor": {
+          "title": "FOB 商人",
+          "field": "商店价格"
+        },
+        "largeHammer": {
+          "title": "大型锤",
+          "field": "商店价格"
+        },
+        "artilleryTank": {
+          "title": "火炮坦克",
+          "field": "生涯解锁价格"
+        },
+        "ural": {
+          "title": "URAL 卡车",
+          "field": "解锁价格"
+        },
+        "duneBuggy": {
+          "title": "沙丘越野车",
+          "field": "解锁价格"
+        },
+        "deagle": {
+          "title": "Deagle",
+          "field": "所需等级"
+        }
       }
     },
     "priority": {
@@ -380,7 +417,35 @@
       "guidesCta": "浏览攻略",
       "steamCta": "打开 Steam"
     },
-    "heroImageAlt": "WARDOGS 士兵和载具正在争夺当前 Control Zone 的官方游戏画面"
+    "heroImageAlt": "WARDOGS 士兵和载具正在争夺当前 Control Zone 的官方游戏画面",
+    "tacticalHub": {
+      "eyebrow": "战术中枢",
+      "title": "四大战术指挥中枢",
+      "map": {
+        "title": "战术交互地图",
+        "description": "256km² 高清底图、迫击炮与重炮密位射表及点位测距",
+        "badge": "HD 2048px",
+        "cta": "立即调取"
+      },
+      "catalogue": {
+        "title": "武器载具图鉴",
+        "description": "11大类装备库、枪械伤害属性与出战预算精算",
+        "badge": "11 大类",
+        "cta": "查验图鉴"
+      },
+      "radar": {
+        "title": "实时服务监控",
+        "description": "官方停机维护动态、匹配队列监测与跨区延迟雷达",
+        "badge": "Live Radar",
+        "cta": "查看状态"
+      },
+      "wipe": {
+        "title": "第二赛季删档",
+        "description": "赛季清零规则矩阵、12 天避险策略与现金兑换率",
+        "badge": "S2 Wipe",
+        "cta": "查看应对"
+      }
+    }
   },
   "guides": {
     "metaTitle": "WARDOGS 中文攻略大全 - 上线、玩法、武器、载具与故障修复",

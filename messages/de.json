@@ -84,7 +84,9 @@
     "items": "Gegenstände",
     "news": "Neuigkeiten",
     "steamCta": "Auf Steam ansehen",
-    "primaryLabel": "Hauptnavigation"
+    "primaryLabel": "Hauptnavigation",
+    "mapsAndTools": "Karten & Werkzeuge",
+    "artilleryCalculator": "Artillerie- und Mörser-Rechner"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: Guides, Waffen, Fahrzeuge & Tools durchsuchen",
@@ -93,7 +95,12 @@
     "heroDescription": "Nutze ein quellengeprüftes WARDOGS-Nachschlagewerk für Ausrüstung, Steuerung, Zugang, Problemlösungen und Taktiken mit klaren Build-Hinweisen.",
     "primaryCta": "Patch 0.11 lesen",
     "secondaryCta": "Serverstatus prüfen",
-    "quickTasks": {"weapons": "Waffen", "vehicles": "Fahrzeuge", "map": "Interaktive Karte", "status": "Serverstatus"},
+    "quickTasks": {
+      "weapons": "Waffen",
+      "vehicles": "Fahrzeuge",
+      "map": "Interaktive Karte",
+      "status": "Serverstatus"
+    },
     "status": "Steam Early Access ist live",
     "statsLabel": "Wichtige Fakten zu WARDOGS",
     "stats": {
@@ -161,8 +168,20 @@
       "videoCategory": "Aktuelles Video",
       "toolSummary": "Interaktives Spieler-Tool aus der gemeinsamen Seitennavigation.",
       "mapSummary": "Aufgabenorientierter Einsatzatlas mit belegten Hinweisen zu Schlachtfeld, Zielen, Logistik, Mörsern und Luftoperationen.",
-      "types": {"guide": "Guide", "item": "Gegenstand", "video": "Video", "tool": "Tool", "map": "Karte"},
-      "counts": {"guides": "Guides", "items": "Gegenstandsseiten", "videos": "Aktuelle Videos", "tools": "Tools", "maps": "Karten"}
+      "types": {
+        "guide": "Guide",
+        "item": "Gegenstand",
+        "video": "Video",
+        "tool": "Tool",
+        "map": "Karte"
+      },
+      "counts": {
+        "guides": "Guides",
+        "items": "Gegenstandsseiten",
+        "videos": "Aktuelle Videos",
+        "tools": "Tools",
+        "maps": "Karten"
+      }
     },
     "actions": {
       "eyebrow": "Wähle deine Aufgabe",
@@ -209,12 +228,30 @@
       "verifiedLabel": "Geprüft",
       "sourceCta": "Offizielles Season-1-Update lesen",
       "entries": {
-        "fobVendor": {"title": "FOB-Händler", "field": "Händlerpreis"},
-        "largeHammer": {"title": "Large Hammer", "field": "Händlerpreis"},
-        "artilleryTank": {"title": "Artillery Tank", "field": "Karriere-Freischaltung"},
-        "ural": {"title": "URAL", "field": "Freischaltung"},
-        "duneBuggy": {"title": "Dune Buggy", "field": "Freischaltung"},
-        "deagle": {"title": "Deagle", "field": "Benötigtes Level"}
+        "fobVendor": {
+          "title": "FOB-Händler",
+          "field": "Händlerpreis"
+        },
+        "largeHammer": {
+          "title": "Large Hammer",
+          "field": "Händlerpreis"
+        },
+        "artilleryTank": {
+          "title": "Artillery Tank",
+          "field": "Karriere-Freischaltung"
+        },
+        "ural": {
+          "title": "URAL",
+          "field": "Freischaltung"
+        },
+        "duneBuggy": {
+          "title": "Dune Buggy",
+          "field": "Freischaltung"
+        },
+        "deagle": {
+          "title": "Deagle",
+          "field": "Benötigtes Level"
+        }
       }
     },
     "priority": {
@@ -380,7 +417,35 @@
       "guidesCta": "Guides entdecken",
       "steamCta": "Steam öffnen"
     },
-    "heroImageAlt": "WARDOGS-Soldaten und Fahrzeuge im Kampf um die aktive Control Zone"
+    "heroImageAlt": "WARDOGS-Soldaten und Fahrzeuge im Kampf um die aktive Control Zone",
+    "tacticalHub": {
+      "eyebrow": "TAKTISCHE ZENTREN",
+      "title": "Vier strategische Lagezentren",
+      "map": {
+        "title": "Taktische interaktive Karte",
+        "description": "256 km² HD-Basiskarten, Artillerie-/Mörser-Schusstabellen & Entfernungsmesser",
+        "badge": "HD 2048px",
+        "cta": "Karte öffnen"
+      },
+      "catalogue": {
+        "title": "Waffen- & Fahrzeug-Katalog",
+        "description": "Datenbank für 11 Kategorien, Schadensprofile & Ausrüstungsbudget-Rechner",
+        "badge": "11 Kategorien",
+        "cta": "Katalog durchsuchen"
+      },
+      "radar": {
+        "title": "Live-Server-Statusradar",
+        "description": "Offizielle Wartungsfenster, Warteschlangenüberwachung & Regionen-Ping-Radar",
+        "badge": "Live Radar",
+        "cta": "Status prüfen"
+      },
+      "wipe": {
+        "title": "Saison 2 Wipe-Matrix",
+        "description": "Vollständige Reset-Regeln, 12-Tage-Absicherungsstrategien & Auszahlungskurse",
+        "badge": "S2 Wipe",
+        "cta": "Strategie ansehen"
+      }
+    }
   },
   "guides": {
     "metaTitle": "WARDOGS Guides - Launch, Gameplay, Waffen & Lösungen",
