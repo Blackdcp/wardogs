@@ -1,6 +1,6 @@
 import {defineConfig, devices} from "@playwright/test";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/wardogs";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default defineConfig({
   testDir: "./tests/pages-e2e",

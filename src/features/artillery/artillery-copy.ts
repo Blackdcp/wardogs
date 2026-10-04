@@ -165,11 +165,11 @@ const copy: Record<Locale, ArtilleryCopy> = {
     adNotice: "贊助商戰術支援"
   },
   en: {
-    metaTitle: "WARDOGS Artillery Calculator: L81 Mortar & SPH-2 Firing Table",
-    metaDescription: "Interactive WARDOGS artillery and mortar calculator. Calculate firing solutions for L81 81mm Mortar and SPH-2 Howitzer: elevation mils, azimuth, elevation delta, and flight time.",
+    metaTitle: "WARDOGS Mortar Calculator & Artillery Firing Table: L81 + SPH-2",
+    metaDescription: "WARDOGS mortar calculator and artillery firing table for L81 and SPH-2. Plot map targets, range, azimuth, elevation mils, height delta and time of flight.",
     eyebrow: "Tactical Fire Control",
-    title: "Artillery & Mortar Mil Calculator",
-    subtitle: "Estimate elevation, bearing and flight time from the available firing tables and model. Use map or numeric inputs.",
+    title: "Mortar Calculator & SPH-2 Artillery Firing Table",
+    subtitle: "Turn map measurements into L81 mortar or SPH-2 artillery firing solutions with mils, azimuth, height delta and time-of-flight checks.",
     modeMap: "Interactive Map",
     modeDirect: "Direct Numeric",
     selectWeapon: "Select Weapon System",
@@ -202,8 +202,8 @@ const copy: Record<Locale, ArtilleryCopy> = {
     cancelCountdown: "Cancel countdown",
     mapKeyboardInstructions: "Focus the map, move the cursor with arrow keys, then press Enter or Space to place the gun or target. Choose what to place with the buttons above.",
     mapCursor: "Map cursor",
-    tacticalTipTitle: "Tactical Suppression & Supply Notes",
-    tacticalTipBody: "Treat these figures as estimates. Test and calibrate in your current game build, checking the map scale, selected trajectory and height difference before relying on a firing solution.",
+    tacticalTipTitle: "Map-to-Fire Workflow",
+    tacticalTipBody: "Measure in the tactical map first, place gun and target, then fire one ranging round in the current build before spending a full volley. Recheck trajectory, height delta and server rules.",
     quickTools: {
       ammoTitle: "Weapon & Ammo Matcher",
       ammoDesc: "Check recorded weapon and ammunition calibre matches",

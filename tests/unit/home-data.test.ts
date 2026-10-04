@@ -15,12 +15,12 @@ describe("homepage data", () => {
     const guides = [...TOP_GUIDE_SLUGS, "wardogs-helicopter-guide", "wardogs-cargo-guide", "wardogs-squad-guide", "wardogs-towers-guide", "wardogs-best-settings", "wardogs-mortar-guide"].map((slug) => ({slug, updatedAt: "2026-09-30"}));
     const result = getHomePriorityGuides(guides, "ja");
     expect(result.top.map((guide) => guide.slug)).toEqual([
-      "wardogs-squad-guide", "wardogs-towers-guide", "wardogs-best-weapons-loadouts",
-      "wardogs-cargo-guide", "wardogs-best-settings", "wardogs-helicopter-guide"
+      "wardogs-infantry-mode", "wardogs-squad-guide", "wardogs-mortar-guide",
+      "wardogs-towers-guide", "wardogs-best-weapons-loadouts", "wardogs-cargo-guide"
     ]);
     expect(getHomePriorityGuides(guides, "de").top.map((guide) => guide.slug)).toEqual([
-      "wardogs-best-weapons-loadouts", "wardogs-best-settings", "wardogs-progression-wipes-guide",
-      "wardogs-crash-fix", "wardogs-season-2", "wardogs-cargo-guide"
+      "wardogs-infantry-mode", "wardogs-best-weapons-loadouts", "wardogs-best-settings",
+      "wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-season-2"
     ]);
     const sparse = getHomePriorityGuides([guides[0]], "ja");
     expect(sparse.top).toEqual([guides[0]]);
@@ -54,6 +54,7 @@ describe("homepage data", () => {
 
   it("promotes core homepage SEO links and maintenance signals", () => {
     expect(TOP_GUIDE_SLUGS).toEqual([
+      "wardogs-infantry-mode",
       "wardogs-season-2",
       "wardogs-server-status",
       "wardogs-patch-notes",

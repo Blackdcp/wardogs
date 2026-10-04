@@ -1,0 +1,93 @@
+---
+title: "WARDOGS 步兵模式攻略：规则、载具与打法"
+description: "WARDOGS 步兵模式攻略，结合 0.1.2 更新、Deploy 服务器入口、载具与火力限制、地图路线、FOB 建设、迫击炮校射、IR Rangefinder 热修与小队配装，帮助玩家快速适应 Infantry Mode，并判断当前服务器到底保留哪些工具、路线和支援火力。适合开局前速查。"
+keyword: "wardogs infantry mode"
+category: "guide"
+slug: "wardogs-infantry-mode"
+order: 55
+updatedAt: "2026-10-04"
+badges:
+  - label: "步兵模式"
+    tone: "accent"
+  - label: "0.1.2 更新"
+    tone: "warning"
+faq:
+  - question: "WARDOGS 步兵模式是什么？"
+    answer: "步兵模式是 Update 0.1.2 后在 Deploy 里出现的服务器选择，重点转向步兵交战，但仍要以当前服务器的实际规则为准。"
+  - question: "步兵模式会移除迫击炮、FOB 或后勤吗？"
+    answer: "官方更新只确认入口与服务器选择，没有公布完整移除清单。进入服务器后要检查载具、建造、补给与迫击炮是否可用。"
+  - question: "步兵模式还需要地图和火炮计算器吗？"
+    answer: "需要。路线、塔楼推进、FOB 补给、迫击炮校射和队友坐标同步仍然决定胜负。"
+sources:
+  - label: "Official Update 0.1.2 minor patch"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-04"
+  - label: "Official October 2 IR/CWIS hotfix feed"
+    url: "https://steamcommunity.com/app/1867240/announcements/"
+    kind: "official"
+    checkedAt: "2026-10-04"
+  - label: "Official WARDOGS Season 02 announcement"
+    url: "https://steamcommunity.com/games/1867240/announcements/detail/677384059121304815"
+    kind: "official"
+    checkedAt: "2026-10-04"
+  - label: "PC Gamer balance and XP interview coverage"
+    url: "https://www.pcgamer.com/games/fps/wardogs-boss-talks-balance-xp-and-why-the-endgame-is-sh-t-right-now/"
+    kind: "press"
+    checkedAt: "2026-10-04"
+---
+
+## 快速结论
+
+步兵模式之所以突然变成搜索热点，是因为 Update 0.1.2 把它直接放进 Deploy 服务器选择里，和 Official、Community、Low-Level 并列。不要把它理解成“所有载具和支援系统必定消失”。更稳的理解是：这是一个偏步兵交战的服务器规则集，具体禁用什么，要进入当前服务器后检查载具终端、商店、建造提示和地图目标。
+
+最稳的打法是步兵优先：便宜可重复的配装、明确的塔楼路线、短距离救援、地图标记、语音 callout 和能快速补回损失的后勤纪律。打开 [交互地图](/zh-cn/tools/map)，先约定主路线、备用路线和集合点；如果当前服务器仍允许 L81 或 SPH-2，再把 [火炮计算器](/zh-cn/tools/artillery-calculator) 作为校射工具。
+
+## 0.1.2 更新改变了什么
+
+官方 Update 0.1.2 把 Deploy 入口做得更明确：玩家可以选择 Official、Community、Infantry Mode 或 Low-Level，Official 高级筛选恢复，加入服务器后的连接和排队反馈也更清楚。因此玩家现在要解决的问题不是“有没有步兵模式”，而是“我进的这个步兵模式服务器到底保留了哪些东西”。
+
+进场前先看服务器标签，进场后检查商店、载具刷新、建造提示、队伍规模和当前目标。若载具终端不可用，但装备商店仍开放，你的配装策略会和完全禁用支援系统的服务器不同。若 FOB 仍可建造，Support 的价值会上升，因为步兵战更依赖短复活路线和稳定补给。
+
+## 步兵优先并不等于无脑冲楼
+
+步兵模式会放大基本功：间距、掩体、局部语音、救援、弹药分享和准确标记。没有坦克不代表门口安全；手雷、交叉火力、第三方队伍和屋顶角度仍然会惩罚堆点。
+
+第一套装备应该便宜、可替换、能打两轮接触。带一把你能压住的主武器，足够弹药，一个小队缺少的医疗或支援职责，以及服务器确实允许的工具。想测试新枪或新配件，最好等路线稳定后再做，不要把第一波塔楼推进变成昂贵试验。
+
+## 地图、塔楼和 FOB 路线
+
+冲之前先看地图。选一条主推进线、一条撤退线和一个不会直接暴露在塔楼火力下的集合点。三方战场里，第三队经常在前两队暴露后收割，所以所谓“安静小路”只有在有掩体、有救援点、有退路时才安全。
+
+塔楼内部分工要清楚：一个人看楼梯或屋顶，一个人看道路或山脊，一个人读终端提示，一个人准备救援。若塔楼被连续爆炸物或迫击炮压制，不要在同一个房间反复倒地。先离开弹着区，在外侧重组，等敌方装填或换位后再进。
+
+## 迫击炮、CIWS 和直升机检查
+
+步兵模式不能让你忽视 10 月 2 日热修。官方 IR/CWIS 热修暂时关闭新 IR Rangefinder 商店购买，计划 Season 02 回归时需要电池；CWIS 对 Havoc 的击毁时间也从约 12 秒调整回约 6 秒。这影响侦察、直升机风险和防空部署。
+
+如果服务器允许 L81 迫击炮，先打一发校射，不要凭感觉一口气倾泻。报清目标、距离、方位角、第一发弹着点和修正方向。若迫击炮不可用，这套沟通习惯仍适用于手雷、火箭筒和侧翼包抄。若直升机仍存在，听到旋翼声就提前分散，覆盖可能落点，不要因为追飞机而丢掉目标区。
+
+## 配装优先级
+
+| 需求 | 优先携带 | 先别浪费钱 |
+| --- | --- | --- |
+| 突击进点 | 稳定主武器、足够弹匣、可用烟雾或工具 | 没测过后坐力的昂贵整活枪 |
+| 医疗救援 | 掩体、语音、医疗用品 | 在同一个爆炸区反复救人 |
+| 支援 / FOB | 建造工具、补给意识、路线标记 | 卡车和直升机都到不了的位置 |
+| 侦察标记 | 清晰点名、距离、方向 | 假设热修后还能直接买 IR Rangefinder |
+
+## 本站使用路线
+
+这篇是步兵模式搜索入口。继续看 [Patch Notes](/zh-cn/guides/wardogs-patch-notes) 确认 0.1.2 入口变化；看 [装备工具攻略](/zh-cn/guides/wardogs-equipment-tools-guide) 了解 IR Rangefinder 与 CWIS；用 [地图攻略](/zh-cn/guides/wardogs-map) 规划路线；服务器若允许间接火力，再看 [迫击炮攻略](/zh-cn/guides/wardogs-mortar-guide)。
+
+## 来源与核查
+
+核查日期按下方每条来源分别记录。Update 0.1.2 与 10 月 2 日 IR/CWIS 热修在 2026-10-04 对照官方 Steam 公告入口核查。PC Gamer 关于平衡、XP 与迫击炮压力的报道只作为社区问题背景，不当作补丁说明。
+
+## 相关攻略
+
+- [WARDOGS 补丁说明](/zh-cn/guides/wardogs-patch-notes)
+- [WARDOGS 装备工具攻略](/zh-cn/guides/wardogs-equipment-tools-guide)
+- [WARDOGS 地图攻略](/zh-cn/guides/wardogs-map)
+- [WARDOGS 迫击炮攻略](/zh-cn/guides/wardogs-mortar-guide)
+- [WARDOGS 火炮计算器](/zh-cn/tools/artillery-calculator)

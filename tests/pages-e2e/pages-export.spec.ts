@@ -4,7 +4,8 @@ import {expect, test} from "@playwright/test";
 import {getIndexableItemPaths} from "../../src/features/items/item-library";
 import {getPublicSiteBase} from "../../src/lib/public-url";
 
-const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/wardogs";
+process.env.NEXT_PUBLIC_SITE_URL ??= "https://www.wardogswiki.com";
+const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const basePath = configuredBasePath.replace(/^\/+|\/+$/g, "")
   ? `/${configuredBasePath.replace(/^\/+|\/+$/g, "")}`
   : "";
@@ -66,7 +67,7 @@ test("serves the Pages export from its deployment base", async ({page, request})
 
   await page.goto(deployed("/en/guides/wardogs-gameplay/"));
   await page.locator("select:visible").selectOption("de");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/guides/wardogs-gameplay/")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/guides/wardogs-gameplay")}`);
 
   await page.goto(deployed("/en/"));
   const localLinks = await page.locator('a[href^="/"]').evaluateAll((links) => links.map((link) => link.getAttribute("href")));
@@ -205,13 +206,13 @@ test("locale switching uses only exported item routes", async ({page}) => {
 
   await page.goto(deployed("/en/items/vehicles/bobcat/"));
   await page.locator("select:visible").selectOption("ru");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/vehicles/bobcat/")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/vehicles/bobcat")}`);
 
   await page.goto(deployed("/en/items/weapons/mortar/"));
   await page.locator("select:visible").selectOption("ru");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/weapons/mortar/")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/weapons/mortar")}`);
   await page.locator("select:visible").selectOption("de");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/items/weapons/mortar/")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/items/weapons/mortar")}`);
 });
 
 test("crawls every catalogue-facing internal link across all locales", async ({page, request}) => {

@@ -59,8 +59,9 @@ describe("September 23 Season 02 content refresh", () => {
     }
   });
 
-  it("promotes Season 02 as the first home-page guide and a confirmed status item", () => {
-    expect(TOP_GUIDE_SLUGS[0]).toBe("wardogs-season-2");
+  it("keeps Season 02 promoted while prioritizing the new Infantry Mode page", () => {
+    expect(TOP_GUIDE_SLUGS[0]).toBe("wardogs-infantry-mode");
+    expect(TOP_GUIDE_SLUGS[1]).toBe("wardogs-season-2");
     expect(CONFIRMED_RUMOR_ITEMS[0]).toEqual({
       status: "confirmed",
       titleKey: "season02",

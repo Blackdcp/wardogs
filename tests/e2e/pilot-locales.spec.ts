@@ -81,6 +81,6 @@ test("includes complete new locales in the sitemap without duplicate URLs", asyn
     for (const suffix of ["", "/news", "/items", "/tools/map", "/guides/wardogs-controls", "/guides/wardogs-mortar-guide"]) {
       expect(urls).toContain(publicPageUrl(`/${locale}${suffix}`));
     }
-    expect(urls.filter((url) => url.includes(`/${locale}/guides/`))).toHaveLength(54);
+    expect(urls.filter((url) => url.includes(`/${locale}/guides/`))).toHaveLength(55);
   }
 });

@@ -49,6 +49,8 @@ describe("grouped navigation", () => {
       .toBe("/guides/wardogs-crash-fix");
     expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.helicopterGuide")?.href)
       .toBe("/guides/wardogs-helicopter-guide");
+    expect(groups.find((group) => group.id === "guides")?.items.find(({label}) => label === "nav.infantryMode")?.href)
+      .toBe("/guides/wardogs-infantry-mode");
     expect(groups.find((group) => group.id === "mapsAndTools")?.items.find(({label}) => label === "nav.systemCheck")?.href)
       .toBe("/tools/system-check");
     expect(groups.find((group) => group.id === "mapsAndTools")?.items.find(({label}) => label === "nav.interactiveMap")?.href)
@@ -70,6 +72,7 @@ describe("grouped navigation", () => {
     const byHref = new Map(items.map((item) => [item.href, item.searchType]));
 
     expect(byHref.get("/guides/wardogs-beginner-guide")).toBe("guide");
+    expect(byHref.get("/guides/wardogs-infantry-mode")).toBe("guide");
     expect(byHref.get("/items/weapons")).toBe("item");
     expect(byHref.get("/tools/system-check")).toBe("tool");
     expect(byHref.get("/tools/loadout-budget")).toBe("tool");

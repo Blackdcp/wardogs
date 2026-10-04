@@ -1,6 +1,6 @@
 import {seasonOneChanges, type SeasonOneChange} from "@/features/catalogue/catalogue-evidence";
 
-export const HOME_UPDATED_AT = "2026-10-03";
+export const HOME_UPDATED_AT = "2026-10-04";
 
 export const HOME_FACT_KEYS = ["earlyAccess", "players", "teams", "controlZone"] as const;
 export type HomeFactKey = (typeof HOME_FACT_KEYS)[number];
@@ -41,6 +41,7 @@ export const HOME_CATEGORY_GUIDES = [
 ] as const;
 
 export const TOP_GUIDE_SLUGS = [
+  "wardogs-infantry-mode",
   "wardogs-season-2",
   "wardogs-server-status",
   "wardogs-patch-notes",
@@ -86,14 +87,14 @@ export const CONFIRMED_RUMOR_ITEMS = [
 ] as const;
 
 const LOCALIZED_PRIORITY_SLUGS: Readonly<Record<string, readonly string[]>> = {
-  en: ["wardogs-community-servers-guide", "wardogs-crash-fix", "wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-mortar-guide", "wardogs-achievements"],
-  ja: ["wardogs-squad-guide", "wardogs-towers-guide", "wardogs-best-weapons-loadouts", "wardogs-cargo-guide", "wardogs-best-settings", "wardogs-helicopter-guide"],
-  ru: ["wardogs-crash-fix", "wardogs-best-settings", "wardogs-mortar-guide", "wardogs-progression-wipes-guide", "wardogs-squad-guide", "wardogs-money-guide"],
-  de: ["wardogs-best-weapons-loadouts", "wardogs-best-settings", "wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-season-2", "wardogs-cargo-guide"],
-  "zh-cn": ["wardogs-map", "wardogs-mortar-guide", "wardogs-equipment-tools-guide", "wardogs-crash-fix", "wardogs-money-guide", "wardogs-season-2"],
-  "zh-tw": ["wardogs-map", "wardogs-mortar-guide", "wardogs-equipment-tools-guide", "wardogs-crash-fix", "wardogs-money-guide", "wardogs-season-2"],
-  "pt-br": ["wardogs-beginner-guide", "wardogs-squad-guide", "wardogs-money-guide", "wardogs-best-settings", "wardogs-mortar-guide", "wardogs-progression-wipes-guide"],
-  pl: ["wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-ammo-reload-guide", "wardogs-community-servers-guide", "wardogs-season-2", "wardogs-best-weapons-loadouts"]
+  en: ["wardogs-infantry-mode", "wardogs-community-servers-guide", "wardogs-crash-fix", "wardogs-season-2", "wardogs-mortar-guide", "wardogs-artillery-guide"],
+  ja: ["wardogs-infantry-mode", "wardogs-squad-guide", "wardogs-mortar-guide", "wardogs-towers-guide", "wardogs-best-weapons-loadouts", "wardogs-cargo-guide"],
+  ru: ["wardogs-infantry-mode", "wardogs-crash-fix", "wardogs-mortar-guide", "wardogs-best-settings", "wardogs-progression-wipes-guide", "wardogs-squad-guide"],
+  de: ["wardogs-infantry-mode", "wardogs-best-weapons-loadouts", "wardogs-best-settings", "wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-season-2"],
+  "zh-cn": ["wardogs-infantry-mode", "wardogs-map", "wardogs-mortar-guide", "wardogs-equipment-tools-guide", "wardogs-crash-fix", "wardogs-season-2"],
+  "zh-tw": ["wardogs-infantry-mode", "wardogs-map", "wardogs-mortar-guide", "wardogs-equipment-tools-guide", "wardogs-crash-fix", "wardogs-season-2"],
+  "pt-br": ["wardogs-infantry-mode", "wardogs-beginner-guide", "wardogs-squad-guide", "wardogs-money-guide", "wardogs-best-settings", "wardogs-mortar-guide"],
+  pl: ["wardogs-infantry-mode", "wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-ammo-reload-guide", "wardogs-community-servers-guide", "wardogs-season-2"]
 };
 
 export function getHomePriorityGuides<T extends RecentlyUpdatedGuideInput>(guides: readonly T[], locale?: string) {

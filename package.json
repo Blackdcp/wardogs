@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "npm run content:validate && next build",
+    "build": "npm run content:validate && next build --webpack",
     "release:prepare": "node scripts/deploy-production.mjs prepare",
     "release:finalize": "node scripts/deploy-production.mjs finalize",
     "build:pages": "node scripts/build-pages.mjs",

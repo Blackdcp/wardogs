@@ -12,7 +12,7 @@ const slugs = ["wardogs-achievements", "wardogs-progression-wipes-guide", "wardo
 
 // Pre-edit title, description, keyword and slug digests, in the slug order above.
 const metadataBaseline = {
-  en: ["53bec00f32596ba90db71b51057bdefbc43008480736bc13b6892ceea4d10b67", "f9d8b57e888b6a6ca54e9dff0ebbba44c8308e089f6ac0ca70fe9fc98175e663", "53a7635a7654fb8e8b17fa33c40147cd733c94f1ac26a0338095c33166f196d0"],
+  en: ["53bec00f32596ba90db71b51057bdefbc43008480736bc13b6892ceea4d10b67", "f9d8b57e888b6a6ca54e9dff0ebbba44c8308e089f6ac0ca70fe9fc98175e663", "9ff948f12ceba7b58e2b795b29d52acc5e33fc305f115c9269d3b00947a80b75"],
   ru: ["edaf25d19a8ae1ed1c164c82566565afb5acde379044014f2117b5443f8eb484", "75a6ed4056d12b45e151bb233723ca790bd5b41da17e6d36c9fd6b03386097f2", "6ac8f2bb75dc239b0baf1f78b1fb515e06bbdc195a86ab70907b5a62da9961dc"],
   de: ["36c1826af9f501763571828e1550056e638189a4a028d699b067eaf8483bfe69", "7d8a09e289c264bf26f595e4a5a61007353e141a4e13dedfb62365ecff99b689", "0d2dd3121f9a942e8a971ff16d16b11a48c83fea902eae1ff9bf23187bc1dff2"],
   "pt-br": ["d88c2afece53c82398969adb85612a0e10375832816b44920b1bcb811d98a755", "d032d90d3531ce7e6cb117164205f42f860af56567fc872b0896d141ad15c2bc", "4a4b75be318713767043cc657d466d166b270c5bfd922bc3bbf3d0ead18b5c74"],
@@ -22,7 +22,7 @@ const metadataBaseline = {
   pl: ["99fde2ce0954c246d4a81fbaff0f9ea950adf8b4932a2cb3a22e635970e7705e", "97fb0bf9592df395822b3c8c1685610c8b56f68dc8941f2c1ce425d0803e4601", "b80cee330bb322f38b3319f7b64308ebd17fdca8671a5b95de4bde6a98f4d697"],
 };
 const headingCounts = {
-  en: [7, 18, 15], ru: [7, 14, 14], de: [7, 14, 15], "pt-br": [7, 14, 15],
+  en: [7, 18, 16], ru: [7, 14, 14], de: [7, 14, 15], "pt-br": [7, 14, 15],
   ja: [7, 14, 11], "zh-cn": [7, 15, 14], "zh-tw": [7, 15, 14], pl: [7, 18, 15],
 };
 

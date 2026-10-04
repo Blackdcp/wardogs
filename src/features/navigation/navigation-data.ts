@@ -38,6 +38,7 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
         {href: "/guides/wardogs-beginner-guide", label: t("nav.beginnerGuide"), searchType: "guide"},
         {href: "/guides/wardogs-crash-fix", label: t("nav.crashFix"), searchType: "guide"},
         {href: "/guides/wardogs-helicopter-guide", label: t("nav.helicopterGuide"), searchType: "guide"},
+        {href: "/guides/wardogs-infantry-mode", label: t("nav.infantryMode"), searchType: "guide"},
         {href: "/guides/wardogs-gameplay", label: t("nav.gameplayGuide"), searchType: "guide"},
         {href: "/guides/wardogs-fob-guide", label: t("nav.fobLogistics"), searchType: "guide"},
         {href: "/guides/wardogs-mortar-guide", label: t("nav.mortarGuide"), searchType: "guide"},

@@ -159,8 +159,9 @@ describe("Similarweb growth guide cluster", () => {
   });
 
   it("keeps the homepage focused on current high-intent player tasks", () => {
-    expect(TOP_GUIDE_SLUGS).toHaveLength(18);
+    expect(TOP_GUIDE_SLUGS).toHaveLength(19);
     expect(TOP_GUIDE_SLUGS).toEqual(expect.arrayContaining([
+      "wardogs-infantry-mode",
       "wardogs-known-issues",
       "wardogs-season-2",
       "wardogs-download",
