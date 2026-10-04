@@ -195,33 +195,26 @@
         "description": "Lerne Einstieg, aktives Ziel, Truppbewegung und einen nützlichen Support-Ablauf."
       },
       "money": {
-        "title": "Geld verdienen und schützen",
-        "description": "Wähle eine wiederholbare Teamaufgabe, setze ein Verlustlimit und prüfe den Nettoertrag."
-      },
-      "progression": {
-        "title": "Rollenfortschritt planen",
-        "description": "Wähle ein Rollenziel und trenne bestätigte Season-1-Änderungen von älteren Werten."
+        "title": "Cash verdienen und Logistik fahren",
+        "description": "Finde wiederholbare Geldrouten, Nachschub, FOB-Loops und sichere Verlustlimits."
       },
       "weapons": {
         "title": "Waffen und Munition wählen",
         "description": "Plane ein bezahlbares Loadout nach Reichweite, Panzerung, Munition und Aktualität der Belege."
       },
-      "logistics": {
-        "title": "FOBs und Logistik betreiben",
-        "description": "Setze sinnvolle Spawnpunkte, bewege Nachschub, sichere Routen und stelle den Ablauf wieder her."
-      },
-      "vehicles": {
-        "title": "Fahrzeuge erkennen",
-        "description": "Durchsuche Transport, Panzerung, Luftfahrzeuge und den jeweils beobachteten Build."
-      },
-      "controls": {
-        "title": "Steuerung lernen",
-        "description": "Prüfe aktuelle Eingaben für Tastatur, Maus, Controller, Fahrzeuge und Helikopter."
-      },
       "pcFixes": {
-        "title": "Abstürze und Leistung beheben",
-        "description": "Prüfe Stabilität, Treiber, Grafikoptionen, Warteschlangen und Systemanforderungen."
-      }
+        "title": "Crashes oder Serverstatus prüfen",
+        "description": "Diagnostiziere WD-L020, Startabstürze, Performance-Probleme und Serverhinweise."
+      },
+      "map": {
+        "title": "Karte und Mörser-Tools nutzen",
+        "description": "Öffne taktische Karte, Reichweitencheck und Feuerleit-Rechner vor dem Einsatz."
+      },
+      "season2": {
+        "title": "Auf Season 2 und Wipes vorbereiten",
+        "description": "Trenne bestätigte Reset-Regeln von Gerüchten, bevor du Cash oder Unlocks grindest."
+      },
+      "cta": "Guide öffnen"
     },
     "buildChanges": {
       "eyebrow": "Offizielle Season-1-Belege",

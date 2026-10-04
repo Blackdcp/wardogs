@@ -9,7 +9,8 @@ import {SiteHeader} from "@/components/layout/site-header";
 import {GoogleAnalytics} from "@/components/seo/google-analytics";
 import {SiteAnalytics} from "@/components/seo/site-analytics";
 import {AdsterraBehavioralAds} from "@/components/ads/adsterra-behavioral-ads";
-import {AdsterraDisplayBanner, AdsterraGlobalInventory} from "@/components/ads/adsterra-display-banner";
+import {AdsterraGlobalInventory} from "@/components/ads/adsterra-display-banner";
+import {GlobalTopAd} from "@/components/ads/global-top-ad";
 import {buildSiteMetadata} from "@/lib/metadata";
 
 type LocaleLayoutProps = {
@@ -51,9 +52,7 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
           </a>
           <div className="flex min-h-screen flex-col pb-[74px] min-[468px]:pb-0">
             <SiteHeader />
-            <div className="site-container py-1" data-global-ad-position="top">
-              <AdsterraDisplayBanner label={adsT("label")} placement="horizontal" />
-            </div>
+            <GlobalTopAd label={adsT("label")} />
             <div id="main-content" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
               {children}
             </div>

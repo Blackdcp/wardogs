@@ -1,6 +1,6 @@
 import {expect, test} from "@playwright/test";
 
-test("home keeps action and freshness sections ahead of discovery and the compact search strip", async ({page}) => {
+test("home presents a focused guide-site journey with integrated high-viewability sponsorship", async ({page}) => {
   await page.setViewportSize({width: 1365, height: 900});
   await page.goto("/en");
 
@@ -25,6 +25,20 @@ test("home keeps action and freshness sections ahead of discovery and the compac
   expect(sectionOrder.every((position) => position >= 0)).toBe(true);
   expect(sectionOrder).toEqual([...sectionOrder].sort((left, right) => left - right));
 
+  const heroTasks = await page.locator("[data-home-placement='hero'][data-home-task]").evaluateAll((links) => links.map((link) => link.getAttribute("data-home-task")));
+  expect(heroTasks).toEqual(["map", "calculator"]);
+  await expect(page.locator("[data-home-placement='hero'][data-home-task='season2']")).toHaveCount(0);
+  await expect(page.locator("[data-home-placement='hero'][data-home-task='status']")).toHaveCount(0);
+
+  await expect(page.locator("[data-global-ad-position='top']")).toHaveCount(0);
+
+  const decisionCards = page.locator("[data-home-action-hub] [data-home-placement='action-hub'][data-home-task]");
+  await expect(decisionCards).toHaveCount(6);
+  await expect(page.locator("[data-home-action-hub] [data-home-task='map']")).toBeVisible();
+  await expect(page.locator("[data-home-action-hub] [data-home-task='season2']")).toBeVisible();
+  await expect(page.locator("[data-home-sponsored-slot='true']")).toBeVisible();
+  await expect(page.locator("[data-home-sponsored-slot='true']")).toHaveCount(1);
+
   const searchHeight = await page.locator("[data-site-search]").evaluate((section) => section.getBoundingClientRect().height);
   expect(searchHeight).toBeLessThan(240);
 });
@@ -33,7 +47,7 @@ test("hero search opens in place instead of jumping to the footer search strip",
   await page.setViewportSize({width: 1440, height: 1000});
   await page.goto("/en");
 
-  await page.locator("[data-hero-search-trigger], [data-hero-search-box='true'] a").first().click();
+  await page.locator("[data-hero-search-trigger='true']").click();
 
   await expect(page.getByRole("dialog", {name: "Search WARDOGS Wiki"})).toBeVisible();
   await expect(page).not.toHaveURL(/#site-search-title$/);

@@ -4,32 +4,34 @@ import {describe, expect, it} from "vitest";
 import {HomeActionHubView} from "../../src/components/home/home-action-hub";
 
 describe("HomeActionHubView", () => {
-  it("renders eight stable task destinations without nested media cards", () => {
+  it("renders six problem-first destinations with an integrated sponsored slot", () => {
     const html = renderToStaticMarkup(
       <HomeActionHubView
-        eyebrow="Your next move"
+        eyebrow="Start here"
         title="What do you need right now?"
-        description="Go directly to the task that brought you here."
+        description="Choose the problem you came to solve."
         actions={[
           {key: "firstMatch", href: "/guides/wardogs-beginner-guide", title: "First match", description: "Deploy with a useful plan."},
-          {key: "money", href: "/guides/wardogs-money-guide", title: "Earn money", description: "Protect cash and contribute."},
-          {key: "progression", href: "/guides/wardogs-progression-wipes-guide", title: "Role progression", description: "Choose a role path."},
+          {key: "map", href: "/tools/map", title: "Map and mortar", description: "Open the tactical map and fire-control tools."},
+          {key: "money", href: "/guides/wardogs-money-guide", title: "Money and logistics", description: "Earn cash and keep supply moving."},
           {key: "weapons", href: "/guides/wardogs-best-weapons-loadouts", title: "Weapons", description: "Build a sourced loadout."},
-          {key: "logistics", href: "/guides/wardogs-fob-guide", title: "FOB and logistics", description: "Build and supply the front."},
-          {key: "vehicles", href: "/items/vehicles", title: "Vehicles", description: "Find transport and armor."},
-          {key: "controls", href: "/guides/wardogs-controls", title: "Controls", description: "Learn the current inputs."},
-          {key: "pcFixes", href: "/guides/wardogs-crash-fix", title: "PC fixes", description: "Diagnose crashes and performance."}
+          {key: "pcFixes", href: "/guides/wardogs-crash-fix", title: "Crashes or server status", description: "Recover from crashes and outages."},
+          {key: "season2", href: "/guides/wardogs-season-2", title: "Season 2 wipe", description: "Separate confirmed resets from rumors."}
         ]}
+        sponsoredSlot={<div data-sponsored-test="true">Sponsored</div>}
+        ctaLabel="Open guide"
       />
     );
 
     expect(html).toContain('data-home-action-hub="true"');
-    expect(html.match(/data-home-action=/g)).toHaveLength(8);
-    expect(html).not.toContain("<img");
-    expect(html).toContain('href="/items/vehicles"');
-    expect(html).toContain('href="/guides/wardogs-crash-fix"');
-    expect(html.match(/data-home-task=/g)).toHaveLength(12);
-    expect(html.match(/data-home-placement="tactical-hub"/g)).toHaveLength(4);
-    expect(html.match(/data-home-placement="action-hub"/g)).toHaveLength(8);
+    expect(html.match(/data-home-action=/g)).toHaveLength(6);
+    expect(html.match(/data-home-task=/g)).toHaveLength(6);
+    expect(html).toContain('data-home-task="map"');
+    expect(html).toContain('data-home-task="season2"');
+    expect(html.match(/data-home-sponsored-slot="true"/g)).toHaveLength(1);
+    expect(html).toContain('data-sponsored-test="true"');
+    expect(html).toContain("Open guide");
+    expect(html).not.toContain('data-tactical-cards="true"');
+    expect(html).not.toContain('data-home-placement="tactical-hub"');
   });
 });

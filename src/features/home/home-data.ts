@@ -20,13 +20,11 @@ export const START_GUIDES = [
 
 export const HOME_ACTIONS = [
   {key: "firstMatch", href: "/guides/wardogs-beginner-guide"},
+  {key: "map", href: "/tools/map"},
   {key: "money", href: "/guides/wardogs-money-guide"},
-  {key: "progression", href: "/guides/wardogs-progression-wipes-guide"},
   {key: "weapons", href: "/guides/wardogs-best-weapons-loadouts"},
-  {key: "logistics", href: "/guides/wardogs-fob-guide"},
-  {key: "vehicles", href: "/items/vehicles"},
-  {key: "controls", href: "/guides/wardogs-controls"},
-  {key: "pcFixes", href: "/guides/wardogs-crash-fix"}
+  {key: "pcFixes", href: "/guides/wardogs-crash-fix"},
+  {key: "season2", href: "/guides/wardogs-season-2"}
 ] as const;
 
 export const HOME_CATEGORY_GUIDES = [

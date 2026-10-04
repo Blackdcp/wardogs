@@ -195,33 +195,26 @@
         "description": "Poznaj wejście do walki, aktywny cel, ruch drużyny i jeden użyteczny cykl wsparcia."
       },
       "money": {
-        "title": "Chroń i zarabiaj gotówkę",
-        "description": "Wybierz powtarzalne zadanie zespołowe, ustal limit strat i sprawdzaj rzeczywisty wynik netto."
-      },
-      "progression": {
-        "title": "Zaplanuj rozwój roli",
-        "description": "Wybierz cel roli i oddziel potwierdzone zmiany Season 1 od starszych wartości."
+        "title": "Zarabiaj i prowadź logistykę",
+        "description": "Sprawdź powtarzalne trasy zarobku, zaopatrzenie, pętle FOB i limity strat."
       },
       "weapons": {
         "title": "Dobierz broń i amunicję",
         "description": "Zbuduj przystępny cenowo zestaw według dystansu, pancerza, amunicji i aktualności dowodów."
       },
-      "logistics": {
-        "title": "Obsługuj FOB i logistykę",
-        "description": "Twórz użyteczne zaplecze odrodzeń, przewoź zaopatrzenie, chroń trasy i przywracaj cykl wsparcia."
-      },
-      "vehicles": {
-        "title": "Rozpoznaj pojazdy",
-        "description": "Przeglądaj transport, pojazdy opancerzone, lotnictwo i wersję, w której zaobserwowano każdy wpis."
-      },
-      "controls": {
-        "title": "Poznaj sterowanie",
-        "description": "Sprawdź aktualne sterowanie klawiaturą, myszą i kontrolerem oraz obsługę pojazdów i śmigłowców."
-      },
       "pcFixes": {
-        "title": "Napraw awarie i wydajność",
-        "description": "Diagnozuj stabilność, sterowniki, grafikę, kolejki i wymagania sprzętowe."
-      }
+        "title": "Napraw awarie lub sprawdź serwery",
+        "description": "Diagnozuj WD-L020, crashe startowe, wydajność i aktualne komunikaty serwerów."
+      },
+      "map": {
+        "title": "Użyj mapy i narzędzi moździerza",
+        "description": "Otwórz mapę taktyczną, pomiar zasięgu i kalkulator ognia przed ruchem."
+      },
+      "season2": {
+        "title": "Przygotuj się na Season 2 i wipe",
+        "description": "Oddziel potwierdzone zasady resetu od plotek przed wydawaniem i grindem."
+      },
+      "cta": "Otwórz poradnik"
     },
     "buildChanges": {
       "eyebrow": "Oficjalne dane Season 1",

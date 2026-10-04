@@ -1,11 +1,9 @@
 import Image from "next/image";
-import {ArrowRight, Crosshair, Map, ShieldCheck} from "lucide-react";
+import {Crosshair, Map, ShieldCheck} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {assetPath} from "@/lib/assets";
 import {ButtonLink} from "@/components/ui/button-link";
-import {StatsGrid} from "@/components/ui/stats-grid";
 import {StatusBadge} from "@/components/ui/status-badge";
-import {CURRENT_EVENT} from "@/features/live-ops/current-event";
 import {HeroSearchBox} from "./hero-search-box";
 import type {Locale} from "@/config/site";
 
@@ -16,9 +14,10 @@ type HomeHeroProps = {
 
 export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
   const t = await getTranslations();
+  const proofPoints = facts.slice(0, 3);
 
   return (
-    <section aria-labelledby="home-hero-title" className="relative isolate flex min-h-[560px] items-center overflow-hidden border-b border-[#2c3631]">
+    <section aria-labelledby="home-hero-title" className="relative isolate flex min-h-[540px] items-center overflow-hidden border-b border-[#2c3631]">
       <Image
         src={assetPath("/images/wardogs-hero.jpg")}
         alt={t("home.heroImageAlt")}
@@ -28,9 +27,9 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
         sizes="100vw"
         className="-z-20 object-cover object-[43%_center]"
       />
-      <div className="absolute inset-0 -z-10 bg-[#080b09]/75" />
+      <div className="absolute inset-0 -z-10 bg-[#080b09]/78" />
 
-      <div className="site-container py-8 text-center sm:py-14">
+      <div className="site-container py-9 text-center sm:py-14">
         <div className="mx-auto flex max-w-4xl flex-col items-center">
           <div className="flex flex-wrap items-center justify-center gap-2.5">
             <span className="inline-flex items-center gap-2 text-xs font-semibold text-[#d5ddd8] sm:text-sm">
@@ -58,7 +57,6 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
             {t("home.heroDescription")}
           </p>
 
-          {/* 1. Hero 战术聚焦区：智能搜索框 + 5 个免打字热搜标签 */}
           <HeroSearchBox
             locale={locale}
             placeholder={t("home.search.placeholder")}
@@ -75,17 +73,17 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
               {t("nav.artilleryCalculator")}
             </ButtonLink>
           </div>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-sm">
-            <ButtonLink href={`/guides/${CURRENT_EVENT.patchNotesGuideSlug}`} homeTask="season2" variant="secondary" className="min-h-10 px-4 py-2 text-xs" title={t("home.primaryCta")}>
-              {t("home.primaryCta")}
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </ButtonLink>
-            <ButtonLink href="/guides/wardogs-server-status" homeTask="status" variant="secondary" className="min-h-10 px-4 py-2 text-xs" title={t("home.secondaryCta")}>
-              {t("home.secondaryCta")}
-            </ButtonLink>
-          </div>
 
-          <StatsGrid items={facts} label={t("home.statsLabel")} className="mt-5 w-full" />
+          {proofPoints.length > 0 ? (
+            <ul aria-label={t("home.statsLabel")} className="mt-5 flex max-w-2xl flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-[#aab7b0]" data-hero-proof="true">
+              {proofPoints.map((fact) => (
+                <li className="flex items-center gap-2" key={fact}>
+                  <span aria-hidden="true" className="size-1 rounded-full bg-[#69c78f]" />
+                  <span>{fact}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </div>
     </section>

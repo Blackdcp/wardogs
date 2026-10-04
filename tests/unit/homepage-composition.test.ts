@@ -3,7 +3,7 @@ import path from "node:path";
 import {describe, expect, it} from "vitest";
 
 describe("homepage composition", () => {
-  it("arranges the homepage according to the tactical wireframe structure", () => {
+  it("arranges the homepage as value first, sponsored second-screen, then trust and discovery", () => {
     const source = readFileSync(path.resolve("src/app/[locale]/page.tsx"), "utf8");
     const primarySections = [
       "<HomeHero",
@@ -19,6 +19,10 @@ describe("homepage composition", () => {
 
     expect(primarySections.every((position) => position >= 0)).toBe(true);
     expect(primarySections).toEqual([...primarySections].sort((left, right) => left - right));
+    expect(source).toContain("sponsoredSlot=");
+    expect(source).toContain('data-page-ad-inventory="home"');
+    expect(source.indexOf("sponsoredSlot=")).toBeGreaterThan(source.indexOf("<HomeActionHub"));
+    expect(source.indexOf("sponsoredSlot=")).toBeLessThan(source.indexOf("<CurrentBuildChanges"));
   });
 
   it("keeps the branded visual hero before the compact operational status surface", () => {
@@ -37,5 +41,6 @@ describe("homepage composition", () => {
     expect(source).toContain('src={assetPath("/images/wardogs-hero.jpg")}');
     expect(source).toContain("WARDOGS Wiki");
     expect(source).toContain('id="home-hero-title"');
+    expect(source).not.toContain("<StatsGrid");
   });
 });

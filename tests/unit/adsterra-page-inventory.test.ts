@@ -1,5 +1,6 @@
 import {readFile} from "node:fs/promises";
 import {describe, expect, it} from "vitest";
+import {isLocalizedHomepage} from "../../src/components/ads/global-top-ad";
 
 const pageFiles = [
   "src/app/[locale]/page.tsx",
@@ -33,7 +34,25 @@ describe("Adsterra page inventory", () => {
     const source = await readFile("src/app/[locale]/layout.tsx", "utf8");
     expect(source).toContain("AdsterraBehavioralAds");
     expect(source).toContain("AdsterraGlobalInventory");
-    expect(source).toContain('data-global-ad-position="top"');
+    expect(source).toContain("GlobalTopAd");
     expect(source).toContain('data-global-ad-position="bottom"');
   });
 });
+
+
+
+  it("identifies locale home paths so the top banner stays off the homepage", () => {
+    expect(isLocalizedHomepage("/en")).toBe(true);
+    expect(isLocalizedHomepage("/en/")).toBe(true);
+    expect(isLocalizedHomepage("/zh-cn")).toBe(true);
+    expect(isLocalizedHomepage("/")).toBe(true);
+    expect(isLocalizedHomepage("/en/guides")).toBe(false);
+    expect(isLocalizedHomepage("/tools/map")).toBe(false);
+  });
+
+  it("keeps the global top banner off localized homepages", async () => {
+    const source = await readFile("src/components/ads/global-top-ad.tsx", "utf8");
+    expect(source).toContain('data-global-ad-position="top"');
+    expect(source).toContain("isLocalizedHomepage");
+    expect(source).toContain("return null");
+  });

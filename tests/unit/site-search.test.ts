@@ -134,7 +134,7 @@ describe("site search index", () => {
       expect(messages.home.metaTitle, locale).toEqual(expect.any(String));
       expect(messages.home.metaDescription, locale).toEqual(expect.any(String));
       expect(Object.keys(messages.home.actions).sort(), locale).toEqual([
-        "controls", "description", "eyebrow", "firstMatch", "logistics", "money", "pcFixes", "progression", "title", "vehicles", "weapons"
+        "cta", "description", "eyebrow", "firstMatch", "map", "money", "pcFixes", "season2", "title", "weapons"
       ]);
       expect(messages.home.search.types, locale).toEqual(expect.objectContaining({guide: expect.any(String), item: expect.any(String), video: expect.any(String), tool: expect.any(String), map: expect.any(String)}));
       expect(messages.home.search.counts, locale).toEqual(expect.objectContaining({guides: expect.any(String), items: expect.any(String), videos: expect.any(String), tools: expect.any(String), maps: expect.any(String)}));

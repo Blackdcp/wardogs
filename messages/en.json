@@ -195,33 +195,26 @@
         "description": "Learn deployment, the active objective, squad movement, and one useful support loop."
       },
       "money": {
-        "title": "Protect and earn cash",
-        "description": "Choose a repeatable team job, set a loss limit, and check the real net result."
-      },
-      "progression": {
-        "title": "Plan role progression",
-        "description": "Choose a role goal and separate confirmed Season 1 changes from older values."
+        "title": "Earn cash and run logistics",
+        "description": "Find repeatable money routes, supply work, FOB loops, and safer loss limits."
       },
       "weapons": {
         "title": "Choose weapons and ammo",
         "description": "Build an affordable loadout around range, armor, ammunition, and evidence freshness."
       },
-      "logistics": {
-        "title": "Run FOBs and logistics",
-        "description": "Place useful spawns, move supplies, protect routes, and recover the support loop."
-      },
-      "vehicles": {
-        "title": "Identify vehicles",
-        "description": "Browse transport, armor, aircraft, and the build in which each record was observed."
-      },
-      "controls": {
-        "title": "Learn the controls",
-        "description": "Check current keyboard, mouse, controller, vehicle, and helicopter inputs."
-      },
       "pcFixes": {
-        "title": "Fix crashes and performance",
-        "description": "Diagnose stability, drivers, graphics settings, queues, and system requirements."
-      }
+        "title": "Fix crashes or server status",
+        "description": "Diagnose WD-L020, launch crashes, performance issues, and current server notices."
+      },
+      "map": {
+        "title": "Use the map and mortar tools",
+        "description": "Open the tactical map, range checks, and fire-control calculator before you move."
+      },
+      "season2": {
+        "title": "Prepare for Season 2 and wipes",
+        "description": "Separate confirmed reset rules from rumors before spending cash or grinding unlocks."
+      },
+      "cta": "Open guide"
     },
     "buildChanges": {
       "eyebrow": "Official Season 1 evidence",

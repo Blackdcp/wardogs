@@ -195,33 +195,26 @@
         "description": "Aprenda o deploy, o objetivo ativo, o movimento do esquadrão e um ciclo útil de suporte."
       },
       "money": {
-        "title": "Ganhar e proteger dinheiro",
-        "description": "Escolha uma função repetível, defina um limite de perda e confira o resultado líquido."
-      },
-      "progression": {
-        "title": "Planejar a progressão da função",
-        "description": "Escolha uma meta de função e separe mudanças confirmadas da Season 1 de valores antigos."
+        "title": "Ganhe dinheiro e rode logística",
+        "description": "Veja rotas repetíveis de dinheiro, suprimento, FOBs e limites de perda seguros."
       },
       "weapons": {
         "title": "Escolher armas e munição",
         "description": "Monte um kit acessível por alcance, blindagem, munição e atualidade das evidências."
       },
-      "logistics": {
-        "title": "Operar FOBs e logística",
-        "description": "Crie spawns úteis, leve suprimentos, proteja rotas e recupere o ciclo de suporte."
-      },
-      "vehicles": {
-        "title": "Identificar veículos",
-        "description": "Consulte transporte, blindados, aeronaves e a build em que cada registro foi observado."
-      },
-      "controls": {
-        "title": "Aprender os controles",
-        "description": "Confira comandos atuais de teclado, mouse, controle, veículos e helicópteros."
-      },
       "pcFixes": {
-        "title": "Corrigir travamentos e desempenho",
-        "description": "Diagnostique estabilidade, drivers, gráficos, filas e requisitos do sistema."
-      }
+        "title": "Corrija travamentos ou veja servidores",
+        "description": "Diagnostique WD-L020, crash ao iniciar, desempenho e avisos atuais de servidor."
+      },
+      "map": {
+        "title": "Use o mapa e ferramentas de morteiro",
+        "description": "Abra o mapa tático, medições de alcance e calculadora de fogo antes de avançar."
+      },
+      "season2": {
+        "title": "Prepare-se para a Season 2 e wipes",
+        "description": "Separe regras confirmadas de reset dos rumores antes de gastar ou farmar desbloqueios."
+      },
+      "cta": "Abrir guia"
     },
     "buildChanges": {
       "eyebrow": "Evidência oficial da Season 1",

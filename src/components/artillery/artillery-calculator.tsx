@@ -207,9 +207,9 @@ export function ArtilleryCalculator({locale}: Props) {
   const targetGrid = formatGridCoordinate(targetPoint, mapId);
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-8">
+    <div className="mx-auto w-full max-w-6xl space-y-8" data-tool-calculator-shell="artillery">
       {/* 1. Header & Weapon Controls */}
-      <div className="rounded-xl border border-[#34453b] bg-gradient-to-b from-[#131c17] to-[#0c120e] p-5 shadow-2xl">
+      <div className="rounded-[6px] border border-[#344039] bg-[#111613] p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <span className="font-mono text-xs font-semibold tracking-wider text-[#7dd89f]">
@@ -280,7 +280,7 @@ export function ArtilleryCalculator({locale}: Props) {
                 })}
                 className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                   weaponId === "mortar"
-                    ? "border-[#62b984] bg-[#1d3527] text-[#8ce2ad] shadow-[0_0_12px_rgba(98,185,132,0.2)]"
+                    ? "border-[#62b984] bg-[#1d3527] text-[#8ce2ad]"
                     : "border-[#32453a] bg-[#101713] text-[#8d9e95] hover:border-[#4b6656]"
                 }`}
               >
@@ -297,7 +297,7 @@ export function ArtilleryCalculator({locale}: Props) {
                 })}
                 className={`flex-1 rounded-lg border py-2 text-xs font-bold transition-all ${
                   weaponId === "sph2"
-                    ? "border-[#d88f48] bg-[#352516] text-[#f2ad6f] shadow-[0_0_12px_rgba(216,143,72,0.2)]"
+                    ? "border-[#d88f48] bg-[#352516] text-[#f2ad6f]"
                     : "border-[#32453a] bg-[#101713] text-[#8d9e95] hover:border-[#4b6656]"
                 }`}
               >
@@ -377,7 +377,7 @@ export function ArtilleryCalculator({locale}: Props) {
       </div>
 
       {/* 2. Tactical Fire Control HUD (The Core Result Display) */}
-      <div className="relative overflow-hidden rounded-xl border-2 border-[#3c634c] bg-gradient-to-r from-[#0d1611] via-[#101a14] to-[#0c1410] p-6 shadow-[0_0_30px_rgba(50,90,70,0.25)]">
+      <div className="relative overflow-hidden rounded-[6px] border border-[#3b5744] bg-[#111613] p-5" data-fire-solution-panel="true">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           {/* Main Firing Numbers */}
           <div className="grid flex-1 grid-cols-2 gap-4 sm:grid-cols-4">
@@ -475,7 +475,7 @@ export function ArtilleryCalculator({locale}: Props) {
                 type="button"
                 onClick={startFireCountdown}
                 disabled={!solution.valid}
-                className="group relative flex items-center justify-center gap-2 rounded-xl border border-[#528d68] bg-gradient-to-r from-[#1f3f2c] to-[#142d1f] px-6 py-4 text-sm font-bold text-white shadow-lg transition-all hover:border-[#7ceb9e] hover:shadow-[0_0_20px_rgba(124,235,158,0.3)] disabled:opacity-40"
+                className="group relative flex items-center justify-center gap-2 rounded-[6px] border border-[#528d68] bg-[#24583a] px-6 py-4 text-sm font-bold text-white transition-colors hover:border-[#7ceb9e] hover:bg-[#2d6a46] disabled:opacity-40"
               >
                 <Flame className="size-5 text-[#f59e0b] group-hover:animate-pulse" />
                 <span>{copy.fireButton}</span>
@@ -526,7 +526,7 @@ export function ArtilleryCalculator({locale}: Props) {
 
       {/* 3. Main Operational Area: Interactive Map vs Direct Keypad */}
       {inputMode === "map" ? (
-        <div className="rounded-xl border border-[#34453b] bg-[#0c120f] p-4 shadow-xl">
+        <div className="rounded-[6px] border border-[#344039] bg-[#0c120f] p-4">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <button
@@ -640,7 +640,7 @@ export function ArtilleryCalculator({locale}: Props) {
               className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center pointer-events-none"
               style={{left: `${gunPoint.x * 100}%`, top: `${gunPoint.y * 100}%`}}
             >
-              <div className="flex size-7 items-center justify-center rounded-full border-2 border-white bg-[#10b981] shadow-lg">
+              <div className="flex size-7 items-center justify-center rounded-full border-2 border-white bg-[#10b981]">
                 <MapPin className="size-4 text-black" />
               </div>
               <span className="absolute -top-5 whitespace-nowrap rounded bg-black/80 px-1 font-mono text-[9px] font-bold text-[#8ce2ad]">
@@ -653,7 +653,7 @@ export function ArtilleryCalculator({locale}: Props) {
               className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center pointer-events-none"
               style={{left: `${targetPoint.x * 100}%`, top: `${targetPoint.y * 100}%`}}
             >
-              <div className="flex size-7 items-center justify-center rounded-full border-2 border-white bg-[#ef4444] shadow-lg">
+              <div className="flex size-7 items-center justify-center rounded-full border-2 border-white bg-[#ef4444]">
                 <Crosshair className="size-4 text-white" />
               </div>
               <span className="absolute -top-5 whitespace-nowrap rounded bg-black/80 px-1 font-mono text-[9px] font-bold text-[#fca5a5]">
@@ -664,7 +664,7 @@ export function ArtilleryCalculator({locale}: Props) {
         </div>
       ) : (
         /* Direct Keypad & Distance Input Mode */
-        <div className="rounded-xl border border-[#34453b] bg-[#0c120f] p-6 shadow-xl">
+        <div className="rounded-[6px] border border-[#344039] bg-[#0c120f] p-6">
           <h2 className="text-sm font-bold uppercase tracking-wider text-[#8ce2ad]">
             {copy.keypadTitle}
           </h2>
@@ -758,7 +758,7 @@ export function ArtilleryCalculator({locale}: Props) {
         <Link
           href="/tools/ammo-matcher"
           title={copy.quickTools.ammoTitle}
-          className="group flex flex-col justify-between rounded-xl border border-[#314638] bg-[#111914] p-4 transition-all hover:border-[#69c78f] hover:shadow-[0_0_15px_rgba(105,199,143,0.15)]"
+          className="group flex flex-col justify-between rounded-[6px] border border-[#344039] bg-[#111613] p-4 transition-colors hover:border-[#69c78f] hover:bg-[#151d18]"
         >
           <div>
             <div className="flex size-9 items-center justify-center rounded-lg border border-[#385945] bg-[#1b2c21] text-[#8ce2ad]">
@@ -781,7 +781,7 @@ export function ArtilleryCalculator({locale}: Props) {
         <Link
           href="/tools/logistics-planner"
           title={copy.quickTools.logisticsTitle}
-          className="group flex flex-col justify-between rounded-xl border border-[#314638] bg-[#111914] p-4 transition-all hover:border-[#69c78f] hover:shadow-[0_0_15px_rgba(105,199,143,0.15)]"
+          className="group flex flex-col justify-between rounded-[6px] border border-[#344039] bg-[#111613] p-4 transition-colors hover:border-[#69c78f] hover:bg-[#151d18]"
         >
           <div>
             <div className="flex size-9 items-center justify-center rounded-lg border border-[#385945] bg-[#1b2c21] text-[#8ce2ad]">
@@ -804,7 +804,7 @@ export function ArtilleryCalculator({locale}: Props) {
         <Link
           href="/guides/wardogs-mortar-guide"
           title={copy.quickTools.guideTitle}
-          className="group flex flex-col justify-between rounded-xl border border-[#314638] bg-[#111914] p-4 transition-all hover:border-[#69c78f] hover:shadow-[0_0_15px_rgba(105,199,143,0.15)]"
+          className="group flex flex-col justify-between rounded-[6px] border border-[#344039] bg-[#111613] p-4 transition-colors hover:border-[#69c78f] hover:bg-[#151d18]"
         >
           <div>
             <div className="flex size-9 items-center justify-center rounded-lg border border-[#385945] bg-[#1b2c21] text-[#8ce2ad]">
@@ -825,7 +825,7 @@ export function ArtilleryCalculator({locale}: Props) {
       </div>
 
       {/* 5. Tactical Pro-Tip Banner */}
-      <div className="rounded-xl border border-[#3c5645] bg-gradient-to-r from-[#17251d] to-[#121c17] p-5">
+      <div className="rounded-[6px] border border-[#3c5645] bg-[#111613] p-5">
         <h4 className="flex items-center gap-2 text-sm font-bold text-[#8ce2ad]">
           <Zap size={16} className="text-[#f59e0b]" />
           {copy.tacticalTipTitle}

@@ -195,33 +195,26 @@
         "description": "先学会部署、识别当前目标、跟随小队并完成一个有效支援循环。"
       },
       "money": {
-        "title": "赚钱并保护资金",
-        "description": "选择可重复的团队任务，设定亏损上限，并核对真实净收益。"
-      },
-      "progression": {
-        "title": "规划兵种进度",
-        "description": "确定兵种目标，并区分已确认的 Season 1 改动与历史数值。"
+        "title": "赚钱并跑通后勤",
+        "description": "查可重复的赚钱路线、补给运输、FOB 循环和更安全的亏损上限。"
       },
       "weapons": {
         "title": "选择武器与弹药",
         "description": "围绕射程、护甲、弹药和证据新鲜度配置可负担的装备。"
       },
-      "logistics": {
-        "title": "执行 FOB 与后勤任务",
-        "description": "建立有效出生点、运输补给、保护路线并恢复完整支援循环。"
-      },
-      "vehicles": {
-        "title": "识别与选择载具",
-        "description": "查看运输、装甲与航空载具，以及每条记录对应的实测版本。"
-      },
-      "controls": {
-        "title": "掌握操作",
-        "description": "核对当前键鼠、手柄、地面载具和直升机操作。"
-      },
       "pcFixes": {
-        "title": "修复崩溃与性能问题",
-        "description": "排查稳定性、驱动、画面设置、排队和电脑配置要求。"
-      }
+        "title": "修复崩溃或查看服务器",
+        "description": "排查 WD-L020、启动崩溃、性能问题，并查看当前服务器公告。"
+      },
+      "map": {
+        "title": "使用地图与迫击炮工具",
+        "description": "移动前先打开战术地图、测距与火炮/迫击炮计算器。"
+      },
+      "season2": {
+        "title": "准备 Season 2 与删档",
+        "description": "花钱或刷解锁前，先区分已确认的重置规则和社区传闻。"
+      },
+      "cta": "打开攻略"
     },
     "buildChanges": {
       "eyebrow": "Season 1 官方证据",

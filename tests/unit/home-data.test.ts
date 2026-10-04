@@ -116,18 +116,16 @@ describe("homepage data", () => {
     ]);
   });
 
-  it("defines exactly eight task-first homepage actions with valid internal destinations", () => {
+  it("defines six problem-first homepage actions with valid internal destinations", () => {
     expect(HOME_ACTIONS).toEqual([
       {key: "firstMatch", href: "/guides/wardogs-beginner-guide"},
+      {key: "map", href: "/tools/map"},
       {key: "money", href: "/guides/wardogs-money-guide"},
-      {key: "progression", href: "/guides/wardogs-progression-wipes-guide"},
       {key: "weapons", href: "/guides/wardogs-best-weapons-loadouts"},
-      {key: "logistics", href: "/guides/wardogs-fob-guide"},
-      {key: "vehicles", href: "/items/vehicles"},
-      {key: "controls", href: "/guides/wardogs-controls"},
-      {key: "pcFixes", href: "/guides/wardogs-crash-fix"}
+      {key: "pcFixes", href: "/guides/wardogs-crash-fix"},
+      {key: "season2", href: "/guides/wardogs-season-2"}
     ]);
-    expect(HOME_ACTIONS).toHaveLength(8);
+    expect(HOME_ACTIONS).toHaveLength(6);
     expect(HOME_ACTIONS.every((action) => action.href.startsWith("/"))).toBe(true);
   });
 

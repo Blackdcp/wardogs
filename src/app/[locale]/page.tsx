@@ -71,20 +71,22 @@ export default async function HomePage({params}: HomePageProps) {
       <HomeHero facts={facts} locale={locale} />
       <LiveBetaBanner compact />
 
-      {/* 2. 四大战术中枢大卡 (直接拉动内页 PV 裂变) */}
-      <HomeActionHub />
+      {/* 2. 问题分流区 + 高曝光赞助位 */}
+      <HomeActionHub
+        sponsoredSlot={
+          <div className="space-y-3" data-page-ad-inventory="home">
+            <p className="px-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-[#82938a]">{t("ads.sponsored")}</p>
+            <AdsterraDisplayBanner label={t("ads.label")} placement="rectangle" />
+            <AdsterraNativeBanner label={t("ads.label")} />
+            <AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />
+          </div>
+        }
+      />
 
-      {/* 3. 💰 黄金变现广告区 (首屏下第一视觉停顿点) */}
-      <section className="site-container py-6" data-page-ad-inventory="home">
-        <AdsterraDisplayBanner label={t("ads.label")} placement="rectangle" />
-        <AdsterraNativeBanner label={t("ads.label")} />
-        <AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />
-      </section>
-
-      {/* 4. 时效与版本动态区 (随版本迭代更新) */}
+      {/* 3. 时效与版本动态区 (随版本迭代更新) */}
       <CurrentBuildChanges locale={locale} />
 
-      {/* 5. 深度内容瀑布流 (沉淀长尾 SEO) */}
+      {/* 4. 深度内容瀑布流 (沉淀长尾 SEO) */}
       <PriorityGuides guides={guides} locale={locale} />
       <VideoIntelligence locale={locale} />
       <CatalogueHomeBand locale={locale} />

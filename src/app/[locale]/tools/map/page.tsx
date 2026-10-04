@@ -35,29 +35,28 @@ export default async function TacticalMapPage({params}: PageProps) {
 
   return (
     <main className="site-container py-8 md:py-12">
-      <header className="mb-6 max-w-4xl">
-        <span className="rounded bg-sky-950 px-2.5 py-1 font-mono text-xs font-semibold text-sky-400 border border-sky-800 uppercase tracking-wider">
+      <header className="mb-6 max-w-4xl border-b border-[#2b3530] pb-6" data-tool-page-hero="map">
+        <span className="inline-flex min-h-7 items-center rounded-[4px] border border-[#46534d] bg-[#101512] px-2.5 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-[#79d19c]">
           {c.badge}
         </span>
-        <h1 className="display-font mt-3 text-3xl font-black text-white sm:text-4xl md:text-5xl">
+        <h1 className="display-font mt-3 text-3xl leading-tight text-white sm:text-4xl md:text-5xl">
           {c.title}
         </h1>
-        <p className="mt-3 text-base leading-7 text-slate-300">
+        <p className="mt-3 max-w-3xl text-base leading-7 text-[#b8c4be]">
           {c.desc}
         </p>
 
-        {/* Tactical Cross-Tool Callout: Quick Jump to Artillery Calculator */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#3b5946] bg-[#122119] p-3">
-          <div className="flex items-center gap-2">
-            <Crosshair className="size-5 text-[#8ce2ad]" />
-            <span className="text-xs sm:text-sm font-semibold text-white">
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[6px] border border-[#344039] bg-[#111613] p-4" data-tool-crosslink="artillery">
+          <div className="flex min-w-0 items-start gap-3">
+            <Crosshair aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-[#8ce2ad]" />
+            <span className="text-sm font-semibold leading-6 text-[#edf2ef]">
               {c.calcPrompt}
             </span>
           </div>
           <Link
             href="/tools/artillery-calculator"
             title={c.calcTitle}
-            className="inline-flex items-center gap-1.5 rounded-md bg-[#254533] px-3 py-1.5 text-xs font-bold text-[#8ce2ad] hover:bg-[#346247] hover:text-white transition-all shadow"
+            className="inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-[6px] border border-[#3c5c46] bg-[#16251b] px-3.5 py-2 text-xs font-semibold text-[#d8f4e4] transition-colors hover:border-[#69c78f] hover:bg-[#1b3023] hover:text-white"
           >
             <span>{c.calcCta}</span>
           </Link>
