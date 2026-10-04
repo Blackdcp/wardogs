@@ -92,9 +92,11 @@ test("homepage priority links emit a task click before navigation", async ({page
 });
 
 test("video embed activation and catalogue filters emit their dedicated events", async ({page}) => {
-  await page.goto("/en/videos/wardogs-everything-before-playing");
+  await page.goto("/en/guides/wardogs-cargo-guide");
   await waitForAnalyticsReady(page);
-  await page.getByRole("button", {name: /WARDOGS - Everything You Need to Know/}).click();
+  const evidence = page.locator("[data-workflow-video-evidence]");
+  await evidence.locator("summary").click();
+  await evidence.locator("[data-workflow-source]").first().getByRole("button").click();
   await expect.poll(() => dataLayerEvents(page, "video_embed_open")).toHaveLength(1);
   await expect(dataLayerEvents(page, "video_start")).resolves.toEqual([]);
 

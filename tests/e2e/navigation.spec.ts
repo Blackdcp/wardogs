@@ -193,11 +193,9 @@ test("homepage exposes the official trailer and collected creator videos", async
 
 test("new standalone video articles expose their privacy-enhanced source player", async ({page}) => {
   await page.goto("/en/videos/wardogs-everything-before-playing");
-  const player = page.getByRole("button", {name: /WARDOGS - Everything You Need to Know/});
 
-  await expect(player).toBeVisible();
-  await player.click();
   await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/tF4-GnGlo4I"]')).toBeVisible();
+  await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/tF4-GnGlo4I"]')).not.toHaveAttribute("src", /autoplay=1/);
 });
 
 test("homepage promotes priority guide links and confirmed status signals", async ({page}) => {

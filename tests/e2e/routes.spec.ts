@@ -39,7 +39,11 @@ test("discovery media and editorial trust signals render on published articles",
   const videoHtml = await videoResponse.text();
   expect(videoResponse.status()).toBe(200);
   expect(videoHtml).toContain('"@type":"Clip"');
-  expect(videoHtml).toContain("?t=474");
+  expect(videoHtml).toContain('"endOffset":474');
+  expect(videoHtml).toContain("?t=408");
+
+  await page.goto("/en/videos/wardogs-loadout-gear-guide");
+  await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/J5QZXLENLgQ"]')).toBeVisible();
 
   await page.goto("/en/editorial-policy");
   await expect(page.getByRole("heading", {level: 1, name: "How We Research WARDOGS"})).toBeVisible();

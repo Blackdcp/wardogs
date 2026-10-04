@@ -44,10 +44,63 @@ const approvedVideoIds = new Set([
   "CfbKirbnhu8",
   "8Mgl4FRekbg",
   "f-B-26p8soc",
-  "XUyP1GLUF5o"
+  "XUyP1GLUF5o",
+  "fUKgHeT0JGY",
+  "4CHoWpu4Imw",
+  "Tkors4Fenh0",
+  "mYXhZnJ8Eus",
+  "VrtwXz94dQg",
+  "v0V69ZYMlgY",
+  "smOE0063KOE",
+  "7W0KgoBf-wM",
+  "BrTNezWMpuk",
+  "ZO7H54kLhqM",
+  "3T64Rn9fWsI",
+  "oLaGhUlixpE",
+  "Cuq8Sk5hn1E",
+  "eR3U1uR6Wn8",
+  "-o6VKUgLq88",
+  "W3Wi0osDVuE",
+  "4lqHgQKIl50",
+  "KL_gNxXL4ng",
+  "dvWT0OcB1dY",
+  "lcU4KJ_8iXc",
+  "kUGJcZK1ivI",
+  "HJl7kzBIaNU",
+  "To3wwc0p3Y8",
+  "cKFK1F0ZP6I",
+  "J5QZXLENLgQ",
+  "oP9RelmWk6A",
+  "trlcyJgeZOo",
+  "OBjq7kVgtnQ",
+  "Jm7ogJLKIJo",
+  "2aU4OB0duYg",
+  "Hq6OZqPDoAc",
+  "DT1_i8m8cMA",
+  "SwlEyNdgw1o",
+  "im60BiRZFow",
+  "IO7-_TwxpII",
+  "7O5QJNRzXzQ",
+  "JSAu5nlLjJw"
 ]);
 
-export function OfficialVideo({id, title, className = "my-8", startSeconds = 0, endSeconds, usePageTimestamp = false}: {id: string; title: string; className?: string; startSeconds?: number; endSeconds?: number; usePageTimestamp?: boolean}) {
+export function OfficialVideo({
+  id,
+  title,
+  className = "my-8",
+  startSeconds = 0,
+  endSeconds,
+  usePageTimestamp = false,
+  embedImmediately = false
+}: {
+  id: string;
+  title: string;
+  className?: string;
+  startSeconds?: number;
+  endSeconds?: number;
+  usePageTimestamp?: boolean;
+  embedImmediately?: boolean;
+}) {
   const [active, setActive] = useState(false);
   const pageStart = useSyncExternalStore(
     usePageTimestamp ? subscribeToVideoUrl : noVideoUrlSubscription,
@@ -60,6 +113,8 @@ export function OfficialVideo({id, title, className = "my-8", startSeconds = 0, 
   const start = Number.isSafeInteger(requestedStart) && requestedStart > 0 && requestedStart < 86400 ? requestedStart : 0;
   const end = typeof endSeconds === "number" && Number.isSafeInteger(endSeconds) && endSeconds > start && endSeconds < 86400 ? endSeconds : null;
   const timing = `${start ? `&start=${start}` : ""}${end ? `&end=${end}` : ""}`;
+  const showIframe = embedImmediately || active;
+  const autoplay = active ? "&autoplay=1" : "";
 
   function startVideo() {
     trackAnalyticsEvent(ANALYTICS_EVENTS.videoEmbedOpen, {video_id: id, video_title: title});
@@ -69,10 +124,10 @@ export function OfficialVideo({id, title, className = "my-8", startSeconds = 0, 
   return (
     <figure className={`${className} overflow-hidden border border-[#2c3631] bg-black`}>
       <div className="aspect-video">
-        {active ? (
+        {showIframe ? (
           <iframe
             className="size-full"
-            src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${timing}`}
+            src={`https://www.youtube-nocookie.com/embed/${id}?rel=0${autoplay}${timing}`}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen

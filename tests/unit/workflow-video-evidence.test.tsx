@@ -6,6 +6,7 @@ import {WorkflowVideoEvidence} from "../../src/components/guides/workflow-video-
 import {OfficialVideo} from "../../src/components/mdx/official-video";
 import {getWorkflowVideoEvidence, getWorkflowVideoEvidenceUi, videoSampleTime} from "../../src/features/guides/workflow-video-evidence";
 import {visualWorkflowSlugs} from "../../src/features/guides/visual-workflows";
+import {videoArticles} from "../../src/features/videos/video-library";
 
 vi.mock("next-intl", () => ({useTranslations: () => (key: string) => key}));
 
@@ -68,5 +69,22 @@ describe("bounded original-video evidence", () => {
     }
     expect(videoSampleTime(14)).toBe("00:14");
     expect(videoSampleTime(814)).toBe("13:34");
+  });
+
+  it("can expose a crawler-visible iframe for pages that publish VideoObject markup", () => {
+    const html = renderToStaticMarkup(<OfficialVideo embedImmediately id="XUyP1GLUF5o" title="test" startSeconds={212} endSeconds={245} />);
+
+    expect(html).toContain('<iframe class="size-full"');
+    expect(html).toContain('src="https://www.youtube-nocookie.com/embed/XUyP1GLUF5o?rel=0&amp;start=212&amp;end=245"');
+    expect(html).not.toContain("autoplay=1");
+    expect(html).not.toContain("videoConsent");
+  });
+
+  it("renders every standalone video article source that publishes VideoObject markup", () => {
+    for (const article of videoArticles) {
+      const html = renderToStaticMarkup(<OfficialVideo embedImmediately id={article.youtubeId} title={article.sourceLabel} />);
+
+      expect(html, article.slug).toContain(`youtube-nocookie.com/embed/${article.youtubeId}?rel=0`);
+    }
   });
 });
