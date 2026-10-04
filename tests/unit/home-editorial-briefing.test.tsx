@@ -36,7 +36,7 @@ vi.mock("../../src/i18n/navigation", () => ({
 
 describe("HomeEditorialBriefing", () => {
   it("turns the homepage from a loose directory into an editorial player route", async () => {
-    const html = renderToStaticMarkup(await HomeEditorialBriefing());
+    const html = renderToStaticMarkup(await HomeEditorialBriefing({sponsoredSlot: <div data-ad-test="home-ad" />}));
 
     expect(html).toContain('data-home-editorial-briefing="true"');
     expect(html).toContain('data-home-section="briefing"');
@@ -51,5 +51,7 @@ describe("HomeEditorialBriefing", () => {
     expect(html).toContain('/guides/wardogs-beginner-guide');
     expect(html).toContain('/guides/wardogs-season-2');
     expect(html).toContain('/tools/artillery-calculator');
+    expect(html).toContain('data-home-sponsored-slot="true"');
+    expect(html).toContain('data-ad-test="home-ad"');
   });
 });

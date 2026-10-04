@@ -1,6 +1,7 @@
 import {ArrowUpRight, Hourglass, Play, Route, ShieldCheck, Wrench, type LucideIcon} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {Link} from "@/i18n/navigation";
+import type {ReactNode} from "react";
 
 type PriorityKey = "firstMatch" | "season2" | "pcFixes";
 type PathKey = "newPlayer" | "returning" | "tools";
@@ -49,7 +50,7 @@ const playerPaths: readonly PlayerPath[] = [
   {key: "tools", href: "/tools/artillery-calculator", task: "calculator"}
 ] as const;
 
-export async function HomeEditorialBriefing() {
+export async function HomeEditorialBriefing({sponsoredSlot}: {sponsoredSlot?: ReactNode} = {}) {
   const t = await getTranslations("home.briefing");
   const [lead, ...secondary] = priorities;
   const LeadIcon = lead.icon;
@@ -156,6 +157,12 @@ export async function HomeEditorialBriefing() {
                 ))}
               </ul>
             </div>
+
+            {sponsoredSlot ? (
+              <aside className="rounded-[6px] border border-[#344039] bg-[#101512] p-3" data-home-sponsored-slot="true">
+                {sponsoredSlot}
+              </aside>
+            ) : null}
           </div>
         </div>
       </div>

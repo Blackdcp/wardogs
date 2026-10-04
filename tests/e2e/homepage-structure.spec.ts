@@ -9,15 +9,11 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
       "#home-hero-title",
       "[data-live-event]",
       "[data-home-editorial-briefing]",
-      "[data-home-action-hub]",
       "[data-start-here]",
       "[data-current-build-changes]",
       "#priority-guides-title",
-      "[data-beginner-tips]",
       "[data-catalogue-home-band]",
-      "[data-home-faq]",
-      "[data-site-search]",
-      "[data-final-cta]"
+      "[data-site-search]"
     ];
     const sections = Array.from(main.querySelectorAll("section"));
 
@@ -52,15 +48,23 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
 
   await expect(page.locator("[data-global-ad-position='top']")).toHaveCount(0);
 
-  const decisionCards = page.locator("[data-home-action-hub] [data-home-placement='action-hub'][data-home-task]");
-  await expect(decisionCards).toHaveCount(6);
-  await expect(page.locator("[data-home-action-hub] [data-home-task='map']")).toBeVisible();
-  await expect(page.locator("[data-home-action-hub] [data-home-task='season2']")).toBeVisible();
+  const decisionLinks = page.locator("[data-home-editorial-briefing] [data-home-task]");
+  await expect(decisionLinks).toHaveCount(6);
+  await expect(page.locator("[data-home-editorial-briefing] [data-home-task='season2']")).toHaveCount(2);
+  await expect(page.locator("[data-home-editorial-briefing] [data-home-task='pcFixes']")).toHaveCount(1);
+  await expect(page.locator("[data-home-editorial-briefing] [data-home-task='calculator']")).toHaveCount(1);
   await expect(page.locator("[data-home-sponsored-slot='true']")).toBeVisible();
   await expect(page.locator("[data-home-sponsored-slot='true']")).toHaveCount(1);
 
+  for (const removedSelector of ["[data-home-action-hub]", "[data-beginner-tips]", "[data-home-section='videos']", "[data-home-section='library']", "[data-home-section='about']", "[data-home-faq]", "[data-final-cta]"]) {
+    await expect(page.locator(removedSelector)).toHaveCount(0);
+  }
+
   const downstreamSections = await page.locator("[data-home-section]").evaluateAll((sections) => sections.map((section) => section.getAttribute("data-home-section")));
-  expect(downstreamSections).toEqual(["briefing", "tasks", "start", "evidence", "guides", "tips", "videos", "catalogue", "library", "about", "faq", "search", "final"]);
+  expect(downstreamSections).toEqual(["briefing", "start", "evidence", "guides", "catalogue", "search"]);
+
+  const viewportScreens = await page.evaluate(() => document.documentElement.scrollHeight / window.innerHeight);
+  expect(viewportScreens).toBeLessThan(7);
 
   const searchHeight = await page.locator("[data-site-search]").evaluate((section) => section.getBoundingClientRect().height);
   expect(searchHeight).toBeLessThan(240);

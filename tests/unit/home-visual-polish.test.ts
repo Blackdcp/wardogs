@@ -76,18 +76,11 @@ describe("homepage visual polish", () => {
   it("applies the same homepage section system to every downstream block", () => {
     const files = [
       "src/components/home/home-editorial-briefing.tsx",
-      "src/components/home/home-action-hub.tsx",
       "src/components/home/start-here.tsx",
       "src/components/home/current-build-changes.tsx",
       "src/components/home/priority-guides.tsx",
-      "src/components/home/beginner-tips.tsx",
-      "src/components/home/video-intelligence.tsx",
       "src/components/catalogue/catalogue-home-band.tsx",
-      "src/components/home/category-grid.tsx",
-      "src/components/home/about-game.tsx",
-      "src/components/home/home-faq.tsx",
-      "src/components/home/site-search.tsx",
-      "src/components/home/final-cta.tsx"
+      "src/components/home/site-search.tsx"
     ];
 
     for (const file of files) {
@@ -98,6 +91,21 @@ describe("homepage visual polish", () => {
       expect(text, file).not.toContain('border-y border-[#526159]');
       expect(text, file).not.toContain('border-t border-[#3a473f]');
     }
+  });
+
+
+  it("keeps the homepage from becoming a long stack of low-priority sections", () => {
+    const page = source("src/app/[locale]/page.tsx");
+    const startHere = source("src/components/home/start-here.tsx");
+
+    expect(page).not.toContain("<BeginnerTips");
+    expect(page).not.toContain("<VideoIntelligence");
+    expect(page).not.toContain("<CategoryGrid");
+    expect(page).not.toContain("<AboutGame");
+    expect(page).not.toContain("<HomeFaq");
+    expect(page).not.toContain("<FinalCta");
+    expect(startHere).toContain("xl:grid-cols-6");
+    expect(startHere).not.toContain("min-h-[224px]");
   });
 
   it("keeps lower homepage cards compact and in the same visual language", () => {

@@ -7,17 +7,19 @@ export async function StartHere() {
   const t = await getTranslations();
 
   return (
-    <section aria-labelledby="start-here-title" className="border-b border-[#26312c] bg-[#101512] py-12 sm:py-14" data-start-here data-home-section="start">
+    <section aria-labelledby="start-here-title" className="border-b border-[#26312c] bg-[#101512] py-10 sm:py-12" data-start-here data-home-section="start">
       <div className="site-container">
-        <div className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase text-[#69c78f]">{t("home.startEyebrow")}</p>
-          <h2 id="start-here-title" className="display-font mt-3 text-3xl leading-tight text-[#f2f5f3] sm:text-4xl">
-            {t("home.startTitle")}
-          </h2>
-          <p className="mt-4 text-sm leading-7 text-[#a8b4ae] sm:text-base">{t("home.start.description")}</p>
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase text-[#69c78f]">{t("home.startEyebrow")}</p>
+            <h2 id="start-here-title" className="display-font mt-3 text-3xl leading-tight text-[#f2f5f3] sm:text-4xl">
+              {t("home.startTitle")}
+            </h2>
+          </div>
+          <p className="max-w-2xl text-sm leading-7 text-[#a8b4ae] sm:text-base lg:justify-self-end">{t("home.start.description")}</p>
         </div>
 
-        <ol className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <ol className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {START_GUIDES.map((guide) => {
             const anchor = "anchor" in guide ? `#${guide.anchor}` : "";
             const href = `/guides/${guide.slug}${anchor}`;
@@ -27,18 +29,18 @@ export async function StartHere() {
                 <Link
                   href={href}
                   title={title}
-                  className="group flex min-h-[224px] h-full flex-col rounded-[7px] border border-[#303c36] bg-[#171d1a] p-5 transition-colors hover:border-[#4d946d] hover:bg-[#1d2621]"
+                  className="group flex h-full flex-col rounded-[6px] border border-[#303c36] bg-[#171d1a] p-4 transition-colors hover:border-[#4d946d] hover:bg-[#1d2621]"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <span className="display-font inline-flex size-10 items-center justify-center rounded-[4px] bg-[#244332] text-lg text-[#d8f4e4]">
+                    <span className="display-font inline-flex size-8 items-center justify-center rounded-[4px] bg-[#244332] text-sm text-[#d8f4e4]">
                       {guide.number}
                     </span>
-          <ArrowUpRight aria-hidden="true" className="size-5 text-[#82938a] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
+                    <ArrowUpRight aria-hidden="true" className="size-4 text-[#82938a] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
                   </div>
-                  <h3 className="display-font mt-8 text-xl leading-tight text-[#f2f5f3]">
+                  <h3 className="display-font mt-5 text-lg leading-tight text-[#f2f5f3]">
                     {title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-[#9fada6]">
+                  <p className="mt-2 text-xs leading-5 text-[#9fada6]">
                     {t(`home.start.cards.${guide.titleKey}.description`)}
                   </p>
                 </Link>
