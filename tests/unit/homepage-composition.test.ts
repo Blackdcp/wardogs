@@ -8,13 +8,19 @@ describe("homepage composition", () => {
     const primarySections = [
       "<HomeHero",
       "<LiveBetaBanner",
+      "<HomeEditorialBriefing",
       "<HomeActionHub",
+      "<StartHere",
       "<CurrentBuildChanges",
       "<PriorityGuides",
+      "<BeginnerTips",
       "<VideoIntelligence",
       "<CatalogueHomeBand",
       "<CategoryGrid",
-      "<SiteSearch"
+      "<AboutGame",
+      "<HomeFaq",
+      "<SiteSearch",
+      "<FinalCta"
     ].map((component) => source.indexOf(component));
 
     expect(primarySections.every((position) => position >= 0)).toBe(true);
@@ -31,8 +37,12 @@ describe("homepage composition", () => {
     expect(source).toContain("<HomeHero facts={facts}");
     expect(source).toContain("<LiveBetaBanner compact />");
     expect(source.indexOf("<HomeHero")).toBeLessThan(source.indexOf("<LiveBetaBanner"));
-    expect(source.indexOf("<LiveBetaBanner")).toBeLessThan(source.indexOf("<HomeActionHub"));
-    expect(source.indexOf("<HomeActionHub")).toBeLessThan(source.indexOf("<SiteSearch"));
+    expect(source.indexOf("<LiveBetaBanner")).toBeLessThan(source.indexOf("<HomeEditorialBriefing"));
+    expect(source.indexOf("<HomeEditorialBriefing")).toBeLessThan(source.indexOf("<HomeActionHub"));
+    expect(source.indexOf("<HomeActionHub")).toBeLessThan(source.indexOf("<StartHere"));
+    expect(source.indexOf("<StartHere")).toBeLessThan(source.indexOf("<SiteSearch"));
+    expect(source.indexOf("<HomeFaq")).toBeLessThan(source.indexOf("<SiteSearch"));
+    expect(source.indexOf("<SiteSearch")).toBeLessThan(source.indexOf("<FinalCta"));
   });
 
   it("keeps the visible WARDOGS Wiki brand and hero artwork in the hero component", () => {

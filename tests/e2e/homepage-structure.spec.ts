@@ -8,11 +8,16 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
     const selectors = [
       "#home-hero-title",
       "[data-live-event]",
+      "[data-home-editorial-briefing]",
       "[data-home-action-hub]",
+      "[data-start-here]",
       "[data-current-build-changes]",
       "#priority-guides-title",
+      "[data-beginner-tips]",
       "[data-catalogue-home-band]",
-      "[data-site-search]"
+      "[data-home-faq]",
+      "[data-site-search]",
+      "[data-final-cta]"
     ];
     const sections = Array.from(main.querySelectorAll("section"));
 
@@ -55,7 +60,7 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
   await expect(page.locator("[data-home-sponsored-slot='true']")).toHaveCount(1);
 
   const downstreamSections = await page.locator("[data-home-section]").evaluateAll((sections) => sections.map((section) => section.getAttribute("data-home-section")));
-  expect(downstreamSections).toEqual(["evidence", "guides", "videos", "catalogue", "library", "search"]);
+  expect(downstreamSections).toEqual(["briefing", "tasks", "start", "evidence", "guides", "tips", "videos", "catalogue", "library", "about", "faq", "search", "final"]);
 
   const searchHeight = await page.locator("[data-site-search]").evaluate((section) => section.getBoundingClientRect().height);
   expect(searchHeight).toBeLessThan(240);

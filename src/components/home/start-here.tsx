@@ -7,7 +7,7 @@ export async function StartHere() {
   const t = await getTranslations();
 
   return (
-    <section aria-labelledby="start-here-title" className="border-b border-[#26312c] bg-[#0d0f0e] py-16 sm:py-20">
+    <section aria-labelledby="start-here-title" className="border-b border-[#26312c] bg-[#101512] py-12 sm:py-14" data-start-here data-home-section="start">
       <div className="site-container">
         <div className="max-w-2xl">
           <p className="text-xs font-semibold uppercase text-[#69c78f]">{t("home.startEyebrow")}</p>

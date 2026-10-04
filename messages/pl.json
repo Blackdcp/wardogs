@@ -445,6 +445,44 @@
         "badge": "Polityka S2",
         "cta": "Czytaj zasady"
       }
+    },
+    "briefing": {
+      "eyebrow": "Aktualne centrum polowe",
+      "title": "Zacznij od trzech decyzji, które zmienią dzisiejszy mecz",
+      "description": "Strona główna działa jak redakcyjny pulpit poradników: najpierw aktualny problem gracza, potem właściwy poradnik, narzędzie albo źródło.",
+      "primaryLabel": "Najpierw przeczytaj",
+      "priority": {
+        "firstMatch": {
+          "title": "Przetrwaj pierwsze wejście",
+          "description": "Poznaj cel, wydatki, ruch drużyny, transport, reanimacje i pierwszy cykl wsparcia, zanim stracisz gotówkę.",
+          "cta": "Start trasy"
+        },
+        "season2": {
+          "title": "Sprawdź zasady wipe S2",
+          "description": "Zobacz, co się resetuje, co zostaje i które szczegóły startu nadal nie są potwierdzone.",
+          "cta": "Otwórz wipe"
+        },
+        "pcFixes": {
+          "title": "Napraw WD-L020 i start gry",
+          "description": "Aktualna ścieżka dla WD-L020, crashy startu, przeglądarki serwerów i wydajności.",
+          "cta": "Otwórz naprawy"
+        }
+      },
+      "pathsTitle": "Wybierz według intencji",
+      "paths": {
+        "newPlayer": {
+          "label": "Nowy",
+          "title": "Trasa początkująca"
+        },
+        "returning": {
+          "label": "Powrót",
+          "title": "Patch i wipe"
+        },
+        "tools": {
+          "label": "Narzędzia",
+          "title": "Mapa i moździerz"
+        }
+      }
     }
   },
   "guides": {

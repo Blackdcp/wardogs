@@ -445,6 +445,44 @@
         "badge": "S2 Policy",
         "cta": "Read Policy"
       }
+    },
+    "briefing": {
+      "eyebrow": "Current field desk",
+      "title": "Start with the three decisions that change tonight's match",
+      "description": "The homepage now works like a guide editor's desk: start with the live player problem, then branch into the route, tool, or evidence page that solves it.",
+      "primaryLabel": "Read first",
+      "priority": {
+        "firstMatch": {
+          "title": "Survive the first deployment",
+          "description": "Learn the objective, spending rules, squad movement, transport, revives, and the first support loop before cash mistakes snowball.",
+          "cta": "Start the route"
+        },
+        "season2": {
+          "title": "Check Season 2 wipe rules",
+          "description": "Know what resets, what carries forward, and which launch details are still unconfirmed before grinding or spending.",
+          "cta": "Open wipe guide"
+        },
+        "pcFixes": {
+          "title": "Fix WD-L020 and launch issues",
+          "description": "Use the current troubleshooting path for WD-L020, launch crashes, server browser issues, and performance problems.",
+          "cta": "Open fixes"
+        }
+      },
+      "pathsTitle": "Choose by player intent",
+      "paths": {
+        "newPlayer": {
+          "label": "New player",
+          "title": "Beginner route"
+        },
+        "returning": {
+          "label": "Returning",
+          "title": "Patch and wipe route"
+        },
+        "tools": {
+          "label": "Tools",
+          "title": "Map and mortar route"
+        }
+      }
     }
   },
   "guides": {

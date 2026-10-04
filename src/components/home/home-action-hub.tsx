@@ -78,7 +78,7 @@ function NativeLink({children, ...props}: ActionLinkProps) {
 
 export function HomeActionHubView({eyebrow, title, description, actions, LinkComponent = NativeLink, sponsoredSlot, ctaLabel = "Open"}: HomeActionHubViewProps) {
   return (
-    <section aria-labelledby="home-action-title" className="border-b border-[#2b3530] bg-[#0b0e0c] py-12 sm:py-14" data-home-action-hub="true">
+    <section aria-labelledby="home-action-title" className="border-b border-[#2b3530] bg-[#0b0e0c] py-12 sm:py-14" data-home-action-hub="true" data-home-section="tasks">
       <div className="site-container">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-end">
           <div>

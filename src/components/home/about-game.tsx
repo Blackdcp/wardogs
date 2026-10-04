@@ -9,7 +9,7 @@ export async function AboutGame() {
   const points = ["teams", "battlefield", "roles"] as const;
 
   return (
-    <section aria-labelledby="about-wardogs-title" className="border-b border-[#26312c] bg-[#111613] py-16 sm:py-20">
+    <section aria-labelledby="about-wardogs-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-12 sm:py-14" data-about-game data-home-section="about">
       <div className="site-container grid items-center gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-16">
         <div className="relative aspect-[16/10] overflow-hidden rounded-[8px] border border-[#36433c] bg-[#090b0a]">
           <Image

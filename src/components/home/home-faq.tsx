@@ -10,7 +10,7 @@ export async function HomeFaq() {
   }));
 
   return (
-    <section aria-labelledby="home-faq-title" className="border-b border-[#26312c] bg-[#0d0f0e] py-16 sm:py-20">
+    <section aria-labelledby="home-faq-title" className="border-b border-[#26312c] bg-[#101512] py-12 sm:py-14" data-home-faq data-home-section="faq">
       <div className="site-container grid gap-10 lg:grid-cols-[minmax(260px,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
         <div>
           <p className="text-xs font-semibold uppercase text-[#d9a93a]">{t("home.faq.eyebrow")}</p>

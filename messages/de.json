@@ -445,6 +445,44 @@
         "badge": "S2-Regel",
         "cta": "Regel lesen"
       }
+    },
+    "briefing": {
+      "eyebrow": "Aktueller Field Desk",
+      "title": "Beginne mit den drei Entscheidungen, die dein Match heute verändern",
+      "description": "Die Startseite führt wie ein Guide-Desk: erst das aktuelle Spielerproblem, dann der passende Guide, das Tool oder die belegte Quelle.",
+      "primaryLabel": "Zuerst lesen",
+      "priority": {
+        "firstMatch": {
+          "title": "Die erste Runde überleben",
+          "description": "Lerne Ziel, Ausgaben, Squad-Bewegung, Transport, Revives und die erste Support-Schleife, bevor Geldfehler eskalieren.",
+          "cta": "Route starten"
+        },
+        "season2": {
+          "title": "Season-2-Wipe-Regeln prüfen",
+          "description": "Kläre Reset, Beibehaltung und offene Launch-Details, bevor du grindest oder Cash ausgibst.",
+          "cta": "Wipe-Guide öffnen"
+        },
+        "pcFixes": {
+          "title": "WD-L020 und Startprobleme beheben",
+          "description": "Nutze den aktuellen Pfad für WD-L020, Launch-Crashes, Server-Browser und Performance-Probleme.",
+          "cta": "Fixes öffnen"
+        }
+      },
+      "pathsTitle": "Nach Spielerabsicht wählen",
+      "paths": {
+        "newPlayer": {
+          "label": "Neu",
+          "title": "Einsteigerroute"
+        },
+        "returning": {
+          "label": "Zurück",
+          "title": "Patch- und Wipe-Route"
+        },
+        "tools": {
+          "label": "Tools",
+          "title": "Karte und Mörser"
+        }
+      }
     }
   },
   "guides": {

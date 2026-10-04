@@ -7,7 +7,7 @@ export async function FinalCta() {
   const t = await getTranslations();
 
   return (
-    <section aria-labelledby="final-cta-title" className="border-b border-[#4d795f] bg-[#244332] py-14 sm:py-16">
+    <section aria-labelledby="final-cta-title" className="border-b border-[#4d795f] bg-[#17251d] py-12 sm:py-14" data-final-cta data-home-section="final">
       <div className="site-container flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-2xl">
           <p className="text-xs font-semibold uppercase text-[#f1d58c]">{t("home.final.eyebrow")}</p>

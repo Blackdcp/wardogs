@@ -445,6 +445,44 @@
         "badge": "Política S2",
         "cta": "Ler política"
       }
+    },
+    "briefing": {
+      "eyebrow": "Mesa de campo atual",
+      "title": "Comece pelas três decisões que mudam a partida de hoje",
+      "description": "A home agora funciona como uma mesa editorial de guias: primeiro o problema atual do jogador, depois o guia, ferramenta ou evidência certa.",
+      "primaryLabel": "Leia primeiro",
+      "priority": {
+        "firstMatch": {
+          "title": "Sobreviva à primeira partida",
+          "description": "Entenda objetivo, gastos, movimento em squad, transporte, revives e o primeiro ciclo de suporte antes de perder dinheiro.",
+          "cta": "Iniciar rota"
+        },
+        "season2": {
+          "title": "Ver regras do wipe da S2",
+          "description": "Confira o que reseta, o que continua e quais detalhes de lançamento ainda não foram confirmados.",
+          "cta": "Abrir wipe"
+        },
+        "pcFixes": {
+          "title": "Corrigir WD-L020 e inicialização",
+          "description": "Use o caminho atual para WD-L020, crashes, navegador de servidores e performance.",
+          "cta": "Abrir correções"
+        }
+      },
+      "pathsTitle": "Escolha pela intenção",
+      "paths": {
+        "newPlayer": {
+          "label": "Novo",
+          "title": "Rota iniciante"
+        },
+        "returning": {
+          "label": "Retorno",
+          "title": "Patch e wipe"
+        },
+        "tools": {
+          "label": "Ferramentas",
+          "title": "Mapa e morteiro"
+        }
+      }
     }
   },
   "guides": {

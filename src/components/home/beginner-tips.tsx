@@ -14,7 +14,7 @@ export async function BeginnerTips() {
   const t = await getTranslations();
 
   return (
-    <section aria-labelledby="beginner-tips-title" className="border-b border-[#26312c] bg-[#151b18] py-16 sm:py-20">
+    <section aria-labelledby="beginner-tips-title" className="border-b border-[#26312c] bg-[#101512] py-12 sm:py-14" data-beginner-tips data-home-section="tips">
       <div className="site-container">
         <div className="max-w-2xl">
           <p className="text-xs font-semibold uppercase text-[#69c78f]">{t("home.tips.eyebrow")}</p>

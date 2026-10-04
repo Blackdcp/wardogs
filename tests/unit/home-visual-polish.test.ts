@@ -16,6 +16,18 @@ describe("homepage visual polish", () => {
     expect(heroSearch).not.toContain('border border-[#304538] bg-[#141e18]/90');
   });
 
+
+  it("keeps hero popular links in player language rather than internal keyword shorthand", () => {
+    const heroSearch = source("src/components/home/hero-search-box.tsx");
+
+    expect(heroSearch).toContain('tag: "Season 2 wipe date"');
+    expect(heroSearch).toContain('tag: "Build an M4 kit"');
+    expect(heroSearch).toContain('tag: "第二赛季删档时间"');
+    expect(heroSearch).not.toContain("S2 Wipe Matrix");
+    expect(heroSearch).not.toContain("Ural Cargo SOP");
+    expect(heroSearch).not.toContain('tag: "Montar M4", href: "/en');
+  });
+
   it("keeps the hero search trigger compact and aligned with the site card language", () => {
     const dialog = source("src/components/layout/site-search-dialog.tsx");
 
@@ -63,12 +75,19 @@ describe("homepage visual polish", () => {
 
   it("applies the same homepage section system to every downstream block", () => {
     const files = [
+      "src/components/home/home-editorial-briefing.tsx",
+      "src/components/home/home-action-hub.tsx",
+      "src/components/home/start-here.tsx",
       "src/components/home/current-build-changes.tsx",
       "src/components/home/priority-guides.tsx",
+      "src/components/home/beginner-tips.tsx",
       "src/components/home/video-intelligence.tsx",
       "src/components/catalogue/catalogue-home-band.tsx",
       "src/components/home/category-grid.tsx",
-      "src/components/home/site-search.tsx"
+      "src/components/home/about-game.tsx",
+      "src/components/home/home-faq.tsx",
+      "src/components/home/site-search.tsx",
+      "src/components/home/final-cta.tsx"
     ];
 
     for (const file of files) {
