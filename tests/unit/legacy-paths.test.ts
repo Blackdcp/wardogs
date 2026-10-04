@@ -22,6 +22,10 @@ describe("legacy unprefixed paths", () => {
     expect(getLegacyEnglishRedirectPath("/editorial-policy")).toBe("/en/editorial-policy");
     expect(getLegacyEnglishRedirectPath("/about")).toBe("/en/about");
     expect(getLegacyEnglishRedirectPath("/contact")).toBe("/en/contact");
+    expect(getLegacyEnglishRedirectPath("/vehicles/helicopters")).toBe("/en/vehicles/helicopters");
+    expect(getLegacyEnglishRedirectPath("/skins")).toBe("/en/skins");
+    expect(getLegacyEnglishRedirectPath("/black-market")).toBe("/en/black-market");
+    expect(getLegacyEnglishRedirectPath("/gold-market")).toBe("/en/gold-market");
     expect(getLegacyEnglishRedirectPath("/tools/not-a-tool")).toBeNull();
     expect(getLegacyEnglishRedirectPath("/maps/not-a-map")).toBeNull();
     expect(getLegacyEnglishRedirectPath("/not-a-page")).toBeNull();

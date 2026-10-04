@@ -29,6 +29,19 @@ test("root redirects and primary routes resolve", async ({page}) => {
   expect((await page.goto("/en/guides/not-a-topic"))?.status()).toBe(404);
 });
 
+test("legacy unprefixed catalogue expansion routes redirect to English canonicals", async ({page}) => {
+  for (const [legacyPath, canonicalPath] of [
+    ["/vehicles/helicopters", "/en/vehicles/helicopters"],
+    ["/skins", "/en/skins"],
+    ["/black-market", "/en/black-market"],
+    ["/gold-market", "/en/gold-market"]
+  ] as const) {
+    const response = await page.goto(legacyPath);
+    expect(response?.status(), legacyPath).toBe(200);
+    expect(new URL(page.url()).pathname, legacyPath).toBe(canonicalPath);
+  }
+});
+
 test("discovery media and editorial trust signals render on published articles", async ({page, request}) => {
   await page.goto("/en/guides/wardogs-crash-fix");
 

@@ -1,7 +1,15 @@
 import {isLocale} from "@/config/site";
 
-const legacyEnglishSegments = new Set(["guides", "videos", "items", "news", "privacy", "terms"]);
-const legacyEnglishPages = new Set(["maps", "about", "contact", "editorial-policy"]);
+const legacyEnglishSegments = new Set(["guides", "videos", "items", "news", "privacy", "terms", "vehicles"]);
+const legacyEnglishPages = new Set([
+  "maps",
+  "about",
+  "contact",
+  "editorial-policy",
+  "skins",
+  "black-market",
+  "gold-market"
+]);
 const legacyEnglishTools = new Set([
   "system-check", "ammo-matcher", "logistics-planner", "progression-route",
   "weapon-compare", "loadout-budget", "artillery-calculator", "map"
