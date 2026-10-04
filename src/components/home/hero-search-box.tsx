@@ -1,6 +1,5 @@
 "use client";
 
-import {Flame} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {SiteSearchDialog} from "@/components/layout/site-search-dialog";
 
@@ -80,20 +79,19 @@ export function HeroSearchBox({locale = "en", placeholder, hotTagsLabel = "HOT"}
         trigger="hero"
       />
 
-      <div className="-mx-2 mt-3 flex items-center gap-2 overflow-x-auto px-2 pb-1 text-xs sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 sm:pb-0" data-hero-trending="true">
-        <span className="flex shrink-0 items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-[#9daaa3]">
-          <Flame aria-hidden="true" className="size-3 text-[#d9a93a]" />
-          {hotTagsLabel}
-        </span>
-        {tags.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            title={item.title}
-            className="shrink-0 rounded-full border border-[#2b3831] bg-[#0e1511]/80 px-2.5 py-1 text-[11px] font-semibold text-[#a8d8ba] transition-colors hover:border-[#5b8f6a] hover:bg-[#17251d] hover:text-white"
-          >
-            {item.tag}
-          </a>
+      <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-[#aeb9b3]" data-hero-popular-links="true">
+        <span className="font-semibold uppercase tracking-wide text-[#7f8e87]">{hotTagsLabel}</span>
+        {tags.map((item, index) => (
+          <span className="inline-flex items-center gap-2" key={item.href}>
+            <a
+              href={item.href}
+              title={item.title}
+              className="font-semibold text-[#bcd8c7] underline decoration-[#35523d] decoration-1 underline-offset-4 transition-colors hover:text-white hover:decoration-[#69c78f]"
+            >
+              {item.tag}
+            </a>
+            {index < tags.length - 1 ? <span aria-hidden="true" className="text-[#46534d]">/</span> : null}
+          </span>
         ))}
       </div>
     </div>

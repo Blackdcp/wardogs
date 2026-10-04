@@ -37,11 +37,11 @@ export function CurrentVideoSourceGrid({locale, sources, limit}: {
   }, [limit, selectedTopic, sources]);
 
   return (
-    <div>
+    <div data-home-video-grid="true">
       <div className="flex flex-wrap gap-2" aria-label={ui.filterLabel} role="group">
         <button
           aria-pressed={selectedTopic === "all"}
-          className={`min-h-10 border px-3 py-2 text-xs font-semibold uppercase transition-colors ${selectedTopic === "all" ? "border-[#d9a93a] bg-[#d9a93a] text-[#111512]" : "border-[#46534d] text-[#d6dfda] hover:border-[#79d19c] hover:text-white"}`}
+          className={`min-h-9 rounded-[4px] border px-3 py-1.5 text-xs font-semibold uppercase transition-colors ${selectedTopic === "all" ? "border-[#69c78f] bg-[#17251d] text-[#d8f4e4]" : "border-[#344039] text-[#aeb9b3] hover:border-[#79d19c] hover:text-white"}`}
           onClick={() => setSelectedTopic("all")}
           type="button"
         >
@@ -50,7 +50,7 @@ export function CurrentVideoSourceGrid({locale, sources, limit}: {
         {availableTopics.map((topic) => (
           <button
             aria-pressed={selectedTopic === topic}
-            className={`min-h-10 border px-3 py-2 text-xs font-semibold uppercase transition-colors ${selectedTopic === topic ? "border-[#d9a93a] bg-[#d9a93a] text-[#111512]" : "border-[#46534d] text-[#d6dfda] hover:border-[#79d19c] hover:text-white"}`}
+            className={`min-h-9 rounded-[4px] border px-3 py-1.5 text-xs font-semibold uppercase transition-colors ${selectedTopic === topic ? "border-[#69c78f] bg-[#17251d] text-[#d8f4e4]" : "border-[#344039] text-[#aeb9b3] hover:border-[#79d19c] hover:text-white"}`}
             key={topic}
             onClick={() => setSelectedTopic(topic)}
             type="button"
@@ -65,22 +65,22 @@ export function CurrentVideoSourceGrid({locale, sources, limit}: {
           const topic = ui.topics[source.topic];
 
           return (
-            <article className="scroll-mt-24 overflow-hidden border border-[#354039] bg-[#111512]" data-current-video-source={source.youtubeId} id={currentVideoAnchorId(source.youtubeId)} key={source.youtubeId}>
+            <article className="scroll-mt-24 overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" data-current-video-source={source.youtubeId} id={currentVideoAnchorId(source.youtubeId)} key={source.youtubeId}>
               <a className="group block" href={source.sourceUrl} rel="noreferrer" target="_blank" title={`${source.title} - ${source.channel}`}>
                 <span className="relative block aspect-video overflow-hidden border-b border-[#2c3631] bg-[#0d100e]">
                   <VideoThumbnailImage alt={`${source.title} video thumbnail`} eager={index === 0} youtubeId={source.youtubeId} />
                   <span className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
-                  <span className="absolute bottom-3 left-3 inline-flex size-10 items-center justify-center bg-[#d9a93a] text-[#111512]" aria-hidden="true">
+                  <span className="absolute bottom-3 left-3 inline-flex size-9 items-center justify-center rounded-[4px] border border-[#344039] bg-[#111713]/90 text-[#8ce2ad]" aria-hidden="true">
                     <PlayCircle className="size-5" />
                   </span>
                   <span className="absolute right-3 top-3 border border-[#68bd8d]/40 bg-[#111512]/90 px-2 py-1 text-[11px] font-semibold uppercase text-[#79d19c]">
                     {videoUi.seasonOneCurrent}
                   </span>
                 </span>
-                <span className="block min-h-64 p-5" style={{overflowWrap: "anywhere"}}>
+                <span className="block min-h-[220px] p-4" style={{overflowWrap: "anywhere"}}>
                   <span className="block text-xs font-semibold uppercase text-[#d9a93a]">{topic.label}</span>
                   <span className="mt-2 block text-xs font-semibold uppercase text-[#b8c3bd]">{source.channel}</span>
-                  <span className="display-font mt-3 block text-2xl leading-tight text-white">{source.title}</span>
+                  <span className="display-font mt-3 block text-xl leading-tight text-white">{source.title}</span>
                   <span className="mt-3 block text-sm leading-6 text-[#a8b4ae]">{topic.summary}</span>
                   <span className="mt-4 grid gap-2 text-xs text-[#8b9992] sm:grid-cols-2">
                     <span className="inline-flex min-w-0 items-start gap-1.5"><CalendarDays aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{ui.published} <time dateTime={source.publishedDate}>{formatLocalizedDate(source.publishedDate, locale)}</time></span></span>
@@ -90,7 +90,7 @@ export function CurrentVideoSourceGrid({locale, sources, limit}: {
                   <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">YouTube<ExternalLink aria-hidden="true" className="size-4" /></span>
                 </span>
               </a>
-              <a className="flex min-h-11 items-center justify-between gap-3 border-t border-[#2c3631] px-5 py-3 text-xs font-semibold uppercase text-[#b8c3bd] hover:bg-[#1b241f] hover:text-white" href={`/${locale}/guides/${source.internalGuideSlug}`} title={ui.viewGuide}>
+              <a className="flex min-h-10 items-center justify-between gap-3 border-t border-[#26312c] px-4 py-2.5 text-xs font-semibold uppercase text-[#b8c3bd] hover:bg-[#1b241f] hover:text-white" href={`/${locale}/guides/${source.internalGuideSlug}`} title={ui.viewGuide}>
                 <span className="min-w-0" style={{overflowWrap: "anywhere"}}>{ui.viewGuide}</span>
                 <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
               </a>

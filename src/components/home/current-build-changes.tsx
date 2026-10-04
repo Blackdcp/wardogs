@@ -11,7 +11,7 @@ export async function CurrentBuildChanges({locale}: {locale: Locale}) {
   const changes = getHomeCurrentBuildChanges();
 
   return (
-    <section aria-labelledby="current-build-changes-title" className="border-b border-[#26312c] bg-[#151b18] py-12 sm:py-14" data-current-build-changes>
+    <section aria-labelledby="current-build-changes-title" className="border-b border-[#26312c] bg-[#101512] py-12 sm:py-14" data-current-build-changes data-home-section="evidence">
       <div className="site-container">
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <div className="max-w-3xl">
@@ -22,7 +22,7 @@ export async function CurrentBuildChanges({locale}: {locale: Locale}) {
             <h2 className="display-font mt-3 text-3xl leading-tight text-[#f2f5f3] sm:text-4xl" id="current-build-changes-title">{t("title")}</h2>
             <p className="mt-4 text-sm leading-7 text-[#a8b4ae] sm:text-base">{t("description")}</p>
           </div>
-          <dl className="grid grid-cols-2 gap-x-7 border-t border-[#3a473f] pt-4 text-sm lg:min-w-[310px]">
+          <dl className="grid grid-cols-2 gap-x-7 rounded-[6px] border border-[#344039] bg-[#111713] p-4 text-sm lg:min-w-[310px]">
             <div>
               <dt className="text-[11px] uppercase text-[#82938a]">{t("buildLabel")}</dt>
               <dd className="mt-1 font-semibold text-white">{changes[0]?.effectiveBuild}</dd>
@@ -34,9 +34,9 @@ export async function CurrentBuildChanges({locale}: {locale: Locale}) {
           </dl>
         </div>
 
-        <ul className="mt-8 grid gap-x-6 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {changes.map((change) => (
-            <li className="min-w-0 border-t border-[#3a473f] py-5" key={change.key}>
+            <li className="min-w-0 rounded-[6px] border border-[#344039] bg-[#111713] p-4" key={change.key}>
               <p className="text-sm font-semibold leading-6 text-[#edf2ef]">{t(`entries.${change.key}.title`)}</p>
               <p className="mt-1 text-xs text-[#82938a]">{t(`entries.${change.key}.field`)}</p>
               <p className="display-font mt-4 flex items-center gap-3 text-xl text-white">
@@ -48,11 +48,10 @@ export async function CurrentBuildChanges({locale}: {locale: Locale}) {
           ))}
         </ul>
 
-        {/* 4. 时效与版本动态区：Update 0.1.2 修复报告与 S2 倒计时动态 */}
-        <div className="mt-8 rounded-lg border border-[#3b5744] bg-gradient-to-r from-[#172b20] to-[#101913] p-5 shadow-lg">
+        <div className="mt-4 rounded-[6px] border border-[#344039] bg-[#111713] p-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3.5">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-md border border-[#3b684c] bg-[#1a3326] text-[#f0be55]">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-[4px] border border-[#344039] bg-[#0d120f] text-[#d9a93a]">
                 <Hourglass aria-hidden="true" className="size-5" />
               </div>
               <div>
@@ -67,7 +66,7 @@ export async function CurrentBuildChanges({locale}: {locale: Locale}) {
             <Link
               href={`/guides/${CURRENT_EVENT.nextSeasonGuideSlug}`}
               title={t("s2WipeTitle")}
-              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-[6px] border border-[#68bd8d] bg-[#24583a] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#2c6a46]"
+              className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-[4px] border border-[#4d6b56] bg-[#17251d] px-4 py-2 text-xs font-semibold text-[#d8f4e4] transition-colors hover:border-[#69c78f] hover:bg-[#1d3024]"
             >
               <span>{t("s2WipeCta")}</span>
               <ArrowUpRight aria-hidden="true" className="size-4" />

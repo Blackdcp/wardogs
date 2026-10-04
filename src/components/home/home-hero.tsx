@@ -60,7 +60,7 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
           <HeroSearchBox
             locale={locale}
             placeholder={t("home.search.placeholder")}
-            hotTagsLabel={locale === "zh-cn" || locale === "zh-tw" ? "热搜" : "Trending"}
+            hotTagsLabel={locale === "zh-cn" || locale === "zh-tw" ? "常用" : "Popular"}
           />
 
           <div className="mt-5 grid w-full max-w-xl gap-2.5 sm:grid-cols-2">

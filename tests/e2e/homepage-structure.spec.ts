@@ -37,6 +37,9 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
   expect(heroSearchBox?.height ?? 0).toBeLessThanOrEqual(56);
   expect(heroSearchBox?.width ?? 0).toBeLessThanOrEqual(640);
 
+  await expect(page.locator("[data-hero-trending='true']")).toHaveCount(0);
+  await expect(page.locator("[data-hero-popular-links='true'] a")).toHaveCount(5);
+
   const heroTasks = await page.locator("[data-home-placement='hero'][data-home-task]").evaluateAll((links) => links.map((link) => link.getAttribute("data-home-task")));
   expect(heroTasks).toEqual(["map", "calculator"]);
   await expect(page.locator("[data-home-placement='hero'][data-home-task='season2']")).toHaveCount(0);
@@ -50,6 +53,9 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
   await expect(page.locator("[data-home-action-hub] [data-home-task='season2']")).toBeVisible();
   await expect(page.locator("[data-home-sponsored-slot='true']")).toBeVisible();
   await expect(page.locator("[data-home-sponsored-slot='true']")).toHaveCount(1);
+
+  const downstreamSections = await page.locator("[data-home-section]").evaluateAll((sections) => sections.map((section) => section.getAttribute("data-home-section")));
+  expect(downstreamSections).toEqual(["evidence", "guides", "videos", "catalogue", "library", "search"]);
 
   const searchHeight = await page.locator("[data-site-search]").evaluate((section) => section.getBoundingClientRect().height);
   expect(searchHeight).toBeLessThan(240);

@@ -94,8 +94,8 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
   }
 
   return (
-    <section aria-labelledby="site-search-title" className="border-b border-[#26312c] bg-[#0d120f] py-6 sm:py-7" data-site-search>
-      <div className="site-container grid gap-4 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:items-center md:gap-8">
+    <section aria-labelledby="site-search-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-8 sm:py-10" data-site-search data-home-section="search">
+      <div className="site-container grid gap-4 rounded-[6px] border border-[#344039] bg-[#111713] p-4 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:items-center md:gap-8 md:p-5">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase text-[#79d19c]">{copy.eyebrow}</p>
           <h2 className="display-font mt-1 text-xl leading-tight text-white sm:text-2xl" id="site-search-title">{copy.title}</h2>
@@ -105,7 +105,7 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
         <div className="min-w-0">
           <label className="sr-only" htmlFor="site-search-input">{copy.label}</label>
           <div className="relative">
-            <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[#82938a]" />
+            <Search aria-hidden="true" className="pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-[#82938a]" />
             <input
               aria-activedescendant={hasResults && activeResult ? `site-search-option-${selectedIndex}` : undefined}
               aria-autocomplete="list"
@@ -113,7 +113,7 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
               aria-expanded={hasResults}
               aria-haspopup="listbox"
               autoComplete="off"
-              className="h-14 w-full border border-[#526159] bg-[#151b18] pl-12 pr-4 text-base text-white outline-none transition placeholder:text-[#75827b] focus:border-[#79d19c] focus:ring-2 focus:ring-[#79d19c]/35"
+              className="h-12 w-full rounded-[6px] border border-[#344039] bg-[#0b100d] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-[#75827b] focus:border-[#79d19c] focus:shadow-[inset_0_0_0_1px_rgba(105,199,143,0.45)]"
               id="site-search-input"
               onBlur={() => {recordSearch(query, results.length); setIsOpen(false);}}
               onChange={handleChange}
@@ -124,7 +124,7 @@ export function SiteSearch({copy, index, locale}: SiteSearchProps) {
               type="search"
               value={query}
             />
-            <div className="absolute inset-x-0 top-full z-30 mt-2 max-h-80 overflow-y-auto border border-[#344039] bg-[#111613] shadow-2xl" data-site-search-results="stable" hidden={!hasResults} tabIndex={-1}>
+            <div className="absolute inset-x-0 top-full z-30 mt-2 max-h-80 overflow-y-auto rounded-[6px] border border-[#344039] bg-[#111613] shadow-[0_20px_60px_rgba(0,0,0,0.35)]" data-site-search-results="stable" hidden={!hasResults} tabIndex={-1}>
               <ul
                 aria-label={copy.resultCount.replace("{count}", String(results.length))}
                 id="site-search-results"

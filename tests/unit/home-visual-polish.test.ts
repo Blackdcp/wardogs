@@ -7,10 +7,10 @@ function source(file: string) {
 }
 
 describe("homepage visual polish", () => {
-  it("renders hero trending chips as editorial links instead of bracketed debug pills", () => {
+  it("renders hero popular links as quiet editorial text instead of promo chips", () => {
     const heroSearch = source("src/components/home/hero-search-box.tsx");
 
-    expect(heroSearch).toContain('data-hero-trending="true"');
+    expect(heroSearch).toContain('data-hero-popular-links="true"');
     expect(heroSearch).not.toContain('[{item.tag}]');
     expect(heroSearch).not.toContain('font-mono text-[11px] font-bold uppercase tracking-wider text-[#d9a93a]');
     expect(heroSearch).not.toContain('border border-[#304538] bg-[#141e18]/90');
@@ -50,6 +50,47 @@ describe("homepage visual polish", () => {
 
     expect(globals).toContain('[data-search-dialog-input="command"]:focus-visible');
     expect(globals).toContain("outline: 0");
+  });
+
+  it("turns hero hot terms into a quiet popular-links row rather than promo chips", () => {
+    const heroSearch = source("src/components/home/hero-search-box.tsx");
+
+    expect(heroSearch).toContain('data-hero-popular-links="true"');
+    expect(heroSearch).not.toContain('data-hero-trending="true"');
+    expect(heroSearch).not.toContain('Flame');
+    expect(heroSearch).not.toContain('rounded-full border border-[#2b3831]');
+  });
+
+  it("applies the same homepage section system to every downstream block", () => {
+    const files = [
+      "src/components/home/current-build-changes.tsx",
+      "src/components/home/priority-guides.tsx",
+      "src/components/home/video-intelligence.tsx",
+      "src/components/catalogue/catalogue-home-band.tsx",
+      "src/components/home/category-grid.tsx",
+      "src/components/home/site-search.tsx"
+    ];
+
+    for (const file of files) {
+      const text = source(file);
+      expect(text, file).toContain("data-home-section=");
+      expect(text, file).not.toContain("bg-gradient-to-r");
+      expect(text, file).not.toContain("shadow-lg");
+      expect(text, file).not.toContain('border-y border-[#526159]');
+      expect(text, file).not.toContain('border-t border-[#3a473f]');
+    }
+  });
+
+  it("keeps lower homepage cards compact and in the same visual language", () => {
+    const videoGrid = source("src/components/videos/current-video-source-grid.tsx");
+    const siteSearch = source("src/components/home/site-search.tsx");
+
+    expect(videoGrid).toContain('data-home-video-grid="true"');
+    expect(videoGrid).not.toContain('bg-[#d9a93a] text-[#111512]');
+    expect(videoGrid).not.toContain('block min-h-64 p-5');
+    expect(siteSearch).toContain('data-home-section="search"');
+    expect(siteSearch).not.toContain('h-14 w-full border border-[#526159]');
+    expect(siteSearch).not.toContain('focus:ring-2 focus:ring-[#79d19c]/35');
   });
 
 });

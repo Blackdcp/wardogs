@@ -30,7 +30,7 @@ export async function CategoryGrid({guideCount}: {guideCount: number}) {
   const t = await getTranslations();
 
   return (
-    <section aria-labelledby="all-guides-title" className="border-b border-[#26312c] bg-[#151b18] py-16 sm:py-20">
+    <section aria-labelledby="all-guides-title" className="border-b border-[#26312c] bg-[#101512] py-14 sm:py-16" data-home-section="library">
       <div className="site-container">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
@@ -46,15 +46,15 @@ export async function CategoryGrid({guideCount}: {guideCount: number}) {
           </Link>
         </div>
 
-        <ul className="mt-9 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {HOME_CATEGORY_GUIDES.map((category) => {
             const Icon = categoryIcons[category.key];
             return (
-              <li key={category.key} className="border-t border-[#344039]">
+              <li key={category.key} className="rounded-[6px] border border-[#344039] bg-[#111713]">
                 <Link
                   href={`/guides/${category.slug}`}
                   title={t(`categories.${category.key}`)}
-                  className="group flex min-h-[132px] items-start gap-4 py-5"
+                  className="group flex min-h-[132px] items-start gap-4 p-4"
                 >
                   <span className={`inline-flex size-10 shrink-0 items-center justify-center rounded-[5px] border ${categoryTones[category.key]}`}>
                     <Icon aria-hidden="true" className="size-5" />
