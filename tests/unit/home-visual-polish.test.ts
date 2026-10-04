@@ -80,6 +80,7 @@ describe("homepage visual polish", () => {
       "src/components/home/current-build-changes.tsx",
       "src/components/home/priority-guides.tsx",
       "src/components/catalogue/catalogue-home-band.tsx",
+      "src/components/home/home-discovery-compact.tsx",
       "src/components/home/site-search.tsx"
     ];
 
@@ -104,6 +105,7 @@ describe("homepage visual polish", () => {
     expect(page).not.toContain("<AboutGame");
     expect(page).not.toContain("<HomeFaq");
     expect(page).not.toContain("<FinalCta");
+    expect(page).toContain("<HomeDiscoveryCompact");
     expect(startHere).toContain("xl:grid-cols-6");
     expect(startHere).not.toContain("min-h-[224px]");
   });

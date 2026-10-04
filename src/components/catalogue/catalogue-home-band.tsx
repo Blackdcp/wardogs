@@ -57,7 +57,7 @@ function CatalogueEntry({entry, LinkComponent}: {entry: CatalogueHomeBandEntry; 
   return (
     <li className="min-w-0" data-catalogue-entry={entry.key}>
       <LinkComponent className="group block h-full min-w-0 overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" href={entry.href} title={entry.title}>
-        <span className={`relative block overflow-hidden bg-[#090b0a] ${feature ? "aspect-[8/3]" : "aspect-[8/5]"}`}>
+        <span className={`relative block overflow-hidden bg-[#090b0a] ${feature ? "aspect-[16/5]" : "aspect-[16/9]"}`}>
           <Image
             src={assetPath(entry.image)}
             alt={entry.imageAlt}
@@ -66,12 +66,12 @@ function CatalogueEntry({entry, LinkComponent}: {entry: CatalogueHomeBandEntry; 
             className={`${entry.imageFit === "cover" ? "object-cover" : "object-contain p-3 sm:p-4"} transition-transform duration-300 group-hover:scale-[1.02]`}
           />
         </span>
-        <span className={`flex min-w-0 items-start justify-between gap-3 ${feature ? "min-h-24 py-5" : "min-h-24 py-4"}`}>
+        <span className={`flex min-w-0 items-start justify-between gap-3 ${feature ? "min-h-20 py-4" : "min-h-[76px] py-3"}`}>
           <span className="min-w-0">
-            <span className={`${feature ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"} display-font block [overflow-wrap:anywhere] leading-tight text-[#f2f5f3] group-hover:text-[#79d19c]`}>
+            <span className={`${feature ? "text-xl sm:text-2xl" : "text-base sm:text-lg"} display-font block [overflow-wrap:anywhere] leading-tight text-[#f2f5f3] group-hover:text-[#79d19c]`}>
               {entry.title}
             </span>
-            <span className="mt-2 block [overflow-wrap:anywhere] text-xs leading-5 text-[#9fada6] sm:text-sm">
+            <span className="mt-1.5 block [overflow-wrap:anywhere] text-xs leading-5 text-[#9fada6]">
               {entry.count}
             </span>
           </span>
@@ -86,19 +86,19 @@ function CatalogueModelEntry({entry}: {entry: CatalogueHomeModelEntry}) {
   return (
     <li className="min-w-0" data-catalogue-model-entry={entry.key}>
       <a aria-label={entry.title} className="group block h-full overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" href={entry.href} title={entry.title}>
-        <span className="relative block aspect-[4/3] overflow-hidden bg-[#090b0a]">
+        <span className="relative block aspect-[16/9] overflow-hidden bg-[#090b0a]">
           <Image
             src={assetPath(entry.image)}
             alt={entry.imageAlt}
             fill
             sizes="(min-width: 1280px) 277px, (min-width: 640px) calc(50vw - 36px), calc(100vw - 32px)"
-            className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.02]"
+            className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.02]"
           />
         </span>
-        <span className="flex min-h-24 items-start justify-between gap-3 py-4">
+        <span className="flex min-h-[76px] items-start justify-between gap-3 py-3">
           <span className="min-w-0">
             <span className="block text-xs uppercase leading-5 text-[#9fada6]">{entry.subtype}</span>
-            <h3 className="display-font mt-1 [overflow-wrap:anywhere] text-xl leading-tight text-[#f2f5f3] group-hover:text-[#79d19c]">{entry.title}</h3>
+            <h3 className="display-font mt-1 [overflow-wrap:anywhere] text-lg leading-tight text-[#f2f5f3] group-hover:text-[#79d19c]">{entry.title}</h3>
           </span>
           <ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-[#82938a] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#79d19c]" />
         </span>
@@ -112,23 +112,23 @@ export function CatalogueHomeBandView({heading, modelHeading = "Published model 
   const compact = entries.filter((entry) => entry.layout === "compact");
 
   return (
-    <section data-catalogue-home-band aria-labelledby="catalogue-home-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-14 sm:py-16" data-home-section="catalogue">
+    <section data-catalogue-home-band aria-labelledby="catalogue-home-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-10 sm:py-12" data-home-section="catalogue">
       <div className="site-container">
-        <h2 id="catalogue-home-title" className="display-font max-w-3xl text-3xl leading-tight text-[#f2f5f3] sm:text-4xl">
+        <h2 id="catalogue-home-title" className="display-font max-w-3xl text-2xl leading-tight text-[#f2f5f3] sm:text-3xl">
           {heading}
         </h2>
         {modelEntries.length > 0 ? (
-          <div className="mt-8 rounded-[6px] border border-[#344039] bg-[#111713] p-5">
+          <div className="mt-6 rounded-[6px] border border-[#344039] bg-[#111713] p-4">
             <p className="font-mono text-xs uppercase text-[#d9a93a]">{modelHeading}</p>
-            <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {modelEntries.map((entry) => <CatalogueModelEntry entry={entry} key={entry.key} />)}
             </ul>
           </div>
         ) : null}
-        <ul className="mt-8 grid gap-4 md:grid-cols-2">
+        <ul className="mt-6 grid gap-3 md:grid-cols-2">
           {features.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
         </ul>
-        <ul className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
+        <ul className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
           {compact.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
         </ul>
       </div>

@@ -13,6 +13,7 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
       "[data-current-build-changes]",
       "#priority-guides-title",
       "[data-catalogue-home-band]",
+      "[data-home-compact-discovery]",
       "[data-site-search]"
     ];
     const sections = Array.from(main.querySelectorAll("section"));
@@ -61,10 +62,17 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
   }
 
   const downstreamSections = await page.locator("[data-home-section]").evaluateAll((sections) => sections.map((section) => section.getAttribute("data-home-section")));
-  expect(downstreamSections).toEqual(["briefing", "start", "evidence", "guides", "catalogue", "search"]);
+  expect(downstreamSections).toEqual(["briefing", "start", "evidence", "guides", "catalogue", "discovery", "search"]);
+
+  await expect(page.locator("[data-home-compact-discovery] [data-home-task='videos']")).toHaveCount(1);
+  await expect(page.locator("[data-home-compact-discovery] [data-home-task='guides']")).toHaveCount(1);
+  await expect(page.locator("[data-home-compact-discovery] [data-home-task='faq']")).toHaveCount(1);
+  await expect(page.locator("[data-home-compact-discovery] [data-home-task='about']")).toHaveCount(1);
+  await expect(page.locator("[data-home-discovery-category]")).toHaveCount(8);
+  await expect(page.locator("[data-home-discovery-faq]")).toHaveCount(4);
 
   const viewportScreens = await page.evaluate(() => document.documentElement.scrollHeight / window.innerHeight);
-  expect(viewportScreens).toBeLessThan(7);
+  expect(viewportScreens).toBeLessThan(8);
 
   const searchHeight = await page.locator("[data-site-search]").evaluate((section) => section.getBoundingClientRect().height);
   expect(searchHeight).toBeLessThan(240);

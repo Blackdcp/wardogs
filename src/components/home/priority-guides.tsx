@@ -21,37 +21,37 @@ export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
   const {top: topGuides, recent: recentGuides, status: statusItems} = getHomePriorityGuides(guides, locale);
 
   return (
-    <section aria-labelledby="priority-guides-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-14 sm:py-16" data-home-section="guides">
+    <section aria-labelledby="priority-guides-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-10 sm:py-12" data-home-section="guides">
       <div className="site-container">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase text-[#d9a93a]">{t("home.priority.eyebrow")}</p>
-            <h2 id="priority-guides-title" className="display-font mt-3 text-3xl leading-tight text-[#f2f5f3] sm:text-4xl">
+            <h2 id="priority-guides-title" className="display-font mt-2 text-2xl leading-tight text-[#f2f5f3] sm:text-3xl">
               {t("home.priority.title")}
             </h2>
-            <p className="mt-4 text-sm leading-7 text-[#a8b4ae] sm:text-base">{t("home.priority.description")}</p>
+            <p className="mt-3 text-sm leading-6 text-[#a8b4ae]">{t("home.priority.description")}</p>
           </div>
           <Link className="inline-flex min-h-10 w-fit items-center gap-2 rounded-[4px] border border-[#344039] bg-[#111713] px-4 py-2 text-sm font-semibold text-[#dce4df] hover:border-[#79d19c] hover:text-white" href="/guides" title={t("nav.allGuides")}>
             {t("nav.allGuides")}<ArrowRight aria-hidden="true" className="size-4" />
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-12">
-          <div className="rounded-[6px] border border-[#344039] bg-[#111713] p-5">
+        <div className="mt-7 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.72fr)]">
+          <div className="rounded-[6px] border border-[#344039] bg-[#111713] p-4">
             <div className="flex items-center gap-3">
               <Flame aria-hidden="true" className="size-5 text-[#d9a93a]" />
               <h3 className="display-font text-2xl text-[#f2f5f3]">{t("home.priority.top.title")}</h3>
             </div>
-            <p className="mt-3 text-sm leading-6 text-[#98a69f]">{t("home.priority.top.description")}</p>
-            <ol aria-label={t("home.priority.top.title")} className="mt-6 grid gap-x-7 sm:grid-cols-2">
+            <p className="mt-2 text-sm leading-6 text-[#98a69f]">{t("home.priority.top.description")}</p>
+            <ol aria-label={t("home.priority.top.title")} className="mt-4 grid gap-x-4 sm:grid-cols-2">
               {topGuides.map((guide, index) => (
                 <li key={guide.slug}>
                   <Link
                     href={`/guides/${guide.slug}`}
                     title={guide.title}
-                    className="group flex min-h-12 items-start gap-3 rounded-[4px] border border-transparent px-2 py-2 text-sm text-[#d7ded9] hover:border-[#344039] hover:bg-[#151d18] hover:text-[#79d19c]"
+                    className="group flex min-h-10 items-start gap-3 rounded-[4px] border border-transparent px-2 py-1.5 text-sm text-[#d7ded9] hover:border-[#344039] hover:bg-[#151d18] hover:text-[#79d19c]"
                   >
-            <span className="display-font mt-0.5 w-6 shrink-0 text-right text-xs text-[#82938a]">
+                    <span className="display-font mt-0.5 w-6 shrink-0 text-right text-xs text-[#82938a]">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="min-w-0 flex-1 leading-6">{guide.title}</span>
@@ -63,16 +63,16 @@ export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
           </div>
 
           <div className="grid gap-4">
-            <div className="rounded-[6px] border border-[#344039] bg-[#111713] p-5">
+            <div className="rounded-[6px] border border-[#344039] bg-[#111713] p-4">
               <div className="flex items-center gap-3">
                 <Clock3 aria-hidden="true" className="size-5 text-[#79a9d1]" />
                 <h3 className="display-font text-xl text-[#f2f5f3]">{t("home.priority.recent.title")}</h3>
               </div>
-              <ul aria-label={t("home.priority.recent.title")} className="mt-5 space-y-3">
+              <ul aria-label={t("home.priority.recent.title")} className="mt-3 space-y-1">
                 {recentGuides.map((guide) => (
                   <li key={guide.slug}>
-                    <Link href={`/guides/${guide.slug}`} className="group block rounded-[4px] border border-transparent px-2 py-2 hover:border-[#344039] hover:bg-[#151d18]" title={guide.title}>
-                      <span className="block text-sm font-semibold leading-6 text-[#d7ded9] group-hover:text-[#79d19c]">{guide.title}</span>
+                    <Link href={`/guides/${guide.slug}`} className="group block rounded-[4px] border border-transparent px-2 py-1.5 hover:border-[#344039] hover:bg-[#151d18]" title={guide.title}>
+                      <span className="block text-sm font-semibold leading-5 text-[#d7ded9] group-hover:text-[#79d19c]">{guide.title}</span>
                       <span className="mt-1 block text-xs uppercase text-[#82938a]">{t("common.updated")} {formatLocalizedDate(guide.updatedAt, locale)}</span>
                     </Link>
                   </li>
@@ -80,19 +80,19 @@ export async function PriorityGuides({guides, locale}: PriorityGuidesProps) {
               </ul>
             </div>
 
-            <div className="rounded-[6px] border border-[#344039] bg-[#111713] p-5">
+            <div className="rounded-[6px] border border-[#344039] bg-[#111713] p-4">
               <div className="flex items-center gap-3">
                 <CheckCircle2 aria-hidden="true" className="size-5 text-[#69c78f]" />
                 <h3 className="display-font text-xl text-[#f2f5f3]">{t("home.priority.status.title")}</h3>
               </div>
-              <ul aria-label={t("home.priority.status.title")} className="mt-5 space-y-3">
+              <ul aria-label={t("home.priority.status.title")} className="mt-3 space-y-1">
                 {statusItems.map((item) => (
                   <li key={item.titleKey}>
-                    <Link href={`/guides/${item.slug}`} className="group flex items-start gap-3 rounded-[4px] border border-transparent px-2 py-2 hover:border-[#344039] hover:bg-[#151d18]" title={t(`home.priority.status.items.${item.titleKey}.title`)}>
+                    <Link href={`/guides/${item.slug}`} className="group flex items-start gap-3 rounded-[4px] border border-transparent px-2 py-1.5 hover:border-[#344039] hover:bg-[#151d18]" title={t(`home.priority.status.items.${item.titleKey}.title`)}>
                       <span className={`mt-0.5 inline-flex h-6 shrink-0 items-center rounded-[4px] border px-2 text-[10px] font-semibold uppercase ${statusStyles[item.status]}`}>
                         {t(`home.priority.status.labels.${item.status}`)}
                       </span>
-                      <span className="min-w-0 flex-1 text-sm font-semibold leading-6 text-[#d7ded9] group-hover:text-[#79d19c]">
+                      <span className="min-w-0 flex-1 text-sm font-semibold leading-5 text-[#d7ded9] group-hover:text-[#79d19c]">
                         {t(`home.priority.status.items.${item.titleKey}.title`)}
                       </span>
                       <HelpCircle aria-hidden="true" className="mt-1 size-4 shrink-0 text-[#64726a] group-hover:text-[#79d19c]" />

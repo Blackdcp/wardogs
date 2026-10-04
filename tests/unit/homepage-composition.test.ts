@@ -13,6 +13,7 @@ describe("homepage composition", () => {
       "<CurrentBuildChanges",
       "<PriorityGuides",
       "<CatalogueHomeBand",
+      "<HomeDiscoveryCompact",
       "<SiteSearch"
     ].map((component) => source.indexOf(component));
 
@@ -34,6 +35,7 @@ describe("homepage composition", () => {
     ]) {
       expect(source).not.toContain(removedHomeBlock);
     }
+    expect(source).toContain("<HomeDiscoveryCompact guideCount={guides.length} locale={locale} />");
   });
 
   it("keeps the branded hero before a compact editorial desk and then the remaining homepage sections", () => {
@@ -47,7 +49,8 @@ describe("homepage composition", () => {
     expect(source.indexOf("<StartHere")).toBeLessThan(source.indexOf("<CurrentBuildChanges"));
     expect(source.indexOf("<CurrentBuildChanges")).toBeLessThan(source.indexOf("<PriorityGuides"));
     expect(source.indexOf("<PriorityGuides")).toBeLessThan(source.indexOf("<CatalogueHomeBand"));
-    expect(source.indexOf("<CatalogueHomeBand")).toBeLessThan(source.indexOf("<SiteSearch"));
+    expect(source.indexOf("<CatalogueHomeBand")).toBeLessThan(source.indexOf("<HomeDiscoveryCompact"));
+    expect(source.indexOf("<HomeDiscoveryCompact")).toBeLessThan(source.indexOf("<SiteSearch"));
   });
 
   it("keeps the visible WARDOGS Wiki brand and hero artwork in the hero component", () => {

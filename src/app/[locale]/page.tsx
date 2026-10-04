@@ -3,6 +3,7 @@ import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {CatalogueHomeBand} from "@/components/catalogue/catalogue-home-band";
 import {CurrentBuildChanges} from "@/components/home/current-build-changes";
+import {HomeDiscoveryCompact} from "@/components/home/home-discovery-compact";
 import {HomeEditorialBriefing} from "@/components/home/home-editorial-briefing";
 import {HomeHero} from "@/components/home/home-hero";
 import {PriorityGuides} from "@/components/home/priority-guides";
@@ -88,9 +89,10 @@ export default async function HomePage({params}: HomePageProps) {
       {/* 4. 当前版本证据：保留首页可信度和版本敏感信息 */}
       <CurrentBuildChanges locale={locale} />
 
-      {/* 5. 深度入口：只保留核心攻略、资料库和搜索 */}
+      {/* 5. 深度入口：核心攻略、资料库和压缩的长尾入口 */}
       <PriorityGuides guides={guides} locale={locale} />
       <CatalogueHomeBand locale={locale} />
+      <HomeDiscoveryCompact guideCount={guides.length} locale={locale} />
       <SiteSearch copy={searchCopy} index={searchIndex} locale={locale} />
     </main>
   );
