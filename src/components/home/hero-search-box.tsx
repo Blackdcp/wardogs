@@ -73,27 +73,26 @@ export function HeroSearchBox({locale = "en", placeholder, hotTagsLabel = "HOT"}
   const tags = hotTagsData[locale] ?? hotTagsData.en;
 
   return (
-    <div className="mt-7 w-full max-w-2xl text-left" data-hero-search-box="true">
+    <div className="mt-7 w-full max-w-xl text-left" data-hero-search-box="true">
       <SiteSearchDialog
         placeholder={placeholder || "Search weapons, error codes, wipe dates, controls..."}
         source="hero"
         trigger="hero"
       />
 
-      {/* 5 免打字热搜标签 */}
-      <div className="-mx-2 mt-3 flex items-center gap-2 overflow-x-auto px-2 pb-1 text-xs sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 sm:pb-0">
-        <span className="flex shrink-0 items-center gap-1 font-mono text-[11px] font-bold uppercase tracking-wider text-[#d9a93a]">
-          <Flame aria-hidden="true" className="size-3.5 text-[#f08c35]" />
-          {hotTagsLabel}:
+      <div className="-mx-2 mt-3 flex items-center gap-2 overflow-x-auto px-2 pb-1 text-xs sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 sm:pb-0" data-hero-trending="true">
+        <span className="flex shrink-0 items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-[#9daaa3]">
+          <Flame aria-hidden="true" className="size-3 text-[#d9a93a]" />
+          {hotTagsLabel}
         </span>
         {tags.map((item) => (
           <a
             key={item.href}
             href={item.href}
             title={item.title}
-            className="shrink-0 rounded border border-[#304538] bg-[#141e18]/90 px-2.5 py-1 text-xs font-medium text-[#8ce2ad] transition-colors hover:border-[#69c78f] hover:bg-[#1a2c22] hover:text-white"
+            className="shrink-0 rounded-full border border-[#2b3831] bg-[#0e1511]/80 px-2.5 py-1 text-[11px] font-semibold text-[#a8d8ba] transition-colors hover:border-[#5b8f6a] hover:bg-[#17251d] hover:text-white"
           >
-            [{item.tag}]
+            {item.tag}
           </a>
         ))}
       </div>

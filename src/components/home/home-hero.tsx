@@ -60,16 +60,16 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
           <HeroSearchBox
             locale={locale}
             placeholder={t("home.search.placeholder")}
-            hotTagsLabel={locale === "zh-cn" || locale === "zh-tw" ? "热搜" : "HOT"}
+            hotTagsLabel={locale === "zh-cn" || locale === "zh-tw" ? "热搜" : "Trending"}
           />
 
-          <div className="mt-6 grid w-full max-w-2xl gap-3 sm:grid-cols-2">
-            <ButtonLink href="/tools/map" homeTask="map" className="min-h-12 text-base" title={t("nav.interactiveMap")}>
-              <Map aria-hidden="true" className="size-5" />
+          <div className="mt-5 grid w-full max-w-xl gap-2.5 sm:grid-cols-2">
+            <ButtonLink href="/tools/map" homeTask="map" variant="secondary" className="min-h-11 border-[#344039] bg-[#111713]/88 text-sm text-[#d8f4e4] hover:border-[#69c78f] hover:bg-[#17251d]" title={t("nav.interactiveMap")}>
+              <Map aria-hidden="true" className="size-[18px] text-[#8ce2ad]" />
               {t("nav.interactiveMap")}
             </ButtonLink>
-            <ButtonLink href="/tools/artillery-calculator" homeTask="calculator" variant="secondary" className="min-h-12 border-[#3c5c46] bg-[#111a15]/90 text-base text-[#d8f4e4] hover:border-[#69c78f] hover:bg-[#193022]" title={t("nav.artilleryCalculator")}>
-              <Crosshair aria-hidden="true" className="size-5 text-[#8ce2ad]" />
+            <ButtonLink href="/tools/artillery-calculator" homeTask="calculator" variant="secondary" className="min-h-11 border-[#344039] bg-[#111713]/88 text-sm text-[#d8f4e4] hover:border-[#69c78f] hover:bg-[#17251d]" title={t("nav.artilleryCalculator")}>
+              <Crosshair aria-hidden="true" className="size-[18px] text-[#8ce2ad]" />
               {t("nav.artilleryCalculator")}
             </ButtonLink>
           </div>

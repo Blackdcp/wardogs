@@ -70,26 +70,22 @@ export async function SiteHeader() {
           </Link>
           <DesktopNavigation groups={navigation} label={t("nav.primaryLabel")} />
 
-          {/* 战术双核心高绿胶囊 (Tactical Twin Capsule: Map & Artillery) */}
-          <div
-            className="inline-flex min-h-10 shrink-0 items-center overflow-hidden rounded-[6px] border border-[#30543e] bg-[#122319] p-0.5 shadow-[0_0_15px_rgba(76,217,136,0.12)] transition-colors hover:border-[#4cd988]"
-            data-tactical-capsule="true"
-          >
+          <div className="inline-flex shrink-0 items-center gap-1 text-[#9fb0a7]" data-header-tool-shortcuts="true">
             <Link
               href="/tools/map"
               title={t("nav.interactiveMap")}
-              className="inline-flex h-9 items-center gap-1.5 rounded-[4px] px-2.5 text-xs font-semibold text-[#8be2ad] transition-colors hover:bg-[#1b3626] hover:text-[#d8f4e4]"
+              className="inline-flex h-9 items-center gap-1.5 rounded-[4px] px-2 text-xs font-semibold transition-colors hover:bg-[#18221c] hover:text-[#8ce2ad]"
             >
-              <Map aria-hidden="true" className="size-3.5 text-[#4cd988]" />
+              <Map aria-hidden="true" className="size-3.5 text-[#6fbf8c]" />
               <span className="whitespace-nowrap">{t("nav.mapPill")}</span>
             </Link>
-            <span aria-hidden="true" className="h-4 w-px bg-[#264432]" />
+            <span aria-hidden="true" className="h-4 w-px bg-[#2b3530]" />
             <Link
               href="/tools/artillery-calculator"
               title={t("nav.artilleryCalculator")}
-              className="inline-flex h-9 items-center gap-1.5 rounded-[4px] px-2.5 text-xs font-semibold text-[#8be2ad] transition-colors hover:bg-[#1b3626] hover:text-[#d8f4e4]"
+              className="inline-flex h-9 items-center gap-1.5 rounded-[4px] px-2 text-xs font-semibold transition-colors hover:bg-[#18221c] hover:text-[#8ce2ad]"
             >
-              <Crosshair aria-hidden="true" className="size-3.5 text-[#4cd988]" />
+              <Crosshair aria-hidden="true" className="size-3.5 text-[#6fbf8c]" />
               <span className="whitespace-nowrap">{t("nav.calcPill")}</span>
             </Link>
           </div>

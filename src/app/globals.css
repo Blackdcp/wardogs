@@ -48,3 +48,5 @@ iframe {border: 0;}
 
 @media (min-width: 768px) {.site-container {width: min(calc(100% - 64px), var(--content));}}
 @media (prefers-reduced-motion: reduce) {html {scroll-behavior: auto;} *, *::before, *::after {animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important;}}
+
+[data-search-dialog-input="command"]:focus-visible {outline: 0; outline-offset: 0;}
