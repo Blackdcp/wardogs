@@ -11,7 +11,9 @@ export function safeSearchTerm(query: string): string | null {
   return term;
 }
 
-export function recordSiteSearch(query: string, resultCount: number, locale: Locale, source: "home" | "header") {
+export type SiteSearchSource = "home" | "header" | "hero";
+
+export function recordSiteSearch(query: string, resultCount: number, locale: Locale, source: SiteSearchSource) {
   const searchTerm = safeSearchTerm(query);
   if (!searchTerm) return;
   const parameters = {search_term: searchTerm, result_count: resultCount, locale, search_source: source};
@@ -21,7 +23,7 @@ export function recordSiteSearch(query: string, resultCount: number, locale: Loc
 
 // One query can finish through Enter, blur and a result click. Record that
 // outcome once per mounted search surface; never record each keystroke.
-export function createSiteSearchRecorder(locale: Locale, source: "home" | "header") {
+export function createSiteSearchRecorder(locale: Locale, source: SiteSearchSource) {
   let previous: string | null = null;
   return (query: string, resultCount: number) => {
     const term = safeSearchTerm(query);
@@ -33,7 +35,7 @@ export function createSiteSearchRecorder(locale: Locale, source: "home" | "heade
   };
 }
 
-export function recordSiteSearchResult(query: string, result: SiteSearchEntry, locale: Locale, source: "home" | "header") {
+export function recordSiteSearchResult(query: string, result: SiteSearchEntry, locale: Locale, source: SiteSearchSource) {
   const searchTerm = safeSearchTerm(query);
   if (!searchTerm) return;
   trackAnalyticsEvent(ANALYTICS_EVENTS.siteSearchResultOpen, {

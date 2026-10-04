@@ -21,9 +21,9 @@ export async function SiteHeader() {
             href="/"
             aria-label={t("footer.aboutTitle")}
             title={t("footer.aboutTitle")}
-            className="min-w-0 shrink"
+            className="shrink-0"
           >
-            <SiteBrand markClassName="w-[100px] sm:w-[118px]" />
+            <SiteBrand markClassName="w-[108px] sm:w-[118px]" suffixClassName="hidden min-[420px]:inline-block" />
           </Link>
           <div className="flex shrink-0 items-center gap-2">
             <Link
@@ -42,7 +42,7 @@ export async function SiteHeader() {
               rel="noreferrer"
               aria-label={t("common.openSteam")}
               title={t("common.openSteam")}
-              className="inline-flex size-11 items-center justify-center rounded-[6px] border border-[#397b59] bg-[#244332] text-[#d8f4e4] transition-colors hover:bg-[#315a43]"
+              className="hidden size-11 items-center justify-center rounded-[6px] border border-[#397b59] bg-[#244332] text-[#d8f4e4] transition-colors hover:bg-[#315a43] sm:inline-flex"
             >
               <Gamepad2 aria-hidden="true" className="size-5" />
               <span className="sr-only">{t("common.openSteam")}</span>

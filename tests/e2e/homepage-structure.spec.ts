@@ -1,6 +1,6 @@
 import {expect, test} from "@playwright/test";
 
-test("home puts the highest-intent paths ahead of the compact search strip", async ({page}) => {
+test("home keeps action and freshness sections ahead of discovery and the compact search strip", async ({page}) => {
   await page.setViewportSize({width: 1365, height: 900});
   await page.goto("/en");
 
@@ -9,10 +9,10 @@ test("home puts the highest-intent paths ahead of the compact search strip", asy
       "#home-hero-title",
       "[data-live-event]",
       "[data-home-action-hub]",
-      "[data-catalogue-home-band]",
+      "[data-current-build-changes]",
       "#priority-guides-title",
-      "[data-site-search]",
-      "[data-current-build-changes]"
+      "[data-catalogue-home-band]",
+      "[data-site-search]"
     ];
     const sections = Array.from(main.querySelectorAll("section"));
 
@@ -27,4 +27,16 @@ test("home puts the highest-intent paths ahead of the compact search strip", asy
 
   const searchHeight = await page.locator("[data-site-search]").evaluate((section) => section.getBoundingClientRect().height);
   expect(searchHeight).toBeLessThan(240);
+});
+
+test("hero search opens in place instead of jumping to the footer search strip", async ({page}) => {
+  await page.setViewportSize({width: 1440, height: 1000});
+  await page.goto("/en");
+
+  await page.locator("[data-hero-search-trigger], [data-hero-search-box='true'] a").first().click();
+
+  await expect(page.getByRole("dialog", {name: "Search WARDOGS Wiki"})).toBeVisible();
+  await expect(page).not.toHaveURL(/#site-search-title$/);
+  const scrollY = await page.evaluate(() => window.scrollY);
+  expect(scrollY).toBeLessThan(200);
 });

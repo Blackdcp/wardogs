@@ -1,5 +1,8 @@
-import {Flame, Search} from "lucide-react";
+"use client";
+
+import {Flame} from "lucide-react";
 import type {Locale} from "@/config/site";
+import {SiteSearchDialog} from "@/components/layout/site-search-dialog";
 
 type HeroSearchBoxProps = {
   locale?: Locale;
@@ -68,30 +71,18 @@ const hotTagsData: Record<string, {tag: string; href: string; title: string}[]> 
 
 export function HeroSearchBox({locale = "en", placeholder, hotTagsLabel = "HOT"}: HeroSearchBoxProps) {
   const tags = hotTagsData[locale] ?? hotTagsData.en;
-  const isZh = locale === "zh-cn" || locale === "zh-tw";
 
   return (
     <div className="mt-7 w-full max-w-2xl text-left" data-hero-search-box="true">
-      {/* High-visibility Tactical Search Trigger leading to Search Hub */}
-      <a
-        href="#site-search-title"
-        title={placeholder || "Search WARDOGS database"}
-        className="group relative flex w-full items-center justify-between rounded-lg border border-[#3f5746] bg-[#111713]/90 px-4 py-3 shadow-xl transition-all hover:border-[#69c78f] hover:bg-[#15201a]"
-      >
-        <div className="flex min-w-0 items-center gap-3">
-          <Search aria-hidden="true" className="size-5 shrink-0 text-[#79d19c] transition-colors group-hover:text-white" />
-          <span className="truncate text-xs text-[#91a098] group-hover:text-[#d5ddd8] sm:text-sm">
-            {placeholder || "Search weapons, error codes, wipe dates, controls..."}
-          </span>
-        </div>
-        <span className="hidden shrink-0 rounded border border-[#304538] bg-[#18231c] px-2.5 py-1 font-mono text-[11px] font-semibold text-[#8ce2ad] group-hover:border-[#4d6a56] group-hover:text-white sm:inline-block">
-          {isZh ? "点击全库检索" : "Quick Search"}
-        </span>
-      </a>
+      <SiteSearchDialog
+        placeholder={placeholder || "Search weapons, error codes, wipe dates, controls..."}
+        source="hero"
+        trigger="hero"
+      />
 
       {/* 5 免打字热搜标签 */}
-      <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs">
-        <span className="flex items-center gap-1 font-mono text-[11px] font-bold uppercase tracking-wider text-[#d9a93a]">
+      <div className="-mx-2 mt-3 flex items-center gap-2 overflow-x-auto px-2 pb-1 text-xs sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 sm:pb-0">
+        <span className="flex shrink-0 items-center gap-1 font-mono text-[11px] font-bold uppercase tracking-wider text-[#d9a93a]">
           <Flame aria-hidden="true" className="size-3.5 text-[#f08c35]" />
           {hotTagsLabel}:
         </span>
@@ -100,7 +91,7 @@ export function HeroSearchBox({locale = "en", placeholder, hotTagsLabel = "HOT"}
             key={item.href}
             href={item.href}
             title={item.title}
-            className="rounded border border-[#304538] bg-[#141e18]/90 px-2.5 py-1 text-xs font-medium text-[#8ce2ad] transition-colors hover:border-[#69c78f] hover:bg-[#1a2c22] hover:text-white"
+            className="shrink-0 rounded border border-[#304538] bg-[#141e18]/90 px-2.5 py-1 text-xs font-medium text-[#8ce2ad] transition-colors hover:border-[#69c78f] hover:bg-[#1a2c22] hover:text-white"
           >
             [{item.tag}]
           </a>

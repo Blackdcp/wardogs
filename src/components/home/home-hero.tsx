@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {ArrowRight, ShieldCheck} from "lucide-react";
+import {ArrowRight, Crosshair, Map, ShieldCheck} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {assetPath} from "@/lib/assets";
 import {ButtonLink} from "@/components/ui/button-link";
@@ -30,7 +30,7 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
       />
       <div className="absolute inset-0 -z-10 bg-[#080b09]/75" />
 
-      <div className="site-container py-10 text-center sm:py-14">
+      <div className="site-container py-8 text-center sm:py-14">
         <div className="mx-auto flex max-w-4xl flex-col items-center">
           <div className="flex flex-wrap items-center justify-center gap-2.5">
             <span className="inline-flex items-center gap-2 text-xs font-semibold text-[#d5ddd8] sm:text-sm">
@@ -46,12 +46,12 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
             height={490}
             alt="WARDOGS"
             loading="eager"
-            className="mt-6 h-auto w-[260px] sm:w-[360px] lg:w-[430px]"
+            className="mt-4 h-auto w-[220px] sm:mt-6 sm:w-[360px] lg:w-[430px]"
           />
-          <h1 id="home-hero-title" className="display-font mt-2 text-4xl leading-none text-white sm:text-5xl lg:text-6xl">
+          <h1 id="home-hero-title" className="display-font mt-2 text-3xl leading-none text-white sm:text-5xl lg:text-6xl">
             WARDOGS Wiki
           </h1>
-          <p className="display-font mt-3 text-xl leading-tight text-[#edf2ef] sm:text-2xl">
+          <p className="display-font mt-3 text-lg leading-tight text-[#edf2ef] sm:text-2xl">
             {t("home.heroTitle")}
           </p>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-[#d6ded9] sm:text-base sm:leading-8">
@@ -65,16 +65,23 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
             hotTagsLabel={locale === "zh-cn" || locale === "zh-tw" ? "热搜" : "HOT"}
           />
 
-          <div className="mt-6 grid w-full max-w-2xl grid-cols-2 gap-2.5 sm:grid-cols-4">
-            <ButtonLink href="/items/weapons" homeTask="weapons" className="px-2" title={t("home.quickTasks.weapons")}>{t("home.quickTasks.weapons")}</ButtonLink>
-            <ButtonLink href="/items/vehicles" homeTask="vehicles" variant="secondary" className="px-2" title={t("home.quickTasks.vehicles")}>{t("home.quickTasks.vehicles")}</ButtonLink>
-            <ButtonLink href="/tools/map" homeTask="map" variant="secondary" className="px-2" title={t("home.quickTasks.map")}>{t("home.quickTasks.map")}</ButtonLink>
-            <ButtonLink href="/guides/wardogs-server-status" homeTask="status" variant="secondary" className="px-2" title={t("home.quickTasks.status")}>{t("home.quickTasks.status")}</ButtonLink>
+          <div className="mt-6 grid w-full max-w-2xl gap-3 sm:grid-cols-2">
+            <ButtonLink href="/tools/map" homeTask="map" className="min-h-12 text-base" title={t("nav.interactiveMap")}>
+              <Map aria-hidden="true" className="size-5" />
+              {t("nav.interactiveMap")}
+            </ButtonLink>
+            <ButtonLink href="/tools/artillery-calculator" homeTask="calculator" variant="secondary" className="min-h-12 border-[#3c5c46] bg-[#111a15]/90 text-base text-[#d8f4e4] hover:border-[#69c78f] hover:bg-[#193022]" title={t("nav.artilleryCalculator")}>
+              <Crosshair aria-hidden="true" className="size-5 text-[#8ce2ad]" />
+              {t("nav.artilleryCalculator")}
+            </ButtonLink>
           </div>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm">
-            <ButtonLink href={`/guides/${CURRENT_EVENT.patchNotesGuideSlug}`} variant="secondary" title={t("home.primaryCta")}>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-sm">
+            <ButtonLink href={`/guides/${CURRENT_EVENT.patchNotesGuideSlug}`} homeTask="season2" variant="secondary" className="min-h-10 px-4 py-2 text-xs" title={t("home.primaryCta")}>
               {t("home.primaryCta")}
               <ArrowRight aria-hidden="true" className="size-4" />
+            </ButtonLink>
+            <ButtonLink href="/guides/wardogs-server-status" homeTask="status" variant="secondary" className="min-h-10 px-4 py-2 text-xs" title={t("home.secondaryCta")}>
+              {t("home.secondaryCta")}
             </ButtonLink>
           </div>
 

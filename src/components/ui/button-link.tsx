@@ -1,7 +1,15 @@
 import type {ReactNode} from "react";
 import {Link} from "@/i18n/navigation";
 
-type ButtonLinkProps = {href: string; children: ReactNode; title?: string; variant?: "primary" | "secondary" | "light"; className?: string; external?: boolean; homeTask?: "weapons" | "vehicles" | "map" | "status"};
+type ButtonLinkProps = {
+  href: string;
+  children: ReactNode;
+  title?: string;
+  variant?: "primary" | "secondary" | "light";
+  className?: string;
+  external?: boolean;
+  homeTask?: "weapons" | "vehicles" | "map" | "calculator" | "status" | "season2";
+};
 
 const variants = {
   primary: "border-[#397b59] bg-[#397b59] text-white hover:bg-[#45946c]",
