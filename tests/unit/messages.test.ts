@@ -14,6 +14,59 @@ function leafPaths(value: unknown, prefix = ""): string[] {
 }
 
 describe("localized messages", () => {
+  it("states calculator input provenance and unverified current economy in every Tools hub", () => {
+    const boundaries = {
+      en: [/build/i, /inputs/i, /balance/i, /prices/i, /unlocks/i, /do not prove/i],
+      ru: [/сбор/i, /ввод|введ/i, /баланс/i, /цен/i, /разблок/i, /не подтверж/i],
+      de: [/Build/, /Eingaben/, /Balance/, /Preise/, /Freischaltungen/, /belegen keine/],
+      "pt-br": [/versão/, /entradas/, /balanceamento/, /preços/, /desbloqueios/, /não comprovam/],
+      ja: [/ビルド/, /入力/, /バランス/, /価格/, /解放/, /保証しません/],
+      "zh-cn": [/版本/, /输入/, /平衡/, /价格/, /解锁/, /不能证明/],
+      "zh-tw": [/版本/, /輸入/, /平衡/, /價格/, /解鎖/, /不能證明/],
+      pl: [/wersji/, /wprowadzone/, /balansu/, /cen/, /odblokowania/, /nie potwierdzają/i],
+    } as const;
+    for (const locale of locales) {
+      const messages = loadMessages(locale) as {toolsHub: {evidenceDescription: string}};
+      for (const boundary of boundaries[locale]) expect(messages.toolsHub.evidenceDescription, locale).toMatch(boundary);
+    }
+  });
+  it("provides source-bounded artillery task answers and steps in all eight locales", () => {
+    for (const locale of locales) {
+      const messages = loadMessages(locale) as {guides: {tasks?: {artillery?: {title: string; directAnswer: string; caution: string; steps: Record<string, string>}}}};
+      const task = messages.guides.tasks?.artillery;
+      expect(task, locale).toBeDefined();
+      if (!task) continue;
+      for (const value of [task.title, task.directAnswer, task.caution, ...Object.values(task.steps)]) expect(value.trim().length, locale).toBeGreaterThan(10);
+      expect(Object.keys(task.steps), locale).toEqual(["one", "two", "three", "four", "five"]);
+    }
+  });
+  it("provides the six-section homepage copy and bounded evidence states without English fallback", () => {
+    const keys = [
+      ...["command", "proven-demand", "live-intel", "workbench", "database", "library"].flatMap((id) => [`home.discovery.sections.${id}.title`, `home.discovery.sections.${id}.description`]),
+      ...["openGuide", "allTools", "allGuides", "collections", "videos", "news", "about", "catalogue", "serverStatus", "patchNotes"].map((id) => `home.discovery.actions.${id}`),
+      ...["earlyAccess", "current", "archive", "unknownBuild", "verifiedAt", "noVerifiedChanges"].map((id) => `home.discovery.states.${id}`),
+      ...["official", "live-client", "creator-current", "community-report"].map((id) => `home.discovery.states.sources.${id}`),
+      ...["search", "map", "calculator", "weapons", "vehicles", "status", "catalogue", "guides", "tools", "videos", "news", "cargo", "squad", "towers", "progression", "mortar", "fob", "controls", "helicopter", "settings", "pcFixes", "season2", "patchNotes", "money", "firstMatch", "loadout", "logistics", "systemCheck", "faq", "about"].map((id) => `home.discovery.tasks.${id}`),
+      ...["failed", "retry", "guidesFallback"].map((id) => `home.search.${id}`),
+    ];
+    const read = (locale: typeof locales[number], key: string) => key.split(".").reduce<unknown>((value, part) => value && typeof value === "object" ? (value as Record<string, unknown>)[part] : undefined, loadMessages(locale));
+    for (const locale of locales) for (const key of keys) {
+      const value = read(locale, key) as string | undefined;
+      expect(value, `${locale}/${key}`).toBeTypeOf("string");
+      expect(value?.trim().length, `${locale}/${key}`).toBeGreaterThan(0);
+      if (locale !== "en") expect(value, `${locale}/${key}`).not.toBe(read("en", key));
+    }
+  });
+  it("provides translated task routes and Tools hub copy in every locale", () => {
+    const keys = ["nav.toolsHome", ...["title", "description", "metaTitle", "metaDescription", "openTool", "relatedGuides", "evidenceTitle", "evidenceDescription"].map((key) => `toolsHub.${key}`), ...["combat", "economy", "logistics", "progression", "fixes"].map((key) => `toolsHub.groups.${key}`), ...["map", "artillery-calculator", "weapon-compare", "ammo-matcher", "loadout-budget", "cash-xp-calculator", "logistics-planner", "progression-route", "system-check"].map((key) => `toolsHub.tools.${key}.description`), "guides.routes.title", "guides.routes.relatedTools", ...["new-player", "combat-operations", "logistics-live"].flatMap((key) => [`guides.routes.${key}.title`, `guides.routes.${key}.description`])];
+    const read = (locale: typeof locales[number], key: string) => key.split(".").reduce<unknown>((value, part) => value && typeof value === "object" ? (value as Record<string, unknown>)[part] : undefined, loadMessages(locale));
+    for (const locale of locales) for (const key of keys) {
+      const value = read(locale, key) as string | undefined;
+      expect(value, `${locale}/${key}`).toBeTypeOf("string");
+      expect(value?.trim().length, `${locale}/${key}`).toBeGreaterThan(0);
+      if (locale !== "en") expect(value, `${locale}/${key}`).not.toBe(read("en", key));
+    }
+  });
   it("dates the current official-patch check in every homepage locale", () => {
     for (const locale of locales) {
       const messages = loadMessages(locale) as {liveOps?: {windowValue?: string}};

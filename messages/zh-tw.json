@@ -90,7 +90,8 @@
     "artilleryCalculator": "火砲與迫擊砲計算器",
     "mapPill": "戰術地圖",
     "calcPill": "密位計算",
-    "cashXpCalculator": "金錢與 XP 計算器"
+    "cashXpCalculator": "金錢與 XP 計算器",
+    "toolsHome": "工具總覽"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki 中文維基：戰術射擊全圖鑑與開荒地圖攻略",
@@ -185,7 +186,10 @@
         "videos": "當前影片",
         "tools": "工具",
         "maps": "地圖"
-      }
+      },
+      "failed": "無法載入搜尋，請再試一次或瀏覽攻略庫。",
+      "retry": "重新搜尋",
+      "guidesFallback": "瀏覽攻略"
     },
     "actions": {
       "eyebrow": "選擇你的任務",
@@ -484,6 +488,92 @@
           "title": "地圖與迫擊砲路線"
         }
       }
+    },
+    "discovery": {
+      "sections": {
+        "command": {
+          "title": "選擇下一個實戰目標",
+          "description": "找出能協助你行動的攻略、地圖或工具。"
+        },
+        "proven-demand": {
+          "title": "從重點遊玩任務開始",
+          "description": "本語言的六篇優先攻略，帶你直接找到答案。"
+        },
+        "live-intel": {
+          "title": "查看近期核實的情報",
+          "description": "閱讀標明日期的變更、更新內容與服務公告。"
+        },
+        "workbench": {
+          "title": "用工具安排下一步",
+          "description": "使用工具後，確認輸入數值與證據。"
+        },
+        "database": {
+          "title": "查閱武器與載具",
+          "description": "開啟完整圖鑑，比較已公開的紀錄。"
+        },
+        "library": {
+          "title": "依遊玩路線深入",
+          "description": "瀏覽攻略庫、主題合輯與補充資料。"
+        }
+      },
+      "actions": {
+        "openGuide": "開啟攻略",
+        "allTools": "所有工具",
+        "allGuides": "所有攻略",
+        "collections": "攻略合輯",
+        "videos": "影片庫",
+        "news": "最新情報",
+        "about": "關於本站",
+        "catalogue": "完整圖鑑",
+        "serverStatus": "伺服器狀態",
+        "patchNotes": "更新說明"
+      },
+      "states": {
+        "earlyAccess": "搶先體驗",
+        "current": "目前證據",
+        "archive": "最近核實的歷史紀錄",
+        "unknownBuild": "未標示版本",
+        "verifiedAt": "確認日期",
+        "noVerifiedChanges": "目前沒有符合條件的變更紀錄，請查看伺服器狀態與更新總覽。",
+        "sources": {
+          "official": "官方來源",
+          "live-client": "目前遊戲用戶端的觀測",
+          "creator-current": "近期創作者實機影片",
+          "community-report": "社群回報"
+        }
+      },
+      "tasks": {
+        "search": "搜尋",
+        "map": "互動地圖",
+        "calculator": "火砲計算器",
+        "weapons": "武器資料庫",
+        "vehicles": "載具資料庫",
+        "status": "服務狀態",
+        "catalogue": "圖鑑",
+        "guides": "攻略",
+        "tools": "工具",
+        "videos": "影片",
+        "news": "情報",
+        "cargo": "貨物交付",
+        "squad": "小隊協作",
+        "towers": "塔樓目標",
+        "progression": "成長與重置",
+        "mortar": "迫擊砲操作",
+        "fob": "FOB 補給",
+        "controls": "操作設定",
+        "helicopter": "直升機飛行",
+        "settings": "畫面設定",
+        "pcFixes": "電腦疑難排解",
+        "season2": "第 2 賽季",
+        "patchNotes": "更新說明",
+        "money": "資金規劃",
+        "firstMatch": "第一場對戰",
+        "loadout": "配裝規劃",
+        "logistics": "後勤規劃",
+        "systemCheck": "規格檢查",
+        "faq": "常見問題",
+        "about": "關於本站"
+      }
     }
   },
   "guides": {
@@ -491,7 +581,37 @@
     "title": "WARDOGS 攻略",
     "description": "瀏覽上線、貨運、彈藥、小隊、故障排除、載具、FOB 後勤、釋出和核心玩法攻略。",
     "count": "{count} 篇攻略",
-    "read": "閱讀攻略"
+    "read": "閱讀攻略",
+    "routes": {
+      "title": "選擇遊玩路線",
+      "relatedTools": "相關工具",
+      "new-player": {
+        "title": "新手路線",
+        "description": "開始遊戲、加入小隊、保留備用資金，並熟悉成長機制。"
+      },
+      "combat-operations": {
+        "title": "戰鬥與作戰路線",
+        "description": "準備武器彈藥、熟悉載具，再規劃地圖行動與火力支援。"
+      },
+      "logistics-live": {
+        "title": "後勤與最新情報路線",
+        "description": "運送貨物、補給 FOB，並查看賽季、更新與伺服器公告。"
+      }
+    },
+    "tasks": {
+      "artillery": {
+        "title": "觀察落點，再調整火砲射擊",
+        "directAnswer": "官方第 1 賽季變更將 Artillery Tank 類別設為 Career 90、一次性解鎖費 $500,000，但沒有指名 SPH-2，也未確認目前的重複購買價格。射擊前先保護陣地、穩定平台、確認目標與友軍，再核對距離及方位角，依第一發落點調整。",
+        "caution": "地圖與計算器的結果一致，不代表公尺比例或彈道已經實測。請確認目前用戶端提示、乘員及彈藥；解鎖費與每次出擊的購買費應分開計算。",
+        "steps": {
+          "one": "花費資金前，確認載具、目前的使用條件與商人售價。",
+          "two": "分配駕駛、砲手、觀察與近距離警戒，準備補給及撤退路線。",
+          "three": "在有掩護的地面停穩，確認砲手座位、穩定狀態與彈藥。",
+          "four": "讀取目前目標、友軍位置、距離及方位角，檢查輸入單位與校正限制。",
+          "five": "先發射一發校射彈，觀察落點後調整並裝填；目標或友軍安全無法確認時立即停火。"
+        }
+      }
+    }
   },
   "news": {
     "metaTitle": "WARDOGS 新聞 - Update 0.1.2、伺服器與搶先體驗",
@@ -744,5 +864,51 @@
     "editorialPolicy": "編輯政策（英文）",
     "privacy": "隱私政策（英文）",
     "terms": "服務條款（英文）"
+  },
+  "toolsHub": {
+    "title": "WARDOGS 工具總覽",
+    "description": "依目前任務挑選工具，再回到攻略確認結果的依據。",
+    "metaTitle": "WARDOGS 工具：地圖、配裝與成長規劃",
+    "metaDescription": "透過九項 WARDOGS 工具規劃戰鬥、配裝預算、補給路線與賽季成長，並搭配攻略與證據確認結果。",
+    "openTool": "開啟工具",
+    "relatedGuides": "相關攻略",
+    "evidenceTitle": "查看證據",
+    "evidenceDescription": "計算器採用已核驗的來源與版本紀錄，或你輸入的數值。結果不能證明目前的平衡、價格或解鎖條件；花費資金前請在目前用戶端確認。",
+    "groups": {
+      "combat": "戰鬥",
+      "economy": "經濟",
+      "logistics": "後勤",
+      "progression": "成長",
+      "fixes": "疑難排解"
+    },
+    "tools": {
+      "map": {
+        "description": "在二維地圖上標示路線、測量距離，並將目標送至火力計算器。"
+      },
+      "artillery-calculator": {
+        "description": "確認射程與方位角，再於實戰觀察落點並調整射擊。"
+      },
+      "weapon-compare": {
+        "description": "挑選職責與配裝前，比較已記錄的武器資料。"
+      },
+      "ammo-matcher": {
+        "description": "購買前確認武器、彈匣與彈藥的搭配關係。"
+      },
+      "loadout-budget": {
+        "description": "規劃裝備支出，為下次出擊留下備用資金。"
+      },
+      "cash-xp-calculator": {
+        "description": "依輸入數值估算現金與經驗；實際收益仍須在遊戲內確認。"
+      },
+      "logistics-planner": {
+        "description": "安排物資、運輸、交接與交付確認。"
+      },
+      "progression-route": {
+        "description": "選擇成長任務，並查看賽季重置後保留的內容。"
+      },
+      "system-check": {
+        "description": "比對系統需求與電腦規格，再依症狀進行疑難排解。"
+      }
+    }
   }
 }

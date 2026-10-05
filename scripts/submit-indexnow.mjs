@@ -11,6 +11,16 @@ const MAX_REDIRECT_HOPS = 5;
 const localeIdsPattern = "en|de|ru|pt-br|ja|zh-cn|zh-tw|pl";
 const localizedPathPattern = `(?:${localeIdsPattern})`;
 
+export function assertProductionIndexNowEnvironment() {
+  if (process.env.GITHUB_PAGES === "true") {
+    throw new Error("Production IndexNow submission is disabled in the auxiliary GitHub Pages environment.");
+  }
+  const configuredOrigin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (configuredOrigin && configuredOrigin !== SITE_ORIGIN) {
+    throw new Error(`Production IndexNow submission requires NEXT_PUBLIC_SITE_URL=${SITE_ORIGIN}, received ${configuredOrigin}.`);
+  }
+}
+
 function normalizedPath(url) {
   return new URL(url).pathname.replace(/\/$/, "") || "/";
 }
@@ -45,23 +55,56 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
     }
     if (messages) {
       const locale = messages[1];
-      for (const route of ["", "/guides", "/items", "/news", "/videos", "/privacy", "/terms"]) {
+      for (const route of ["", "/guides", "/items", "/tools", "/news", "/videos", "/privacy", "/terms"]) {
         wantedPaths.add(`/${locale}${route}`);
       }
       continue;
     }
-    if (file === "src/features/news/news-data.ts") {
-      for (const locale of localeIdsPattern.split("|")) wantedPaths.add(`/${locale}/news`);
+    if (/^src\/(?:components|features)\/home\//.test(file) || file === "src/app/[locale]/page.tsx") {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}$`));
+      continue;
+    }
+    if (/^src\/(?:components|features)\/tools\//.test(file) || /^src\/app\/\[locale\]\/tools(?:\/|$)/.test(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/tools(?:\/|$)`));
+      continue;
+    }
+    const localizedItemProse = file.match(new RegExp(`^src\/features\/items\/item-prose\.(${localeIdsPattern})\.ts$`));
+    if (localizedItemProse) {
+      wantedPatterns.push(new RegExp(`^\/${localizedItemProse[1]}\/items(?:\/|$)`));
+      continue;
+    }
+    if (file === "src/features/items/item-localization.ts") {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/items(?:\/|$)`));
+      continue;
+    }
+    if (/^src\/(?:components|features)\/catalogue\//.test(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/items(?:\/|$)`));
+      continue;
+    }
+    if ([
+      "src/features/guides/guide-task-data.ts",
+      "src/features/guides/guide-routes.ts",
+      "src/features/guides/guide-collections.ts",
+      "src/components/guides/guide-task-panel.tsx",
+      "src/components/guides/guide-route-grid.tsx"
+    ].includes(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/guides(?:\/|$)`));
       continue;
     }
     if (file === "src/features/guides/related.ts") {
-      // These historical entry points render a different Related Guides block.
-      // Notify the affected localized pages, not every guide on the site.
-      for (const locale of localeIdsPattern.split("|")) {
-        for (const slug of ["wardogs-alpha", "wardogs-alpha-key", "wardogs-beta", "wardogs-playtest"]) {
-          wantedPaths.add(`/${locale}/guides/${slug}`);
-        }
-      }
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/(?:guides|items)(?:\/|$)`));
+      continue;
+    }
+    if (/^src\/features\/videos\/video-(?:articles(?:\.[^.]+)?|library|structured-data)\.ts$/.test(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/videos(?:\/|$)`));
+      continue;
+    }
+    if (["src/lib/metadata.ts", "src/lib/structured-data.ts", "src/app/sitemap.ts"].includes(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}(?:\/|$)`));
+      continue;
+    }
+    if (file === "src/features/news/news-data.ts") {
+      for (const locale of localeIdsPattern.split("|")) wantedPaths.add(`/${locale}/news`);
       continue;
     }
     if ([
@@ -206,6 +249,7 @@ function wait(ms) {
 }
 
 export async function submitIndexNowUrls(urls, options = {}) {
+  assertProductionIndexNowEnvironment();
   const fetchImpl = options.fetchImpl ?? fetch;
   const keyLocation = options.keyLocation ?? `${SITE_ORIGIN}/${INDEXNOW_KEY}.txt`;
   const pause = options.pause ?? (() => wait(INDEXNOW_DELAY_MS));
@@ -235,6 +279,7 @@ export async function submitIndexNowUrls(urls, options = {}) {
 }
 
 export async function submitIndexNow(options = {}) {
+  assertProductionIndexNowEnvironment();
   const changedFiles = options.changedFiles ?? changedFilesFromGit();
   const fetchImpl = options.fetchImpl ?? fetch;
   const keyLocation = await verifyOwnershipKey(fetchImpl);

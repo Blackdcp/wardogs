@@ -24,18 +24,30 @@ const modelEntries: CatalogueHomeModelEntry[] = [
 ];
 
 describe("CatalogueHomeBandView", () => {
-  it("renders the six image-backed promoted catalogue links without Equipment", () => {
+  it("renders only the exact hub and two main catalogue destinations", () => {
     const html = renderToStaticMarkup(<CatalogueHomeBandView heading="WARDOGS Catalogue" entries={entries} />);
 
     expect(html).toContain("WARDOGS Catalogue");
-    expect(html.match(/<img/g)).toHaveLength(6);
-    for (const entry of entries) {
+    expect(html).toContain('data-home-section-sentinel="database"');
+    expect(html.match(/<img/g)).toHaveLength(2);
+    expect(html).toContain('href="/items"');
+    for (const entry of entries.slice(0, 2)) {
       expect(html).toContain(`href="${entry.href}"`);
       expect(html).toContain(encodeURIComponent(entry.image));
       expect(html).toContain(entry.title);
       expect(html).toContain(entry.count);
     }
-    expect(html).not.toContain("Equipment");
+    for (const href of ["/items/ammo", "/items/attachments", "/items/gear", "/items/loadouts"]) expect(html).not.toContain(`href="${href}"`);
+  });
+
+  it("caps published previews to a single row of four", () => {
+    const html = renderToStaticMarkup(<CatalogueHomeBandView heading="Catalogue" entries={entries} modelEntries={[...modelEntries, {...modelEntries[0], key: "weapons-extra", title: "Extra preview"}]} />);
+    expect(html.match(/data-catalogue-model-entry=/g)).toHaveLength(4);
+    expect((html.match(/data-home-placement="database"/g) ?? [])).toHaveLength(7);
+    expect(html).toContain('data-home-task="catalogue"');
+    expect(html).toContain('data-home-task="weapons"');
+    expect(html).toContain('data-home-task="vehicles"');
+    expect(html).not.toContain("Extra preview");
   });
 
   it("renders a balanced set of unique English-canonical model links", () => {
@@ -44,7 +56,11 @@ describe("CatalogueHomeBandView", () => {
     );
 
     expect(html.match(/data-catalogue-model-entry=/g)).toHaveLength(4);
-    expect(html.match(/<img/g)).toHaveLength(10);
+    expect((html.match(/data-home-placement="database"/g) ?? [])).toHaveLength(7);
+    expect(html).toContain('data-home-task="catalogue"');
+    expect(html).toContain('data-home-task="weapons"');
+    expect(html).toContain('data-home-task="vehicles"');
+    expect(html.match(/<img/g)).toHaveLength(6);
     for (const model of modelEntries) {
       expect(html).toContain(`href="${model.href}"`);
       expect(html).toContain(encodeURIComponent(model.image));

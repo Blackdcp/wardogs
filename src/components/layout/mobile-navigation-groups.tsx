@@ -24,7 +24,7 @@ export function MobileNavigationGroups({groups, onNavigate, mapLabel, calcLabel}
           <Link
             href="/tools/map"
             title={mapLabel}
-            className="flex min-h-12 items-center justify-center gap-2 rounded-[6px] border border-[#30543e] bg-[#14261c] px-3 py-2 text-xs font-bold text-[#8be2ad] shadow-sm transition-colors hover:border-[#4cd988] hover:bg-[#1a3827] hover:text-white"
+            className="navigation-link flex min-h-12 items-center justify-center gap-2 rounded-[6px] border border-[#30543e] bg-[#14261c] px-3 py-2 text-xs font-bold text-[#8be2ad] shadow-sm transition-colors hover:border-[#4cd988] hover:bg-[#1a3827] hover:text-white"
             onClick={onNavigate}
           >
             <Map aria-hidden="true" className="size-4 text-[#4cd988]" />
@@ -33,7 +33,7 @@ export function MobileNavigationGroups({groups, onNavigate, mapLabel, calcLabel}
           <Link
             href="/tools/artillery-calculator"
             title={calcLabel}
-            className="flex min-h-12 items-center justify-center gap-2 rounded-[6px] border border-[#30543e] bg-[#14261c] px-3 py-2 text-xs font-bold text-[#8be2ad] shadow-sm transition-colors hover:border-[#4cd988] hover:bg-[#1a3827] hover:text-white"
+            className="navigation-link flex min-h-12 items-center justify-center gap-2 rounded-[6px] border border-[#30543e] bg-[#14261c] px-3 py-2 text-xs font-bold text-[#8be2ad] shadow-sm transition-colors hover:border-[#4cd988] hover:bg-[#1a3827] hover:text-white"
             onClick={onNavigate}
           >
             <Crosshair aria-hidden="true" className="size-4 text-[#4cd988]" />
@@ -50,7 +50,7 @@ export function MobileNavigationGroups({groups, onNavigate, mapLabel, calcLabel}
                 <Link
                   href={group.href}
                   title={group.label}
-                  className="flex min-h-12 items-center rounded-[6px] border border-[#2f3934] bg-[#171d1a] px-4 py-3 text-sm font-semibold text-[#edf2ef] transition-colors hover:border-[#4d946d] hover:bg-[#1e2923] hover:text-white"
+                  className="navigation-link flex min-h-12 items-center rounded-[6px] border border-[#2f3934] bg-[#171d1a] px-4 py-3 text-sm font-semibold text-[#edf2ef] transition-colors hover:border-[#4d946d] hover:bg-[#1e2923] hover:text-white"
                   onClick={onNavigate}
                 >
                   {group.label}
@@ -67,7 +67,7 @@ export function MobileNavigationGroups({groups, onNavigate, mapLabel, calcLabel}
                 type="button"
                 aria-expanded={open}
                 aria-controls={contentId}
-                className="flex min-h-12 w-full items-center justify-between gap-3 rounded-[6px] border border-[#2f3934] bg-[#171d1a] px-4 py-3 text-left text-sm font-semibold text-[#edf2ef] transition-colors hover:border-[#4d946d] hover:bg-[#1e2923] hover:text-white"
+                className="navigation-link flex min-h-12 w-full items-center justify-between gap-3 rounded-[6px] border border-[#2f3934] bg-[#171d1a] px-4 py-3 text-left text-sm font-semibold text-[#edf2ef] transition-colors hover:border-[#4d946d] hover:bg-[#1e2923] hover:text-white"
                 onClick={() => setOpenGroupId(open ? null : group.id)}
               >
                 <span>{group.label}</span>
@@ -84,7 +84,7 @@ export function MobileNavigationGroups({groups, onNavigate, mapLabel, calcLabel}
                         href={item.href}
                         locale={item.locale}
                         title={item.label}
-                        className="flex min-h-11 items-center rounded-[4px] px-3 py-2 text-sm text-[#cbd5d0] transition-colors hover:bg-[#1e2923] hover:text-white"
+                        className="navigation-link flex min-h-11 items-center rounded-[4px] px-3 py-2 text-sm text-[#cbd5d0] transition-colors hover:bg-[#1e2923] hover:text-white"
                         onClick={onNavigate}
                       >
                         {item.label}

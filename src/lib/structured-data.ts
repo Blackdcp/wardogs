@@ -4,6 +4,7 @@ import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
 import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 import {publicAssetUrl} from "@/lib/public-url";
 import {HOME_UPDATED_AT} from "@/features/home/home-data";
+import {TOOL_REGISTRY} from "@/features/tools/tool-registry";
 
 type JsonLd = Record<string, unknown>;
 
@@ -102,6 +103,40 @@ export function buildGuideIndexJsonLd(locale: Locale, guides: GuideSummary[]): J
       itemListElement: [
         {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
         {"@type": "ListItem", position: 2, name: guideLabel(locale), item: url}
+      ]
+    }
+  ];
+}
+
+export function buildToolIndexJsonLd(locale: Locale, label: (key: string) => string): JsonLd[] {
+  const url = pageUrl(locale, "/tools");
+  const name = label("toolsHub.title");
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name,
+      description: label("toolsHub.description"),
+      url,
+      inLanguage: locale,
+      isPartOf: {"@type": "WebSite", name: "WARDOGS Wiki", url: `${getSiteOrigin()}/`}
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      itemListElement: TOOL_REGISTRY.map((tool, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: label(tool.labelKey),
+        url: pageUrl(locale, tool.href)
+      }))
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {"@type": "ListItem", position: 1, name: "WARDOGS Wiki", item: pageUrl(locale)},
+        {"@type": "ListItem", position: 2, name, item: url}
       ]
     }
   ];

@@ -26,7 +26,7 @@ const modelPaths = [
   ...weaponModels.map((slug) => ({type: "weapons" as const, slug})),
   ...vehicleModels.map((slug) => ({type: "vehicles" as const, slug}))
 ];
-const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn"] as const;
+const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const;
 
 function deployed(pathname: string) {
   return `${basePath}${pathname}`;
@@ -34,6 +34,18 @@ function deployed(pathname: string) {
 
 function getAttribute(tag: string, name: string) {
   return tag.match(new RegExp(`\\b${name}="([^"]+)"`))?.[1];
+}
+
+async function mapWithConcurrency<T, R>(values: readonly T[], limit: number, run: (value: T) => Promise<R>) {
+  const results = new Array<R>(values.length);
+  let cursor = 0;
+  await Promise.all(Array.from({length: Math.min(limit, values.length)}, async () => {
+    while (cursor < values.length) {
+      const index = cursor++;
+      results[index] = await run(values[index]);
+    }
+  }));
+  return results;
 }
 
 test("serves the Pages export from its deployment base", async ({page, request}) => {
@@ -57,7 +69,14 @@ test("serves the Pages export from its deployment base", async ({page, request})
 
   for (const pathname of [
     "/en/",
+    "/ja/",
+    "/zh-tw/",
+    "/pl/",
     "/en/guides/",
+    "/en/tools/",
+    "/ja/items/",
+    "/de/items/weapons/",
+    "/ru/guides/wardogs-mortar-guide/",
     "/en/guides/wardogs-gameplay/",
     "/pt-br/guides/wardogs-first-look/"
   ]) {
@@ -67,9 +86,19 @@ test("serves the Pages export from its deployment base", async ({page, request})
 
   await page.goto(deployed("/en/guides/wardogs-gameplay/"));
   await page.locator("select:visible").selectOption("de");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/guides/wardogs-gameplay")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/guides/wardogs-gameplay/")}`);
 
   await page.goto(deployed("/en/"));
+  const homeSections = page.locator("main > [data-home-section]");
+  await expect(homeSections).toHaveCount(6);
+  expect(await homeSections.evaluateAll((sections) => sections.map((section) => section.getAttribute("data-home-section")))).toEqual([
+    "command",
+    "proven-demand",
+    "live-intel",
+    "workbench",
+    "database",
+    "library"
+  ]);
   const localLinks = await page.locator('a[href^="/"]').evaluateAll((links) => links.map((link) => link.getAttribute("href")));
   expect(localLinks.some((href) => href?.startsWith(`${basePath}/en/items/`))).toBe(true);
   expect(localLinks.filter((href) => href?.includes("/items/")).every((href) => href?.startsWith(`${basePath}/`))).toBe(true);
@@ -92,9 +121,33 @@ test("serves the Pages export from its deployment base", async ({page, request})
   expect(sitemap.status()).toBe(200);
   const sitemapText = await sitemap.text();
   expect(sitemapText).toContain(`${canonicalBase}/en/news/</loc>`);
+  expect(sitemapText).toContain(`${canonicalBase}/en/tools/</loc>`);
   expect(sitemapText).toContain(`${canonicalBase}/en/guides/wardogs-gameplay/</loc>`);
+  const releaseSha = process.env.WARDOGSWIKI_RELEASE_SHA;
+  expect(releaseSha).toMatch(/^[0-9a-f]{40}$/);
+  const revision = await request.get(deployed("/api/revision"));
+  expect(revision.status()).toBe(200);
+  expect(await revision.json()).toEqual({revision: releaseSha});
   expect(failures).toEqual([]);
   expect((await page.goto(deployed("/en/guides/not-a-topic/")))?.status()).toBe(404);
+});
+
+test("basePath homepage search loads the localized static index and opens a result", async ({page}) => {
+  const searchRequests: string[] = [];
+  page.on("request", (request) => {
+    const url = new URL(request.url());
+    if (url.pathname.includes("/api/search-index/")) searchRequests.push(url.pathname);
+  });
+
+  await page.goto(deployed("/en/"));
+  await page.locator('[data-home-task="search"]').first().click();
+  const dialog = page.getByRole("dialog");
+  const input = dialog.getByRole("combobox");
+  await input.fill("mortar");
+  await expect(dialog.getByRole("option").first()).toBeVisible();
+  expect(searchRequests).toContain(`${basePath}/api/search-index/en`);
+  await input.press("Enter");
+  await expect(page).toHaveURL(new RegExp(`${basePath}/en/(?:guides|items|tools)/`));
 });
 
 test("restores shared tool selections from query parameters after hydration", async ({page}) => {
@@ -193,7 +246,7 @@ test("exports localized copies of every new model", async ({request}) => {
     modelPaths.map(({type, slug}) => ({locale, type, slug}))
   );
 
-  expect(probes).toHaveLength(204);
+  expect(probes).toHaveLength(272);
   await Promise.all(probes.map(async ({locale, type, slug}) => {
     const pathname = `/${locale}/items/${type}/${slug}/`;
     expect(existsSync(resolve("out", locale, "items", type, slug, "index.html")), pathname).toBe(true);
@@ -206,13 +259,13 @@ test("locale switching uses only exported item routes", async ({page}) => {
 
   await page.goto(deployed("/en/items/vehicles/bobcat/"));
   await page.locator("select:visible").selectOption("ru");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/vehicles/bobcat")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/vehicles/bobcat/")}`);
 
   await page.goto(deployed("/en/items/weapons/mortar/"));
   await page.locator("select:visible").selectOption("ru");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/weapons/mortar")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/ru/items/weapons/mortar/")}`);
   await page.locator("select:visible").selectOption("de");
-  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/items/weapons/mortar")}`);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/de/items/weapons/mortar/")}`);
 });
 
 test("crawls every catalogue-facing internal link across all locales", async ({page, request}) => {
@@ -242,10 +295,10 @@ test("crawls every catalogue-facing internal link across all locales", async ({p
     }
   }
 
-  const targetFailures = (await Promise.all([...internalTargets].map(async (pathname) => {
+  const targetFailures = (await mapWithConcurrency([...internalTargets], 8, async (pathname) => {
     const response = await request.get(pathname);
     return response.status() >= 400 ? `${response.status()} ${pathname}` : null;
-  }))).filter((failure): failure is string => failure !== null);
+  })).filter((failure): failure is string => failure !== null);
 
   expect(sourceFailures).toEqual([]);
   expect(internalTargets.size).toBeGreaterThan(80);

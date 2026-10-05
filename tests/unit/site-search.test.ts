@@ -1,9 +1,6 @@
 import {readFileSync} from "node:fs";
 import path from "node:path";
-import React from "react";
-import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
-import {SiteSearch} from "../../src/components/home/site-search";
 import {locales} from "../../src/config/site";
 import {listGuideSummaries} from "../../src/content/guides";
 import {itemLibrary} from "../../src/features/items/item-library";
@@ -61,6 +58,13 @@ describe("site search index", () => {
     expect(new Set(index.filter((entry) => entry.type === "map").map((entry) => entry.href))).toEqual(mapHrefs);
   });
 
+  it("indexes the Tools hub and all nine existing exact destinations once", async () => {
+    const index = await buildSiteSearchIndex("en");
+    for (const href of ["/tools", "/tools/map", "/tools/artillery-calculator", "/tools/weapon-compare", "/tools/ammo-matcher", "/tools/loadout-budget", "/tools/cash-xp-calculator", "/tools/logistics-planner", "/tools/progression-route", "/tools/system-check"]) {
+      expect(index.filter((entry) => entry.href === href), href).toHaveLength(1);
+    }
+  });
+
   it("never exposes a generic or gated item detail route", async () => {
     const index = await buildSiteSearchIndex("en");
     const gated = itemLibrary.find((item) => !item.indexable);
@@ -98,34 +102,6 @@ describe("site search index", () => {
     expect(getSearchKeyboardAction("Enter", 0, [result])).toEqual({type: "open", href: "/guides/open-me"});
     expect(getSearchKeyboardAction("Enter", -1, [result])).toEqual({type: "none"});
     expect(getSearchKeyboardAction("ArrowDown", -1, [result])).toEqual({type: "select", index: 0});
-  });
-
-  it("renders a labelled combobox and a stable result region", () => {
-    const html = renderToStaticMarkup(
-      React.createElement(SiteSearch, {
-        copy: {
-          eyebrow: "Search the field reference",
-          title: "Find the next answer",
-          description: "Search every maintained surface.",
-          label: "Search WARDOGS Wiki",
-          placeholder: "Search guides, items, videos, and tools",
-          prompt: "Type a task, item, or question.",
-          empty: "No maintained result found.",
-          resultCount: "{count} results",
-          openResult: "Open result",
-          types: {guide: "Guide", item: "Item", video: "Video", tool: "Tool", map: "Map"}
-        },
-        index: [],
-        locale: "en"
-      })
-    );
-
-    expect(html).toContain('role="combobox"');
-    expect(html).toContain('aria-controls="site-search-results"');
-    expect(html).toContain('data-site-search-results="stable"');
-    expect(html).toContain('hidden=""');
-    expect(html).not.toContain("h-[308px]");
-    expect(html).toContain("Search guides, items, videos, and tools");
   });
 
   it("provides complete localized search, action, build-change, and metadata copy", () => {

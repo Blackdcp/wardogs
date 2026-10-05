@@ -133,6 +133,15 @@ describe("sitemap", () => {
     }
   });
 
+  it("includes the localized Tools hub with reciprocal alternates", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+    for (const locale of locales) {
+      const url = `${origin}/${locale}/tools`;
+      expect(entriesByUrl.get(url), url).toBeDefined();
+      expect(entriesByUrl.get(url)?.alternates?.languages).toEqual(pageAlternates("/tools"));
+    }
+  });
+
   it("uses each video article's actual editorial update date", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
 

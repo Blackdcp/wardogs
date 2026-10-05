@@ -1,5 +1,10 @@
 import type {Locale} from "@/config/site";
 import type {ItemType, ItemTypeId, WardogsItem} from "./item-library";
+import {localizeItemProseDe} from "./item-prose.de";
+import {localizeItemProsePtBr} from "./item-prose.pt-br";
+import {localizeItemProseRu} from "./item-prose.ru";
+import {localizeItemProseJa} from "./item-prose.ja";
+import {localizeItemProseZhCn} from "./item-prose.zh-cn";
 import {localizeItemProseZhTw} from "./item-prose.zh-tw";
 import {localizeItemProsePl} from "./item-prose.pl";
 
@@ -662,6 +667,13 @@ function localizeBuild(build: string, locale: TranslatedLocale, prefix: string):
       : locale === "pt-br" ? "Vídeo do criador verificado em 25 de agosto de 2026"
       : "クリエイター映像を2026年8月25日に確認";
   }
+  if (build === "Alpha 1 and Closed Beta footage checked 2026-08-28") {
+    return locale === "zh-cn" ? "Alpha 1 与封闭测试实机核查于 2026 年 8 月 28 日"
+      : locale === "ru" ? "Записи Alpha 1 и закрытой беты проверены 28 августа 2026"
+      : locale === "de" ? "Alpha-1- und Closed-Beta-Aufnahmen geprüft am 28. August 2026"
+      : locale === "pt-br" ? "Vídeos do Alpha 1 e Beta Fechado verificados em 28 de agosto de 2026"
+      : "Alpha 1とクローズドベータの映像を2026年8月28日に確認";
+  }
   return `${prefix}: ${build}`;
 }
 
@@ -695,32 +707,11 @@ export function getLocalizedItem(item: WardogsItem, locale: Locale): WardogsItem
     detailImageAlt: item.detailImage ? profile.imageAlt(item, typeName) : item.detailImageAlt,
     imageAlt: item.image ? profile.imageAlt(item, typeName) : item.imageAlt
   };
-  if (locale === "ja" && item.type === "vehicles" && item.slug === "stingray") {
-    return {
-      ...localized,
-      summary: "スティングレイはWARDOGSの対車両ドローン用ランチャーです。ベータ版映像で発射筒と操作端末を確認できますが、現在の価格・解除条件・ダメージは未確認です。",
-      description: "スティングレイは運転する車両ではなく、発射筒と操作端末を使う対車両ドローンです。クローズドベータの建築映像で機材を確認でき、9月の実機映像では敵車両や砲兵を狙う様子が見られます。現在の価格、解除条件、配備費用、ダメージはこれらの映像だけでは確定できません。",
-      role: "目標の位置を確認してから発射し、操縦者は遮蔽物の内側に置きましょう。停止中の高価値車両や砲兵を優先する運用は過去の実機映像に基づきます。着弾前の最終修正に余裕を残し、無理な追尾より撤退判断を優先します。飛行操作やブーストの感覚は現在のビルドで再確認してください。",
-      strengths: [
-        "確認済みの敵車両や停止中の砲兵を遠隔から攻撃できます。",
-        "発射筒と操作端末は出典のベータ版映像で直接確認できます。",
-        "9月の実機映像もスティングレイによる対車両運用の参考になります。"
-      ],
-      cautions: [
-        "操作中の操縦者は周辺の敵に対応しづらいため、発射地点の防護と味方の監視が必要です。",
-        "ベータ版の操縦方法、誘導、威力を現在の仕様として扱わないでください。",
-        "現在の価格、解除条件、配備費用、ダメージは未確認です。"
-      ],
-      confirmedFacts: [
-        "出典のクローズドベータ映像で発射筒と操作端末を確認できます。",
-        "9月の実機映像で敵車両・砲兵を狙う運用が紹介されています。"
-      ],
-      unconfirmedFacts: [
-        "現在のショップ価格、解除条件、配備費用、ダメージは公式資料や現行ビルドの画面で確認できていません。",
-        "ベータ版の飛行操作が現行ビルドと同じとは限りません。"
-      ]
-    };
-  }
+  if (locale === "de" && item.indexable) return {...localized, ...localizeItemProseDe(item)};
+  if (locale === "pt-br" && item.indexable) return {...localized, ...localizeItemProsePtBr(item)};
+  if (locale === "ru" && item.indexable) return {...localized, ...localizeItemProseRu(item)};
+  if (locale === "ja" && item.indexable) return {...localized, ...localizeItemProseJa(item)};
+  if (locale === "zh-cn") return {...localized, ...localizeItemProseZhCn(item)};
   if (locale === "zh-tw") return {...localized, ...localizeItemProseZhTw(item)};
   if (locale === "pl") return {...localized, ...localizeItemProsePl(item)};
   return localized;

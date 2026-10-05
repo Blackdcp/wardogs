@@ -58,7 +58,7 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit, l
       data-ad-placement={placement}
       data-ad-unit={unit.key}
     >
-      <p className="mb-2 text-center text-[10px] font-semibold uppercase text-[#718079]">{label}</p>
+      <p className="mb-2 text-center text-[10px] font-semibold uppercase text-[#82938a]">{label}</p>
       <div
         ref={slotRef}
         className="mx-auto flex items-center justify-center"

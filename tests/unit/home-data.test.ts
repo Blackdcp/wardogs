@@ -1,31 +1,8 @@
 import {describe, expect, it} from "vitest";
-import {
-  CONFIRMED_RUMOR_ITEMS,
-  HOME_ACTIONS,
-  getHomeCurrentBuildChanges,
-  getHomeFacts,
-  getHomePriorityGuides,
-  getRecentlyUpdatedGuides,
-  TOP_GUIDE_SLUGS,
-  START_GUIDES
-} from "../../src/features/home/home-data";
+import {HOME_FACT_KEYS, HOME_UPDATED_AT, getHomeFacts} from "../../src/features/home/home-data";
 
 describe("homepage data", () => {
-  it("prioritizes each language's tasks without inventing missing guides", () => {
-    const guides = [...TOP_GUIDE_SLUGS, "wardogs-helicopter-guide", "wardogs-cargo-guide", "wardogs-squad-guide", "wardogs-towers-guide", "wardogs-best-settings", "wardogs-mortar-guide"].map((slug) => ({slug, updatedAt: "2026-09-30"}));
-    const result = getHomePriorityGuides(guides, "ja");
-    expect(result.top.map((guide) => guide.slug)).toEqual([
-      "wardogs-infantry-mode", "wardogs-squad-guide", "wardogs-mortar-guide",
-      "wardogs-towers-guide", "wardogs-best-weapons-loadouts", "wardogs-cargo-guide"
-    ]);
-    expect(getHomePriorityGuides(guides, "de").top.map((guide) => guide.slug)).toEqual([
-      "wardogs-infantry-mode", "wardogs-best-weapons-loadouts", "wardogs-best-settings",
-      "wardogs-progression-wipes-guide", "wardogs-crash-fix", "wardogs-season-2"
-    ]);
-    const sparse = getHomePriorityGuides([guides[0]], "ja");
-    expect(sparse.top).toEqual([guides[0]]);
-  });
-  it("uses four intuitive facts and six current start routes", () => {
+  it("keeps the stable homepage facts and release freshness date", () => {
     const copy = {
       earlyAccess: "Early Access Sep 10, 2026",
       players: "Up to 100 Players",
@@ -33,119 +10,13 @@ describe("homepage data", () => {
       controlZone: "2 x 2 km Control Zone"
     } as const;
 
-    const facts = getHomeFacts((key) => copy[key]);
-
-    expect(facts).toEqual([
+    expect(HOME_FACT_KEYS).toEqual(["earlyAccess", "players", "teams", "controlZone"]);
+    expect(getHomeFacts((key) => copy[key])).toEqual([
       "Early Access Sep 10, 2026",
       "Up to 100 Players",
       "3 Teams",
       "2 x 2 km Control Zone"
     ]);
-    expect(START_GUIDES).toEqual([
-      {number: "1", slug: "wardogs-beginner-guide", titleKey: "beginner"},
-      {number: "2", slug: "wardogs-money-guide", titleKey: "money"},
-      {number: "3", slug: "wardogs-progression-wipes-guide", titleKey: "progression"},
-      {number: "4", slug: "wardogs-best-weapons-loadouts", titleKey: "loadouts"},
-      {number: "5", slug: "wardogs-community-servers-guide", titleKey: "communityServers"},
-      {number: "6", slug: "wardogs-known-issues", titleKey: "issues"}
-    ]);
-    expect(facts.every((fact) => typeof fact === "string")).toBe(true);
-  });
-
-  it("promotes core homepage SEO links and maintenance signals", () => {
-    expect(TOP_GUIDE_SLUGS).toEqual([
-      "wardogs-infantry-mode",
-      "wardogs-season-2",
-      "wardogs-server-status",
-      "wardogs-patch-notes",
-      "wardogs-beginner-guide",
-      "wardogs-money-guide",
-      "wardogs-progression-wipes-guide",
-      "wardogs-best-weapons-loadouts",
-      "wardogs-community-servers-guide",
-      "wardogs-known-issues",
-      "wardogs-download",
-      "wardogs-controls",
-      "wardogs-map",
-      "wardogs-early-access",
-      "wardogs-price",
-      "wardogs-system-requirements",
-      "wardogs-linux-proton",
-      "wardogs-fob-guide",
-      "wardogs-crash-fix"
-    ]);
-    expect(new Set(TOP_GUIDE_SLUGS).size).toBe(TOP_GUIDE_SLUGS.length);
-
-    const latest = getRecentlyUpdatedGuides([
-      {slug: "older", updatedAt: "2026-08-01", title: "Older"},
-      {slug: "newest", updatedAt: "2026-08-13", title: "Newest"},
-      {slug: "middle", updatedAt: "2026-08-08", title: "Middle"}
-    ], 2);
-
-    expect(latest.map((guide) => guide.slug)).toEqual(["newest", "middle"]);
-    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.status)).toEqual(["confirmed", "confirmed", "confirmed", "rumor"]);
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual({
-      status: "confirmed",
-      titleKey: "season02",
-      slug: "wardogs-season-2"
-    });
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual({
-      status: "confirmed",
-      titleKey: "steamEarlyAccess",
-      slug: "wardogs-early-access"
-    });
-    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.titleKey)).not.toContain("closedBeta02");
-    expect(CONFIRMED_RUMOR_ITEMS.map((item) => item.titleKey)).not.toContain("clipContest");
-  });
-
-  it("keeps the homepage intel panel concise while preserving confirmed and rumor states", () => {
-    const guides = Array.from({length: 20}, (_, index) => ({
-      slug: `guide-${index}`,
-      title: `Guide ${index}`,
-      updatedAt: `2026-08-${String(index + 1).padStart(2, "0")}`
-    }));
-    const result = getHomePriorityGuides(guides);
-
-    expect(result.top).toHaveLength(0);
-    expect(result.recent).toHaveLength(3);
-    expect(result.status).toEqual([
-      expect.objectContaining({titleKey: "season02", status: "confirmed"}),
-      expect.objectContaining({titleKey: "steamEarlyAccess", status: "confirmed"}),
-      expect.objectContaining({titleKey: "patch012", status: "confirmed"}),
-      expect.objectContaining({titleKey: "ps5Release", status: "rumor"})
-    ]);
-  });
-
-  it("defines six problem-first homepage actions with valid internal destinations", () => {
-    expect(HOME_ACTIONS).toEqual([
-      {key: "firstMatch", href: "/guides/wardogs-beginner-guide"},
-      {key: "map", href: "/tools/map"},
-      {key: "money", href: "/guides/wardogs-money-guide"},
-      {key: "weapons", href: "/guides/wardogs-best-weapons-loadouts"},
-      {key: "pcFixes", href: "/guides/wardogs-crash-fix"},
-      {key: "season2", href: "/guides/wardogs-season-2"}
-    ]);
-    expect(HOME_ACTIONS).toHaveLength(6);
-    expect(HOME_ACTIONS.every((action) => action.href.startsWith("/"))).toBe(true);
-  });
-
-  it("builds the current-change band only from dated official Season 1 evidence", () => {
-    const changes = getHomeCurrentBuildChanges();
-
-    expect(changes).toHaveLength(6);
-    expect(changes.map((change) => change.key)).toEqual([
-      "fobVendor",
-      "largeHammer",
-      "artilleryTank",
-      "ural",
-      "duneBuggy",
-      "deagle"
-    ]);
-    for (const change of changes) {
-      expect(change.effectiveBuild).toBe("Season 1");
-      expect(change.verifiedAt).toBe("2026-09-09");
-      expect(change.sourceUrl).toBe("https://store.steampowered.com/news/app/1867240/view/701027323413004455");
-      expect(change.previousValue).not.toBe(change.currentValue);
-    }
+    expect(HOME_UPDATED_AT).toBe("2026-10-05");
   });
 });

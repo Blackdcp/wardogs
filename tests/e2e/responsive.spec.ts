@@ -18,6 +18,7 @@ test("mobile guide tables remain semantic and scroll within the article", async 
 });
 
 for (const viewport of [
+  {name: "compact", width: 375, height: 812},
   {name: "mobile", width: 390, height: 844},
   {name: "tablet", width: 768, height: 1024},
   {name: "desktop", width: 1440, height: 1200},
@@ -25,14 +26,14 @@ for (const viewport of [
 ]) {
   test(`${viewport.name} layouts load assets without overflow`, async ({page}) => {
     await page.setViewportSize(viewport);
-    for (const pathname of ["/en", "/en/news", "/de/guides", "/pt-br/guides/wardogs-gameplay"]) {
+    for (const pathname of ["/en", "/en/news", "/de/guides", "/ja/items", "/en/tools", "/en/maps", "/pt-br/guides/wardogs-gameplay"]) {
       await page.goto(pathname);
       await expectImagesLoaded(page);
       await expectNoHorizontalOverflow(page);
       if (pathname === "/en") {
         const band = page.locator('[data-catalogue-home-band]');
-        await expect(band.locator('[data-catalogue-entry]')).toHaveCount(6);
-        await expect(band.locator('[data-catalogue-entry] img')).toHaveCount(6);
+        await expect(band.locator('[data-catalogue-entry]')).toHaveCount(2);
+        await expect(band.locator('[data-catalogue-entry] img')).toHaveCount(2);
         await expect(band.locator('[data-catalogue-model-entry]')).toHaveCount(4);
         await expect(band.locator('[data-catalogue-model-entry] img')).toHaveCount(4);
       }

@@ -1,3 +1,6 @@
+import {buildToolRelatedLinks, ToolRelatedGuides} from "@/components/tools/tool-related-guides";
+import {ToolPageHeader} from "@/components/tools/tool-page-header";
+import {getTranslations} from "next-intl/server";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {LogisticsPlanner} from "@/components/tools/logistics-planner";
@@ -27,18 +30,17 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
 export default async function LogisticsPlannerPage({params}: PageProps) {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
+  const relatedLinks = await buildToolRelatedLinks("logistics-planner", locale);
+  const headerT = await getTranslations({locale: locale, namespace: "nav"});
   const copy = getToolCopy(locale);
   const stages = getLogisticsStages(locale);
   const initialState = decodeLogisticsPlanState("", logisticsStageIds);
 
   return (
     <main className="site-container py-10 md:py-16">
-      <header className="mb-8 max-w-3xl">
-        <p className="font-mono text-xs uppercase text-[#69c78f]">{copy.logisticsPlannerEyebrow}</p>
-        <h1 className="display-font mt-3 text-balance text-3xl leading-tight text-white sm:text-4xl md:text-5xl">{copy.logisticsPlannerTitle}</h1>
-        <p className="mt-4 text-base leading-7 text-[#a8b4ae]">{copy.logisticsPlannerDescription}</p>
-      </header>
+      <ToolPageHeader toolId="logistics-planner" eyebrow={copy.logisticsPlannerEyebrow} title={copy.logisticsPlannerTitle} description={copy.logisticsPlannerDescription} actions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]} />
       <LogisticsPlanner copy={copy} initialState={initialState} stages={stages} />
+      <ToolRelatedGuides model={relatedLinks} locale={locale} />
     </main>
   );
 }

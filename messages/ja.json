@@ -90,7 +90,8 @@
     "artilleryCalculator": "迫撃砲・曲射砲計算ツール",
     "mapPill": "戦術マップ",
     "calcPill": "密位計算",
-    "cashXpCalculator": "Cash & XP 計算機"
+    "cashXpCalculator": "Cash & XP 計算機",
+    "toolsHome": "ツール一覧"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki：攻略・武器・車両・ツールを検索",
@@ -185,7 +186,10 @@
         "videos": "現行動画",
         "tools": "ツール",
         "maps": "マップ"
-      }
+      },
+      "failed": "検索を読み込めませんでした。再試行するか攻略一覧を開いてください。",
+      "retry": "検索を再試行",
+      "guidesFallback": "攻略一覧を見る"
     },
     "actions": {
       "eyebrow": "目的を選択",
@@ -484,6 +488,92 @@
           "title": "マップと迫撃砲"
         }
       }
+    },
+    "discovery": {
+      "sections": {
+        "command": {
+          "title": "次に取り組むことを選ぶ",
+          "description": "行動に役立つ攻略、マップ、ツールを探しましょう。"
+        },
+        "proven-demand": {
+          "title": "よく使われる攻略から始める",
+          "description": "この言語の優先攻略6本から、必要な答えへ進めます。"
+        },
+        "live-intel": {
+          "title": "最新の確認済み情報を見る",
+          "description": "日付のある変更、パッチ内容、サービス告知を確認します。"
+        },
+        "workbench": {
+          "title": "ツールで準備する",
+          "description": "ツールを使い、入力値と根拠資料を確認しましょう。"
+        },
+        "database": {
+          "title": "武器と車両を調べる",
+          "description": "図鑑全体を開き、公開済みの記録を比較します。"
+        },
+        "library": {
+          "title": "プレイヤー向けルートをたどる",
+          "description": "攻略一覧、テーマ別のまとめ、補足資料を探せます。"
+        }
+      },
+      "actions": {
+        "openGuide": "攻略を開く",
+        "allTools": "すべてのツール",
+        "allGuides": "すべての攻略",
+        "collections": "攻略のまとめ",
+        "videos": "動画ライブラリ",
+        "news": "最新ニュース",
+        "about": "このWikiについて",
+        "catalogue": "図鑑一覧",
+        "serverStatus": "サーバー状況",
+        "patchNotes": "パッチ内容"
+      },
+      "states": {
+        "earlyAccess": "早期アクセス",
+        "current": "現在の根拠",
+        "archive": "直近に確認した過去の記録",
+        "unknownBuild": "ビルド未記載",
+        "verifiedAt": "確認日",
+        "noVerifiedChanges": "条件を満たす変更記録がありません。サーバー状況とパッチ一覧を確認してください。",
+        "sources": {
+          "official": "公式資料",
+          "live-client": "現行クライアントでの観測",
+          "creator-current": "現在のクリエイター映像",
+          "community-report": "コミュニティ報告"
+        }
+      },
+      "tasks": {
+        "search": "検索",
+        "map": "インタラクティブマップ",
+        "calculator": "砲撃計算ツール",
+        "weapons": "武器データベース",
+        "vehicles": "車両データベース",
+        "status": "サービス状況",
+        "catalogue": "図鑑",
+        "guides": "攻略",
+        "tools": "ツール",
+        "videos": "動画",
+        "news": "ニュース",
+        "cargo": "貨物配送",
+        "squad": "分隊プレイ",
+        "towers": "タワー目標",
+        "progression": "進行とリセット",
+        "mortar": "迫撃砲の手順",
+        "fob": "FOB補給",
+        "controls": "操作",
+        "helicopter": "ヘリコプター飛行",
+        "settings": "設定",
+        "pcFixes": "PCの不具合対処",
+        "season2": "シーズン2",
+        "patchNotes": "パッチ内容",
+        "money": "資金計画",
+        "firstMatch": "最初の試合",
+        "loadout": "装備計画",
+        "logistics": "兵站計画",
+        "systemCheck": "システムチェック",
+        "faq": "よくある質問",
+        "about": "サイトについて"
+      }
     }
   },
   "guides": {
@@ -491,7 +581,37 @@
     "title": "WARDOGS攻略",
     "description": "発売、貨物輸送、弾薬、分隊、車両、FOB兵站、ゲームプレイを扱う{count}件の攻略です。",
     "count": "{count}件の攻略",
-    "read": "攻略を読む"
+    "read": "攻略を読む",
+    "routes": {
+      "title": "プレイヤー向けルートを選ぶ",
+      "relatedTools": "関連ツール",
+      "new-player": {
+        "title": "初心者ルート",
+        "description": "ゲームを始め、分隊に入り、資金を守りながら進行の仕組みを学びます。"
+      },
+      "combat-operations": {
+        "title": "戦闘・作戦ルート",
+        "description": "武器と弾薬を準備し、車両を学んでから、移動と火力支援を計画します。"
+      },
+      "logistics-live": {
+        "title": "兵站・最新情報ルート",
+        "description": "貨物を届け、FOBを補給し、シーズン・パッチ・サーバー告知を確認します。"
+      }
+    },
+    "tasks": {
+      "artillery": {
+        "title": "着弾を観測して砲撃を修正する",
+        "directAnswer": "公式のシーズン1変更はArtillery TankカテゴリーにCareer 90と一度限り$500,000の解放費を設定しています。SPH-2の名称や現在の再購入価格は示していません。射撃位置を守り、安定化し、目標と味方、距離と方位角を確認したうえで、最初の着弾から修正します。",
+        "caution": "マップと計算ツールの一致は、メートル縮尺や弾道の実測を意味しません。現在の操作表示、乗員、弾薬を確認し、解放費と出撃費を分けてください。",
+        "steps": {
+          "one": "資金を使う前に機体、現在の入手条件、販売価格を確認します。",
+          "two": "運転、砲撃、観測、近距離警戒を分担し、補給と退路を用意します。",
+          "three": "保護された地面で停止し、砲手席、安定化、弾薬を確認します。",
+          "four": "現在の目標、味方位置、距離、方位角を読み、入力単位と校正の限界を確認します。",
+          "five": "修正用の1発を撃ち、着弾を観測して調整・装填します。目標や味方の安全が不明なら停火します。"
+        }
+      }
+    }
   },
   "news": {
     "metaTitle": "WARDOGSニュース - Update 0.1.2・サーバー・Early Access",
@@ -713,5 +833,51 @@
     "description": "指定されたページは、現在の確認済み攻略ライブラリに存在しません。",
     "home": "トップへ戻る",
     "guides": "攻略を見る"
+  },
+  "toolsHub": {
+    "title": "WARDOGS ツール一覧",
+    "description": "次に取り組むことに合ったツールを選び、結果の根拠となる攻略や資料も確認しましょう。",
+    "metaTitle": "WARDOGS ツール：マップ・装備・進行",
+    "metaDescription": "WARDOGS の戦闘、装備予算、補給ルート、シーズン進行を9つのツールで計画。結果を現在の攻略と根拠資料で確認できます。",
+    "openTool": "ツールを開く",
+    "relatedGuides": "関連攻略",
+    "evidenceTitle": "根拠資料を確認",
+    "evidenceDescription": "計算ツールは確認済みの資料・ビルド時点の記録、または入力値を使います。現在のバランス・価格・解放条件を保証しません。資金を使う前に現在のクライアントで確認してください。",
+    "groups": {
+      "combat": "戦闘",
+      "economy": "経済",
+      "logistics": "兵站",
+      "progression": "進行",
+      "fixes": "不具合対処"
+    },
+    "tools": {
+      "map": {
+        "description": "二次元マップでルートを記録・測定し、目標を射撃計算へ送ります。"
+      },
+      "artillery-calculator": {
+        "description": "距離と方位角を確認し、実際の試合で着弾を観測して修正します。"
+      },
+      "weapon-compare": {
+        "description": "役割と装備を選ぶ前に、記録された武器の根拠資料を比較します。"
+      },
+      "ammo-matcher": {
+        "description": "購入前に武器・マガジン・弾薬の組み合わせを確認します。"
+      },
+      "loadout-budget": {
+        "description": "装備費を計画し、次の出撃に必要な予備資金を残します。"
+      },
+      "cash-xp-calculator": {
+        "description": "入力値から資金とXPを見積もります。報酬を保証するものではありません。"
+      },
+      "logistics-planner": {
+        "description": "補給品、輸送、引き渡し、納品確認を計画します。"
+      },
+      "progression-route": {
+        "description": "進行の目標を選び、シーズンリセットの範囲を確認します。"
+      },
+      "system-check": {
+        "description": "PC構成を必要環境と比較し、症状に合う切り分け手順へ進みます。"
+      }
+    }
   }
 }

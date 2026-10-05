@@ -1,31 +1,22 @@
 import {readFileSync} from "node:fs";
 import path from "node:path";
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, vi} from "vitest";
+import {HeroSearchBox} from "../../src/components/home/hero-search-box";
+
+vi.mock("@/components/layout/site-search-dialog", () => ({SiteSearchDialog: () => null}));
 
 function source(file: string) {
   return readFileSync(path.resolve(file), "utf8");
 }
 
 describe("homepage visual polish", () => {
-  it("renders hero popular links as quiet editorial text instead of promo chips", () => {
-    const heroSearch = source("src/components/home/hero-search-box.tsx");
-
-    expect(heroSearch).toContain('data-hero-popular-links="true"');
-    expect(heroSearch).not.toContain('[{item.tag}]');
-    expect(heroSearch).not.toContain('font-mono text-[11px] font-bold uppercase tracking-wider text-[#d9a93a]');
-    expect(heroSearch).not.toContain('border border-[#304538] bg-[#141e18]/90');
-  });
-
-
-  it("keeps hero popular links in player language rather than internal keyword shorthand", () => {
-    const heroSearch = source("src/components/home/hero-search-box.tsx");
-
-    expect(heroSearch).toContain('tag: "Season 2 wipe date"');
-    expect(heroSearch).toContain('tag: "Build an M4 kit"');
-    expect(heroSearch).toContain('tag: "第二赛季删档时间"');
-    expect(heroSearch).not.toContain("S2 Wipe Matrix");
-    expect(heroSearch).not.toContain("Ural Cargo SOP");
-    expect(heroSearch).not.toContain('tag: "Montar M4", href: "/en');
+  it("keeps hero search as one command trigger without a second popular-terms row", () => {
+    const searchBox = HeroSearchBox({locale: "en", placeholder: "Search"});
+    const trigger = searchBox.props.children;
+    expect(trigger.props.source).toBe("hero");
+    expect(trigger.props.trigger).toBe("hero");
+    expect(trigger.props.children).toBeUndefined();
+    expect(searchBox.props["data-hero-search-box"]).toBe("true");
   });
 
   it("keeps the hero search trigger compact and aligned with the site card language", () => {
@@ -64,24 +55,14 @@ describe("homepage visual polish", () => {
     expect(globals).toContain("outline: 0");
   });
 
-  it("turns hero hot terms into a quiet popular-links row rather than promo chips", () => {
-    const heroSearch = source("src/components/home/hero-search-box.tsx");
-
-    expect(heroSearch).toContain('data-hero-popular-links="true"');
-    expect(heroSearch).not.toContain('data-hero-trending="true"');
-    expect(heroSearch).not.toContain('Flame');
-    expect(heroSearch).not.toContain('rounded-full border border-[#2b3831]');
-  });
-
   it("applies the same homepage section system to every downstream block", () => {
     const files = [
-      "src/components/home/home-editorial-briefing.tsx",
-      "src/components/home/start-here.tsx",
-      "src/components/home/current-build-changes.tsx",
-      "src/components/home/priority-guides.tsx",
+      "src/components/home/home-hero.tsx",
+      "src/components/home/home-proven-demand.tsx",
+      "src/components/home/home-live-intel.tsx",
+      "src/components/home/home-tool-workbench.tsx",
       "src/components/catalogue/catalogue-home-band.tsx",
-      "src/components/home/home-discovery-compact.tsx",
-      "src/components/home/site-search.tsx"
+      "src/components/home/home-library.tsx"
     ];
 
     for (const file of files) {
@@ -97,7 +78,6 @@ describe("homepage visual polish", () => {
 
   it("keeps the homepage from becoming a long stack of low-priority sections", () => {
     const page = source("src/app/[locale]/page.tsx");
-    const startHere = source("src/components/home/start-here.tsx");
 
     expect(page).not.toContain("<BeginnerTips");
     expect(page).not.toContain("<VideoIntelligence");
@@ -105,21 +85,18 @@ describe("homepage visual polish", () => {
     expect(page).not.toContain("<AboutGame");
     expect(page).not.toContain("<HomeFaq");
     expect(page).not.toContain("<FinalCta");
-    expect(page).toContain("<HomeDiscoveryCompact");
-    expect(startHere).toContain("xl:grid-cols-6");
-    expect(startHere).not.toContain("min-h-[224px]");
+    expect(page).toContain("<HomeLibrary");
+    expect(page).not.toContain("<SiteSearch");
+    expect(page).not.toContain("<HomeDiscoveryCompact");
+    expect(page).not.toContain("data-home-section=\"discovery\"");
   });
 
   it("keeps lower homepage cards compact and in the same visual language", () => {
     const videoGrid = source("src/components/videos/current-video-source-grid.tsx");
-    const siteSearch = source("src/components/home/site-search.tsx");
 
     expect(videoGrid).toContain('data-home-video-grid="true"');
     expect(videoGrid).not.toContain('bg-[#d9a93a] text-[#111512]');
     expect(videoGrid).not.toContain('block min-h-64 p-5');
-    expect(siteSearch).toContain('data-home-section="search"');
-    expect(siteSearch).not.toContain('h-14 w-full border border-[#526159]');
-    expect(siteSearch).not.toContain('focus:ring-2 focus:ring-[#79d19c]/35');
   });
 
 });

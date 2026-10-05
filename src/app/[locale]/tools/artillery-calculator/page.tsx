@@ -1,3 +1,4 @@
+import {buildToolRelatedLinks, ToolRelatedGuides} from "@/components/tools/tool-related-guides";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {getTranslations} from "next-intl/server";
@@ -33,10 +34,14 @@ export default async function ArtilleryCalculatorPage({params}: PageProps) {
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
   const t = await getTranslations({locale, namespace: "ads"});
+  const relatedLinks = await buildToolRelatedLinks("artillery-calculator", locale);
+  const headerT = await getTranslations({locale, namespace: "nav"});
 
   return (
     <main className="site-container py-8 md:py-12">
-      <ArtilleryCalculator locale={locale} />
+      <ArtilleryCalculator locale={locale} headerActions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]} />
+
+      <ToolRelatedGuides model={relatedLinks} locale={locale} />
 
       {/* Dwell-Time Monetization: Players keeping fire control open during raids */}
       <section className="mt-12 pt-8 border-t border-[#2b3530]" data-page-ad-inventory="tools-artillery">

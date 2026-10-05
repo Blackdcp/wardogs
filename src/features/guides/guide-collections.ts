@@ -31,17 +31,20 @@ export function groupGuideCollections<T extends Pick<GuideSummary, "slug">>(guid
 
 // UI copy follows the site's existing locale-specific feature data pattern.
 const labels = {
-  en: ["Guide collections", "Choose a task, then follow the relevant guides.", "Start playing", "Weapons & combat", "Map, FOB & logistics", "Seasons & progression", "PC & server fixes", "Game & release reference", "Tools & calculators", "Squad, towers & cargo"],
-  ja: ["攻略コレクション", "目的を選んで、必要な攻略へ進みましょう。", "初心者・フレンドと遊ぶ", "武器・戦闘", "マップ・FOB・物流", "シーズン・進行・ワイプ", "PC・サーバーの不具合", "ゲーム・発売情報", "ツール・計算機", "フレンド・拠点・輸送の攻略"],
-  de: ["Guide-Sammlungen", "Wähle deine Aufgabe und die passenden Guides.", "Spielstart", "Waffen & Kampf", "Karte, FOB & Logistik", "Saisons & Fortschritt", "PC- & Serverprobleme", "Spiel- & Releaseinfos", "Tools & Rechner", "Squad, Türme & Fracht"],
-  ru: ["Разделы руководств", "Выберите задачу и нужное руководство.", "Начало игры", "Оружие и бой", "Карта, FOB и логистика", "Сезоны и прогресс", "Проблемы ПК и серверов", "Об игре и релизе", "Инструменты и калькуляторы", "Отряд, вышки и грузы"],
-  "pt-br": ["Coleções de guias", "Escolha uma tarefa e siga os guias relevantes.", "Começar a jogar", "Armas e combate", "Mapa, FOB e logística", "Temporadas e progressão", "Problemas de PC e servidor", "Jogo e lançamento", "Ferramentas e calculadoras", "Esquadrão, torres e carga"],
-  pl: ["Zbiory poradników", "Wybierz zadanie i odpowiedni poradnik.", "Początek gry", "Broń i walka", "Mapa, FOB i logistyka", "Sezony i postępy", "Problemy PC i serwerów", "Gra i premiera", "Narzędzia i kalkulatory", "Drużyna, wieże i ładunki"],
-  "zh-cn": ["攻略合集", "按当前任务找到需要的攻略。", "新手与组队", "武器与战斗", "地图、FOB 与后勤", "赛季、成长与重置", "电脑与服务器排障", "游戏与发售信息", "工具与计算器", "好友邀请、塔楼与货运"],
-  "zh-tw": ["攻略合集", "按目前任務找到需要的攻略。", "新手與組隊", "武器與戰鬥", "地圖、FOB 與後勤", "賽季、成長與重置", "電腦與伺服器排障", "遊戲與發售資訊", "工具與計算機", "好友邀請、塔樓與貨運"]
+  en: ["Guide collections", "Start playing", "Weapons & combat", "Map, FOB & logistics", "Seasons & progression", "PC & server fixes", "Game & release reference"],
+  ja: ["攻略コレクション", "初心者・フレンドと遊ぶ", "武器・戦闘", "マップ・FOB・物流", "シーズン・進行・ワイプ", "PC・サーバーの不具合", "ゲーム・発売情報"],
+  de: ["Guide-Sammlungen", "Spielstart", "Waffen & Kampf", "Karte, FOB & Logistik", "Saisons & Fortschritt", "PC- & Serverprobleme", "Spiel- & Releaseinfos"],
+  ru: ["Разделы руководств", "Начало игры", "Оружие и бой", "Карта, FOB и логистика", "Сезоны и прогресс", "Проблемы ПК и серверов", "Об игре и релизе"],
+  "pt-br": ["Coleções de guias", "Começar a jogar", "Armas e combate", "Mapa, FOB e logística", "Temporadas e progressão", "Problemas de PC e servidor", "Jogo e lançamento"],
+  pl: ["Zbiory poradników", "Początek gry", "Broń i walka", "Mapa, FOB i logistyka", "Sezony i postępy", "Problemy PC i serwerów", "Gra i premiera"],
+  "zh-cn": ["攻略合集", "新手与组队", "武器与战斗", "地图、FOB 与后勤", "赛季、成长与重置", "电脑与服务器排障", "游戏与发售信息"],
+  "zh-tw": ["攻略合集", "新手與組隊", "武器與戰鬥", "地圖、FOB 與後勤", "賽季、成長與重置", "電腦與伺服器排障", "遊戲與發售資訊"]
 } satisfies Record<Locale, readonly string[]>;
 
 export function getGuideHubCopy(locale: Locale) {
-  const [title, description, start, combat, logistics, progression, fixes, reference, tools, recovery] = labels[locale];
-  return {title, description, tools, recovery, collections: {start, combat, logistics, progression, fixes, reference}};
+  const [title, start, combat, logistics, progression, fixes, reference] = labels[locale];
+  return {
+    title,
+    collections: {start, combat, logistics, progression, fixes, reference}
+  };
 }

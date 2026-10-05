@@ -90,7 +90,8 @@
     "artilleryCalculator": "Artillery & Mortar Calculator",
     "mapPill": "Map",
     "calcPill": "Mortar Calc",
-    "cashXpCalculator": "Cash & XP Calculator"
+    "cashXpCalculator": "Cash & XP Calculator",
+    "toolsHome": "Tools"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: Tactical FPS Game Database & Guides",
@@ -185,7 +186,10 @@
         "videos": "Current videos",
         "tools": "Tools",
         "maps": "Maps"
-      }
+      },
+      "failed": "Search could not load. Try again or browse the guide library.",
+      "retry": "Retry search",
+      "guidesFallback": "Browse guides"
     },
     "actions": {
       "eyebrow": "Choose your mission",
@@ -484,6 +488,92 @@
           "title": "Map and mortar route"
         }
       }
+    },
+    "discovery": {
+      "sections": {
+        "command": {
+          "title": "Choose your next field task",
+          "description": "Find the guide, map or tool that helps you act."
+        },
+        "proven-demand": {
+          "title": "Start with proven player tasks",
+          "description": "Six priority guides for this language, with a direct route to the answer."
+        },
+        "live-intel": {
+          "title": "Check the latest verified intel",
+          "description": "Read dated changes, patch notes and service notices."
+        },
+        "workbench": {
+          "title": "Plan at the workbench",
+          "description": "Use a tool, then check its inputs and evidence."
+        },
+        "database": {
+          "title": "Explore weapons and vehicles",
+          "description": "Open the full catalogue and compare published records."
+        },
+        "library": {
+          "title": "Follow a player route",
+          "description": "Browse the guide library, collections and supporting sources."
+        }
+      },
+      "actions": {
+        "openGuide": "Open guide",
+        "allTools": "All tools",
+        "allGuides": "All guides",
+        "collections": "Guide collections",
+        "videos": "Video library",
+        "news": "Latest news",
+        "about": "About this wiki",
+        "catalogue": "Full catalogue",
+        "serverStatus": "Server status",
+        "patchNotes": "Patch notes"
+      },
+      "states": {
+        "earlyAccess": "Early Access",
+        "current": "Current evidence",
+        "archive": "Latest verified archive",
+        "unknownBuild": "Build not stated",
+        "verifiedAt": "Verified on",
+        "noVerifiedChanges": "No qualified changes available. Check the server status and patch hubs.",
+        "sources": {
+          "official": "Official source",
+          "live-client": "Live-client observation",
+          "creator-current": "Current creator footage",
+          "community-report": "Community report"
+        }
+      },
+      "tasks": {
+        "search": "Search",
+        "map": "Interactive map",
+        "calculator": "Artillery calculator",
+        "weapons": "Weapons database",
+        "vehicles": "Vehicles database",
+        "status": "Service status",
+        "catalogue": "Catalogue",
+        "guides": "Guides",
+        "tools": "Tools",
+        "videos": "Videos",
+        "news": "News",
+        "cargo": "Cargo delivery",
+        "squad": "Squad play",
+        "towers": "Tower objectives",
+        "progression": "Progression and wipes",
+        "mortar": "Mortar workflow",
+        "fob": "FOB supply",
+        "controls": "Controls",
+        "helicopter": "Helicopter flight",
+        "settings": "Settings",
+        "pcFixes": "PC troubleshooting",
+        "season2": "Season 2",
+        "patchNotes": "Patch notes",
+        "money": "Money planning",
+        "firstMatch": "First match",
+        "loadout": "Loadout planning",
+        "logistics": "Logistics planning",
+        "systemCheck": "System check",
+        "faq": "Common questions",
+        "about": "About"
+      }
     }
   },
   "guides": {
@@ -491,7 +581,37 @@
     "title": "WARDOGS Guides",
     "description": "Browse {count} focused guides covering launch, cargo, ammunition, squads, troubleshooting, vehicles, FOB logistics, release, and gameplay.",
     "count": "{count} Guide Topics",
-    "read": "Read guide"
+    "read": "Read guide",
+    "routes": {
+      "title": "Choose a player route",
+      "relatedTools": "Related tools",
+      "new-player": {
+        "title": "New player route",
+        "description": "Start playing, join a squad, protect your cash and understand progression."
+      },
+      "combat-operations": {
+        "title": "Combat and operations",
+        "description": "Prepare weapons and ammunition, learn vehicles, then plan map and fire-support tasks."
+      },
+      "logistics-live": {
+        "title": "Logistics and live operations",
+        "description": "Deliver Cargo, supply a FOB and check seasons, patches and server notices."
+      }
+    },
+    "tasks": {
+      "artillery": {
+        "title": "Operate artillery with a correction loop",
+        "directAnswer": "The official Season 1 category change sets Artillery Tank access at Career 90 with a $500,000 one-time unlock. It does not name SPH-2 or establish a current repeat-purchase price. For firing, protect the position, stabilize, confirm the target and friendlies, check range and azimuth, then correct from the first observed impact.",
+        "caution": "Map and calculator agreement is not measured metre-scale or ballistic validation. Check current client prompts, crew and ammunition; keep unlock costs separate from deployment costs.",
+        "steps": {
+          "one": "Confirm the vehicle, current access and vendor quote before committing cash.",
+          "two": "Assign driving, gunnery, observation and local security; prepare supply and an exit.",
+          "three": "Stop on protected ground and verify the gunner seat, stabilization and ammunition.",
+          "four": "Read the current target, friendly positions, range and azimuth; check input units and calibration limits.",
+          "five": "Fire a correction round, observe the impact, adjust and reload; cease fire when target or friendly safety is uncertain."
+        }
+      }
+    }
   },
   "news": {
     "metaTitle": "WARDOGS News - Season 02 Date, Patch Notes & Servers",
@@ -713,5 +833,51 @@
     "description": "That route does not exist in the current verified guide library.",
     "home": "Return Home",
     "guides": "Browse Guides"
+  },
+  "toolsHub": {
+    "title": "WARDOGS Tools",
+    "description": "Choose a tool for your next task, then return to the guide and evidence behind the result.",
+    "metaTitle": "WARDOGS Tools: Maps, Loadouts and Progression",
+    "metaDescription": "Plan WARDOGS combat, equipment budgets, supply routes and season progression with nine tools. Check each result against current guides and evidence.",
+    "openTool": "Open tool",
+    "relatedGuides": "Related guides",
+    "evidenceTitle": "Read the evidence",
+    "evidenceDescription": "Calculators use verified source/build snapshots or your entered inputs. They do not prove current balance, prices or unlocks; check the current client before spending.",
+    "groups": {
+      "combat": "Combat",
+      "economy": "Economy",
+      "logistics": "Logistics",
+      "progression": "Progression",
+      "fixes": "Troubleshooting"
+    },
+    "tools": {
+      "map": {
+        "description": "Mark routes, measure on the two-dimensional map and send a target to fire control."
+      },
+      "artillery-calculator": {
+        "description": "Check range and azimuth, then observe and correct shots in the live match."
+      },
+      "weapon-compare": {
+        "description": "Compare recorded weapon evidence before choosing a role and kit."
+      },
+      "ammo-matcher": {
+        "description": "Check weapon, magazine and ammunition relationships before buying."
+      },
+      "loadout-budget": {
+        "description": "Plan kit costs and preserve a reserve for the next life."
+      },
+      "cash-xp-calculator": {
+        "description": "Estimate cash and XP from your inputs; payouts are not guaranteed."
+      },
+      "logistics-planner": {
+        "description": "Plan supplies, transport, handoff and delivery checks."
+      },
+      "progression-route": {
+        "description": "Choose progression tasks and review the season reset boundaries."
+      },
+      "system-check": {
+        "description": "Compare your PC configuration with requirements and follow the appropriate diagnostic branch."
+      }
+    }
   }
 }

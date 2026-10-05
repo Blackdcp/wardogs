@@ -1,5 +1,7 @@
 "use client";
 
+import {ToolPageHeader} from "@/components/tools/tool-page-header";
+import type {TaskLinkData} from "@/components/ui/task-link";
 import {useCallback, useEffect, useRef, useState} from "react";
 import Image from "next/image";
 import {Crosshair, MapPin, RotateCcw, Volume2, VolumeX, ShieldAlert, Truck, BookOpen, Layers, Flame, ArrowRight, Zap} from "lucide-react";
@@ -24,13 +26,14 @@ import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 interface Props {
   locale: Locale;
+  headerActions?: readonly TaskLinkData[];
 }
 
 function normalizeAzimuth(value: number) {
   return Number.isFinite(value) ? ((value % 360) + 360) % 360 : 0;
 }
 
-export function ArtilleryCalculator({locale}: Props) {
+export function ArtilleryCalculator({locale, headerActions}: Props) {
   const copy = getArtilleryCopy(locale);
   const [weaponId, setWeaponId] = useState<WeaponId>("mortar");
   const [trajectoryMode, setTrajectoryMode] = useState<TrajectoryMode>("single");
@@ -213,17 +216,7 @@ export function ArtilleryCalculator({locale}: Props) {
       {/* 1. Header & Weapon Controls */}
       <div className="rounded-[6px] border border-[#344039] bg-[#111613] p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <span className="font-mono text-xs font-semibold tracking-wider text-[#7dd89f]">
-              {copy.eyebrow}
-            </span>
-            <h1 className="display-font mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              {copy.title}
-            </h1>
-            <p className="mt-1 text-xs text-[#9bb0a4] sm:text-sm">
-              {copy.subtitle}
-            </p>
-          </div>
+          <ToolPageHeader toolId="artillery-calculator" eyebrow={copy.eyebrow} title={copy.title} description={copy.subtitle} actions={headerActions} />
 
           <div className="flex items-center gap-2">
             <button

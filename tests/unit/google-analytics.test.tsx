@@ -7,6 +7,7 @@ import {
 } from "../../src/components/seo/google-analytics";
 import * as googleAnalytics from "../../src/components/seo/google-analytics";
 import {siteLocales} from "../../src/config/site";
+import {notifyAnalyticsPageView, normalizeAnalyticsPathname} from "../../src/lib/analytics-events";
 
 function analyticsSandbox(hostname: string, pending: unknown[] = []) {
   const scripts: Record<string, unknown>[] = [];
@@ -24,6 +25,10 @@ function analyticsSandbox(hostname: string, pending: unknown[] = []) {
 }
 
 describe("Google Analytics", () => {
+  it("keeps page-view notification safe outside the browser", () => {
+    expect(() => notifyAnalyticsPageView()).not.toThrow();
+    expect(normalizeAnalyticsPathname("/wardogs/ja/tools/map/?x=123&y=456#share", "/wardogs")).toBe("/ja/tools/map");
+  });
   it.each(siteLocales)("tracks catalogue details for %s with and without a base path", (locale) => {
     for (const basePath of ["", "/wardogs"]) {
       const href = `https://www.wardogswiki.com${basePath}/${locale}/items/weapons/ak74/`;

@@ -1,7 +1,7 @@
 import {readFileSync} from "node:fs";
 import {join} from "node:path";
 import {describe, expect, it} from "vitest";
-import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 
 const requiredHeadings = [
   "## Quick Answer",

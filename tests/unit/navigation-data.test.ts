@@ -31,6 +31,7 @@ describe("grouped navigation", () => {
       "/gold-market"
     ]);
     expect(groups.find((group) => group.id === "mapsAndTools")?.items.map((item) => item.href)).toEqual([
+      "/tools",
       "/tools/map",
       "/tools/artillery-calculator",
       "/maps",
@@ -38,6 +39,7 @@ describe("grouped navigation", () => {
       "/tools/weapon-compare",
       "/tools/logistics-planner",
       "/tools/loadout-budget",
+      "/tools/cash-xp-calculator",
       "/tools/system-check",
       "/tools/progression-route"
     ]);

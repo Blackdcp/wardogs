@@ -2,7 +2,7 @@ import {describe, expect, it} from "vitest";
 import {readdirSync, readFileSync} from "node:fs";
 import {join} from "node:path";
 import {loadGuideDocument} from "../../src/content/guides";
-import {CONFIRMED_RUMOR_ITEMS} from "../../src/features/home/home-data";
+import {getHomeLiveIntelEntries} from "../../src/features/home/home-live-intel";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const currentSlugs = ["wardogs-beta", "wardogs-playtest", "wardogs-preload", "wardogs-download"] as const;
@@ -123,9 +123,9 @@ describe("WARDOGS current and historical status boundaries", () => {
   it("keeps Beta 02 and contest history reachable without presenting them as current homepage status", async () => {
     expect(await loadGuideDocument("en", "wardogs-beta")).not.toBeNull();
     expect(await loadGuideDocument("en", "wardogs-100k-clip-contest")).not.toBeNull();
-    expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toContain("closedBeta02");
-    expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toContain("clipContest");
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({status: "confirmed", titleKey: "season02", slug: "wardogs-season-2"}));
-    expect(CONFIRMED_RUMOR_ITEMS).toContainEqual(expect.objectContaining({status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"}));
+    const liveIntel = await getHomeLiveIntelEntries("en");
+    expect(liveIntel.map(({href}) => href)).not.toContain("/guides/wardogs-beta");
+    expect(liveIntel.map(({href}) => href)).not.toContain("/guides/wardogs-100k-clip-contest");
+    expect(liveIntel.map(({href}) => href)).toContain("/guides/wardogs-season-2");
   });
 });

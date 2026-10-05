@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {guideManifest} from "../../src/content/manifest";
-import {START_GUIDES, TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 import {getLocalizedVideoArticle} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
 
@@ -112,8 +112,6 @@ describe("2026-08-29 launch and logistics expansion", () => {
   });
 
   it("promotes Early Access preparation after Beta 02 ends", () => {
-    expect(START_GUIDES[0].slug).toBe("wardogs-beginner-guide");
-    expect(START_GUIDES[1].slug).toBe("wardogs-money-guide");
     expect(TOP_GUIDE_SLUGS.slice(0, 5)).toEqual([
       "wardogs-infantry-mode",
       "wardogs-season-2",

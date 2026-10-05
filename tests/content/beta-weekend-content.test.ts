@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
-import {CONFIRMED_RUMOR_ITEMS, START_GUIDES, TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "../../src/features/news/news-data";
 
 const weekendSlugs = [
@@ -41,19 +41,6 @@ describe("WARDOGS Closed Beta reference content", () => {
     }
     expect(TOP_GUIDE_SLUGS).not.toContain("wardogs-twitch-drops");
     expect(TOP_GUIDE_SLUGS).toContain("wardogs-download");
-    expect(START_GUIDES[0].slug).toBe("wardogs-beginner-guide");
-    expect(START_GUIDES[1].slug).toBe("wardogs-money-guide");
-    expect(CONFIRMED_RUMOR_ITEMS).toEqual(expect.arrayContaining([
-      expect.objectContaining({status: "confirmed", titleKey: "season02", slug: "wardogs-season-2"}),
-      expect.objectContaining({status: "confirmed", titleKey: "steamEarlyAccess", slug: "wardogs-early-access"}),
-      expect.objectContaining({status: "confirmed", titleKey: "patch012", slug: "wardogs-patch-notes"}),
-      expect.objectContaining({status: "rumor", titleKey: "ps5Release", slug: "wardogs-ps5"}),
-    ]));
-    expect(CONFIRMED_RUMOR_ITEMS.map(({titleKey}) => titleKey)).not.toEqual(expect.arrayContaining([
-      "closedBeta02",
-      "paidPrepurchase",
-      "clipContest",
-    ]));
     expect(NEWS_CHECKLIST_SLUGS).toContain("wardogs-twitch-drops");
     expect(NEWS_UPDATES).toContainEqual(expect.objectContaining({
       date: "2026-09-09",

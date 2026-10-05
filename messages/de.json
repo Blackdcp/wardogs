@@ -90,7 +90,8 @@
     "artilleryCalculator": "Artillerie- und Mörser-Rechner",
     "mapPill": "Karte",
     "calcPill": "Mörser-Rechner",
-    "cashXpCalculator": "Cash- & XP-Rechner"
+    "cashXpCalculator": "Cash- & XP-Rechner",
+    "toolsHome": "Werkzeuge"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: Guides, Waffen, Fahrzeuge & Tools durchsuchen",
@@ -185,7 +186,10 @@
         "videos": "Aktuelle Videos",
         "tools": "Tools",
         "maps": "Karten"
-      }
+      },
+      "failed": "Die Suche konnte nicht geladen werden. Versuche es erneut oder öffne die Leitfäden.",
+      "retry": "Suche erneut laden",
+      "guidesFallback": "Leitfäden durchsuchen"
     },
     "actions": {
       "eyebrow": "Wähle deine Aufgabe",
@@ -484,6 +488,92 @@
           "title": "Karte und Mörser"
         }
       }
+    },
+    "discovery": {
+      "sections": {
+        "command": {
+          "title": "Wähle deine nächste Aufgabe",
+          "description": "Finde den Leitfaden, die Karte oder das Werkzeug für deinen nächsten Schritt."
+        },
+        "proven-demand": {
+          "title": "Beginne mit wichtigen Spieleraufgaben",
+          "description": "Sechs priorisierte Leitfäden in deiner Sprache führen direkt zur Antwort."
+        },
+        "live-intel": {
+          "title": "Prüfe die zuletzt verifizierte Lage",
+          "description": "Lies datierte Änderungen, Patchnotes und Servermeldungen."
+        },
+        "workbench": {
+          "title": "Plane an der Werkbank",
+          "description": "Nutze ein Werkzeug und prüfe anschließend Eingaben und Belege."
+        },
+        "database": {
+          "title": "Entdecke Waffen und Fahrzeuge",
+          "description": "Öffne den vollständigen Katalog und vergleiche veröffentlichte Einträge."
+        },
+        "library": {
+          "title": "Folge einer Spielerroute",
+          "description": "Entdecke Leitfäden, Sammlungen und ergänzende Quellen."
+        }
+      },
+      "actions": {
+        "openGuide": "Leitfaden öffnen",
+        "allTools": "Alle Werkzeuge",
+        "allGuides": "Alle Leitfäden",
+        "collections": "Leitfadensammlungen",
+        "videos": "Videobibliothek",
+        "news": "Aktuelle Nachrichten",
+        "about": "Über dieses Wiki",
+        "catalogue": "Vollständiger Katalog",
+        "serverStatus": "Serverstatus",
+        "patchNotes": "Änderungsnotizen"
+      },
+      "states": {
+        "earlyAccess": "Früher Zugang",
+        "current": "Aktuelle Belege",
+        "archive": "Zuletzt geprüfte historische Aufzeichnung",
+        "unknownBuild": "Build nicht angegeben",
+        "verifiedAt": "Geprüft am",
+        "noVerifiedChanges": "Keine geeigneten Änderungen verfügbar. Prüfe Serverstatus und Patchübersicht.",
+        "sources": {
+          "official": "Offizielle Quelle",
+          "live-client": "Beobachtung im aktuellen Spiel",
+          "creator-current": "Aktuelle Creator-Aufnahme",
+          "community-report": "Community-Bericht"
+        }
+      },
+      "tasks": {
+        "search": "Suchen",
+        "map": "Interaktive Karte",
+        "calculator": "Artillerierechner",
+        "weapons": "Waffendatenbank",
+        "vehicles": "Fahrzeugdatenbank",
+        "status": "Dienststatus",
+        "catalogue": "Katalog",
+        "guides": "Leitfäden",
+        "tools": "Werkzeuge",
+        "videos": "Videothek",
+        "news": "Nachrichten",
+        "cargo": "Frachtlieferung",
+        "squad": "Truppenspiel",
+        "towers": "Turmziele",
+        "progression": "Fortschritt und Resets",
+        "mortar": "Mörserablauf",
+        "fob": "FOB-Versorgung",
+        "controls": "Steuerung",
+        "helicopter": "Hubschrauberflug",
+        "settings": "Einstellungen",
+        "pcFixes": "PC-Fehlerbehebung",
+        "season2": "Saison 2",
+        "patchNotes": "Patchnotizen",
+        "money": "Geldplanung",
+        "firstMatch": "Erstes Match",
+        "loadout": "Ausrüstungsplanung",
+        "logistics": "Logistikplanung",
+        "systemCheck": "Systemprüfung",
+        "faq": "Häufige Fragen",
+        "about": "Über uns"
+      }
     }
   },
   "guides": {
@@ -491,7 +581,37 @@
     "title": "WARDOGS-Leitfäden",
     "description": "Durchsuche {count} Guides zu Launch, Fracht, Munition, Squads, Abstürzen, Fahrzeugen, FOB-Logistik und Gameplay.",
     "count": "{count} Guide-Themen",
-    "read": "Guide lesen"
+    "read": "Guide lesen",
+    "routes": {
+      "title": "Spielerroute wählen",
+      "relatedTools": "Passende Werkzeuge",
+      "new-player": {
+        "title": "Route für Einsteiger",
+        "description": "Beginne zu spielen, tritt einem Trupp bei, schütze dein Geld und verstehe den Fortschritt."
+      },
+      "combat-operations": {
+        "title": "Kampf und Operationen",
+        "description": "Bereite Waffen und Munition vor, lerne Fahrzeuge kennen und plane Karten- und Feuerunterstützungsaufgaben."
+      },
+      "logistics-live": {
+        "title": "Logistik und aktuelle Lage",
+        "description": "Liefere Fracht, versorge eine FOB und prüfe Saisons, Patches und Servermeldungen."
+      }
+    },
+    "tasks": {
+      "artillery": {
+        "title": "Artillerie beobachten und korrigieren",
+        "directAnswer": "Die offizielle Kategorieänderung in Saison 1 nennt Career 90 und $500,000 für die einmalige Freischaltung von Artillery Tank. Sie nennt weder SPH-2 noch einen aktuellen Wiederkaufpreis. Schütze den Standort, stabilisiere, prüfe Ziel und Verbündete sowie Entfernung und Azimut und korrigiere nach dem ersten beobachteten Einschlag.",
+        "caution": "Übereinstimmung von Karte und Rechner bestätigt weder einen gemessenen Metermaßstab noch Ballistik. Prüfe aktuelle Hinweise, Besatzung und Munition; trenne Freischaltung und Einsatzkosten.",
+        "steps": {
+          "one": "Prüfe Fahrzeug, aktuelle Zugangsvoraussetzungen und Händlerpreis vor der Ausgabe.",
+          "two": "Verteile Fahren, Richten, Beobachtung und Nahsicherung; bereite Nachschub und Rückzug vor.",
+          "three": "Halte auf geschütztem Boden an und prüfe Richtschützenplatz, Stabilisierung und Munition.",
+          "four": "Prüfe Ziel, verbündete Positionen, Entfernung und Azimut sowie Eingabeeinheiten und Kalibrierungsgrenzen.",
+          "five": "Schieße zur Korrektur, beobachte den Einschlag, passe an und lade nach; stoppe bei unklarem Ziel oder gefährdeten Verbündeten."
+        }
+      }
+    }
   },
   "news": {
     "metaTitle": "WARDOGS News - Update 0.1.2, Server und Early Access",
@@ -713,5 +833,51 @@
     "description": "Diese Route existiert nicht in der aktuellen geprüften Guide-Bibliothek.",
     "home": "Zur Startseite",
     "guides": "Guides ansehen"
+  },
+  "toolsHub": {
+    "title": "WARDOGS-Werkzeuge",
+    "description": "Wähle ein Werkzeug für deine Aufgabe und kehre anschließend zum Leitfaden und den Belegen zurück.",
+    "metaTitle": "WARDOGS-Werkzeuge: Karten, Ausrüstung und Fortschritt",
+    "metaDescription": "Plane Kämpfe, Ausrüstungsbudgets, Nachschub und Saisonfortschritt mit neun WARDOGS-Werkzeugen. Prüfe die Ergebnisse anhand aktueller Leitfäden und Belege.",
+    "openTool": "Werkzeug öffnen",
+    "relatedGuides": "Passende Leitfäden",
+    "evidenceTitle": "Belege prüfen",
+    "evidenceDescription": "Rechner verwenden geprüfte Quellen- und Build-Stände oder deine Eingaben. Sie belegen keine aktuellen Werte für Balance, Preise oder Freischaltungen; prüfe den aktuellen Client vor Ausgaben.",
+    "groups": {
+      "combat": "Kampf",
+      "economy": "Wirtschaft",
+      "logistics": "Logistik",
+      "progression": "Fortschritt",
+      "fixes": "Fehlerbehebung"
+    },
+    "tools": {
+      "map": {
+        "description": "Markiere Routen, miss auf der zweidimensionalen Karte und übergib ein Ziel an die Feuerleitung."
+      },
+      "artillery-calculator": {
+        "description": "Prüfe Entfernung und Azimut; beobachte und korrigiere anschließend die Schüsse im laufenden Match."
+      },
+      "weapon-compare": {
+        "description": "Vergleiche dokumentierte Waffenbelege, bevor du Rolle und Ausrüstung wählst."
+      },
+      "ammo-matcher": {
+        "description": "Prüfe die Zuordnung von Waffe, Magazin und Munition vor dem Kauf."
+      },
+      "loadout-budget": {
+        "description": "Plane Ausrüstungskosten und behalte eine Reserve für das nächste Leben."
+      },
+      "cash-xp-calculator": {
+        "description": "Schätze Geld und XP anhand deiner Eingaben; Auszahlungen sind nicht garantiert."
+      },
+      "logistics-planner": {
+        "description": "Plane Ressourcen, Transport, Übergabe und die Prüfung der Lieferung."
+      },
+      "progression-route": {
+        "description": "Wähle Fortschrittsaufgaben und prüfe die Grenzen des Saisonresets."
+      },
+      "system-check": {
+        "description": "Vergleiche deine PC-Konfiguration mit den Anforderungen und folge dem passenden Diagnosezweig."
+      }
+    }
   }
 }

@@ -12,6 +12,11 @@ import {GUIDE_COLLECTIONS, getGuideHubCopy, groupGuideCollections} from "../../s
     expect(new Set(slugs)).toEqual(new Set(guideManifest.map((guide) => guide.slug)));
     for (const group of GUIDE_COLLECTIONS) for (const slug of group.slugs) expect(guideManifest.some((guide) => guide.slug === slug), slug).toBe(true);
   });
+  it("preserves the established collection fragment destinations", () => {
+    expect(groupGuideCollections(guideManifest).map(({key}) => `#collection-${key}`)).toEqual([
+      "#collection-start", "#collection-combat", "#collection-logistics", "#collection-progression", "#collection-fixes", "#collection-reference"
+    ]);
+  });
   it("does not invent cards for missing content", () => {
     expect(groupGuideCollections([])).toEqual([]);
     expect(groupGuideCollections([{slug: "future-guide"}])).toEqual([{key: "reference", guides: [{slug: "future-guide"}]}]);
@@ -20,7 +25,6 @@ import {GUIDE_COLLECTIONS, getGuideHubCopy, groupGuideCollections} from "../../s
     for (const locale of locales) {
       const copy = getGuideHubCopy(locale);
       expect(copy.title).toBeTruthy();
-      expect(copy.tools).toBeTruthy();
       for (const collection of GUIDE_COLLECTIONS) expect(copy.collections[collection.key]).toBeTruthy();
     }
   });

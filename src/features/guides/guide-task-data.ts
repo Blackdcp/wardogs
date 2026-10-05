@@ -1,3 +1,15 @@
+import enMessages from "../../../messages/en.json";
+import deMessages from "../../../messages/de.json";
+import ruMessages from "../../../messages/ru.json";
+import ptBrMessages from "../../../messages/pt-br.json";
+import jaMessages from "../../../messages/ja.json";
+import zhCnMessages from "../../../messages/zh-cn.json";
+import zhTwMessages from "../../../messages/zh-tw.json";
+import plMessages from "../../../messages/pl.json";
+import {TOOL_REGISTRY} from "@/features/tools/tool-registry";
+import {getItemType, type ItemTypeId} from "@/features/items/item-library";
+import {getLocalizedItemType} from "@/features/items/item-localization";
+import {resolveItemRouteTarget} from "@/features/items/item-route-availability";
 import type {Locale} from "@/config/site";
 import {getArtilleryCopy} from "@/features/artillery/artillery-copy";
 import {interactiveMapPageCopy} from "@/features/maps/interactive-map-page-copy";
@@ -23,7 +35,8 @@ export const guideTaskSlugs = [
   "wardogs-best-weapons-loadouts",
   "wardogs-equipment-tools-guide",
   "wardogs-crash-fix",
-  "wardogs-map"
+  "wardogs-map",
+  "wardogs-artillery-guide"
 ] as const;
 
 export type GuideTaskSlug = (typeof guideTaskSlugs)[number];
@@ -44,6 +57,8 @@ export type GuideTaskData = {
   steps: readonly string[];
   caution?: string;
   relatedTool?: {href: string; label: string};
+  relatedTools: readonly {href: string; label: string}[];
+  relatedCatalogue: readonly GuideCatalogueLink[];
   videos: readonly CurrentVideoSource[];
 };
 
@@ -89,6 +104,7 @@ const relatedTools: Partial<Record<GuideTaskSlug, {href: string; key: ToolKey}>>
   "wardogs-best-weapons-loadouts": {href: "/tools/weapon-compare", key: "weaponCompareTitle"},
   "wardogs-equipment-tools-guide": {href: "/tools/loadout-budget", key: "loadoutBudget"},
   "wardogs-crash-fix": {href: "/tools/system-check", key: "systemCheck"},
+  "wardogs-artillery-guide": {href: "/tools/artillery-calculator", key: "artillery"},
   "wardogs-mortar-guide": {href: "/tools/artillery-calculator", key: "artillery"},
   "wardogs-map": {href: "/tools/map", key: "map"},
   "wardogs-cargo-guide": {href: "/tools/logistics-planner", key: "logisticsPlannerTitle"},
@@ -103,7 +119,7 @@ function toolLabel(locale: Locale, key: ToolKey): string {
   return getToolCopy(locale)[key];
 }
 
-const copy: Record<Locale, Record<GuideTaskSlug, GuideTaskCopy>> = {
+const copy: Record<Locale, Record<Exclude<GuideTaskSlug, "wardogs-artillery-guide">, GuideTaskCopy>> = {
   en: {
     "wardogs-ammo-reload-guide": task(
       "Check ammunition before deployment",
@@ -403,7 +419,12 @@ export function getGuideTaskData(slug: string, locale: Locale): GuideTaskData | 
   if (!taskSlugSet.has(slug)) return undefined;
 
   const taskSlug = slug as GuideTaskSlug;
-  const localized = copy[locale][taskSlug];
+  const localized = taskSlug === "wardogs-artillery-guide" ? {
+    title: discoveryMessage(locale, "guides.tasks.artillery.title"),
+    directAnswer: discoveryMessage(locale, "guides.tasks.artillery.directAnswer"),
+    caution: discoveryMessage(locale, "guides.tasks.artillery.caution"),
+    steps: ["one", "two", "three", "four", "five"].map((step) => discoveryMessage(locale, `guides.tasks.artillery.steps.${step}`))
+  } : copy[locale][taskSlug];
   const tool = relatedTools[taskSlug];
 
   return {
@@ -411,6 +432,53 @@ export function getGuideTaskData(slug: string, locale: Locale): GuideTaskData | 
     eyebrow: ui[locale].eyebrow,
     ...localized,
     relatedTool: tool ? {href: tool.href, label: toolLabel(locale, tool.key)} : undefined,
+    ...getGuideDiscoveryLinks(taskSlug, locale),
     videos: getCurrentVideoSourcesForGuide(taskSlug)
   };
+}
+
+
+type MessageTree = {[key: string]: string | MessageTree};
+const discoveryMessages = {en: enMessages, de: deMessages, ru: ruMessages, "pt-br": ptBrMessages, ja: jaMessages, "zh-cn": zhCnMessages, "zh-tw": zhTwMessages, pl: plMessages} satisfies Record<Locale, object>;
+function discoveryMessage(locale: Locale, key: string): string {
+  let value: string | MessageTree = discoveryMessages[locale] as MessageTree;
+  for (const segment of key.split(".")) {
+    if (typeof value === "string" || !(segment in value)) throw new Error(`Missing localized discovery message: ${locale}/${key}`);
+    value = value[segment];
+  }
+  if (typeof value !== "string") throw new Error(`Invalid discovery message: ${locale}/${key}`);
+  return value;
+}
+
+export type GuideCatalogueLink = {href: string; label: string; locale: Locale};
+// Only categories that help complete this guide's task belong here. PC checks
+// and progression do not acquire generic catalogue links without item evidence.
+const guideCatalogueTypes: Readonly<Record<string, readonly ItemTypeId[]>> = {
+  "wardogs-ammo-reload-guide": ["weapons", "ammo", "attachments"],
+  "wardogs-beginner-guide": ["loadouts", "gear"],
+  "wardogs-money-guide": ["loadouts", "gear"],
+  "wardogs-best-weapons-loadouts": ["weapons", "ammo", "attachments", "gear"],
+  "wardogs-equipment-tools-guide": ["equipment", "medical", "deployables"],
+  "wardogs-cargo-guide": ["vehicles", "supplies"],
+  "wardogs-fob-guide": ["mechanics", "equipment"],
+  "wardogs-oil-rig-guide": ["vehicles", "mechanics"],
+  "wardogs-helicopter-guide": ["vehicles"],
+  "wardogs-map": ["mechanics"],
+  "wardogs-infantry-mode": ["mechanics"],
+  "wardogs-mortar-guide": ["mechanics", "equipment"],
+  "wardogs-artillery-guide": ["vehicles", "mechanics"]
+};
+
+export function getGuideDiscoveryLinks(slug: string, locale: Locale) {
+  const registered = TOOL_REGISTRY.filter((tool) => tool.relatedGuideSlugs.some((relatedSlug) => relatedSlug === slug));
+  const primary = relatedTools[slug as GuideTaskSlug];
+  const tools = new Map<string, {href: string; label: string}>(registered.map((tool) => [tool.href as string, {href: tool.href, label: discoveryMessage(locale, tool.labelKey)}]));
+  if (primary && !tools.has(primary.href)) tools.set(primary.href, {href: primary.href, label: toolLabel(locale, primary.key)});
+  const relatedCatalogue: GuideCatalogueLink[] = (guideCatalogueTypes[slug] ?? []).map((id) => {
+    const type = getItemType(id);
+    if (!type) throw new Error(`Missing discovery catalogue category: ${id}`);
+    const target = resolveItemRouteTarget(locale, type.href);
+    return {href: target.pathname, locale: target.locale, label: getLocalizedItemType(type, locale).label};
+  });
+  return {relatedTools: [...tools.values()], relatedCatalogue};
 }

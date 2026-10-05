@@ -14,10 +14,11 @@ for (const width of [1440, 390]) {
     await page.setViewportSize({width, height: 900});
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto("/en/tools/ammo-matcher?weapon=mp5");
+    await page.goto("/en/tools/ammo-matcher?weapon=mp5&fitWeapon=mp5");
     const matrix = page.locator("[data-compatibility-matrix]");
     await expect(matrix).toBeVisible();
-    await matrix.getByRole("combobox", {name: "Weapon", exact: true}).selectOption("mp5");
+    await expect(matrix.getByRole("combobox", {name: "Weapon", exact: true})).toHaveValue("mp5");
+    await expect(matrix.getByRole("checkbox")).toBeEnabled();
     await matrix.getByRole("checkbox").check();
     await expect(matrix.locator("tbody tr")).toHaveCount(3);
     await matrix.getByRole("button", {name: "Copy selection link"}).click();
@@ -31,10 +32,7 @@ for (const width of [1440, 390]) {
     const ammo = page.locator("main > section").first();
     await ammo.getByRole("combobox").first().selectOption("amp-9");
     expect(new URL(page.url()).searchParams.get("fitWeapon")).toBe("mp5");
-    await page.evaluate(() => {
-      window.history.pushState(null, "", "?fitWeapon=galil&fitNamed=1");
-      window.dispatchEvent(new PopStateEvent("popstate"));
-    });
+    await page.goto("/en/tools/ammo-matcher?fitWeapon=galil&fitNamed=1");
     await expect(matrix.getByRole("combobox", {name: "Weapon", exact: true})).toHaveValue("galil");
     await expect(matrix.locator("tbody tr")).toHaveCount(2);
     await matrix.screenshot({path: `.tmp/guide-depth-matrix-${width}.png`, style: captureStyle});
@@ -77,5 +75,23 @@ for (const width of [1440, 390]) {
     await expect(page.locator("[data-matrix-track]")).toHaveCount(7);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width + 1);
     expect(errors).toEqual([]);
+  });
+}
+
+for (const locale of ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"]) {
+  test(`guide route retains ${locale} from hub through guide to tool`, async ({page}) => {
+    await page.goto(`/${locale}/guides`);
+    const route = page.locator('[data-guide-route="logistics-live"]');
+    await expect(route).toBeVisible();
+    const guideUrl = new RegExp(`/${locale}/guides/wardogs-cargo-guide$`);
+    await Promise.all([
+      page.waitForURL(guideUrl, {timeout: 15_000}),
+      route.locator(`a[href="/${locale}/guides/wardogs-cargo-guide"]`).click(),
+    ]);
+    const toolUrl = new RegExp(`/${locale}/tools/logistics-planner$`);
+    await Promise.all([
+      page.waitForURL(toolUrl, {timeout: 15_000}),
+      page.locator(`main a[href="/${locale}/tools/logistics-planner"]`).first().click(),
+    ]);
   });
 }

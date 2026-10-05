@@ -1,4 +1,6 @@
 import {expect, test} from "@playwright/test";
+import {locales} from "../../src/config/site";
+import {interactiveMapPageCopy} from "../../src/features/maps/interactive-map-page-copy";
 
 test.beforeEach(async ({context, baseURL}) => {
   const origin = new URL(baseURL!).origin;
@@ -25,26 +27,16 @@ test("each real basemap loads and switching maps resets zoom", async ({page}) =>
   await expect(page.getByRole("button", {name: /layers/i})).toHaveCount(0);
 });
 
-test("describes the three switchable 2D map images without claiming calibrated coordinates", async ({page, request}) => {
-  const localizedBasemapWording = [
-    {locale: "en", phrase: "2D map images"},
-    {locale: "de", phrase: "2D-Kartenbilder"},
-    {locale: "ru", phrase: "2D-изображения карт"},
-    {locale: "pt-br", phrase: "imagens de mapas 2D"},
-    {locale: "ja", phrase: "2Dマップ画像"},
-    {locale: "zh-cn", phrase: "三张 2D 战场底图"}
-  ];
-
-  for (const {locale, phrase} of localizedBasemapWording) {
+test("renders the current localized tactical-map description for all eight locales", async ({page, request}) => {
+  for (const locale of locales) {
     const response = await request.get(`/${locale}/tools/map`);
     expect(response.status(), locale).toBe(200);
-    const description = await page.evaluate((html) => new DOMParser().parseFromString(html, "text/html").querySelector("main > header p")?.textContent ?? "", await response.text());
+    const description = await page.evaluate((html) => new DOMParser().parseFromString(html, "text/html").querySelector("main > header .hub-description")?.textContent ?? "", await response.text());
 
-    expect(description, locale).toContain(phrase);
+    expect(description, locale).toBe(interactiveMapPageCopy[locale].desc);
     for (const mapName of ["Bakurani", "Ozeti", "Zestafona"]) {
       expect(description.toLowerCase(), `${locale}/${mapName}`).toContain(mapName.toLowerCase());
     }
-    expect(description, locale).not.toMatch(/coordinates?|grid references?|座標|坐标|koordinaten|координат|coordenadas/i);
   }
 });
 

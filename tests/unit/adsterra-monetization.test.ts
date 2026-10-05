@@ -13,6 +13,14 @@ function walk(directory: string): string[] {
 }
 
 describe("Adsterra monetization strategy", () => {
+  it("keeps ad_status scoped to DOM delivery signals instead of vendor accounting", () => {
+    const source = fs.readFileSync(path.join(root, "src", "features", "ads", "adsterra-banner.ts"), "utf8");
+    expect(source).toContain("These are DOM observations, not vendor impressions");
+    expect(source).toContain("billable impressions cannot be verified");
+    expect(source).toContain('export type AdStatus = "script_loaded" | "script_error" | "slot_visible" | "creative_present" | "creative_visible"');
+    expect(source).not.toMatch(/revenue|cpm|billable_impression\s*:/i);
+  });
+
   it("keeps publisher URLs isolated to the approved ad modules", () => {
     const sourceFiles = walk(path.join(root, "src"));
     for (const file of sourceFiles) {

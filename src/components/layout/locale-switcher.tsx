@@ -1,6 +1,6 @@
 "use client";
 
-import {useId, useState, type ChangeEvent} from "react";
+import {useId, useState, useSyncExternalStore, type ChangeEvent} from "react";
 import {ChevronDown, Languages} from "lucide-react";
 import {useLocale} from "next-intl";
 import {isSiteLocale, siteLocales, type SiteLocale} from "@/config/site";
@@ -26,10 +26,13 @@ type LocaleSwitcherProps = {
   compact?: boolean;
 };
 
+const subscribeHydration = () => () => {};
+
 export function LocaleSwitcher({label, compact = false}: LocaleSwitcherProps) {
   const id = useId();
   const locale = useLocale();
   const pathname = usePathname();
+  const isHydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const [isPending, setIsPending] = useState(false);
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
@@ -61,7 +64,7 @@ export function LocaleSwitcher({label, compact = false}: LocaleSwitcherProps) {
         className={`h-full w-full cursor-pointer appearance-none rounded-[6px] bg-transparent pr-6 text-xs font-semibold text-[#f2f5f3] disabled:cursor-wait disabled:opacity-60 ${compact ? "pl-2" : "pl-8"}`}
         value={locale}
         onChange={handleChange}
-        disabled={isPending}
+        disabled={!isHydrated || isPending}
       >
         {siteLocales.map((option) => (
           <option key={option} value={option} title={siteLocaleLabels[option]} className="bg-[#151b18] text-[#f2f5f3]">

@@ -55,7 +55,7 @@ function elements(node: unknown): Element[] {
   return [element, ...elements(element.props.children)];
 }
 
-type PendingRequest = {signal: AbortSignal; complete: (entries: SiteSearchEntry[]) => void};
+type PendingRequest = {url: string; signal: AbortSignal; complete: (entries: SiteSearchEntry[]) => void; fail: () => void};
 let requests: PendingRequest[];
 let listeners: Map<string, Set<(event: {key: string}) => void>>;
 let gtag: ReturnType<typeof vi.fn>;
@@ -99,9 +99,9 @@ beforeEach(async () => {
     },
     removeEventListener(name: string, listener: (event: {key: string}) => void) { listeners.get(name)?.delete(listener); },
   });
-  vi.stubGlobal("fetch", (_url: string, {signal}: {signal: AbortSignal}) => new Promise((resolve, reject) => {
+  vi.stubGlobal("fetch", (url: string, {signal}: {signal: AbortSignal}) => new Promise((resolve, reject) => {
     signal.addEventListener("abort", () => reject(new DOMException("aborted", "AbortError")), {once: true});
-    requests.push({signal, complete: (entries) => resolve({ok: true, json: () => Promise.resolve(entries)})});
+    requests.push({url, signal, complete: (entries) => resolve({ok: true, json: () => Promise.resolve(entries)}), fail: () => reject(new Error("Unavailable"))});
   }));
   const {SiteSearchDialog} = await import("../../src/components/layout/site-search-dialog");
   component = () => SiteSearchDialog({});
@@ -110,9 +110,68 @@ afterEach(async () => {
   hooks.slots.forEach((slot) => slot.cleanup?.());
   await flushPromises();
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
 });
 
 describe("search dialog request and analytics lifecycle", () => {
+  it.each(["", "/wardogs"])("loads the search index through the deployment base path %s", (basePath) => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", basePath);
+    vi.stubEnv("GITHUB_PAGES", "true");
+    open();
+    expect(requests[0].url).toBe(`${basePath}/api/search-index/en`);
+  });
+
+  it.each(["header", "hero"] as const)("restores %s trigger focus without changing scroll position on Escape", async (triggerKind) => {
+    const {SiteSearchDialog} = await import("../../src/components/layout/site-search-dialog");
+    component = () => SiteSearchDialog({trigger: triggerKind});
+    const trigger = render().find((node) => node.type === "button")!;
+    expect(trigger.props.ref, "search trigger must keep a focus restoration ref").toBeDefined();
+    const focus = vi.fn();
+    (trigger.props.ref as {current: unknown}).current = {focus};
+    open(); escape();
+    expect(focus).toHaveBeenCalledExactlyOnceWith({preventScroll: true});
+  });
+
+  it("keeps keyboard focus inside the modal and result options outside the Tab sequence", async () => {
+    open(); requests[0].complete([entry]); await flushPromises();
+    const nodes = typeQuery("Havoc");
+    const dialog = nodes.find((node) => node.props.role === "dialog")!;
+    expect(dialog.props.ref, "dialog must keep its focus boundary").toBeDefined();
+    const first = {focus: vi.fn()};
+    const last = {focus: vi.fn()};
+    (dialog.props.ref as {current: unknown}).current = {querySelectorAll: () => [first, last]};
+    Object.assign(document, {activeElement: last});
+    const event = {key: "Tab", shiftKey: false, preventDefault: vi.fn()};
+    listeners.get("keydown")?.forEach((listener) => listener(event));
+    expect(event.preventDefault).toHaveBeenCalledOnce();
+    expect(first.focus).toHaveBeenCalledExactlyOnceWith({preventScroll: true});
+    const result = nodes.find((node) => node.type === "button" && node.props.onMouseEnter)!;
+    expect(result.props.tabIndex).toBe(-1);
+    expect(nodes.find((node) => node.type === "input")?.props["aria-activedescendant"]).toBe("global-site-search-option-0");
+    closeButton();
+  });
+
+  it("retries an unavailable index and offers a reachable Guides fallback", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    vi.stubEnv("GITHUB_PAGES", "false");
+    open();
+    requests[0].fail();
+    await flushPromises();
+    const failed = render();
+    const fallback = failed.find((node) => node.type === "a");
+    expect(fallback?.props.href).toBe("/wardogs/en/guides/");
+    const retry = failed.find((node) => node.type === "button" && node.props.children === "home.search.retry");
+    expect(retry).toBeDefined();
+    click(retry!); render();
+    expect(requests).toHaveLength(2);
+    expect(loading(render())).toBe(true);
+    requests[1].complete([entry]);
+    await flushPromises();
+    expect(loading(render())).toBe(false);
+    expect(typeQuery("Havoc").some((node) => node.props.children === "Havoc")).toBe(true);
+    closeButton();
+  });
+
   it("restores cached results into another already-mounted header search surface", async () => {
     render();
     const firstSurface = hooks.slots;

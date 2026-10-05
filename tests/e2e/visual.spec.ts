@@ -1,6 +1,8 @@
 import {expect, test, type Page} from "@playwright/test";
-import {expectImagesLoaded, installDeterministicExternalMediaFallback} from "./helpers";
+import {expectImagesLoaded, installDeterministicExternalMediaFallback, installDeterministicMobileAdCreative} from "./helpers";
 import {calculateMobileSegmentScrollTops} from "./visual-segments";
+
+test.skip(process.platform !== "darwin", "Canonical pixel baselines are maintained on the macOS release workstation.");
 
 async function expectMobileCategoryScrollSegments(page: Page, name: string) {
   const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -13,7 +15,7 @@ async function expectMobileCategoryScrollSegments(page: Page, name: string) {
 
   for (const [index, top] of scrollTops.entries()) {
     await page.evaluate((scrollTop) => window.scrollTo(0, scrollTop), top);
-    await page.waitForTimeout(100);
+    await expect.poll(() => page.evaluate(() => Math.round(window.scrollY))).toBe(top);
     await expect(page).toHaveScreenshot(`${name}-mobile-segment-${index + 1}.png`, {animations: "disabled"});
   }
 }
@@ -25,6 +27,7 @@ for (const viewport of [
   for (const pageCase of [
     {name: "home", pathname: "/en"},
     {name: "guides", pathname: "/en/guides"},
+    {name: "tools-hub", pathname: "/en/tools"},
     {name: "article", pathname: "/en/guides/wardogs-gameplay"},
     {name: "video-hub", pathname: "/en/videos"},
     {name: "video-article", pathname: "/en/videos/wardogs-everything-before-playing"},
@@ -39,9 +42,11 @@ for (const viewport of [
       await installDeterministicExternalMediaFallback(page);
       await page.setViewportSize(viewport);
       await page.goto(pageCase.pathname);
-      await page.addStyleTag({content: "nextjs-portal { display: none !important; }"});
+      await page.addStyleTag({content: "html { scroll-behavior: auto !important; } nextjs-portal, iframe[src*='youtube-nocookie.com/embed/'] { visibility: hidden !important; }"});
+      await installDeterministicMobileAdCreative(page);
       await expectImagesLoaded(page);
       await page.evaluate(() => window.scrollTo(0, 0));
+      await expect.poll(() => page.evaluate(() => ({x: Math.round(window.scrollX), y: Math.round(window.scrollY)}))).toEqual({x: 0, y: 0});
       if (viewport.name === "mobile" && (pageCase.name === "catalogue-weapons" || pageCase.name === "catalogue-vehicles")) {
         await expectMobileCategoryScrollSegments(page, pageCase.name);
         return;

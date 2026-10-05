@@ -1,3 +1,6 @@
+import {buildToolRelatedLinks, ToolRelatedGuides} from "@/components/tools/tool-related-guides";
+import {ToolPageHeader} from "@/components/tools/tool-page-header";
+import {getTranslations} from "next-intl/server";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {LoadoutBudget} from "@/components/tools/loadout-budget";
@@ -19,6 +22,14 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
 export default async function LoadoutBudgetPage({params}: PageProps) {
   const {locale: requestedLocale} = await params;
   if (!isLocale(requestedLocale)) notFound();
+  const relatedLinks = await buildToolRelatedLinks("loadout-budget", requestedLocale);
+  const headerT = await getTranslations({locale: requestedLocale, namespace: "nav"});
   const copy = getToolCopy(requestedLocale as Locale);
-  return <main className="site-container py-10 md:py-16"><header className="mb-8 max-w-3xl"><p className="font-mono text-xs uppercase text-[#69c78f]">{copy.buildWarning}</p><h1 id="loadout-budget-form" className="display-font mt-3 text-balance text-3xl leading-tight text-white sm:text-4xl md:text-5xl">{copy.budgetTitle}</h1><p className="mt-4 text-base leading-7 text-[#a8b4ae]">{copy.budgetDescription}</p></header><LoadoutBudget copy={copy} /></main>;
+  return (
+    <main className="site-container py-10 md:py-16">
+      <ToolPageHeader toolId="loadout-budget" titleId="loadout-budget-form" eyebrow={copy.buildWarning} title={copy.budgetTitle} description={copy.budgetDescription} actions={[{href: `/${requestedLocale}/tools`, label: headerT("toolsHome")}]} />
+      <LoadoutBudget copy={copy} />
+      <ToolRelatedGuides model={relatedLinks} locale={requestedLocale} />
+    </main>
+  );
 }

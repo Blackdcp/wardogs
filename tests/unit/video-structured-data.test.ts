@@ -1,8 +1,39 @@
 import {describe, expect, it} from "vitest";
 import {getVideoArticle} from "../../src/features/videos/video-library";
 import {buildVideoArticleJsonLd} from "../../src/features/videos/video-structured-data";
+import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
+import {locales} from "../../src/config/site";
 
 describe("video structured data", () => {
+  it.each(locales)("validates every emitted %s video entity against its localized canonical", (locale) => {
+    for (const article of getLocalizedVideoArticles(locale)) {
+      const jsonLd = buildVideoArticleJsonLd(locale, article);
+      const articleSchema = jsonLd.find((item) => item["@type"] === "Article")!;
+      const video = jsonLd.find((item) => item["@type"] === "VideoObject")!;
+      const canonical = `http://localhost:3000/${locale}/videos/${article.slug}`;
+
+      expect(articleSchema.mainEntityOfPage, article.slug).toBe(canonical);
+      expect(articleSchema.image, article.slug).toMatch(/^https:\/\/i\.ytimg\.com\/vi\/[\w-]+\/hqdefault\.jpg$/);
+      expect(video, article.slug).toMatchObject({
+        name: article.sourceLabel,
+        description: article.description,
+        uploadDate: `${article.publishedDate}T00:00:00+00:00`,
+        embedUrl: `https://www.youtube-nocookie.com/embed/${article.youtubeId}`,
+        url: article.sourceUrl,
+        thumbnailUrl: `https://i.ytimg.com/vi/${article.youtubeId}/hqdefault.jpg`
+      });
+      expect(String(video.name).trim().length, article.slug).toBeGreaterThan(0);
+      expect(String(video.description).trim().length, article.slug).toBeGreaterThan(0);
+      expect(article.sourceUrl, article.slug).toContain(article.youtubeId);
+
+      for (const clip of (video.hasPart as Array<Record<string, unknown>> | undefined) ?? []) {
+        expect(String(clip.name).trim().length, article.slug).toBeGreaterThan(0);
+        expect(clip.endOffset, article.slug).toBeGreaterThan(clip.startOffset as number);
+        expect(clip.url, article.slug).toBe(`${canonical}?t=${clip.startOffset}`);
+      }
+    }
+  });
+
   it("includes timezone-aware uploadDate on VideoObject results for Google video indexing", () => {
     const article = getVideoArticle("wardogs-7-things-you-need-to-know");
     expect(article).toBeDefined();

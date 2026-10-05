@@ -27,6 +27,7 @@ const staticPaths = [
   "/skins",
   "/black-market",
   "/gold-market",
+  "/tools",
   "/tools/system-check",
   "/tools/loadout-budget",
   "/tools/cash-xp-calculator",
@@ -49,6 +50,7 @@ const freshHubPaths = new Set([
   "",
   "/guides",
   "/news",
+  "/tools",
   "/tools/weapon-compare",
   "/tools/loadout-budget",
   "/tools/cash-xp-calculator",
@@ -143,6 +145,7 @@ function resolvePageLastModified(locale: Locale, pathname: string) {
   if (pathname === "/items" || /^\/items\/[^/]+$/.test(pathname)) {
     return new Date(`${itemHubDate(pathname === "/items" ? undefined : pathname.slice("/items/".length))}T00:00:00.000Z`);
   }
+  if (pathname === "/tools") return new Date("2026-10-05T00:00:00.000Z");
   if (freshHubPaths.has(pathname)) {
     return new Date("2026-10-03T00:00:00.000Z");
   }

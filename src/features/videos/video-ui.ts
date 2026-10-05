@@ -25,9 +25,6 @@ type VideoUi = {
   youtubeSource: string;
   relatedGuide: string;
   internalGuide: string;
-  homeEyebrow: string;
-  homeTitle: string;
-  homeDescription: string;
   stripEyebrow: string;
   stripTitle: string;
   openHub: string;
@@ -38,7 +35,7 @@ type VideoUi = {
 
 const copy: Record<Locale, VideoUi> = {
   "zh-cn": {
-    metaTitle: "WARDOGS 视频攻略 - YouTube 实机解析", metaDescription: "独立整理的 WARDOGS 中文视频攻略，覆盖新手、设置、赚钱、直升机、FOB、武器、载具、目标和抢先体验信息。", eyebrow: "WARDOGS 视频情报", hubTitle: "WARDOGS YouTube 攻略", hubDescription: (count) => `${count} 篇独立撰写的视频解析，将官方和创作者实机整理成新手、资金、设置、目标、直升机、FOB、武器、载具与购买判断攻略。`, officialVideo: "官方视频", creatorFootage: "创作者实机", currentSourcesTitle: "Season 1 当前视频精选", currentSourcesDescription: "已于 2026 年 9 月 17 日核对的外部视频，优先覆盖新手、赚钱、配装、FOB、设置与进度问题。创作者结论仍需对照当前客户端和官方公告。", seasonOneCurrent: "Season 1 当前版本", betaWorkflow: "Beta 流程参考", historicalReference: "历史资料", readBreakdown: "阅读视频解析", allVideos: "全部视频攻略", officialBreakdown: "官方视频解析", creatorBreakdown: "创作者视频解析", lastUpdated: "最后更新", quickAnswer: "快速结论", takeaways: "关键要点", connectionTitle: "它与核心攻略的关系", connectionBody: "本页分析一段特定视频。已确认的游戏系统、测试时间、价格和平台信息，请通过链接的核心攻略核对，不要把视频画面当作最终版本。", youtubeSource: "YouTube 来源", relatedGuide: "阅读相关 WARDOGS 攻略", internalGuide: "相关攻略", homeEyebrow: "视频分析", homeTitle: "将 YouTube 实机整理成独立攻略", homeDescription: "从新手、资金、设置、直升机、FOB 后勤和目标视频开始。每篇文章均保留来源、测试版本提示和相关攻略。", stripEyebrow: "视频驱动攻略", stripTitle: "YouTube 独立解析", openHub: "打开视频攻略", official: "官方", creator: "创作者", thumbnail: "缩略图"
+    metaTitle: "WARDOGS 视频攻略 - YouTube 实机解析", metaDescription: "独立整理的 WARDOGS 中文视频攻略，覆盖新手、设置、赚钱、直升机、FOB、武器、载具、目标和抢先体验信息。", eyebrow: "WARDOGS 视频情报", hubTitle: "WARDOGS YouTube 攻略", hubDescription: (count) => `${count} 篇独立撰写的视频解析，将官方和创作者实机整理成新手、资金、设置、目标、直升机、FOB、武器、载具与购买判断攻略。`, officialVideo: "官方视频", creatorFootage: "创作者实机", currentSourcesTitle: "Season 1 当前视频精选", currentSourcesDescription: "已于 2026 年 9 月 17 日核对的外部视频，优先覆盖新手、赚钱、配装、FOB、设置与进度问题。创作者结论仍需对照当前客户端和官方公告。", seasonOneCurrent: "Season 1 当前版本", betaWorkflow: "Beta 流程参考", historicalReference: "历史资料", readBreakdown: "阅读视频解析", allVideos: "全部视频攻略", officialBreakdown: "官方视频解析", creatorBreakdown: "创作者视频解析", lastUpdated: "最后更新", quickAnswer: "快速结论", takeaways: "关键要点", connectionTitle: "它与核心攻略的关系", connectionBody: "本页分析一段特定视频。已确认的游戏系统、测试时间、价格和平台信息，请通过链接的核心攻略核对，不要把视频画面当作最终版本。", youtubeSource: "YouTube 来源", relatedGuide: "阅读相关 WARDOGS 攻略", internalGuide: "相关攻略", stripEyebrow: "视频驱动攻略", stripTitle: "YouTube 独立解析", openHub: "打开视频攻略", official: "官方", creator: "创作者", thumbnail: "缩略图"
   },
   en: {
     metaTitle: "WARDOGS Videos - YouTube Gameplay Breakdowns",
@@ -65,9 +62,6 @@ const copy: Record<Locale, VideoUi> = {
     youtubeSource: "Source on YouTube",
     relatedGuide: "Read the related WARDOGS guide",
     internalGuide: "Internal guide",
-    homeEyebrow: "Video Intelligence",
-    homeTitle: "YouTube Footage Turned Into Standalone WARDOGS Guides",
-    homeDescription: "Start with useful videos on first matches, money, settings, helicopters, FOB logistics, and objectives. Every source opens as a complete article with test-build caveats and a related core guide.",
     stripEyebrow: "Video-Based Guides",
     stripTitle: "Standalone YouTube Breakdowns",
     openHub: "Open video hub",
@@ -100,9 +94,6 @@ const copy: Record<Locale, VideoUi> = {
     youtubeSource: "Источник на YouTube",
     relatedGuide: "Читать связанный гайд WARDOGS",
     internalGuide: "Внутренний гайд",
-    homeEyebrow: "Видеоаналитика",
-    homeTitle: "Видео с YouTube как самостоятельные гайды WARDOGS",
-    homeDescription: "Начните с полезных материалов о первых матчах, деньгах, настройках, вертолетах, логистике FOB и целях. У каждого источника есть полноценная статья, оговорки о тестовой сборке и связанный основной гайд.",
     stripEyebrow: "Гайды по видео",
     stripTitle: "Самостоятельные разборы YouTube",
     openHub: "Открыть видеотеку",
@@ -135,9 +126,6 @@ const copy: Record<Locale, VideoUi> = {
     youtubeSource: "Quelle auf YouTube",
     relatedGuide: "Verwandten WARDOGS-Guide lesen",
     internalGuide: "Interner Guide",
-    homeEyebrow: "Videoanalyse",
-    homeTitle: "YouTube-Aufnahmen als eigenständige WARDOGS-Guides",
-    homeDescription: "Beginne mit hilfreichen Videos zu ersten Matches, Geld, Einstellungen, Helikoptern, FOB-Logistik und Zielen. Jede Quelle führt zu einem vollständigen Artikel mit Hinweisen zur Testversion und einem Hauptguide.",
     stripEyebrow: "Video-Guides",
     stripTitle: "Eigenständige YouTube-Analysen",
     openHub: "Videoübersicht öffnen",
@@ -170,9 +158,6 @@ const copy: Record<Locale, VideoUi> = {
     youtubeSource: "Fonte no YouTube",
     relatedGuide: "Ler o guia relacionado de WARDOGS",
     internalGuide: "Guia interno",
-    homeEyebrow: "Análises em vídeo",
-    homeTitle: "Vídeos do YouTube transformados em guias de WARDOGS",
-    homeDescription: "Comece por vídeos úteis sobre primeiras partidas, dinheiro, configurações, helicópteros, logística de FOB e objetivos. Cada fonte abre um artigo completo com ressalvas da build de teste e um guia principal relacionado.",
     stripEyebrow: "Guias baseados em vídeo",
     stripTitle: "Análises independentes do YouTube",
     openHub: "Abrir central de vídeos",
@@ -205,9 +190,6 @@ const copy: Record<Locale, VideoUi> = {
     youtubeSource: "YouTubeの出典",
     relatedGuide: "関連するWARDOGS攻略を読む",
     internalGuide: "関連攻略",
-    homeEyebrow: "動画分析",
-    homeTitle: "YouTube映像を独立したWARDOGS攻略に整理",
-    homeDescription: "初戦、資金、設定、ヘリコプター、FOB兵站、目標に役立つ動画から始められます。各出典には、テストビルドの注意点と関連攻略を含む完全な記事があります。",
     stripEyebrow: "動画ベース攻略",
     stripTitle: "YouTube独立解説",
     openHub: "動画攻略を開く",
@@ -216,9 +198,9 @@ const copy: Record<Locale, VideoUi> = {
     thumbnail: "サムネイル"
   },
 
-  pl: {metaTitle: "Filmy WARDOGS - analizy rozgrywki z YouTube", metaDescription: "Osobne poradniki filmowe WARDOGS: początki, ustawienia, pieniądze, śmigłowce, FOB, broń, pojazdy, cele, rozgrywka i wczesny dostęp.", eyebrow: "Analizy filmów WARDOGS", hubTitle: "Poradniki WARDOGS z YouTube", hubDescription: (count) => `${count} autorskich analiz materiałów twórców i deweloperów pomaga w pierwszych meczach, zarządzaniu pieniędzmi, ustawieniach, celach, śmigłowcach, FOB, broni, pojazdach i decyzjach zakupowych.`, officialVideo: "Film oficjalny", creatorFootage: "Nagranie twórcy", currentSourcesTitle: "Filmy do sprawdzenia: sezon 1", currentSourcesDescription: "Filmy zewnętrzne sprawdzone 17 września 2026, wybrane pod kątem początków, pieniędzy, wyposażenia, FOB, ustawień i postępów. Wnioski twórców porównuj z obecną wersją gry i oficjalnymi zmianami.", seasonOneCurrent: "Aktualny sezon 1", betaWorkflow: "Procedura z bety", historicalReference: "Materiał historyczny", readBreakdown: "Przeczytaj analizę filmu", allVideos: "Wszystkie poradniki filmowe", officialBreakdown: "Analiza filmu oficjalnego", creatorBreakdown: "Analiza nagrania twórcy", lastUpdated: "Ostatnia aktualizacja", quickAnswer: "Krótka odpowiedź", takeaways: "Najważniejsze wnioski", connectionTitle: "Powiązanie z głównym poradnikiem WARDOGS", connectionBody: "Ta strona analizuje konkretny film. Potwierdzone mechaniki, terminy dostępu, ceny i status platform znajdziesz w powiązanym głównym poradniku. Nagranie nie jest ostateczną dokumentacją.", youtubeSource: "Źródło na YouTube", relatedGuide: "Przeczytaj powiązany poradnik WARDOGS", internalGuide: "Poradnik serwisu", homeEyebrow: "Analizy filmów", homeTitle: "Nagrania z YouTube jako osobne poradniki WARDOGS", homeDescription: "Zacznij od filmów o pierwszych meczach, pieniądzach, ustawieniach, śmigłowcach, logistyce FOB i celach. Każde źródło ma osobny artykuł z zastrzeżeniami dotyczącymi wersji testowej i powiązanym poradnikiem.", stripEyebrow: "Poradniki na podstawie filmów", stripTitle: "Osobne analizy filmów z YouTube", openHub: "Otwórz bibliotekę filmów", official: "Oficjalny", creator: "Twórca", thumbnail: "miniatura"},
+  pl: {metaTitle: "Filmy WARDOGS - analizy rozgrywki z YouTube", metaDescription: "Osobne poradniki filmowe WARDOGS: początki, ustawienia, pieniądze, śmigłowce, FOB, broń, pojazdy, cele, rozgrywka i wczesny dostęp.", eyebrow: "Analizy filmów WARDOGS", hubTitle: "Poradniki WARDOGS z YouTube", hubDescription: (count) => `${count} autorskich analiz materiałów twórców i deweloperów pomaga w pierwszych meczach, zarządzaniu pieniędzmi, ustawieniach, celach, śmigłowcach, FOB, broni, pojazdach i decyzjach zakupowych.`, officialVideo: "Film oficjalny", creatorFootage: "Nagranie twórcy", currentSourcesTitle: "Filmy do sprawdzenia: sezon 1", currentSourcesDescription: "Filmy zewnętrzne sprawdzone 17 września 2026, wybrane pod kątem początków, pieniędzy, wyposażenia, FOB, ustawień i postępów. Wnioski twórców porównuj z obecną wersją gry i oficjalnymi zmianami.", seasonOneCurrent: "Aktualny sezon 1", betaWorkflow: "Procedura z bety", historicalReference: "Materiał historyczny", readBreakdown: "Przeczytaj analizę filmu", allVideos: "Wszystkie poradniki filmowe", officialBreakdown: "Analiza filmu oficjalnego", creatorBreakdown: "Analiza nagrania twórcy", lastUpdated: "Ostatnia aktualizacja", quickAnswer: "Krótka odpowiedź", takeaways: "Najważniejsze wnioski", connectionTitle: "Powiązanie z głównym poradnikiem WARDOGS", connectionBody: "Ta strona analizuje konkretny film. Potwierdzone mechaniki, terminy dostępu, ceny i status platform znajdziesz w powiązanym głównym poradniku. Nagranie nie jest ostateczną dokumentacją.", youtubeSource: "Źródło na YouTube", relatedGuide: "Przeczytaj powiązany poradnik WARDOGS", internalGuide: "Poradnik serwisu", stripEyebrow: "Poradniki na podstawie filmów", stripTitle: "Osobne analizy filmów z YouTube", openHub: "Otwórz bibliotekę filmów", official: "Oficjalny", creator: "Twórca", thumbnail: "miniatura"},
   "zh-tw": {
-    metaTitle: "WARDOGS 影片攻略 - YouTube 實機解析", metaDescription: "獨立整理的 WARDOGS 中文影片攻略，覆蓋新手、設定、賺錢、直升機、FOB、武器、載具、目標和搶先體驗資訊。", eyebrow: "WARDOGS 影片情報", hubTitle: "WARDOGS YouTube 攻略", hubDescription: (count) => `${count} 篇獨立撰寫的影片解析，將官方和創作者實機整理成新手、資金、設定、目標、直升機、FOB、武器、載具與購買判斷攻略。`, officialVideo: "官方影片", creatorFootage: "創作者實機", currentSourcesTitle: "Season 1 當前影片精選", currentSourcesDescription: "已於 2026 年 9 月 17 日核對的外部影片，優先覆蓋新手、賺錢、配裝、FOB、設定與進度問題。創作者結論仍需對照當前客戶端和官方公告。", seasonOneCurrent: "Season 1 當前版本", betaWorkflow: "Beta 流程參考", historicalReference: "歷史資料", readBreakdown: "閱讀影片解析", allVideos: "全部影片攻略", officialBreakdown: "官方影片解析", creatorBreakdown: "創作者影片解析", lastUpdated: "最後更新", quickAnswer: "快速結論", takeaways: "關鍵要點", connectionTitle: "它與核心攻略的關係", connectionBody: "本頁分析一段特定影片。已確認的遊戲系統、測試時間、價格和平臺資訊，請通過連結的核心攻略核對，不要把影片畫面當作最終版本。", youtubeSource: "YouTube 來源", relatedGuide: "閱讀相關 WARDOGS 攻略", internalGuide: "相關攻略", homeEyebrow: "影片分析", homeTitle: "將 YouTube 實機整理成獨立攻略", homeDescription: "從新手、資金、設定、直升機、FOB 後勤和目標影片開始。每篇文章均保留來源、測試版本提示和相關攻略。", stripEyebrow: "影片驅動攻略", stripTitle: "YouTube 獨立解析", openHub: "開啟影片攻略", official: "官方", creator: "創作者", thumbnail: "縮圖"
+    metaTitle: "WARDOGS 影片攻略 - YouTube 實機解析", metaDescription: "獨立整理的 WARDOGS 中文影片攻略，覆蓋新手、設定、賺錢、直升機、FOB、武器、載具、目標和搶先體驗資訊。", eyebrow: "WARDOGS 影片情報", hubTitle: "WARDOGS YouTube 攻略", hubDescription: (count) => `${count} 篇獨立撰寫的影片解析，將官方和創作者實機整理成新手、資金、設定、目標、直升機、FOB、武器、載具與購買判斷攻略。`, officialVideo: "官方影片", creatorFootage: "創作者實機", currentSourcesTitle: "Season 1 當前影片精選", currentSourcesDescription: "已於 2026 年 9 月 17 日核對的外部影片，優先覆蓋新手、賺錢、配裝、FOB、設定與進度問題。創作者結論仍需對照當前客戶端和官方公告。", seasonOneCurrent: "Season 1 當前版本", betaWorkflow: "Beta 流程參考", historicalReference: "歷史資料", readBreakdown: "閱讀影片解析", allVideos: "全部影片攻略", officialBreakdown: "官方影片解析", creatorBreakdown: "創作者影片解析", lastUpdated: "最後更新", quickAnswer: "快速結論", takeaways: "關鍵要點", connectionTitle: "它與核心攻略的關係", connectionBody: "本頁分析一段特定影片。已確認的遊戲系統、測試時間、價格和平臺資訊，請通過連結的核心攻略核對，不要把影片畫面當作最終版本。", youtubeSource: "YouTube 來源", relatedGuide: "閱讀相關 WARDOGS 攻略", internalGuide: "相關攻略", stripEyebrow: "影片驅動攻略", stripTitle: "YouTube 獨立解析", openHub: "開啟影片攻略", official: "官方", creator: "創作者", thumbnail: "縮圖"
 }
 };
 

@@ -11,7 +11,9 @@ export async function SiteFooter() {
     {href: "/guides/wardogs-gameplay", label: t("nav.gameplay")},
     {href: "/guides/wardogs-factions", label: t("nav.factions")},
     {href: "/news", label: t("nav.news")},
-    {href: "/guides", label: t("nav.guides")}
+    {href: "/guides", label: t("nav.guides")},
+    {href: "/items", label: t("nav.catalogueHome")},
+    {href: "/tools", label: t("nav.toolsHome")}
   ] as const;
   const externalLinks = [
     {href: officialLinks.team17, label: t("footer.officialSite")},
@@ -41,7 +43,7 @@ export async function SiteFooter() {
             <ul className="mt-4 space-y-2.5">
               {guideLinks.map((item) => (
                 <li key={item.href}>
-                  <Link className="text-sm text-[#a8b4ae] transition-colors hover:text-[#79d19c]" href={item.href} title={item.label}>
+                  <Link className="navigation-link inline-flex items-center text-sm text-[#a8b4ae] transition-colors hover:text-[#79d19c]" href={item.href} title={item.label}>
                     {item.label}
                   </Link>
                 </li>
@@ -55,7 +57,7 @@ export async function SiteFooter() {
               {externalLinks.map((item) => (
                 <li key={item.href}>
                   <a
-                    className="inline-flex items-center gap-1.5 text-sm text-[#a8b4ae] transition-colors hover:text-[#79d19c]"
+                    className="navigation-link inline-flex items-center gap-1.5 text-sm text-[#a8b4ae] transition-colors hover:text-[#79d19c]"
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
@@ -73,11 +75,11 @@ export async function SiteFooter() {
         <div className="mt-10 flex flex-col gap-4 border-t border-[#27312c] pt-6 text-xs text-[#7f8d86] sm:flex-row sm:items-center sm:justify-between">
           <p>{t("footer.description")}</p>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/about" title={t("footer.aboutLink")}>{t("footer.aboutLink")}</Link>
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/contact" title={t("footer.contact")}>{t("footer.contact")}</Link>
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/editorial-policy" title={t("footer.editorialPolicy")}>{t("footer.editorialPolicy")}</Link>
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/privacy" title={t("footer.privacy")}>{t("footer.privacy")}</Link>
-            <Link className="transition-colors hover:text-[#c7d1cc]" href="/terms" title={t("footer.terms")}>{t("footer.terms")}</Link>
+            <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/about" title={t("footer.aboutLink")}>{t("footer.aboutLink")}</Link>
+            <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/contact" title={t("footer.contact")}>{t("footer.contact")}</Link>
+            <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/editorial-policy" title={t("footer.editorialPolicy")}>{t("footer.editorialPolicy")}</Link>
+            <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/privacy" title={t("footer.privacy")}>{t("footer.privacy")}</Link>
+            <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/terms" title={t("footer.terms")}>{t("footer.terms")}</Link>
           </div>
         </div>
       </div>

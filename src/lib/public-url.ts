@@ -55,7 +55,13 @@ function publicPath(reference: string, kind: PublicReferenceKind) {
 
   const basePath = normalizeBasePath();
   let publicPathname = addBasePath(normalizePathname(pathname), basePath);
-  if (kind === "route" && process.env.GITHUB_PAGES === "true" && !publicPathname.endsWith("/")) {
+  // GITHUB_PAGES is server-only and is not present in the hydrated client bundle.
+  // The public base path remains available there, so use either signal to keep
+  // static-export directory routes canonical after client-side interactions.
+  const usesDirectoryRoutes = process.env.GITHUB_PAGES === "true" || basePath !== "";
+  const deploymentRelativePath = removeBasePath(publicPathname, basePath);
+  const isStaticFileRoute = deploymentRelativePath === "/api" || deploymentRelativePath.startsWith("/api/") || /\.[a-z\d]+$/i.test(deploymentRelativePath);
+  if (kind === "route" && usesDirectoryRoutes && !isStaticFileRoute && !publicPathname.endsWith("/")) {
     publicPathname += "/";
   }
   return `${publicPathname}${suffix}`;

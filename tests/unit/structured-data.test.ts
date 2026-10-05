@@ -1,7 +1,8 @@
 import {describe, expect, it} from "vitest";
-import {buildArticleJsonLd, buildHomeJsonLd} from "../../src/lib/structured-data";
+import {buildArticleJsonLd, buildHomeJsonLd, buildToolIndexJsonLd} from "../../src/lib/structured-data";
 import {loadGuideDocument} from "../../src/content/guides";
 import {officialLinks, siteLocales} from "../../src/config/site";
+import {TOOL_REGISTRY} from "../../src/features/tools/tool-registry";
 import sitemap from "../../src/app/sitemap";
 
 describe("structured data", () => {
@@ -73,5 +74,18 @@ describe("structured data", () => {
     const article = buildArticleJsonLd("en", guide!)[0];
 
     expect(article.image).toBe("http://localhost:3000/images/guide-discovery/medic-revive.webp");
+  });
+
+  it.each(siteLocales)("publishes a localized Tools CollectionPage and complete ItemList for %s", (locale) => {
+    const schema = buildToolIndexJsonLd(locale, (key) => key);
+
+    expect(schema.map((item) => item["@type"])).toEqual(["CollectionPage", "ItemList", "BreadcrumbList"]);
+    expect(schema[0]).toMatchObject({url: `http://localhost:3000/${locale}/tools`, inLanguage: locale});
+    expect(schema[1].itemListElement).toEqual(TOOL_REGISTRY.map((tool, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: tool.labelKey,
+      url: `http://localhost:3000/${locale}${tool.href}`
+    })));
   });
 });

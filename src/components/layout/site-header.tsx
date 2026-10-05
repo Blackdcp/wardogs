@@ -30,7 +30,7 @@ export async function SiteHeader() {
               href="/tools/map"
               aria-label={t("nav.interactiveMap")}
               title={t("nav.interactiveMap")}
-              className="inline-flex size-11 items-center justify-center rounded-[6px] border border-[#30543e] bg-[#16271e] text-[#8be2ad] transition-colors hover:bg-[#1e382b] hover:text-[#d8f4e4]"
+              className="navigation-link inline-flex size-11 items-center justify-center rounded-[6px] border border-[#30543e] bg-[#16271e] text-[#8be2ad] transition-colors hover:bg-[#1e382b] hover:text-[#d8f4e4]"
             >
               <Map aria-hidden="true" className="size-5 text-[#4cd988]" />
               <span className="sr-only">{t("nav.interactiveMap")}</span>
@@ -74,7 +74,7 @@ export async function SiteHeader() {
             <Link
               href="/tools/map"
               title={t("nav.interactiveMap")}
-              className="inline-flex h-9 items-center gap-1.5 rounded-[4px] px-2 text-xs font-semibold transition-colors hover:bg-[#18221c] hover:text-[#8ce2ad]"
+              className="navigation-link inline-flex min-h-11 items-center gap-1.5 rounded-[4px] px-2 text-xs font-semibold transition-colors hover:bg-[#18221c] hover:text-[#8ce2ad]"
             >
               <Map aria-hidden="true" className="size-3.5 text-[#6fbf8c]" />
               <span className="whitespace-nowrap">{t("nav.mapPill")}</span>
@@ -83,7 +83,7 @@ export async function SiteHeader() {
             <Link
               href="/tools/artillery-calculator"
               title={t("nav.artilleryCalculator")}
-              className="inline-flex h-9 items-center gap-1.5 rounded-[4px] px-2 text-xs font-semibold transition-colors hover:bg-[#18221c] hover:text-[#8ce2ad]"
+              className="navigation-link inline-flex min-h-11 items-center gap-1.5 rounded-[4px] px-2 text-xs font-semibold transition-colors hover:bg-[#18221c] hover:text-[#8ce2ad]"
             >
               <Crosshair aria-hidden="true" className="size-3.5 text-[#6fbf8c]" />
               <span className="whitespace-nowrap">{t("nav.calcPill")}</span>
@@ -98,7 +98,7 @@ export async function SiteHeader() {
             rel="noreferrer"
             aria-label={t("common.openSteam")}
             title={t("common.openSteam")}
-            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-[6px] border border-[#397b59] bg-[#397b59] px-3.5 text-xs font-semibold text-white transition-colors hover:bg-[#45946c] min-[1360px]:px-4 min-[1360px]:text-sm"
+            className="navigation-link inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-[6px] border border-[#397b59] bg-[#397b59] px-3.5 text-xs font-semibold text-white transition-colors hover:bg-[#45946c] min-[1360px]:px-4 min-[1360px]:text-sm"
           >
             {t("nav.steamCta")}
             <ExternalLink aria-hidden="true" className="size-4" />

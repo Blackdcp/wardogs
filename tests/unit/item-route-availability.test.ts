@@ -40,6 +40,17 @@ describe("item detail route availability", () => {
     )).toBe(true);
   });
 
+  it("keeps gated historical records on their locale category and leaves clean 404 responsibility to detail routes", async () => {
+    const routes = await loadRouteAvailability();
+    expect(routes).not.toBeNull();
+    if (!routes) return;
+    for (const locale of ["en", "ja", "zh-tw", "pl"]) {
+      expect(routes.isItemDetailRouteAvailable(locale, "/items/vehicles/vanguard-ciws")).toBe(false);
+      expect(routes.resolveItemRouteTarget(locale, "/items/vehicles/vanguard-ciws")).toEqual({locale, pathname: "/items/vehicles"});
+      expect(routes.resolveItemRouteTarget(locale, "/items/weapons/unknown-future-record")).toEqual({locale, pathname: "/items/weapons/unknown-future-record"});
+    }
+  });
+
   it("keeps the route manifest synchronized with the server item library", async () => {
     const routeAvailability = await loadRouteAvailability();
     expect(routeAvailability).not.toBeNull();

@@ -18,10 +18,9 @@ function sortByFreshness(sources: readonly CurrentVideoSource[]) {
   });
 }
 
-export function CurrentVideoSourceGrid({locale, sources, limit}: {
+export function CurrentVideoSourceGrid({locale, sources}: {
   locale: Locale;
   sources: readonly CurrentVideoSource[];
-  limit?: number;
 }) {
   const [selectedTopic, setSelectedTopic] = useState<TopicFilter>("all");
   const ui = getCurrentVideoUi(locale);
@@ -33,8 +32,8 @@ export function CurrentVideoSourceGrid({locale, sources, limit}: {
   const visibleSources = useMemo(() => {
     const filtered = selectedTopic === "all" ? sources : sources.filter((source) => source.topic === selectedTopic);
     const sorted = sortByFreshness(filtered);
-    return selectedTopic === "all" && limit !== undefined ? sorted.slice(0, limit) : sorted;
-  }, [limit, selectedTopic, sources]);
+    return sorted;
+  }, [selectedTopic, sources]);
 
   return (
     <div data-home-video-grid="true">

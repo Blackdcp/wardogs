@@ -7,6 +7,7 @@ const root = process.cwd();
 const scriptPath = path.join(root, "scripts", "submit-indexnow.mjs");
 const productionScriptPath = path.join(root, "scripts", "deploy-production.mjs");
 const workflowPath = path.join(root, ".github", "workflows", "deploy-pages.yml");
+const SITE_ORIGIN = "https://www.wardogswiki.com";
 
 describe("IndexNow deployment notification", () => {
   it("notifies newly full-site languages without resubmitting unrelated old locales", async () => {
@@ -114,7 +115,7 @@ describe("IndexNow deployment notification", () => {
     ];
 
     expect(indexNow.deriveIndexNowUrls(["src/features/guides/related.ts"], sitemapUrls))
-      .toEqual(sitemapUrls.slice(0, 3));
+      .toEqual(sitemapUrls);
   });
 
   it("notifies all published locale map pages when the map route or basemap changes", async () => {
@@ -133,6 +134,71 @@ describe("IndexNow deployment notification", () => {
       .toEqual(sitemapUrls.slice(1, 4));
     expect(indexNow.deriveIndexNowUrls(["public/images/maps/ozeti/overview.webp"], sitemapUrls))
       .toEqual(sitemapUrls.slice(1, 4));
+  });
+
+  it("selects the complete new tool surface, localized item prose, and homepage when their shared sources change", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
+    };
+    const sitemapUrls = [
+      `${SITE_ORIGIN}/en`, `${SITE_ORIGIN}/ja`,
+      `${SITE_ORIGIN}/en/tools`, `${SITE_ORIGIN}/ja/tools`,
+      `${SITE_ORIGIN}/en/tools/ammo-matcher`, `${SITE_ORIGIN}/ja/tools/ammo-matcher`,
+      `${SITE_ORIGIN}/ru/items`, `${SITE_ORIGIN}/ru/items/weapons`, `${SITE_ORIGIN}/ru/items/weapons/ak-74`,
+      `${SITE_ORIGIN}/en/items/weapons/ak-74`, `${SITE_ORIGIN}/en/guides`
+    ];
+
+    expect(indexNow.deriveIndexNowUrls(["src/features/tools/tool-registry.ts"], sitemapUrls)).toEqual(sitemapUrls.slice(2, 6));
+    expect(indexNow.deriveIndexNowUrls(["src/features/items/item-prose.ru.ts"], sitemapUrls)).toEqual(sitemapUrls.slice(6, 9));
+    expect(indexNow.deriveIndexNowUrls(["src/components/home/home-command-deck.tsx"], sitemapUrls)).toEqual(sitemapUrls.slice(0, 2));
+  });
+
+  it("includes the localized tools hub when a locale message catalogue changes", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
+    };
+    const urls = [
+      `${SITE_ORIGIN}/ja`, `${SITE_ORIGIN}/ja/guides`, `${SITE_ORIGIN}/ja/items`, `${SITE_ORIGIN}/ja/tools`, `${SITE_ORIGIN}/en/tools`
+    ];
+    expect(indexNow.deriveIndexNowUrls(["messages/ja.json"], urls)).toEqual(urls.slice(0, 4));
+  });
+
+  it("selects guide, video, item-return, and site-wide metadata surfaces changed by shared sources", async () => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      deriveIndexNowUrls: (changedFiles: string[], sitemapUrls: string[]) => string[];
+    };
+    const urls = [
+      `${SITE_ORIGIN}/en`,
+      `${SITE_ORIGIN}/en/guides`, `${SITE_ORIGIN}/ja/guides/wardogs-squad-guide`,
+      `${SITE_ORIGIN}/en/items`, `${SITE_ORIGIN}/ru/items/weapons/ak74`,
+      `${SITE_ORIGIN}/en/videos`, `${SITE_ORIGIN}/pl/videos/wardogs-gameplay-impressions`,
+      `${SITE_ORIGIN}/en/tools`
+    ];
+
+    expect(indexNow.deriveIndexNowUrls(["src/features/guides/guide-task-data.ts"], urls)).toEqual(urls.slice(1, 3));
+    expect(indexNow.deriveIndexNowUrls(["src/components/guides/guide-task-panel.tsx"], urls)).toEqual(urls.slice(1, 3));
+    expect(indexNow.deriveIndexNowUrls(["src/features/videos/video-articles.pl.ts"], urls)).toEqual(urls.slice(5, 7));
+    expect(indexNow.deriveIndexNowUrls(["src/features/guides/related.ts"], urls)).toEqual(urls.slice(1, 5));
+    expect(indexNow.deriveIndexNowUrls(["src/lib/metadata.ts"], urls)).toEqual(urls);
+  });
+
+  it.each([
+    ["Pages mode", {GITHUB_PAGES: "true", NEXT_PUBLIC_SITE_URL: SITE_ORIGIN}],
+    ["a non-production origin", {GITHUB_PAGES: "false", NEXT_PUBLIC_SITE_URL: "https://blackdcp.github.io/wardogs"}]
+  ])("refuses IndexNow in %s before making any request", async (_label, environment) => {
+    const indexNow = await import(pathToFileURL(scriptPath).href) as {
+      submitIndexNow: (options: {changedFiles: string[]; fetchImpl: typeof fetch}) => Promise<unknown>;
+    };
+    vi.stubEnv("GITHUB_PAGES", environment.GITHUB_PAGES);
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", environment.NEXT_PUBLIC_SITE_URL);
+    const fetchImpl = vi.fn<typeof fetch>(async () => new Response("unexpected", {status: 200}));
+    try {
+      await expect(indexNow.submitIndexNow({changedFiles: ["src/app/[locale]/page.tsx"], fetchImpl}))
+        .rejects.toThrow(/production.*IndexNow/i);
+      expect(fetchImpl).not.toHaveBeenCalled();
+    } finally {
+      vi.unstubAllEnvs();
+    }
   });
 
   it("selects only URLs newly absent from the pre-deploy sitemap", async () => {
@@ -443,11 +509,12 @@ describe("IndexNow deployment notification", () => {
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 
-  it("runs the notifier only after the deployment job succeeds", () => {
+  it("keeps the auxiliary GitHub Pages workflow unable to deploy production or notify IndexNow", () => {
     const workflow = readFileSync(workflowPath, "utf8");
-    expect(workflow).toContain("notify-indexnow:");
-    expect(workflow).toContain("needs: deploy");
-    expect(workflow).toContain("node scripts/submit-indexnow.mjs");
+    expect(workflow).not.toContain("notify-indexnow:");
+    expect(workflow).not.toContain("deploy-pages");
+    expect(workflow).not.toContain("node scripts/submit-indexnow.mjs");
+    expect(readFileSync(productionScriptPath, "utf8")).toMatch(/verifyProduction[\s\S]*submitImpl/);
   });
 
   it("refuses a direct production deploy without a known diff or with uncommitted content", async () => {

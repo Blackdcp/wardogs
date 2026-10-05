@@ -1,3 +1,6 @@
+import {buildToolRelatedLinks, ToolRelatedGuides} from "@/components/tools/tool-related-guides";
+import {ToolPageHeader} from "@/components/tools/tool-page-header";
+import {getTranslations} from "next-intl/server";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {WeaponCompare} from "@/components/tools/weapon-compare";
@@ -25,18 +28,17 @@ export async function generateMetadata({params}: Pick<PageProps, "params">): Pro
 export default async function WeaponComparePage({params}: PageProps) {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
+  const relatedLinks = await buildToolRelatedLinks("weapon-compare", locale);
+  const headerT = await getTranslations({locale: locale, namespace: "nav"});
   const copy = getToolCopy(locale);
   const weapons = getComparableWeapons(locale);
   const initialState = decodeWeaponCompareState("", weapons.map(({slug}) => slug));
 
   return (
     <main className="site-container py-10 md:py-16">
-      <header className="mb-8 max-w-3xl">
-        <p className="font-mono text-xs uppercase text-[#69c78f]">{copy.weaponCompareEyebrow}</p>
-        <h1 className="display-font mt-3 text-balance text-3xl leading-tight text-white sm:text-4xl md:text-5xl">{copy.weaponCompareTitle}</h1>
-        <p className="mt-4 text-base leading-7 text-[#a8b4ae]">{copy.weaponCompareDescription}</p>
-      </header>
+      <ToolPageHeader toolId="weapon-compare" eyebrow={copy.weaponCompareEyebrow} title={copy.weaponCompareTitle} description={copy.weaponCompareDescription} actions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]} />
       <WeaponCompare copy={copy} initialState={initialState} weapons={weapons} />
+      <ToolRelatedGuides model={relatedLinks} locale={locale} />
     </main>
   );
 }

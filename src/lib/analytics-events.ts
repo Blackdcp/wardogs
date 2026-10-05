@@ -2,6 +2,8 @@ import {isSiteLocale, officialLinks} from "@/config/site";
 
 export const ANALYTICS_EVENTS = {
   homeTaskClick: "home_task_click",
+  homeSectionView: "home_section_view",
+  discoveryClick: "discovery_click",
   engagedGuide: "engaged_guide",
   catalogueItemOpen: "catalogue_item_open",
   videoStart: "video_start",
@@ -33,6 +35,68 @@ export type AnalyticsTarget = {
   gtag?: (...args: unknown[]) => void;
 };
 
+export const ANALYTICS_PAGE_VIEW_EVENT = "wardogs:analytics-page-view";
+const pageLocations = new WeakMap<Window, string>();
+
+/** Route fields never contain query strings or fragments, including share state. */
+export function normalizeAnalyticsPathname(value: string, basePath = "") {
+  let pathname: string;
+  try {pathname = new URL(value, "https://analytics.invalid").pathname;} catch {return "/";}
+  pathname = pathnameWithoutBasePath(pathname, basePath).replace(/\/+$/, "");
+  return pathname || "/";
+}
+
+export function notifyAnalyticsPageView(pagePath?: string) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent(ANALYTICS_PAGE_VIEW_EVENT, {
+    detail: {page_path: normalizeAnalyticsPathname(pagePath ?? window.location.pathname, process.env.NEXT_PUBLIC_BASE_PATH)}
+  }));
+}
+
+/** Coalesce the router, native-history and popstate notifications for one navigation. */
+export function notifyAnalyticsLocationChange(force = false) {
+  if (typeof window === "undefined") return;
+  const url = new URL(window.location.href);
+  const location = `${url.origin}${url.pathname}${url.search}`;
+  const previous = pageLocations.get(window);
+  pageLocations.set(window, location);
+  if (force || (previous !== undefined && previous !== location)) notifyAnalyticsPageView();
+}
+
+export function installAnalyticsPageViewLifecycle() {
+  notifyAnalyticsLocationChange();
+  const handlePopstate = () => notifyAnalyticsLocationChange();
+  const handlePageshow = (event: PageTransitionEvent) => {
+    if (event.persisted) {
+      notifyAnalyticsLocationChange(true);
+    }
+  };
+  window.addEventListener("popstate", handlePopstate);
+  window.addEventListener("pageshow", handlePageshow);
+  const history = window.history;
+  let active = true;
+  const originals = history ? {pushState: history.pushState, replaceState: history.replaceState} : null;
+  const wrap = (original: History["pushState"]): History["pushState"] => function (this: History, ...args) {
+    original.apply(this, args);
+    if (active) notifyAnalyticsLocationChange();
+  };
+  const pushState = originals ? wrap(originals.pushState) : null;
+  const replaceState = originals ? wrap(originals.replaceState) : null;
+  if (history && pushState && replaceState) {
+    history.pushState = pushState;
+    history.replaceState = replaceState;
+  }
+  return () => {
+    active = false;
+    window.removeEventListener("popstate", handlePopstate);
+    window.removeEventListener("pageshow", handlePageshow);
+    if (history && originals) {
+      if (history.pushState === pushState) history.pushState = originals.pushState;
+      if (history.replaceState === replaceState) history.replaceState = originals.replaceState;
+    }
+  };
+}
+
 type TrackedLinkOptions = {
   basePath?: string;
   officialDestination?: string;
@@ -53,7 +117,13 @@ export function trackAnalyticsEvent(
   const analyticsTarget = target ?? (typeof window === "undefined" ? undefined : window as AnalyticsTarget);
   if (!analyticsTarget) return;
 
-  const command = createAnalyticsEventCommand(name, parameters);
+  const safeParameters = name === "page_view" && typeof parameters.page_path === "string"
+    ? {...parameters, page_path: normalizeAnalyticsPathname(parameters.page_path, process.env.NEXT_PUBLIC_BASE_PATH)}
+    : parameters;
+  const command = createAnalyticsEventCommand(name, safeParameters);
+  if (name === "page_view" && typeof window !== "undefined" && analyticsTarget === window) {
+    notifyAnalyticsPageView(typeof safeParameters.page_path === "string" ? safeParameters.page_path : window.location.pathname);
+  }
   if (analyticsTarget.gtag) {
     analyticsTarget.gtag(...command);
     return;

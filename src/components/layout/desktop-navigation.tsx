@@ -61,7 +61,7 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
                 <Link
                   href={group.href}
                   title={group.label}
-                  className="inline-flex min-h-11 min-w-20 items-center justify-center whitespace-nowrap px-3 text-[13px] font-semibold text-[#c2ccc7] transition-colors hover:text-[#79d19c]"
+                  className="navigation-link inline-flex min-h-11 min-w-20 items-center justify-center whitespace-nowrap px-3 text-[13px] font-semibold text-[#c2ccc7] transition-colors hover:text-[#79d19c]"
                 >
                   {group.label}
                 </Link>
@@ -88,7 +88,7 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
                 type="button"
                 aria-expanded={open}
                 aria-controls={dropdownId}
-                className="inline-flex min-h-11 min-w-24 items-center justify-center gap-1.5 whitespace-nowrap px-3 text-[13px] font-semibold text-[#c2ccc7] transition-colors hover:text-[#79d19c]"
+                className="navigation-link inline-flex min-h-11 min-w-24 items-center justify-center gap-1.5 whitespace-nowrap px-3 text-[13px] font-semibold text-[#c2ccc7] transition-colors hover:text-[#79d19c]"
                 onClick={(event) => {
                   const openedByPointerEntry = pointerEntryGroupRef.current === group.id;
                   pointerEntryGroupRef.current = null;
@@ -119,7 +119,7 @@ export function DesktopNavigation({groups, label}: DesktopNavigationProps) {
                         href={item.href}
                         locale={item.locale}
                         title={item.label}
-                        className="flex min-h-10 items-center whitespace-nowrap rounded-[4px] px-3 py-2 text-sm font-semibold text-[#dce4df] transition-colors hover:bg-[#1e2923] hover:text-[#79d19c]"
+                        className="navigation-link flex min-h-11 items-center whitespace-normal rounded-[4px] px-3 py-2 text-sm font-semibold text-[#dce4df] transition-colors hover:bg-[#1e2923] hover:text-[#79d19c]"
                         onClick={() => {
                           pointerEntryGroupRef.current = null;
                           setOpenGroupId(null);

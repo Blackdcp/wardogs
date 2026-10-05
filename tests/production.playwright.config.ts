@@ -1,8 +1,18 @@
 import {defineConfig} from "@playwright/test";
 
+process.env.NEXT_PUBLIC_SITE_URL ??= "https://www.wardogswiki.com";
+
 export default defineConfig({
   testDir: "./e2e",
-  testMatch: ["production-health.spec.ts", "guide-depth.spec.ts", "tools-workflow.spec.ts", "interactive-map.spec.ts"],
+  testMatch: [
+    "production-health.spec.ts",
+    "release-route-contract.spec.ts",
+    "homepage-structure.spec.ts",
+    "adsterra-inventory.spec.ts",
+    "guide-depth.spec.ts",
+    "tools-workflow.spec.ts",
+    "interactive-map.spec.ts"
+  ],
   workers: 1,
   retries: 0,
   timeout: 120_000,

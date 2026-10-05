@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {guideManifest} from "../../src/content/manifest";
-import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const slug = "wardogs-linux-proton";

@@ -4,7 +4,7 @@ import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
 import {guideManifest} from "../../src/content/manifest";
 import {NEWS_UPDATES} from "../../src/features/news/news-data";
-import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 import {catalogueRecords} from "../../src/features/catalogue/catalogue-records";
 import {catalogueMediaSources} from "../../src/features/catalogue/catalogue-media-sources";
 

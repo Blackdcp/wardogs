@@ -1,0 +1,1421 @@
+{
+  "schemaVersion": 1,
+  "evidence": [
+    {
+      "path": "/ja/guides/wardogs-progression-wipes-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0001"
+    },
+    {
+      "path": "/ja/guides/wardogs-squad-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0002"
+    },
+    {
+      "path": "/ja/guides/wardogs-mortar-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0003"
+    },
+    {
+      "path": "/ja/items",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0004"
+    },
+    {
+      "path": "/ja/guides/wardogs-towers-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0005"
+    },
+    {
+      "path": "/en/guides/wardogs-season-2",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0006"
+    },
+    {
+      "path": "/ja/guides/wardogs-cargo-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0007"
+    },
+    {
+      "path": "/ja/guides/wardogs-fob-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0008"
+    },
+    {
+      "path": "/en/guides/wardogs-cargo-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0009"
+    },
+    {
+      "path": "/ja/guides/wardogs-helicopter-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0010"
+    },
+    {
+      "path": "/ja/guides/wardogs-crash-fix",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0011"
+    },
+    {
+      "path": "/ja/guides/wardogs-server-status",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0012"
+    },
+    {
+      "path": "/ja/guides/wardogs-controls",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0013"
+    },
+    {
+      "path": "/ja/guides/wardogs-best-settings",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0014"
+    },
+    {
+      "path": "/en/guides/wardogs-artillery-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0015"
+    },
+    {
+      "path": "/en/items/weapons",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0016"
+    },
+    {
+      "path": "/en/guides/wardogs-ammo-reload-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0017"
+    },
+    {
+      "path": "/en",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0018"
+    },
+    {
+      "path": "/ja/guides/wardogs-ammo-reload-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0019"
+    },
+    {
+      "path": "/en/guides/wardogs-crash-fix",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0020"
+    },
+    {
+      "path": "/ja/guides/wardogs-community-servers-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0021"
+    },
+    {
+      "path": "/ja/items/weapons",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0022"
+    },
+    {
+      "path": "/ja/guides/wardogs-map",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0023"
+    },
+    {
+      "path": "/ru/items/weapons",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0024"
+    },
+    {
+      "path": "/en/guides/wardogs-progression-wipes-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0025"
+    },
+    {
+      "path": "/en/items",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0026"
+    },
+    {
+      "path": "/ru/guides/wardogs-best-weapons-loadouts",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0027"
+    },
+    {
+      "path": "/en/guides/wardogs-controls",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0028"
+    },
+    {
+      "path": "/ru",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0029"
+    },
+    {
+      "path": "/ja/items/vehicles",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0030"
+    },
+    {
+      "path": "/ru/guides/wardogs-helicopter-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0031"
+    },
+    {
+      "path": "/en/guides/wardogs-achievements",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0032"
+    },
+    {
+      "path": "/en/items/vehicles/sph-2",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0033"
+    },
+    {
+      "path": "/en/guides/wardogs-mortar-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0034"
+    },
+    {
+      "path": "/ru/guides/wardogs-map",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0035"
+    },
+    {
+      "path": "/ru/guides/wardogs-controls",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0036"
+    },
+    {
+      "path": "/en/guides/wardogs-fob-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0037"
+    },
+    {
+      "path": "/en/guides/wardogs-helicopter-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0038"
+    },
+    {
+      "path": "/en/guides/wardogs-community-servers-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0039"
+    },
+    {
+      "path": "/ja",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0040"
+    },
+    {
+      "path": "/ru/guides/wardogs-mortar-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0041"
+    },
+    {
+      "path": "/ru/guides/wardogs-cargo-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0042"
+    },
+    {
+      "path": "/ja/guides/wardogs-armor-damage-ttk-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0043"
+    },
+    {
+      "path": "/ru/guides/wardogs-crash-fix",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0044"
+    },
+    {
+      "path": "/ru/guides/wardogs-towers-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0045"
+    },
+    {
+      "path": "/ru/guides/wardogs-game-developers",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0046"
+    },
+    {
+      "path": "/en/items/ammo",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0047"
+    },
+    {
+      "path": "/ru/guides/wardogs-ammo-reload-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0048"
+    },
+    {
+      "path": "/ja/guides/wardogs-ps5",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0049"
+    },
+    {
+      "path": "/ja/guides/wardogs-artillery-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0050"
+    },
+    {
+      "path": "/ja/guides/wardogs-equipment-tools-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0051"
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-progression-wipes-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0052"
+    },
+    {
+      "path": "/en/guides/wardogs-oil-rig-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0053"
+    },
+    {
+      "path": "/de/guides/wardogs-fob-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0054"
+    },
+    {
+      "path": "/en/guides/wardogs-best-weapons-loadouts",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0055"
+    },
+    {
+      "path": "/ru/guides/wardogs-price",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0056"
+    },
+    {
+      "path": "/ru/guides/wardogs-squad-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0057"
+    },
+    {
+      "path": "/de/items/vehicles",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0058"
+    },
+    {
+      "path": "/en/items/vehicles",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0059"
+    },
+    {
+      "path": "/de/guides/wardogs-cargo-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0060"
+    },
+    {
+      "path": "/en/items/weapons/bmr-308",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0061"
+    },
+    {
+      "path": "/ja/guides/wardogs-system-requirements",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0062"
+    },
+    {
+      "path": "/ru/guides/wardogs-artillery-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0063"
+    },
+    {
+      "path": "/ru/items",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0064"
+    },
+    {
+      "path": "/ru/guides/wardogs-server-status",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0065"
+    },
+    {
+      "path": "/de/guides/wardogs-server-status",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0066"
+    },
+    {
+      "path": "/ja/guides/wardogs-discord",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0067"
+    },
+    {
+      "path": "/ja/maps",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0068"
+    },
+    {
+      "path": "/en/items/vehicles/havoc",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0069"
+    },
+    {
+      "path": "/de/guides/wardogs-map",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0070"
+    },
+    {
+      "path": "/pt-br/guides/wardogs-artillery-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0071"
+    },
+    {
+      "path": "/en/items/gear",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0072"
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-best-settings",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0073"
+    },
+    {
+      "path": "/ja/items/vehicles/havoc",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0074"
+    },
+    {
+      "path": "/de/guides/wardogs-controls",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0075"
+    },
+    {
+      "path": "/en/guides/wardogs-download",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0076"
+    },
+    {
+      "path": "/ja/guides/wardogs-best-weapons-loadouts",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0077"
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-controls",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0078"
+    },
+    {
+      "path": "/ru/guides/wardogs-factions",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0079"
+    },
+    {
+      "path": "/de/guides/wardogs-helicopter-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0080"
+    },
+    {
+      "path": "/pt-br/guides/wardogs-best-weapons-loadouts",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0082"
+    },
+    {
+      "path": "/ja/guides",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0083"
+    },
+    {
+      "path": "/ru/guides/wardogs-progression-wipes-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0084"
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-artillery-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0085"
+    },
+    {
+      "path": "/ja/items/weapons/compound-bow",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0086"
+    },
+    {
+      "path": "/ru/guides/wardogs-system-requirements",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0087"
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-system-requirements",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0088"
+    },
+    {
+      "path": "/ja/items/attachments",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0089"
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-crash-fix",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0090"
+    },
+    {
+      "path": "/ru/guides/wardogs-patch-notes",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0091"
+    },
+    {
+      "path": "/ru/videos/wardogs-stingray-anti-vehicle-drone",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0092"
+    },
+    {
+      "path": "/ja/guides/wardogs-medic-revive-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0093"
+    },
+    {
+      "path": "/en/guides/wardogs-medic-revive-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0094"
+    },
+    {
+      "path": "/ja/guides/wardogs-patch-notes",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0095"
+    },
+    {
+      "path": "/ru/items/weapons/galil",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0096"
+    },
+    {
+      "path": "/ja/videos/wardogs-havoc-helicopter-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0097"
+    },
+    {
+      "path": "/de/guides/wardogs-ammo-reload-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0098"
+    },
+    {
+      "path": "/de/guides/wardogs-progression-wipes-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0099"
+    },
+    {
+      "path": "/ja/news",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0100"
+    },
+    {
+      "path": "/en/guides/wardogs-best-settings",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0411"
+    },
+    {
+      "path": "/en/guides/wardogs-patch-notes",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0185"
+    },
+    {
+      "path": "/ru/guides/wardogs-best-settings",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0113"
+    },
+    {
+      "path": "/de/items/weapons",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0452"
+    },
+    {
+      "path": "/de/guides/wardogs-best-weapons-loadouts",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0127"
+    },
+    {
+      "path": "/de/guides/wardogs-best-settings",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0190"
+    },
+    {
+      "path": "/de/guides/wardogs-crash-fix",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-23/2026-09-29",
+      "evidenceKey": "gsc-pages-export-2026-10-03:row-0103"
+    },
+    {
+      "path": "/ja/guides/wardogs-progression-wipes-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-01"
+    },
+    {
+      "path": "/ja/guides/wardogs-squad-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-02"
+    },
+    {
+      "path": "/ja/items",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-03"
+    },
+    {
+      "path": "/en/guides/wardogs-cargo-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-04"
+    },
+    {
+      "path": "/ja/guides/wardogs-fob-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-05"
+    },
+    {
+      "path": "/ja/guides/wardogs-towers-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-06"
+    },
+    {
+      "path": "/ja/guides/wardogs-crash-fix",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-07"
+    },
+    {
+      "path": "/ja/guides/wardogs-cargo-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-08"
+    },
+    {
+      "path": "/ja/guides/wardogs-mortar-guide",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-09"
+    },
+    {
+      "path": "/en/items/weapons",
+      "sources": [
+        "gsc"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "gsc-pages-live-2026-10-05:top-page-10"
+    },
+    {
+      "path": "/en",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-01"
+    },
+    {
+      "path": "/en/guides/wardogs-crash-fix",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-02"
+    },
+    {
+      "path": "/en/guides/wardogs-controls",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-03"
+    },
+    {
+      "path": "/en/guides/wardogs-helicopter-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-04"
+    },
+    {
+      "path": "/en/guides/wardogs-cargo-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-05"
+    },
+    {
+      "path": "/en/guides/wardogs-best-settings",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-06"
+    },
+    {
+      "path": "/en/guides/wardogs-fob-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-07"
+    },
+    {
+      "path": "/en/guides/wardogs-mortar-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-08"
+    },
+    {
+      "path": "/en/guides/wardogs-gameplay",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-09"
+    },
+    {
+      "path": "/en/guides/wardogs-towers-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-10"
+    },
+    {
+      "path": "/en/guides/wardogs-ammo-reload-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-11"
+    },
+    {
+      "path": "/en/guides/wardogs-patch-notes",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-12"
+    },
+    {
+      "path": "/en/guides/wardogs-game-developers",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-13"
+    },
+    {
+      "path": "/en/guides/wardogs-system-requirements",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-14"
+    },
+    {
+      "path": "/en/guides/wardogs-ps5",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-15"
+    },
+    {
+      "path": "/en/guides/wardogs-beta",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-16"
+    },
+    {
+      "path": "/en/guides/wardogs-server-status",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-17"
+    },
+    {
+      "path": "/en/guides/wardogs-artillery-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-18"
+    },
+    {
+      "path": "/en/guides/wardogs-squad-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-19"
+    },
+    {
+      "path": "/en/guides/wardogs-price",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-20"
+    },
+    {
+      "path": "/en/guides/wardogs-linux-proton",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-21"
+    },
+    {
+      "path": "/en/videos/wardogs-helicopter-flight-guide",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-22"
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-server-status",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-23"
+    },
+    {
+      "path": "/ja/guides/wardogs-crash-fix",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-24"
+    },
+    {
+      "path": "/ja/guides/wardogs-server-status",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:top-page-25"
+    },
+    {
+      "path": "/en/guides/wardogs-beta",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-04/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:30d-top-page-01"
+    },
+    {
+      "path": "/en/videos/wardogs-vehicle-cargo-logistics",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-04/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:30d-top-page-02"
+    },
+    {
+      "path": "/en/videos/wardogs-best-settings",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "2026-09-04/2026-10-03",
+      "evidenceKey": "bing-ai-pages-live-2026-10-05:30d-top-page-03"
+    },
+    {
+      "path": "/en",
+      "sources": [
+        "ga-page"
+      ],
+      "window": "2026-09-28/2026-10-04",
+      "evidenceKey": "ga-pages-live-2026-10-05:visible-row-01"
+    },
+    {
+      "path": "/ja",
+      "sources": [
+        "ga-page"
+      ],
+      "window": "2026-09-28/2026-10-04",
+      "evidenceKey": "ga-pages-live-2026-10-05:visible-row-02"
+    },
+    {
+      "path": "/ja/items",
+      "sources": [
+        "ga-page"
+      ],
+      "window": "2026-09-28/2026-10-04",
+      "evidenceKey": "ga-pages-live-2026-10-05:visible-row-03"
+    },
+    {
+      "path": "/ja/guides/wardogs-squad-guide",
+      "sources": [
+        "ga-page"
+      ],
+      "window": "2026-09-28/2026-10-04",
+      "evidenceKey": "ga-pages-live-2026-10-05:visible-row-04"
+    },
+    {
+      "path": "/ja/guides/wardogs-progression-wipes-guide",
+      "sources": [
+        "ga-page"
+      ],
+      "window": "2026-09-28/2026-10-04",
+      "evidenceKey": "ga-pages-live-2026-10-05:visible-row-05"
+    },
+    {
+      "path": "/ja/guides/wardogs-towers-guide",
+      "sources": [
+        "ga-page"
+      ],
+      "window": "2026-09-28/2026-10-04",
+      "evidenceKey": "ga-pages-live-2026-10-05:visible-row-06"
+    },
+    {
+      "path": "/ja/guides/wardogs-mortar-guide",
+      "sources": [
+        "ga-page"
+      ],
+      "window": "2026-09-28/2026-10-04",
+      "evidenceKey": "ga-pages-live-2026-10-05:visible-row-07"
+    },
+    {
+      "path": "/en/guides/wardogs-crash-fix",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-01"
+    },
+    {
+      "path": "/en/guides/wardogs-controls",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-02"
+    },
+    {
+      "path": "/en/guides/wardogs-helicopter-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-03"
+    },
+    {
+      "path": "/en/guides/wardogs-best-settings",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-04"
+    },
+    {
+      "path": "/en/guides/wardogs-patch-notes",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-05"
+    },
+    {
+      "path": "/en/guides/wardogs-fob-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-06"
+    },
+    {
+      "path": "/en/guides/wardogs-gameplay",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-07"
+    },
+    {
+      "path": "/en/guides/wardogs-mortar-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-08"
+    },
+    {
+      "path": "/en/guides/wardogs-cargo-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-09"
+    },
+    {
+      "path": "/en/guides/wardogs-towers-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-10"
+    },
+    {
+      "path": "/en/guides/wardogs-season-2",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-11"
+    },
+    {
+      "path": "/en/guides/wardogs-discord",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-12"
+    },
+    {
+      "path": "/en/guides/wardogs-ammo-reload-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-13"
+    },
+    {
+      "path": "/en/guides/wardogs-steam",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-14"
+    },
+    {
+      "path": "/en/guides/wardogs-system-requirements",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-15"
+    },
+    {
+      "path": "/en/guides/wardogs-price",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-16"
+    },
+    {
+      "path": "/en/guides/wardogs-server-status",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-17"
+    },
+    {
+      "path": "/en/guides/wardogs-money-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-18"
+    },
+    {
+      "path": "/en/guides/wardogs-artillery-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-19"
+    },
+    {
+      "path": "/en/guides/wardogs-map",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-20"
+    },
+    {
+      "path": "/en",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-21"
+    },
+    {
+      "path": "/ja",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-22"
+    },
+    {
+      "path": "/ja/guides/wardogs-crash-fix",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-23"
+    },
+    {
+      "path": "/ja/guides/wardogs-progression-wipes-guide",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-24"
+    },
+    {
+      "path": "/en/videos",
+      "sources": [
+        "bing-search"
+      ],
+      "window": "2026-09-27/2026-10-03",
+      "evidenceKey": "bing-search-pages-live-2026-10-05:top-page-25"
+    },
+    {
+      "path": "/en/guides/wardogs-playtest",
+      "sources": [
+        "bing-ai"
+      ],
+      "window": "historical-through-2026-10-03",
+      "evidenceKey": "bing-ai-pages-verified-history:wardogs-playtest"
+    }
+  ]
+}

@@ -1,23 +1,29 @@
 import Image from "next/image";
-import {Crosshair, Map, ShieldCheck} from "lucide-react";
+import {ShieldCheck} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {assetPath} from "@/lib/assets";
-import {ButtonLink} from "@/components/ui/button-link";
 import {StatusBadge} from "@/components/ui/status-badge";
+import {HomeSectionSentinel} from "@/components/seo/home-section-analytics";
+import {Link} from "@/i18n/navigation";
+import type {DiscoveryDestination} from "@/features/discovery/discovery-types";
+import {getHomeCommandDestinations} from "@/features/home/home-discovery-model";
 import {HeroSearchBox} from "./hero-search-box";
 import type {Locale} from "@/config/site";
 
 type HomeHeroProps = {
   facts: readonly string[];
   locale?: Locale;
+  command?: readonly DiscoveryDestination[];
 };
 
-export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
+export async function HomeHero({facts, locale = "en", command = getHomeCommandDestinations(locale)}: HomeHeroProps) {
   const t = await getTranslations();
   const proofPoints = facts.slice(0, 3);
 
   return (
-    <section aria-labelledby="home-hero-title" className="relative isolate flex min-h-[540px] items-center overflow-hidden border-b border-[#2c3631]">
+    <section data-home-section="command" aria-labelledby="home-hero-title" className="relative isolate flex min-h-[520px] items-center overflow-hidden border-b border-[#2c3631]">
+      {/* The first section cannot scroll its top into the shared 25%–75% observation region. */}
+      <div className="absolute left-0" style={{top: "40vh"}}><HomeSectionSentinel section="command" /></div>
       <Image
         src={assetPath("/images/wardogs-hero.jpg")}
         alt={t("home.heroImageAlt")}
@@ -36,7 +42,7 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
               <ShieldCheck aria-hidden="true" className="size-4 text-[#69c78f]" />
               {t("common.fanMade")}
             </span>
-            <StatusBadge>{t("home.status")}</StatusBadge>
+            <StatusBadge>{t("home.discovery.states.earlyAccess")}</StatusBadge>
           </div>
 
           <Image
@@ -51,27 +57,21 @@ export async function HomeHero({facts, locale = "en"}: HomeHeroProps) {
             WARDOGS Wiki
           </h1>
           <p className="display-font mt-3 text-lg leading-tight text-[#edf2ef] sm:text-2xl">
-            {t("home.heroTitle")}
+            {t("home.discovery.sections.command.title")}
           </p>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-[#d6ded9] sm:text-base sm:leading-8">
-            {t("home.heroDescription")}
+            {t("home.discovery.sections.command.description")}
           </p>
 
           <HeroSearchBox
             locale={locale}
             placeholder={t("home.search.placeholder")}
-            hotTagsLabel={locale === "zh-cn" || locale === "zh-tw" ? "常用" : "Popular"}
           />
 
           <div className="mt-5 grid w-full max-w-xl gap-2.5 sm:grid-cols-2">
-            <ButtonLink href="/tools/map" homeTask="map" variant="secondary" className="min-h-11 border-[#344039] bg-[#111713]/88 text-sm text-[#d8f4e4] hover:border-[#69c78f] hover:bg-[#17251d]" title={t("nav.interactiveMap")}>
-              <Map aria-hidden="true" className="size-[18px] text-[#8ce2ad]" />
-              {t("nav.interactiveMap")}
-            </ButtonLink>
-            <ButtonLink href="/tools/artillery-calculator" homeTask="calculator" variant="secondary" className="min-h-11 border-[#344039] bg-[#111713]/88 text-sm text-[#d8f4e4] hover:border-[#69c78f] hover:bg-[#17251d]" title={t("nav.artilleryCalculator")}>
-              <Crosshair aria-hidden="true" className="size-[18px] text-[#8ce2ad]" />
-              {t("nav.artilleryCalculator")}
-            </ButtonLink>
+            {command.filter((destination) => destination.task !== "search").map((destination) => (
+              <Link key={destination.id} href={destination.href} className="task-link task-link--secondary text-[#d8f4e4]" data-home-task={destination.task} data-home-placement="command" title={t(destination.labelKey)}>{t(destination.labelKey)}</Link>
+            ))}
           </div>
 
           {proofPoints.length > 0 ? (

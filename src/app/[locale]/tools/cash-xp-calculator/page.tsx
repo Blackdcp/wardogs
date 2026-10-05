@@ -1,3 +1,6 @@
+import {buildToolRelatedLinks, ToolRelatedGuides} from "@/components/tools/tool-related-guides";
+import {ToolPageHeader} from "@/components/tools/tool-page-header";
+import {getTranslations} from "next-intl/server";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {CashXpCalculator} from "@/components/tools/cash-xp-calculator";
@@ -63,15 +66,14 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
 export default async function CashXpCalculatorPage({params}: PageProps) {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
+  const relatedLinks = await buildToolRelatedLinks("cash-xp-calculator", locale);
+  const headerT = await getTranslations({locale: locale, namespace: "nav"});
   const copy = metadataCopy[locale];
   return (
     <main className="site-container py-10 md:py-16">
-      <header className="mb-8 max-w-3xl">
-        <p className="font-mono text-xs uppercase text-[#69c78f]">{copy.title}</p>
-        <h1 className="display-font mt-3 text-balance text-3xl leading-tight text-white sm:text-4xl md:text-5xl">{copy.title}</h1>
-        <p className="mt-4 text-base leading-7 text-[#a8b4ae]">{copy.description}</p>
-      </header>
+      <ToolPageHeader toolId="cash-xp-calculator" eyebrow={copy.title} title={copy.title} description={copy.description} actions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]} />
       <CashXpCalculator locale={locale} />
+      <ToolRelatedGuides model={relatedLinks} locale={locale} />
     </main>
   );
 }

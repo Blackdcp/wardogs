@@ -83,23 +83,62 @@ test("homepage priority links emit a task click before navigation", async ({page
       if ((event.target as Element | null)?.closest("a[data-home-task]")) event.preventDefault();
     }, true);
   });
-  await page.locator('a[data-home-task="map"][data-home-placement="hero"]').click();
+  await page.locator('a[data-home-task="map"][data-home-placement="command"]').click();
   await expect.poll(() => dataLayerEvents(page, "home_task_click")).toEqual([
     expect.objectContaining({
-      parameters: expect.objectContaining({task: "map", placement: "hero", locale: "en"})
+      parameters: expect.objectContaining({task: "map", placement: "command", locale: "en", page_path: "/en", target_path: "/tools/map", link_url: new URL("/en/tools/map", page.url()).href})
     })
   ]);
-  await page.locator('a[data-home-task="videos"][data-home-placement="discovery"]').click();
+  await page.locator('a[data-home-task="videos"][data-home-placement="library"]').click();
   await expect.poll(() => dataLayerEvents(page, "home_task_click")).toContainEqual(
     expect.objectContaining({
-      parameters: expect.objectContaining({task: "videos", placement: "discovery", locale: "en"})
+      parameters: expect.objectContaining({task: "videos", placement: "library", locale: "en"})
     })
   );
   await expect.poll(() => dataLayerEvents(page, "home_task_click_videos")).toEqual([
     expect.objectContaining({
-      parameters: expect.objectContaining({task: "videos", placement: "discovery", locale: "en"})
+      parameters: expect.objectContaining({task: "videos", placement: "library", locale: "en", legacy_compat: true})
     })
   ]);
+});
+
+for (const viewport of [{width: 1440, height: 900}, {width: 390, height: 844}]) {
+  test(`command sentinel enters the shared viewport middle once on first load at ${viewport.width}px`, async ({page}) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/en");
+    await waitForAnalyticsReady(page);
+    const sentinel = page.locator('[data-home-section="command"] [data-home-section-sentinel="command"]');
+    await expect(sentinel).toHaveCount(1);
+    const top = await sentinel.evaluate((element) => element.getBoundingClientRect().top);
+    expect(top).toBeGreaterThanOrEqual(viewport.height * 0.25);
+    expect(top).toBeLessThanOrEqual(viewport.height * 0.75);
+    await expect.poll(async () => (await dataLayerEvents(page, "home_section_view")).filter((event) => event.parameters.section === "command")).toHaveLength(1);
+    await page.evaluate(() => window.dispatchEvent(new Event("resize")));
+    await expect.poll(async () => (await dataLayerEvents(page, "home_section_view")).filter((event) => event.parameters.section === "command")).toHaveLength(1);
+  });
+}
+
+test("section exposures fire once per view and reset after client navigation back", async ({page}) => {
+  await page.goto("/en");
+  await waitForAnalyticsReady(page);
+  await expect.poll(async () => (await dataLayerEvents(page, "home_section_view")).filter((event) => event.parameters.section === "command")).toHaveLength(1);
+  const sections = ["command", "proven-demand", "live-intel", "workbench", "database", "library"];
+  for (const section of sections) {
+    await page.locator(`[data-home-section-sentinel="${section}"]`).evaluate((sentinel) => {
+      window.scrollBy(0, sentinel.getBoundingClientRect().top - window.innerHeight / 2);
+    });
+    await expect.poll(async () => (await dataLayerEvents(page, "home_section_view")).filter((event) => event.parameters.section === section)).toHaveLength(1);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.locator('a[data-home-task="map"][data-home-placement="command"]').click();
+  await expect(page).toHaveURL(/\/en\/tools\/map\/?$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/en\/?$/);
+  await page.locator('[data-home-section-sentinel="command"]').evaluate((sentinel) => {
+    window.scrollBy(0, sentinel.getBoundingClientRect().top - window.innerHeight / 2);
+  });
+  await expect.poll(async () => (await dataLayerEvents(page, "home_section_view")).filter((event) => event.parameters.section === "command")).toHaveLength(2);
+  await expect(dataLayerEvents(page, "page_view")).resolves.toEqual([]);
 });
 
 test("video embed activation and catalogue filters emit their dedicated events", async ({page}) => {
@@ -193,7 +232,7 @@ test("local navigation and back send no production config or manual page views",
   await page.goto("/en");
   await waitForAnalyticsReady(page);
   await page.evaluate(() => { document.documentElement.dataset.analyticsDocument = "same-document"; });
-  await page.locator('a[data-home-task="map"][data-home-placement="hero"]').click();
+  await page.locator('a[data-home-task="map"][data-home-placement="command"]').click();
   await expect(page).toHaveURL(/\/en\/tools\/map\/?$/);
   await page.goBack();
   await expect(page).toHaveURL(/\/en\/?$/);

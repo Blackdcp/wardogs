@@ -1,96 +1,105 @@
-import {expect, test} from "@playwright/test";
+import {readFileSync} from "node:fs";
+import {expect, test, type Locator, type Page} from "@playwright/test";
+import protection from "../../config/traffic-protected-routes.json" with {type: "json"};
 
-test("home presents a focused guide-site journey with integrated high-viewability sponsorship", async ({page}) => {
-  await page.setViewportSize({width: 1365, height: 900});
-  await page.goto("/en");
+const sections = ["command", "proven-demand", "live-intel", "workbench", "database", "library"];
+async function settleFonts(page: Page) {
+  await page.evaluate(async () => {await document.fonts.ready;});
+}
 
-  const sectionOrder = await page.locator("main").evaluate((main) => {
-    const selectors = [
-      "#home-hero-title",
-      "[data-live-event]",
-      "[data-home-action-hub]",
-      "[data-home-section='guide-hub']",
-      "[data-catalogue-home-band]",
-      "[data-site-search]"
-    ];
-    const sections = Array.from(main.querySelectorAll("section"));
-
-    return selectors.map((selector) => {
-      const section = main.querySelector(selector)?.closest("section");
-      return section ? sections.indexOf(section) : -1;
+async function expectFirstScreenControl(control: Locator, page: Page) {
+  await expect(control).toBeVisible();
+  const box = await control.boundingBox();
+  expect(box, "command control must have a measurable touch area").not.toBeNull();
+  expect(box!.width).toBeGreaterThanOrEqual(44);
+  expect(box!.height).toBeGreaterThanOrEqual(44);
+  expect(box!.x).toBeGreaterThanOrEqual(0);
+  expect(box!.y).toBeGreaterThanOrEqual(0);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+  expect(box!.y + box!.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+  expect(await control.evaluate((element) => {
+    const {left, top, width, height} = element.getBoundingClientRect();
+    // The center and both vertical hit targets must resolve to this control,
+    // including while the site's sticky advertisement remains enabled.
+    return [0.25, 0.5, 0.75].every((fraction) => {
+      const hit = document.elementFromPoint(left + width / 2, top + height * fraction);
+      return hit !== null && element.contains(hit);
     });
-  });
+  }), "command touch targets must not be covered by a sticky ad/header").toBe(true);
+}
 
-  expect(sectionOrder.every((position) => position >= 0)).toBe(true);
-  expect(sectionOrder).toEqual([...sectionOrder].sort((left, right) => left - right));
+const viewports = [{width: 390, height: 844}, {width: 768, height: 1024}, {width: 1440, height: 900}, {width: 1920, height: 1080}];
 
+for (const locale of ["en", "ja"] as const) {
+  for (const viewport of viewports) {
+    test(`${locale} has exactly six shared home sections at ${viewport.width}px`, async ({page}) => {
+      await page.setViewportSize(viewport);
+      await page.goto(`/${locale}`);
+      await settleFonts(page);
+      expect(await page.locator("main > section").evaluateAll((nodes) => nodes.map((node) => node.getAttribute("data-home-section")))).toEqual(sections);
+      await expect(page.locator("main [data-home-section-sentinel]")).toHaveCount(6);
+      const demand = page.locator('[data-home-section="proven-demand"]');
+      await expect(demand.locator("[data-protected-demand]")).toHaveCount(6);
+      await expect(demand.locator(`a[href='/${locale}/items']`)).toHaveCount(1);
+      await expect(demand.locator('[data-page-ad-inventory="home"]')).toHaveCount(1);
+      await expect(page.locator('[data-page-ad-inventory="home"]')).toHaveCount(1);
+      await expect(demand.locator('[data-ad-placement="rectangle"]')).toHaveCount(1);
+      await expect(demand.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+      await expect(page.locator('[data-home-route]')).toHaveCount(3);
+      await expect(page.locator('[data-featured-tool]')).toHaveCount(4);
+      await expect(page.locator('[data-hero-popular-links], [data-site-search], [data-live-event], [data-ad-slot="adsterra-smartlink"]')).toHaveCount(0);
+      expect(await page.locator('[data-home-placement="command"][data-home-task]').evaluateAll((nodes) => nodes.map((node) => node.getAttribute("data-home-task")))).toEqual(["search", "map", "calculator", "weapons", "status"]);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
+      const mainHeight = await page.locator("main").evaluate((main) => main.getBoundingClientRect().height);
+      if (viewport.width < 768) expect(mainHeight / viewport.height).toBeLessThan(10);
+      else expect(mainHeight / viewport.height).toBeLessThanOrEqual(6);
+      if (viewport.width === 390) {
+        expect(await page.evaluate(() => window.scrollY), "first-screen contract must run without scrolling").toBe(0);
+        await expect(page.locator('[data-ad-placement="mobile-sticky-creative"]')).toHaveCount(1);
+        await expectFirstScreenControl(page.locator('[data-hero-search-trigger="true"]'), page);
+        const command = page.locator('[data-home-section="command"]');
+        for (const task of ["map", "calculator"]) {
+          await expectFirstScreenControl(command.locator(`a[data-home-task="${task}"]`), page);
+        }
+        // Keep the enabled mobile ad present while checking actual hit testing.
+        await expect(page.locator('[data-ad-placement="mobile-sticky"]')).toHaveCount(1);
+        // The production capture is immutable. Never regenerate it from this candidate.
+        const manifestPath = process.env.HOME_VISUAL_BASELINE ?? `.tmp/traffic-baseline/${protection.production.baselineRevision}/visual/manifest.json`;
+        const baseline = JSON.parse(readFileSync(manifestPath, "utf8")) as {revision: string; captures: {locale: string; viewport: {width: number; height: number}; measurement: {mainHeight: number}}[]};
+        expect(baseline.revision).toBe(protection.production.baselineRevision);
+        const capture = baseline.captures.find((entry) => entry.locale === locale && entry.viewport.width === viewport.width && entry.viewport.height === viewport.height);
+        expect(capture, "matching frozen production main-height capture").toBeDefined();
+        expect(mainHeight).toBeLessThanOrEqual(capture!.measurement.mainHeight * 1.02);
+      }
+    });
+  }
+}
 
-  const headerTools = page.locator("[data-header-tool-shortcuts='true']");
-  await expect(headerTools).toBeVisible();
-  const headerToolBox = await headerTools.boundingBox();
-  expect(headerToolBox?.height ?? 0).toBeLessThanOrEqual(38);
-
-  const heroSearchTrigger = page.locator("[data-search-trigger-style='hero-compact']");
-  await expect(heroSearchTrigger).toBeVisible();
-  const heroSearchBox = await heroSearchTrigger.boundingBox();
-  expect(heroSearchBox?.height ?? 0).toBeLessThanOrEqual(56);
-  expect(heroSearchBox?.width ?? 0).toBeLessThanOrEqual(640);
-
-  await expect(page.locator("[data-hero-trending='true']")).toHaveCount(0);
-  await expect(page.locator("[data-hero-popular-links='true'] a")).toHaveCount(5);
-
-  const heroTasks = await page.locator("[data-home-placement='hero'][data-home-task]").evaluateAll((links) => links.map((link) => link.getAttribute("data-home-task")));
-  expect(heroTasks).toEqual(["map", "calculator"]);
-  await expect(page.locator("[data-home-placement='hero'][data-home-task='season2']")).toHaveCount(0);
-  await expect(page.locator("[data-home-placement='hero'][data-home-task='status']")).toHaveCount(0);
-
-  await expect(page.locator("[data-global-ad-position='top']")).toHaveCount(0);
-
-  await expect(page.locator("[data-home-action-hub] [data-home-task]")).toHaveCount(6);
-  await expect(page.locator("[data-home-action-hub] [data-home-task='money']")).toHaveCount(1);
-  await expect(page.locator("[data-home-action-hub] [data-home-task='pcFixes']")).toHaveCount(1);
-  await expect(page.locator("[data-home-sponsored-slot='true']")).toHaveCount(1);
-  await expect(page.locator("[data-home-tools] [data-home-task]")).toHaveCount(9);
-  await expect(page.locator("[data-home-placement='collections'][href='/en/guides#collection-logistics']")).toHaveCount(1);
-  await expect(page.locator("[data-home-editorial-briefing]")).toHaveCount(0);
-  const downstreamSections = await page.locator("[data-home-section]").evaluateAll((sections) => sections.map((section) => section.getAttribute("data-home-section")));
-  expect(downstreamSections).toEqual(["tasks", "guide-hub", "catalogue", "search"]);
-
-  const viewportScreens = await page.evaluate(() => document.documentElement.scrollHeight / window.innerHeight);
-  expect(viewportScreens).toBeLessThan(8);
-
-  const searchHeight = await page.locator("[data-site-search]").evaluate((section) => section.getBoundingClientRect().height);
-  expect(searchHeight).toBeLessThan(240);
-});
-
-test("hero search opens in place instead of jumping to the footer search strip", async ({page}) => {
+test("hero search opens in place and Escape restores its trigger", async ({page}) => {
   await page.setViewportSize({width: 1440, height: 1000});
   await page.goto("/en");
-
-  await page.locator("[data-hero-search-trigger='true']").click();
-
-  await expect(page.getByRole("dialog", {name: "Search WARDOGS Wiki"})).toBeVisible();
-
-  const dialogPanel = page.locator("[data-search-dialog-panel='command']");
-  await expect(dialogPanel).toBeVisible();
-  const dialogBox = await dialogPanel.boundingBox();
-  expect(dialogBox?.width ?? 0).toBeLessThanOrEqual(640);
-
-  const dialogInput = page.locator("[data-search-dialog-input='command']");
-  await expect(dialogInput).toBeVisible();
-  const inputBox = await dialogInput.boundingBox();
-  expect(inputBox?.height ?? 0).toBeLessThanOrEqual(52);
-  await expect(page).not.toHaveURL(/#site-search-title$/);
-  const scrollY = await page.evaluate(() => window.scrollY);
-  expect(scrollY).toBeLessThan(200);
+  const trigger = page.locator('[data-hero-search-trigger="true"]');
+  await trigger.scrollIntoViewIfNeeded();
+  const scrollBefore = await page.evaluate(() => window.scrollY);
+  await trigger.click();
+  const dialog = page.getByRole("dialog", {name: "Search WARDOGS Wiki"});
+  await expect(dialog).toBeVisible();
+  expect((await dialog.boundingBox())?.width ?? 0).toBeLessThanOrEqual(640);
+  const input = dialog.getByRole("combobox");
+  await expect(input).toBeFocused();
+  expect((await input.boundingBox())?.height ?? 0).toBeLessThanOrEqual(52);
+  expect(await page.evaluate(() => window.scrollY)).toBe(scrollBefore);
+  await input.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+  expect(await page.evaluate(() => window.scrollY)).toBe(scrollBefore);
 });
 
-test("Japanese homepage keeps squad, towers, cargo, helicopter and wipe entries near the tools", async ({page}) => {
+test("Japanese homepage preserves its frozen six guide destinations", async ({page}) => {
   await page.goto("/ja");
-  const recovery = page.locator('[data-home-recovery="ja"]');
-  await expect(recovery).toBeVisible();
-  for (const slug of ["wardogs-squad-guide", "wardogs-towers-guide", "wardogs-cargo-guide", "wardogs-helicopter-guide", "wardogs-progression-wipes-guide"]) {
-    await expect(recovery.locator(`a[href='/ja/guides/${slug}'][data-home-task][data-home-placement='recovery']`)).toHaveCount(1);
+  const demand = page.locator('[data-home-section="proven-demand"]');
+  for (const slug of ["wardogs-infantry-mode", "wardogs-squad-guide", "wardogs-mortar-guide", "wardogs-towers-guide", "wardogs-best-weapons-loadouts", "wardogs-cargo-guide"]) {
+    await expect(demand.locator(`a[href='/ja/guides/${slug}'][data-home-task][data-home-placement='proven-demand']`)).toHaveCount(1);
   }
 });
 
@@ -100,9 +109,7 @@ test("guide hub anchors lead to complete task collections", async ({page}) => {
   await expect(collections).toHaveCount(6);
   const links = await collections.locator('article a').evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute("href")));
   expect(new Set(links).size).toBe(links.length);
-  for (const slug of ["wardogs-beginner-guide", "wardogs-money-guide", "wardogs-best-weapons-loadouts", "wardogs-mortar-guide", "wardogs-fob-guide", "wardogs-crash-fix", "wardogs-progression-wipes-guide"]) {
-    expect(links).toContain(`/en/guides/${slug}`);
-  }
+  for (const slug of ["wardogs-beginner-guide", "wardogs-money-guide", "wardogs-best-weapons-loadouts", "wardogs-mortar-guide", "wardogs-fob-guide", "wardogs-crash-fix", "wardogs-progression-wipes-guide"]) expect(links).toContain(`/en/guides/${slug}`);
   await page.locator('a[href="#collection-logistics"]').click();
   await expect(page).toHaveURL(/#collection-logistics$/);
   await expect(page.locator('#collection-logistics-title')).toBeInViewport();

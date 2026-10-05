@@ -1,4 +1,6 @@
-import {AlertTriangle, ArrowRight, ListChecks, Wrench} from "lucide-react";
+import {AlertTriangle, ListChecks, Wrench} from "lucide-react";
+import {TaskLink} from "@/components/ui/task-link";
+import {getItemUi} from "@/features/items/item-ui";
 import type {Locale} from "@/config/site";
 import type {GuideTaskData} from "@/features/guides/guide-task-data";
 import {getGuideTaskUi} from "@/features/guides/guide-task-data";
@@ -7,6 +9,8 @@ import {GuideTaskChecklist} from "./guide-task-checklist";
 
 export function GuideTaskPanel({data, locale}: {data: GuideTaskData; locale: Locale}) {
   const ui = getGuideTaskUi(locale);
+  const relatedTools = data.relatedTools;
+  const catalogueUi = getItemUi(locale);
   const titleId = `guide-task-${data.slug}-title`;
 
   return (
@@ -27,11 +31,21 @@ export function GuideTaskPanel({data, locale}: {data: GuideTaskData; locale: Loc
         </aside>
       ) : null}
 
-      {data.relatedTool ? (
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#2c3631] pt-5">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#8b9992]"><Wrench aria-hidden="true" className="size-4" />{ui.relatedToolLabel}</span>
-          <a className="inline-flex min-h-11 items-center gap-2 border border-[#4d946d] px-4 py-2 text-sm font-semibold text-[#79d19c] hover:bg-[#193122] hover:text-white" href={`/${locale}${data.relatedTool.href}`} title={data.relatedTool.label}>{data.relatedTool.label}<ArrowRight aria-hidden="true" className="size-4" /></a>
-        </div>
+      {relatedTools.length ? (
+        <nav className="mt-6 border-t border-[#2c3631] pt-5" aria-label={ui.relatedToolLabel}>
+          <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#8b9992]"><Wrench aria-hidden="true" className="size-4" />{ui.relatedToolLabel}</p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            {relatedTools.map((tool) => <TaskLink key={tool.href} href={`/${locale}${tool.href}`} label={tool.label} />)}
+          </div>
+        </nav>
+      ) : null}
+      {data.relatedCatalogue.length ? (
+        <nav className="mt-5" aria-label={catalogueUi.relatedItems}>
+          <p className="text-xs font-semibold uppercase text-[#8b9992]">{catalogueUi.relatedItems}</p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            {data.relatedCatalogue.map((link) => <TaskLink key={link.href} href={`/${link.locale}${link.href}`} label={link.label} variant="text" />)}
+          </div>
+        </nav>
       ) : null}
 
       <ContextualVideoEvidence locale={locale} sources={data.videos} />

@@ -28,3 +28,20 @@ export async function getRelatedGuides(locale: Locale, slug: string, limit = 3) 
     .filter((guide) => guide.slug !== slug)
     .map((guide) => [guide.slug, guide])).values()].slice(0, limit);
 }
+
+export async function getItemRelatedGuides(locale: Locale, item: {type: string; slug: string; relatedGuides: readonly string[]}) {
+  const guides = await listGuideSummaries(locale);
+  const bySlug = new Map(guides.map((guide) => [guide.slug, guide]));
+  const taskSlugs = item.slug === "sph-2" || item.slug === "mortar" || item.slug === "l81-mortar"
+    ? ["wardogs-artillery-guide", "wardogs-mortar-guide", "wardogs-map"]
+    : item.type === "weapons"
+      ? ["wardogs-best-weapons-loadouts", "wardogs-ammo-reload-guide", "wardogs-money-guide"]
+      : item.type === "vehicles"
+        ? ["wardogs-cargo-guide", "wardogs-fob-guide"]
+        : [];
+  return [...new Set([...taskSlugs, ...item.relatedGuides])].map((slug) => {
+    const guide = bySlug.get(slug);
+    if (!guide) throw new Error(`Missing localized item-related guide: ${locale}/${slug}`);
+    return guide;
+  });
+}

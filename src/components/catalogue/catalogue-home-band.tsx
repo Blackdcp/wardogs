@@ -1,14 +1,12 @@
+import {SectionHeading} from "@/components/ui/section-heading";
+import type {DiscoveryTask} from "@/features/discovery/discovery-types";
 import Image from "next/image";
 import {ArrowUpRight} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import type {ComponentType, ReactNode} from "react";
-import {catalogueGroups} from "@/features/catalogue/catalogue-groups";
-import {getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
-import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
+import {buildCatalogueHomeModel} from "@/features/catalogue/catalogue-hub-data";
 import type {CatalogueRecordType} from "@/features/catalogue/catalogue-types";
 import type {Locale} from "@/config/site";
-import {localizedItemRoutePath, resolveItemRouteTarget} from "@/features/items/item-route-availability";
-import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {assetPath} from "@/lib/assets";
 import {publicRoutePath} from "@/lib/public-url";
 
@@ -36,18 +34,22 @@ export type CatalogueHomeModelEntry = {
 
 type CatalogueHomeBandViewProps = {
   heading: string;
+  description?: string;
   modelHeading?: string;
+  hubHref?: string;
+  hubLabel?: string;
   entries: readonly CatalogueHomeBandEntry[];
   modelEntries?: readonly CatalogueHomeModelEntry[];
   LinkComponent?: CatalogueLinkComponent;
 };
 
-type CatalogueLinkComponent = ComponentType<{className: string; href: string; title: string; children: ReactNode}>;
+type CatalogueLinkProps = {className: string; href: string; title: string; children: ReactNode; "data-home-task"?: DiscoveryTask; "data-home-placement"?: "database"};
+type CatalogueLinkComponent = ComponentType<CatalogueLinkProps>;
 
 const featureSizes = "(min-width: 1280px) 574px, (min-width: 768px) calc(50vw - 48px), calc(100vw - 32px)";
 const compactSizes = "(min-width: 1280px) 277px, (min-width: 768px) calc(25vw - 28px), calc(50vw - 24px)";
 
-function NativeLink({children, ...props}: {className: string; href: string; title: string; children: ReactNode}) {
+function NativeLink({children, ...props}: CatalogueLinkProps) {
   return <a {...props}>{children}</a>;
 }
 
@@ -56,7 +58,7 @@ function CatalogueEntry({entry, LinkComponent}: {entry: CatalogueHomeBandEntry; 
 
   return (
     <li className="min-w-0" data-catalogue-entry={entry.key}>
-      <LinkComponent className="group block h-full min-w-0 overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" href={entry.href} title={entry.title}>
+      <LinkComponent className="group block h-full min-w-0 overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" href={entry.href} title={entry.title} data-home-task={entry.key === "weapons" ? "weapons" : "vehicles"} data-home-placement="database">
         <span className={`relative block overflow-hidden bg-[#090b0a] ${feature ? "aspect-[16/5]" : "aspect-[16/9]"}`}>
           <Image
             src={assetPath(entry.image)}
@@ -85,7 +87,7 @@ function CatalogueEntry({entry, LinkComponent}: {entry: CatalogueHomeBandEntry; 
 function CatalogueModelEntry({entry}: {entry: CatalogueHomeModelEntry}) {
   return (
     <li className="min-w-0" data-catalogue-model-entry={entry.key}>
-      <a aria-label={entry.title} className="group block h-full overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" href={entry.href} title={entry.title}>
+      <a aria-label={entry.title} className="group block h-full overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" href={entry.href} title={entry.title} data-home-task={entry.key.startsWith("weapons-") ? "weapons" : "vehicles"} data-home-placement="database">
         <span className="relative block aspect-[16/9] overflow-hidden bg-[#090b0a]">
           <Image
             src={assetPath(entry.image)}
@@ -107,85 +109,58 @@ function CatalogueModelEntry({entry}: {entry: CatalogueHomeModelEntry}) {
   );
 }
 
-export function CatalogueHomeBandView({heading, modelHeading = "Published model guides", entries, modelEntries = [], LinkComponent = NativeLink}: CatalogueHomeBandViewProps) {
-  const features = entries.filter((entry) => entry.layout === "feature");
-  const compact = entries.filter((entry) => entry.layout === "compact");
+export function CatalogueHomeBandView({heading, description, modelHeading = heading, hubHref = "/items", hubLabel = heading, entries, modelEntries = [], LinkComponent = NativeLink}: CatalogueHomeBandViewProps) {
+  const features = entries.filter((entry) => entry.key === "weapons" || entry.key === "vehicles");
+  const previews = modelEntries.slice(0, 4);
 
   return (
-    <section data-catalogue-home-band aria-labelledby="catalogue-home-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-10 sm:py-12" data-home-section="catalogue">
+    <section data-catalogue-home-band aria-labelledby="catalogue-home-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-10 sm:py-12" data-home-section="database">
+      <span aria-hidden="true" className="block h-px w-full" data-home-section-sentinel="database" />
       <div className="site-container">
-        <h2 id="catalogue-home-title" className="display-font max-w-3xl text-2xl leading-tight text-[#f2f5f3] sm:text-3xl">
-          {heading}
-        </h2>
-        {modelEntries.length > 0 ? (
-          <div className="mt-6 rounded-[6px] border border-[#344039] bg-[#111713] p-4">
+        <SectionHeading id="catalogue-home-title" title={heading} description={description} />
+        <div className="mt-4">
+          <LinkComponent className="inline-flex min-h-11 items-center font-semibold text-[#79d19c]" href={hubHref} title={hubLabel} data-home-task="catalogue" data-home-placement="database">{hubLabel}</LinkComponent>
+        </div>
+        <ul className="mt-5 grid gap-3 md:grid-cols-2">
+          {features.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
+        </ul>
+        {previews.length > 0 ? (
+          <div className="mt-5">
             <p className="font-mono text-xs uppercase text-[#d9a93a]">{modelHeading}</p>
-            <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {modelEntries.map((entry) => <CatalogueModelEntry entry={entry} key={entry.key} />)}
+            <ul className="mt-3 grid grid-flow-col auto-cols-[minmax(140px,1fr)] gap-3 overflow-x-auto">
+              {previews.map((entry) => <CatalogueModelEntry entry={entry} key={entry.key} />)}
             </ul>
           </div>
         ) : null}
-        <ul className="mt-6 grid gap-3 md:grid-cols-2">
-          {features.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
-        </ul>
-        <ul className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {compact.map((entry) => <CatalogueEntry entry={entry} LinkComponent={LinkComponent} key={entry.key} />)}
-        </ul>
       </div>
     </section>
   );
 }
 
-function observedCount(type: CatalogueRecordType) {
-  if (!catalogueGroups.some((group) => group.type === type)) {
-    throw new Error(`Missing catalogue group for ${type}`);
-  }
-  return getCatalogueRecords(type).length;
-}
-
 export async function CatalogueHomeBand({locale}: {locale: Locale}) {
-  const t = await getTranslations("home.catalogue");
-  const {Link} = await import("@/i18n/navigation");
-  const entries: CatalogueHomeBandEntry[] = [
-    {key: "weapons", title: t("weapons.title"), count: t("weapons.count", {count: observedCount("weapons")}), href: "/items/weapons", image: "/images/catalogue/banners/weapons-1280.webp", imageAlt: t("weapons.imageAlt"), layout: "feature", imageFit: "cover"},
-    {key: "vehicles", title: t("vehicles.title"), count: t("vehicles.count", {count: observedCount("vehicles")}), href: "/items/vehicles", image: "/images/catalogue/banners/vehicles-1280.webp", imageAlt: t("vehicles.imageAlt"), layout: "feature", imageFit: "cover"},
-    {key: "ammo", title: t("ammo.title"), count: t("ammo.count", {count: observedCount("ammo")}), href: "/items/ammo", image: "/images/catalogue/ammo/556x45mm.webp", imageAlt: t("ammo.imageAlt"), layout: "compact", imageFit: "contain"},
-    {key: "attachments", title: t("attachments.title"), count: t("attachments.count", {count: observedCount("attachments")}), href: "/items/attachments", image: "/images/catalogue/banners/attachments-1280.webp", imageAlt: t("attachments.imageAlt"), layout: "compact", imageFit: "cover"},
-    {key: "gear", title: t("gear.title"), count: t("gear.count", {count: observedCount("gear")}), href: "/items/gear", image: "/images/catalogue/gear/heavy-armor.webp", imageAlt: t("gear.imageAlt"), layout: "compact", imageFit: "contain"},
-    {key: "loadouts", title: t("loadouts.title"), count: t("loadouts.count", {count: getCatalogGuide("loadouts")?.sections.reduce((total, section) => total + section.rows.length, 0) ?? 0}), href: "/items/loadouts", image: "/images/catalogue/banners/loadouts-1280.webp", imageAlt: t("loadouts.imageAlt"), layout: "compact", imageFit: "cover"}
-  ];
-  const modelEntries: CatalogueHomeModelEntry[] = [
-    {type: "weapons" as const, slug: "a-91"},
-    {type: "weapons" as const, slug: "amp-9"},
-    {type: "vehicles" as const, slug: "bobcat"},
-    {type: "vehicles" as const, slug: "l2a6"}
-  ].map(({type, slug}) => {
-    const record = getCatalogueRecords(type).find((candidate) => candidate.slug === slug);
-    if (!record || record.detailStatus !== "published" || !record.detailHref || !record.image || !record.imageAlt) {
-      throw new Error(`Missing published homepage model: ${type}/${slug}`);
-    }
-    const localized = locale === "pl" || locale === "zh-tw" ? getLocalizedCatalogueRecords([record], locale)[0] : record;
-    return {
-      key: `${type}-${slug}` as const,
-      title: record.name,
-      subtype: localized.subtype,
-      href: publicRoutePath(localizedItemRoutePath(resolveItemRouteTarget(locale, record.detailHref))),
-      image: record.image,
-      imageAlt: localized.imageAlt ?? record.imageAlt
-    };
-  });
-
-  const LocalizedLink: CatalogueLinkComponent = ({children, href, className, title}) => (
-    <Link aria-label={title} className={className} href={href} title={title}>{children}</Link>
+  const t = await getTranslations({locale, namespace: "home.catalogue"});
+  const sectionT = await getTranslations({locale, namespace: "home.discovery.sections.database"});
+  const model = buildCatalogueHomeModel(locale);
+  const entries: CatalogueHomeBandEntry[] = model.categories.map((category) => ({
+    key: category.id,
+    title: category.label,
+    count: category.count,
+    href: category.href,
+    image: category.image,
+    imageAlt: category.imageAlt,
+    layout: "feature",
+    imageFit: category.imageFit ?? "cover"
+  }));
+  const modelEntries: CatalogueHomeModelEntry[] = model.previews.map((record) => ({
+    key: `${record.type as "weapons" | "vehicles"}-${record.slug}`,
+    title: record.name,
+    subtype: record.subtype,
+    href: publicRoutePath(record.href),
+    image: record.image,
+    imageAlt: record.imageAlt
+  }));
+  const LocalizedLink: CatalogueLinkComponent = ({children, href, ...props}) => (
+    <a aria-label={props.title} {...props} href={publicRoutePath(`/${locale}${href}`)} title={props.title}>{children}</a>
   );
-
-  return (
-    <CatalogueHomeBandView
-      heading={t("heading")}
-      modelHeading={t("publishedModels")}
-      entries={entries}
-      modelEntries={modelEntries}
-      LinkComponent={LocalizedLink}
-    />
-  );
+  return <CatalogueHomeBandView heading={sectionT("title")} description={sectionT("description")} modelHeading={t("publishedModels")} hubHref={model.destinations[0].href} hubLabel={model.hubLabel} entries={entries} modelEntries={modelEntries} LinkComponent={LocalizedLink} />;
 }

@@ -1,3 +1,4 @@
+import {getToolDefinition, type ToolId} from "@/features/tools/tool-registry";
 import type {Locale} from "@/config/site";
 
 export type NavigationSearchType = "guide" | "item" | "tool" | "map";
@@ -30,6 +31,10 @@ function isSearchNavigationItem(item: NavigationItem): item is NavigationItem & 
 }
 
 export function buildNavigation(t: Translate): NavigationGroup[] {
+  const toolItem = (id: ToolId): NavigationItem => {
+    const tool = getToolDefinition(id)!;
+    return {href: tool.href, label: t(tool.labelKey), searchType: tool.searchType};
+  };
   return [
     {
       id: "guides",
@@ -77,16 +82,17 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
       id: "mapsAndTools",
       label: t("nav.mapsAndTools"),
       items: [
-        {href: "/tools/map", label: t("nav.interactiveMap"), searchType: "map"},
-        {href: "/tools/artillery-calculator", label: t("nav.artilleryCalculator"), searchType: "tool"},
+        {href: "/tools", label: t("nav.toolsHome"), searchType: "tool"},
+        toolItem("map"),
+        toolItem("artillery-calculator"),
         {href: "/maps", label: t("nav.operationsAtlas"), searchType: "map"},
-        {href: "/tools/ammo-matcher", label: t("nav.ammoMatcher"), searchType: "tool"},
-        {href: "/tools/weapon-compare", label: t("nav.weaponCompare"), searchType: "tool"},
-        {href: "/tools/logistics-planner", label: t("nav.logisticsPlanner"), searchType: "tool"},
-        {href: "/tools/loadout-budget", label: t("nav.budgetTool"), searchType: "tool"},
-        {href: "/tools/cash-xp-calculator", label: t("nav.cashXpCalculator"), searchType: "tool"},
-        {href: "/tools/system-check", label: t("nav.systemCheck"), searchType: "tool"},
-        {href: "/tools/progression-route", label: t("nav.progressionRoute"), searchType: "tool"}
+        toolItem("ammo-matcher"),
+        toolItem("weapon-compare"),
+        toolItem("logistics-planner"),
+        toolItem("loadout-budget"),
+        toolItem("cash-xp-calculator"),
+        toolItem("system-check"),
+        toolItem("progression-route")
       ]
     },
     {id: "news", label: t("nav.news"), href: "/news", items: []}

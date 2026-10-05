@@ -25,7 +25,8 @@ const expectedSlugs = [
   "wardogs-best-weapons-loadouts",
   "wardogs-equipment-tools-guide",
   "wardogs-crash-fix",
-  "wardogs-map"
+  "wardogs-map",
+  "wardogs-artillery-guide"
 ] as const;
 
 const ps5UnconfirmedPatterns: Record<Locale, RegExp> = {
@@ -51,7 +52,7 @@ const controlsVerificationPatterns: Record<Locale, RegExp> = {
 };
 
 describe("guide task data", () => {
-  it("covers exactly the sixteen approved high-intent guides", () => {
+  it("covers exactly the seventeen approved high-intent guides", () => {
     expect(guideTaskSlugs).toEqual(expectedSlugs);
     expect(new Set(guideTaskSlugs).size).toBe(expectedSlugs.length);
   });

@@ -2,6 +2,46 @@ import {expect, test} from "@playwright/test";
 
 test.setTimeout(90_000);
 
+async function installFixedCreativeFixture(page: import("@playwright/test").Page) {
+  await page.locator('[data-ad-placement], [data-ad-slot="adsterra-native"]').evaluateAll((slots) => {
+    for (const slot of slots) {
+      if (slot.querySelector("[data-fixed-ad-creative]")) continue;
+      const creative = document.createElement("div");
+      creative.dataset.fixedAdCreative = "true";
+      creative.textContent = "ADVERTISEMENT";
+      Object.assign(creative.style, {
+        alignItems: "center",
+        background: "#111512",
+        border: "1px solid #46534d",
+        color: "#82938a",
+        display: "flex",
+        fontFamily: "sans-serif",
+        fontSize: "10px",
+        justifyContent: "center",
+        minHeight: slot.getAttribute("data-ad-placement") === "mobile-sticky" ? "50px" : "90px",
+        width: "100%"
+      });
+      slot.append(creative);
+    }
+  });
+}
+
+async function expectNoOverlap(page: import("@playwright/test").Page, target: import("@playwright/test").Locator) {
+  await target.scrollIntoViewIfNeeded();
+  const [targetBox, adBox] = await Promise.all([
+    target.boundingBox(),
+    page.locator('[data-ad-placement="mobile-sticky"]').boundingBox()
+  ]);
+  expect(targetBox).not.toBeNull();
+  expect(adBox).not.toBeNull();
+  const overlaps = Boolean(targetBox && adBox
+    && targetBox.x < adBox.x + adBox.width
+    && targetBox.x + targetBox.width > adBox.x
+    && targetBox.y < adBox.y + adBox.height
+    && targetBox.y + targetBox.height > adBox.y);
+  expect(overlaps).toBe(false);
+}
+
 for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}]) {
   test("ad slots render correctly at " + viewport.width + "px", async ({page, context}) => {
     await page.setViewportSize(viewport);
@@ -13,6 +53,7 @@ for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}])
     );
 
     await page.goto("/en/guides/wardogs-artillery-guide");
+    await installFixedCreativeFixture(page);
 
     const nativeSlot = page.locator('[data-ad-slot="adsterra-native"]');
     await expect(nativeSlot).toBeVisible();
@@ -35,3 +76,34 @@ for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}])
     }
   });
 }
+
+test("fixed mobile creatives do not cover homepage search, tasks, navigation, or the dismiss control", async ({page}) => {
+  await page.setViewportSize({width: 390, height: 844});
+  await page.goto("/en");
+  await installFixedCreativeFixture(page);
+
+  const sticky = page.locator('[data-ad-placement="mobile-sticky"]');
+  await expect(sticky).toBeVisible();
+  await expectNoOverlap(page, page.locator("header").first());
+  await expectNoOverlap(page, page.locator('[data-home-task="search"]').first());
+  await expectNoOverlap(page, page.locator("[data-home-task]:visible").nth(1));
+  await expect(page.getByRole("button", {name: "Close advertisement", exact: true})).toBeVisible();
+});
+
+test("client route changes keep one inline inventory shell per page", async ({page}) => {
+  await page.setViewportSize({width: 1440, height: 900});
+  await page.goto("/en");
+  await expect(page.locator('[data-page-ad-inventory="home"]')).toHaveCount(1);
+  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+
+  await page.locator('a[href="/en/guides"]:visible').first().click();
+  await expect(page).toHaveURL(/\/en\/guides\/?$/);
+  await expect(page.locator('[data-page-ad-inventory="guides"]')).toHaveCount(1);
+  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+
+  await page.locator('a[href="/en/items"]:visible').first().click();
+  await expect(page).toHaveURL(/\/en\/items\/?$/);
+  await expect(page.locator('[data-page-ad-inventory="items"]')).toHaveCount(1);
+  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
+  await expect(page.locator("#container-481d6501bcd0c27b98bc3c4776a26f6e")).toHaveCount(1);
+});

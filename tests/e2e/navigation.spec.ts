@@ -1,5 +1,15 @@
-import {expect, test} from "@playwright/test";
-import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {expect, test, type Page} from "@playwright/test";
+import {LOCALIZED_PRIORITY_SLUGS} from "../../src/features/home/home-traffic-assets";
+
+async function switchLocale(page: Page, locale: string, expectedUrl: RegExp) {
+  const select = page.locator("select:visible");
+  await expect(select).toBeEnabled();
+  await Promise.all([
+    page.waitForURL(expectedUrl, {waitUntil: "domcontentloaded"}),
+    select.selectOption(locale)
+  ]);
+  await expect(page.locator("select:visible")).toHaveValue(locale);
+}
 
 test("locale switching preserves the current article slug", async ({page}) => {
   await page.goto("/en/guides/wardogs-gameplay");
@@ -9,14 +19,11 @@ test("locale switching preserves the current article slug", async ({page}) => {
 
 test("locale switching preserves supported item details", async ({page}) => {
   await page.goto("/en/items/vehicles/bobcat");
-  await page.locator('select:visible').selectOption("ru");
-  await expect(page).toHaveURL(/\/ru\/items\/vehicles\/bobcat\/?$/);
+  await switchLocale(page, "ru", /\/ru\/items\/vehicles\/bobcat\/?$/);
 
   await page.goto("/en/items/weapons/mortar");
-  await page.locator('select:visible').selectOption("ru");
-  await expect(page).toHaveURL(/\/ru\/items\/weapons\/mortar\/?$/);
-  await page.locator('select:visible').selectOption("de");
-  await expect(page).toHaveURL(/\/de\/items\/weapons\/mortar\/?$/);
+  await switchLocale(page, "ru", /\/ru\/items\/weapons\/mortar\/?$/);
+  await switchLocale(page, "de", /\/de\/items\/weapons\/mortar\/?$/);
 });
 
 test("fixed legacy navigation links target only published locales", async ({page}) => {
@@ -95,7 +102,7 @@ test("desktop disclosure stays open after a fresh pointer entry and click", asyn
   await page.keyboard.press("Space");
   await expect(catalogue).toHaveAttribute("aria-expanded", "false");
 
-  const game = navigation.getByRole("button", {name: "Game"});
+  const game = navigation.getByRole("button", {name: "Maps & Tools"});
   const guides = navigation.getByRole("button", {name: "Guides"});
   await game.hover();
   await expect(game).toHaveAttribute("aria-expanded", "true");
@@ -127,10 +134,10 @@ test("mobile focus trap includes expanded links and wraps in both directions", a
   await page.getByRole("button", {name: "Open menu"}).click();
 
   const navigation = page.getByRole("navigation", {name: /primary/i});
-  const game = navigation.getByRole("button", {name: "Game"});
+  const game = navigation.getByRole("button", {name: "Maps & Tools"});
   const catalogue = navigation.getByRole("button", {name: "Catalogue"});
   const catalogueHome = navigation.getByRole("link", {name: "Catalogue Home"});
-  const videos = navigation.getByRole("link", {name: "Videos", exact: true});
+  const map = navigation.getByRole("link", {name: "Map", exact: true});
   const news = navigation.getByRole("link", {name: "News", exact: true});
 
   await catalogue.click();
@@ -139,54 +146,36 @@ test("mobile focus trap includes expanded links and wraps in both directions", a
   await page.keyboard.press("Shift+Tab");
   await expect(catalogue).toBeFocused();
 
-  for (const linkName of [
-    "Catalogue Home",
-    "Weapons",
-    "Vehicles",
-    "Ammo",
-    "Attachments",
-    "Gear",
-    "Equipment",
-    "Medical",
-    "Supplies",
-    "Deployables",
-    "Mechanics",
-    "Loadouts",
-    "Loadout Budget",
-    "Weapon Compare",
-    "Ammo Matcher"
-  ]) {
+  const catalogueContentId = await catalogue.getAttribute("aria-controls");
+  expect(catalogueContentId).toBeTruthy();
+  const catalogueLinks = navigation.locator(`[id="${catalogueContentId}"] a[href]`);
+  expect(await catalogueLinks.count()).toBeGreaterThan(0);
+  for (let position = 0; position < await catalogueLinks.count(); position += 1) {
     await page.keyboard.press("Tab");
-    await expect(navigation.getByRole("link", {name: linkName, exact: true})).toBeFocused();
+    await expect(catalogueLinks.nth(position)).toBeFocused();
   }
 
   await page.keyboard.press("Tab");
-  await expect(videos).toBeFocused();
+  await expect(game).toBeFocused();
   await news.focus();
   await page.keyboard.press("Tab");
-  await expect(game).toBeFocused();
+  await expect(map).toBeFocused();
 
+  await map.focus();
   await page.keyboard.press("Shift+Tab");
   await expect(news).toBeFocused();
 });
 
-test("homepage exposes the official trailer and collected creator videos", async ({page}) => {
+test("homepage hands video discovery to the library while the official trailer remains available", async ({page}) => {
   await page.goto("/en");
-
-  const trailer = page.getByRole("button", {name: /WARDOGS Official Reveal Trailer/});
+  const videoLibrary = page.locator('[data-home-section="library"] a[href="/en/videos"]');
+  await expect(videoLibrary).toBeVisible();
+  await videoLibrary.click();
+  await expect(page).toHaveURL(/\/en\/videos\/?$/);
+  await expect(page.locator("#creator-candidates article")).toHaveCount(14);
+  await page.goto("/en/guides/wardogs-trailer");
+  const trailer = page.getByRole("button", {name: /WARDOGS Reveal Trailer/});
   await expect(trailer).toBeVisible();
-  await expect(page.getByText("7 Things You NEED To Know About WARDOGS", {exact: true})).toBeVisible();
-  await expect(page.getByText("WARDOGS Gameplay and Impressions...", {exact: true})).toBeVisible();
-  await expect(page.getByText("WARDOGS Alpha - Gameplay and Impressions!", {exact: true})).toBeVisible();
-
-  const finalCta = page.getByRole("link", {name: /Explore the Guides/});
-  await expect(finalCta).toBeVisible();
-  const colors = await finalCta.evaluate((element) => {
-    const styles = getComputedStyle(element);
-    return {foreground: styles.color, background: styles.backgroundColor};
-  });
-  expect(colors.foreground).not.toBe(colors.background);
-
   await trailer.click();
   await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/hVtmnaUCpuQ"]')).toBeVisible();
 });
@@ -198,20 +187,18 @@ test("new standalone video articles expose their privacy-enhanced source player"
   await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/tF4-GnGlo4I"]')).not.toHaveAttribute("src", /autoplay=1/);
 });
 
-test("homepage promotes priority guide links and confirmed status signals", async ({page}) => {
+test("homepage preserves the English traffic assets and dated live-intel routes", async ({page}) => {
   await page.goto("/en");
-
-  await expect(page.getByRole("heading", {name: "Top Guides"})).toBeVisible();
-  await expect(page.getByRole("heading", {name: "Recently Updated"})).toBeVisible();
-  await expect(page.getByRole("heading", {name: "Confirmed vs Rumor"})).toBeVisible();
-  const topGuides = page.getByRole("list", {name: "Top Guides"});
-  const statusSection = page.getByRole("heading", {name: "Confirmed vs Rumor"}).locator("xpath=ancestor::section");
-  for (const slug of TOP_GUIDE_SLUGS.slice(0, 6)) {
-    await expect(topGuides.locator(`a[href="/en/guides/${slug}"]`)).toBeVisible();
+  const demand = page.locator('[data-home-section="proven-demand"]');
+  for (const slug of LOCALIZED_PRIORITY_SLUGS.en) {
+    await expect(demand.locator(`a[href="/en/guides/${slug}"][data-home-placement="proven-demand"]`)).toHaveCount(1);
   }
-  await expect(statusSection.getByText("Steam Early Access is live", {exact: true})).toBeVisible();
-  await expect(statusSection.getByText("Patch 0.11 is the current official checkpoint", {exact: true})).toBeVisible();
-  await expect(statusSection.getByText("Console versions are planned for 2028", {exact: true})).toBeVisible();
+  const intel = page.locator('[data-home-section="live-intel"]');
+  await expect(intel.locator("[data-home-intel]")).toHaveCount(3);
+  await expect(intel.locator("time")).toHaveCount(3);
+  const intelNavigation = intel.getByRole("navigation");
+  await expect(intelNavigation.locator('a[href="/en/guides/wardogs-server-status"]')).toBeVisible();
+  await expect(intelNavigation.locator('a[href="/en/guides/wardogs-patch-notes"]')).toBeVisible();
 });
 
 test("first-look guide embeds all three supplied YouTube reports", async ({page}) => {
@@ -219,4 +206,17 @@ test("first-look guide embeds all three supplied YouTube reports", async ({page}
   await expect(page.getByRole("button", {name: /7 Things You NEED To Know About WARDOGS/})).toBeVisible();
   await expect(page.getByRole("button", {name: /WARDOGS Gameplay and Impressions/})).toBeVisible();
   await expect(page.getByRole("button", {name: /WARDOGS Alpha - Gameplay and Impressions/})).toBeVisible();
+});
+
+test("Tools hub stays reachable through the grouped navigation and its return action", async ({page}) => {
+  await page.goto("/en/guides");
+  const navigation = page.getByRole("navigation", {name: /primary/i});
+  await navigation.getByRole("button", {name: "Maps & Tools"}).click();
+  await navigation.getByRole("link", {name: "Tools", exact: true}).click();
+  await expect(page).toHaveURL(/\/en\/tools\/?$/);
+  await expect(page.locator('[data-tool-entry]')).toHaveCount(9);
+  await page.locator('[data-tool-entry="weapon-compare"] [data-task-link="primary"]').click();
+  await expect(page.locator('[data-tool-page-hero="weapon-compare"]')).toBeVisible();
+  await page.locator('[data-tool-page-hero="weapon-compare"] a[href="/en/tools"]').click();
+  await expect(page).toHaveURL(/\/en\/tools\/?$/);
 });

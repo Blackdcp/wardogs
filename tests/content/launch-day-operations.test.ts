@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
-import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 import {getPublicStatus} from "../../src/features/live-ops/public-status";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;

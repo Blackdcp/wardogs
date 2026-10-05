@@ -1,5 +1,7 @@
+import {HubHeader} from "@/components/ui/hub-header";
+import {SectionHeading} from "@/components/ui/section-heading";
 import type {Metadata} from "next";
-import {CalendarDays, CheckCircle2, HelpCircle, Newspaper} from "lucide-react";
+import {CalendarDays, CheckCircle2, HelpCircle} from "lucide-react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {isLocale, locales, type Locale} from "@/config/site";
@@ -46,23 +48,14 @@ export default async function NewsPage({params}: PageProps) {
 
   return (
     <main>
-      <section className="border-b border-[#2c3631] bg-[#111512] py-16 md:py-24">
-        <div className="site-container">
-          <p className="inline-flex items-center gap-2 font-mono text-xs uppercase text-[#68bd8d]">
-            <Newspaper aria-hidden="true" className="size-4" />
-            {t("eyebrow")}
-          </p>
-          <h1 className="display-font mt-4 max-w-5xl text-5xl leading-none text-white md:text-7xl">{t("title")}</h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">{t("description")}</p>
-        </div>
-      </section>
+      <HubHeader eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
 
       <section className="border-b border-[#2c3631] bg-[#0d0f0e] py-14 md:py-18">
         <div className="site-container grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
           <div>
             <div className="flex items-center gap-3">
               <CalendarDays aria-hidden="true" className="size-5 text-[#d9a93a]" />
-              <h2 className="display-font text-3xl text-white">{t("timeline.title")}</h2>
+              <SectionHeading title={t("timeline.title")} />
             </div>
             <ol className="mt-7 border-l border-[#344039]">
               {timeline.map((item) => (
@@ -88,7 +81,7 @@ export default async function NewsPage({params}: PageProps) {
           <aside className="border-t border-[#344039] pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
             <div className="flex items-center gap-3">
               <CheckCircle2 aria-hidden="true" className="size-5 text-[#69c78f]" />
-              <h2 className="display-font text-3xl text-white">{t("checklist.title")}</h2>
+              <SectionHeading title={t("checklist.title")} />
             </div>
             <p className="mt-4 text-sm leading-7 text-[#a8b4ae]">{t("checklist.description")}</p>
             <ul className="mt-6 space-y-3">
@@ -109,7 +102,7 @@ export default async function NewsPage({params}: PageProps) {
         <div className="site-container">
           <div className="flex items-center gap-3">
             <HelpCircle aria-hidden="true" className="size-5 text-[#79a9d1]" />
-            <h2 className="display-font text-3xl text-white">{t("rules.title")}</h2>
+            <SectionHeading title={t("rules.title")} />
           </div>
           <div className="mt-7 grid gap-px bg-[#2c3631] md:grid-cols-3">
             {(["official", "rumor", "refresh"] as const).map((key) => (

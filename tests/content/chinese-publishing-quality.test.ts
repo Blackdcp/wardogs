@@ -2,7 +2,7 @@ import {readdirSync, readFileSync} from "node:fs";
 import path from "node:path";
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
-import {HOME_CATEGORY_GUIDES, TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {LOCALIZED_PRIORITY_SLUGS} from "../../src/features/home/home-traffic-assets";
 
 const criticalAccessSlugs = [
   "wardogs-beta",
@@ -202,10 +202,7 @@ describe("Simplified Chinese publishing quality", () => {
   });
 
   it("keeps every homepage-recommended Chinese guide at reviewed publishing quality", async () => {
-    const homepageSlugs = new Set([
-      ...TOP_GUIDE_SLUGS,
-      ...HOME_CATEGORY_GUIDES.map(({slug}) => slug),
-    ]);
+    const homepageSlugs = new Set(LOCALIZED_PRIORITY_SLUGS["zh-cn"]);
 
     for (const slug of homepageSlugs) {
       const guide = await loadGuideDocument("zh-cn", slug);

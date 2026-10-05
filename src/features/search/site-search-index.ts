@@ -12,6 +12,7 @@ import {getGuideTaskData} from "@/features/guides/guide-task-data";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
 import {itemLibrary, itemTypes} from "@/features/items/item-library";
 import {getSearchNavigationItems} from "@/features/navigation/navigation-data";
+import {TOOL_REGISTRY} from "@/features/tools/tool-registry";
 import {currentVideoAnchorId, currentVideoSources} from "@/features/videos/video-library";
 import type {SiteSearchEntry as SearchEntry} from "./site-search-runtime";
 export {
@@ -104,7 +105,7 @@ export async function buildSiteSearchIndex(locale: Locale): Promise<SearchEntry[
     type: item.searchType,
     title: item.label,
     aliases: [item.href.split("/").filter(Boolean).join(" ").replaceAll("-", " ")],
-    summary: getMessage(locale, item.searchType === "map" ? "home.search.mapSummary" : "home.search.toolSummary"),
+    summary: getMessage(locale, TOOL_REGISTRY.find((tool) => tool.href === item.href)?.descriptionKey ?? (item.href === "/tools" ? "toolsHub.description" : item.searchType === "map" ? "home.search.mapSummary" : "home.search.toolSummary")),
     taskIntent: [item.label],
     category: item.category,
     href: item.href

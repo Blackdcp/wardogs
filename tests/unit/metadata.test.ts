@@ -1,5 +1,5 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
-import {buildAlternates, buildArticleMetadata, buildSiteMetadata, getSiteOrigin} from "../../src/lib/metadata";
+import {buildAlternates, buildArticleMetadata, buildPageMetadata, buildSiteMetadata, getSiteOrigin} from "../../src/lib/metadata";
 import {loadGuideDocument} from "../../src/content/guides";
 
 type TestSocialImage = {url: string | URL; width?: number; height?: number};
@@ -83,6 +83,22 @@ describe("localized metadata", () => {
 
   it("advertises the RSS feed for browser and feed-reader discovery", () => {
     expect(buildSiteMetadata().alternates?.types).toEqual({"application/rss+xml": "/feed.xml"});
+  });
+
+  it("gives the Tools hub a localized canonical and complete reciprocal hreflang set", () => {
+    const metadata = buildPageMetadata("ja", "/tools", "WARDOGS ツール", "WARDOGS のツール一覧と使い方を確認できます。");
+    expect(metadata.alternates?.canonical).toBe("http://localhost:3000/ja/tools");
+    expect(metadata.alternates?.languages).toEqual({
+      en: "http://localhost:3000/en/tools",
+      ru: "http://localhost:3000/ru/tools",
+      de: "http://localhost:3000/de/tools",
+      "pt-BR": "http://localhost:3000/pt-br/tools",
+      ja: "http://localhost:3000/ja/tools",
+      "zh-CN": "http://localhost:3000/zh-cn/tools",
+      "zh-TW": "http://localhost:3000/zh-tw/tools",
+      pl: "http://localhost:3000/pl/tools",
+      "x-default": "http://localhost:3000/en/tools"
+    });
   });
 
   it("publishes local Team17 discovery assets as absolute social URLs", async () => {

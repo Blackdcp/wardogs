@@ -67,6 +67,18 @@ describe("public URL contract", () => {
     expect(publicAssetUrl("/images/catalogue/vehicles/bobcat.webp?v=1#preview")).toBe("https://blackdcp.github.io/wardogs/images/catalogue/vehicles/bobcat.webp?v=1#preview");
   });
 
+  it("keeps directory-route slashes when the client bundle only exposes the public base path", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://blackdcp.github.io/wardogs");
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    vi.stubEnv("GITHUB_PAGES", "");
+
+    expect(publicRoutePath("/de/guides/wardogs-gameplay")).toBe("/wardogs/de/guides/wardogs-gameplay/");
+    expect(publicRoutePath("/api/search-index/en")).toBe("/wardogs/api/search-index/en");
+    expect(publicRoutePath("/api/revision")).toBe("/wardogs/api/revision");
+    expect(publicRoutePath("/sitemap.xml")).toBe("/wardogs/sitemap.xml");
+    expect(publicAssetPath("/images/catalogue/vehicles/bobcat.webp")).toBe("/wardogs/images/catalogue/vehicles/bobcat.webp");
+  });
+
   it("includes the configured base path exactly once when the site URL already embeds it", () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://blackdcp.github.io/wardogs/");
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");

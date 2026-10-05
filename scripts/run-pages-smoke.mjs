@@ -10,6 +10,7 @@ const env = {
   GITHUB_PAGES: process.env.GITHUB_PAGES ?? "true",
   NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH ?? "/wardogs",
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? "https://blackdcp.github.io",
+  WARDOGSWIKI_RELEASE_SHA: process.env.WARDOGSWIKI_RELEASE_SHA ?? "0000000000000000000000000000000000000001",
   ...(process.env.PLAYWRIGHT_EXECUTABLE_PATH
     ? {}
     : existsSync(installedChrome) ? {PLAYWRIGHT_EXECUTABLE_PATH: installedChrome} : {})

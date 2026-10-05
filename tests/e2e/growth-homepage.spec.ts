@@ -16,17 +16,15 @@ for (const locale of ["en", "ja"] as const) {
       const hero = page.locator('img[src*="wardogs-hero"]');
       await expect(hero).toBeVisible();
       await expect.poll(() => hero.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
-      const summary = page.locator("[data-live-event]");
-      await expect(summary).toContainText(locale === "ja" ? "10月15日" : "October 15");
-      await expect(summary.locator('a[href$="/guides/wardogs-season-2"]')).toBeVisible();
-      const guideHub = page.locator("[data-home-section='guide-hub']");
-      await expect(guideHub).toBeVisible();
-      await expect(guideHub.locator("[data-home-tools] a[href$='/tools/map']")).toBeVisible();
-      if (locale === "ja") {
-        await expect(guideHub.locator("[data-home-recovery='ja'] a[href$='/guides/wardogs-helicopter-guide']")).toBeVisible();
-      } else {
-        await expect(guideHub.locator("a[href$='/guides#collection-combat']")).toBeVisible();
-      }
+      const command = page.locator('[data-home-section="command"]');
+      await expect(command.locator('a[href$="/tools/map"]')).toBeVisible();
+      await expect(command.locator('a[href$="/tools/artillery-calculator"]')).toBeVisible();
+      await expect(page.locator('[data-home-section="proven-demand"] [data-protected-demand]')).toHaveCount(6);
+      const intel = page.locator('[data-home-section="live-intel"]');
+      await expect(intel.locator('time')).toHaveCount(3);
+      const library = page.locator('[data-home-section="library"]');
+      await expect(library.locator('[data-home-route]')).toHaveCount(3);
+      await expect(library.locator('a[href$="/guides#collection-combat"]')).toBeVisible();
       if (width === 390) {
         await page.getByRole("button", {name: locale === "ja" ? "広告を閉じる" : "Close advertisement", exact: true}).click();
         await expect(page.locator('[data-ad-placement="mobile-sticky"]')).toHaveCount(0);

@@ -1,7 +1,11 @@
+import {HubHeader} from "@/components/ui/hub-header";
+import {SectionHeading} from "@/components/ui/section-heading";
 import type {Metadata} from "next";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {isLocale, siteLocales, type Locale} from "@/config/site";
+import {GuideRouteGrid} from "@/components/guides/guide-route-grid";
+import {resolveGuideRoutes} from "@/features/guides/guide-routes";
 import {GuideGrid} from "@/components/guides/guide-grid";
 import {VideoGuideStrip} from "@/components/guides/video-guide-strip";
 import {getGuideHubCopy, groupGuideCollections} from "@/features/guides/guide-collections";
@@ -42,6 +46,8 @@ export default async function GuidesPage({params}: PageProps) {
     buildGuideIndex(locale)
   ]);
   const collections = groupGuideCollections(guides);
+  const routes = resolveGuideRoutes(guides, locale);
+  const routeT = await getTranslations({locale});
   const hubCopy = getGuideHubCopy(locale);
   const categoryLabels = Object.fromEntries(
     (["access", "release", "store", "platform", "video", "community", "developer", "guide"] as GuideCategory[])
@@ -51,13 +57,8 @@ export default async function GuidesPage({params}: PageProps) {
   return (
     <main>
       <JsonLd data={buildGuideIndexJsonLd(locale, guides)} />
-      <section className="border-b border-[#2c3631] bg-[#111512] py-16 md:py-24">
-        <div className="site-container">
-          <p className="font-mono text-xs uppercase text-[#68bd8d]">{t("count", {count: guides.length})}</p>
-          <h1 className="display-font mt-4 max-w-4xl text-5xl leading-none text-white md:text-7xl">{t("title")}</h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">{t("description", {count: guides.length})}</p>
-        </div>
-      </section>
+      <HubHeader eyebrow={t("count", {count: guides.length})} title={t("title")} description={t("description", {count: guides.length})} />
+      <GuideRouteGrid routes={routes} t={routeT} />
       <section className="site-container py-10 md:py-12">
         <nav aria-label={hubCopy.title} className="mb-8 flex flex-wrap gap-2">
           {collections.map((collection) => (
@@ -76,7 +77,7 @@ export default async function GuidesPage({params}: PageProps) {
       <div className="site-container space-y-10 py-10 md:py-12">
         {collections.map((collection) => (
           <section className="scroll-mt-24" id={`collection-${collection.key}`} key={collection.key} aria-labelledby={`collection-${collection.key}-title`}>
-            <h2 className="display-font mb-4 text-3xl text-white" id={`collection-${collection.key}-title`}>{hubCopy.collections[collection.key]} <span className="text-lg text-[#82938a]">({collection.guides.length})</span></h2>
+            <SectionHeading id={`collection-${collection.key}-title`} title={`${hubCopy.collections[collection.key]} (${collection.guides.length})`} />
             <GuideGrid guides={collection.guides} readLabel={t("read")} categoryLabels={categoryLabels} />
           </section>
         ))}

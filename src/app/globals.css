@@ -50,3 +50,23 @@ iframe {border: 0;}
 @media (prefers-reduced-motion: reduce) {html {scroll-behavior: auto;} *, *::before, *::after {animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important;}}
 
 [data-search-dialog-input="command"]:focus-visible {outline: 0; outline-offset: 0;}
+
+/* Shared discovery UI keeps the established Oswald/Inter, surfaces and focus colors. */
+.hub-header {min-width: 0;}
+.hub-header--hub {border-bottom: 1px solid var(--border); background: #111512; padding-block: clamp(2.5rem, 5vw, 4rem);}
+.hub-header--tool {max-width: 56rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);}
+.hub-header--overlay {max-width: 56rem;}
+.hub-eyebrow {font-family: "Inter", sans-serif; font-size: .75rem; font-weight: 600; text-transform: uppercase; color: #79d19c; margin: 0;}
+.hub-title, .section-title {font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: 0; color: var(--text); overflow-wrap: anywhere; text-wrap: balance; line-height: 1.12; margin: .75rem 0 0;}
+.hub-title {max-width: 64rem; font-size: clamp(2rem, 4vw, 3.75rem);}
+.hub-header--tool .hub-title {font-size: clamp(1.875rem, 3.5vw, 3rem);}
+.hub-description {max-width: 48rem; margin: 1rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.75;}
+.section-heading {min-width: 0; margin-bottom: 1.5rem;}
+.section-title {font-size: clamp(1.5rem, 2.5vw, 2.25rem);}
+.task-link {display: inline-flex; min-height: 44px; min-width: 0; align-items: center; justify-content: center; padding: .65rem 1rem; border: 1px solid #46534d; border-radius: 6px; color: var(--text); font-size: .875rem; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; transition: color .15s, background-color .15s, border-color .15s;}
+.task-link--primary {border-color: #397b59; background: #244332; color: #d8f4e4;}
+.task-link--secondary {background: #111713; color: #79d19c;}
+.task-link--text {border-color: transparent; justify-content: start; padding-inline: 0; color: #79d19c;}
+.task-link:hover {border-color: #79d19c; background: #1e2923; color: #fff;}
+.task-link:focus-visible, .navigation-link:focus-visible {outline: 3px solid hsl(var(--nav-theme-light)); outline-offset: 3px;}
+.navigation-link {min-height: 44px; overflow-wrap: anywhere;}

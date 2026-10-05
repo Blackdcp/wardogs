@@ -12,7 +12,6 @@ vi.mock("next-intl/server", () => ({
 }));
 vi.mock("next/navigation", () => ({notFound: vi.fn()}));
 vi.mock("@/components/guides/guide-grid", () => ({GuideGrid: () => null}));
-vi.mock("@/components/home/priority-guides", () => ({PriorityGuides: () => null}));
 vi.mock("@/components/guides/video-guide-strip", () => ({VideoGuideStrip: () => null}));
 vi.mock("@/components/seo/json-ld", () => ({JsonLd: () => null}));
 vi.mock("@/features/guides/guide-index", () => ({buildGuideIndex: vi.fn(async () => [])}));

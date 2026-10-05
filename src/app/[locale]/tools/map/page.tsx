@@ -1,3 +1,5 @@
+import {buildToolRelatedLinks, ToolRelatedGuides} from "@/components/tools/tool-related-guides";
+import {ToolPageHeader} from "@/components/tools/tool-page-header";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {getTranslations} from "next-intl/server";
@@ -31,21 +33,13 @@ export default async function TacticalMapPage({params}: PageProps) {
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
   const c = interactiveMapPageCopy[locale];
+  const relatedLinks = await buildToolRelatedLinks("map", locale);
+  const headerT = await getTranslations({locale, namespace: "nav"});
   const t = await getTranslations({locale, namespace: "ads"});
 
   return (
     <main className="site-container py-8 md:py-12">
-      <header className="mb-6 max-w-4xl border-b border-[#2b3530] pb-6" data-tool-page-hero="map">
-        <span className="inline-flex min-h-7 items-center rounded-[4px] border border-[#46534d] bg-[#101512] px-2.5 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-[#79d19c]">
-          {c.badge}
-        </span>
-        <h1 className="display-font mt-3 text-3xl leading-tight text-white sm:text-4xl md:text-5xl">
-          {c.title}
-        </h1>
-        <p className="mt-3 max-w-3xl text-base leading-7 text-[#b8c4be]">
-          {c.desc}
-        </p>
-
+      <ToolPageHeader toolId="map" eyebrow={c.badge} title={c.title} description={c.desc} actions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]}>
         <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-[6px] border border-[#344039] bg-[#111613] p-4" data-tool-crosslink="artillery">
           <div className="flex min-w-0 items-start gap-3">
             <Crosshair aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-[#8ce2ad]" />
@@ -61,11 +55,13 @@ export default async function TacticalMapPage({params}: PageProps) {
             <span>{c.calcCta}</span>
           </Link>
         </div>
-      </header>
+      </ToolPageHeader>
 
       <section aria-label={c.title}>
         <WardogsMapViewer initialMap="bakurani" locale={locale} />
       </section>
+
+      <ToolRelatedGuides model={relatedLinks} locale={locale} />
 
       {/* Dwell-Time Monetization: High viewability for players running maps on secondary monitors */}
       <section className="mt-8 pt-6 border-t border-[#2b3530]" data-page-ad-inventory="tools-map">

@@ -1,3 +1,4 @@
+import type {DiscoveryTask} from "@/features/discovery/discovery-types";
 import Image from "next/image";
 import {ArrowUpRight} from "lucide-react";
 import {Link} from "@/i18n/navigation";
@@ -11,6 +12,7 @@ type CatalogueCategoryCardProps = {
   image: string;
   imageAlt: string;
   imageFit?: "cover" | "contain";
+  discoveryTask?: DiscoveryTask;
 };
 
 const categorySizes = "(min-width: 1280px) 386px, (min-width: 768px) calc(50vw - 44px), calc(100vw - 32px)";
@@ -22,11 +24,12 @@ export function CatalogueCategoryCard({
   href,
   image,
   imageAlt,
-  imageFit = "cover"
+  imageFit = "cover",
+  discoveryTask = "catalogue"
 }: CatalogueCategoryCardProps) {
   return (
     <li data-catalogue-category className="min-w-0 border border-[#303b35] bg-[#151b18]">
-      <Link aria-label={title} className="group flex h-full min-w-0 flex-col" href={href} title={title}>
+      <Link aria-label={title} className="group flex h-full min-w-0 flex-col" href={href} title={title} data-discovery-hub="catalogue" data-discovery-task={discoveryTask} data-discovery-target={href}>
         <span className="relative block aspect-[16/9] overflow-hidden bg-[#090c0a]">
           <Image
             src={assetPath(image)}

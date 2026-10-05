@@ -57,7 +57,7 @@ const localeText = {
   asOf: "Alfa 1 - 7 sierpnia 2026",
   sources: ["WARDOGS na Steam", "WARDOGS na stronie Team17", "WARDOGS na stronie BULKHEAD"]
 },
-  "zh-tw": { count: (n: number, l: string) => `${l}：${n} 條記錄`, description: (l: string) => `WARDOGS ${l}完整觀察圖鑑。比較型號、定位、測試版本價格和證據，不推測最終平衡。`, disclaimer: "社群在預釋出版本中觀察到的資料。價格、解鎖、平衡和可用性可能在搶先體驗前發生變化。", section: (s: string, l: string) => `${s}：${l}類別中已觀察的型號與數值。所有數字僅對應標註的測試版本。`, insight: (l: string) => [`${l}應按照明確的職責、預算和補給計劃選擇。`, "已觀察數值適合比較選項，但不是最終平衡表。", "昂貴選擇只有在小隊能持續使用和補給時才有價值。"], unknown: (l: string) => [`${l}在搶先體驗版中的最終屬性尚未確認。`, "價格、進度、可用性和平衡可能隨新版本改變。", "不能根據單個影片或截圖補寫缺失數值。"], asOf: "Alpha 1 — 2026年8月7日", sources: ["WARDOGS Steam 頁面", "Team17 WARDOGS 頁面", "BULKHEAD WARDOGS 頁面"] }
+  "zh-tw": { count: (n: number, l: string) => `${l}：${n} 筆紀錄`, description: (l: string) => `WARDOGS ${l}觀察圖鑑。比較型號、用途、測試版本的價格與證據，避免推測最終平衡。`, disclaimer: "社群在上市前測試版本觀察到的資料。價格、解鎖條件、平衡與取得方式可能在搶先體驗前改變。", section: (s: string, l: string) => `${s}：已觀察到的${l}型號與數值。所有數字都只適用於標註的測試版本。`, insight: (l: string) => [`選擇${l}時，先確認用途、預算與補給計畫。`, "已觀察到的數值可用來比較選項，但不是最終的平衡表。", "只有小隊能持續運用並提供補給，高價選項才值得投入。"], unknown: (l: string) => [`${l}在搶先體驗版的最終性能尚未確認。`, "價格、進度、取得方式與平衡可能隨版本更新而改變。", "不能僅憑一支影片或一張截圖補上缺少的數值。"], asOf: "Alpha 1 — 2026年8月7日", sources: ["WARDOGS Steam 頁面", "Team17 WARDOGS 頁面", "BULKHEAD WARDOGS 頁面"] }
 } as const;
 
 const localizedDataAsOf: Record<Exclude<Locale, "en">, Record<string, string>> = {
@@ -234,9 +234,9 @@ const catalogueEvidenceDisclaimers: Record<Locale, Record<CatalogueGuideEvidence
   "mixed": "Połączenie dowodów aktualnych i historycznych. Bieżące oficjalne fakty są oznaczone osobno; starsze i niezweryfikowane zapisy dotyczą wyłącznie podanej wersji."
 },
   "zh-tw": {
-    current: "僅使用當前官方證據。只有引用來源直接說明的事實才視為已確認，不補寫來源未提供的數值。",
-    historical: "僅包含歷史記錄或未驗證記錄。除非較新的引用來源明確複核，否則數值和可用性均不視為當前資訊。",
-    mixed: "當前證據與歷史證據並存。當前官方事實會單獨標記；舊記錄或未驗證記錄只適用於其標註版本。",
+    current: "僅採用目前的官方證據。只有引用來源明確說明的事實才視為已確認，來源沒有提供的數值不會自行補上。",
+    historical: "僅包含歷史紀錄或尚未驗證的紀錄。除非較新的來源明確重新確認，否則數值與取得方式都不能視為目前的資訊。",
+    mixed: "目前與歷史證據並存。已確認的官方事實會分別標示；舊紀錄或尚未驗證的紀錄只適用於標示的版本。",
 }
 };
 

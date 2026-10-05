@@ -1,6 +1,7 @@
+import {HubHeader} from "@/components/ui/hub-header";
+import {SectionHeading} from "@/components/ui/section-heading";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
-import {Clapperboard} from "lucide-react";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {CurrentVideoSourceGrid} from "@/components/videos/current-video-source-grid";
 import {VideoCandidateList} from "@/components/videos/video-candidate-list";
@@ -51,26 +52,11 @@ export default async function VideosPage({params}: PageProps) {
 
   return (
     <main>
-      <section className="border-b border-[#2c3631] bg-[#111512] py-16 md:py-24">
-        <div className="site-container">
-          <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#d9a93a]">
-            <Clapperboard aria-hidden="true" className="size-4" />
-            {ui.eyebrow}
-          </p>
-          <h1 className="display-font mt-4 max-w-4xl text-5xl leading-none text-white md:text-7xl">{ui.hubTitle}</h1>
-          <p className="mt-6 max-w-3xl text-base leading-7 text-[#a8b4ae] md:text-lg">
-            {ui.hubDescription(videoArticles.length)}
-          </p>
-        </div>
-      </section>
+      <HubHeader eyebrow={ui.eyebrow} title={ui.hubTitle} description={ui.hubDescription(videoArticles.length)} />
       <VideoCandidateList locale={locale} />
       <section className="border-b border-[#2c3631] bg-[#151b18]">
         <div className="site-container py-12 md:py-16">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.seasonOneCurrent}</p>
-            <h2 className="display-font mt-3 text-4xl text-white md:text-5xl">{ui.currentSourcesTitle}</h2>
-            <p className="mt-4 text-sm leading-7 text-[#a8b4ae] md:text-base">{ui.currentSourcesDescription}</p>
-          </div>
+          <SectionHeading eyebrow={ui.seasonOneCurrent} title={ui.currentSourcesTitle} description={ui.currentSourcesDescription} />
           <div className="mt-8"><CurrentVideoSourceGrid locale={locale} sources={currentVideoSources} /></div>
         </div>
       </section>
@@ -80,10 +66,7 @@ export default async function VideosPage({params}: PageProps) {
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
       <section className="site-container py-12 md:py-16">
-        <div className="mb-8">
-          <p className="text-xs font-semibold uppercase text-[#d9a93a]">{ui.betaWorkflow} / {ui.historicalReference}</p>
-          <h2 className="display-font mt-3 text-4xl text-white">{ui.allVideos}</h2>
-        </div>
+        <SectionHeading eyebrow={`${ui.betaWorkflow} / ${ui.historicalReference}`} title={ui.allVideos} />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {sortedArticles.map((article, index) => (
             <VideoArticleCard article={article} locale={locale} eager={index === 0} key={article.slug} />

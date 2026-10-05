@@ -24,7 +24,8 @@ import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {getLocalizedItem, getLocalizedItemType} from "@/features/items/item-localization";
 import {getItemUi} from "@/features/items/item-ui";
-import {loadGuideDocument} from "@/content/guides";
+import {getItemRelatedGuides} from "@/features/guides/related";
+import {TaskLink} from "@/components/ui/task-link";
 import {getTranslations} from "next-intl/server";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
@@ -63,9 +64,7 @@ export default async function ItemDetailPage({params}: PageProps) {
   const baseItemType = getItemType(item.type);
   const itemType = baseItemType ? getLocalizedItemType(baseItemType, locale) : undefined;
   const relatedItems = getRelatedItems(baseItem, locale).map((related) => getLocalizedItem(related, locale));
-  const relatedGuideDocuments = await Promise.all(
-    item.relatedGuides.map((guideSlug) => loadGuideDocument(locale, guideSlug))
-  );
+  const relatedGuides = await getItemRelatedGuides(locale, baseItem);
   const ui = getItemUi(locale);
   const quickFacts = item.facts.map(({label, value}) => ({label, value}));
   const freshness = getCatalogueFreshness({dataAsOf: baseItem.build, evidence: baseItem.evidence});
@@ -235,11 +234,9 @@ export default async function ItemDetailPage({params}: PageProps) {
           <div>
             <h2 className="display-font text-3xl text-white">{ui.relatedGuides}</h2>
             <ul className="mt-4 space-y-2">
-              {item.relatedGuides.map((guideSlug, index) => (
-                <li key={guideSlug}>
-                  <Link className="inline-flex min-h-11 items-center text-[#7fd0a1] hover:text-white" href={`/guides/${guideSlug}`} title={relatedGuideDocuments[index]?.frontmatter.title ?? guideSlug.replace(/-/g, " ")}>
-                    {relatedGuideDocuments[index]?.frontmatter.title ?? guideSlug.replace(/-/g, " ")}
-                  </Link>
+              {relatedGuides.map((guide) => (
+                <li key={guide.slug}>
+                  <TaskLink href={`/${locale}/guides/${guide.slug}`} label={guide.title} variant="text" />
                 </li>
               ))}
             </ul>

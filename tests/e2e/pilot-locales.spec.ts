@@ -59,8 +59,11 @@ for (const locale of ["zh-tw", "pl"]) {
 
 test("preserves the page and saved URL state across all language switches", async ({page}) => {
   await page.goto("/en/guides/wardogs-controls?source=bookmark#bindings");
+  await expect(page.locator("select:visible").first()).toBeEnabled();
   await page.locator("select:visible").first().selectOption("pl");
   await expect(page).toHaveURL(/\/pl\/guides\/wardogs-controls\?source=bookmark#bindings$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "pl");
+  await expect(page.locator("select:visible").first()).toBeEnabled();
   await page.locator("select:visible").first().selectOption("zh-tw");
   await expect(page).toHaveURL(/\/zh-tw\/guides\/wardogs-controls\?source=bookmark#bindings$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-tw");
@@ -76,11 +79,19 @@ test("preserves the page and saved URL state across all language switches", asyn
 test("includes complete new locales in the sitemap without duplicate URLs", async ({request}) => {
   const xml = await (await request.get("/sitemap.xml")).text();
   const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  const englishGuidePaths = urls
+    .map((url) => new URL(url).pathname)
+    .filter((pathname) => pathname.startsWith("/en/guides/"))
+    .map((pathname) => pathname.slice("/en".length));
   expect(new Set(urls).size).toBe(urls.length);
   for (const locale of ["zh-tw", "pl"]) {
     for (const suffix of ["", "/news", "/items", "/tools/map", "/guides/wardogs-controls", "/guides/wardogs-mortar-guide"]) {
       expect(urls).toContain(publicPageUrl(`/${locale}${suffix}`));
     }
-    expect(urls.filter((url) => url.includes(`/${locale}/guides/`))).toHaveLength(55);
+    const localizedGuidePaths = urls
+      .map((url) => new URL(url).pathname)
+      .filter((pathname) => pathname.startsWith(`/${locale}/guides/`))
+      .map((pathname) => pathname.slice(`/${locale}`.length));
+    expect(new Set(localizedGuidePaths)).toEqual(new Set(englishGuidePaths));
   }
 });

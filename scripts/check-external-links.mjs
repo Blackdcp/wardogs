@@ -9,7 +9,7 @@ const competitorHosts = new Set([
   "gamblewithyourfriends.net",
   "www.gamblewithyourfriends.net"
 ]);
-const botProtectedHosts = new Set(["reddit.com", "www.reddit.com"]);
+const botProtectedHosts = new Set(["reddit.com", "www.reddit.com", "steamdb.info", "www.steamdb.info"]);
 
 const requestHeaders = {"user-agent": "WARDOGS-Wiki-Link-Checker/1.0"};
 const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));

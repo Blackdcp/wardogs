@@ -67,7 +67,7 @@ test("guide direct answer uses the first explanatory paragraph instead of a mark
   await page.goto("/en/guides/wardogs-gameplay");
   const answer = page.locator("article > aside").first().locator("p").nth(1);
 
-  await expect(answer).toContainText("BULKHEAD's upcoming tactical all-out warfare FPS");
+  await expect(answer).toContainText("BULKHEAD's live Steam Early Access tactical all-out warfare FPS");
   await expect(answer).toContainText("2016 War Dogs movie");
   await expect(answer).not.toHaveText("Quick Answer");
 });
@@ -98,8 +98,9 @@ test("item hubs and first item detail routes resolve", async ({page}) => {
 
 test("catalogue hub is a visual evidence-labelled navigation surface", async ({page}) => {
   await page.goto("/en/items");
+  const ui = getItemUi("en");
 
-  await expect(page.getByRole("heading", {level: 1, name: "WARDOGS Catalogue"})).toBeVisible();
+  await expect(page.getByRole("heading", {level: 1, name: ui.hubTitle})).toBeVisible();
   await expect(page.locator('[data-catalogue-hero] img')).toHaveAttribute("src", /thegame-1280/);
 
   const categories = page.locator('[data-catalogue-category]');
@@ -114,7 +115,6 @@ test("catalogue hub is a visual evidence-labelled navigation surface", async ({p
   }
 
   const legend = page.locator('[data-evidence-legend]');
-  const ui = getItemUi("en");
   for (const label of [ui.official, ui.verified, ui.preRelease]) {
     await expect(legend.getByText(label, {exact: true})).toBeVisible();
   }
@@ -165,7 +165,7 @@ test("category routes render approved heroes, complete explorers, and aggressive
     await expect(page.locator('[data-catalogue-record] img')).toHaveCount(imageCount);
     const linkedRecordCount = getIndexableCatalogueItems(records).length;
     await expect(page.locator('[data-catalogue-record] > a[aria-label]')).toHaveCount(linkedRecordCount);
-    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+    await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
     await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(0);
     await expectImagesLoaded(page);
   }
@@ -175,7 +175,7 @@ test("category routes render approved heroes, complete explorers, and aggressive
   expect(loadoutHero).toBeDefined();
   await expect(page.locator('[data-catalogue-category-hero] img')).toHaveAttribute("src", new RegExp(loadoutHero!.image.split("/").at(-1)!.split(".")[0]));
   await expect(page.locator('[data-catalogue-explorer]')).toHaveCount(0);
-  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(0);
+  await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
   await expect(page.locator('[data-ad-slot="adsterra-smartlink"] a')).toHaveCount(0);
 });
 
@@ -328,21 +328,22 @@ test("every English vehicle model route renders complete evidence", async ({page
   expect((await page.goto("/ru/items/vehicles/bobcat"))?.status()).toBe(200);
 });
 
-test("homepage promotes the catalogue before video intelligence", async ({page}) => {
+test("homepage keeps the compressed catalogue database before the long-tail library", async ({page}) => {
   await page.goto("/en");
 
   const band = page.locator('[data-catalogue-home-band]');
-  await expect(band.getByRole("heading", {name: "WARDOGS Catalogue"})).toBeVisible();
-  await expect(band.locator('[data-catalogue-entry]')).toHaveCount(6);
-  await expect(band.locator("img")).toHaveCount(10);
-  await expect(band.getByText("Equipment", {exact: true})).toHaveCount(0);
+  await expect(band.getByRole("heading", {name: "Explore weapons and vehicles"})).toBeVisible();
+  await expect(band.locator('[data-catalogue-entry]')).toHaveCount(2);
+  await expect(band.locator('[data-catalogue-model-entry]')).toHaveCount(4);
+  await expect(band.locator("img")).toHaveCount(6);
   await expectImagesLoaded(page);
 
   const catalogueTop = await band.evaluate((element) => element.getBoundingClientRect().top);
-  const videoTop = await page.getByRole("heading", {name: "Current Season 1 Video Watchlist"}).evaluate((element) => element.getBoundingClientRect().top);
-  expect(catalogueTop).toBeLessThan(videoTop);
+  const libraryTop = await page.locator('[data-home-section="library"]').evaluate((element) => element.getBoundingClientRect().top);
+  expect(catalogueTop).toBeLessThan(libraryTop);
 
-  for (const pathname of ["weapons", "vehicles", "ammo", "attachments", "gear", "loadouts"]) {
+  await expect(band.locator('a[href="/en/items"]')).toHaveCount(1);
+  for (const pathname of ["weapons", "vehicles"]) {
     const href = `/en/items/${pathname}`;
     await expect(band.locator(`a[href="${href}"]`)).toHaveCount(1);
     expect((await page.request.get(href)).status(), href).toBe(200);
@@ -369,8 +370,8 @@ test("localized homepages feature unique weapon and vehicle model links in the a
 test("localized privacy pages disclose the advertising provider", async ({page}) => {
   for (const locale of locales) {
     await page.goto(`/${locale}/privacy`);
-    await expect(page.getByText(/Adsterra/i)).toBeVisible();
-    await expect(page.getByText(/Popunder/i)).toBeVisible();
-    await expect(page.getByText(/IP/)).toBeVisible();
+    const advertisingDisclosure = page.locator("main p").filter({hasText: /Adsterra/i}).filter({hasText: /Popunder/i});
+    await expect(advertisingDisclosure).toHaveCount(1);
+    await expect(advertisingDisclosure).toContainText(/IP/);
   }
 });

@@ -7,25 +7,38 @@ import {describe, expect, it, vi} from "vitest";
 const origin = "https://www.wardogswiki.com";
 const revision = "a".repeat(40);
 const deploymentPath = path.join(process.cwd(), "scripts", "deploy-production.mjs");
-const releaseSitemap = `<urlset>${["/en", "/ja", "/en/tools/map", "/zh-tw", "/pl", "/zh-tw/guides/wardogs-controls", "/pl/guides/wardogs-controls"].map((pathname) => `<url><loc>${origin}${pathname}</loc></url>`).join("")}</urlset>`;
+const smokeContract = {
+  schemaVersion: 1,
+  production: {origin, platform: "vercel-cloudflare", baselineRevision: "e".repeat(40)},
+  canonical: [
+    "/en", "/ja", "/en/maps", "/ja/maps", "/en/items", "/ja/items", "/en/tools/map", "/ja/tools/map"
+  ].map((routePath) => ({
+    path: routePath,
+    expectedStatus: 200,
+    tier: routePath === "/en" || routePath === "/ja" ? "protected" : "growth",
+    sources: ["sitemap"],
+    locales: [routePath.split("/")[1]]
+  })),
+  legacy: [{path: "/maps", expectedStatus: 308, target: "/en/maps", sources: ["legacy"]}],
+  knownMissing: [{path: "/en/items/vehicles/littlebird", expectedStatus: 404, noindex: true, sources: ["clean-404"]}]
+};
+const releaseSitemap = `<urlset>${smokeContract.canonical.map(({path: routePath}) => `<url><loc>${origin}${routePath}</loc></url>`).join("")}</urlset>`;
 
 function htmlPage(pathname: string) {
-  return `<html><head><link rel="canonical" href="${origin}${pathname}" /></head><body>WARDOGS</body></html>`;
+  const suffix = pathname.replace(/^\/(?:en|ja)/, "") || "";
+  const alternates = ["en", "ja"].map((locale) =>
+    `<link rel="alternate" hreflang="${locale}" href="${origin}/${locale}${suffix}" />`
+  ).join("");
+  const homepage = /^\/(?:en|ja)$/.test(pathname)
+    ? `<main><h1>WARDOGS Wiki</h1>${["command", "proven-demand", "live-intel", "workbench", "database", "library"].map((section) => `<section data-home-section="${section}"></section>`).join("")}<button data-home-task="search">Search</button><a href="${pathname}/items" data-home-task="catalogue">Items</a><aside data-page-ad-inventory="home"><div data-ad-container="rectangle"></div><div data-ad-slot="adsterra-native"></div></aside></main>`
+    : "<main><h1>WARDOGS Reference</h1></main>";
+  return `<html><head><title>WARDOGS protected reference</title><meta name="description" content="A complete WARDOGS reference page with verified gameplay guidance and current navigation." /><link rel="canonical" href="${origin}${pathname}" />${alternates}<link rel="alternate" hreflang="x-default" href="${origin}/en${suffix}" /></head><body>${homepage}<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"WARDOGS Reference"}</script></body></html>`;
 }
 
 function liveResponses(overrides: Record<string, Response> = {}) {
   const responses: Record<string, Response> = {
     "/api/revision": new Response(JSON.stringify({revision}), {status: 200}),
-    "/en": new Response(htmlPage("/en"), {status: 200}),
-    "/ja": new Response(htmlPage("/ja"), {status: 200}),
-    "/en/guides/wardogs-squad-guide": new Response(htmlPage("/en/guides/wardogs-squad-guide"), {status: 200}),
-    "/en/guides/wardogs-known-issues": new Response(htmlPage("/en/guides/wardogs-known-issues"), {status: 200}),
-    "/en/tools/map": new Response(htmlPage("/en/tools/map"), {status: 200}),
-    "/en/tools/loadout-budget": new Response(htmlPage("/en/tools/loadout-budget"), {status: 200}),
-    "/en/videos": new Response(htmlPage("/en/videos"), {status: 200}),
-    "/zh-tw/guides": new Response(htmlPage("/zh-tw/guides"), {status: 200}),
-    "/pl/guides": new Response(htmlPage("/pl/guides"), {status: 200}),
-    ...Object.fromEntries(["/zh-tw", "/pl", "/zh-tw/items/weapons", "/pl/items/weapons", "/zh-tw/tools/loadout-budget", "/pl/tools/loadout-budget"].map((pathname) => [pathname, new Response(htmlPage(pathname), {status: 200})])),
+    ...Object.fromEntries(smokeContract.canonical.map(({path: routePath}) => [routePath, new Response(htmlPage(routePath), {status: 200})])),
     "/sitemap.xml": new Response(releaseSitemap, {status: 200}),
     "/maps": new Response(null, {status: 308, headers: {location: "/en/maps"}}),
     "/en/items/vehicles/littlebird": new Response("<meta name=\"robots\" content=\"noindex\">", {status: 404})
@@ -35,7 +48,7 @@ function liveResponses(overrides: Record<string, Response> = {}) {
 
 async function verifyWith(responses: Record<string, Response>) {
   const deployment = await import(pathToFileURL(deploymentPath).href) as {
-    verifyProduction: (fetchImpl: typeof fetch, siteOrigin: string, expectedRevision: string, options: {revisionAttempts: number; pause: () => Promise<void>}) => Promise<{checked: number}>;
+    verifyProduction: (fetchImpl: typeof fetch, siteOrigin: string, expectedRevision: string, options: {revisionAttempts: number; pause: () => Promise<void>; contract: typeof smokeContract}) => Promise<{checked: number}>;
   };
   const requested: string[] = [];
   const fetchImpl = (async (input: string | URL | Request, options?: RequestInit) => {
@@ -46,7 +59,7 @@ async function verifyWith(responses: Record<string, Response>) {
     if (!response) throw new Error(`Unexpected smoke request: ${pathname}`);
     return response;
   }) as typeof fetch;
-  const result = await deployment.verifyProduction(fetchImpl, origin, revision, {revisionAttempts: 1, pause: async () => {}});
+  const result = await deployment.verifyProduction(fetchImpl, origin, revision, {revisionAttempts: 1, pause: async () => {}, contract: smokeContract});
   return {result, requested};
 }
 
@@ -63,6 +76,7 @@ describe("production release smoke", () => {
         fetchImpl: typeof fetch;
         submitImpl: (options: {previousSitemapUrls: string[]}) => Promise<{submitted: number}>;
         snapshotPath: string;
+        smokeOptions: {contract: typeof smokeContract; revisionAttempts: number; pause: () => Promise<void>};
       }) => Promise<{submitted: number}>;
     };
     const snapshotDirectory = mkdtempSync(path.join(tmpdir(), "indexnow-release-"));
@@ -114,7 +128,10 @@ describe("production release smoke", () => {
       })).resolves.toEqual({prepared: 2});
       expect(events).toEqual(["base-revision", "sitemap-before"]);
       expect(existsSync(snapshotPath)).toBe(true);
-      await expect(deployment.finalizeProductionRelease({gitImpl, fetchImpl, submitImpl, snapshotPath})).resolves.toEqual({submitted: 1});
+      await expect(deployment.finalizeProductionRelease({
+        gitImpl, fetchImpl, submitImpl, snapshotPath,
+        smokeOptions: {contract: smokeContract, revisionAttempts: 1, pause: async () => {}}
+      })).resolves.toEqual({submitted: 1});
       expect(events).toEqual(["base-revision", "sitemap-before", "release-revision", "sitemap-after", "notify"]);
       expect(submitImpl).toHaveBeenCalledTimes(1);
       expect(existsSync(snapshotPath)).toBe(false);
@@ -141,6 +158,7 @@ describe("production release smoke", () => {
         fetchImpl: typeof fetch;
         submitImpl: (options: {previousSitemapUrls: string[]}) => Promise<{submitted: number}>;
         snapshotPath: string;
+        smokeOptions: {contract: typeof smokeContract; revisionAttempts: number; pause: () => Promise<void>};
       }) => Promise<{submitted: number}>;
     };
     const snapshotDirectory = mkdtempSync(path.join(tmpdir(), "indexnow-retry-"));
@@ -175,7 +193,10 @@ describe("production release smoke", () => {
       if (++notificationAttempts === 1) throw new Error("IndexNow outage");
       return {submitted: 1};
     });
-    const options = {gitImpl, fetchImpl, submitImpl, snapshotPath};
+    const options = {
+      gitImpl, fetchImpl, submitImpl, snapshotPath,
+      smokeOptions: {contract: smokeContract, revisionAttempts: 1, pause: async () => {}}
+    };
 
     try {
       await expect(deployment.prepareProductionRelease({gitImpl, fetchImpl, snapshotPath})).resolves.toEqual({prepared: 2});
@@ -299,31 +320,37 @@ describe("production release smoke", () => {
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 
+  it("refuses production release commands in the auxiliary Pages environment before Git or network access", async () => {
+    const deployment = await import(pathToFileURL(deploymentPath).href) as {
+      prepareProductionRelease: (options: {gitImpl: (...args: string[]) => string; fetchImpl: typeof fetch; snapshotPath: string}) => Promise<unknown>;
+    };
+    vi.stubEnv("GITHUB_PAGES", "true");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://blackdcp.github.io/wardogs");
+    const gitImpl = vi.fn<(...args: string[]) => string>(() => "");
+    const fetchImpl = vi.fn<typeof fetch>(async () => new Response("unexpected", {status: 200}));
+    try {
+      await expect(deployment.prepareProductionRelease({
+        gitImpl,
+        fetchImpl,
+        snapshotPath: path.join(tmpdir(), "unused-pages-release.json")
+      })).rejects.toThrow(/production.*Pages/i);
+      expect(gitImpl).not.toHaveBeenCalled();
+      expect(fetchImpl).not.toHaveBeenCalled();
+    } finally {
+      vi.unstubAllEnvs();
+    }
+  });
+
   it("checks live landing pages, sitemap, exact redirect, and genuine 404 before notification", async () => {
     const {result, requested} = await verifyWith(liveResponses());
 
-    expect(result).toEqual({checked: 19});
-    expect(requested).toEqual([
-      "/api/revision",
-      "/en",
-      "/ja",
-      "/en/guides/wardogs-squad-guide",
-      "/en/guides/wardogs-known-issues",
-      "/en/tools/map",
-      "/en/tools/loadout-budget",
-      "/en/videos",
-      "/zh-tw/guides",
-      "/pl/guides",
-      "/zh-tw",
-      "/pl",
-      "/zh-tw/items/weapons",
-      "/pl/items/weapons",
-      "/zh-tw/tools/loadout-budget",
-      "/pl/tools/loadout-budget",
-      "/sitemap.xml",
-      "/maps",
-      "/en/items/vehicles/littlebird"
-    ]);
+    expect(result).toEqual({checked: 12});
+    expect(new Set(requested)).toEqual(new Set([
+      "/api/revision", "/sitemap.xml",
+      ...smokeContract.canonical.map(({path: routePath}) => routePath),
+      ...smokeContract.legacy.map(({path: routePath}) => routePath),
+      ...smokeContract.knownMissing.map(({path: routePath}) => routePath)
+    ]));
   });
 
   it("rejects a real 404 response that search engines could still index", async () => {
@@ -365,12 +392,12 @@ describe("production release smoke", () => {
     const responses = liveResponses({
       "/sitemap.xml": new Response(`<urlset><url><loc>${origin}/en</loc></url></urlset>`, {status: 200})
     });
-    await expect(verifyWith(responses)).rejects.toThrow(/sitemap\.xml.*map URL/);
+    await expect(verifyWith(responses)).rejects.toThrow(/sitemap\.xml.*missing.*\/en\/tools\/map/);
   });
 
   it("waits briefly for the production alias to switch to the new revision", async () => {
     const deployment = await import(pathToFileURL(deploymentPath).href) as {
-      verifyProduction: (fetchImpl: typeof fetch, siteOrigin: string, expectedRevision: string, options: {revisionAttempts: number; pause: () => Promise<void>}) => Promise<{checked: number}>;
+      verifyProduction: (fetchImpl: typeof fetch, siteOrigin: string, expectedRevision: string, options: {revisionAttempts: number; pause: () => Promise<void>; contract: typeof smokeContract}) => Promise<{checked: number}>;
     };
     const responses = liveResponses();
     let checks = 0;
@@ -385,8 +412,9 @@ describe("production release smoke", () => {
 
     await expect(deployment.verifyProduction(fetchImpl, origin, revision, {
       revisionAttempts: 2,
-      pause: async () => { pauses += 1; }
-    })).resolves.toEqual({checked: 19});
+      pause: async () => { pauses += 1; },
+      contract: smokeContract
+    })).resolves.toEqual({checked: 12});
     expect(checks).toBe(2);
     expect(pauses).toBe(1);
   });
@@ -399,7 +427,7 @@ describe("production release smoke", () => {
       })
     });
 
-    await expect(verifyWith(responses)).resolves.toMatchObject({result: {checked: 19}});
+    await expect(verifyWith(responses)).resolves.toMatchObject({result: {checked: 12}});
   });
 
   it("rejects a canonical Link header on a 404", async () => {
@@ -422,5 +450,176 @@ describe("production release smoke", () => {
     });
 
     await expect(verifyWith(responses)).rejects.toThrow(/404.*noindex/);
+  });
+
+  it("loads the complete generated traffic contract for the real release gate", async () => {
+    const deployment = await import(pathToFileURL(deploymentPath).href) as {
+      loadTrafficRouteContract: () => typeof smokeContract;
+    };
+    const contract = deployment.loadTrafficRouteContract();
+
+    expect(contract.production).toMatchObject({origin, platform: "vercel-cloudflare"});
+    expect(contract.canonical.length).toBeGreaterThan(1_300);
+    expect(contract.legacy.length).toBeGreaterThan(2_800);
+    expect(contract.knownMissing).toEqual(expect.arrayContaining([
+      expect.objectContaining({path: "/en/items/vehicles/littlebird", expectedStatus: 404, noindex: true})
+    ]));
+  });
+
+  it("aggregates route failures instead of stopping after the first broken asset", async () => {
+    const responses = liveResponses({
+      "/en": new Response("missing", {status: 404}),
+      "/ja": new Response(`${htmlPage("/ja")}<meta name="robots" content="noindex">`, {status: 200})
+    });
+
+    await expect(verifyWith(responses)).rejects.toThrow(/\/en returned 404[\s\S]*\/ja unexpectedly has noindex/);
+  });
+
+  it("retries a transport error or 5xx once, while keeping route concurrency at six", async () => {
+    const deployment = await import(pathToFileURL(deploymentPath).href) as {
+      verifyProduction: (fetchImpl: typeof fetch, siteOrigin: string, expectedRevision: string, options: {
+        revisionAttempts: number; pause: () => Promise<void>; contract: typeof smokeContract; concurrency: number;
+      }) => Promise<{checked: number}>;
+    };
+    const attempts = new Map<string, number>();
+    let active = 0;
+    let maxActive = 0;
+    const fetchImpl = (async (input: string | URL | Request) => {
+      const pathname = new URL(String(input)).pathname;
+      const attempt = (attempts.get(pathname) ?? 0) + 1;
+      attempts.set(pathname, attempt);
+      if (pathname === "/api/revision") return new Response(JSON.stringify({revision}), {status: 200});
+      if (pathname === "/sitemap.xml") return new Response(releaseSitemap, {status: 200});
+      active += 1;
+      maxActive = Math.max(maxActive, active);
+      await new Promise((resolve) => setTimeout(resolve, 1));
+      active -= 1;
+      if (pathname === "/en/tools/map" && attempt === 1) return new Response("retry", {status: 503});
+      if (pathname === "/ja/tools/map" && attempt === 1) throw new TypeError("socket reset");
+      if (pathname === "/maps") return new Response(null, {status: 308, headers: {location: "/en/maps"}});
+      if (pathname === "/en/items/vehicles/littlebird") return new Response('<meta name="robots" content="noindex">', {status: 404});
+      return new Response(htmlPage(pathname), {status: 200});
+    }) as typeof fetch;
+
+    await expect(deployment.verifyProduction(fetchImpl, origin, revision, {
+      revisionAttempts: 1,
+      pause: async () => {},
+      contract: smokeContract,
+      concurrency: 6
+    })).resolves.toEqual({checked: 12});
+    expect(attempts.get("/en/tools/map")).toBe(2);
+    expect(attempts.get("/ja/tools/map")).toBe(2);
+    expect(maxActive).toBeLessThanOrEqual(6);
+  });
+
+  it("rejects hreflang outside the protected canonical set and a homepage without its frozen ad inventory", async () => {
+    const badAlternate = htmlPage("/en/tools/map").replace(`${origin}/ja/tools/map`, `${origin}/ja/tools/removed`);
+    const badHome = htmlPage("/en").replace(' data-page-ad-inventory="home"', "");
+    const responses = liveResponses({
+      "/en/tools/map": new Response(badAlternate, {status: 200}),
+      "/en": new Response(badHome, {status: 200})
+    });
+
+    await expect(verifyWith(responses)).rejects.toThrow(/\/en.*ad inventory[\s\S]*\/en\/tools\/map.*hreflang/);
+  });
+
+  it("rejects sitemap and legacy redirect URLs that reuse a protected pathname on another origin", async () => {
+    const foreignSitemap = releaseSitemap.replace(
+      `${origin}/en/tools/map`,
+      "https://foreign.invalid/en/tools/map"
+    );
+    const responses = liveResponses({
+      "/sitemap.xml": new Response(foreignSitemap, {status: 200}),
+      "/maps": new Response(null, {status: 308, headers: {location: "https://foreign.invalid/en/maps"}})
+    });
+
+    await expect(verifyWith(responses)).rejects.toThrow(/sitemap\.xml.*foreign[\s\S]*\/maps.*foreign\.invalid/);
+  });
+
+  it("rejects canonical entity pages without basic search metadata, one H1, and valid JSON-LD", async () => {
+    const sparse = htmlPage("/en/items")
+      .replace(/<title>[\s\S]*?<\/title>/, "")
+      .replace(/<meta name="description"[^>]*>/, "")
+      .replace(/<h1>[\s\S]*?<\/h1>/, "")
+      .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, "");
+
+    await expect(verifyWith(liveResponses({
+      "/en/items": new Response(sparse, {status: 200})
+    }))).rejects.toThrow(/\/en\/items.*title[\s\S]*description[\s\S]*one H1[\s\S]*JSON-LD/);
+  });
+
+  it("gives route verification a fresh deadline after revision polling", async () => {
+    vi.useFakeTimers();
+    const deployment = await import(pathToFileURL(deploymentPath).href) as {
+      verifyProduction: (fetchImpl: typeof fetch, siteOrigin: string, expectedRevision: string, options: {
+        revisionAttempts: number;
+        pause: () => Promise<void>;
+        retryPause: () => Promise<void>;
+        contract: typeof smokeContract;
+        concurrency: number;
+        timeoutMs: number;
+      }) => Promise<{checked: number}>;
+    };
+    const responses = liveResponses();
+    let revisionChecks = 0;
+    let revisionSignal: AbortSignal | null | undefined;
+    let routeSignal: AbortSignal | null | undefined;
+    const fetchImpl = (async (input: string | URL | Request, init?: RequestInit) => {
+      const pathname = new URL(String(input)).pathname;
+      if (pathname === "/api/revision") {
+        revisionSignal ??= init?.signal;
+        expect(init?.signal).toBe(revisionSignal);
+        revisionChecks += 1;
+        return new Response(JSON.stringify({
+          revision: revisionChecks === 1 ? "b".repeat(40) : revision
+        }), {status: 200});
+      }
+      routeSignal ??= init?.signal;
+      expect(init?.signal).toBe(routeSignal);
+      expect(init?.signal?.aborted).toBe(false);
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      const response = responses[pathname];
+      if (!response) throw new Error(`Unexpected smoke request: ${pathname}`);
+      return response;
+    }) as typeof fetch;
+
+    try {
+      const verification = deployment.verifyProduction(fetchImpl, origin, revision, {
+        revisionAttempts: 2,
+        pause: () => new Promise((resolve) => setTimeout(resolve, 90)),
+        retryPause: async () => {},
+        contract: smokeContract,
+        concurrency: 6,
+        timeoutMs: 100
+      });
+      const expectation = expect(verification).resolves.toEqual({checked: 12});
+      await vi.advanceTimersByTimeAsync(250);
+      await expectation;
+      expect(revisionChecks).toBe(2);
+      expect(routeSignal).not.toBe(revisionSignal);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("applies the release deadline to revision polling and aborts outstanding work", async () => {
+    const deployment = await import(pathToFileURL(deploymentPath).href) as {
+      verifyProduction: (fetchImpl: typeof fetch, siteOrigin: string, expectedRevision: string, options: {
+        revisionAttempts: number; pause: () => Promise<void>; contract: typeof smokeContract; timeoutMs: number;
+      }) => Promise<{checked: number}>;
+    };
+    let observedSignal: AbortSignal | undefined;
+    const fetchImpl = (async (_input: string | URL | Request, init?: RequestInit) => {
+      observedSignal = init?.signal as AbortSignal | undefined;
+      return new Response(JSON.stringify({revision: "b".repeat(40)}), {status: 200});
+    }) as typeof fetch;
+
+    await expect(deployment.verifyProduction(fetchImpl, origin, revision, {
+      revisionAttempts: 2,
+      pause: () => new Promise((resolve) => setTimeout(resolve, 30)),
+      contract: smokeContract,
+      timeoutMs: 5
+    })).rejects.toThrow(/deadline/);
+    expect(observedSignal?.aborted).toBe(true);
   });
 });

@@ -1,6 +1,21 @@
 import {readFile} from "node:fs/promises";
 import {describe, expect, it} from "vitest";
 import {isLocalizedHomepage} from "../../src/components/ads/global-top-ad";
+import {ADSTERRA_BANNER_UNITS} from "../../src/features/ads/adsterra-banner";
+import {ADSTERRA_NATIVE_ZONE_ID} from "../../src/features/ads/adsterra-native";
+import {
+  ADSTERRA_MOBILE_STICKY_ENABLED,
+  ADSTERRA_NATIVE_ENABLED,
+  ADSTERRA_SMARTLINK_ENABLED,
+  ADSTERRA_SOCIAL_BAR_ENABLED,
+  BEHAVIORAL_POPUNDER_ENABLED
+} from "../../src/features/ads/ad-policy";
+import {
+  AD_INVENTORY_CONTRACT,
+  DISABLED_AD_FORMATS,
+  INVENTORY_PAGE_TEMPLATES,
+  INVENTORY_VIEWPORTS
+} from "../fixtures/ad-inventory-contract";
 
 const pageFiles = [
   "src/app/[locale]/page.tsx",
@@ -11,6 +26,62 @@ const pageFiles = [
 ] as const;
 
 describe("Adsterra page inventory", () => {
+  it("freezes the page-template and viewport inventory multiset", () => {
+    const tuples = AD_INVENTORY_CONTRACT.map((slot) => [
+      slot.pageTemplate,
+      slot.viewport,
+      slot.placement,
+      slot.format,
+      slot.zone,
+      slot.count
+    ].join("|"));
+
+    expect(new Set(tuples).size).toBe(tuples.length);
+    expect(new Set(AD_INVENTORY_CONTRACT.map(({pageTemplate}) => pageTemplate))).toEqual(new Set(INVENTORY_PAGE_TEMPLATES));
+    expect(new Set(AD_INVENTORY_CONTRACT.map(({viewport}) => viewport))).toEqual(new Set(INVENTORY_VIEWPORTS));
+    expect(AD_INVENTORY_CONTRACT.every(({count}) => count === 1)).toBe(true);
+    expect(DISABLED_AD_FORMATS).toEqual(["smartlink", "popunder", "social-bar"]);
+    expect(new Set(AD_INVENTORY_CONTRACT.map(({zone}) => zone))).toEqual(new Set([
+      ADSTERRA_NATIVE_ZONE_ID,
+      ...Object.values(ADSTERRA_BANNER_UNITS).map(({key}) => key)
+    ]));
+    expect(ADSTERRA_NATIVE_ENABLED).toBe(true);
+    expect(ADSTERRA_MOBILE_STICKY_ENABLED).toBe(true);
+    expect(ADSTERRA_SMARTLINK_ENABLED).toBe(false);
+    expect(ADSTERRA_SOCIAL_BAR_ENABLED).toBe(false);
+    expect(BEHAVIORAL_POPUNDER_ENABLED).toBe(false);
+  });
+
+  it("keeps one rectangle and one native slot on every monetized template", () => {
+    for (const pageTemplate of INVENTORY_PAGE_TEMPLATES) {
+      for (const viewport of INVENTORY_VIEWPORTS) {
+        const slots = AD_INVENTORY_CONTRACT.filter((slot) =>
+          slot.pageTemplate === pageTemplate && slot.viewport === viewport
+        );
+        expect(slots.filter(({placement, format}) => placement === "inline-primary" && format === "display"), `${pageTemplate}/${viewport}/rectangle`).toHaveLength(1);
+        expect(slots.filter(({placement, format}) => placement === "inline-primary" && format === "native"), `${pageTemplate}/${viewport}/native`).toHaveLength(1);
+      }
+    }
+  });
+
+  it("preserves mobile sticky, desktop top, and wide rail inventory without adding a home top banner", () => {
+    const slots = (pageTemplate: string, viewport: string) => AD_INVENTORY_CONTRACT.filter((slot) =>
+      slot.pageTemplate === pageTemplate && slot.viewport === viewport
+    );
+
+    for (const pageTemplate of INVENTORY_PAGE_TEMPLATES) {
+      expect(slots(pageTemplate, "mobile").filter(({placement}) => placement === "mobile-sticky")).toHaveLength(1);
+      expect(slots(pageTemplate, "wide").filter(({placement}) => placement === "left-rail")).toHaveLength(1);
+      expect(slots(pageTemplate, "wide").filter(({placement}) => placement === "right-rail")).toHaveLength(1);
+    }
+    expect(slots("home", "desktop").some(({placement}) => placement === "global-top")).toBe(false);
+    expect(slots("home", "wide").some(({placement}) => placement === "global-top")).toBe(false);
+    expect(slots("guide-detail", "desktop").filter(({placement}) => placement === "global-top")).toHaveLength(1);
+    expect(AD_INVENTORY_CONTRACT.filter(({pageTemplate, placement}) =>
+      pageTemplate === "home" && placement === "inline-primary"
+    ).every(({section}) => section === "proven-demand")).toBe(true);
+  });
+
   it("monetizes the homepage and every primary index page", async () => {
     for (const file of pageFiles) {
       const source = await readFile(file, "utf8");

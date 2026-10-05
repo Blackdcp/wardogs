@@ -16,7 +16,7 @@ export function AdsterraSmartlink({
 
   return (
     <aside className="my-8 border border-[#2c3631] bg-[#111512] p-4" data-ad-slot="adsterra-smartlink">
-      <p className="text-[10px] font-semibold uppercase text-[#718079]">{label}</p>
+      <p className="text-[10px] font-semibold uppercase text-[#82938a]">{label}</p>
       <div className="mt-2 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <p className="max-w-xl text-sm leading-6 text-[#a8b4ae]">{description}</p>
         <div className="flex flex-col gap-2 sm:flex-row">

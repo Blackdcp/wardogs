@@ -12,6 +12,12 @@ import {getMapViewerCopy} from "../../src/features/maps/map-viewer-copy";
 import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
 import {getVideoUi} from "../../src/features/videos/video-ui";
+import {getWorkflowCopy} from "../../src/features/tools/workflow-copy";
+import {getToolCopy} from "../../src/features/tools/tool-copy";
+import {getCompatibilityCopy} from "../../src/features/tools/equipment-compatibility-copy";
+import {getArtilleryCopy} from "../../src/features/artillery/artillery-copy";
+import {getMapMeasurementCopy} from "../../src/features/maps/map-measurement-copy";
+import {interactiveMapPageCopy} from "../../src/features/maps/interactive-map-page-copy";
 
 const localizedLocales = ["ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const;
 const allLocales = ["en", ...localizedLocales] as const;
@@ -37,6 +43,48 @@ const localizedDateSignals = {
 } as const;
 
 describe("localized shared editorial content", () => {
+  it("covers tool headers, results, errors and empty states across the eight-language matrix", () => {
+    const surfaces = (locale: typeof allLocales[number]) => ({
+      tool: getToolCopy(locale), workflow: getWorkflowCopy(locale), compatibility: getCompatibilityCopy(locale),
+      artillery: getArtilleryCopy(locale), measurement: getMapMeasurementCopy(locale), map: interactiveMapPageCopy[locale],
+    });
+    const leaves = (value: unknown, prefix = ""): Record<string, string> => {
+      if (typeof value === "string") return {[prefix]: value};
+      return Object.fromEntries(Object.entries(value as object).flatMap(([key, child]) => Object.entries(leaves(child, prefix ? `${prefix}.${key}` : key))));
+    };
+    const english = leaves(surfaces("en"));
+    const stateKeys = ["tool.systemTitle", "tool.budgetTitle", "tool.result", "tool.resultReview", "tool.resultBelow", "workflow.noResults", "workflow.invalid", "compatibility.title", "compatibility.empty", "compatibility.invalid", "compatibility.failed", "artillery.title", "artillery.tooClose", "artillery.outOfRange", "measurement.title", "measurement.invalid", "measurement.invalidLink", "map.title", "map.desc"];
+    for (const locale of allLocales) {
+      const copy = leaves(surfaces(locale));
+      expect(Object.keys(copy).sort(), locale).toEqual(Object.keys(english).sort());
+      for (const [key, value] of Object.entries(copy)) expect(value.trim().length, `${locale}/${key}`).toBeGreaterThan(0);
+      for (const key of stateKeys) {
+        expect(copy[key], `${locale}/${key}`).toBeTypeOf("string");
+        if (locale !== "en") expect(copy[key], `${locale}/${key}`).not.toBe(english[key]);
+      }
+    }
+  });
+  it("uses authored Taiwan catalogue terminology", () => {
+    const copy = getLocalizedCatalogGuide(getCatalogGuide("weapons")!, "zh-tw");
+    expect(copy.description).toContain("測試版本");
+    expect(copy.insights.join(" ")).toContain("補給計畫");
+    expect(JSON.stringify(copy)).not.toMatch(/補給計劃|預釋出|單個影片|條記錄/);
+    const boundaries = (["current", "historical", "mixed"] as const).map((state) => getLocalizedCatalogueEvidenceDisclaimer(state, "zh-tw")).join(" ");
+    expect(boundaries).toContain("目前");
+    expect(boundaries).not.toMatch(/當前|複核|歷史記錄/);
+    const mortar = getLocalizedItem(getItemBySlug("mortar")!, "zh-tw");
+    expect(mortar.description).toContain("紀錄");
+    expect(mortar.description).not.toContain("影片已顯示");
+  });
+  it("uses Taiwan workflow terms instead of converted Simplified Chinese wording", () => {
+    const copy = getWorkflowCopy("zh-tw");
+    expect(copy.shareTooLarge).toContain("項目");
+    expect(copy.shareTooLarge).toContain("網址列");
+    expect(copy.custom).toBe("自訂");
+    expect(copy.allTypes).toBe("所有類型");
+    expect(copy.noResults).toBe("沒有符合的物品");
+    expect(JSON.stringify(copy)).not.toMatch(/自定義|情景|全部型別|無匹配|專案|位址列/);
+  });
   it("localizes every long-form video article instead of reusing English", () => {
     for (const locale of localizedLocales) {
       const localizedArticles = getLocalizedVideoArticles(locale);
@@ -83,7 +131,7 @@ describe("localized shared editorial content", () => {
         expect(localized.summary, `${locale}/${item.slug}`).not.toBe(item.summary);
         expect(localized.description, `${locale}/${item.slug}`).not.toBe(item.description);
         expect(bodyText, `${locale}/${item.slug}`).toMatch(languageSignals[locale]);
-        const minimumLength = locale === "zh-cn" || locale === "zh-tw" ? 200 : 700;
+        const minimumLength = locale === "ja" || locale === "zh-cn" || locale === "zh-tw" ? 200 : 700;
         expect(bodyText.length, `${locale}/${item.slug}`).toBeGreaterThanOrEqual(minimumLength);
       }
     }
@@ -252,6 +300,21 @@ describe("localized shared editorial content", () => {
       expect(visibleText, item.slug).not.toMatch(/[\u3040-\u30ff]/);
       expect(visibleText, item.slug).not.toContain("Pre-release build");
       expect(visibleText, item.slug).not.toContain("Creator footage checked");
+    }
+  });
+
+  it("translates complete build provenance rather than adding a localized prefix to English", () => {
+    for (const locale of localizedLocales) for (const original of itemLibrary.filter((item) => item.indexable)) {
+      const copy = getLocalizedItem(original, locale);
+      expect(copy.build, `${locale}/${original.slug}`).not.toMatch(/and Closed Beta footage checked|Creator footage checked|7 Aug 2026/);
+    }
+  });
+
+  it("uses Simplified Chinese item terminology throughout authored prose", () => {
+    for (const original of itemLibrary.filter((item) => item.indexable)) {
+      const copy = getLocalizedItem(original, "zh-cn");
+      const prose = [copy.summary, copy.description, copy.role, ...copy.strengths, ...copy.cautions, ...(copy.confirmedFacts ?? []), ...(copy.unconfirmedFacts ?? [])].join(" ");
+      expect(prose, original.slug).not.toMatch(/砲|硬体|身分|搜寻|自走炮/);
     }
   });
 

@@ -19,10 +19,12 @@ import {ToolShareNotice} from "./tool-share-notice";
 const defaults: BudgetState = {cash: 10_000, loadout: 3_000, vehicle: 0, reserve: 2_000};
 const emptySearch = () => "";
 function subscribe(onChange: () => void) { window.addEventListener("popstate", onChange); return () => window.removeEventListener("popstate", onChange); }
+const subscribeHydration = () => () => {};
 const buttonClass = "inline-flex min-h-11 items-center justify-center gap-2 border border-[#397b59] px-3 py-2 text-sm font-semibold text-white enabled:hover:bg-[#244332] disabled:opacity-40";
 
 export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogue: LoadoutCatalogue}) {
   const t = getWorkflowCopy(copy.locale);
+  const isHydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const search = useSyncExternalStore(subscribe, () => window.location.search, emptySearch);
   const restored = useMemo(() => decodeBudgetState(search), [search]);
   const preselected = useMemo(() => {
@@ -88,9 +90,10 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
     catch { trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "loadout-budget", action: "share", result: "clipboard_error", locale: copy.locale}); setShareStatus(t.shareFailed); }
   }
 
-  return <section className="border-y border-[#354039] bg-[#111512]" aria-labelledby="loadout-budget-form">
+  return <section aria-busy={!isHydrated} className="border-y border-[#354039] bg-[#111512]" aria-labelledby="loadout-budget-form">
     <ToolShareNotice locale={copy.locale} search={search} dataVersion={catalogue.dataVersion} invalid={Boolean(search && !restored && !preselected.length && new URLSearchParams(search).has("cash"))} />
-    <div className="space-y-6 p-5 md:p-8">
+    <fieldset className="m-0 min-w-0 border-0 p-0" disabled={!isHydrated}>
+      <div className="space-y-6 p-5 md:p-8">
       <section className="min-w-0 space-y-3 border-b border-[#354039] pb-5" aria-label={presetCopy.heading}>
         <h2 className="text-lg font-semibold text-white">{presetCopy.heading}</h2>
         <p className="text-xs leading-5 text-[#a8b4ae]">{presetCopy.notice}</p>
@@ -171,6 +174,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
       {tooLarge ? <p role="status" className="text-sm text-[#e4c35f]">{t.shareTooLarge}</p> : null}
       <button className={buttonClass} type="button" disabled={tooLarge} onClick={share}><Copy size={16} aria-hidden="true" />{copy.share}</button>
       <p role="status" className="text-sm text-[#a8b4ae]">{shareStatus}</p>
-    </div>
+      </div>
+    </fieldset>
   </section>;
 }

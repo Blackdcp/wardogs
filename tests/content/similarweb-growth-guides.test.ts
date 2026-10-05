@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
-import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 import {videoArticles} from "../../src/features/videos/video-library";
 import sitemap from "../../src/app/sitemap";
 

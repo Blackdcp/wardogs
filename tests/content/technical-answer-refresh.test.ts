@@ -45,15 +45,18 @@ describe.each(locales)("bounded technical answers: %s", (locale) => {
     }
   });
 
-  it("keeps guide links within the current locale and points to existing content", async () => {
+  it("keeps guide and diagnostic tool links localized and points to existing destinations", async () => {
     for (const slug of ["wardogs-crash-fix", "wardogs-known-issues"]) {
       const guide = await loadGuideDocument(locale, slug);
       expect(guide).not.toBeNull();
       const links = [...(guide?.body ?? "").matchAll(/\]\((\/[^)#?\s]+)(?:[?#][^)]*)?\)/g)];
       expect(links.length).toBeGreaterThan(0);
       for (const [, href] of links) {
-        expect(href, `${locale}/${slug}: ${href}`).toMatch(new RegExp(`^/${locale}/guides/`));
-        await expect(access(path.join("content", `${href.slice(1)}.mdx`))).resolves.toBeUndefined();
+        expect(href, `${locale}/${slug}: ${href}`).toMatch(new RegExp(`^/${locale}/(?:guides|tools)/`));
+        const destination = href.startsWith(`/${locale}/guides/`)
+          ? path.join("content", `${href.slice(1)}.mdx`)
+          : path.join("src/app/[locale]", href.slice(locale.length + 2), "page.tsx");
+        await expect(access(destination), href).resolves.toBeUndefined();
       }
     }
   });

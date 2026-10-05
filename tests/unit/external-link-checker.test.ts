@@ -31,4 +31,10 @@ describe("external link checker", () => {
     const fetchImpl = vi.fn().mockResolvedValue(new Response("blocked", {status: 403}));
     await expect(checkUrl("https://www.reddit.com/r/WarDogs/", fetchImpl)).resolves.toMatchObject({status: 403, method: "GET"});
   });
+
+  it("accepts SteamDB's verified anti-bot response without hiding a 404", async () => {
+    const {checkUrl} = await import("../../scripts/check-external-links.mjs");
+    const fetchImpl = vi.fn().mockResolvedValue(new Response("blocked", {status: 403}));
+    await expect(checkUrl("https://steamdb.info/app/1867240/charts/", fetchImpl)).resolves.toMatchObject({status: 403, method: "GET"});
+  });
 });

@@ -1,9 +1,11 @@
 "use client";
 
 
+import {HubHeader} from "@/components/ui/hub-header";
+import {SectionHeading} from "@/components/ui/section-heading";
 import Image from "next/image";
 import {useState} from "react";
-import {ArrowUpRight, BookOpen, CalendarCheck2, ImageOff, MapPinned} from "lucide-react";
+import {ArrowUpRight, BookOpen, CalendarCheck2, ImageOff} from "lucide-react";
 import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 import type {Locale} from "@/config/site";
 import {formatCatalogueVerifiedAt, localizeCatalogueBuild, localizeCatalogueFact} from "@/features/catalogue/catalogue-localization";
@@ -55,24 +57,14 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: Operati
     <section aria-labelledby="operations-atlas-heading" className="border-y border-[#303b35] bg-[#101512]">
       <div className="site-container py-8 md:py-12">
         <div className="flex flex-col gap-5 border-b border-[#303b35] pb-7 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-3xl">
-            <p className="inline-flex items-center gap-2 font-mono text-xs uppercase text-[#69c78f]">
-              <MapPinned aria-hidden="true" className="size-4" />
-              {copy.eyebrow}
-            </p>
-            <h1 className="display-font mt-3 text-4xl leading-tight text-white sm:text-5xl" id="operations-atlas-heading">
-              {copy.title}
-            </h1>
-            <p className="mt-4 text-base leading-7 text-[#a8b4ae]">{copy.description}</p>
-          </div>
+          <HubHeader layout="overlay" eyebrow={copy.eyebrow} title={copy.title} description={copy.description} titleId="operations-atlas-heading" />
           <p aria-live="polite" className="font-mono text-xs uppercase text-[#d9a93a]">
             {visibleRecords.length} {copy.showing}
           </p>
         </div>
 
         <section aria-labelledby="site-maps-heading" className="border-b border-[#303b35] py-7" data-site-maps>
-          <h2 className="display-font text-2xl text-white" id="site-maps-heading">{mapCopy.heading}</h2>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-[#a8b4ae]">{mapCopy.description}</p>
+          <SectionHeading id="site-maps-heading" title={mapCopy.heading} description={mapCopy.description} />
           <WardogsMapViewer className="mt-5" locale={locale} />
           <Link className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#8cdfa9] hover:text-white" href="/tools/map" title={mapCopy.open}>{mapCopy.open}<ArrowUpRight aria-hidden="true" className="size-4" /></Link>
         </section>

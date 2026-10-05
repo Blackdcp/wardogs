@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
 import {loadGuideDocument} from "../../src/content/guides";
-import {CONFIRMED_RUMOR_ITEMS, TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 
 const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
 const seasonAnnouncement = "https://steamcommunity.com/games/1867240/announcements/detail/677384059121304815";
@@ -62,10 +62,5 @@ describe("September 23 Season 02 content refresh", () => {
   it("keeps Season 02 promoted while prioritizing the new Infantry Mode page", () => {
     expect(TOP_GUIDE_SLUGS[0]).toBe("wardogs-infantry-mode");
     expect(TOP_GUIDE_SLUGS[1]).toBe("wardogs-season-2");
-    expect(CONFIRMED_RUMOR_ITEMS[0]).toEqual({
-      status: "confirmed",
-      titleKey: "season02",
-      slug: "wardogs-season-2",
-    });
   });
 });

@@ -1,7 +1,7 @@
 import {describe, expect, it} from "vitest";
 import {locales} from "../../src/config/site";
 import {loadGuideDocument} from "../../src/content/guides";
-import {getHomePriorityGuides, TOP_GUIDE_SLUGS} from "../../src/features/home/home-data";
+import {getHomePriorityGuideEntries, TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 
 describe("Infantry mode, map and calculator growth refresh", () => {
   it.each(locales)("publishes the Infantry Mode hub in %s with current official change context", async (locale) => {
@@ -21,6 +21,6 @@ describe("Infantry mode, map and calculator growth refresh", () => {
   it("promotes Infantry Mode before evergreen guides on the homepage", () => {
     expect(TOP_GUIDE_SLUGS[0]).toBe("wardogs-infantry-mode");
     const guides = TOP_GUIDE_SLUGS.map((slug) => ({slug, updatedAt: "2026-10-04"}));
-    expect(getHomePriorityGuides(guides, "en").top[0]?.slug).toBe("wardogs-infantry-mode");
+    expect(getHomePriorityGuideEntries(guides, "en")[0]?.slug).toBe("wardogs-infantry-mode");
   });
 });
