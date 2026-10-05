@@ -1,3 +1,5 @@
+import type {Locale} from "@/config/site";
+
 const en = {
   map: "Map", close: "Close", zoomIn: "Zoom in", zoomOut: "Zoom out", reset: "Reset view", fullscreen: "Fullscreen", exitFullscreen: "Exit fullscreen",
   loading: "Loading map", failed: "Map could not load", retry: "Retry", search: "Search map references", empty: "No matching references",
@@ -8,25 +10,83 @@ const en = {
   provenance: "Basemap source", source: "Site-owner-provided map asset, recorded 27 Sep 2026. 8 x 8 tiles stitched and re-encoded as WebP (quality 92); not a lossless original. Owner-use statement is recorded in the asset notes, not independently certified here.",
   version: "EA v0.11 / Closed Beta 02", notes: "Asset notes", privacy: "Shared markers are user annotations, not verified game locations. Names are included in the link.",
 };
+
 export type MapViewerCopy = typeof en;
-const translations: Record<"zh-tw" | "pl", MapViewerCopy> & Record<string, Partial<MapViewerCopy>> = {
-  "zh-cn": {map: "地图", zoomIn: "放大", zoomOut: "缩小", reset: "重置视角", fullscreen: "全屏", exitFullscreen: "退出全屏", loading: "地图加载中", failed: "地图加载失败", retry: "重试", search: "搜索地图资料", empty: "没有匹配资料", references: "有来源的资料", unlocated: "位置未核实", manual: "手动标记", marker: "标记", label: "标记名称", remove: "删除标记", add: "放置手动标记", center: "标记视角中心", pan: "移动地图", share: "分享视角与标记", copied: "链接已复制", shareLink: "分享链接", invalid: "地图链接无效或数据版本不匹配。", limit: "每个地图链接最多 16 个标记。", measurement: "测距不可用：底图比例和方向尚未校准。", measure: "测距（尚未校准）", provenance: "底图来源", source: "站长提供的地图素材，记录日期为 2026-09-27。由 8×8 瓦片拼接，并以 quality=92 重编码为 WebP，并非无损原图。素材说明记录了站长的使用授权声明，此处不作独立许可认证。", notes: "素材说明", privacy: "共享标记是用户注释，不是已核实的游戏点位。名称包含在链接中。"},
-  "zh-tw": {
-    close: "關閉",
-    map: "地圖", zoomIn: "放大", zoomOut: "縮小", reset: "重設視角", fullscreen: "全螢幕", exitFullscreen: "退出全螢幕", loading: "地圖載入中", failed: "地圖載入失敗", retry: "重試", search: "搜尋地圖資料", empty: "沒有符合的資料", references: "有來源的資料", unlocated: "位置未核實", manual: "手動標記", marker: "標記", label: "標記名稱", remove: "刪除標記", add: "放置手動標記", center: "標記視角中心", pan: "移動地圖", share: "分享視角與標記", copied: "連結已複製", shareLink: "分享連結", invalid: "地圖連結無效或資料版本不符。", limit: "每個地圖連結最多 16 個標記。", measurement: "測距不可用：底圖比例和方向尚未校準。", measure: "測距（尚未校準）", provenance: "底圖來源", notes: "素材說明", privacy: "共享標記是使用者註記，不是已核實的遊戲位置。名稱包含在連結中。",
-    source: "站長提供的地圖素材，記錄日期為 2026-09-27。由 8×8 圖磚拼接，並以 quality=92 重新編碼為 WebP，並非無損原圖。素材說明記錄了站長的使用授權聲明，此處不作獨立授權認證。",
-    version: "搶先體驗 v0.11 / 封閉測試 02",
+
+export const mapViewerCopyByLocale: Record<Locale, MapViewerCopy> = {
+  en,
+  "zh-cn": {
+    map: "地图", close: "关闭", zoomIn: "放大", zoomOut: "缩小", reset: "重置视角", fullscreen: "全屏", exitFullscreen: "退出全屏",
+    loading: "地图加载中", failed: "地图加载失败", retry: "重试", search: "搜索地图资料", empty: "没有匹配资料",
+    references: "有来源的资料", unlocated: "位置未核实", manual: "手动标记", marker: "标记", label: "标记名称", remove: "删除标记",
+    add: "放置手动标记", center: "标记视角中心", pan: "移动地图", share: "分享视角与标记", copied: "链接已复制", shareLink: "分享链接",
+    invalid: "地图链接无效或数据版本不匹配。", limit: "每个地图链接最多 16 个标记。",
+    measurement: "测距不可用：底图比例和方向尚未校准。", measure: "测距（尚未校准）",
+    provenance: "底图来源", source: "站长提供的地图素材，记录日期为 2026-09-27。由 8×8 瓦片拼接，并以 quality=92 重编码为 WebP，并非无损原图。素材说明记录了站长的使用授权声明，此处不作独立许可认证。",
+    version: "抢先体验 v0.11 / 封闭测试 02", notes: "素材说明", privacy: "共享标记是用户注释，不是已核实的游戏点位。名称包含在链接中。",
   },
-  ja: {map: "マップ", zoomIn: "拡大", zoomOut: "縮小", reset: "表示をリセット", fullscreen: "全画面", exitFullscreen: "全画面を終了", loading: "マップを読み込み中", failed: "マップを読み込めません", retry: "再試行", search: "マップ資料を検索", empty: "該当する資料はありません", references: "出典付き資料", unlocated: "位置は未確認", manual: "手動マーカー", marker: "マーカー", label: "マーカー名", remove: "マーカーを削除", add: "手動マーカーを配置", center: "中心にマーカーを配置", pan: "マップを移動", share: "表示とマーカーを共有", copied: "リンクをコピーしました", shareLink: "共有リンク", invalid: "リンクが無効、またはデータのバージョンが異なります。", measurement: "距離計測は利用不可：縮尺と方角が未検証です。", measure: "距離計測（未校正）", provenance: "地図の出典", notes: "素材の記録", privacy: "共有マーカーはユーザーの注釈であり、確認済み地点ではありません。名前はリンクに含まれます。"},
-  de: {map: "Karte", zoomIn: "Vergrößern", zoomOut: "Verkleinern", reset: "Ansicht zurücksetzen", fullscreen: "Vollbild", exitFullscreen: "Vollbild verlassen", loading: "Karte wird geladen", failed: "Karte konnte nicht geladen werden", retry: "Erneut versuchen", search: "Kartenquellen suchen", manual: "Eigene Markierungen", share: "Ansicht und Markierungen teilen", copied: "Link kopiert", measurement: "Entfernung nicht verfügbar: Maßstab und Ausrichtung sind nicht bestätigt."},
-  ru: {map: "Карта", zoomIn: "Увеличить", zoomOut: "Уменьшить", reset: "Сбросить вид", fullscreen: "Полный экран", exitFullscreen: "Выйти из полного экрана", loading: "Загрузка карты", failed: "Не удалось загрузить карту", retry: "Повторить", search: "Поиск материалов карты", manual: "Свои метки", share: "Поделиться видом и метками", copied: "Ссылка скопирована", measurement: "Расстояние недоступно: масштаб и ориентация не проверены."},
-  "pt-br": {map: "Mapa", zoomIn: "Ampliar", zoomOut: "Reduzir", reset: "Redefinir vista", fullscreen: "Tela cheia", exitFullscreen: "Sair da tela cheia", loading: "Carregando mapa", failed: "Falha ao carregar mapa", retry: "Tentar novamente", search: "Buscar referências do mapa", manual: "Marcações manuais", share: "Compartilhar vista e marcações", copied: "Link copiado", measurement: "Distância indisponível: escala e orientação não verificadas."},
+  ru: {
+    map: "Карта", close: "Закрыть", zoomIn: "Увеличить", zoomOut: "Уменьшить", reset: "Сбросить вид", fullscreen: "Полный экран", exitFullscreen: "Выйти из полного экрана",
+    loading: "Загрузка карты", failed: "Не удалось загрузить карту", retry: "Повторить", search: "Поиск материалов карты", empty: "Совпадений нет",
+    references: "Материалы с источниками", unlocated: "Позиция не подтверждена", manual: "Свои метки", marker: "Метка", label: "Название метки", remove: "Удалить метку",
+    add: "Поставить свою метку", center: "Отметить центр вида", pan: "Переместить карту", share: "Поделиться видом и метками", copied: "Ссылка скопирована", shareLink: "Ссылка для обмена",
+    invalid: "Ссылка на карту недействительна или использует другую версию данных.", limit: "В одной ссылке карты допускается не более 16 меток.",
+    measurement: "Расстояние недоступно: масштаб и ориентация основы не подтверждены.", measure: "Измерить расстояние (без калибровки)",
+    provenance: "Источник базовой карты", source: "Карта предоставлена владельцем сайта и записана 27 сентября 2026 года. Сшито 8×8 тайлов, затем файл повторно закодирован в WebP с quality 92; это не без потерь сохранённый оригинал. Заявление владельца о праве использования записано в примечаниях к материалу и здесь не подтверждается независимо.",
+    version: "Ранний доступ v0.11 / закрытая бета 02", notes: "Примечания к материалу", privacy: "Общие метки — это пользовательские заметки, а не подтверждённые игровые точки. Названия входят в ссылку.",
+  },
+  de: {
+    map: "Karte", close: "Schließen", zoomIn: "Vergrößern", zoomOut: "Verkleinern", reset: "Ansicht zurücksetzen", fullscreen: "Vollbild", exitFullscreen: "Vollbild verlassen",
+    loading: "Karte wird geladen", failed: "Karte konnte nicht geladen werden", retry: "Erneut versuchen", search: "Kartenquellen suchen", empty: "Keine passenden Quellen",
+    references: "Quellenbelegte Hinweise", unlocated: "Position nicht bestätigt", manual: "Eigene Markierungen", marker: "Markierung", label: "Name der Markierung", remove: "Markierung entfernen",
+    add: "Eigene Markierung setzen", center: "Ansichtsmitte markieren", pan: "Karte verschieben", share: "Ansicht und Markierungen teilen", copied: "Link kopiert", shareLink: "Freigabelink",
+    invalid: "Dieser Kartenlink ist ungültig oder nutzt eine andere Datenversion.", limit: "Pro Kartenlink sind höchstens 16 Markierungen erlaubt.",
+    measurement: "Entfernung nicht verfügbar: Maßstab und Ausrichtung der Basiskarte sind nicht bestätigt.", measure: "Entfernung messen (nicht kalibriert)",
+    provenance: "Quelle der Basiskarte", source: "Vom Website-Eigentümer bereitgestellte Kartenressource, aufgezeichnet am 27. September 2026. 8×8 Kacheln wurden zusammengesetzt und als WebP mit quality 92 neu kodiert; es ist kein verlustfreies Original. Die Erklärung des Eigentümers zur Nutzung ist in den Asset-Notizen vermerkt und hier nicht unabhängig zertifiziert.",
+    version: "Early Access v0.11 / Closed Beta 02", notes: "Asset-Notizen", privacy: "Geteilte Markierungen sind Nutzeranmerkungen und keine bestätigten Spielorte. Namen sind im Link enthalten.",
+  },
+  "pt-br": {
+    map: "Mapa", close: "Fechar", zoomIn: "Ampliar", zoomOut: "Reduzir", reset: "Redefinir vista", fullscreen: "Tela cheia", exitFullscreen: "Sair da tela cheia",
+    loading: "Carregando mapa", failed: "Falha ao carregar mapa", retry: "Tentar novamente", search: "Buscar referências do mapa", empty: "Nenhuma referência encontrada",
+    references: "Referências com fonte", unlocated: "Posição não verificada", manual: "Marcações manuais", marker: "Marcador", label: "Nome do marcador", remove: "Remover marcador",
+    add: "Colocar marcador manual", center: "Marcar centro da vista", pan: "Mover mapa", share: "Compartilhar vista e marcações", copied: "Link copiado", shareLink: "Link de compartilhamento",
+    invalid: "Este link do mapa é inválido ou usa outra versão dos dados.", limit: "Máximo de 16 marcadores por link do mapa.",
+    measurement: "Distância indisponível: este mapa-base não tem escala nem orientação verificadas.", measure: "Medir distância (não calibrado)",
+    provenance: "Fonte do mapa-base", source: "Recurso de mapa fornecido pelo proprietário do site, registrado em 27 de setembro de 2026. Foram unidos 8×8 blocos e o arquivo foi recodificado em WebP com quality 92; não é um original sem perdas. A declaração de uso do proprietário está registrada nas notas do recurso e não é certificada de forma independente aqui.",
+    version: "Acesso Antecipado v0.11 / Beta Fechado 02", notes: "Notas do recurso", privacy: "Marcações compartilhadas são anotações do usuário, não locais verificados no jogo. Os nomes são incluídos no link.",
+  },
+  ja: {
+    map: "マップ", close: "閉じる", zoomIn: "拡大", zoomOut: "縮小", reset: "表示をリセット", fullscreen: "全画面", exitFullscreen: "全画面を終了",
+    loading: "マップを読み込み中", failed: "マップを読み込めません", retry: "再試行", search: "マップ資料を検索", empty: "該当する資料はありません",
+    references: "出典付き資料", unlocated: "位置は未確認", manual: "手動マーカー", marker: "マーカー", label: "マーカー名", remove: "マーカーを削除",
+    add: "手動マーカーを配置", center: "中心にマーカーを配置", pan: "マップを移動", share: "表示とマーカーを共有", copied: "リンクをコピーしました", shareLink: "共有リンク",
+    invalid: "このマップリンクは無効、または別のデータバージョンを使用しています。", limit: "1つのマップリンクに保存できるマーカーは最大16個です。",
+    measurement: "距離計測は利用不可：このベースマップの縮尺と方角は未検証です。", measure: "距離計測（未校正）",
+    provenance: "ベースマップの出典", source: "サイト所有者から提供されたマップ素材で、記録日は2026年9月27日です。8×8タイルを結合し、quality 92のWebPとして再エンコードしています。無劣化の原本ではありません。所有者による使用許諾の説明は素材メモに記録されていますが、ここで独立認証しているわけではありません。",
+    version: "早期アクセス v0.11 / クローズドベータ 02", notes: "素材メモ", privacy: "共有マーカーはユーザー注釈であり、確認済みのゲーム内地点ではありません。名前はリンクに含まれます。",
+  },
+  "zh-tw": {
+    map: "地圖", close: "關閉", zoomIn: "放大", zoomOut: "縮小", reset: "重設視角", fullscreen: "全螢幕", exitFullscreen: "退出全螢幕",
+    loading: "地圖載入中", failed: "地圖載入失敗", retry: "重試", search: "搜尋地圖資料", empty: "沒有符合的資料",
+    references: "有來源的資料", unlocated: "位置未核實", manual: "手動標記", marker: "標記", label: "標記名稱", remove: "刪除標記",
+    add: "放置手動標記", center: "標記視角中心", pan: "移動地圖", share: "分享視角與標記", copied: "連結已複製", shareLink: "分享連結",
+    invalid: "地圖連結無效或資料版本不符。", limit: "每個地圖連結最多 16 個標記。",
+    measurement: "測距不可用：底圖比例和方向尚未校準。", measure: "測距（尚未校準）",
+    provenance: "底圖來源", source: "站長提供的地圖素材，記錄日期為 2026-09-27。由 8×8 圖磚拼接，並以 quality=92 重新編碼為 WebP，並非無損原圖。素材說明記錄了站長的使用授權聲明，此處不作獨立授權認證。",
+    version: "搶先體驗 v0.11 / 封閉測試 02", notes: "素材說明", privacy: "共享標記是使用者註記，不是已核實的遊戲位置。名稱包含在連結中。",
+  },
   pl: {
-    close: "Zamknij",
-    map: "Mapa", zoomIn: "Powiększ", zoomOut: "Pomniejsz", reset: "Resetuj widok", fullscreen: "Pełny ekran", exitFullscreen: "Opuść pełny ekran", loading: "Wczytywanie mapy", failed: "Nie można wczytać mapy", retry: "Ponów", search: "Szukaj informacji o mapie", manual: "Własne znaczniki", share: "Udostępnij widok i znaczniki", copied: "Link skopiowany", measurement: "Pomiar niedostępny: skala i orientacja nie są potwierdzone.",
-    empty: "Brak pasujących materiałów", references: "Materiały ze źródłami", unlocated: "Pozycja niezweryfikowana", marker: "Znacznik", label: "Nazwa znacznika", remove: "Usuń znacznik", add: "Umieść własny znacznik", center: "Oznacz środek widoku", pan: "Przesuń mapę", shareLink: "Link do udostępnienia", invalid: "Link mapy jest nieprawidłowy lub używa innej wersji danych.", limit: "Maksymalnie 16 znaczników w jednym linku mapy.", measure: "Zmierz odległość (bez kalibracji)", provenance: "Źródło mapy bazowej",
-    source: "Mapa dostarczona przez właściciela serwisu, zapisana 27 września 2026. Połączono 8×8 kafelków i ponownie zakodowano jako WebP z jakością 92; nie jest to bezstratny oryginał. Oświadczenie właściciela o prawie do użycia zapisano w uwagach do materiału, bez niezależnego potwierdzenia w tym miejscu.",
+    map: "Mapa", close: "Zamknij", zoomIn: "Powiększ", zoomOut: "Pomniejsz", reset: "Resetuj widok", fullscreen: "Pełny ekran", exitFullscreen: "Opuść pełny ekran",
+    loading: "Wczytywanie mapy", failed: "Nie można wczytać mapy", retry: "Ponów", search: "Szukaj informacji o mapie", empty: "Brak pasujących materiałów",
+    references: "Materiały ze źródłami", unlocated: "Pozycja niezweryfikowana", manual: "Własne znaczniki", marker: "Znacznik", label: "Nazwa znacznika", remove: "Usuń znacznik",
+    add: "Umieść własny znacznik", center: "Oznacz środek widoku", pan: "Przesuń mapę", share: "Udostępnij widok i znaczniki", copied: "Link skopiowany", shareLink: "Link do udostępnienia",
+    invalid: "Link mapy jest nieprawidłowy lub używa innej wersji danych.", limit: "Maksymalnie 16 znaczników w jednym linku mapy.",
+    measurement: "Pomiar niedostępny: skala i orientacja mapy bazowej nie są potwierdzone.", measure: "Zmierz odległość (bez kalibracji)",
+    provenance: "Źródło mapy bazowej", source: "Mapa dostarczona przez właściciela serwisu, zapisana 27 września 2026. Połączono 8×8 kafelków i ponownie zakodowano jako WebP z jakością 92; nie jest to bezstratny oryginał. Oświadczenie właściciela o prawie do użycia zapisano w uwagach do materiału, bez niezależnego potwierdzenia w tym miejscu.",
     version: "Wczesny dostęp v0.11 / zamknięta beta 02", notes: "Uwagi do materiału", privacy: "Udostępniane znaczniki to adnotacje użytkownika, a nie zweryfikowane miejsca w grze. Ich nazwy są zawarte w linku.",
   },
 };
-export function getMapViewerCopy(locale: string): MapViewerCopy { return {...en, ...translations[locale]}; }
+
+export function getMapViewerCopy(locale: string): MapViewerCopy {
+  return mapViewerCopyByLocale[locale as Locale] ?? en;
+}

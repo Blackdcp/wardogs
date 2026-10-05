@@ -20,6 +20,8 @@ const approvedHosts = new Set([
   "support.microsoft.com",
   "pcgamer.com",
   "www.pcgamer.com",
+  "gamesradar.com",
+  "www.gamesradar.com",
   "wardogs100k.com",
   "www.wardogs100k.com",
 ]);

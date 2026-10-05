@@ -53,7 +53,7 @@
     "crashFix": "Naprawa awarii",
     "helicopterGuide": "Poradnik śmigłowców",
     "gameplayGuide": "Poradnik rozgrywki",
-    "infantryMode": "Infantry Mode",
+    "infantryMode": "Tryb piechoty",
     "fobLogistics": "FOB i logistyka",
     "mortarGuide": "Poradnik moździerza",
     "allGuides": "Wszystkie poradniki",
@@ -89,7 +89,8 @@
     "mapsAndTools": "Mapy i narzędzia",
     "artilleryCalculator": "Kalkulator artylerii i moździerzy",
     "mapPill": "Mapa",
-    "calcPill": "Kalkulator"
+    "calcPill": "Kalkulator",
+    "cashXpCalculator": "Kalkulator gotówki i XP"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: poradniki, broń, pojazdy i narzędzia",
@@ -237,7 +238,7 @@
           "field": "Cena u sprzedawcy"
         },
         "artilleryTank": {
-          "title": "Artillery Tank",
+          "title": "Czołg artyleryjski",
           "field": "Odblokowanie kariery"
         },
         "ural": {

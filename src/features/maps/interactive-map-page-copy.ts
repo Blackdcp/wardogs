@@ -1,3 +1,5 @@
+import type {Locale} from "@/config/site";
+
 export interface InteractiveMapCopy {
   title: string;
   desc: string;
@@ -7,7 +9,7 @@ export interface InteractiveMapCopy {
   calcTitle: string;
 }
 
-export const interactiveMapPageCopy: Record<string, InteractiveMapCopy> = {
+export const interactiveMapPageCopy: Record<Locale, InteractiveMapCopy> = {
   "zh-cn": {
     title: "WARDOGS 交互式战术地图：FOB 路线、塔楼与迫击炮射程",
     desc: "规划 Bakurani、Ozeti、Zestafona 的控制区路线、FOB 补给线、塔楼推进和迫击炮射程。支持测距、标记和分享视角。",

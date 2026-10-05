@@ -1,0 +1,81 @@
+---
+title: "WARDOGS Deploy 伺服器選擇指南"
+description: "WARDOGS Deploy 伺服器選擇指南：圍繞當前版本、Season 2、伺服器、進度和小隊計畫，整理玩家今天需要判斷的風險、工具、來源和下一步行動。 數值隨版本變化，重要花費前請先核對當前客戶端。 數值隨版本變化，重要花費前請先核對當前客戶端。 數值隨版本變化，重要花費前請先核對當前客戶端。"
+keyword: "wardogs deploy screen"
+category: "guide"
+slug: "wardogs-deploy-screen"
+order: 58
+updatedAt: "2026-10-05"
+badges:
+  - label: "Server Browser"
+    tone: "accent"
+  - label: "Troubleshooting"
+    tone: "warning"
+faq:
+  - question: "Why is my WARDOGS Deploy screen empty?"
+    answer: "First clear filters and switch between Official, Community, Infantry and Low-Level views. If all views fail, compare with current official notices and record the exact state."
+  - question: "Is the Deploy screen a server outage indicator?"
+    answer: "Not by itself. It is a routing interface, and filters or category selection can make a healthy server pool look empty."
+sources:
+  - label: "Official Update 0.1.2 minor patch"
+    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
+    kind: "official"
+    checkedAt: "2026-10-05"
+  - label: "Reddit community discussion: Low-Level servers"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wu21j2/how_do_low_level_servers_work/"
+    kind: "community"
+    checkedAt: "2026-10-05"
+  - label: "Reddit community discussion: new deployment screen"
+    url: "https://www.reddit.com/r/WarDogs/comments/1wu29z1/new_deployment_screen/"
+    kind: "community"
+    checkedAt: "2026-10-05"
+  - label: "GamesRadar: WARDOGS infantry servers response"
+    url: "https://www.gamesradar.com/games/fps/wardogs-boss-admits-were-failing-on-getting-infantry-servers-to-you-guys-but-says-bulkhead-is-learning-more-and-more-how-to-balance-the-game-to-our-vision/"
+    kind: "press"
+    checkedAt: "2026-10-05"
+---
+
+## 快速答案
+
+Deploy Screen 是伺服器和模式的路由层，不是简单的開始按钮。你需要先判断 Official、Community、Infantry、Low-Level 和筛选条件，再决定要進哪一類對局。空列表通常先排查筛选和分類，而不是立刻重装游戏。
+
+## 已確認事实
+
+- Patch 0.11 已经把 Official 與 Community server browser 分開。
+- Update 0.1.2 又调整了 Deploy 体验，并把 Infantry Mode、Low-Level servers 放進更明显的位置。
+- 社區 bug 反馈显示，玩家會遇到空列表、筛选误导、分類混淆和好友加入 workaround。
+- Deploy 问題和 WD-L020、WD-L018、反作弊、权限错误不是同一類问題。
+
+## 行动方案
+
+### 第一步清空筛选
+
+先关闭可能限制结果的过滤项，包括地區、满服、空服、模式、社區類型等。很多“没有伺服器”的情况，其实是筛选组合太窄。
+
+### 分開检查 Official 和 Community
+
+Official 没结果不等于 Community 也没结果，反过来也一样。Patch 0.11 以後這两個入口應该分開判断。
+
+### 单独测试 Infantry 和 Low-Level
+
+如果你是為了步兵局或低等級入口来玩，就不要只看默认列表。切到對應分類，確認列表、人數和规则是否符合预期。
+
+### 和状态頁交叉验证
+
+如果所有分類都异常，再去看 server status、patch notes 和 known issues。只有多個入口同時失败，才更像服务端或版本问題。
+
+### 报告要有可复现資訊
+
+有用的反馈包括時间、地區、分類、筛选条件、错误码、是否能跟好友加入，以及客户端版本。只说“Deploy 坏了”很难定位。
+
+## 来源和核查日期
+
+核查日期按下方每條來源分別記錄；不要把單個頁面日期理解為所有資訊的統一核查日期。
+
+## 相关攻略
+
+- [wardogs server status](/zh-tw/guides/wardogs-server-status)
+- [wardogs known issues](/zh-tw/guides/wardogs-known-issues)
+- [wardogs low level servers](/zh-tw/guides/wardogs-low-level-servers)
+- [wardogs community servers guide](/zh-tw/guides/wardogs-community-servers-guide)
+- [wardogs crash fix](/zh-tw/guides/wardogs-crash-fix)

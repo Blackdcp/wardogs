@@ -27,7 +27,7 @@ type OperationsAtlasProps = {
 
 const visualSizes = "(min-width: 1024px) 320px, (min-width: 640px) 38vw, calc(100vw - 32px)";
 
-const siteMapCopy: Record<string, {heading: string; description: string; open: string}> = {
+const siteMapCopy: Record<Locale, {heading: string; description: string; open: string}> = {
   en: {heading: "Explore the three maps", description: "Switch between Bakurani, Ozeti, and Zestafona. Use the workflows below to plan your route.", open: "Open the full map page"},
   ru: {heading: "Три игровые карты", description: "Переключайтесь между Bakurani, Ozeti и Zestafona. Маршруты ниже помогут спланировать движение.", open: "Открыть карту на отдельной странице"},
   de: {heading: "Drei Karten erkunden", description: "Wechsle zwischen Bakurani, Ozeti und Zestafona und plane deine Route mit den Anleitungen unten.", open: "Karte auf eigener Seite öffnen"},
@@ -49,7 +49,7 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: Operati
   const [filter, setFilter] = useState<OperationsAtlasFilter>("all");
   const visibleRecords = filterOperationsAtlas(getLocalizedOperationsAtlasRecords(locale), filter);
   const itemUi = getItemUi(locale);
-  const mapCopy = siteMapCopy[locale] ?? siteMapCopy.en;
+  const mapCopy = siteMapCopy[locale];
 
   return (
     <section aria-labelledby="operations-atlas-heading" className="border-y border-[#303b35] bg-[#101512]">

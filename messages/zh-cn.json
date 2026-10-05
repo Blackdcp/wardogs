@@ -89,7 +89,8 @@
     "mapsAndTools": "地图与工具",
     "artilleryCalculator": "火炮与迫击炮计算器",
     "mapPill": "战术地图",
-    "calcPill": "密位计算"
+    "calcPill": "密位计算",
+    "cashXpCalculator": "金钱与 XP 计算器"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki 中文维基：战术射击全图鉴与开荒地图攻略",
@@ -118,7 +119,7 @@
       "imageAlt": "WARDOGS 官方实机画面中的直升机与战场",
       "bodyOne": "WARDOGS 是 BULKHEAD 已在 Steam 抢先体验上线的战术全面战争 FPS，并非 2016 年电影《War Dogs》。最多 100 名玩家分成三队，在随机 2 x 2 公里控制区中使用步兵、载具、工事和后勤作战。",
       "bodyTwo": "击杀不是唯一贡献方式。救治、运输、补给和目标控制也会影响团队推进与个人经济；具体数值和规则仍可能在抢先体验阶段调整。",
-      "officialQuote": "Every player starts their journey with $10,000.",
+      "officialQuote": "每名玩家都会以 10,000 美元开始自己的旅程。",
       "officialQuoteSource": "Steam 上的 WARDOGS 官方介绍",
       "points": {
         "teams": "三支队伍争夺同一得分目标",

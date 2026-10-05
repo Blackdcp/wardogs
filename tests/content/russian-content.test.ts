@@ -5,7 +5,7 @@ describe("Russian guide library", () => {
   it("contains localized Cyrillic content for every guide slug", async () => {
     await expect(assertCompleteContentMatrix(["en", "ru"])).resolves.toBeUndefined();
     const summaries = await listGuideSummaries("ru");
-    expect(summaries).toHaveLength(55);
+    expect(summaries).toHaveLength(64);
     for (const summary of summaries) {
       expect(summary.title).toMatch(/[А-Яа-яЁё]/);
       const guide = await loadGuideDocument("ru", summary.slug);

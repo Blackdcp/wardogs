@@ -12,7 +12,7 @@ const legacyEnglishPages = new Set([
 ]);
 const legacyEnglishTools = new Set([
   "system-check", "ammo-matcher", "logistics-planner", "progression-route",
-  "weapon-compare", "loadout-budget", "artillery-calculator", "map"
+  "weapon-compare", "loadout-budget", "cash-xp-calculator", "artillery-calculator", "map"
 ]);
 
 export function getLegacyEnglishRedirectPath(pathname: string): string | null {

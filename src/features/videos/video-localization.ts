@@ -6,6 +6,7 @@ import {videoArticleCopyPl} from "./video-articles.pl";
 import {videoArticleCopyZhTw} from "./video-articles.zh-tw";
 
 type TranslatedLocale = Exclude<Locale, "en" | "zh-tw">;
+type TemplateTopicLocale = Exclude<TranslatedLocale, "pl">;
 
 export type ContextualVideoUi = {
   eyebrow: string;
@@ -39,7 +40,7 @@ export function getContextualVideoUi(locale: Locale): ContextualVideoUi {
   };
 }
 
-const topics: Record<VideoArticle["slug"], Partial<Record<TranslatedLocale, string>>> = {
+const topics: Record<VideoArticle["slug"], Record<TemplateTopicLocale, string>> = {
   "wardogs-10-reasons-not-to-buy": {ru: "официальные доводы разработчиков о спорных особенностях и ожиданиях перед покупкой", de: "die offiziellen Entwicklerargumente zu möglichen Nachteilen und realistischen Erwartungen vor dem Kauf", "pt-br": "os argumentos oficiais dos desenvolvedores sobre limitações e expectativas antes da compra", ja: "開発者が説明した購入前に知るべき弱点と現実的な期待", "zh-cn": "官方开发者列出的购买前风险与适合人群"},
   "wardogs-7-things-you-need-to-know": {ru: "масштаб на 100 игроков, три команды, постоянные деньги, мобильные FOB и сроки выхода", de: "100 Spieler, drei Teams, dauerhaftes Geld, mobile FOBs und der Veröffentlichungsplan", "pt-br": "100 jogadores, três equipes, dinheiro persistente, FOBs móveis e o cronograma de lançamento", ja: "100人・3チーム戦、持ち越し資金、移動FOB、発売予定", "zh-cn": "百人三方战、持久资金、移动 FOB 与发售信息"},
   "wardogs-loadout-gear-guide": {ru: "оружие, магазины, медицина, броня, рюкзаки, парашюты, специалисты и строительство FOB", de: "Waffen, Magazine, Medizin, Rüstung, Rucksäcke, Fallschirme, Spezialisten und FOB-Bau", "pt-br": "armas, carregadores, medicina, armadura, mochilas, paraquedas, especialistas e construção de FOB", ja: "武器、マガジン、医療、装甲、バックパック、パラシュート、特殊装備、FOB建築", "zh-cn": "武器、弹匣、医疗、护甲、背包与 FOB 建造配装"},
@@ -175,7 +176,7 @@ const titles: Record<TranslatedLocale, Record<VideoArticle["slug"], string>> = {
 };
 
 function localizedArticle(article: VideoArticle, locale: TranslatedLocale): VideoArticle {
-  const topic = locale === "pl" ? polishTopics[article.slug] : topics[article.slug][locale] ?? `“${article.title}”中的玩法、证据与实战建议`;
+  const topic = locale === "pl" ? polishTopics[article.slug] : topics[article.slug][locale];
   const title = titles[locale][article.slug];
 
   if (locale === "pl") {

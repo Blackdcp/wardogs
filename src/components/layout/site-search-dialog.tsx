@@ -10,7 +10,16 @@ import {getNextSearchSelection, searchSiteIndex, type SiteSearchEntry} from "@/f
 import {useRouter} from "@/i18n/navigation";
 
 const indexCache = new Map<Locale, readonly SiteSearchEntry[]>();
-const loadingLabels: Partial<Record<Locale, string>> = {"zh-tw": "搜尋載入中", pl: "Wczytywanie wyników"};
+export const siteSearchLoadingLabels: Record<Locale, string> = {
+  en: "Loading",
+  ru: "Загрузка результатов",
+  de: "Ergebnisse werden geladen",
+  "pt-br": "Carregando resultados",
+  ja: "検索結果を読み込み中",
+  "zh-cn": "搜索结果加载中",
+  "zh-tw": "搜尋結果載入中",
+  pl: "Wczytywanie wyników"
+};
 
 type SiteSearchDialogProps = {
   compact?: boolean;
@@ -163,7 +172,7 @@ export function SiteSearchDialog({compact = false, placeholder, source = "header
               />
             </div>
             <div aria-live="polite" className="mt-3 min-h-6 px-1 text-sm text-[#a8b4ae]">
-              {loading ? <LoaderCircle aria-label={loadingLabels[locale] ?? "Loading"} className="size-5 animate-spin" /> : failed ? <a className="text-[#79d19c] underline" href={`/${locale}#site-search-title`} title={t("home.search.label")}>{t("home.search.label")}</a> : !query.trim() ? t("home.search.prompt") : results.length === 0 ? t("home.search.empty") : t("home.search.resultCount", {count: results.length})}
+              {loading ? <LoaderCircle aria-label={siteSearchLoadingLabels[locale]} className="size-5 animate-spin" /> : failed ? <a className="text-[#79d19c] underline" href={`/${locale}#site-search-title`} title={t("home.search.label")}>{t("home.search.label")}</a> : !query.trim() ? t("home.search.prompt") : results.length === 0 ? t("home.search.empty") : t("home.search.resultCount", {count: results.length})}
             </div>
             <ul className="mt-2 max-h-[min(55vh,480px)] overflow-y-auto rounded-[6px]" id="global-site-search-results" role="listbox">
               {query.trim() && results.map((result, position) => (

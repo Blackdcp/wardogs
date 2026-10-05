@@ -53,7 +53,7 @@
     "crashFix": "クラッシュ対策",
     "helicopterGuide": "ヘリコプターガイド",
     "gameplayGuide": "ゲームプレイガイド",
-    "infantryMode": "Infantry Mode",
+    "infantryMode": "歩兵モード",
     "fobLogistics": "FOBと兵站",
     "mortarGuide": "迫撃砲ガイド",
     "allGuides": "すべての攻略",
@@ -89,7 +89,8 @@
     "mapsAndTools": "マップ＆ツール",
     "artilleryCalculator": "迫撃砲・曲射砲計算ツール",
     "mapPill": "戦術マップ",
-    "calcPill": "密位計算"
+    "calcPill": "密位計算",
+    "cashXpCalculator": "Cash & XP 計算機"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki：攻略・武器・車両・ツールを検索",
@@ -118,7 +119,7 @@
       "imageAlt": "ヘリコプターの操縦席から見たWARDOGS公式ゲームプレイ",
       "bodyOne": "WARDOGSはBULKHEADが開発し、Steam Early Accessで配信中のタクティカルな大規模戦FPSで、2016年の映画War Dogsとは別作品です。最大100人の3チームが、歩兵、車両、要塞、兵站を使ってランダムな2 x 2 kmのControl Zoneを争います。",
       "bodyTwo": "資金は試合をまたいで保持され、各ライフの新しいロードアウトに使います。戦闘だけでなく、輸送、補給、蘇生などの支援行動もチームと自分の経済に貢献します。",
-      "officialQuote": "Every player starts their journey with $10,000.",
+      "officialQuote": "すべてのプレイヤーは$10,000から旅を始めます。",
       "officialQuoteSource": "SteamのWARDOGS公式説明",
       "points": {
         "teams": "3チームが同じ得点目標を追う",
@@ -237,7 +238,7 @@
           "field": "販売価格"
         },
         "artilleryTank": {
-          "title": "Artillery Tank",
+          "title": "砲兵戦車",
           "field": "キャリア解除"
         },
         "ural": {

@@ -491,5 +491,5 @@ const copy: Record<Locale, ArtilleryCopy> = {
 };
 
 export function getArtilleryCopy(locale: Locale): ArtilleryCopy {
-  return copy[locale] ?? copy.en;
+  return copy[locale];
 }

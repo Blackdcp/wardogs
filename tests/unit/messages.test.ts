@@ -31,6 +31,56 @@ describe("localized messages", () => {
     }
   });
 
+  it("does not leave high-visibility English UI copy in localized dictionaries", () => {
+    const expected = {
+      ru: {
+        "nav.infantryMode": "Пехотный режим",
+        "home.about.officialQuote": "Каждый игрок начинает свой путь с $10,000.",
+        "home.buildChanges.entries.artilleryTank.title": "Артиллерийский танк",
+      },
+      de: {
+        "nav.infantryMode": "Infanteriemodus",
+        "home.about.officialQuote": "Jeder Spieler beginnt seine Laufbahn mit $10,000.",
+        "home.buildChanges.entries.artilleryTank.title": "Artilleriepanzer",
+        "guides.title": "WARDOGS-Leitfäden",
+      },
+      "pt-br": {
+        "nav.infantryMode": "Modo de Infantaria",
+        "home.about.officialQuote": "Cada jogador começa sua jornada com $10,000.",
+        "home.buildChanges.entries.artilleryTank.title": "Tanque de Artilharia",
+      },
+      ja: {
+        "nav.infantryMode": "歩兵モード",
+        "home.about.officialQuote": "すべてのプレイヤーは$10,000から旅を始めます。",
+        "home.buildChanges.entries.artilleryTank.title": "砲兵戦車",
+      },
+      "zh-cn": {
+        "home.about.officialQuote": "每名玩家都会以 10,000 美元开始自己的旅程。",
+      },
+      "zh-tw": {
+        "home.about.officialQuote": "每名玩家都會以 10,000 美元開始自己的旅程。",
+      },
+      pl: {
+        "nav.infantryMode": "Tryb piechoty",
+        "home.buildChanges.entries.artilleryTank.title": "Czołg artyleryjski",
+      },
+    } as const;
+
+    function readPath(messages: Record<string, unknown>, path: string) {
+      return path.split(".").reduce<unknown>((value, part) => (
+        value && typeof value === "object" ? (value as Record<string, unknown>)[part] : undefined
+      ), messages);
+    }
+
+    for (const [locale, checks] of Object.entries(expected)) {
+      const messages = loadMessages(locale as (typeof locales)[number]);
+      for (const [path, value] of Object.entries(checks)) {
+        expect(readPath(messages, path), `${locale} ${path}`).toBe(value);
+        expect(readPath(messages, path), `${locale} ${path}`).not.toBe(readPath(loadMessages("en"), path));
+      }
+    }
+  });
+
   it("keeps homepage SEO metadata within the requested limits", () => {
     for (const locale of locales) {
       const home = loadMessages(locale).home as {

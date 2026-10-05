@@ -313,7 +313,7 @@ export function filterOperationsAtlas(
   return records.filter((record) => record.tasks.includes(filter));
 }
 
-const copyByLocale: Record<string, OperationsAtlasCopy> = {
+const copyByLocale: Record<Locale, OperationsAtlasCopy> = {
   en: {
     metaTitle: "WARDOGS Operations Atlas: Maps, FOBs, Cargo and Objectives",
     metaDescription: "Use the sourced WARDOGS operations atlas for Control Zone orientation, tower objectives, FOBs, cargo, mortars, and helicopter transport without invented routes.",
@@ -451,5 +451,5 @@ metaTitle:"Atlas działań WARDOGS: mapy, FOB, ładunki i cele", metaDescription
 };
 
 export function getOperationsAtlasCopy(locale: Locale): OperationsAtlasCopy {
-  return copyByLocale[locale] ?? copyByLocale.en;
+  return copyByLocale[locale];
 }

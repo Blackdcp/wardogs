@@ -1,6 +1,6 @@
 import {seasonOneChanges, type SeasonOneChange} from "@/features/catalogue/catalogue-evidence";
 
-export const HOME_UPDATED_AT = "2026-10-04";
+export const HOME_UPDATED_AT = "2026-10-05";
 
 export const HOME_FACT_KEYS = ["earlyAccess", "players", "teams", "controlZone"] as const;
 export type HomeFactKey = (typeof HOME_FACT_KEYS)[number];

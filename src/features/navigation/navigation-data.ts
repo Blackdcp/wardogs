@@ -84,6 +84,7 @@ export function buildNavigation(t: Translate): NavigationGroup[] {
         {href: "/tools/weapon-compare", label: t("nav.weaponCompare"), searchType: "tool"},
         {href: "/tools/logistics-planner", label: t("nav.logisticsPlanner"), searchType: "tool"},
         {href: "/tools/loadout-budget", label: t("nav.budgetTool"), searchType: "tool"},
+        {href: "/tools/cash-xp-calculator", label: t("nav.cashXpCalculator"), searchType: "tool"},
         {href: "/tools/system-check", label: t("nav.systemCheck"), searchType: "tool"},
         {href: "/tools/progression-route", label: t("nav.progressionRoute"), searchType: "tool"}
       ]

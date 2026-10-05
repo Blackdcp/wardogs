@@ -3,7 +3,7 @@ import {readFileSync} from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import {guideManifest} from "@/content/manifest";
-import {locales} from "@/config/site";
+import {locales, type Locale} from "@/config/site";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import {getCatalogGuide} from "@/features/items/item-catalog-guides";
 import {itemHubPreviewSlugs} from "@/features/items/item-hub-data";
@@ -29,6 +29,7 @@ const staticPaths = [
   "/gold-market",
   "/tools/system-check",
   "/tools/loadout-budget",
+  "/tools/cash-xp-calculator",
   "/tools/weapon-compare",
   "/tools/ammo-matcher",
   "/tools/progression-route",
@@ -50,6 +51,7 @@ const freshHubPaths = new Set([
   "/news",
   "/tools/weapon-compare",
   "/tools/loadout-budget",
+  "/tools/cash-xp-calculator",
   "/tools/system-check",
   "/tools/map",
   "/tools/artillery-calculator",
@@ -113,7 +115,7 @@ export function resolveEditorialHubLastModified(pathname: "" | "/guides" | "/new
   return new Date(`${latestDate(dates)}T00:00:00.000Z`);
 }
 
-function editorialHubSources(locale: string): EditorialHubSources {
+function editorialHubSources(locale: Locale): EditorialHubSources {
   return {
     guides: guideManifest.map(({slug}) => resolveGuideUpdatedAt(locale, slug)),
     news: [
@@ -127,7 +129,7 @@ function editorialHubSources(locale: string): EditorialHubSources {
   };
 }
 
-function resolvePageLastModified(locale: string, pathname: string) {
+function resolvePageLastModified(locale: Locale, pathname: string) {
   if (pathname === "" || pathname === "/guides" || pathname === "/news") {
     const lastModified = resolveEditorialHubLastModified(pathname, editorialHubSources(locale));
     return pathname === "" ? new Date(Math.max(lastModified.getTime(), Date.parse(HOME_UPDATED_AT))) : lastModified;

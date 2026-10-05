@@ -53,7 +53,7 @@
     "crashFix": "Absturz beheben",
     "helicopterGuide": "Helikopter-Leitfaden",
     "gameplayGuide": "Spielanleitung",
-    "infantryMode": "Infantry Mode",
+    "infantryMode": "Infanteriemodus",
     "fobLogistics": "FOB und Logistik",
     "mortarGuide": "Mörser-Leitfaden",
     "allGuides": "Alle Anleitungen",
@@ -89,7 +89,8 @@
     "mapsAndTools": "Karten & Werkzeuge",
     "artilleryCalculator": "Artillerie- und Mörser-Rechner",
     "mapPill": "Karte",
-    "calcPill": "Mörser-Rechner"
+    "calcPill": "Mörser-Rechner",
+    "cashXpCalculator": "Cash- & XP-Rechner"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: Guides, Waffen, Fahrzeuge & Tools durchsuchen",
@@ -118,7 +119,7 @@
       "imageAlt": "Offizielle WARDOGS-Gameplay-Szene aus einem Helikoptercockpit",
       "bodyOne": "WARDOGS ist BULKHEADs live verfügbares taktisches All-out-Warfare-FPS im Steam Early Access, nicht der Film War Dogs von 2016. Bis zu 100 Spieler in drei Teams kämpfen in einer zufälligen 2 x 2 km großen Kontrollzone mit Infanterie, Fahrzeugen, Befestigungen und Logistik.",
       "bodyTwo": "Geld bleibt zwischen Matches erhalten und finanziert für jedes Leben ein neues Loadout. Kampf- und Unterstützungsaktionen helfen dem Team und erhalten zugleich deine Wirtschaft.",
-      "officialQuote": "Every player starts their journey with $10,000.",
+      "officialQuote": "Jeder Spieler beginnt seine Laufbahn mit $10,000.",
       "officialQuoteSource": "Offizielle WARDOGS-Beschreibung auf Steam",
       "points": {
         "teams": "Drei Teams verfolgen dasselbe Punktziel",
@@ -237,7 +238,7 @@
           "field": "Händlerpreis"
         },
         "artilleryTank": {
-          "title": "Artillery Tank",
+          "title": "Artilleriepanzer",
           "field": "Karriere-Freischaltung"
         },
         "ural": {
@@ -487,7 +488,7 @@
   },
   "guides": {
     "metaTitle": "WARDOGS Guides - Launch, Gameplay, Waffen & Lösungen",
-    "title": "WARDOGS Guides",
+    "title": "WARDOGS-Leitfäden",
     "description": "Durchsuche {count} Guides zu Launch, Fracht, Munition, Squads, Abstürzen, Fahrzeugen, FOB-Logistik und Gameplay.",
     "count": "{count} Guide-Themen",
     "read": "Guide lesen"

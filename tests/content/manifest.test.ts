@@ -56,13 +56,22 @@ const expected = [
   ["guide", "wardogs pacifist guide", "wardogs-pacifist-guide"],
   ["guide", "wardogs player count", "wardogs-player-count"],
   ["guide", "wardogs achievements", "wardogs-achievements"],
-  ["guide", "wardogs infantry mode", "wardogs-infantry-mode"]
+  ["guide", "wardogs infantry mode", "wardogs-infantry-mode"],
+  ["guide", "wardogs what to buy before wipe", "wardogs-what-to-buy-before-wipe"],
+  ["guide", "wardogs low level servers", "wardogs-low-level-servers"],
+  ["guide", "wardogs deploy screen", "wardogs-deploy-screen"],
+  ["guide", "wardogs level 100 route", "wardogs-level-100-route"],
+  ["guide", "wardogs cash xp calculator", "wardogs-cash-xp-calculator"],
+  ["guide", "wardogs fob layouts", "wardogs-fob-layouts"],
+  ["guide", "wardogs mortar meta", "wardogs-mortar-meta"],
+  ["guide", "wardogs havoc ciws", "wardogs-havoc-ciws"],
+  ["guide", "wardogs roadmap", "wardogs-roadmap"]
 ] as const;
 
 describe("guideManifest", () => {
   it("maps every approved keyword exactly once and in traffic order", () => {
     expect(guideManifest.map(({category, keyword, slug}) => [category, keyword, slug])).toEqual(expected);
-    expect(new Set(guideManifest.map(({slug}) => slug)).size).toBe(55);
-    expect(guideManifest.map(({order}) => order)).toEqual(Array.from({length: 55}, (_, index) => index + 1));
+    expect(new Set(guideManifest.map(({slug}) => slug)).size).toBe(64);
+    expect(guideManifest.map(({order}) => order)).toEqual(Array.from({length: 64}, (_, index) => index + 1));
   });
 });

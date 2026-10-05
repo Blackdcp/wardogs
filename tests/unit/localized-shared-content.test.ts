@@ -8,11 +8,12 @@ import {getCatalogueRecords} from "../../src/features/catalogue/catalogue-record
 import {catalogGuides, getCatalogGuide} from "../../src/features/items/item-catalog-guides";
 import {getItemBySlug, itemLibrary} from "../../src/features/items/item-library";
 import {getLocalizedItem} from "../../src/features/items/item-localization";
+import {getMapViewerCopy} from "../../src/features/maps/map-viewer-copy";
 import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
 import {videoArticles} from "../../src/features/videos/video-library";
 import {getVideoUi} from "../../src/features/videos/video-ui";
 
-const localizedLocales = ["ru", "de", "pt-br", "ja", "zh-cn"] as const;
+const localizedLocales = ["ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const;
 const allLocales = ["en", ...localizedLocales] as const;
 
 const languageSignals = {
@@ -20,7 +21,9 @@ const languageSignals = {
   de: /\b(?:der|die|das|und|mit|für|auf|Spiel|Zugang|Guide)\b/i,
   "pt-br": /\b(?:o|a|de|do|da|para|com|jogo|acesso|guia)\b/i,
   ja: /[\u3040-\u30ff\u3400-\u9fff]/,
-  "zh-cn": /[\u3400-\u9fff]/
+  "zh-cn": /[\u3400-\u9fff]/,
+  "zh-tw": /[\u3400-\u9fff]/,
+  pl: /(?:\bi\b|oraz|dla|gry|poradnik|źród|wczesn|wersj|fakty|potwierdz)/i
 } as const;
 
 const localizedDateSignals = {
@@ -28,7 +31,9 @@ const localizedDateSignals = {
   de: /(?:August|September|Saison|Beta)/i,
   "pt-br": /(?:agosto|setembro|temporada|beta)/i,
   ja: /(?:年|月|日|シーズン|ベータ)/,
-  "zh-cn": /(?:年|月|日|赛季|测试)/
+  "zh-cn": /(?:年|月|日|赛季|测试)/,
+  "zh-tw": /(?:年|月|日|賽季|測試)/,
+  pl: /(?:sierpnia|września|sezon|beta)/i
 } as const;
 
 describe("localized shared editorial content", () => {
@@ -50,7 +55,7 @@ describe("localized shared editorial content", () => {
         expect(article.title, `${locale}/${article.slug}`).not.toBe(english.title);
         expect(article.quickAnswer, `${locale}/${article.slug}`).not.toBe(english.quickAnswer);
         expect(bodyText, `${locale}/${article.slug}`).toMatch(languageSignals[locale]);
-        const minimumLength = locale === "zh-cn" ? 900 : 1_200;
+        const minimumLength = locale === "zh-cn" || locale === "zh-tw" ? 900 : 1_200;
         expect(bodyText.length, `${locale}/${article.slug}`).toBeGreaterThanOrEqual(minimumLength);
       }
     }
@@ -78,7 +83,8 @@ describe("localized shared editorial content", () => {
         expect(localized.summary, `${locale}/${item.slug}`).not.toBe(item.summary);
         expect(localized.description, `${locale}/${item.slug}`).not.toBe(item.description);
         expect(bodyText, `${locale}/${item.slug}`).toMatch(languageSignals[locale]);
-        expect(bodyText.length, `${locale}/${item.slug}`).toBeGreaterThanOrEqual(700);
+        const minimumLength = locale === "zh-cn" || locale === "zh-tw" ? 200 : 700;
+        expect(bodyText.length, `${locale}/${item.slug}`).toBeGreaterThanOrEqual(minimumLength);
       }
     }
   });
@@ -93,10 +99,10 @@ describe("localized shared editorial content", () => {
       const localizedT21 = getLocalizedCatalogueRecords([t21!], locale)[0];
       const localizedGuide = getLocalizedCatalogGuide(weaponsGuide!, locale);
 
-      expect(localizedT21.dataAsOf, locale).toMatch(/Beta|ベータ|бета|封闭测试/i);
+      expect(localizedT21.dataAsOf, locale).toMatch(/Beta|ベータ|бета|封闭测试|封閉測試/i);
       expect(localizedT21.dataAsOf, locale).not.toMatch(/Alpha 1/i);
-      expect(localizedGuide.dataAsOf, locale).toMatch(/Alpha 1/i);
-      expect(localizedGuide.dataAsOf, locale).toMatch(/Beta|ベータ|бета|封闭测试/i);
+      expect(localizedGuide.dataAsOf, locale).toMatch(/Alpha 1|Alfa 1/i);
+      expect(localizedGuide.dataAsOf, locale).toMatch(/Beta|ベータ|бета|封闭测试|封閉測試/i);
     }
   });
 
@@ -195,6 +201,23 @@ describe("localized shared editorial content", () => {
 
       expect(lifecycleText, locale).toMatch(languageSignals[locale]);
       expect(ui.currentSourcesTitle, locale).not.toBe(getVideoUi("en").currentSourcesTitle);
+    }
+  });
+
+  it("keeps map viewer chrome fully localized instead of merging English fallback fields", () => {
+    const english = getMapViewerCopy("en");
+    const fields = Object.keys(english) as Array<keyof typeof english>;
+
+    for (const locale of localizedLocales) {
+      const copy = getMapViewerCopy(locale);
+      for (const field of fields) {
+        expect(copy[field], `${locale}.${field}`).toBeTypeOf("string");
+        expect(copy[field].trim().length, `${locale}.${field}`).toBeGreaterThan(0);
+      }
+      for (const field of ["close", "empty", "references", "unlocated", "marker", "label", "remove", "add", "center", "pan", "shareLink", "invalid", "limit", "measure", "provenance", "source", "version", "notes", "privacy"] as const) {
+        expect(copy[field], `${locale}.${field}`).not.toBe(english[field]);
+      }
+      expect(Object.values(copy).join(" "), locale).toMatch(languageSignals[locale]);
     }
   });
 

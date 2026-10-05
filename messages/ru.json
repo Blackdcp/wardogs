@@ -53,7 +53,7 @@
     "crashFix": "Исправление сбоев",
     "helicopterGuide": "Гайд по вертолётам",
     "gameplayGuide": "Руководство по игре",
-    "infantryMode": "Infantry Mode",
+    "infantryMode": "Пехотный режим",
     "fobLogistics": "FOB и логистика",
     "mortarGuide": "Руководство по миномёту",
     "allGuides": "Все руководства",
@@ -89,7 +89,8 @@
     "mapsAndTools": "Карты и инструменты",
     "artilleryCalculator": "Калькулятор артиллерии и минометов",
     "mapPill": "Карта",
-    "calcPill": "Калькулятор"
+    "calcPill": "Калькулятор",
+    "cashXpCalculator": "Калькулятор денег и XP"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: поиск гайдов, оружия, техники и инструментов",
@@ -118,7 +119,7 @@
       "imageAlt": "Официальный кадр игрового процесса WARDOGS из кабины вертолёта",
       "bodyOne": "WARDOGS - уже доступный в Steam Early Access тактический FPS BULKHEAD, а не фильм War Dogs 2016 года. До 100 игроков в трех командах сражаются за случайную контрольную зону 2 x 2 км, используя пехоту, технику, укрепления и логистику.",
       "bodyTwo": "Деньги сохраняются между матчами и позволяют покупать снаряжение для каждой жизни. Боевые и вспомогательные действия помогают команде и поддерживают вашу экономику.",
-      "officialQuote": "Every player starts their journey with $10,000.",
+      "officialQuote": "Каждый игрок начинает свой путь с $10,000.",
       "officialQuoteSource": "Официальное описание WARDOGS в Steam",
       "points": {
         "teams": "Три команды борются за одну цель и очки",
@@ -237,7 +238,7 @@
           "field": "Цена у торговца"
         },
         "artilleryTank": {
-          "title": "Artillery Tank",
+          "title": "Артиллерийский танк",
           "field": "Открытие в карьере"
         },
         "ural": {

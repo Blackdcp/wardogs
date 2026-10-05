@@ -53,7 +53,7 @@
     "crashFix": "Corrigir travamentos",
     "helicopterGuide": "Guia de helicóptero",
     "gameplayGuide": "Guia de jogabilidade",
-    "infantryMode": "Infantry Mode",
+    "infantryMode": "Modo de Infantaria",
     "fobLogistics": "FOB e logística",
     "mortarGuide": "Guia de morteiro",
     "allGuides": "Todos os guias",
@@ -89,7 +89,8 @@
     "mapsAndTools": "Mapas e Ferramentas",
     "artilleryCalculator": "Calculadora de Artilharia e Morteiro",
     "mapPill": "Mapa",
-    "calcPill": "Calculadora"
+    "calcPill": "Calculadora",
+    "cashXpCalculator": "Calculadora de dinheiro e XP"
   },
   "home": {
     "metaTitle": "WARDOGS Wiki: pesquise guias, armas, veículos e ferramentas",
@@ -118,7 +119,7 @@
       "imageAlt": "Cena oficial de WARDOGS vista da cabine de um helicóptero",
       "bodyOne": "WARDOGS é o FPS tático de guerra total da BULKHEAD já disponível no Acesso Antecipado da Steam, e não o filme War Dogs de 2016. Até 100 jogadores em três equipes disputam uma Zona de Controle aleatória de 2 x 2 km com infantaria, veículos, fortificações e logística.",
       "bodyTwo": "O dinheiro permanece entre as partidas e financia um novo equipamento para cada vida. Ações de combate e suporte ajudam a equipe e sustentam sua economia.",
-      "officialQuote": "Every player starts their journey with $10,000.",
+      "officialQuote": "Cada jogador começa sua jornada com $10,000.",
       "officialQuoteSource": "Descrição oficial de WARDOGS no Steam",
       "points": {
         "teams": "Três equipes disputam o mesmo objetivo de pontuação",
@@ -237,7 +238,7 @@
           "field": "Preço no vendedor"
         },
         "artilleryTank": {
-          "title": "Artillery Tank",
+          "title": "Tanque de Artilharia",
           "field": "Desbloqueio de carreira"
         },
         "ural": {

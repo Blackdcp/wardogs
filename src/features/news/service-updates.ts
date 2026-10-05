@@ -1,3 +1,5 @@
+import type {Locale} from "@/config/site";
+
 const records = [
   {date: "2026-09-29", titleKey: "devResponseSeptember29", guideSlug: "wardogs-season-2", sources: ["https://x.com/Brammflakes/status/2104937869634662749"]},
   {date: "2026-09-26", titleKey: "threeMillionSeptember26", guideSlug: "wardogs-player-count", sources: ["https://steamcommunity.com/app/1867240/announcements/"]},
@@ -5,7 +7,7 @@ const records = [
   {date: "2026-09-24", titleKey: "distributionIncidentSeptember24", guideSlug: "wardogs-patch-notes", sources: ["https://x.com/WARDOGSUpdates/status/2103051537308135694", "https://x.com/WARDOGSUpdates/status/2103054159641538707"]}
 ] as const;
 
-const copy: Record<string, readonly (readonly [string, string])[]> = {
+const copy: Record<Locale, readonly (readonly [string, string])[]> = {
   en: [
     ["Developer response on balance and XP", "Joe Brammer published a response. Its full transcript has not been verified here; no specific XP values, patch date or level-capped server promise is inferred."],
     ["Three million copies sold", "The September 26 official announcement is a cumulative sales milestone, not current concurrent players or proof that every server is available."],
@@ -57,7 +59,7 @@ const copy: Record<string, readonly (readonly [string, string])[]> = {
 ]
 };
 
-export function getServiceUpdates(locale: string) {
-  const localized = copy[locale] ?? copy.en;
+export function getServiceUpdates(locale: Locale) {
+  const localized = copy[locale];
   return records.map((record, index) => ({...record, status: "Confirmed" as const, title: localized[index][0], description: localized[index][1]}));
 }

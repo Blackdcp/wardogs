@@ -1,3 +1,5 @@
+import type {Locale} from "@/config/site";
+
 const en = {
   title: "Distance", measure: "Measure distance", reference: "Reference segment", center: "Set endpoint at view center", clear: "Clear measurement", close: "Close measurement",
   uncalibrated: "Image distance only - no verified meter scale", calibrated: "User-calibrated estimate - not game-verified",
@@ -20,7 +22,7 @@ const zh: MapMeasurementCopy = {
   ballistics: "弹道解算不可用：尚未验证对应游戏版本的重力、初速、阻力、高程及平台姿态。",
   privacy: "分享链接包含基准记录和游戏版本。", invalidLink: "测距链接已拒绝：校准、地图或素材版本无效。",
 };
-const translations: Record<string, MapMeasurementCopy> = {
+const translations: Record<Locale, MapMeasurementCopy> = {
   en, "zh-cn": zh,
   de: {
     title: "Entfernung", measure: "Entfernung messen", reference: "Referenzstrecke", center: "Endpunkt in der Ansichtsmitte setzen", clear: "Messung löschen", close: "Messung schließen",
@@ -75,4 +77,4 @@ const translations: Record<string, MapMeasurementCopy> = {
     privacy: "分享連結包含基準記錄和遊戲版本。", invalidLink: "測距連結已拒絕：校準、地圖或素材版本無效。",
 }
 };
-export function getMapMeasurementCopy(locale: string): MapMeasurementCopy { return translations[locale] ?? en; }
+export function getMapMeasurementCopy(locale: string): MapMeasurementCopy { return translations[locale as Locale] ?? en; }

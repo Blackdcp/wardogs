@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {useEffect, useId, useRef, useState} from "react";
 import {ExternalLink, Maximize2, RotateCcw, X, ZoomIn, ZoomOut} from "lucide-react";
+import type {Locale} from "@/config/site";
 import type {CatalogueMediaSource} from "@/features/catalogue/catalogue-media-sources";
 import {assetPath} from "@/lib/assets";
 import {ItemImageInspection} from "./item-image-inspection";
@@ -12,8 +13,8 @@ const english = {
   unknown: "No image-specific source record is available.", processing: "Displayed file is the site's stored image. Crop, re-encoding and other processing are not fully recorded; it is not presented as the untouched source original. Source attribution is not independent license certification.",
   retrieved: "Recorded", captured: "Source frame", failed: "Image could not load", retry: "Retry", loading: "Loading image",
 };
-type CompleteImageLocale = "zh-cn" | "zh-tw" | "pl" | "ja" | "de" | "ru" | "pt-br";
-const translated: Record<CompleteImageLocale, typeof english> & Record<string, Partial<typeof english>> = {
+export const imageViewerCopyByLocale: Record<Locale, typeof english> = {
+  en: english,
   "zh-cn": {open: "查看大图", close: "关闭大图", actual: "原始像素", fit: "适应窗口", file: "打开本站保存图片", source: "图片来源", scope: "来源与加工说明", unknown: "暂无这张图片的独立来源记录。", processing: "展示的是本站保存的图片。裁切、重编码等加工记录尚不完整，不称为来源的未加工原图。标注来源不等于独立许可认证。", retrieved: "记录日期", captured: "来源画面", failed: "图片加载失败", retry: "重试", loading: "图片加载中"},
   "zh-tw": {open: "檢視大圖", close: "關閉大圖", actual: "原始像素", fit: "符合視窗", file: "開啟本站儲存圖片", source: "圖片來源", scope: "來源與加工說明", unknown: "尚無這張圖片的獨立來源記錄。", processing: "展示的是本站儲存的圖片。裁切、重新編碼等加工記錄尚不完整，不稱為未加工原圖。標註來源不等於獨立許可認證。", retrieved: "記錄日期", captured: "來源畫面", failed: "圖片載入失敗", retry: "重試", loading: "圖片載入中"},
   ja: {
@@ -47,7 +48,7 @@ const translated: Record<CompleteImageLocale, typeof english> & Record<string, P
     retrieved: "Data zapisu", captured: "Klatka źródłowa", failed: "Nie udało się wczytać obrazu", loading: "Wczytywanie obrazu",
   },
 };
-type Props = {src: string; alt: string; locale: string; source?: CatalogueMediaSource};
+type Props = {src: string; alt: string; locale: Locale; source?: CatalogueMediaSource};
 const buttonClass = "inline-flex size-11 shrink-0 items-center justify-center rounded border border-[#506459] text-white hover:bg-[#2e4538]";
 
 export function ItemImageViewer({src, alt, locale, source}: Props) {
@@ -59,7 +60,7 @@ export function ItemImageViewer({src, alt, locale, source}: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const id = useId();
-  const copy = {...english, ...translated[locale]};
+  const copy = imageViewerCopyByLocale[locale];
   const file = assetPath(src);
   useEffect(() => {
     if (!open) return;

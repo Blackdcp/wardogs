@@ -2,6 +2,7 @@ import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {describe, expect, it} from "vitest";
 import {ItemImageInspection} from "../../src/components/catalogue/item-image-inspection";
+import type {Locale} from "../../src/config/site";
 import {catalogueMediaSources} from "../../src/features/catalogue/catalogue-media-sources";
 import {catalogueRecords} from "../../src/features/catalogue/catalogue-records";
 
@@ -47,13 +48,15 @@ describe("catalogue image inspection audit", () => {
     expect(catalogueMediaSources["/images/catalogue/ammo/45-acp.webp"].sourceUrl).toBeUndefined();
   });
 
-  const locales = [
+  const locales: Array<[Locale, string]> = [
     ["en", "Capture, build and rights record"],
     ["zh-cn", "拍摄、版本与许可记录"],
+    ["zh-tw", "拍攝、版本與授權記錄"],
     ["ja", "撮影・ゲーム版・許諾の記録"],
     ["de", "Aufnahme, Spielversion und Rechte"],
     ["ru", "Съёмка, версия и права"],
     ["pt-br", "Captura, versão e direitos"],
+    ["pl", "Zrzut, wersja i prawa"],
   ];
 
   it.each(locales)("keeps %s inspection concise and collapsed by default", (locale, summary) => {

@@ -1,3 +1,4 @@
+import type {Locale} from "@/config/site";
 import type {CatalogueImageInspection, CatalogueImageOrigin} from "@/features/catalogue/catalogue-image-inspection";
 
 const english = {
@@ -16,7 +17,8 @@ const english = {
 };
 
 type Copy = typeof english;
-const translations: Record<string, Copy> = {
+const translations: Record<Locale, Copy> = {
+  en: english,
   "zh-cn": {
     summary: "拍摄、版本与许可记录",
     origin: "记录的来源类型", captureDate: "拍摄日期", build: "图片游戏版本", rights: "许可凭证", ai: "AI 重建", reviewed: "记录核查日期",
@@ -68,8 +70,8 @@ const translations: Record<string, Copy> = {
   },
 };
 
-export function ItemImageInspection({inspection, locale}: {inspection?: CatalogueImageInspection; locale: string}) {
-  const copy = translations[locale] ?? english;
+export function ItemImageInspection({inspection, locale}: {inspection?: CatalogueImageInspection; locale: Locale}) {
+  const copy = translations[locale];
   const rows = [
     [copy.origin, inspection ? copy.origins[inspection.recordedOrigin] : copy.unknown],
     [copy.captureDate, inspection?.captureDate ?? copy.unknown],

@@ -9,7 +9,7 @@ type HeroSearchBoxProps = {
   hotTagsLabel?: string;
 };
 
-const hotTagsData: Record<string, {tag: string; href: string; title: string}[]> = {
+const hotTagsData: Record<Locale, {tag: string; href: string; title: string}[]> = {
   "zh-cn": [
     {tag: "修复 WD-L020", href: "/zh-cn/guides/wardogs-crash-fix", title: "WD-L020 报错与闪退修复"},
     {tag: "第二赛季删档时间", href: "/zh-cn/guides/wardogs-season-2", title: "S2 赛季重置政策与待公布细节"},
@@ -69,7 +69,7 @@ const hotTagsData: Record<string, {tag: string; href: string; title: string}[]> 
 };
 
 export function HeroSearchBox({locale = "en", placeholder, hotTagsLabel = "HOT"}: HeroSearchBoxProps) {
-  const tags = hotTagsData[locale] ?? hotTagsData.en;
+  const tags = hotTagsData[locale];
 
   return (
     <div className="mt-7 w-full max-w-xl text-left" data-hero-search-box="true">

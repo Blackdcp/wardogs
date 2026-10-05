@@ -7,6 +7,7 @@ import {
   ADSTERRA_MOBILE_STICKY_ENABLED,
   ADSTERRA_RIGHT_RAIL_ENABLED
 } from "@/features/ads/ad-policy";
+import type {Locale} from "@/config/site";
 import {
   ADSTERRA_BANNER_UNITS,
   mountAdsterraBanner,
@@ -141,7 +142,7 @@ function FixedBanner({label, media, placement, position, unit, dismissLabel}: {
   );
 }
 
-const closeAd: Record<string, string> = {
+const closeAd: Record<Locale, string> = {
   en: "Close advertisement",
   ja: "広告を閉じる",
   ru: "Закрыть рекламу",
@@ -155,7 +156,7 @@ const closeAd: Record<string, string> = {
 export function AdsterraGlobalInventory({
   label = "Advertisement",
   locale = "en"
-}: {label?: string; locale?: string} = {}) {
+}: {label?: string; locale?: Locale} = {}) {
   if (!ADSTERRA_ENABLED) return null;
   return (
     <>
@@ -164,7 +165,7 @@ export function AdsterraGlobalInventory({
           label={label}
           media="(max-width: 467px)"
           placement="mobile-sticky"
-          dismissLabel={closeAd[locale] ?? closeAd.en}
+          dismissLabel={closeAd[locale]}
           position="fixed inset-x-0 bottom-0 z-[70] mx-auto w-[320px] border-t border-[#2c3631] bg-[#0d0f0e] pt-1 min-[468px]:hidden"
           unit={ADSTERRA_BANNER_UNITS.mobile320}
         />

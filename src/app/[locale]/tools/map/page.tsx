@@ -22,7 +22,7 @@ export function generateStaticParams() {
 export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) return {};
-  const c = interactiveMapPageCopy[locale] ?? interactiveMapPageCopy.en;
+  const c = interactiveMapPageCopy[locale];
   return buildPageMetadata(locale as Locale, "/tools/map", c.title, c.desc, "WARDOGS interactive map, WARDOGS map tool, mortar calculator, artillery range, FOB placement, control zone map, WARDOGS tactical map");
 }
 
@@ -30,7 +30,7 @@ export default async function TacticalMapPage({params}: PageProps) {
   const {locale: requestedLocale} = await params;
   if (!isLocale(requestedLocale)) notFound();
   const locale: Locale = requestedLocale;
-  const c = interactiveMapPageCopy[locale] ?? interactiveMapPageCopy.en;
+  const c = interactiveMapPageCopy[locale];
   const t = await getTranslations({locale, namespace: "ads"});
 
   return (

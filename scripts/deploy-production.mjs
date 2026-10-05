@@ -11,6 +11,7 @@ const livePages = [
   "/en/guides/wardogs-known-issues",
   "/en/tools/map",
   "/en/tools/loadout-budget",
+  "/en/tools/cash-xp-calculator",
   "/en/videos",
   "/zh-tw/guides",
   "/pl/guides",
@@ -85,6 +86,7 @@ export async function verifyProduction(fetchImpl = fetch, siteOrigin = SITE_ORIG
     !sitemapXml.includes(`<loc>${siteOrigin}/en</loc>`) ||
     !sitemapXml.includes(`<loc>${siteOrigin}/ja</loc>`) ||
     !sitemapXml.includes(`<loc>${siteOrigin}/en/tools/map</loc>`) ||
+    !sitemapXml.includes(`<loc>${siteOrigin}/en/tools/cash-xp-calculator</loc>`) ||
     ["zh-tw", "pl"].some((locale) => !sitemapXml.includes(`<loc>${siteOrigin}/${locale}</loc>`) ||
       !sitemapXml.includes(`<loc>${siteOrigin}/${locale}/guides/wardogs-controls</loc>`))) {
     throw new Error("Production smoke: sitemap.xml is unavailable or missing a required home, guide, or map URL.");
