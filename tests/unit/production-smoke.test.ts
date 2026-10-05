@@ -523,6 +523,48 @@ describe("production release smoke", () => {
     await expect(verifyWith(responses)).rejects.toThrow(/\/en.*ad inventory[\s\S]*\/en\/tools\/map.*hreflang/);
   });
 
+  it("accepts case-insensitive language-region hreflang values emitted by Next", async () => {
+    const deployment = await import(pathToFileURL(deploymentPath).href) as {
+      verifyProduction: (fetchImpl: typeof fetch, siteOrigin: string, expectedRevision: string, options: {
+        revisionAttempts: number;
+        pause: () => Promise<void>;
+        contract: typeof regionalContract;
+      }) => Promise<{checked: number}>;
+    };
+    const locales = ["en", "pt-br", "zh-cn", "zh-tw"];
+    const regionalContract = {
+      schemaVersion: 1,
+      production: {origin, platform: "vercel-cloudflare", baselineRevision: "e".repeat(40)},
+      canonical: locales.map((locale) => ({
+        path: `/${locale}/items`, expectedStatus: 200, tier: "growth", sources: ["sitemap"], locales: [locale]
+      })),
+      legacy: [],
+      knownMissing: []
+    };
+    const regionalSitemap = `<urlset>${regionalContract.canonical.map(({path: routePath}) => `<url><loc>${origin}${routePath}</loc></url>`).join("")}</urlset>`;
+    const alternates = locales.map((locale) =>
+      `<link rel="alternate" hrefLang="${locale}" href="${origin}/${locale}/items" />`
+    ).join("");
+    const page = (pathname: string) => `<html><head><title>WARDOGS item reference</title><meta name="description" content="A complete WARDOGS item reference with verified gameplay data and current navigation." /><link rel="canonical" href="${origin}${pathname}" />${alternates}<link rel="alternate" hrefLang="x-default" href="${origin}/en/items" /></head><body><main><h1>WARDOGS Items</h1></main><script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"WARDOGS Items"}</script></body></html>`;
+    const responses = Object.fromEntries(regionalContract.canonical.map(({path: routePath}) =>
+      [routePath, new Response(page(routePath), {status: 200})]
+    ));
+    const fetchImpl = (async (input: string | URL | Request) => {
+      const pathname = new URL(String(input)).pathname;
+      if (pathname === "/api/revision") return new Response(JSON.stringify({revision}), {status: 200});
+      if (pathname === "/sitemap.xml") return new Response(regionalSitemap, {status: 200});
+      const response = responses[pathname];
+      if (!response) throw new Error(`Unexpected smoke request: ${pathname}`);
+      return response;
+    }) as typeof fetch;
+
+    await expect(deployment.verifyProduction(fetchImpl, origin, revision, {
+      revisionAttempts: 1,
+      pause: async () => {},
+      contract: regionalContract
+    })).resolves.toEqual({checked: regionalContract.canonical.length + 2});
+  });
+
   it("rejects sitemap and legacy redirect URLs that reuse a protected pathname on another origin", async () => {
     const foreignSitemap = releaseSitemap.replace(
       `${origin}/en/tools/map`,

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {ShieldCheck} from "lucide-react";
+import {CalendarDays, ShieldCheck} from "lucide-react";
 import {getTranslations} from "next-intl/server";
 import {assetPath} from "@/lib/assets";
 import {StatusBadge} from "@/components/ui/status-badge";
@@ -7,6 +7,7 @@ import {HomeSectionSentinel} from "@/components/seo/home-section-analytics";
 import {Link} from "@/i18n/navigation";
 import type {DiscoveryDestination} from "@/features/discovery/discovery-types";
 import {getHomeCommandDestinations} from "@/features/home/home-discovery-model";
+import {CURRENT_EVENT} from "@/features/live-ops/current-event";
 import {HeroSearchBox} from "./hero-search-box";
 import type {Locale} from "@/config/site";
 
@@ -43,6 +44,18 @@ export async function HomeHero({facts, locale = "en", command = getHomeCommandDe
               {t("common.fanMade")}
             </span>
             <StatusBadge>{t("home.discovery.states.earlyAccess")}</StatusBadge>
+            <Link
+              href={`/guides/${CURRENT_EVENT.nextSeasonGuideSlug}`}
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-sm border border-[#806328] bg-[#19150c]/90 px-3 py-2 text-xs font-semibold text-[#f0c45b] transition-colors hover:border-[#c49a3a] hover:text-[#ffe3a0] sm:text-sm"
+              data-home-task="season2"
+              data-home-placement="command"
+              data-home-season-date={CURRENT_EVENT.nextSeasonDate}
+              title={t("liveOps.title")}
+            >
+              <CalendarDays aria-hidden="true" className="size-4" />
+              <time dateTime={CURRENT_EVENT.nextSeasonDate}>{t("liveOps.title")}</time>
+              <span aria-hidden="true">→</span>
+            </Link>
           </div>
 
           <Image
@@ -68,7 +81,7 @@ export async function HomeHero({facts, locale = "en", command = getHomeCommandDe
             placeholder={t("home.search.placeholder")}
           />
 
-          <div className="mt-5 grid w-full max-w-xl gap-2.5 sm:grid-cols-2">
+          <div className="mt-5 grid w-full max-w-xl gap-2.5 sm:grid-cols-2" data-home-command-grid="true">
             {command.filter((destination) => destination.task !== "search").map((destination) => (
               <Link key={destination.id} href={destination.href} className="task-link task-link--secondary text-[#d8f4e4]" data-home-task={destination.task} data-home-placement="command" title={t(destination.labelKey)}>{t(destination.labelKey)}</Link>
             ))}
@@ -84,6 +97,7 @@ export async function HomeHero({facts, locale = "en", command = getHomeCommandDe
               ))}
             </ul>
           ) : null}
+
         </div>
       </div>
     </section>

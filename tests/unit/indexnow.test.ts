@@ -6,7 +6,6 @@ import {describe, expect, it, vi} from "vitest";
 const root = process.cwd();
 const scriptPath = path.join(root, "scripts", "submit-indexnow.mjs");
 const productionScriptPath = path.join(root, "scripts", "deploy-production.mjs");
-const workflowPath = path.join(root, ".github", "workflows", "deploy-pages.yml");
 const SITE_ORIGIN = "https://www.wardogswiki.com";
 
 describe("IndexNow deployment notification", () => {
@@ -183,14 +182,17 @@ describe("IndexNow deployment notification", () => {
   });
 
   it.each([
-    ["Pages mode", {GITHUB_PAGES: "true", NEXT_PUBLIC_SITE_URL: SITE_ORIGIN}],
-    ["a non-production origin", {GITHUB_PAGES: "false", NEXT_PUBLIC_SITE_URL: "https://blackdcp.github.io/wardogs"}]
+    ["Pages mode", {GITHUB_PAGES: "true", NEXT_PUBLIC_SITE_URL: SITE_ORIGIN, GITHUB_ACTIONS: "", GITHUB_WORKFLOW: ""}],
+    ["a non-production origin", {GITHUB_PAGES: "false", NEXT_PUBLIC_SITE_URL: "https://blackdcp.github.io/wardogs", GITHUB_ACTIONS: "", GITHUB_WORKFLOW: ""}],
+    ["the legacy Pages workflow", {GITHUB_PAGES: "false", NEXT_PUBLIC_SITE_URL: SITE_ORIGIN, GITHUB_ACTIONS: "true", GITHUB_WORKFLOW: "Deploy WARDOGS Wiki to GitHub Pages"}]
   ])("refuses IndexNow in %s before making any request", async (_label, environment) => {
     const indexNow = await import(pathToFileURL(scriptPath).href) as {
       submitIndexNow: (options: {changedFiles: string[]; fetchImpl: typeof fetch}) => Promise<unknown>;
     };
     vi.stubEnv("GITHUB_PAGES", environment.GITHUB_PAGES);
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", environment.NEXT_PUBLIC_SITE_URL);
+    vi.stubEnv("GITHUB_ACTIONS", environment.GITHUB_ACTIONS);
+    vi.stubEnv("GITHUB_WORKFLOW", environment.GITHUB_WORKFLOW);
     const fetchImpl = vi.fn<typeof fetch>(async () => new Response("unexpected", {status: 200}));
     try {
       await expect(indexNow.submitIndexNow({changedFiles: ["src/app/[locale]/page.tsx"], fetchImpl}))
@@ -509,11 +511,7 @@ describe("IndexNow deployment notification", () => {
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 
-  it("keeps the auxiliary GitHub Pages workflow unable to deploy production or notify IndexNow", () => {
-    const workflow = readFileSync(workflowPath, "utf8");
-    expect(workflow).not.toContain("notify-indexnow:");
-    expect(workflow).not.toContain("deploy-pages");
-    expect(workflow).not.toContain("node scripts/submit-indexnow.mjs");
+  it("keeps production release finalization coupled to the verified Vercel build", () => {
     expect(readFileSync(productionScriptPath, "utf8")).toMatch(/verifyProduction[\s\S]*submitImpl/);
   });
 

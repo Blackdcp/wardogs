@@ -106,12 +106,15 @@ function validateCanonicalHtml(pathname, html, headers, siteOrigin, canonicalPat
   }
 
   const alternateTags = linkTags(html).filter((tag) => relIncludes(tag, "alternate") && attribute(tag, "hreflang"));
-  const alternateByLanguage = new Map(alternateTags.map((tag) => [attribute(tag, "hreflang"), attribute(tag, "href")]));
+  const alternateByLanguage = new Map(alternateTags.map((tag) => [
+    attribute(tag, "hreflang")?.trim().toLowerCase(),
+    attribute(tag, "href")
+  ]));
   const expectedPaths = pathsBySuffix.get(localizedSuffix(pathname)) ?? [];
   for (const expectedPath of expectedPaths) {
     const locale = expectedPath.split("/")[1];
     const language = locale === "pt-br" ? "pt-BR" : locale === "zh-cn" ? "zh-CN" : locale === "zh-tw" ? "zh-TW" : locale;
-    if (alternateByLanguage.get(language) !== `${siteOrigin}${expectedPath}`) {
+    if (alternateByLanguage.get(language.toLowerCase()) !== `${siteOrigin}${expectedPath}`) {
       failures.push(`${pathname} has missing or invalid hreflang ${language}.`);
     }
   }

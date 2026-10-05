@@ -12,7 +12,8 @@ const localeIdsPattern = "en|de|ru|pt-br|ja|zh-cn|zh-tw|pl";
 const localizedPathPattern = `(?:${localeIdsPattern})`;
 
 export function assertProductionIndexNowEnvironment() {
-  if (process.env.GITHUB_PAGES === "true") {
+  const pagesWorkflow = process.env.GITHUB_ACTIONS === "true" && /github pages/i.test(process.env.GITHUB_WORKFLOW ?? "");
+  if (process.env.GITHUB_PAGES === "true" || pagesWorkflow) {
     throw new Error("Production IndexNow submission is disabled in the auxiliary GitHub Pages environment.");
   }
   const configuredOrigin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");

@@ -48,7 +48,12 @@ for (const locale of ["en", "ja"] as const) {
       await expect(page.locator('[data-home-route]')).toHaveCount(3);
       await expect(page.locator('[data-featured-tool]')).toHaveCount(4);
       await expect(page.locator('[data-hero-popular-links], [data-site-search], [data-live-event], [data-ad-slot="adsterra-smartlink"]')).toHaveCount(0);
-      expect(await page.locator('[data-home-placement="command"][data-home-task]').evaluateAll((nodes) => nodes.map((node) => node.getAttribute("data-home-task")))).toEqual(["search", "map", "calculator", "weapons", "status"]);
+      expect(await page.locator('[data-home-placement="command"][data-home-task]').evaluateAll((nodes) => nodes.map((node) => node.getAttribute("data-home-task")))).toEqual(["season2", "search", "map", "calculator", "weapons", "status"]);
+      const command = page.locator('[data-home-section="command"]');
+      const seasonTwo = command.locator('a[data-home-task="season2"]');
+      await expect(seasonTwo).toBeVisible();
+      await expect(seasonTwo).toHaveAttribute("href", `/${locale}/guides/wardogs-season-2`);
+      await expect(seasonTwo.locator("time")).toHaveAttribute("datetime", "2026-10-15");
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
       const mainHeight = await page.locator("main").evaluate((main) => main.getBoundingClientRect().height);
       if (viewport.width < 768) expect(mainHeight / viewport.height).toBeLessThan(10);
@@ -56,8 +61,8 @@ for (const locale of ["en", "ja"] as const) {
       if (viewport.width === 390) {
         expect(await page.evaluate(() => window.scrollY), "first-screen contract must run without scrolling").toBe(0);
         await expect(page.locator('[data-ad-placement="mobile-sticky-creative"]')).toHaveCount(1);
+        await expectFirstScreenControl(command.locator('a[data-home-task="season2"]'), page);
         await expectFirstScreenControl(page.locator('[data-hero-search-trigger="true"]'), page);
-        const command = page.locator('[data-home-section="command"]');
         for (const task of ["map", "calculator"]) {
           await expectFirstScreenControl(command.locator(`a[data-home-task="${task}"]`), page);
         }

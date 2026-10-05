@@ -17,6 +17,10 @@ for (const locale of ["en", "ja"] as const) {
       await expect(hero).toBeVisible();
       await expect.poll(() => hero.evaluate((img) => (img as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
       const command = page.locator('[data-home-section="command"]');
+      const seasonTwo = command.locator('a[data-home-task="season2"]');
+      await expect(seasonTwo).toBeVisible();
+      await expect(seasonTwo).toHaveAttribute("href", `/${locale}/guides/wardogs-season-2`);
+      await expect(seasonTwo.locator("time")).toHaveAttribute("datetime", "2026-10-15");
       await expect(command.locator('a[href$="/tools/map"]')).toBeVisible();
       await expect(command.locator('a[href$="/tools/artillery-calculator"]')).toBeVisible();
       await expect(page.locator('[data-home-section="proven-demand"] [data-protected-demand]')).toHaveCount(6);
