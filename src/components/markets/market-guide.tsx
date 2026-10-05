@@ -122,7 +122,7 @@ const copy: Record<Locale, Record<MarketKind, Copy>> = {
       relatedTitle: "继续了解", relatedMarket: "黄金市场与金条", moneyGuide: "现金与回本指南", sourceTitle: "官方来源", checkedLabel: "来源核查于 2026 年 9 月 27 日"
     },
     gold: {
-      title: "WARDOGS 黄金市场", description: "理解现金兑换金条和外观购买，不把旧截图误当作当前汇率。",
+      title: "WARDOGS 黄金市场", description: "了解现金兑换金条、赛季结算与外观购买规则，并在决定兑换前核对游戏内当前汇率和价格。",
       status: "本页没有实时兑换报价", statusDetail: "BULKHEAD 说明现金兑换金条的汇率会变化。兑换前请在游戏内核对当前汇率和目标外观的价格。",
       actionTitle: "兑换前怎么判断", steps: ["先留出下一套可用装备及近期解锁所需的现金。", "在游戏内兑换界面查看汇率，再查看想要的外观需要多少金条。", "只考虑兑换不影响作战的余款；Beta 截图不是当前报价。"],
       evidenceTitle: "开发者实际说了什么", evidence: "《Top Questions》说明现金可兑换金条，用于黄金市场的外观解锁。《Early Access & Beyond》说明赛季末剩余现金会自动转换，金条和外观跨赛季保留。",
@@ -145,7 +145,7 @@ gold: {title: "Rynek złota WARDOGS", description: "Oceń wymianę gotówki na s
         relatedTitle: "繼續瞭解", relatedMarket: "黃金市場與金條", moneyGuide: "現金與回本指南", sourceTitle: "官方來源", checkedLabel: "來源核查於 2026 年 9 月 27 日"
     },
     gold: {
-        title: "WARDOGS 黃金市場", description: "理解現金兌換金條和外觀購買，不把舊截圖誤當作當前匯率。",
+        title: "WARDOGS 黃金市場", description: "了解現金兌換金條、賽季結算與外觀購買規則，並在決定兌換前核對遊戲內目前匯率和價格。",
         status: "本頁沒有即時兌換報價", statusDetail: "BULKHEAD 說明現金兌換金條的匯率會變化。兌換前請在遊戲核心對當前匯率和目標外觀的價格。",
         actionTitle: "兌換前怎麼判斷", steps: ["先留出下一套可用裝備及近期解鎖所需的現金。", "在遊戲內兌換介面檢視匯率，再檢視想要的外觀需要多少金條。", "只考慮兌換不影響作戰的餘款；Beta 截圖不是當前報價。"],
         evidenceTitle: "開發者實際說了什麼", evidence: "《Top Questions》說明現金可兌換金條，用於黃金市場的外觀解鎖。《Early Access & Beyond》說明賽季末剩餘現金會自動轉換，金條和外觀跨賽季保留。",

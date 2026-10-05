@@ -33,6 +33,7 @@ describe("market guides", () => {
         const copy = getMarketCopy(locale, kind);
         const html = renderToStaticMarkup(<MarketGuide locale={locale} kind={kind} />);
         expect(copy.title.trim(), `${locale}/${kind}`).not.toBe("");
+        expect(copy.description.trim().length, `${locale}/${kind} meta description`).toBeGreaterThanOrEqual(30);
         expect(html).toContain(copy.title);
         expect(html).toContain(`href="/${locale}/guides/wardogs-money-guide"`);
         expect(html).toContain(`href="/${locale}/${kind === "black" ? "gold-market" : "black-market"}"`);
