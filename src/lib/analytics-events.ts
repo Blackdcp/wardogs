@@ -6,6 +6,7 @@ export const ANALYTICS_EVENTS = {
   catalogueItemOpen: "catalogue_item_open",
   videoStart: "video_start",
   videoEmbedOpen: "video_embed_open",
+  toolStart: "tool_start",
   toolResult: "tool_result",
   toolAction: "tool_action",
   mapAction: "map_action",
@@ -60,6 +61,22 @@ export function trackAnalyticsEvent(
 
   analyticsTarget.dataLayer ??= [];
   analyticsTarget.dataLayer.push(command);
+}
+
+// Call only after a user edit. Repeated renders and equivalent verdicts are
+// coalesced; raw configuration, coordinates and share URLs never enter GA.
+export function createToolResultRecorder(
+  tool: "cash-xp-calculator" | "loadout-budget",
+  locale: string,
+  target?: AnalyticsTarget
+) {
+  let previous: string | null = null;
+  return (result: "cash_positive" | "cash_negative" | "reserve_met" | "reserve_missed" | "incomplete") => {
+    if (result === previous) return;
+    if (previous === null) trackAnalyticsEvent(ANALYTICS_EVENTS.toolStart, {tool, locale}, target);
+    previous = result;
+    trackAnalyticsEvent(ANALYTICS_EVENTS.toolResult, {tool, result, locale}, target);
+  };
 }
 
 export function hasReachedScrollDepth(

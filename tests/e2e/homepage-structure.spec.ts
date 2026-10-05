@@ -8,12 +8,9 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
     const selectors = [
       "#home-hero-title",
       "[data-live-event]",
-      "[data-home-editorial-briefing]",
-      "[data-start-here]",
-      "[data-current-build-changes]",
-      "#priority-guides-title",
+      "[data-home-action-hub]",
+      "[data-home-section='guide-hub']",
       "[data-catalogue-home-band]",
-      "[data-home-compact-discovery]",
       "[data-site-search]"
     ];
     const sections = Array.from(main.querySelectorAll("section"));
@@ -49,27 +46,15 @@ test("home presents a focused guide-site journey with integrated high-viewabilit
 
   await expect(page.locator("[data-global-ad-position='top']")).toHaveCount(0);
 
-  const decisionLinks = page.locator("[data-home-editorial-briefing] [data-home-task]");
-  await expect(decisionLinks).toHaveCount(6);
-  await expect(page.locator("[data-home-editorial-briefing] [data-home-task='season2']")).toHaveCount(2);
-  await expect(page.locator("[data-home-editorial-briefing] [data-home-task='pcFixes']")).toHaveCount(1);
-  await expect(page.locator("[data-home-editorial-briefing] [data-home-task='calculator']")).toHaveCount(1);
-  await expect(page.locator("[data-home-sponsored-slot='true']")).toBeVisible();
+  await expect(page.locator("[data-home-action-hub] [data-home-task]")).toHaveCount(6);
+  await expect(page.locator("[data-home-action-hub] [data-home-task='money']")).toHaveCount(1);
+  await expect(page.locator("[data-home-action-hub] [data-home-task='pcFixes']")).toHaveCount(1);
   await expect(page.locator("[data-home-sponsored-slot='true']")).toHaveCount(1);
-
-  for (const removedSelector of ["[data-home-action-hub]", "[data-beginner-tips]", "[data-home-section='videos']", "[data-home-section='library']", "[data-home-section='about']", "[data-home-faq]", "[data-final-cta]"]) {
-    await expect(page.locator(removedSelector)).toHaveCount(0);
-  }
-
+  await expect(page.locator("[data-home-tools] [data-home-task]")).toHaveCount(9);
+  await expect(page.locator("[data-home-placement='collections'][href='/en/guides#collection-logistics']")).toHaveCount(1);
+  await expect(page.locator("[data-home-editorial-briefing]")).toHaveCount(0);
   const downstreamSections = await page.locator("[data-home-section]").evaluateAll((sections) => sections.map((section) => section.getAttribute("data-home-section")));
-  expect(downstreamSections).toEqual(["briefing", "start", "evidence", "guides", "catalogue", "discovery", "search"]);
-
-  await expect(page.locator("[data-home-compact-discovery] [data-home-task='videos']")).toHaveCount(1);
-  await expect(page.locator("[data-home-compact-discovery] [data-home-task='guides']")).toHaveCount(1);
-  await expect(page.locator("[data-home-compact-discovery] [data-home-task='faq']")).toHaveCount(1);
-  await expect(page.locator("[data-home-compact-discovery] [data-home-task='about']")).toHaveCount(1);
-  await expect(page.locator("[data-home-discovery-category]")).toHaveCount(8);
-  await expect(page.locator("[data-home-discovery-faq]")).toHaveCount(4);
+  expect(downstreamSections).toEqual(["tasks", "guide-hub", "catalogue", "search"]);
 
   const viewportScreens = await page.evaluate(() => document.documentElement.scrollHeight / window.innerHeight);
   expect(viewportScreens).toBeLessThan(8);
@@ -98,4 +83,27 @@ test("hero search opens in place instead of jumping to the footer search strip",
   await expect(page).not.toHaveURL(/#site-search-title$/);
   const scrollY = await page.evaluate(() => window.scrollY);
   expect(scrollY).toBeLessThan(200);
+});
+
+test("Japanese homepage keeps squad, towers, cargo, helicopter and wipe entries near the tools", async ({page}) => {
+  await page.goto("/ja");
+  const recovery = page.locator('[data-home-recovery="ja"]');
+  await expect(recovery).toBeVisible();
+  for (const slug of ["wardogs-squad-guide", "wardogs-towers-guide", "wardogs-cargo-guide", "wardogs-helicopter-guide", "wardogs-progression-wipes-guide"]) {
+    await expect(recovery.locator(`a[href='/ja/guides/${slug}'][data-home-task][data-home-placement='recovery']`)).toHaveCount(1);
+  }
+});
+
+test("guide hub anchors lead to complete task collections", async ({page}) => {
+  await page.goto("/en/guides");
+  const collections = page.locator('section[id^="collection-"]');
+  await expect(collections).toHaveCount(6);
+  const links = await collections.locator('article a').evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute("href")));
+  expect(new Set(links).size).toBe(links.length);
+  for (const slug of ["wardogs-beginner-guide", "wardogs-money-guide", "wardogs-best-weapons-loadouts", "wardogs-mortar-guide", "wardogs-fob-guide", "wardogs-crash-fix", "wardogs-progression-wipes-guide"]) {
+    expect(links).toContain(`/en/guides/${slug}`);
+  }
+  await page.locator('a[href="#collection-logistics"]').click();
+  await expect(page).toHaveURL(/#collection-logistics$/);
+  await expect(page.locator('#collection-logistics-title')).toBeInViewport();
 });

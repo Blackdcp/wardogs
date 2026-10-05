@@ -3,8 +3,8 @@ import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {isLocale, siteLocales, type Locale} from "@/config/site";
 import {GuideGrid} from "@/components/guides/guide-grid";
-import {PriorityGuides} from "@/components/home/priority-guides";
 import {VideoGuideStrip} from "@/components/guides/video-guide-strip";
+import {getGuideHubCopy, groupGuideCollections} from "@/features/guides/guide-collections";
 import {buildGuideIndex} from "@/features/guides/guide-index";
 import type {GuideCategory} from "@/content/manifest";
 import {buildPageMetadata} from "@/lib/metadata";
@@ -41,6 +41,8 @@ export default async function GuidesPage({params}: PageProps) {
     getTranslations({locale, namespace: "ads"}),
     buildGuideIndex(locale)
   ]);
+  const collections = groupGuideCollections(guides);
+  const hubCopy = getGuideHubCopy(locale);
   const categoryLabels = Object.fromEntries(
     (["access", "release", "store", "platform", "video", "community", "developer", "guide"] as GuideCategory[])
       .map((category) => [category, categories(category)])
@@ -57,7 +59,13 @@ export default async function GuidesPage({params}: PageProps) {
         </div>
       </section>
       <section className="site-container py-10 md:py-12">
-        <PriorityGuides guides={guides} locale={locale} />
+        <nav aria-label={hubCopy.title} className="mb-8 flex flex-wrap gap-2">
+          {collections.map((collection) => (
+            <a className="rounded border border-[#344039] px-4 py-2 text-sm text-[#d7ded9] hover:border-[#79d19c] hover:text-[#79d19c]" href={`#collection-${collection.key}`} key={collection.key} title={hubCopy.collections[collection.key]}>
+              {hubCopy.collections[collection.key]} ({collection.guides.length})
+            </a>
+          ))}
+        </nav>
         <div data-page-ad-inventory="guides">
           <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
           <AdsterraNativeBanner label={adsT("label")} />
@@ -65,9 +73,14 @@ export default async function GuidesPage({params}: PageProps) {
         </div>
       </section>
       <VideoGuideStrip locale={locale} />
-      <section className="site-container py-12 md:py-16">
-        <GuideGrid guides={guides} readLabel={t("read")} categoryLabels={categoryLabels} />
-      </section>
+      <div className="site-container space-y-10 py-10 md:py-12">
+        {collections.map((collection) => (
+          <section className="scroll-mt-24" id={`collection-${collection.key}`} key={collection.key} aria-labelledby={`collection-${collection.key}-title`}>
+            <h2 className="display-font mb-4 text-3xl text-white" id={`collection-${collection.key}-title`}>{hubCopy.collections[collection.key]} <span className="text-lg text-[#82938a]">({collection.guides.length})</span></h2>
+            <GuideGrid guides={collection.guides} readLabel={t("read")} categoryLabels={categoryLabels} />
+          </section>
+        ))}
+      </div>
     </main>
   );
 }

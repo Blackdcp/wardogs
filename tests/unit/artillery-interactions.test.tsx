@@ -219,9 +219,9 @@ describe("artillery input and timer regressions", () => {
     change(nodes.filter((entry) => entry.type === "input" && entry.props.type === "number")[0], "750");
     render(artillery);
     expect(browser.gtag.mock.calls).toEqual([
-      ["event", "tool_result", {tool: "artillery-calculator", result: "valid"}],
-      ["event", "tool_action", {tool: "artillery-calculator", result: "valid", action: "fire"}],
-      ["event", "tool_result", {tool: "artillery-calculator", result: "invalid"}],
+      ["event", "tool_result", {tool: "artillery-calculator", result: "valid", result_type: "ready", weapon: "mortar", input_mode: "direct", locale: "en"}],
+      ["event", "tool_action", {tool: "artillery-calculator", result: "valid", action: "fire", weapon: "mortar", locale: "en"}],
+      ["event", "tool_result", {tool: "artillery-calculator", result: "invalid", result_type: "out_of_range", weapon: "mortar", input_mode: "direct", locale: "en"}],
     ]);
     expect(intervals.size).toBe(0);
   });

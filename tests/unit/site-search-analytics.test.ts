@@ -1,5 +1,5 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
-import {createSiteSearchRecorder, safeSearchTerm} from "../../src/features/search/site-search-analytics";
+import {createSiteSearchRecorder, recordSiteSearchResult, safeSearchTerm} from "../../src/features/search/site-search-analytics";
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -21,6 +21,18 @@ describe("site search analytics privacy", () => {
     expect(safeSearchTerm(query)).toBeNull();
   });
 
+  it("records an opened result with its catalogue identity but no query text", () => {
+    const gtag = vi.fn();
+    vi.stubGlobal("window", {gtag});
+    recordSiteSearchResult("my arbitrary free text", {
+      id: "tool:map", type: "tool", title: "Map", aliases: [], summary: "",
+      taskIntent: [], category: "tools", href: "/en/tools/map"
+    }, "en", "header");
+    expect(gtag.mock.calls).toEqual([
+      ["event", "site_search_result_open", {result_type: "tool", result_id: "tool:map", locale: "en", search_source: "header"}]
+    ]);
+  });
+
   it("records an abandoned empty-result query once across blur, close and Enter", () => {
     const gtag = vi.fn();
     vi.stubGlobal("window", {gtag});
@@ -29,8 +41,8 @@ describe("site search analytics privacy", () => {
     record("SPH-2 unknown", 0);
     record("SPH-2 unknown", 0);
     expect(gtag.mock.calls).toEqual([
-      ["event", "search", {search_term: "SPH-2 unknown", result_count: 0, locale: "en", search_source: "home"}],
-      ["event", "site_search_no_results", {search_term: "SPH-2 unknown", result_count: 0, locale: "en", search_source: "home"}]
+      ["event", "search", {result_count: 0, locale: "en", search_source: "home"}],
+      ["event", "site_search_no_results", {result_count: 0, locale: "en", search_source: "home"}]
     ]);
   });
 
@@ -45,5 +57,7 @@ describe("site search analytics privacy", () => {
     record("Havoc", 2);
     expect(gtag.mock.calls.filter((call) => call[1] === "search")).toHaveLength(4);
     expect(JSON.stringify(gtag.mock.calls)).not.toContain("user@example.com");
+    expect(JSON.stringify(gtag.mock.calls)).not.toContain("Havoc");
+    expect(JSON.stringify(gtag.mock.calls)).not.toContain("SPH-2");
   });
 });

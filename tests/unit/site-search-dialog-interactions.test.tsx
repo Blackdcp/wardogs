@@ -133,7 +133,7 @@ describe("search dialog request and analytics lifecycle", () => {
     expect(nodes.some((node) => node.props.children === "Havoc")).toBe(true);
     closeButton();
     expect(gtag.mock.calls).toEqual([
-      ["event", "search", {search_term: "Havoc", result_count: 1, locale: "en", search_source: "header"}],
+      ["event", "search", {result_count: 1, locale: "en", search_source: "header"}],
     ]);
   });
 
@@ -169,7 +169,7 @@ describe("search dialog request and analytics lifecycle", () => {
     (backdrop.props.onMouseDown as (event: unknown) => void)({target, currentTarget: target});
     render(); open(); escape();
     expect(gtag.mock.calls).toEqual([
-      ["event", "search", {search_term: "Havoc", result_count: 1, locale: "en", search_source: "header"}],
+      ["event", "search", {result_count: 1, locale: "en", search_source: "header"}],
     ]);
   });
 
@@ -180,8 +180,8 @@ describe("search dialog request and analytics lifecycle", () => {
     typeQuery("unmatched-query"); closeButton(); open(); escape();
     open(); typeQuery("user@example.com"); closeButton();
     expect(gtag.mock.calls).toEqual([
-      ["event", "search", {search_term: "unmatched-query", result_count: 0, locale: "en", search_source: "header"}],
-      ["event", "site_search_no_results", {search_term: "unmatched-query", result_count: 0, locale: "en", search_source: "header"}],
+      ["event", "search", {result_count: 0, locale: "en", search_source: "header"}],
+      ["event", "site_search_no_results", {result_count: 0, locale: "en", search_source: "header"}],
     ]);
   });
 });

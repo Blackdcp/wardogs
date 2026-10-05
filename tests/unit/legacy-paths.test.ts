@@ -6,8 +6,15 @@ describe("legacy unprefixed paths", () => {
     expect(getLegacyEnglishRedirectPath("/guides/wardogs-factions")).toBe("/en/guides/wardogs-factions");
     expect(getLegacyEnglishRedirectPath("/guides/wardogs-trailer")).toBe("/en/guides/wardogs-trailer");
     expect(getLegacyEnglishRedirectPath("/guides/wardogs-early-access")).toBe("/en/guides/wardogs-early-access");
+    expect(getLegacyEnglishRedirectPath("/guides/wardogs-squad-invite")).toBe("/en/guides/wardogs-squad-guide");
     expect(getLegacyEnglishRedirectPath("/videos/wardogs-mortars-indirect-fire")).toBe("/en/videos/wardogs-mortars-indirect-fire");
     expect(getLegacyEnglishRedirectPath("/items/weapons/ak74")).toBe("/en/items/weapons/ak74");
+  });
+
+  it("preserves localized high-traffic legacy guide aliases", () => {
+    expect(getLegacyEnglishRedirectPath("/ja/guides/wardogs-squad-invite")).toBe("/ja/guides/wardogs-squad-guide");
+    expect(getLegacyEnglishRedirectPath("/de/guides/wardogs-squad-invite")).toBe("/de/guides/wardogs-squad-guide");
+    expect(getLegacyEnglishRedirectPath("/ja/guides/wardogs-squad-guide")).toBeNull();
   });
 
   it("redirects known top-level pages but leaves unknown paths alone", () => {
@@ -35,6 +42,7 @@ describe("legacy unprefixed paths", () => {
   it("collapses duplicate locale prefixes from historical URLs", () => {
     expect(getLegacyEnglishRedirectPath("/en/en/guides/wardogs-alpha")).toBe("/en/guides/wardogs-alpha");
     expect(getLegacyEnglishRedirectPath("/ja/ja/guides/wardogs-beginner-guide")).toBe("/ja/guides/wardogs-beginner-guide");
+    expect(getLegacyEnglishRedirectPath("/ja/ja/guides/wardogs-squad-invite")).toBe("/ja/guides/wardogs-squad-guide");
     expect(getLegacyEnglishRedirectPath("/pt-br/pt-br/videos")).toBe("/pt-br/videos");
     expect(getLegacyEnglishRedirectPath("/en/ja/videos")).toBeNull();
   });
@@ -42,6 +50,7 @@ describe("legacy unprefixed paths", () => {
   it("removes the obsolete deployment prefix while preserving locale and route", () => {
     expect(getLegacyEnglishRedirectPath("/wardogs/en")).toBe("/en");
     expect(getLegacyEnglishRedirectPath("/wardogs/zh-cn/items/weapons")).toBe("/zh-cn/items/weapons");
+    expect(getLegacyEnglishRedirectPath("/wardogs/ja/guides/wardogs-squad-invite")).toBe("/ja/guides/wardogs-squad-guide");
     expect(getLegacyEnglishRedirectPath("/wardogs/not-a-locale")).toBeNull();
   });
 });

@@ -145,7 +145,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     if (load !== "ready" || point.x < 0 || point.x > 1 || point.y < 0 || point.y > 1) return;
     if (stateRef.current.markers.length >= MAX_MARKERS) { setNotice(copy.limit); return; }
     updateState((previous) => ({...previous, markers: [...previous.markers, {id: `m${crypto.randomUUID()}`, ...point, label: `${copy.marker} ${previous.markers.length + 1}`}]}));
-    trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: stateRef.current.map, action: "marker_added"});
+    trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: stateRef.current.map, action: "marker_added", locale});
     setPanel(true);
   }
   function addMeasurementPoint(point: Point) {
@@ -156,6 +156,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     if ((mode === "calibrate" ? next.reference : next.points).length === 2) {
       trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {
         map_id: next.map,
+        locale,
         action: mode === "calibrate" ? "reference_set" : "measure",
         result: next.calibration ? "user_calibrated" : "pixels_only"
       });
@@ -230,10 +231,10 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     try {
       await navigator.clipboard.writeText(url.href);
       setNotice(copy.copied);
-      trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: shared.map, action: "share", result: "copied"});
+      trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: shared.map, action: "share", result: "copied", locale});
     } catch {
       setNotice(copy.shareLink);
-      trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: shared.map, action: "share", result: "manual_copy"});
+      trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: shared.map, action: "share", result: "manual_copy", locale});
     }
   }
 

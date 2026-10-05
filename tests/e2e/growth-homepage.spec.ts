@@ -19,8 +19,14 @@ for (const locale of ["en", "ja"] as const) {
       const summary = page.locator("[data-live-event]");
       await expect(summary).toContainText(locale === "ja" ? "10月15日" : "October 15");
       await expect(summary.locator('a[href$="/guides/wardogs-season-2"]')).toBeVisible();
-      const priority = page.locator('section[aria-labelledby="priority-guides-title"]');
-      await expect(priority.locator(`ol a[href$="/guides/${locale === "ja" ? "wardogs-helicopter-guide" : "wardogs-ammo-reload-guide"}"]`)).toBeVisible();
+      const guideHub = page.locator("[data-home-section='guide-hub']");
+      await expect(guideHub).toBeVisible();
+      await expect(guideHub.locator("[data-home-tools] a[href$='/tools/map']")).toBeVisible();
+      if (locale === "ja") {
+        await expect(guideHub.locator("[data-home-recovery='ja'] a[href$='/guides/wardogs-helicopter-guide']")).toBeVisible();
+      } else {
+        await expect(guideHub.locator("a[href$='/guides#collection-combat']")).toBeVisible();
+      }
       if (width === 390) {
         await page.getByRole("button", {name: locale === "ja" ? "広告を閉じる" : "Close advertisement", exact: true}).click();
         await expect(page.locator('[data-ad-placement="mobile-sticky"]')).toHaveCount(0);

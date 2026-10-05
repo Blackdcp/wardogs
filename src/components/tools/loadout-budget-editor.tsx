@@ -1,10 +1,10 @@
 "use client";
 
-import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {ANALYTICS_EVENTS, createToolResultRecorder, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 import Image from "next/image";
 import {Copy, Plus, Trash2} from "lucide-react";
-import {useMemo, useState, useSyncExternalStore} from "react";
+import {useEffect, useMemo, useRef, useState, useSyncExternalStore} from "react";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import type {LoadoutCatalogue} from "@/features/tools/loadout-catalogue";
 import {appendLoadoutPreset, getLoadoutPresetCopy, getLoadoutPresets, getMatchingLoadoutPresets} from "@/features/tools/loadout-presets";
@@ -57,7 +57,14 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
   const selectedWeapons = lines.filter(({id}) => id.startsWith("weapons/"));
   const activeWeapon = selectedWeapons.some(({id}) => id === weapon) ? weapon : selectedWeapons[0]?.id ?? "";
   const money = (value: number) => `$${value.toLocaleString(copy.locale, {maximumFractionDigits: 2})}`;
-  function commit(next: BudgetState) { setEdited({search, value: next}); setShareStatus(""); }
+  const resultPending = useRef(false);
+  const resultRecorder = useMemo(() => createToolResultRecorder("loadout-budget", copy.locale), [copy.locale]);
+  useEffect(() => {
+    if (!resultPending.current) return;
+    resultPending.current = false;
+    resultRecorder(!result ? "incomplete" : result.reserveMet ? "reserve_met" : "reserve_missed");
+  });
+  function commit(next: BudgetState) { resultPending.current = true; setEdited({search, value: next}); setShareStatus(""); }
   function updateLine(index: number, patch: Partial<PurchaseLine>) { commit({...state, lines: lines.map((line, row) => row === index ? {...line, ...patch} : line)}); }
   function addItem() {
     if (!itemMap.has(selected)) return;
@@ -67,6 +74,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
   }
   function applyPreset() {
     if (!presetResult) return;
+    trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "loadout-budget", action: "apply_preset", result: presetResult.status, locale: copy.locale});
     if (presetResult.status === "applied") commit(presetResult.state);
     setPresetStatus({search, message: presetCopy[presetResult.status]});
   }
@@ -76,8 +84,8 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
     url.search = encodedState;
     window.history.replaceState(null, "", url);
     setEdited({search: url.search, value: state});
-    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "loadout-budget", action: "share", result: "copied"}); setShareStatus(copy.copied); }
-    catch { setShareStatus(t.shareFailed); }
+    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "loadout-budget", action: "share", result: "copied", locale: copy.locale}); setShareStatus(copy.copied); }
+    catch { trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "loadout-budget", action: "share", result: "clipboard_error", locale: copy.locale}); setShareStatus(t.shareFailed); }
   }
 
   return <section className="border-y border-[#354039] bg-[#111512]" aria-labelledby="loadout-budget-form">

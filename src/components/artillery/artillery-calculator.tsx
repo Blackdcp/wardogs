@@ -95,9 +95,11 @@ export function ArtilleryCalculator({locale}: Props) {
     if (!resultPending.current) return;
     resultPending.current = false;
     const verdict = solution.valid ? "valid" : "invalid";
-    if (lastTrackedResult.current !== verdict) {
-      lastTrackedResult.current = verdict;
-      trackAnalyticsEvent(ANALYTICS_EVENTS.toolResult, {tool: "artillery-calculator", result: verdict});
+    const resultType = solution.valid ? "ready" : solution.reason ?? "out_of_range";
+    const resultKey = `${weaponId}:${inputMode}:${verdict}:${resultType}`;
+    if (lastTrackedResult.current !== resultKey) {
+      lastTrackedResult.current = resultKey;
+      trackAnalyticsEvent(ANALYTICS_EVENTS.toolResult, {tool: "artillery-calculator", result: verdict, result_type: resultType, weapon: weaponId, input_mode: inputMode, locale});
     }
   });
 
@@ -144,7 +146,7 @@ export function ArtilleryCalculator({locale}: Props) {
     let previousRemaining = solution.timeOfFlightSeconds;
     setCountdown(previousRemaining);
     playBeep(880, 0.15); // Launch shot cue
-    trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "artillery-calculator", action: "fire", result: "valid"});
+    trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "artillery-calculator", action: "fire", result: "valid", weapon: weaponId, locale});
 
     timerRef.current = setInterval(() => {
       const remaining = Math.max(0, (deadline - performance.now()) / 1000);

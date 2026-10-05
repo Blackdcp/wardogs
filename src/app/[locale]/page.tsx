@@ -2,12 +2,9 @@ import type {Metadata} from "next";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {CatalogueHomeBand} from "@/components/catalogue/catalogue-home-band";
-import {CurrentBuildChanges} from "@/components/home/current-build-changes";
-import {HomeDiscoveryCompact} from "@/components/home/home-discovery-compact";
-import {HomeEditorialBriefing} from "@/components/home/home-editorial-briefing";
+import {HomeActionHub} from "@/components/home/home-action-hub";
+import {HomeGuideHub} from "@/components/home/home-guide-hub";
 import {HomeHero} from "@/components/home/home-hero";
-import {PriorityGuides} from "@/components/home/priority-guides";
-import {StartHere} from "@/components/home/start-here";
 import {SiteSearch, type SiteSearchCopy} from "@/components/home/site-search";
 import {isLocale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
@@ -71,8 +68,8 @@ export default async function HomePage({params}: HomePageProps) {
       <HomeHero facts={facts} locale={locale} />
       <LiveBetaBanner compact />
 
-      {/* 2. 编辑优先级 + 广告承接：一个完整任务台，不再拆成两屏 */}
-      <HomeEditorialBriefing
+      {/* Current player tasks retain existing destinations and click tracking. */}
+      <HomeActionHub
         sponsoredSlot={
           <div className="space-y-3" data-page-ad-inventory="home">
             <p className="px-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-[#82938a]">{t("ads.sponsored")}</p>
@@ -83,16 +80,8 @@ export default async function HomePage({params}: HomePageProps) {
         }
       />
 
-      {/* 3. 新手与回流路径：保留开荒路线，但压成一屏内的扫描列表 */}
-      <StartHere />
-
-      {/* 4. 当前版本证据：保留首页可信度和版本敏感信息 */}
-      <CurrentBuildChanges locale={locale} />
-
-      {/* 5. 深度入口：核心攻略、资料库和压缩的长尾入口 */}
-      <PriorityGuides guides={guides} locale={locale} />
+      <HomeGuideHub guides={guides} locale={locale} />
       <CatalogueHomeBand locale={locale} />
-      <HomeDiscoveryCompact guideCount={guides.length} locale={locale} />
       <SiteSearch copy={searchCopy} index={searchIndex} locale={locale} />
     </main>
   );

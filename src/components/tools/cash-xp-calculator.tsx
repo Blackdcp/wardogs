@@ -2,7 +2,7 @@
 
 import {Copy} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
-import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {ANALYTICS_EVENTS, createToolResultRecorder, trackAnalyticsEvent} from "@/lib/analytics-events";
 import {
   calculateCashXpPlan,
   decodeCashXpPlan,
@@ -159,8 +159,11 @@ export function CashXpCalculator({locale}: {locale: string}) {
   const state = editedState ?? sharedState;
   const result = calculateCashXpPlan(state);
 
+  const resultRecorder = useMemo(() => createToolResultRecorder("cash-xp-calculator", locale), [locale]);
+
   function commit(next: Partial<CashXpPlan>) {
     const normalized = normalizeCashXpPlan({...state, ...next});
+    resultRecorder(calculateCashXpPlan(normalized).netCash < 0 ? "cash_negative" : "cash_positive");
     setEditedState(normalized);
     setCopied(false);
     const url = new URL(window.location.href);
@@ -173,7 +176,7 @@ export function CashXpCalculator({locale}: {locale: string}) {
     url.search = encodeCashXpPlan(state);
     window.history.replaceState(null, "", url);
     await navigator.clipboard.writeText(url.toString());
-    trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "cash-xp-calculator", action: "share", result: "copied"});
+    trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "cash-xp-calculator", action: "share", result: "copied", locale});
     setCopied(true);
   }
 

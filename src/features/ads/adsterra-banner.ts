@@ -90,7 +90,8 @@ export function observeAdSlot(container: HTMLElement, placement: string, format:
   const report = (status: AdStatus) => {
     if (!active || reported.has(status)) return;
     reported.add(status);
-    trackAnalyticsEvent(ANALYTICS_EVENTS.adStatus, {placement, format, status});
+    const locale = container.ownerDocument.documentElement?.lang;
+    trackAnalyticsEvent(ANALYTICS_EVENTS.adStatus, {placement, format, status, ...(locale ? {locale} : {})});
   };
   const intersection = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver((entries) => {
     if (!active) return;

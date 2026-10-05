@@ -207,3 +207,32 @@ test("local navigation and back send no production config or manual page views",
   await expect(page.locator("html")).toHaveAttribute("data-analytics-document", "same-document");
   await expect(dataLayerEvents(page, "page_view")).resolves.toEqual([]);
 });
+
+test("cash calculator emits categorical outcomes after edits without recording inputs", async ({page}) => {
+  await page.goto("/en/tools/cash-xp-calculator");
+  await waitForAnalyticsReady(page);
+  await expect(dataLayerEvents(page, "tool_result")).resolves.toEqual([]);
+  await page.getByRole("spinbutton").first().fill("2");
+  await expect.poll(() => dataLayerEvents(page, "tool_result")).toEqual([
+    {name: "tool_result", parameters: {tool: "cash-xp-calculator", result: "cash_positive", locale: "en"}}
+  ]);
+  await expect(dataLayerEvents(page, "tool_start")).resolves.toEqual([
+    {name: "tool_start", parameters: {tool: "cash-xp-calculator", locale: "en"}}
+  ]);
+  await page.getByRole("spinbutton").first().fill("3");
+  await expect(dataLayerEvents(page, "tool_result")).resolves.toHaveLength(1);
+  await expect(page.locator('script[src*="googletagmanager.com"]')).toHaveCount(0);
+});
+
+test("loadout budget records reserve verdict changes after user edits", async ({page}) => {
+  await page.goto("/en/tools/loadout-budget");
+  await waitForAnalyticsReady(page);
+  await expect(dataLayerEvents(page, "tool_result")).resolves.toEqual([]);
+  await page.getByLabel("Cash available", {exact: true}).fill("1000");
+  await expect.poll(() => dataLayerEvents(page, "tool_result")).toEqual([
+    {name: "tool_result", parameters: {tool: "loadout-budget", result: "reserve_missed", locale: "en"}}
+  ]);
+  await page.getByLabel("Cash available", {exact: true}).fill("10000");
+  await expect.poll(() => dataLayerEvents(page, "tool_result")).toHaveLength(2);
+  await expect(dataLayerEvents(page, "tool_start")).resolves.toHaveLength(1);
+});

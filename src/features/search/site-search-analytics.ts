@@ -2,7 +2,8 @@ import type {Locale} from "@/config/site";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 import type {SiteSearchEntry} from "./site-search-runtime";
 
-// Search input is user-generated. Exclude contact details and URLs from analytics.
+// Search input is user-generated. Validate it only for local deduplication;
+// never send the text to analytics, even when it passes this filter.
 export function safeSearchTerm(query: string): string | null {
   const term = query.normalize("NFKC").trim().replace(/\s+/g, " ");
   if (term.length < 2 || term.length > 80) return null;
@@ -16,7 +17,7 @@ export type SiteSearchSource = "home" | "header" | "hero";
 export function recordSiteSearch(query: string, resultCount: number, locale: Locale, source: SiteSearchSource) {
   const searchTerm = safeSearchTerm(query);
   if (!searchTerm) return;
-  const parameters = {search_term: searchTerm, result_count: resultCount, locale, search_source: source};
+  const parameters = {result_count: resultCount, locale, search_source: source};
   trackAnalyticsEvent(ANALYTICS_EVENTS.siteSearch, parameters);
   if (resultCount === 0) trackAnalyticsEvent(ANALYTICS_EVENTS.siteSearchNoResults, parameters);
 }
@@ -39,7 +40,6 @@ export function recordSiteSearchResult(query: string, result: SiteSearchEntry, l
   const searchTerm = safeSearchTerm(query);
   if (!searchTerm) return;
   trackAnalyticsEvent(ANALYTICS_EVENTS.siteSearchResultOpen, {
-    search_term: searchTerm,
     result_type: result.type,
     result_id: result.id,
     locale,
