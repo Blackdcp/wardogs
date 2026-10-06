@@ -134,12 +134,12 @@ describe("Adsterra display loader configuration", () => {
     expect(banners.mountAdsterraBanner).toBeTypeOf("function");
     const stopFirst = banners.mountAdsterraBanner(element, banners.ADSTERRA_BANNER_UNITS.rectangle300, (status) => {statuses.push(status);});
     const stopSecond = banners.mountAdsterraBanner(second as unknown as HTMLElement, banners.ADSTERRA_BANNER_UNITS.horizontal468);
-    expect(slot.children.map((child) => child.src)).toEqual(["https://arkgleamfox.com/3342dc928824e6ed5c01555e7f9e9e0f/invoke.js"]);
+    expect(slot.children.map((child) => child.src)).toEqual(["https://bauval.org/22/3342dc928824e6ed5c01555e7f9e9e0f"]);
     expect(document.defaultView.atOptions).toMatchObject({key: "3342dc928824e6ed5c01555e7f9e9e0f", width: 300});
     expect(second.children).toHaveLength(0);
     slot.children[0].dispatchEvent(new Event("load"));
     expect(statuses).toEqual(["script_loaded"]);
-    expect(second.children.map((child) => child.src)).toEqual(["https://arkgleamfox.com/c6d1a3e01dc90e01385598a3c84dcaea/invoke.js"]);
+    expect(second.children.map((child) => child.src)).toEqual(["https://bauval.org/22/c6d1a3e01dc90e01385598a3c84dcaea"]);
     expect(document.defaultView.atOptions).toMatchObject({key: "c6d1a3e01dc90e01385598a3c84dcaea", width: 468});
     second.children[0].dispatchEvent(new Event("load"));
     stopFirst(); stopSecond();
@@ -205,7 +205,7 @@ describe("Adsterra native loader lifecycle", () => {
     const statuses: string[] = [];
     const stop = native.mountAdsterraNative(element, (status) => {statuses.push(status);});
     const script = parent.children[0];
-    expect(script.src).toBe("https://arkgleamfox.com/481d6501bcd0c27b98bc3c4776a26f6e/invoke.js");
+    expect(script.src).toBe("https://bauval.org/21/481d6501bcd0c27b98bc3c4776a26f6e");
     script.dispatchEvent(new Event(event));
     expect(statuses).toEqual([event === "load" ? "script_loaded" : "script_error"]);
     slot.appendChild(document.createElement("iframe"));

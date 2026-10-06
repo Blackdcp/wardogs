@@ -9,7 +9,7 @@ export type AdsterraBannerUnit = {
 };
 
 function bannerUnit(key: string, width: number, height: number): AdsterraBannerUnit {
-  return {height, key, src: `https://arkgleamfox.com/${key}/invoke.js`, width};
+  return {height, key, src: `https://bauval.org/22/${key}`, width};
 }
 
 export const ADSTERRA_BANNER_UNITS = {

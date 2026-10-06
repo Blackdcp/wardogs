@@ -13,7 +13,7 @@ describe("Adsterra native banner", () => {
   it("uses the current approved native code configuration", () => {
     expect(ADSTERRA_NATIVE_ZONE_ID).toBe("481d6501bcd0c27b98bc3c4776a26f6e");
     expect(ADSTERRA_NATIVE_CONTAINER_ID).toBe(`container-${ADSTERRA_NATIVE_ZONE_ID}`);
-    expect(ADSTERRA_NATIVE_SCRIPT_SRC).toBe(`https://arkgleamfox.com/${ADSTERRA_NATIVE_ZONE_ID}/invoke.js`);
+    expect(ADSTERRA_NATIVE_SCRIPT_SRC).toBe(`https://bauval.org/21/${ADSTERRA_NATIVE_ZONE_ID}`);
     const script = {async: false, dataset: {} as Record<string, string>, src: ""} as HTMLScriptElement;
     configureAdsterraNativeScript(script);
     expect(script.async).toBe(true);

@@ -3,27 +3,22 @@ import {expect, test} from "@playwright/test";
 test.setTimeout(90_000);
 
 async function installFixedCreativeFixture(page: import("@playwright/test").Page) {
-  await page.locator('[data-ad-placement], [data-ad-slot="adsterra-native"]').evaluateAll((slots) => {
-    for (const slot of slots) {
-      if (slot.querySelector("[data-fixed-ad-creative]")) continue;
-      const creative = document.createElement("div");
-      creative.dataset.fixedAdCreative = "true";
-      creative.textContent = "ADVERTISEMENT";
-      Object.assign(creative.style, {
-        alignItems: "center",
-        background: "#111512",
-        border: "1px solid #46534d",
-        color: "#82938a",
-        display: "flex",
-        fontFamily: "sans-serif",
-        fontSize: "10px",
-        justifyContent: "center",
-        minHeight: slot.getAttribute("data-ad-placement") === "mobile-sticky" ? "50px" : "90px",
-        width: "100%"
-      });
-      slot.append(creative);
+  // Paint test creatives without adding children to React's hydrating tree.
+  await page.addStyleTag({content: `
+    [data-ad-placement]::after, [data-ad-slot="adsterra-native"]::after {
+      content: "ADVERTISEMENT";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 90px;
+      width: 100%;
+      background: #111512;
+      border: 1px solid #46534d;
+      color: #82938a;
+      font: 10px sans-serif;
     }
-  });
+    [data-ad-placement="mobile-sticky"]::after { min-height: 50px; }
+  `});
 }
 
 async function expectNoOverlap(page: import("@playwright/test").Page, target: import("@playwright/test").Locator) {
@@ -45,7 +40,7 @@ async function expectNoOverlap(page: import("@playwright/test").Page, target: im
 for (const viewport of [{width: 390, height: 844}, {width: 1700, height: 1000}]) {
   test("ad slots render correctly at " + viewport.width + "px", async ({page, context}) => {
     await page.setViewportSize(viewport);
-    await context.route("https://arkgleamfox.com/**", (route) =>
+    await context.route("https://bauval.org/**", (route) =>
       route.fulfill({
         contentType: "application/javascript",
         body: 'console.log("Mock adsterra script loaded");'

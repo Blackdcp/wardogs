@@ -2,6 +2,7 @@ import {expect, test} from "@playwright/test";
 import {expectNoHorizontalOverflow} from "./helpers";
 
 async function blockAdNetworks(page: import("@playwright/test").Page) {
+  await page.route("**/bauval.org/**", (route) => route.abort("blockedbyclient"));
   await page.route("**/arkgleamfox.com/**", (route) => route.abort("blockedbyclient"));
   await page.route("**/effectivecpmnetwork.com/**", (route) => route.abort("blockedbyclient"));
 }
