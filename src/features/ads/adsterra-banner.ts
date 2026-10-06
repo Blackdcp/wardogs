@@ -1,5 +1,5 @@
 import {ADSTERRA_ENABLED, ADSTERRA_LEADERBOARD_ENABLED} from "./ad-policy";
-import {ANALYTICS_EVENTS, isProductionHostname, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {ANALYTICS_EVENTS, isProductionHostname, normalizeAnalyticsPathname, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 export type AdsterraBannerUnit = {
   height: number;
@@ -78,29 +78,108 @@ export function observeAdContainerWidth(container: HTMLElement, update: (width: 
   };
 }
 
-export type AdStatus = "script_loaded" | "script_error" | "slot_visible" | "creative_present" | "creative_visible";
+export type AdStatus = "script_loaded" | "script_error" | "slot_visible" | "creative_present" | "creative_visible" | "request_started" | "creative_missing" | "creative_viewable";
 
-// These are DOM observations, not vendor impressions. Cross-origin iframe
-// contents, ad validity, dwell time and billable impressions cannot be verified.
-export function observeAdSlot(container: HTMLElement, placement: string, format: "display" | "native") {
+export type AdSlotMetadata = {
+  ad_unit?: string;
+  page_path?: string;
+  page_type?: string;
+  config_version?: string;
+};
+
+// These are DOM observations, not vendor impressions. Cross-origin contents,
+// vendor fill, ad validity and billable impressions cannot be verified.
+// creative_missing means no qualifying DOM after 15 foreground seconds;
+// creative_viewable means >=50% intersection for one continuous foreground second.
+export function observeAdSlot(container: HTMLElement, placement: string, format: "display" | "native", metadata: AdSlotMetadata = {}) {
   let active = true;
+  const document = container.ownerDocument;
+  const attribution: Record<string, string> = {};
+  for (const key of ["ad_unit", "page_type", "config_version"] as const) {
+    const value = metadata[key];
+    if (value && /^[a-zA-Z0-9_.:-]+$/.test(value)) attribution[key] = value.slice(0, 64);
+  }
+  if (metadata.page_path) attribution.page_path = normalizeAnalyticsPathname(metadata.page_path, process.env.NEXT_PUBLIC_BASE_PATH);
   const reported = new Set<AdStatus>();
   const candidates = new Set<Element>();
+  const sources = new Map<Element, string>();
   const present = new Set<Element>();
+  const ratios = new Map<Element, number>();
+  const viewTimers = new Map<Element, ReturnType<typeof setTimeout>>();
+  let missingTimer: ReturnType<typeof setTimeout> | null = null;
+  let missingStartedAt: number | null = null;
+  let missingRemaining = 15_000;
+  const pauseMissing = () => {
+    if (missingTimer !== null) clearTimeout(missingTimer);
+    if (missingStartedAt !== null) missingRemaining = Math.max(0, missingRemaining - (Date.now() - missingStartedAt));
+    missingTimer = null;
+    missingStartedAt = null;
+  };
   const report = (status: AdStatus) => {
     if (!active || reported.has(status)) return;
     reported.add(status);
-    const locale = container.ownerDocument.documentElement?.lang;
-    trackAnalyticsEvent(ANALYTICS_EVENTS.adStatus, {placement, format, status, ...(locale ? {locale} : {})});
+    container.dataset.adStatus = status;
+    if (status === "script_loaded") updateMissing();
+    if (status === "creative_present" || status === "script_error") pauseMissing();
+    const locale = document.documentElement?.lang;
+    try {
+      trackAnalyticsEvent(ANALYTICS_EVENTS.adStatus, {placement, format, status, ...attribution, ...(locale ? {locale} : {})});
+    } catch {
+      // Analytics is best effort and must not interrupt loader/observer work.
+    }
+  };
+  function updateMissing() {
+    if (!active || document.hidden || !reported.has("script_loaded") || reported.has("creative_present") || reported.has("creative_missing") || reported.has("script_error")) {
+      pauseMissing();
+      return;
+    }
+    if (missingTimer !== null) return;
+    missingStartedAt = Date.now();
+    missingTimer = setTimeout(() => {
+      pauseMissing();
+      inspect();
+      if (active && !document.hidden && !reported.has("creative_present")) report("creative_missing");
+    }, missingRemaining);
+  }
+  const stopViewTimer = (candidate: Element) => {
+    const timer = viewTimers.get(candidate);
+    if (timer !== undefined) clearTimeout(timer);
+    viewTimers.delete(candidate);
+  };
+  const updateVisibility = (candidate: Element) => {
+    const ratio = ratios.get(candidate) ?? 0;
+    if (!active || document.hidden || ratio <= 0) {
+      stopViewTimer(candidate);
+      return;
+    }
+    if (candidate === container) {
+      report("slot_visible");
+      return;
+    }
+    if (!present.has(candidate)) return;
+    report("creative_visible");
+    if (ratio < 0.5 || reported.has("creative_viewable")) {
+      stopViewTimer(candidate);
+      return;
+    }
+    if (viewTimers.has(candidate)) return;
+    viewTimers.set(candidate, setTimeout(() => {
+      viewTimers.delete(candidate);
+      // Recheck dimensions/removal at the boundary before making a dwell claim.
+      inspect();
+      if (active && !document.hidden && present.has(candidate) && (ratios.get(candidate) ?? 0) >= 0.5) {
+        report("creative_viewable");
+        for (const observed of viewTimers.keys()) stopViewTimer(observed);
+      }
+    }, 1_000));
   };
   const intersection = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver((entries) => {
     if (!active) return;
     for (const entry of entries) {
-      if (!entry.isIntersecting || entry.intersectionRatio <= 0) continue;
-      if (entry.target === container) report("slot_visible");
-      else if (present.has(entry.target)) report("creative_visible");
+      ratios.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
+      updateVisibility(entry.target);
     }
-  });
+  }, {threshold: [0, 0.5]});
   intersection?.observe(container);
   const inspect = () => {
     if (!active) return;
@@ -109,22 +188,42 @@ export function observeAdSlot(container: HTMLElement, placement: string, format:
       if (current.has(candidate)) continue;
       candidate.removeEventListener("load", inspect);
       intersection?.unobserve(candidate);
+      resize?.unobserve(candidate);
+      stopViewTimer(candidate);
+      ratios.delete(candidate);
       candidates.delete(candidate);
+      sources.delete(candidate);
       present.delete(candidate);
     }
     for (const candidate of current) {
       if (!candidates.has(candidate)) {
         candidates.add(candidate);
         candidate.addEventListener("load", inspect);
+        // Watch candidates before they qualify: asynchronous sizing need not
+        // mutate their attributes or fire another load event.
+        resize?.observe(candidate);
       }
-      const src = candidate.getAttribute("src")?.trim();
+      const src = candidate.getAttribute("src")?.trim() ?? "";
+      if (sources.has(candidate) && sources.get(candidate) !== src) {
+        // A reused DOM node may now contain a different creative. Require a new
+        // intersection sample and a full dwell interval for the new source.
+        present.delete(candidate);
+        intersection?.unobserve(candidate);
+        ratios.delete(candidate);
+        stopViewTimer(candidate);
+      }
+      sources.set(candidate, src);
       const bounds = candidate.getBoundingClientRect();
       // Empty frames and tracking pixels are not evidence of an ad creative.
       const available = src && !src.startsWith("about:blank") && bounds.width > 1 && bounds.height > 1
         && (candidate.tagName !== "IMG" || ((candidate as HTMLImageElement).complete && (candidate as HTMLImageElement).naturalWidth > 0))
         && (candidate.tagName !== "VIDEO" || (candidate as HTMLVideoElement).readyState >= 2);
       if (!available) {
-        if (present.delete(candidate)) intersection?.unobserve(candidate);
+        if (present.delete(candidate)) {
+          intersection?.unobserve(candidate);
+          ratios.delete(candidate);
+          stopViewTimer(candidate);
+        }
         continue;
       }
       if (present.has(candidate)) continue;
@@ -134,17 +233,33 @@ export function observeAdSlot(container: HTMLElement, placement: string, format:
     }
   };
   const mutations = typeof MutationObserver === "undefined" ? null : new MutationObserver(inspect);
+  const resize = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(inspect);
   mutations?.observe(container, {childList: true, subtree: true, attributes: true, attributeFilter: ["src", "class", "style", "hidden"]});
+  resize?.observe(container);
+  if (!resize) document.defaultView?.addEventListener("resize", inspect);
+  const visibilityChanged = () => {
+    updateMissing();
+    inspect();
+    for (const candidate of ratios.keys()) updateVisibility(candidate);
+  };
+  document.addEventListener("visibilitychange", visibilityChanged);
   inspect();
   return {
     report,
     cleanup: () => {
       active = false;
+      pauseMissing();
+      for (const candidate of viewTimers.keys()) stopViewTimer(candidate);
       intersection?.disconnect();
       mutations?.disconnect();
+      resize?.disconnect();
+      document.removeEventListener("visibilitychange", visibilityChanged);
+      if (!resize) document.defaultView?.removeEventListener("resize", inspect);
       for (const candidate of candidates) candidate.removeEventListener("load", inspect);
       candidates.clear();
+      sources.clear();
       present.clear();
+      ratios.clear();
     }
   };
 }
@@ -196,6 +311,7 @@ export function mountAdsterraBanner(container: HTMLElement, unit: AdsterraBanner
       const failed = () => finish("script_error");
       script.addEventListener("load", loaded);
       script.addEventListener("error", failed);
+      onStatus?.("request_started");
       container.appendChild(script);
     }
   };

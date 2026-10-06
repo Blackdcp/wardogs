@@ -54,8 +54,8 @@ export default async function ItemTypePage({params}: PageProps) {
       <CatalogueCategoryView guide={catalogueGuide} locale={locale} />
 
       <section className="site-container py-2" data-page-ad-inventory="item-type">
-        <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
         <AdsterraNativeBanner label={adsT("label")} />
+        <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
 

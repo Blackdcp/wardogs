@@ -10,6 +10,17 @@ const currentAccessGuideSlugs: Record<string, readonly string[]> = {
   "wardogs-playtest": ["wardogs-early-access", "wardogs-season-2", "wardogs-server-status"]
 };
 
+// Keep established operating and troubleshooting guides reachable from adjacent
+// English entry pages instead of allowing manifest order to choose every card.
+const englishTaskGuideSlugs: Record<string, readonly string[]> = {
+  "wardogs-artillery-guide": ["wardogs-mortar-guide", "wardogs-map", "wardogs-fob-guide"],
+  "wardogs-mortar-guide": ["wardogs-artillery-guide", "wardogs-fob-guide", "wardogs-map"],
+  "wardogs-cargo-guide": ["wardogs-fob-guide", "wardogs-equipment-tools-guide", "wardogs-money-guide"],
+  "wardogs-fob-guide": ["wardogs-cargo-guide", "wardogs-mortar-guide", "wardogs-fob-layouts"],
+  "wardogs-controls": ["wardogs-crash-fix", "wardogs-best-settings", "wardogs-helicopter-guide"],
+  "wardogs-crash-fix": ["wardogs-known-issues", "wardogs-best-settings", "wardogs-system-requirements"]
+};
+
 export function buildRelatedGuideHref(locale: Locale, slug: string) {
   return `/${locale}/guides/${slug}`;
 }
@@ -19,7 +30,9 @@ export async function getRelatedGuides(locale: Locale, slug: string, limit = 3) 
   const current = guides.find((guide) => guide.slug === slug);
   if (!current) return [];
 
-  const prioritized = (currentAccessGuideSlugs[slug] ?? [])
+  const prioritySlugs = (locale === "en" ? englishTaskGuideSlugs[slug] : undefined)
+    ?? currentAccessGuideSlugs[slug] ?? [];
+  const prioritized = prioritySlugs
     .map((relatedSlug) => guides.find((guide) => guide.slug === relatedSlug))
     .filter((guide): guide is (typeof guides)[number] => guide !== undefined);
   const sameCategory = guides.filter((guide) => guide.slug !== slug && guide.category === current.category);
@@ -32,7 +45,9 @@ export async function getRelatedGuides(locale: Locale, slug: string, limit = 3) 
 export async function getItemRelatedGuides(locale: Locale, item: {type: string; slug: string; relatedGuides: readonly string[]}) {
   const guides = await listGuideSummaries(locale);
   const bySlug = new Map(guides.map((guide) => [guide.slug, guide]));
-  const taskSlugs = item.slug === "sph-2" || item.slug === "mortar" || item.slug === "l81-mortar"
+  const taskSlugs = locale === "en" && (item.slug === "mortar" || item.slug === "l81-mortar")
+    ? ["wardogs-mortar-guide", "wardogs-artillery-guide", "wardogs-map"]
+    : item.slug === "sph-2" || item.slug === "mortar" || item.slug === "l81-mortar"
     ? ["wardogs-artillery-guide", "wardogs-mortar-guide", "wardogs-map"]
     : item.type === "weapons"
       ? ["wardogs-best-weapons-loadouts", "wardogs-ammo-reload-guide", "wardogs-money-guide"]

@@ -23,6 +23,7 @@ export function mountAdsterraNative(container: HTMLElement, onStatus?: (status: 
   const failed = () => onStatus?.("script_error");
   script.addEventListener("load", loaded);
   script.addEventListener("error", failed);
+  onStatus?.("request_started");
   parent.insertBefore(script, container);
   return () => {
     script.removeEventListener("load", loaded);

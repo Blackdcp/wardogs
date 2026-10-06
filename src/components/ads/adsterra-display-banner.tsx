@@ -2,6 +2,8 @@
 
 import {useEffect, useRef, useState} from "react";
 import {X} from "lucide-react";
+import {usePathname} from "next/navigation";
+import {AD_REPORTING_VERSION, getAdReportingMetadata} from "@/features/ads/ad-reporting";
 import {
   ADSTERRA_ENABLED,
   ADSTERRA_MOBILE_STICKY_ENABLED,
@@ -14,6 +16,7 @@ import {
   observeAdContainerWidth,
   observeAdSlot,
   selectAdsterraDisplayUnit,
+  type AdStatus,
   type AdsterraBannerUnit
 } from "@/features/ads/adsterra-banner";
 import {isProductionHostname} from "@/lib/analytics-events";
@@ -35,19 +38,38 @@ type BannerSlotProps = {
 
 function BannerSlot({className = "", label = "Advertisement", placement, unit, loadEnabled = true}: BannerSlotProps) {
   const slotRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const reportRef = useRef<((status: AdStatus) => void) | null>(null);
+  const loadedState = useRef<{key: string; status: "script_loaded" | "script_error"} | null>(null);
 
   useEffect(() => {
     if (!ADSTERRA_ENABLED || !unit || !loadEnabled || !isProductionHostname(window.location.hostname)) return;
     const el = slotRef.current;
     if (!el) return;
 
-    const observation = observeAdSlot(el, placement, "display");
-    const cancelLoad = mountAdsterraBanner(el, unit, observation.report);
+    const observation = observeAdSlot(el, placement, "display", getAdReportingMetadata(pathname, unit.key));
+    reportRef.current = observation.report;
+    if (loadedState.current?.key === unit.key) observation.report(loadedState.current.status);
     return () => {
+      reportRef.current = null;
       observation.cleanup();
+    };
+  }, [loadEnabled, pathname, placement, unit]);
+
+  // Attribute persistent layout creatives to the current page without refreshing
+  // the vendor request whenever the visitor changes routes.
+  useEffect(() => {
+    if (!unit || !loadEnabled || !slotRef.current) return;
+    loadedState.current = null;
+    const cancelLoad = mountAdsterraBanner(slotRef.current, unit, (status) => {
+      if (status === "script_loaded" || status === "script_error") loadedState.current = {key: unit.key, status};
+      reportRef.current?.(status);
+    });
+    return () => {
+      loadedState.current = null;
       cancelLoad();
     };
-  }, [loadEnabled, placement, unit]);
+  }, [loadEnabled, unit]);
 
   if (!ADSTERRA_ENABLED || !unit) return null;
 
@@ -57,6 +79,7 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit, l
       className={className}
       data-ad-placement={placement}
       data-ad-unit={unit.key}
+      data-ad-config={AD_REPORTING_VERSION}
     >
       <p className="mb-2 text-center text-[10px] font-semibold uppercase text-[#82938a]">{label}</p>
       <div

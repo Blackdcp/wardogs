@@ -29,8 +29,8 @@ export default async function ItemsPage({params}: PageProps) {
       <JsonLd data={buildItemIndexJsonLd(locale)} />
       <CatalogueHub locale={locale}>
         <section className="site-container py-2" data-page-ad-inventory="items">
-          <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
           <AdsterraNativeBanner label={adsT("label")} />
+          <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
           <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         </section>
       </CatalogueHub>

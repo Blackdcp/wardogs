@@ -59,7 +59,8 @@ class ObserverBoundary {
   emit(entries: unknown[] = []) {this.callback(entries);}
 }
 
-class DocumentBoundary {
+class DocumentBoundary extends EventTarget {
+  hidden = false;
   defaultView = {
     location: {hostname: "wardogswiki.com"},
     dataLayer: [] as unknown[],
@@ -138,7 +139,7 @@ describe("Adsterra display loader configuration", () => {
     expect(document.defaultView.atOptions).toMatchObject({key: "3342dc928824e6ed5c01555e7f9e9e0f", width: 300});
     expect(second.children).toHaveLength(0);
     slot.children[0].dispatchEvent(new Event("load"));
-    expect(statuses).toEqual(["script_loaded"]);
+    expect(statuses).toEqual(["request_started", "script_loaded"]);
     expect(second.children.map((child) => child.src)).toEqual(["https://bauval.org/22/c6d1a3e01dc90e01385598a3c84dcaea"]);
     expect(document.defaultView.atOptions).toMatchObject({key: "c6d1a3e01dc90e01385598a3c84dcaea", width: 468});
     second.children[0].dispatchEvent(new Event("load"));
@@ -156,7 +157,7 @@ describe("Adsterra display loader configuration", () => {
     const stopThird = banners.mountAdsterraBanner(third as unknown as HTMLElement, banners.ADSTERRA_BANNER_UNITS.rail300);
     stopSecond();
     slot.children[0].dispatchEvent(new Event("error"));
-    expect(statuses).toEqual(["script_error"]);
+    expect(statuses).toEqual(["request_started", "script_error"]);
     expect(second.children).toHaveLength(0);
     expect(document.defaultView.atOptions).toMatchObject({key: "f6fc5667adc4cb97634312e962c199c5", width: 160});
     expect(third.children).toHaveLength(1);
@@ -176,7 +177,7 @@ describe("Adsterra display loader configuration", () => {
     expect(slot.children).toHaveLength(0);
     expect(second.children).toHaveLength(0);
     script.dispatchEvent(new Event("load"));
-    expect(statuses).toEqual([]);
+    expect(statuses).toEqual(["request_started"]);
     expect(document.defaultView.atOptions).toMatchObject({key: "c6d1a3e01dc90e01385598a3c84dcaea", width: 468});
     second.children[0].dispatchEvent(new Event("error"));
     stopSecond();
@@ -207,17 +208,297 @@ describe("Adsterra native loader lifecycle", () => {
     const script = parent.children[0];
     expect(script.src).toBe("https://bauval.org/21/481d6501bcd0c27b98bc3c4776a26f6e");
     script.dispatchEvent(new Event(event));
-    expect(statuses).toEqual([event === "load" ? "script_loaded" : "script_error"]);
+    expect(statuses).toEqual(["request_started", event === "load" ? "script_loaded" : "script_error"]);
     slot.appendChild(document.createElement("iframe"));
     stop();
     expect(parent.children).toEqual([slot]);
     expect(slot.children).toHaveLength(0);
     script.dispatchEvent(new Event(event));
-    expect(statuses).toHaveLength(1);
+    expect(statuses).toHaveLength(2);
   });
 });
 
 describe("Adsterra observable status", () => {
+  afterEach(() => {vi.useRealTimers();});
+
+  const statuses = (document: DocumentBoundary) => document.defaultView.dataLayer.map((command) => (command as [string, string, {status: string}])[2].status);
+  const setHidden = (document: DocumentBoundary, hidden: boolean) => {
+    document.hidden = hidden;
+    document.dispatchEvent(new Event("visibilitychange"));
+  };
+
+  it("exposes the latest observed status without letting analytics errors interrupt observation", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    Object.assign(document.defaultView, {gtag: () => {throw new Error("analytics unavailable");}});
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    expect(() => observation.report("script_loaded")).not.toThrow();
+    expect(slot.dataset.adStatus).toBe("script_loaded");
+    vi.advanceTimersByTime(15_000);
+    expect(slot.dataset.adStatus).toBe("creative_missing");
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/ad";
+    slot.appendChild(creative);
+    expect(() => ObserverBoundary.instances[1].emit()).not.toThrow();
+    expect(slot.dataset.adStatus).toBe("creative_present");
+    ObserverBoundary.instances[0].emit([{target: creative, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(1_000);
+    expect(slot.dataset.adStatus).toBe("creative_viewable");
+    observation.cleanup();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("does not combine viewability time across replacement creatives", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const first = document.createElement("iframe");
+    first.src = "https://creative.example/first";
+    slot.appendChild(first);
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    const intersection = ObserverBoundary.instances[0];
+    const mutations = ObserverBoundary.instances[1];
+    intersection.emit([{target: first, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(600);
+    first.remove();
+    const second = document.createElement("iframe");
+    second.src = "https://creative.example/second";
+    slot.appendChild(second);
+    mutations.emit();
+    intersection.emit([{target: second, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(999);
+    expect(statuses(document)).toEqual(["creative_present", "creative_visible"]);
+    vi.advanceTimersByTime(1);
+    expect(statuses(document)).toEqual(["creative_present", "creative_visible", "creative_viewable"]);
+    observation.cleanup();
+  });
+
+  it("restarts viewability when the same iframe changes source", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/first";
+    slot.appendChild(creative);
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    const intersection = ObserverBoundary.instances[0];
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(600);
+    creative.src = "https://creative.example/second";
+    ObserverBoundary.instances[1].emit();
+    // Re-observing the same element delivers an initial intersection for B.
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(400);
+    expect(statuses(document)).toEqual(["creative_present", "creative_visible"]);
+    vi.advanceTimersByTime(599);
+    expect(statuses(document)).not.toContain("creative_viewable");
+    vi.advanceTimersByTime(1);
+    expect(statuses(document)).toEqual(["creative_present", "creative_visible", "creative_viewable"]);
+    observation.cleanup();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("cleans resize observation and dwell timers after a source replacement becomes zero-size", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/first";
+    slot.appendChild(creative);
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    const intersection = ObserverBoundary.instances[0];
+    const resize = ObserverBoundary.instances[2];
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(600);
+    creative.src = "https://creative.example/second";
+    ObserverBoundary.instances[1].emit();
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(300);
+    creative.width = 0;
+    resize.emit([{target: creative, contentRect: {width: 0, height: 250}}]);
+    expect(vi.getTimerCount()).toBe(0);
+    creative.width = 300;
+    resize.emit([{target: creative, contentRect: {width: 300, height: 250}}]);
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(600);
+    expect(statuses(document)).not.toContain("creative_viewable");
+    observation.cleanup();
+    creative.src = "https://creative.example/third";
+    resize.emit([{target: creative, contentRect: {width: 300, height: 250}}]);
+    creative.dispatchEvent(new Event("load"));
+    vi.advanceTimersByTime(2_000);
+    expect(statuses(document)).toEqual(["creative_present", "creative_visible"]);
+    expect(vi.getTimerCount()).toBe(0);
+    expect(resize.observed.size).toBe(0);
+    expect(resize.disconnected).toBe(true);
+  });
+
+  it("reports missing creative evidence only after 15 foreground seconds after script load", () => {
+    vi.useFakeTimers();
+    const {document, element} = fixture();
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    observation.report("request_started");
+    vi.advanceTimersByTime(20_000);
+    expect(statuses(document)).toEqual(["request_started"]);
+    observation.report("script_loaded");
+    vi.advanceTimersByTime(10_000);
+    setHidden(document, true);
+    vi.advanceTimersByTime(30_000);
+    expect(statuses(document)).toEqual(["request_started", "script_loaded"]);
+    setHidden(document, false);
+    vi.advanceTimersByTime(4_999);
+    expect(statuses(document)).toEqual(["request_started", "script_loaded"]);
+    vi.advanceTimersByTime(1);
+    vi.advanceTimersByTime(60_000);
+    expect(statuses(document)).toEqual(["request_started", "script_loaded", "creative_missing"]);
+    observation.cleanup();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("cancels the missing diagnostic when a creative appears", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const observation = banners.observeAdSlot(element, "native", "native");
+    observation.report("script_loaded");
+    vi.advanceTimersByTime(14_999);
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/ad";
+    slot.appendChild(creative);
+    ObserverBoundary.instances[1].emit();
+    vi.advanceTimersByTime(60_000);
+    expect(statuses(document)).toEqual(["script_loaded", "creative_present"]);
+    expect(vi.getTimerCount()).toBe(0);
+    observation.cleanup();
+  });
+
+  it("cancels the missing diagnostic and visibility listener on cleanup", () => {
+    vi.useFakeTimers();
+    const {document, element} = fixture();
+    const removeListener = vi.spyOn(document, "removeEventListener");
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    observation.report("script_loaded");
+    observation.cleanup();
+    setHidden(document, true);
+    setHidden(document, false);
+    vi.advanceTimersByTime(60_000);
+    expect(statuses(document)).toEqual(["script_loaded"]);
+    expect(vi.getTimerCount()).toBe(0);
+    expect(removeListener).toHaveBeenCalledWith("visibilitychange", expect.any(Function));
+  });
+
+  it("adds normalized route, unit and bounded release attribution to each status", () => {
+    const {document, element} = fixture();
+    const observation = banners.observeAdSlot(element, "rectangle", "display", {
+      ad_unit: "3342dc928824e6ed5c01555e7f9e9e0f",
+      page_path: "/en/tools/loadout-budget/?build=private#draft",
+      page_type: "tool",
+      config_version: "ads-2026-10-06"
+    });
+    observation.report("request_started");
+    expect(document.defaultView.dataLayer).toEqual([
+      ["event", "ad_status", {
+        placement: "rectangle", format: "display", status: "request_started",
+        ad_unit: "3342dc928824e6ed5c01555e7f9e9e0f", page_path: "/en/tools/loadout-budget", page_type: "tool", config_version: "ads-2026-10-06"
+      }]
+    ]);
+    observation.cleanup();
+    const bounded = banners.observeAdSlot(element, "rectangle", "display", {
+      ad_unit: "a".repeat(100), page_type: "tool?private=value", config_version: ""
+    });
+    bounded.report("script_error");
+    expect((document.defaultView.dataLayer[1] as unknown[])[2]).toEqual({
+      placement: "rectangle", format: "display", status: "script_error", ad_unit: "a".repeat(64)
+    });
+    bounded.cleanup();
+  });
+
+  it("recognizes a zero-size creative after it expands without a DOM mutation", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/ad";
+    creative.width = 0;
+    creative.height = 0;
+    slot.appendChild(creative);
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    observation.report("script_loaded");
+    expect(statuses(document)).toEqual(["script_loaded"]);
+    creative.width = 300;
+    creative.height = 250;
+    // A resize notification, without a load event or mutation, is the only signal.
+    ObserverBoundary.instances[2]?.emit([{target: creative, contentRect: {width: 300, height: 250}}]);
+    vi.advanceTimersByTime(15_000);
+    expect(statuses(document)).toEqual(["script_loaded", "creative_present"]);
+    observation.cleanup();
+  });
+
+  it("requires the same creative to stay at least half visible for one continuous foreground second", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/ad";
+    slot.appendChild(creative);
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    const intersection = ObserverBoundary.instances[0];
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 0.49}]);
+    vi.advanceTimersByTime(2_000);
+    expect(statuses(document)).toEqual(["creative_present", "creative_visible"]);
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 0.5}]);
+    vi.advanceTimersByTime(999);
+    expect(statuses(document)).not.toContain("creative_viewable");
+    vi.advanceTimersByTime(1);
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 1}]);
+    vi.advanceTimersByTime(2_000);
+    expect(statuses(document)).toEqual(["creative_present", "creative_visible", "creative_viewable"]);
+    observation.cleanup();
+  });
+
+  it("resets viewability duration when the creative leaves the viewport or the tab is hidden", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/ad";
+    slot.appendChild(creative);
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    const intersection = ObserverBoundary.instances[0];
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 0.75}]);
+    vi.advanceTimersByTime(600);
+    intersection.emit([{target: creative, isIntersecting: false, intersectionRatio: 0}]);
+    vi.advanceTimersByTime(500);
+    intersection.emit([{target: creative, isIntersecting: true, intersectionRatio: 0.75}]);
+    vi.advanceTimersByTime(600);
+    expect(statuses(document)).not.toContain("creative_viewable");
+    setHidden(document, true);
+    vi.advanceTimersByTime(20_000);
+    expect(statuses(document)).not.toContain("creative_viewable");
+    setHidden(document, false);
+    vi.advanceTimersByTime(999);
+    expect(statuses(document)).not.toContain("creative_viewable");
+    vi.advanceTimersByTime(1);
+    expect(statuses(document)).toEqual(["creative_present", "creative_visible", "creative_viewable"]);
+    observation.cleanup();
+  });
+
+  it("does not record visibility in a hidden document or complete viewability after cleanup", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    document.hidden = true;
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/ad";
+    slot.appendChild(creative);
+    const observation = banners.observeAdSlot(element, "rectangle", "display");
+    const intersection = ObserverBoundary.instances[0];
+    intersection.emit([
+      {target: slot, isIntersecting: true, intersectionRatio: 1},
+      {target: creative, isIntersecting: true, intersectionRatio: 1}
+    ]);
+    vi.advanceTimersByTime(20_000);
+    expect(statuses(document)).toEqual(["creative_present"]);
+    setHidden(document, false);
+    vi.advanceTimersByTime(500);
+    observation.cleanup();
+    vi.advanceTimersByTime(20_000);
+    expect(statuses(document)).toEqual(["creative_present", "slot_visible", "creative_visible"]);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
   it("does not record creative visibility after its frame becomes empty", () => {
     const {document, element, slot} = fixture();
     const observation = banners.observeAdSlot(element, "rectangle", "display");

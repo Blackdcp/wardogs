@@ -65,8 +65,8 @@ export default async function TacticalMapPage({params}: PageProps) {
 
       {/* Dwell-Time Monetization: High viewability for players running maps on secondary monitors */}
       <section className="mt-8 pt-6 border-t border-[#2b3530]" data-page-ad-inventory="tools-map">
-        <AdsterraDisplayBanner label={t("label")} placement="rectangle" />
         <AdsterraNativeBanner label={t("label")} />
+        <AdsterraDisplayBanner label={t("label")} placement="rectangle" />
         <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
       </section>
 

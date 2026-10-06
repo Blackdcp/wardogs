@@ -3,7 +3,7 @@ import {officialLinks, type Locale} from "@/config/site";
 import {buildLocalizedUrl, getSiteOrigin} from "./metadata";
 import {getGuideDiscoveryImage} from "@/features/guides/guide-discovery-images";
 import {publicAssetUrl} from "@/lib/public-url";
-import {HOME_UPDATED_AT} from "@/features/home/home-data";
+import {getHomeLastModified} from "@/lib/editorial-freshness";
 import {TOOL_REGISTRY} from "@/features/tools/tool-registry";
 
 type JsonLd = Record<string, unknown>;
@@ -56,7 +56,7 @@ export function buildHomeJsonLd(locale: Locale): JsonLd[] {
       url: localizedHomeUrl,
       inLanguage: locale,
       datePublished: "2026-08-13",
-      dateModified: HOME_UPDATED_AT,
+      dateModified: getHomeLastModified(locale).toISOString().slice(0, 10),
       author: {"@type": "Organization", name: "WARDOGS Wiki Editorial Team", url: pageUrl(locale, "/editorial-policy")},
       publisher: {"@type": "Organization", name: "WARDOGS Wiki", url: pageUrl(locale, "/about")},
       isPartOf: {"@type": "WebSite", name: "WARDOGS Wiki", url: siteUrl},

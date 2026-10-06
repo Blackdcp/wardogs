@@ -32,7 +32,7 @@ describe("recent tool page design", () => {
 // calculator/map/form components remain real so duplicated H1s stay observable.
 
 vi.mock("@/i18n/navigation", () => ({Link: ({children, ...props}: {children: React.ReactNode}) => React.createElement("a", props, children)}));
-vi.mock("next/navigation", () => ({notFound: () => {throw new Error("404");}}));
+vi.mock("next/navigation", () => ({usePathname: () => "/en", notFound: () => {throw new Error("404");}}));
 vi.mock("next-intl/server", () => ({
   setRequestLocale: () => {},
   getTranslations: async ({locale = "en", namespace}: {locale?: string; namespace?: string} = {}) => {

@@ -87,7 +87,7 @@ IndexNow runs only after this contract passes. A smoke or IndexNow failure leave
 
 ## Analytics and revenue checks
 
-Before release, verify these GA4 event parameters are registered as event-scoped custom dimensions: `task`, `placement`, `section`, `target_path`, and `hub`. The frozen events are:
+Before release, verify these GA4 event parameters are registered as event-scoped custom dimensions: `task`, `placement`, `section`, `target_path`, and `hub`. Ad diagnostics additionally require `format`, `status`, `locale`, `ad_unit`, `page_type`, and `config_version`. `page_path` is emitted without queries/fragments; use the standard page dimension when available instead of creating an unnecessary high-cardinality duplicate. The frozen events are:
 
 - `home_task_click {task, placement, locale, page_path, link_url, target_path}`;
 - `home_section_view {section, locale, page_path}`;
@@ -95,7 +95,7 @@ Before release, verify these GA4 event parameters are registered as event-scoped
 
 Legacy per-task events with `legacy_compat: true` remain for continuity and must be excluded from conversion counts. Measure task CTR as both `unique task-click sessions / unique section-view sessions` and the explicitly named fallback `unique task-click sessions / homepage landing sessions`; never merge the denominators.
 
-`ad_status` records DOM/runtime delivery state. It is not an Adsterra impression, CPM, or revenue event. Revenue comparisons use Adsterra by zone, format, country, and device for matching UTC dates and production hostnames. Calculate revenue per thousand eligible page views only when the zone-to-template mapping and eligible-page set are reliable; otherwise mark it unavailable. Exclude preview, test, and internal traffic.
+`ad_status` records DOM/runtime delivery state. `request_started` marks an actual loader insertion. `script_loaded`/`script_error` describe known loader state and may be replayed for a reused creative after SPA navigation, without issuing another request. `creative_missing` means no qualifying DOM creative after 15 foreground seconds from successful loader state; it does not prove vendor no-fill. `creative_viewable` means at least 50% intersection for one continuous foreground second, not a billed impression. Observations restart with the normalized current page while persistent layout ad requests stay unchanged. Segment releases using `config_version`; see [the experiment ledger](ad-monetization-experiments.md). It is not an Adsterra impression, CPM, or revenue event. Revenue comparisons use Adsterra by zone, format, country, and device for matching UTC dates and production hostnames. Calculate revenue per thousand eligible page views only when the zone-to-template mapping and eligible-page set are reliable; otherwise mark it unavailable. Exclude preview, test, and internal traffic.
 
 Export 28 complete days, the latest seven complete days, and the preceding comparable seven days for:
 

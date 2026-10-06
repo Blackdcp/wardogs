@@ -1,8 +1,38 @@
 import {describe, expect, it} from "vitest";
-import {buildRelatedGuideHref, getRelatedGuides} from "../../src/features/guides/related";
+import {buildRelatedGuideHref, getItemRelatedGuides, getRelatedGuides} from "../../src/features/guides/related";
+import {getItemBySlug} from "../../src/features/items/item-library";
 import {localizeMdxInternalLinks} from "../../src/content/guides";
 
 describe("related guides", () => {
+  it.each([
+    ["wardogs-artillery-guide", "wardogs-mortar-guide"],
+    ["wardogs-mortar-guide", "wardogs-artillery-guide"],
+    ["wardogs-cargo-guide", "wardogs-fob-guide"],
+    ["wardogs-fob-guide", "wardogs-cargo-guide"],
+    ["wardogs-controls", "wardogs-crash-fix"],
+    ["wardogs-crash-fix", "wardogs-known-issues"]
+  ])("keeps the English %s continuation to %s visible before category fallbacks", async (slug, continuation) => {
+    const related = await getRelatedGuides("en", slug, 3);
+    expect(related[0]?.slug).toBe(continuation);
+    expect(related).toHaveLength(3);
+    expect(new Set(related.map(({slug}) => slug)).size).toBe(3);
+    expect(related.some((guide) => guide.slug === slug)).toBe(false);
+  });
+
+  it.each([
+    ["mortar", "wardogs-mortar-guide"],
+    ["l81-mortar", "wardogs-mortar-guide"],
+    ["sph-2", "wardogs-artillery-guide"]
+  ])("leads the English %s item to its own operating guide", async (slug, continuation) => {
+    const item = getItemBySlug(slug)!;
+    expect(item).toBeDefined();
+    const related = await getItemRelatedGuides("en", item);
+    expect(related[0]?.slug).toBe(continuation);
+    expect(related.map(({slug}) => slug)).toEqual(expect.arrayContaining([
+      "wardogs-mortar-guide", "wardogs-artillery-guide", "wardogs-map"
+    ]));
+  });
+
   it("connects historical access queries to current guides", async () => {
     const related = await getRelatedGuides("en", "wardogs-alpha", 3);
     expect(related.map(({slug}) => slug)).toEqual([

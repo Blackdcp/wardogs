@@ -69,8 +69,8 @@ export default async function MapsPage({params}: PageProps) {
         toolLabels={{"/tools/logistics-planner": tNav("logisticsPlanner")}}
       />
       <section className="site-container py-8" data-page-ad-inventory="maps">
-        <AdsterraDisplayBanner label={tAds("label")} placement="rectangle" />
         <AdsterraNativeBanner label={tAds("label")} />
+        <AdsterraDisplayBanner label={tAds("label")} placement="rectangle" />
         <AdsterraSmartlink cta={tAds("smartlinkCta")} description={tAds("smartlinkDescription")} label={tAds("sponsored")} />
       </section>
     </main>

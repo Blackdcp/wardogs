@@ -45,8 +45,8 @@ export default async function ArtilleryCalculatorPage({params}: PageProps) {
 
       {/* Dwell-Time Monetization: Players keeping fire control open during raids */}
       <section className="mt-12 pt-8 border-t border-[#2b3530]" data-page-ad-inventory="tools-artillery">
-        <AdsterraDisplayBanner label={t("label")} placement="rectangle" />
         <AdsterraNativeBanner label={t("label")} />
+        <AdsterraDisplayBanner label={t("label")} placement="rectangle" />
         <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
       </section>
     </main>

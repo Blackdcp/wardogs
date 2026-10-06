@@ -68,8 +68,8 @@ export default async function GuidesPage({params}: PageProps) {
           ))}
         </nav>
         <div data-page-ad-inventory="guides">
-          <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
           <AdsterraNativeBanner label={adsT("label")} />
+          <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
           <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         </div>
       </section>

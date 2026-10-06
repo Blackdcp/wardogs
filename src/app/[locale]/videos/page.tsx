@@ -61,8 +61,8 @@ export default async function VideosPage({params}: PageProps) {
         </div>
       </section>
       <section className="site-container py-2" data-page-ad-inventory="videos">
-        <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
         <AdsterraNativeBanner label={adsT("label")} />
+        <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
       <section className="site-container py-12 md:py-16">
