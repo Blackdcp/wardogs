@@ -220,9 +220,13 @@ describe("artillery input and timer regressions", () => {
     render(artillery);
     expect(browser.gtag.mock.calls).toEqual([
       ["event", "tool_result", {tool: "artillery-calculator", result: "valid", result_type: "ready", weapon: "mortar", input_mode: "direct", locale: "en"}],
+      ["event", "tool_result_artillery_calculator_ready", {tool: "artillery-calculator", result: "valid", result_type: "ready", weapon: "mortar", input_mode: "direct", locale: "en", legacy_compat: true}],
       ["event", "tool_action", {tool: "artillery-calculator", result: "valid", action: "fire", weapon: "mortar", locale: "en"}],
+      ["event", "tool_action_artillery_fire", {tool: "artillery-calculator", result: "valid", action: "fire", weapon: "mortar", locale: "en", legacy_compat: true}],
       ["event", "tool_result", {tool: "artillery-calculator", result: "invalid", result_type: "out_of_range", weapon: "mortar", input_mode: "direct", locale: "en"}],
+      ["event", "tool_result_artillery_calculator_out_of_range", {tool: "artillery-calculator", result: "invalid", result_type: "out_of_range", weapon: "mortar", input_mode: "direct", locale: "en", legacy_compat: true}],
     ]);
+    expect(JSON.stringify(browser.gtag.mock.calls)).not.toMatch(/400|750|90\.0/);
     expect(intervals.size).toBe(0);
   });
 });
