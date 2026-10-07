@@ -1,101 +1,94 @@
 ---
-title: "WARDOGS: Havoc против CIWS"
-description: "WARDOGS: Havoc против CIWS: актуальные решения, риски, инструменты, источники и следующие шаги для текущей версии, Season 2, серверов, прогресса и планирован..."
+title: "WARDOGS: Havoc против Vanguard CIWS после хотфикса"
+description: "Как оценивать Havoc и Vanguard CIWS в текущей сборке WARDOGS: статус хотфикса, линия огня, снабжение ПВО и отдельная проверка IR Rangefinder."
 keyword: "wardogs havoc ciws"
 category: "guide"
 slug: "wardogs-havoc-ciws"
 order: 63
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-07"
 badges:
-  - label: "Hotfix"
+  - label: "Хотфикс"
     tone: "accent"
-  - label: "Anti-Air"
+  - label: "Противовоздушная оборона"
     tone: "warning"
 faq:
-  - question: "Did WARDOGS nerf the Havoc or buff CIWS?"
-    answer: "The current public framing is an anti-air hotfix around the Havoc interaction. Exact live results still depend on build state and combat conditions."
-  - question: "Can I still buy the IR Rangefinder?"
-    answer: "Check the current vendor and inventory separately. Vendor availability, owned items and Season 2 battery plans are different questions."
+  - question: "Havoc ослабили или Vanguard CIWS усилили?"
+    answer: "В официальном хотфиксе от 2 октября разработчик сообщил, что CIWS теперь уничтожает Havoc примерно за 6 секунд вместо 12. Это правка взаимодействия CIWS с Havoc; результат отдельного боя всё равно зависит от линии огня, состояния техники и действий экипажей."
+  - question: "Можно ли сейчас купить IR Rangefinder?"
+    answer: "Хотфикс от 2 октября отключил IR Rangefinder у торговца до Season 02 и объявил, что после возвращения прибору понадобятся батареи. Проверяйте текущего торговца отдельно от инвентаря: публикация не разъясняет судьбу всех ранее купленных экземпляров."
 sources:
-  - label: "Official WARDOGS Steam announcements feed"
-    url: "https://steamcommunity.com/app/1867240/announcements/"
+  - label: "Официальный хотфикс баланса IR Rangefinder и CIWS"
+    url: "https://steamcommunity.com/ogg/1867240/announcements/detail/670629928317748296"
     kind: "official"
-    checkedAt: "2026-10-05"
-  - label: "Official Update 0.1.2 minor patch"
+    checkedAt: "2026-10-07"
+  - label: "Официальное обновление 0.1.2"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
     kind: "official"
     checkedAt: "2026-10-05"
-  - label: "Reddit balance feedback megathread for 0.1.2"
+  - label: "Обсуждение баланса после 0.1.2"
     url: "https://www.reddit.com/r/WarDogs/comments/1wuslfl/balance_feedback_megathread_patch_012/"
     kind: "community"
     checkedAt: "2026-10-05"
-  - label: "GamesRadar: balance and Season 2 expectations"
+  - label: "GamesRadar: комментарий о балансе и Season 02"
     url: "https://www.gamesradar.com/games/fps/wardogs-boss-says-balance-is-always-guesswork-and-we-wont-even-get-it-right-by-season-2/"
     kind: "press"
     checkedAt: "2026-10-05"
 ---
 
+## Что известно
+
+Официальный хотфикс от **2 октября 2026 года** называет две конкретные правки. Vanguard CIWS должен уничтожать Havoc примерно за **6 секунд вместо 12**, а IR Rangefinder отключён у торговца до Season 02 и после возвращения должен требовать батареи. Для правки не требовались загрузка клиента и отдельное окно простоя; распространение происходило через перезапуски серверов в течение следующих 12 часов.
+
+Шесть секунд — заявленная разработчиком ориентировочная длительность взаимодействия, а не гарантия каждого боя. Препятствие, повреждение установки, разрыв линии огня или манёвр пилота меняют фактический результат. Старые ролики до 2 октября нельзя использовать как проверку текущего состояния.
+
+В названии системы встречается **CIWS**, а в отдельных сообщениях может попадаться перестановка букв **CWIS**. Это варианты написания одной системы; карточка предмета использует название [Vanguard CIWS](/ru/items/vehicles/vanguard-ciws).
+
 ## Краткий ответ
 
-**Treat the Havoc versus CIWS interaction as current-build anti-air planning. Confirm whether the server has the hotfix, place CIWS for line of sight, do not assume old kill times, and keep IR Rangefinder ownership separate from vendor availability.**
+Защищающейся стороне нужно поставить Vanguard CIWS с открытой линией обзора и обеспечить наблюдение, боеприпасы и ремонт. Пилоту Havoc нельзя полагаться на старое 12-секундное окно: после хотфикса прямой повторный заход заметно опаснее, поэтому сначала определите сектор ПВО, используйте рельеф и не повторяйте один маршрут.
 
-Эта страница сделана как актуальная посадочная страница: она даёт прямой ответ, ведёт к нужному инструменту и помечает спорные значения до подтверждения первоисточником.
+Ни одна сторона не должна делать вывод по одному бою. Невидимая цель, повреждённая установка, препятствие или различие серверной версии легко создают впечатление скрытого усиления или ослабления.
 
-## Подтверждённые факты
+## Проверка для расчёта CIWS
 
-- The announcements feed records an October anti-air and IR Rangefinder hotfix window.
-- The site catalogue uses CIWS while one official notice spelling may use CWIS; the player needs both terms connected.
-- Community balance feedback after 0.1.2 keeps air power and anti-air counters in discussion.
-- Exact outcomes depend on range, visibility, damage state, server build and pilot behavior.
+1. **Проверьте линию огня.** Холм, здание или плотная застройка FOB могут закрыть сектор, даже если установка находится рядом с целью защиты.
+2. **Назначьте наблюдателя.** Он сообщает направление захода раньше, чем Havoc окажется над базой, и отличает отсутствие цели от отказа установки.
+3. **Обеспечьте снабжение.** ПВО без боеприпасов и ремонта становится одноразовым сдерживанием.
+4. **Не складывайте всё в одной точке.** Если CIWS, ремонт и запас расположены рядом, один удар лишает базу всех функций.
+5. **Запишите условия.** Версия, сервер, дистанция, видимость и состояние техники нужны для сравнения после патча.
 
-## План действий
+CIWS защищает сектор, а не всю карту. Размещение на самой высокой точке может улучшить обзор, но одновременно сделать установку очевидной целью. Выбирайте позицию, где есть и обзор, и доступ к снабжению, и возможность прикрытия с земли.
 
-### Check the server build
+## Проверка для экипажа Havoc
 
-A region that has not restarted can differ from the published target state.
+Перед атакой выясните, виден ли Vanguard CIWS и какие препятствия разделяют позиции. Не повторяйте прямой заход после обнаружения. Если старое видео показывает устойчивый маршрут, отметьте дату: хотфикс мог изменить взаимодействие, а серверная сборка — ещё не совпадать с записью.
 
-### Separate vendor and inventory
+Отказ от атаки иногда полезнее дорогой потери. Обнаруженная ПВО раскрывает расположение защищаемой FOB; передайте информацию наземной группе и выберите другую задачу. Эта рекомендация не обещает конкретной дальности, урона или способа гарантированно обойти установку.
 
-A disabled vendor purchase does not automatically prove every owned item disappeared.
+## IR Rangefinder: три разных вопроса
 
-### Place for line of sight
+Статус IR Rangefinder нельзя описывать одним словом «удалён». Официально объявлено отключение у торговца до Season 02 и будущая потребность в батареях. Отдельно проверьте:
 
-CIWS value drops if hills, buildings or FOB clutter block the engagement lane.
+- продаётся ли предмет у текущего торговца;
+- остался ли ранее купленный предмет в инвентаре;
+- объявлено ли правило его переноса или изменения в Season 02.
 
-### Pair AA with logistics
+Отсутствие в магазине отвечает только на первый вопрос. Не советуйте игроку продавать или удалять предмет на основании чужого снимка без даты. Актуальное состояние отображает текущий клиент, а официальный хотфикс объясняет объявленное изменение.
 
-An anti-air piece without repair, ammo and spotters becomes a one-time deterrent.
+## Как проверить изменение без ложного вывода
 
-### Update old advice
+Проведите несколько сопоставимых тестов на одном сервере: одинаковая установка, открытый сектор, исправное состояние и один тип захода. Меняйте только один фактор. Если результат расходится, не называйте это новым нерфом до появления официальной записи; сохраните условия и сравните после перезапуска сервера.
 
-Do not repeat pre-hotfix Havoc timing as if it were current.
+Отзывы сообщества полезны для поиска случаев, но не заменяют официальный список изменений. Формулировка «Havoc больше ничего не может» или «CIWS не работает» без версии и обстановки не позволяет отделить баланс от размещения.
 
-## Какой пробел закрывает эта страница
+## Связанные страницы
 
-The Havoc/CIWS/IR Rangefinder conversation sits between item pages, equipment pages and balance threads. It needs one hotfix landing page. This separate landing page keeps that intent from being buried inside a broad guide, then routes the reader into the exact tool or next article. The goal is to capture long-tail traffic without pretending that every live value is permanent.
-
-## Tool and Guide Workflow
-
-| Need | Open | Why |
-| --- | --- | --- |
-| Next step | [havoc](/ru/items/vehicles/havoc) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [vanguard ciws](/ru/items/vehicles/vanguard-ciws) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs equipment tools guide](/ru/guides/wardogs-equipment-tools-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs helicopter guide](/ru/guides/wardogs-helicopter-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs infantry mode](/ru/guides/wardogs-infantry-mode) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-
-## Editorial Notes for Current Build
-
-Values that depend on live servers, vendor stock, reward formulas, exact level gates or seasonal conversion rates must be rechecked in the current client. This page deliberately separates confirmed facts, measured observations and tactical recommendations so a patch can be updated without rewriting the entire guide.
+- [Havoc](/ru/items/vehicles/havoc)
+- [Vanguard CIWS](/ru/items/vehicles/vanguard-ciws)
+- [Снаряжение и инструменты WARDOGS](/ru/guides/wardogs-equipment-tools-guide)
+- [Руководство по вертолётам](/ru/guides/wardogs-helicopter-guide)
+- [Пехотный режим](/ru/guides/wardogs-infantry-mode)
 
 ## Источники и дата проверки
 
-Даты проверки относятся к отдельным источникам ниже; одна дата страницы не является общей гарантией для всех сведений.
-
-## Связанные руководства
-
-- [Havoc](/ru/items/vehicles/havoc)
-- [Vanguard Ciws](/ru/items/vehicles/vanguard-ciws)
-- [Wardogs Equipment Tools Guide](/ru/guides/wardogs-equipment-tools-guide)
-- [Wardogs Helicopter Guide](/ru/guides/wardogs-helicopter-guide)
-- [Wardogs Infantry Mode](/ru/guides/wardogs-infantry-mode)
+Официальный хотфикс определяет заявленное изменение времени уничтожения Havoc и статус IR Rangefinder, а обсуждение и материал прессы дают контекст балансной дискуссии. Значение «примерно 6 секунд» приводится как формулировка разработчика, а не как обещание для любой линии огня. Проверяйте текущий клиент. Даты проверки относятся к отдельным источникам в списке выше.

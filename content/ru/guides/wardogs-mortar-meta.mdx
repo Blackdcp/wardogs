@@ -1,31 +1,31 @@
 ---
-title: "WARDOGS: мета миномётов и SPH-2"
-description: "WARDOGS: мета миномётов и SPH-2: актуальные решения, риски, инструменты, источники и следующие шаги для текущей версии, Season 2, серверов, прогресса и плани..."
+title: "WARDOGS: мета миномётов, SPH-2 и противодействие"
+description: "Как отвечать на миномётное давление в WARDOGS: рассредоточение FOB, поиск батареи, контрбатарейный огонь и выбор между L81 и SPH-2 в текущей версии."
 keyword: "wardogs mortar meta"
 category: "guide"
 slug: "wardogs-mortar-meta"
 order: 62
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-07"
 badges:
-  - label: "Meta"
+  - label: "Мета"
     tone: "accent"
-  - label: "Counterplay"
+  - label: "Противодействие"
     tone: "warning"
 faq:
-  - question: "Are mortars overpowered in WARDOGS?"
-    answer: "Mortars are a current balance complaint, but the practical answer is to treat them as a pressure system with spotting, supply and relocation counters."
-  - question: "Should I use SPH-2 or FOB mortars?"
-    answer: "Use SPH-2 when the team can crew, protect and resupply it. Use FOB mortars for cheaper pressure when spotting and counterfire risk are manageable."
+  - question: "Слишком ли сильны миномёты в WARDOGS?"
+    answer: "Миномётное давление остаётся предметом обсуждения, но практический ответ зависит от разведки, снабжения и расположения FOB. Рассредоточение, смена маршрута и поиск батареи уменьшают ценность повторных залпов."
+  - question: "Что выбрать: SPH-2 или миномёт на FOB?"
+    answer: "SPH-2 требует экипажа, защиты, боеприпасов и пути смены позиции. Миномёт на FOB дешевле встроить в снабжение базы, но он сильнее привязывает огневую позицию к известному логистическому узлу."
 sources:
-  - label: "Official Update 0.1.2 minor patch"
+  - label: "Официальное обновление 0.1.2"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
     kind: "official"
     checkedAt: "2026-10-05"
-  - label: "PC Gamer: WARDOGS endgame, XP and mortar concerns"
+  - label: "PC Gamer: комментарии об эндгейме, XP и миномётах"
     url: "https://www.pcgamer.com/games/fps/wardogs-boss-talks-balance-xp-and-why-the-endgame-is-sh-t-right-now/"
     kind: "press"
     checkedAt: "2026-10-05"
-  - label: "Reddit: mortar cam balance discussion"
+  - label: "Обсуждение сообщества о камере миномёта"
     url: "https://www.reddit.com/r/WarDogs/comments/1wxbvf8/best_way_to_nerf_mortars_remove_mortarcam/"
     kind: "community"
     checkedAt: "2026-10-05"
@@ -33,65 +33,70 @@ sources:
 
 ## Краткий ответ
 
-**The counter to mortar pressure is not one trick. Use map measurement, spread FOB assets, hide the resupply lane, force the firing team to relocate, and reserve SPH-2 or counter-battery only when spotting can confirm the target.**
+Против миномётов нет одной кнопки. Рассредоточьте функции FOB, не повторяйте один маршрут снабжения, следите за направлением и ритмом разрывов и отправляйте на поиск небольшую разведывательную группу. Контрбатарейный огонь полезен только тогда, когда наблюдатель подтвердил позицию; стрельба по предположению тратит боеприпасы и раскрывает собственную батарею.
 
-Эта страница сделана как актуальная посадочная страница: она даёт прямой ответ, ведёт к нужному инструменту и помечает спорные значения до подтверждения первоисточником.
+Спор о «мете» включает несколько разных тем: точность корректировки, давление на плотные базы, роль камеры миномёта и ценность SPH-2. Материалы прессы и сообщества показывают наличие спора, но не устанавливают текущие значения урона, радиуса или дальности. Эти параметры нужно проверять в активной сборке.
 
-## Подтверждённые факты
+## Почему миномётное давление работает
 
-- The site already has a mortar guide and artillery calculator, but the search intent has shifted toward balance and counterplay.
-- Press coverage links mortar pressure with endgame and balance complaints.
-- Community discussion specifically debates mortar camera and spam.
-- SPH-2 and L81 mortar planning should remain separated because their cost, crew, exposure and range behavior differ.
+Непрямая огневая поддержка особенно эффективна против предсказуемых целей. Плотная FOB, одна точка разгрузки, неподвижный запас боеприпасов и пехота у выхода дают расчёту возможность корректировать следующий залп. Если база не меняет поведение после пристрелки, каждый новый разрыв становится точнее и ценнее.
 
-## План действий
+Сила миномёта зависит от цепочки:
 
-### Measure before firing
+1. разведчик или наблюдатель находит цель;
+2. расчёт получает направление и дистанцию;
+3. снабжение поддерживает темп;
+4. наземная группа использует давление для атаки.
 
-Use the map and artillery calculator for a first estimate; confirm with a spotting correction before a volley.
+Разрыв любого звена снижает результат. Уничтожение одной трубы не обязательно решает проблему, если противник сохранил наблюдение и снабжение; точно так же непрерывный огонь без корректировки может почти не влиять на бой.
 
-### Do not stack FOB assets
+## Защита FOB
 
-Mortar pressure punishes compact bases. Separate spawn, ammo and vehicle repair functions.
+Разнесите точку появления, боеприпасы, ремонт, технику и собственную огневую поддержку. Между элементами должны оставаться укрытые проходы, иначе рассредоточение только заставит бойцов бежать по открытому месту. Отдельные схемы приведены в [руководстве по компоновке FOB](/ru/guides/wardogs-fob-layouts).
 
-### Hunt the firing loop
+После первого залпа не собирайте всю команду у повреждённого объекта. Определите, продолжается ли корректировка, выведите людей из зоны повторного попадания и сохраните доступный запас. Если противник видит один и тот же грузовик на одной дороге, смените маршрут или время подхода.
 
-Look for repeated origin direction, resupply timing and correction cadence instead of chasing every impact crater.
+## Как искать батарею
 
-### Use SPH-2 deliberately
+Сопоставляйте направление звука и разрывов, интервалы между сериями и вероятные пути снабжения. Не отправляйте весь отряд к первому предположению: небольшая мобильная группа меньше ослабляет оборону. Подтверждённая позиция важнее быстрого маркера.
 
-A self-propelled gun is a team investment. It needs crew, protection, ammo and a relocation route.
+После обнаружения выбирайте действие по обстановке:
 
-### Log balance changes
+- передайте точную отметку своей огневой поддержке;
+- перережьте маршрут снабжения;
+- заставьте расчёт сменить позицию;
+- атакуйте наземной группой, если путь безопасен.
 
-If mortar camera or splash behavior changes, update tactics before preserving old meta advice.
+Не преследуйте пустую площадку после того, как расчёт уже уехал. Цель противодействия — прекратить полезный огневой цикл, а не обязательно уничтожить каждую единицу техники.
 
-## Какой пробел закрывает эта страница
+## L81, FOB-миномёт и SPH-2
 
-Mortar spam, mortar camera and SPH-2 value are now current community and press topics, so the answer needs to be meta-aware rather than a basic firing tutorial. This separate landing page keeps that intent from being buried inside a broad guide, then routes the reader into the exact tool or next article. The goal is to capture long-tail traffic without pretending that every live value is permanent.
+Стационарный миномёт легче связать с запасом FOB, но его работа помогает противнику определить район базы. SPH-2 мобильнее как платформа, однако требует экипажа, охраны, боеприпасов и заранее выбранного пути отхода. Нельзя переносить настройки дальности и прицела с одной системы на другую.
 
-## Tool and Guide Workflow
+Перед выстрелом измерьте горизонтальную дистанцию на [карте](/ru/tools/map), затем используйте [артиллерийский калькулятор](/ru/tools/artillery-calculator) только как начальную оценку. Некалиброванные пиксели карты не равны метрам, а расчёт не заменяет наблюдение разрыва. Проверьте положение союзников, сделайте ограниченную пристрелку и меняйте одно значение за раз.
 
-| Need | Open | Why |
-| --- | --- | --- |
-| Next step | [wardogs mortar guide](/ru/guides/wardogs-mortar-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs artillery guide](/ru/guides/wardogs-artillery-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [artillery calculator](/ru/tools/artillery-calculator) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [map](/ru/tools/map) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs fob layouts](/ru/guides/wardogs-fob-layouts) | Continue the same decision with a tool, source-backed guide, or related operational page. |
+## Решение для своей команды
 
-## Editorial Notes for Current Build
+| Ситуация | Приоритет |
+| --- | --- |
+| Вражеская FOB стоит плотной группой | Разведка, один пристрелочный выстрел, короткая серия по подтверждённой цели |
+| Собственная FOB уже пристреляна | Рассредоточение, перенос людей и смена логистического маршрута |
+| Позиция батареи неизвестна | Поиск направления и снабжения, без слепого контрогня |
+| SPH-2 доступна, но нет охраны | Отложить развёртывание или выделить защиту и путь отхода |
+| Цель движется, наблюдатель потерял контакт | Прекратить серию и запросить новую отметку |
 
-Values that depend on live servers, vendor stock, reward formulas, exact level gates or seasonal conversion rates must be rechecked in the current client. This page deliberately separates confirmed facts, measured observations and tactical recommendations so a patch can be updated without rewriting the entire guide.
+## Что изменит будущий патч
+
+Изменение камеры, разброса, урона, стоимости выстрела или снабжения может быстро перестроить мету. После обновления сначала проведите безопасную пристрелку и проверьте интерфейс, а уже затем переносите старые таблицы. Не называйте предложение сообщества о нерфе подтверждённым изменением, пока оно не появится в официальном списке изменений.
+
+## Связанные страницы
+
+- [Как строить и наводить миномёт](/ru/guides/wardogs-mortar-guide)
+- [Артиллерия и SPH-2](/ru/guides/wardogs-artillery-guide)
+- [Артиллерийский калькулятор](/ru/tools/artillery-calculator)
+- [Интерактивная карта](/ru/tools/map)
+- [Схемы FOB](/ru/guides/wardogs-fob-layouts)
 
 ## Источники и дата проверки
 
-Даты проверки относятся к отдельным источникам ниже; одна дата страницы не является общей гарантией для всех сведений.
-
-## Связанные руководства
-
-- [Wardogs Mortar Guide](/ru/guides/wardogs-mortar-guide)
-- [Wardogs Artillery Guide](/ru/guides/wardogs-artillery-guide)
-- [Artillery Calculator](/ru/tools/artillery-calculator)
-- [Map](/ru/tools/map)
-- [Wardogs Fob Layouts](/ru/guides/wardogs-fob-layouts)
+Материал PC Gamer и обсуждение камеры фиксируют балансную дискуссию, но не являются патч-нотами. Официальное обновление служит точкой проверки текущей ветки. Точные характеристики вооружения и интерфейс подтверждайте в клиенте. Даты проверки относятся к отдельным источникам в списке выше.
