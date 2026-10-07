@@ -183,8 +183,21 @@ test("homepage hands video discovery to the library while the official trailer r
 test("new standalone video articles expose their privacy-enhanced source player", async ({page}) => {
   await page.goto("/en/videos/wardogs-everything-before-playing");
 
-  await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/tF4-GnGlo4I"]')).toBeVisible();
-  await expect(page.locator('iframe[src*="youtube-nocookie.com/embed/tF4-GnGlo4I"]')).not.toHaveAttribute("src", /autoplay=1/);
+  const player = page.locator('[data-video-primary-player]');
+  const iframe = player.locator('iframe[src*="youtube-nocookie.com/embed/tF4-GnGlo4I"]');
+  await expect(iframe).toBeVisible();
+  await expect(iframe).not.toHaveAttribute("src", /autoplay=1/);
+  await expect(player).toHaveCount(1);
+  expect(await page.locator("h1").evaluate((heading) => {
+    const primaryPlayer = document.querySelector("[data-video-primary-player]");
+    const description = document.querySelector("[data-video-description]");
+    if (!primaryPlayer || !description) return false;
+    return Boolean(
+      heading.compareDocumentPosition(primaryPlayer) & Node.DOCUMENT_POSITION_FOLLOWING
+    ) && Boolean(
+      primaryPlayer.compareDocumentPosition(description) & Node.DOCUMENT_POSITION_FOLLOWING
+    );
+  })).toBe(true);
 });
 
 test("homepage preserves the English traffic assets and dated live-intel routes", async ({page}) => {

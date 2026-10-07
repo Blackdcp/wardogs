@@ -67,28 +67,31 @@ export default async function VideoArticlePage({params}: PageProps) {
             <ArrowLeft aria-hidden="true" size={16} />
             {ui.allVideos}
           </a>
-          <p className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#d9a93a]">
-            <PlayCircle aria-hidden="true" className="size-4" />
-            {article.kind === "official" ? ui.officialBreakdown : ui.creatorBreakdown}
-          </p>
-          <p className="mt-3 inline-flex border border-[#465149] bg-[#151b18] px-2 py-1 text-[11px] font-semibold uppercase text-[#cbd6d0]">
-            {eraLabel}
-          </p>
-          <p className="mt-3 text-xs uppercase text-[#8b9992]">
-            {ui.lastUpdated} <time dateTime={article.updatedDate}>{article.updatedDate}</time>
-          </p>
-          <p className="mt-3 text-xs text-[#8b9992]">
-            {articleT("byline")} <a className="font-semibold text-[#8bb59d] hover:text-white" href={`/${locale}/editorial-policy`} title={articleT("teamName")}>{articleT("teamName")}</a>
-          </p>
-          <h1 className="display-font mt-5 text-4xl leading-[1.05] text-white sm:text-5xl md:text-6xl">{article.title}</h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]">{article.description}</p>
+          <h1 className="display-font mt-6 text-4xl leading-[1.05] text-white sm:text-5xl md:text-6xl">{article.title}</h1>
+          <div className="mt-6" data-video-primary-player>
+            <OfficialVideo embedImmediately id={article.youtubeId} title={article.sourceLabel} className="my-0 rounded-[8px]" usePageTimestamp />
+          </div>
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-[#b8c3bd]" data-video-description>{article.description}</p>
+          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-[#d9a93a]">
+              <PlayCircle aria-hidden="true" className="size-4" />
+              {article.kind === "official" ? ui.officialBreakdown : ui.creatorBreakdown}
+            </p>
+            <p className="inline-flex border border-[#465149] bg-[#151b18] px-2 py-1 text-[11px] font-semibold uppercase text-[#cbd6d0]">
+              {eraLabel}
+            </p>
+            <p className="text-xs uppercase text-[#8b9992]">
+              {ui.lastUpdated} <time dateTime={article.updatedDate}>{article.updatedDate}</time>
+            </p>
+            <p className="text-xs text-[#8b9992]">
+              {articleT("byline")} <a className="font-semibold text-[#8bb59d] hover:text-white" href={`/${locale}/editorial-policy`} title={articleT("teamName")}>{articleT("teamName")}</a>
+            </p>
+          </div>
         </div>
       </header>
 
       <article className="site-container max-w-4xl py-10 md:py-14">
-        <OfficialVideo embedImmediately id={article.youtubeId} title={article.sourceLabel} className="my-0 rounded-[8px]" usePageTimestamp />
-
-        <aside className="my-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
+        <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
           <p className="text-xs font-semibold uppercase text-[#68bd8d]">{ui.quickAnswer}</p>
           <p className="mt-3 text-base leading-7 text-white">{article.quickAnswer}</p>
         </aside>
