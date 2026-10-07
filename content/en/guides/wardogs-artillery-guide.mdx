@@ -1,11 +1,12 @@
 ---
 title: "WARDOGS SPH-2 Artillery Guide: Crew, Aiming & Reloading"
-description: "Plan SPH-2 artillery with Season 1 unlocks, crew roles, map range, calculator firing tables, reload timing, costs and counter-battery checks."
+description: "Operate SPH-2 artillery with crew roles, map ranging and the manual reload sequence. Check Season 1 unlocks, reported costs and counter-battery risks."
+directAnswer: "Stop on protected, level ground, switch to the gunner seat and stabilize the SPH-2. Check compatible ammunition, estimate range from the map, fire one observed correction round and follow the directional manual reload prompt. Assign teammates to driving and local security; controls shown in Beta footage must be checked in the current build."
 keyword: "wardogs artillery guide"
 category: "guide"
 slug: "wardogs-artillery-guide"
 order: 34
-updatedAt: "2026-10-04"
+updatedAt: "2026-10-07"
 badges:
   - label: "Field Guide"
     tone: "accent"
@@ -47,13 +48,53 @@ sources:
     checkedAt: "2026-08-28"
 ---
 
-## SPH-2 unlock, purchase or operation: which answer do you need?
+## Quick Answer
 
-This guide covers the SPH-2 artillery vehicle. If you are loading or aiming a built emplacement, start with the [WARDOGS mortar guide](/en/guides/wardogs-mortar-guide); its setup and correction workflow is separate from the SPH-2 crew and reload sequence below.
+Stop on protected, level ground, switch to the gunner seat and stabilize the SPH-2. Check compatible ammunition, estimate range from the map, fire one observed correction round and follow the directional manual reload prompt. Assign teammates to driving and local security; controls shown in Beta footage must be checked in the current build.
 
-For the vehicle's identity, unlock evidence and historical vendor prices, start with the [SPH-2 model record](/en/items/vehicles/sph-2). Use the [progression guide](/en/guides/wardogs-progression-wipes-guide) to distinguish Career requirements from Driver requirements. Unlocking a category does not establish a free vehicle or its current purchase price.
+Use the [interactive map](/en/tools/map) to mark the firing position and target, then open the [artillery calculator](/en/tools/artillery-calculator) with SPH-2 selected. Check the map scale, input units and trajectory; confirm the result with an observed shot rather than treating it as a verified live-build ballistic solution.
 
-Already have the vehicle but cannot fire? Follow the crew, stabilization, ammunition and reload checks below. For spending, put your observed vendor and shell prices into the [loadout budget](/en/tools/loadout-budget?pick=vehicles%2Fsph-2); keep the one-time unlock separate from repeat deployments. This page covers operation, not a live vendor quote or a verified ballistic solution.
+## Crew and Seat Plan
+
+The clean crew is a driver, a main-gun operator, and a third player watching the top weapon and nearby approaches. The driver selects ground, keeps the hull oriented toward an exit and moves after the position is compromised. The gunner handles stabilization, range, correction and reload. The security player watches aircraft, drones and infantry that the gunner cannot see while following the shell.
+
+A solo player can stop and change seats in observed builds, but cannot drive and fire simultaneously. Solo artillery therefore reacts slowly to threats. Park where changing seats will not roll the vehicle downhill, block the gun or trap the hull between trees and structures.
+
+## Positioning Before the First Shot
+
+Choose firm ground with room for the stabilizing animation, a clear gun arc and at least one reverse or forward escape. Avoid the main road, the exact rear edge of headquarters, an exposed skyline and the most obvious hill facing the Control Zone. Those positions are easy to predict from the kill feed and map geometry.
+
+Keep enough distance to avoid ordinary infantry pressure while remaining in range of useful targets. Creator footage describes long-range operation, but the exact maximum range is build-sensitive. Use the live elevation/range interface as the authority instead of copying a single Beta number.
+
+## Stabilize, Range, Fire, Correct
+
+Stop the vehicle and use its interaction menu to stabilize the platform. The stabilized state keeps the aim reference from wandering after a shot. If the interface still reports an unstabilized state, do not waste a shell trying to correct around a moving platform.
+
+Open the map and use the grid scale, cursor coordinates or a teammate's mark to estimate the horizontal distance. Straight north-south or east-west shots can be approximated from one coordinate difference. Diagonal shots require combining both axes; a calculator can help, but a spotter observing impacts is still the fastest protection against a bad initial estimate. Fire one round, call short/long and left/right correction, then walk the next shot onto the target.
+
+## Manual Reload Sequence
+
+Start reloading immediately after firing. Closed Beta footage shows a directional sequence using movement or arrow inputs. Correct inputs reduce the delay; a mistake can reset progress. Read the prompt rather than mashing keys, because a steady correct sequence is faster than restarting it.
+
+Reload time is also the moment to scan the map, check the kill feed, confirm the target still matters and listen for aircraft or engines. Do not keep firing at an empty tower while the active fight or Hot Zone has moved.
+
+### Map-to-calculator SPH-2 workflow
+
+Use the [interactive map](/en/tools/map) before opening the [artillery calculator](/en/tools/artillery-calculator). Mark the battery position first, mark the target second, then verify the measured range sits inside the selected SPH-2 trajectory envelope. The calculator can produce elevation mils, azimuth, height-delta handling and time of flight, but it cannot know whether the live server allows the vehicle, whether the target moved, or whether the gun is masked by terrain.
+
+For a three-person crew, assign one player to the map, one to the gun and one to security. The map player calls distance, bearing and target description; the gunner enters the solution; the security player watches drones, helicopters and infantry raids. Fire one ranging round, correct from impact and only then spend a full reload cycle. Keep the map call, gun setting and observed correction together so the crew can repeat the shot from the same position.
+
+### SPH-2 calculator: map, trajectory and correction
+
+Select SPH-2 in the [fire-control tool](/en/tools/artillery-calculator), then choose its high or low trajectory. That choice changes the available solution; L81 settings are not interchangeable. In map mode, verify the selected battlefield and point order: firing position first, target second.
+
+For independently measured range, use Direct Numeric with horizontal meters from a calibrated [map ruler](/en/tools/map), bearing from the current client and the checked height difference. Recheck displayed distance after changing weapon or mode. An estimate does not bypass crew, ammunition or stabilization requirements. Fire one observed correction round, stop for unclear friendly positions, and recalculate after moving the gun or target.
+
+## Ammunition, Fuel, and Survival
+
+Creator footage identifies the main ammunition as 155 mm high explosive and warns that ordinary main-battle-tank shells are not interchangeable. Buy or load the correct shell type before leaving base, and agree how resupply will reach the firing position. The top weapon also needs its own ammunition if the crew expects local defense.
+
+Turn the engine off when stationary if doing so helps preserve fuel and hear approaching threats, but keep the exit clear. Relocate after repeated shots, after a valuable kill reveals the likely firing line, or when drones and aircraft begin searching. A Stingray-style anti-vehicle drone, counter-battery fire, helicopter or small infantry team can erase the investment if the crew treats range as immunity.
 
 ## Choose the right weapon and diagnose before firing
 The [official Season 1 changelog](https://store.steampowered.com/news/app/1867240/view/701027323413004455) gives the **Artillery Tank category Career level 90 and a $500,000 one-time unlock fee**. It does not explicitly name SPH-2 or establish its repeat vendor price. Older Alpha/Beta prices below remain historical, not alternatives to that category-level change.
@@ -64,11 +105,15 @@ The [official Season 1 changelog](https://store.steampowered.com/news/app/186724
 | Emplaced mortar | Construction/resources and mortar ammunition | Check the emplacement's own loading state; do not use the SPH-2 purchase table |
 | Stingray | A separate system, even in mixed-base tutorials | Do not transfer a mortar calculator or artillery reload sequence to it |
 
-Stop if friendlies enter the impact area or the spotter loses confirmation. Exact keys, elevation corrections and current reload timing still require dated footage. The video workflows below describe creator footage, not a new reproduction by this site.
+Stop if friendlies enter the impact area or the spotter loses confirmation. Exact keys, elevation corrections and current reload timing still require dated footage. The operating workflows describe creator footage, not a new reproduction by this site.
 
-## Quick Answer
+## SPH-2 unlock, purchase or operation: which answer do you need?
 
-The official Season 1 changelog moved the **Artillery Tank category to Career level 90** and raised its **one-time unlock to $500,000**. Our versioned catalogue identifies the SPH-2 as the artillery vehicle, but the official note does not name the model or provide its current repeat-purchase price. Do not mistake the unlock fee for the cost of spawning one. For a sortie, move to a protected area, stabilize, obtain a target mark, range from the map, fire a correction round and reload while a teammate watches for threats.
+This guide covers the SPH-2 artillery vehicle. If you are loading or aiming a built emplacement, start with the [WARDOGS mortar guide](/en/guides/wardogs-mortar-guide); its setup and correction workflow is separate from the SPH-2 crew and reload sequence.
+
+For the vehicle's identity, unlock evidence and historical vendor prices, start with the [SPH-2 model record](/en/items/vehicles/sph-2). Use the [progression guide](/en/guides/wardogs-progression-wipes-guide) to distinguish Career requirements from Driver requirements. Unlocking a category does not establish a free vehicle or its current purchase price.
+
+Already have the vehicle but cannot fire? Use the crew, stabilization, ammunition and reload sections in this guide. For spending, put your observed vendor and shell prices into the [loadout budget](/en/tools/loadout-budget?pick=vehicles%2Fsph-2); keep the one-time unlock separate from repeat deployments. This page covers operation, not a live vendor quote or a verified ballistic solution.
 
 ## Season 1 Evidence Ledger (checked September 26)
 
@@ -102,36 +147,6 @@ Two independent creator videos show the same durable workflow: the SPH-2 has sep
 
 Exact vendor economics do not agree across builds. An Alpha vendor capture listed a Wardog Level 55 gate and a $10,000 purchase. A later Closed Beta guide showed a separate $400,000 unlock and an $8,000 repeat purchase. The official Season 1 changelog supersedes the category's level and unlock fee with Career 90 and $500,000; it does **not** settle the current repeat price.
 
-## Crew and Seat Plan
-
-The clean crew is a driver, a main-gun operator, and a third player watching the top weapon and nearby approaches. The driver selects ground, keeps the hull oriented toward an exit and moves after the position is compromised. The gunner handles stabilization, range, correction and reload. The security player watches aircraft, drones and infantry that the gunner cannot see while following the shell.
-
-A solo player can stop and change seats in observed builds, but cannot drive and fire simultaneously. Solo artillery therefore reacts slowly to threats. Park where changing seats will not roll the vehicle downhill, block the gun or trap the hull between trees and structures.
-
-## Positioning Before the First Shot
-
-Choose firm ground with room for the stabilizing animation, a clear gun arc and at least one reverse or forward escape. Avoid the main road, the exact rear edge of headquarters, an exposed skyline and the most obvious hill facing the Control Zone. Those positions are easy to predict from the kill feed and map geometry.
-
-Keep enough distance to avoid ordinary infantry pressure while remaining in range of useful targets. Creator footage describes long-range operation, but the exact maximum range is build-sensitive. Use the live elevation/range interface as the authority instead of copying a single Beta number.
-
-## Stabilize, Range, Fire, Correct
-
-Stop the vehicle and use its interaction menu to stabilize the platform. The stabilized state keeps the aim reference from wandering after a shot. If the interface still reports an unstabilized state, do not waste a shell trying to correct around a moving platform.
-
-Open the map and use the grid scale, cursor coordinates or a teammate's mark to estimate the horizontal distance. Straight north-south or east-west shots can be approximated from one coordinate difference. Diagonal shots require combining both axes; a calculator can help, but a spotter observing impacts is still the fastest protection against a bad initial estimate. Fire one round, call short/long and left/right correction, then walk the next shot onto the target.
-
-## Manual Reload Sequence
-
-Start reloading immediately after firing. Closed Beta footage shows a directional sequence using movement or arrow inputs. Correct inputs reduce the delay; a mistake can reset progress. Read the prompt rather than mashing keys, because a steady correct sequence is faster than restarting it.
-
-Reload time is also the moment to scan the map, check the kill feed, confirm the target still matters and listen for aircraft or engines. Do not keep firing at an empty tower while the active fight or Hot Zone has moved.
-
-## Ammunition, Fuel, and Survival
-
-Creator footage identifies the main ammunition as 155 mm high explosive and warns that ordinary main-battle-tank shells are not interchangeable. Buy or load the correct shell type before leaving base, and agree how resupply will reach the firing position. The top weapon also needs its own ammunition if the crew expects local defense.
-
-Turn the engine off when stationary if doing so helps preserve fuel and hear approaching threats, but keep the exit clear. Relocate after repeated shots, after a valuable kill reveals the likely firing line, or when drones and aircraft begin searching. A Stingray-style anti-vehicle drone, counter-battery fire, helicopter or small infantry team can erase the investment if the crew treats range as immunity.
-
 ## Historical Values Versus Season 1
 
 The official Season 1 category gate and unlock fee are documented above. Repeat prices, range, shell cost, blast, armor and payouts remain build-sensitive. This guide preserves the observed operating method because two sources show it, while keeping older numbers labeled by build. Recheck the live vendor and controls after every major update.
@@ -146,19 +161,6 @@ The gun can be fired without one, but a spotter shortens correction time and con
 
 **What should I target first?**
 Prioritize fixed, valuable positions that affect the objective: exposed structures, concentrated defenders or known support assets. Do not spend shells on movement you cannot track.
-
-
-### Map-to-calculator SPH-2 workflow
-
-Use the [interactive map](/en/tools/map) before opening the [artillery calculator](/en/tools/artillery-calculator). Mark the battery position first, mark the target second, then verify the measured range sits inside the selected SPH-2 trajectory envelope. The calculator can produce elevation mils, azimuth, height-delta handling and time of flight, but it cannot know whether the live server allows the vehicle, whether the target moved, or whether the gun is masked by terrain.
-
-For a three-person crew, assign one player to the map, one to the gun and one to security. The map player calls distance, bearing and target description; the gunner enters the solution; the security player watches drones, helicopters and infantry raids. Fire one ranging round, correct from impact and only then spend a full reload cycle. This is the workflow to beat creator videos: readers get the same visual idea, plus a repeatable table-and-tool process.
-
-### SPH-2 calculator: map, trajectory and correction
-
-Select SPH-2 in the [fire-control tool](/en/tools/artillery-calculator), then choose its high or low trajectory. That choice changes the available solution; L81 settings are not interchangeable. In map mode, verify the selected battlefield and point order: firing position first, target second.
-
-For independently measured range, use Direct Numeric with horizontal meters from a calibrated [map ruler](/en/tools/map), bearing from the current client and the checked height difference. Recheck displayed distance after changing weapon or mode. An estimate does not bypass crew, ammunition or stabilization requirements. Fire one observed correction round, stop for unclear friendly positions, and recalculate after moving the gun or target.
 
 ## Related Guides
 

@@ -1107,7 +1107,7 @@ export const videoArticleCopyPl: Record<string, Pick<VideoArticle, "title" | "de
     ]
   },
   "wardogs-artillery-tank-guide": {
-    "title": "Artyleria SPH-2 WARDOGS: celowanie, stabilizacja i przeładowanie",
+    "title": "WARDOGS SPH-2: poradnik wideo celowania i przeładowania",
     "description": "Poradnik SPH-2 oparty na konkretnych źródłach: stanowiska, stabilizacja, pomiar mapy, pociski 155 mm, ręczne przeładowanie, pozycje ogniowe, dostawy i kontry.",
     "quickAnswer": "Film pokazuje powtarzalną obsługę SPH-2: zajmij chroniony teren, ustabilizuj działo, oszacuj dystans z mapy, oddaj strzał korygujący, wykonaj kierunkową sekwencję przeładowania i zmień miejsce przed kontratakiem. Dokładne odblokowanie, cena i zasięg to obserwacje bety, nie stałe wartości Early Access.",
     "takeaways": [

@@ -24,6 +24,7 @@ import {LiveBetaBanner} from "@/components/live-ops/live-beta-banner";
 import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 import {ServerStatusSignal} from "@/components/live-ops/server-status-signal";
 import {GuideTaskPanel} from "@/components/guides/guide-task-panel";
+import {ContextualVideoEvidence} from "@/components/guides/contextual-video-evidence";
 import {VisualWorkflow} from "@/components/guides/visual-workflow";
 import {MissionCase} from "@/components/guides/mission-case";
 import {ProgressionMatrix} from "@/components/guides/progression-matrix";
@@ -49,18 +50,6 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   return guide ? buildArticleMetadata(locale, guide) : {};
 }
 
-function plainDirectAnswer(body: string) {
-  const firstParagraph = body
-    .split(/\r?\n\r?\n/)
-    .map((block) => block.trim())
-    .find((block) => block && !/^#{1,6}\s/.test(block));
-
-  return (firstParagraph ?? "")
-    .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
-    .replace(/[*_`#]/g, "")
-    .trim();
-}
-
 export default async function GuideArticlePage({params}: PageProps) {
   const {locale: requestedLocale, slug} = await params;
   if (!isLocale(requestedLocale)) notFound();
@@ -78,6 +67,9 @@ export default async function GuideArticlePage({params}: PageProps) {
     getRelatedGuides(locale, slug),
     compileLocalizedGuideBody(guideBody, mdxComponents, locale)
   ]);
+  const directAnswer = guide.frontmatter.directAnswer ?? compiled.directAnswer;
+  // Authored answers lead directly into the guide; supporting videos remain reachable below.
+  const deferTaskVideos = Boolean(taskData && guide.frontmatter.directAnswer);
 
   return (
     <main>
@@ -104,7 +96,7 @@ export default async function GuideArticlePage({params}: PageProps) {
       <LiveBetaBanner compact />
 
       <article className="site-container max-w-4xl py-10 md:py-14">
-        {taskData ? <GuideTaskPanel data={taskData} locale={locale} /> : null}
+        {taskData ? <GuideTaskPanel data={taskData} locale={locale} deferVideos={deferTaskVideos} /> : null}
         {slug === "wardogs-map" ? (
           <section className="mb-10" aria-label="Interactive Tactical Map">
             <WardogsMapViewer initialMap="bakurani" locale={locale} />
@@ -126,10 +118,10 @@ export default async function GuideArticlePage({params}: PageProps) {
             </figcaption>
           </figure>
         ) : null}
-        {!taskData ? (
+        {!taskData && directAnswer ? (
           <aside className="mb-10 border-l-4 border-[#4d946d] bg-[#142019] p-6">
             <p className="text-xs font-semibold uppercase text-[#68bd8d]">{t("directAnswer")}</p>
-            <p className="mt-3 text-base leading-7 text-white">{plainDirectAnswer(guide.body)}</p>
+            <p className="mt-3 text-base leading-7 text-white">{directAnswer}</p>
           </aside>
         ) : null}
         <AdsterraNativeBanner label={t("advertisement")} />
@@ -138,6 +130,7 @@ export default async function GuideArticlePage({params}: PageProps) {
         <VisualWorkflow locale={locale} slug={slug} />
         <MissionCase locale={locale} slug={slug} />
         <div className="guide-prose">{compiled.content}</div>
+        {deferTaskVideos && taskData ? <ContextualVideoEvidence locale={locale} sources={taskData.videos} /> : null}
         {slug === "wardogs-best-weapons-loadouts" || slug === "wardogs-money-guide" ? <LoadoutPresetList locale={locale} /> : null}
         {slug === "wardogs-ammo-reload-guide" ? <EquipmentCompatibility dataset={getCompatibilityDataset(locale)} locale={locale} /> : null}
         <ProgressionMatrix locale={locale} slug={slug} />

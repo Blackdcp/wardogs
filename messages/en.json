@@ -601,10 +601,10 @@
     "tasks": {
       "artillery": {
         "title": "Operate artillery with a correction loop",
-        "directAnswer": "The official Season 1 category change sets Artillery Tank access at Career 90 with a $500,000 one-time unlock. It does not name SPH-2 or establish a current repeat-purchase price. For firing, protect the position, stabilize, confirm the target and friendlies, check range and azimuth, then correct from the first observed impact.",
+        "directAnswer": "Stop on protected, level ground, switch to the gunner seat and stabilize the SPH-2. Check compatible ammunition, estimate range from the map, fire one observed correction round and follow the directional manual reload prompt. Assign teammates to driving and local security; controls shown in Beta footage must be checked in the current build.",
         "caution": "Map and calculator agreement is not measured metre-scale or ballistic validation. Check current client prompts, crew and ammunition; keep unlock costs separate from deployment costs.",
         "steps": {
-          "one": "Confirm the vehicle, current access and vendor quote before committing cash.",
+          "one": "Confirm the SPH-2, current access and compatible ammunition before leaving base.",
           "two": "Assign driving, gunnery, observation and local security; prepare supply and an exit.",
           "three": "Stop on protected ground and verify the gunner seat, stabilization and ammunition.",
           "four": "Read the current target, friendly positions, range and azimuth; check input units and calibration limits.",

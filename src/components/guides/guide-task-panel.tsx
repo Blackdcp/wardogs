@@ -5,9 +5,10 @@ import type {Locale} from "@/config/site";
 import type {GuideTaskData} from "@/features/guides/guide-task-data";
 import {getGuideTaskUi} from "@/features/guides/guide-task-data";
 import {ContextualVideoEvidence} from "./contextual-video-evidence";
+import {getContextualVideoUi} from "@/features/videos/video-localization";
 import {GuideTaskChecklist} from "./guide-task-checklist";
 
-export function GuideTaskPanel({data, locale}: {data: GuideTaskData; locale: Locale}) {
+export function GuideTaskPanel({data, locale, deferVideos = false}: {data: GuideTaskData; locale: Locale; deferVideos?: boolean}) {
   const ui = getGuideTaskUi(locale);
   const relatedTools = data.relatedTools;
   const catalogueUi = getItemUi(locale);
@@ -48,7 +49,11 @@ export function GuideTaskPanel({data, locale}: {data: GuideTaskData; locale: Loc
         </nav>
       ) : null}
 
-      <ContextualVideoEvidence locale={locale} sources={data.videos} />
+      {deferVideos ? (data.videos.length ? (
+        <div className="mt-5">
+          <TaskLink href="#contextual-video-evidence-title" label={getContextualVideoUi(locale).title} variant="text" />
+        </div>
+      ) : null) : <ContextualVideoEvidence locale={locale} sources={data.videos} />}
     </section>
   );
 }

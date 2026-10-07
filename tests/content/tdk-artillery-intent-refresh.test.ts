@@ -14,7 +14,7 @@ describe("artillery search-intent separation", () => {
     expect(metadata.title).toBe("WARDOGS SPH-2: Season 1 Unlock & Artillery Guide");
     expect(guide?.frontmatter.title).not.toBe(metadata.title);
     expect(guide?.frontmatter.keyword).toBe("wardogs artillery guide");
-    expect(guide?.frontmatter.description).toBe("Plan SPH-2 artillery with Season 1 unlocks, crew roles, map range, calculator firing tables, reload timing, costs and counter-battery checks.");
+    expect(guide?.frontmatter.description).toBe("Operate SPH-2 artillery with crew roles, map ranging and the manual reload sequence. Check Season 1 unlocks, reported costs and counter-battery risks.");
     expect(item.relatedGuides).toContain("wardogs-artillery-guide");
     expect(metadata.alternates?.canonical).toContain("/en/items/vehicles/sph-2");
   });

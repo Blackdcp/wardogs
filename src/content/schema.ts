@@ -1,4 +1,5 @@
 import {z} from "zod";
+import type {Locale} from "../config/site";
 import type {GuideManifestEntry} from "./manifest";
 import {isApprovedSourceUrl} from "./source-policy";
 
@@ -33,6 +34,10 @@ const sourceSchema = z.object({
 export const guideFrontmatterSchema = z.object({
   title: z.string().trim().min(12).max(60),
   description: z.string().trim().min(140).max(160),
+  directAnswer: z.string().trim().min(12).max(500)
+    .refine((value) => !/[<>{}`\r\n]|\[[^\]]*\]\(|!\[|\*\*|__|^(?:#{1,6}\s|[-*+]\s|\d+[.)]\s)/.test(value), {
+      message: "Direct answer must be a single plain-text paragraph"
+    }).optional(),
   keyword: z.string().trim().min(3),
   category: z.enum(["access", "release", "store", "platform", "video", "community", "developer", "guide"]),
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
@@ -45,8 +50,11 @@ export const guideFrontmatterSchema = z.object({
 
 export type GuideFrontmatter = z.infer<typeof guideFrontmatterSchema>;
 
-export function validateGuideFrontmatter(value: unknown, entry: GuideManifestEntry): GuideFrontmatter {
-  const parsed = guideFrontmatterSchema.parse(value);
+export function validateGuideFrontmatter(value: unknown, entry: GuideManifestEntry, locale: Locale = "en"): GuideFrontmatter {
+  // CJK prose carries more information per character; avoid padding a clear answer.
+  const cjk = locale === "ja" || locale === "zh-cn" || locale === "zh-tw";
+  const schema = cjk ? guideFrontmatterSchema.extend({description: z.string().trim().min(40).max(160)}) : guideFrontmatterSchema;
+  const parsed = schema.parse(value);
   const fields = ["keyword", "category", "slug", "order"] as const;
   for (const field of fields) {
     if (parsed[field] !== entry[field]) {

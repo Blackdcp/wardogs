@@ -1,4 +1,4 @@
-import {mkdtemp, mkdir, rm, writeFile} from "node:fs/promises";
+import {mkdtemp, mkdir, readFile, rm, writeFile} from "node:fs/promises";
 import {tmpdir} from "node:os";
 import path from "node:path";
 import {describe, expect, it} from "vitest";
@@ -11,6 +11,23 @@ describe("guide loader", () => {
     const guide = await loadGuideDocument("en", "wardogs-gameplay", root);
     expect(guide?.frontmatter.order).toBe(21);
     expect(guide?.body).toContain("## Match objective");
+  });
+
+  it("passes the requested locale to description validation", async () => {
+    const temporaryRoot = await mkdtemp(path.join(tmpdir(), "wardogs-description-"));
+    try {
+      const fixture = await readFile(path.join(root, "en/guides/wardogs-gameplay.mdx"), "utf8");
+      const source = fixture.replace(/^description:.*$/m, `description: "${"文".repeat(40)}"`);
+      for (const locale of ["ja", "en"] as const) {
+        const directory = path.join(temporaryRoot, locale, "guides");
+        await mkdir(directory, {recursive: true});
+        await writeFile(path.join(directory, "wardogs-gameplay.mdx"), source);
+      }
+      expect((await loadGuideDocument("ja", "wardogs-gameplay", temporaryRoot))?.frontmatter.description).toHaveLength(40);
+      await expect(loadGuideDocument("en", "wardogs-gameplay", temporaryRoot)).rejects.toThrow(/description/i);
+    } finally {
+      await rm(temporaryRoot, {recursive: true, force: true});
+    }
   });
 
   it("reports the exact missing matrix entries", async () => {

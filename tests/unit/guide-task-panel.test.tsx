@@ -115,6 +115,16 @@ describe("guide task data", () => {
 });
 
 describe("GuideTaskPanel", () => {
+  it("keeps a video jump link when supporting videos follow an authored answer's article", () => {
+    const task = getGuideTaskData("wardogs-progression-wipes-guide", "ja")!;
+    expect(task.videos.length).toBeGreaterThan(0);
+    const html = renderToStaticMarkup(<GuideTaskPanel data={task} locale="ja" deferVideos />);
+    expect(html).toContain('href="#contextual-video-evidence-title"');
+    expect(html).not.toContain('data-contextual-video-evidence="true"');
+    expect(html).toContain(task.directAnswer);
+    expect(html.match(/type="checkbox"/g)).toHaveLength(task.steps.length);
+  });
+
   it("renders an accessible interactive checklist with a stable progress region", () => {
     const task = getGuideTaskData("wardogs-beginner-guide", "en")!;
     const html = renderToStaticMarkup(<GuideTaskPanel data={task} locale="en" />);

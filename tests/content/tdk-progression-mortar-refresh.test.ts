@@ -10,13 +10,14 @@ import {getMapMeasurementCopy} from "../../src/features/maps/map-measurement-cop
 const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const;
 const slugs = ["wardogs-achievements", "wardogs-progression-wipes-guide", "wardogs-mortar-guide"] as const;
 
-// Pre-edit title, description, keyword and slug digests, in the slug order above.
+// Reviewed title, description, keyword and slug digests, in the slug order above.
+// Japanese wipe/mortar descriptions and titles were reviewed on 2026-10-07.
 const metadataBaseline = {
   en: ["53bec00f32596ba90db71b51057bdefbc43008480736bc13b6892ceea4d10b67", "f9d8b57e888b6a6ca54e9dff0ebbba44c8308e089f6ac0ca70fe9fc98175e663", "9ff948f12ceba7b58e2b795b29d52acc5e33fc305f115c9269d3b00947a80b75"],
   ru: ["edaf25d19a8ae1ed1c164c82566565afb5acde379044014f2117b5443f8eb484", "75a6ed4056d12b45e151bb233723ca790bd5b41da17e6d36c9fd6b03386097f2", "6ac8f2bb75dc239b0baf1f78b1fb515e06bbdc195a86ab70907b5a62da9961dc"],
   de: ["36c1826af9f501763571828e1550056e638189a4a028d699b067eaf8483bfe69", "7d8a09e289c264bf26f595e4a5a61007353e141a4e13dedfb62365ecff99b689", "0d2dd3121f9a942e8a971ff16d16b11a48c83fea902eae1ff9bf23187bc1dff2"],
   "pt-br": ["d88c2afece53c82398969adb85612a0e10375832816b44920b1bcb811d98a755", "d032d90d3531ce7e6cb117164205f42f860af56567fc872b0896d141ad15c2bc", "4a4b75be318713767043cc657d466d166b270c5bfd922bc3bbf3d0ead18b5c74"],
-  ja: ["ef43e8769c34752cacb3839c9d08a9155c3c28b149074a87576a130f6a300c67", "3dcbc593a76a55b199d85f9f84dd43dbe8f6f7d5bc3e3f85b67b97b222a0bfb8", "9aedf072ee5d017a60f43f68289514ec45878c1576ef4e59222342b499cb25b2"],
+  ja: ["ef43e8769c34752cacb3839c9d08a9155c3c28b149074a87576a130f6a300c67", "70ade2c4cfe829b7bd09c3ddd3807d050f25745fe42a4fa939f4530b6f3e0cd2", "e032e89d6dfd8692d591e59ac9bccf9af9c00303a4483a145f83043bc7ef88ab"],
   "zh-cn": ["0d06e04228bc39f800126dd389d57fdeec185fae1e29190ebe0356e3133f8259", "b9671a42fc2ecc29b20b5f3a4501cf53fd333cf510abba8ddfeaa6ff9ad1e522", "155a375460b6b243b4bf14e3084a21447bb5f7c25c03949831aad159859091f6"],
   "zh-tw": ["04dc9f0542334683c3fce2f9979c0397eb6d018ebdf3194e84d6cf07c253f09c", "4dc9e1edac064f88738064277ce2cefea78f9750a0a7fce78b7c2e1090e8a907", "8c1240b122d43d3cb3811076e14713e853a087ddffccacf9b0bc5e0bf5fd97be"],
   pl: ["99fde2ce0954c246d4a81fbaff0f9ea950adf8b4932a2cb3a22e635970e7705e", "97fb0bf9592df395822b3c8c1685610c8b56f68dc8941f2c1ce425d0803e4601", "b80cee330bb322f38b3319f7b64308ebd17fdca8671a5b95de4bde6a98f4d697"],
@@ -87,7 +88,8 @@ describe.each(locales)("TDK progression and mortar refresh: %s", (locale) => {
   it("separates public, hidden and missing triggers without a tested-fix claim", async () => {
     const guide = await loadGuideDocument(locale, slugs[0]);
     const body = guide!.body;
-    const diagnosis = body.split(/^## /m)[1];
+    const diagnosis = body.split(/^## /m).find((section) => section.includes(boundaries[locale].achievements[0]));
+    expect(diagnosis, `${locale}: achievement troubleshooting section`).toBeDefined();
     for (const text of boundaries[locale].achievements) expect(diagnosis).toContain(text);
     for (const name of ["Fat Stacks", "Big Spender", "That was rude"]) expect(diagnosis).toContain(name);
     expect(diagnosis).toContain(`/${locale}/tools/loadout-budget`);

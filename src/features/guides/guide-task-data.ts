@@ -232,14 +232,14 @@ const copy: Record<Locale, Record<Exclude<GuideTaskSlug, "wardogs-artillery-guid
       "Recheck after major roadmap or launch updates and preserve the source date."
     ),
     "wardogs-progression-wipes-guide": task(
-      "Plan progression from current evidence",
-      "Read the current role track and official patch notes before choosing a goal. Build a repeatable route around actions that visibly move the relevant bar, without inventing time-to-unlock estimates or wipe rules.",
-      "Beta progression speed, role placement, unlock levels, XP sources, and reset policy must not be treated as permanent.",
-      "Choose one role or unlock goal and record the current track before the match.",
-      "Select one team-useful action associated with that role and repeat it cleanly.",
-      "Check the bar after the action so unrelated rewards do not contaminate the observation.",
-      "Compare the result with the latest official change notes and label unknowns explicitly.",
-      "Rebuild the route after a progression patch or reset announcement."
+      "Check what resets and what carries over",
+      "BULKHEAD’s announced seasonal policy resets cash and XP, converts remaining cash to Gold Bars, and preserves Gold Bars and cosmetics. The Season 02 teaser names October 15, 2026; the reviewed notice does not specify the reset hour, conversion rate or treatment of individual paid unlocks.",
+      "The announced seasonal policy, historical Beta carryover and an individual account reset are different cases. A live Gold exchange quote is not the season-end conversion rate.",
+      "Read the asset checklist below before buying an unlock or converting cash.",
+      "Record cash, Gold, cosmetics, Career XP and each role’s XP separately.",
+      "Check the official Season 02 transition notice for the reset hour and conversion terms.",
+      "Budget purchases for a task you can use now; leave unresolved carryover and refunds unconfirmed.",
+      "For a progression goal, match the item’s named track and level to the current client."
     ),
     "wardogs-best-weapons-loadouts": task(
       "Build a loadout for one job",
@@ -345,10 +345,10 @@ const copy: Record<Locale, Record<Exclude<GuideTaskSlug, "wardogs-artillery-guid
     "wardogs-controls": task("現行クライアントで操作を確認する", "入力設定を開き、出撃前に必要な各操作の現在のゲーム内の割り当てを確認します。古いキー一覧を前提にせず、歩兵、通信、車両、専門操作を安全な場所で試してください。", "割り当て、機器認識、表示、リセット動作はビルド間で変わる場合があります。", "入力カテゴリを開き、移動と操作の現在のゲーム内の割り当てを記録する。", "マップ、ピン、ボイス、インベントリ、リロード、状況操作を個別に確認する。", "戦闘前に安全な場所で車両座席と軸を試す。", "競合を解消して適用し、再起動後も保存されているか確認する。", "パッチや機器ドライバー変更前に現在の配置を保存する。"),
     "wardogs-fob-guide": task("次の戦闘を支えるFOBを作る", "有用なFOBには、配置、必要な補給、通行、守備、撤収計画が必要です。建設や強化の前に、現行ビルドのメニューと資源条件を確認してください。", "建設費、配置条件、強化経路、利用可能な施設はビルド依存です。", "目的を決め、遮蔽、アクセス、敵圧力からの距離を考えて場所を選ぶ。", "必要な資源を確認し、建設前に輸送担当を決める。", "道路、スポーン出口、荷下ろし、味方の動線を空ける。", "直近の目標に必要な防御と機能だけを建てる。", "補給路を守り、修理、移転、放棄の判断を準備する。"),
     "wardogs-cargo-guide": task("貨物ループ全体を完了する", "要求された資源を積み、届け、使用可能な保管先へ移し、車両を次の任務に残して初めて輸送完了です。受け渡しごとに現在の貨物画面を確認してください。", "車両容量、資源名、積載操作、受け渡し区域は録画時のビルドと異なる場合があります。", "目的地に現在必要な資源と量を確認する。", "対応する輸送手段を選び、現在のインベントリに貨物が入ったか確認する。", "守れるルートを決め、到着前に荷下ろし場所を空ける。", "移送後、目的地の資源表示が実際に増えたか確認する。", "スポーンや補給路を塞がず離脱し、車両を次の輸送へ戻す。"),
-    "wardogs-mortar-guide": task("管理された迫撃砲任務を行う", "迫撃砲班には安全な陣地、現在の標的、観測員、測定した修正が必要です。古い射程表やダメージ情報は、現行ビルドで確認するまで参考に留めてください。", "射程、弾薬補給、ダメージ、操作、設置条件は変更される場合があります。", "遮蔽、補給、退避空間がある場所へ迫撃砲を置く。", "装填前に観測員と標的および味方位置を確認する。", "古い表を盲信せず、現在の画面で初期解を作る。", "確認射撃を行い、変数を1つずつ修正する。", "標的移動、味方進入、対砲撃があれば停止または移動する。"),
-    "wardogs-helicopter-guide": task("安全なヘリコプター任務を準備する", "現在の飛行割り当てを確認し、安定した離着陸を練習し、分隊や高価な資産を運ぶ前に中止可能なルートを選びます。成功した任務は次の仕事へ機体を残します。", "飛行挙動、機器対応、対抗手段、修理、燃料、機体の利用可否はビルド依存です。", "現行クライアントでピッチ、ロール、ヨー、コレクティブ、視点、座席、降車を確認する。", "戦闘外でホバリング、離陸、進入、復行、着陸を練習する。", "乗員へ乗降地点、目的地、脅威、中止合図を伝える。", "地形遮蔽と代替着陸地点があるルートを飛ぶ。", "降ろしたら脅威から離れ、機体を確認して次の任務を判断する。"),
+    "wardogs-mortar-guide": task("装填・照準・着弾修正の順に進める", "対応弾薬と装填状態を確認し、発射位置と目標の距離・方位をそろえてから試射します。L81計算機の仰角・飛翔時間は推定値です。観測手と着弾を確認し、一項目ずつ修正してください。", "射程、弾薬、操作、設置条件はビルド依存です。未校正の地図ピクセル値をメートルとして入力せず、計算結果を命中保証にしないでください。", "設置砲、対応弾薬、現在の装填表示と補給を確認する。", "観測手と目標、味方位置、退避方向を共有する。", "校正した地図で水平距離を測り、L81計算機へ距離と確認済みの方位・高低差を入力する。", "試射1発の着弾を観測し、左右・近遠を伝えて一項目ずつ修正する。", "味方進入、標的移動、対砲撃があれば停止し、補給または移設を判断する。"),
+    "wardogs-helicopter-guide": task("乗客なしで離陸から着陸まで練習する", "現在のキーと軸を確認し、ホバリング、垂直離陸、短い周回、着陸の順に練習します。進入前に減速し、機体を安定させて少しずつ降下します。障害物や横流れで着陸できない場合は上昇して再進入してください。", "キー、感度、HOTASの機器別設定は本ページでは未検証です。入力や飛行挙動は現在のクライアントで確認してください。", "乗客なしでピッチ、ロール、ヨー、上昇下降のキーと軸を一つずつ確認する。", "開けた場所で機首を安定させ、垂直離陸と低いホバリングを練習する。", "短い周回から広い着陸地点へ進入し、早めに減速して降下を小さくする。", "障害物、横流れ、攻撃があれば無理に接地せず、上昇して再進入する。", "離着陸を再現できてから乗員と目的地・代替地点を共有し、燃料と帰路を確認して輸送する。"),
     "wardogs-ps5": task("推測せずコンソール状況を確認する", "PS5版の発売日は公式には確認されていません。現在の公式ストアとWARDOGS公式告知を使い、出典のない日付や仮ページは未確認として扱ってください。", "PC Early Accessや第三者一覧から、コンソール日程、クロスプレイ、操作モード、販売状況を推測しないでください。", "WARDOGSとパブリッシャーの公式チャンネルで機種別告知を探す。", "PlayStation Storeを直接検索し、正式商品と仮ページを区別する。", "地域、版、クロスプレイ、進行情報を告知本文で確認する。", "一次情報へリンクしないカウントダウンや日付を無視する。", "ロードマップや発売更新後に再確認し、情報源の日付を残す。"),
-    "wardogs-progression-wipes-guide": task("現行証拠から進行を計画する", "目標を決める前に、現在の役割トラックと公式パッチノートを読みます。解除時間やワイプ規則を推測せず、対象バーが実際に動く行動で繰り返せるルートを作ってください。", "Betaの進行速度、役割位置、解除レベル、XP源、リセット方針を恒久仕様として扱えません。", "役割または解除目標を1つ選び、試合前のトラックを記録する。", "その役割に関連する有用な行動を1つ明確に繰り返す。", "別報酬が混ざる前に、行動後すぐバーを確認する。", "結果を最新の公式変更と比較し、不明点を明記する。", "進行パッチやリセット告知後にルートを作り直す。"),
+    "wardogs-progression-wipes-guide": task("ワイプで消えるもの・残るものを確認する", "公式方針ではシーズン終了時にCashとXPがリセットされ、残ったCashはGold Barsへ自動変換されます。Gold Barsとコスメは維持されます。Season 2は10月15日開始予定ですが、正確な移行時刻・換算率・購入済み解除の扱いは未発表です。", "シーズン開始日を正確なリセット時刻と同一視せず、現在のGold市場レートを季末の自動変換に使わないでください。", "Cash、Career XP、各ロールXP、Gold Bars、コスメを更新前に別々に記録する。", "購入済み解除、装備、設定は保持や再支払いを決めつけず、未確認として記録する。", "公式移行告知で時刻と換算率を確認し、Betaの過去情報と分ける。", "更新後は買い直す前に残高と解除状態を比較し、予期しない差を日時付きで残す。", "継続するロールの解除条件を現在の画面と公式変更で確認してから進行を計画する。"),
     "wardogs-best-weapons-loadouts": task("1つの仕事向けに装備を組む", "最良の装備は、役割、距離、弾薬関係、チーム任務に合う最小コストの信頼できるセットです。固定Tier表ではなく、現在のショップとインベントリを比較してください。", "武器バランス、価格、解除、アタッチメント、弾薬、装甲、スロットは変更されます。", "役割、交戦距離、解決するチーム課題を決める。", "現在確認できる弾薬とマガジン関係を持つ武器を選ぶ。", "追加品より先に防護、医療、目的のある道具を加える。", "再購入リスクを確認し、安価な予備構成を用意する。", "同じ状況で試し、失敗した部分だけ変更する。"),
     "wardogs-equipment-tools-guide": task("戦場任務に合わせて装備を選ぶ", "医療、建築、修理、偵察、補給の任務に合わせて装備を選びます。IR距離計はSeason 2のバッテリー対応まで販売が一時停止されています。CWIS修正でHavocへの対処も変わるため、購入前に最新項目を確認しましょう。", "回数、容量、費用、操作表示、設置条件、対応対象はビルド依存です。", "医療、修理、建設、破壊、偵察、補給から任務を決める。", "現在の説明、必要資源、スロット、対応対象を確認する。", "安全に完了するための最小限の消耗品を持つ。", "安全な状況で操作し、対象の状態変化を確認する。", "分隊任務が変わったら道具を交換または外す。"),
     "wardogs-crash-fix": task("設定を変える前に障害を切り分ける", "Windows KB5124010に関連するWD-L020はWARDOGSパッチ0.1.2で対応されました。ゲーム更新とファイル確認後に再テストします。WD-L014とWD-L018は開発側が把握している別の起動エラーです。正確なコードを記録し、該当告知を確認してから関連する対処を選びましょう。", "特定の機器やビルドで効いた回避策が万能な修正とは限りません。", "ビルド、機器、ドライバー、エラー文、直前操作を記録する。", "現在の公式告知でアクセスやサービス障害を除外する。", "ゲームファイルを確認し、必要なシステム要素を更新する。", "オーバーレイ、フック、常駐ソフトを1つずつ止めて再試験する。", "クリーンな試験でも失敗する場合はログと再現手順を保存する。"),

@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import type {Locale} from "../config/site";
 import {getManifestEntry, guideManifest, type GuideManifestEntry} from "./manifest";
 import {remarkWardogsMdxPolicy} from "./mdx-policy";
+import {remarkDirectAnswer} from "./direct-answer";
 import {validateGuideFrontmatter, type GuideFrontmatter} from "./schema";
 
 export type GuideDocument = {
@@ -19,9 +20,9 @@ export type GuideSummary = Pick<GuideFrontmatter,
   "title" | "description" | "keyword" | "category" | "slug" | "order" | "updatedAt" | "badges"
 >;
 
-export function parseGuideSource(source: string, entry: GuideManifestEntry): {frontmatter: GuideFrontmatter; body: string} {
+export function parseGuideSource(source: string, entry: GuideManifestEntry, locale: Locale = "en"): {frontmatter: GuideFrontmatter; body: string} {
   const parsed = matter(source);
-  return {frontmatter: validateGuideFrontmatter(parsed.data, entry), body: parsed.content.trim()};
+  return {frontmatter: validateGuideFrontmatter(parsed.data, entry, locale), body: parsed.content.trim()};
 }
 
 export async function loadGuideDocument(
@@ -33,7 +34,7 @@ export async function loadGuideDocument(
   if (!entry) return null;
   try {
     const source = await readFile(path.join(root, locale, "guides", `${slug}.mdx`), "utf8");
-    return {locale, ...parseGuideSource(source, entry)};
+    return {locale, ...parseGuideSource(source, entry, locale)};
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
     throw error;
@@ -104,9 +105,15 @@ export function localizeMdxInternalLinks(body: string, locale: Locale): string {
 }
 
 export async function compileLocalizedGuideBody(body: string, components: MDXComponents, locale: Locale) {
-  return compileMDX({
+  let directAnswer: string | null = null;
+  const compiled = await compileMDX({
     source: localizeMdxInternalLinks(body, locale),
     components,
-    options: {blockJS: true, blockDangerousJS: true, mdxOptions: {remarkPlugins: [remarkGfm, remarkWardogsMdxPolicy]}}
+    options: {
+      blockJS: true,
+      blockDangerousJS: true,
+      mdxOptions: {remarkPlugins: [remarkGfm, remarkWardogsMdxPolicy, remarkDirectAnswer((answer) => { directAnswer = answer; })]}
+    }
   });
+  return {...compiled, directAnswer};
 }

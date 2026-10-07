@@ -1794,7 +1794,7 @@ export const videoArticles: readonly VideoArticle[] = [
   },
   {
     slug: "wardogs-artillery-tank-guide",
-    title: "WARDOGS SPH-2 Artillery Guide: Aim, Stabilize and Reload",
+    title: "WARDOGS SPH-2 Artillery Video: Aim, Stabilize and Reload",
     description:
       "A source-specific SPH-2 artillery guide covering crew seats, stabilization, map ranging, 155 mm shells, manual reloads, firing positions, resupply and counters.",
     youtubeId: "oP9RelmWk6A",

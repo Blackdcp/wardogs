@@ -1110,7 +1110,7 @@ export const videoArticleCopyZhTw: Record<
     ]
   },
   "wardogs-artillery-tank-guide": {
-    "title": "WARDOGS SPH-2 自走砲指南：瞄準、穩定與裝填",
+    "title": "WARDOGS SPH-2 自走砲影片指南：瞄準、穩定與裝填",
     "description": "針對來源影片解析 SPH-2 操作，涵蓋乘員座位、穩定、地圖測距、155 mm 砲彈、手動裝填、射擊陣地、補給與反制。",
     "quickAnswer": "影片展示可重複的 SPH-2 流程：移到受保護地面、穩定火砲、用地圖估算距離、打一發校正彈、完成方向裝填序列，並在反擊前轉移。確切解鎖、價格與射程是 Beta 觀察，不是永久搶先體驗數值。",
     "takeaways": [
