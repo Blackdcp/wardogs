@@ -19,9 +19,9 @@ describe("video structured data", () => {
         description: article.description,
         uploadDate: `${article.publishedDate}T00:00:00+00:00`,
         embedUrl: `https://www.youtube-nocookie.com/embed/${article.youtubeId}`,
-        url: article.sourceUrl,
         thumbnailUrl: `https://i.ytimg.com/vi/${article.youtubeId}/hqdefault.jpg`
       });
+      expect(video, article.slug).not.toHaveProperty("url");
       expect(String(video.name).trim().length, article.slug).toBeGreaterThan(0);
       expect(String(video.description).trim().length, article.slug).toBeGreaterThan(0);
       expect(article.sourceUrl, article.slug).toContain(article.youtubeId);

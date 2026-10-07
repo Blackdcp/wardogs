@@ -47,7 +47,6 @@ export function buildVideoArticleJsonLd(locale: Locale, article: VideoArticle): 
       description: article.description,
       uploadDate: asUtcDateTime(article.publishedDate),
       embedUrl: `https://www.youtube-nocookie.com/embed/${article.youtubeId}`,
-      url: article.sourceUrl,
       thumbnailUrl: videoThumbnailUrl(article.youtubeId),
       ...(clips.length ? {hasPart: clips} : {})
     }
