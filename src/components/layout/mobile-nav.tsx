@@ -85,6 +85,7 @@ export function MobileNav({groups, openLabel, closeLabel, navigationLabel, mapLa
           <nav
             ref={panelRef}
             id="mobile-navigation"
+            data-mobile-navigation-open="true"
             aria-label={navigationLabel}
             className="fixed inset-x-0 top-16 z-50 max-h-[calc(100svh-4rem)] overflow-y-auto border-b border-[#35413b] bg-[#101512] px-4 py-5 shadow-2xl min-[1180px]:hidden"
           >

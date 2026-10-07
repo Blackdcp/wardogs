@@ -198,6 +198,54 @@ describe("Adsterra display loader configuration", () => {
   });
 });
 
+describe("Adsterra slow-loader diagnostics", () => {
+  afterEach(() => {vi.useRealTimers();});
+
+  it("distinguishes a stalled request from a waiting queue without releasing its configuration lease", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const second = document.createElement("div");
+    const firstStatuses: string[] = [];
+    const secondStatuses: string[] = [];
+    const stopFirst = banners.mountAdsterraBanner(element, banners.ADSTERRA_BANNER_UNITS.rectangle300, (status) => firstStatuses.push(status));
+    const stopSecond = banners.mountAdsterraBanner(second as unknown as HTMLElement, banners.ADSTERRA_BANNER_UNITS.horizontal468, (status) => secondStatuses.push(status));
+    expect(secondStatuses).toEqual(["queued"]);
+    vi.advanceTimersByTime(15_000);
+    expect(firstStatuses).toEqual(["request_started", "loader_stalled"]);
+    expect(secondStatuses).toEqual(["queued", "loader_wait"]);
+    expect(second.children).toHaveLength(0);
+    expect(document.defaultView.atOptions).toMatchObject({key: banners.ADSTERRA_BANNER_UNITS.rectangle300.key});
+    slot.children[0].dispatchEvent(new Event("load"));
+    expect(secondStatuses).toEqual(["queued", "loader_wait", "request_started"]);
+    second.children[0].dispatchEvent(new Event("load"));
+    vi.advanceTimersByTime(60_000);
+    expect(firstStatuses).not.toContain("script_error");
+    expect(secondStatuses).toEqual(["queued", "loader_wait", "request_started", "script_loaded"]);
+    stopFirst(); stopSecond();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("does not diagnose canceled or background native requests as failed", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const parent = document.createElement("section");
+    parent.appendChild(slot);
+    document.hidden = true;
+    const statuses: string[] = [];
+    const stop = native.mountAdsterraNative(element, (status) => statuses.push(status));
+    vi.advanceTimersByTime(60_000);
+    expect(statuses).toEqual(["request_started"]);
+    document.hidden = false;
+    document.dispatchEvent(new Event("visibilitychange"));
+    vi.advanceTimersByTime(15_000);
+    expect(statuses).toEqual(["request_started", "loader_stalled"]);
+    parent.children[0].dispatchEvent(new Event("load"));
+    expect(statuses).toEqual(["request_started", "loader_stalled", "script_loaded"]);
+    stop();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+});
+
 describe("Adsterra native loader lifecycle", () => {
   it.each(["load", "error"])("reports %s and removes listeners and injected content on cleanup", (event) => {
     const {document, element, slot} = fixture();
@@ -246,6 +294,25 @@ describe("Adsterra observable status", () => {
     expect(slot.dataset.adStatus).toBe("creative_viewable");
     observation.cleanup();
     expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("provides current creative evidence for safe first-party fallback and late creative recovery", () => {
+    vi.useFakeTimers();
+    const {document, element, slot} = fixture();
+    const onStatus = vi.fn();
+    const observation = banners.observeAdSlot(element, "rectangle", "display", {section: "guide:rectangle"}, onStatus);
+    observation.report("script_loaded");
+    vi.advanceTimersByTime(15_000);
+    expect(onStatus).toHaveBeenLastCalledWith("creative_missing", {creativePresent: false});
+    const creative = document.createElement("iframe");
+    creative.src = "https://creative.example/late";
+    slot.appendChild(creative);
+    ObserverBoundary.instances[1].emit();
+    expect(onStatus).toHaveBeenLastCalledWith("creative_present", {creativePresent: true});
+    observation.report("script_error");
+    expect(onStatus).toHaveBeenLastCalledWith("script_error", {creativePresent: true});
+    expect((document.defaultView.dataLayer[0] as unknown[])[2]).toMatchObject({section: "guide:rectangle"});
+    observation.cleanup();
   });
 
   it("does not combine viewability time across replacement creatives", () => {

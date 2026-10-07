@@ -60,12 +60,14 @@ export default async function GuideArticlePage({params}: PageProps) {
   const taskData = getGuideTaskData(slug, locale);
   const guideBody = prepareGuideBodyForTaskPanel(guide.body, locale, Boolean(taskData));
   setRequestLocale(locale);
-  const [t, categoryT, adsT, related, compiled] = await Promise.all([
+  const adsT = await getTranslations({locale, namespace: "ads"});
+  const [t, categoryT, related, compiled] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "categories"}),
-    getTranslations({locale, namespace: "ads"}),
     getRelatedGuides(locale, slug),
-    compileLocalizedGuideBody(guideBody, mdxComponents, locale)
+    compileLocalizedGuideBody(guideBody, mdxComponents, locale, {
+      inlineAd: <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
+    })
   ]);
   const directAnswer = guide.frontmatter.directAnswer ?? compiled.directAnswer;
   // Authored answers lead directly into the guide; supporting videos remain reachable below.
@@ -125,7 +127,6 @@ export default async function GuideArticlePage({params}: PageProps) {
           </aside>
         ) : null}
         <AdsterraNativeBanner label={t("advertisement")} />
-        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         <VisualWorkflow locale={locale} slug={slug} />
         <MissionCase locale={locale} slug={slug} />

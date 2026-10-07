@@ -51,12 +51,15 @@ export default async function ItemTypePage({params}: PageProps) {
   return (
     <main>
       <JsonLd data={buildItemTypeJsonLd(locale, itemType.id)} />
-      <CatalogueCategoryView guide={catalogueGuide} locale={locale} />
+      <CatalogueCategoryView guide={catalogueGuide} locale={locale} sponsoredSlot={
+        <section className="site-container py-2" data-page-ad-inventory="item-type">
+          <AdsterraNativeBanner label={adsT("label")} />
+          <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
+        </section>
+      } />
 
       <section className="site-container py-2" data-page-ad-inventory="item-type">
-        <AdsterraNativeBanner label={adsT("label")} />
         <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
 
       {items.length > 0 ? (

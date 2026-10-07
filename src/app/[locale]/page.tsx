@@ -58,7 +58,6 @@ export default async function HomePage({params}: HomePageProps) {
           <div className="space-y-3" data-page-ad-inventory="home">
             <p className="px-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-[#82938a]">{t("ads.sponsored")}</p>
             <AdsterraNativeBanner label={t("ads.label")} />
-            <AdsterraDisplayBanner label={t("ads.label")} placement="rectangle" />
             <AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />
           </div>
         }
@@ -66,7 +65,14 @@ export default async function HomePage({params}: HomePageProps) {
 
       <HomeLiveIntel locale={locale} entries={model.liveIntel} />
       <HomeToolWorkbench locale={locale} tools={model.featuredTools} />
-      <CatalogueHomeBand locale={locale} />
+      <CatalogueHomeBand
+        locale={locale}
+        sponsoredSlot={
+          <div data-page-ad-inventory="home">
+            <AdsterraDisplayBanner label={t("ads.label")} placement="rectangle" />
+          </div>
+        }
+      />
       <HomeLibrary locale={locale} destinations={model.library} />
     </main>
   );

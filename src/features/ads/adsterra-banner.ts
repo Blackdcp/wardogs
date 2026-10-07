@@ -1,5 +1,6 @@
 import {ADSTERRA_ENABLED, ADSTERRA_LEADERBOARD_ENABLED} from "./ad-policy";
 import {ANALYTICS_EVENTS, isProductionHostname, normalizeAnalyticsPathname, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {AD_LOADER_DIAGNOSTIC_MS, afterForegroundTime} from "./ad-loading";
 
 export type AdsterraBannerUnit = {
   height: number;
@@ -78,24 +79,25 @@ export function observeAdContainerWidth(container: HTMLElement, update: (width: 
   };
 }
 
-export type AdStatus = "script_loaded" | "script_error" | "slot_visible" | "creative_present" | "creative_visible" | "request_started" | "creative_missing" | "creative_viewable";
+export type AdStatus = "script_loaded" | "script_error" | "slot_visible" | "creative_present" | "creative_visible" | "request_started" | "creative_missing" | "creative_viewable" | "queued" | "loader_wait" | "loader_stalled";
 
 export type AdSlotMetadata = {
   ad_unit?: string;
   page_path?: string;
   page_type?: string;
   config_version?: string;
+  section?: string;
 };
 
 // These are DOM observations, not vendor impressions. Cross-origin contents,
 // vendor fill, ad validity and billable impressions cannot be verified.
 // creative_missing means no qualifying DOM after 15 foreground seconds;
 // creative_viewable means >=50% intersection for one continuous foreground second.
-export function observeAdSlot(container: HTMLElement, placement: string, format: "display" | "native", metadata: AdSlotMetadata = {}) {
+export function observeAdSlot(container: HTMLElement, placement: string, format: "display" | "native", metadata: AdSlotMetadata = {}, onStatus?: (status: AdStatus, evidence: {creativePresent: boolean}) => void) {
   let active = true;
   const document = container.ownerDocument;
   const attribution: Record<string, string> = {};
-  for (const key of ["ad_unit", "page_type", "config_version"] as const) {
+  for (const key of ["ad_unit", "page_type", "config_version", "section"] as const) {
     const value = metadata[key];
     if (value && /^[a-zA-Z0-9_.:-]+$/.test(value)) attribution[key] = value.slice(0, 64);
   }
@@ -121,6 +123,7 @@ export function observeAdSlot(container: HTMLElement, placement: string, format:
     container.dataset.adStatus = status;
     if (status === "script_loaded") updateMissing();
     if (status === "creative_present" || status === "script_error") pauseMissing();
+    onStatus?.(status, {creativePresent: present.size > 0});
     const locale = document.documentElement?.lang;
     try {
       trackAnalyticsEvent(ANALYTICS_EVENTS.adStatus, {placement, format, status, ...attribution, ...(locale ? {locale} : {})});
@@ -281,6 +284,7 @@ export function mountAdsterraBanner(container: HTMLElement, unit: AdsterraBanner
   }
   const loadQueue = queue;
   let script: HTMLScriptElement | null = null;
+  let stopDiagnostic: (() => void) | undefined;
   const pump = () => {
     if (loadQueue.active) return;
     let next: BannerLoadJob | undefined;
@@ -294,6 +298,7 @@ export function mountAdsterraBanner(container: HTMLElement, unit: AdsterraBanner
   const job: BannerLoadJob = {
     canceled: false,
     start: () => {
+      stopDiagnostic?.();
       container.innerHTML = "";
       view.atOptions = buildAdsterraBannerOptions(unit);
       script = document.createElement("script");
@@ -301,6 +306,7 @@ export function mountAdsterraBanner(container: HTMLElement, unit: AdsterraBanner
       script.async = true;
       script.src = unit.src;
       const finish = (status: "script_loaded" | "script_error") => {
+        stopDiagnostic?.();
         script?.removeEventListener("load", loaded);
         script?.removeEventListener("error", failed);
         if (!job.canceled) onStatus?.(status);
@@ -312,13 +318,23 @@ export function mountAdsterraBanner(container: HTMLElement, unit: AdsterraBanner
       script.addEventListener("load", loaded);
       script.addEventListener("error", failed);
       onStatus?.("request_started");
+      stopDiagnostic = afterForegroundTime(document, AD_LOADER_DIAGNOSTIC_MS, () => {
+        if (!job.canceled) onStatus?.("loader_stalled");
+      });
       container.appendChild(script);
     }
   };
+  if (loadQueue.active) {
+    onStatus?.("queued");
+    stopDiagnostic = afterForegroundTime(document, AD_LOADER_DIAGNOSTIC_MS, () => {
+      if (!job.canceled) onStatus?.("loader_wait");
+    });
+  }
   loadQueue.pending.push(job);
   pump();
   return () => {
     job.canceled = true;
+    stopDiagnostic?.();
     script?.remove();
     container.innerHTML = "";
     // Removing an in-flight script does not guarantee that it cannot execute.

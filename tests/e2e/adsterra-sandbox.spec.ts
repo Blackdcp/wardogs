@@ -85,20 +85,21 @@ test("fixed mobile creatives do not cover homepage search, tasks, navigation, or
   await expect(page.getByRole("button", {name: "Close advertisement", exact: true})).toBeVisible();
 });
 
-test("client route changes keep one inline inventory shell per page", async ({page}) => {
+test("client route changes preserve the distributed homepage and single Native inventory", async ({page}) => {
   await page.setViewportSize({width: 1440, height: 900});
   await page.goto("/en");
-  await expect(page.locator('[data-page-ad-inventory="home"]')).toHaveCount(1);
+  await expect(page.locator('[data-page-ad-inventory="home"]')).toHaveCount(2);
+  await expect(page.locator('[data-ad-placement="rectangle"]')).toHaveCount(1);
   await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
 
   await page.locator('a[href="/en/guides"]:visible').first().click();
   await expect(page).toHaveURL(/\/en\/guides\/?$/);
-  await expect(page.locator('[data-page-ad-inventory="guides"]')).toHaveCount(1);
+  await expect(page.locator('[data-page-ad-inventory="guides"]')).toHaveCount(2);
   await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
 
   await page.locator('a[href="/en/items"]:visible').first().click();
   await expect(page).toHaveURL(/\/en\/items\/?$/);
-  await expect(page.locator('[data-page-ad-inventory="items"]')).toHaveCount(1);
+  await expect(page.locator('[data-page-ad-inventory="items"]')).toHaveCount(2);
   await expect(page.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
   await expect(page.locator("#container-481d6501bcd0c27b98bc3c4776a26f6e")).toHaveCount(1);
 });

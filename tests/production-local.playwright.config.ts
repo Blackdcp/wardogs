@@ -10,6 +10,9 @@ export default defineConfig({
     "release-route-contract.spec.ts",
     "homepage-structure.spec.ts",
     "adsterra-inventory.spec.ts",
+    "adsterra-delivery.spec.ts",
+    "adsterra-task-layout.spec.ts",
+    "mobile-ad-experience.spec.ts",
     "production-health.spec.ts"
   ],
   fullyParallel: false,

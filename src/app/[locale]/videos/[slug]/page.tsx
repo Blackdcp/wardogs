@@ -97,7 +97,6 @@ export default async function VideoArticlePage({params}: PageProps) {
         </aside>
 
         <AdsterraNativeBanner label={articleT("advertisement")} />
-        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
 
         <section className="border-y border-[#2c3631] py-8" aria-labelledby="video-takeaways">
@@ -121,6 +120,8 @@ export default async function VideoArticlePage({params}: PageProps) {
             <p>{ui.connectionBody}</p>
           </section>
         </div>
+
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
 
         <div className="mt-12 grid gap-px bg-[#2c3631] md:grid-cols-2">
           <a className="bg-[#151b18] p-5 hover:bg-[#1b241f]" href={article.sourceUrl} target="_blank" rel="noreferrer" title={article.sourceLabel}>

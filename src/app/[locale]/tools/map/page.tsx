@@ -1,5 +1,6 @@
 import {buildToolRelatedLinks, ToolRelatedGuides} from "@/components/tools/tool-related-guides";
 import {ToolPageHeader} from "@/components/tools/tool-page-header";
+import {ToolSponsoredWorkspace} from "@/components/tools/tool-sponsored-workspace";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {getTranslations} from "next-intl/server";
@@ -57,16 +58,20 @@ export default async function TacticalMapPage({params}: PageProps) {
         </div>
       </ToolPageHeader>
 
-      <section aria-label={c.title}>
-        <WardogsMapViewer initialMap="bakurani" locale={locale} />
-      </section>
+      <ToolSponsoredWorkspace
+        inventory="tools-map"
+        label={t("label")}
+        sponsoredSlot={<AdsterraDisplayBanner label={t("label")} placement="rectangle" />}
+      >
+        <section aria-label={c.title}>
+          <WardogsMapViewer initialMap="bakurani" locale={locale} />
+        </section>
+      </ToolSponsoredWorkspace>
 
       <ToolRelatedGuides model={relatedLinks} locale={locale} />
 
-      {/* Dwell-Time Monetization: High viewability for players running maps on secondary monitors */}
       <section className="mt-8 pt-6 border-t border-[#2b3530]" data-page-ad-inventory="tools-map">
         <AdsterraNativeBanner label={t("label")} />
-        <AdsterraDisplayBanner label={t("label")} placement="rectangle" />
         <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
       </section>
 

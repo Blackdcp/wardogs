@@ -13,6 +13,7 @@ export const ANALYTICS_EVENTS = {
   toolAction: "tool_action",
   mapAction: "map_action",
   adStatus: "ad_status",
+  adDismiss: "ad_dismiss",
   officialOutboundClick: "official_outbound_click",
   languageSwitch: "language_switch",
   catalogueFilter: "catalogue_filter",

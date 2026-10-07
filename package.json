@@ -20,6 +20,7 @@
     "test:watch": "vitest",
     "content:validate": "vitest run tests/content",
     "links:check": "node scripts/check-external-links.mjs",
+    "ads:report": "node scripts/report-ad-monetization.mjs",
     "test:e2e": "playwright test",
     "test:e2e:build": "playwright test --config tests/production-local.playwright.config.ts",
     "test:e2e:production": "playwright test --config tests/production.playwright.config.ts",

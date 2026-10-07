@@ -12,7 +12,7 @@ import {formatCatalogueIndexCount, getItemUi} from "@/features/items/item-ui";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
 
-export function CatalogueHub({locale, children}: {locale: Locale; children?: ReactNode}) {
+export function CatalogueHub({locale, children, secondarySponsoredSlot}: {locale: Locale; children?: ReactNode; secondarySponsoredSlot?: ReactNode}) {
   const {categories, featured, previews} = buildCatalogueHubModel(locale);
   const ui = getItemUi(locale);
   return (<>
@@ -37,8 +37,6 @@ export function CatalogueHub({locale, children}: {locale: Locale; children?: Rea
         </div>
       </section>
 
-      {children}
-
       <section className="site-container py-12 md:py-16" aria-labelledby="catalogue-categories-title">
         <SectionHeading eyebrow={formatCatalogueIndexCount(locale, categories.length)} id="catalogue-categories-title" title={ui.browseTitle} description={ui.browseDescription} />
         <ul className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -57,6 +55,8 @@ export function CatalogueHub({locale, children}: {locale: Locale; children?: Rea
           ))}
         </ul>
       </section>
+
+      {children}
 
       <section data-evidence-legend aria-labelledby="evidence-legend-title" className="border-y border-[#2c3631] bg-[#111512]">
         <div className="site-container py-9 md:py-11">
@@ -89,6 +89,7 @@ export function CatalogueHub({locale, children}: {locale: Locale; children?: Rea
           title={ui.featuredWeapons}
           description={ui.featuredWeaponsDescription}
         />
+        {secondarySponsoredSlot}
         <CataloguePreviewRow
           locale={locale}
           type="vehicles"

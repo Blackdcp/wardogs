@@ -84,6 +84,9 @@ test("empty native loader reports request, load and missing creative evidence wi
   const requests = await installDeliveryFixture(context, baseURL, false);
   await page.clock.install();
   await page.goto(`${productionOrigin}/en/guides?fixture=private#not-analytics`);
+  // Deep inventory intentionally requests only near the viewport. The shell
+  // exists before its loader or creative, so scroll it before awaiting delivery.
+  await page.locator(`#container-${nativeUnit}`).scrollIntoViewIfNeeded();
   await expectStatus(page, "native", "/en/guides", "request_started");
   await expectStatus(page, "native", "/en/guides", "script_loaded");
   expect((await adEvents(page, "native", "/en/guides")).map((event) => event.status)).not.toContain("creative_missing");
@@ -94,7 +97,7 @@ test("empty native loader reports request, load and missing creative evidence wi
   for (const event of events) {
     expect(event).toMatchObject({
       format: "native", ad_unit: nativeUnit, page_path: "/en/guides",
-      page_type: "guide_hub", config_version: "native-first-v1", locale: "en"
+      page_type: "guide_hub", config_version: "task-aware-v2", locale: "en"
     });
     expect(["request_started", "script_loaded", "slot_visible", "creative_missing"]).toContain(event.status);
   }
@@ -110,6 +113,7 @@ test("locally served creative yields presence and foreground viewability without
   const requests = await installDeliveryFixture(context, baseURL, true);
   await page.clock.install();
   await page.goto(`${productionOrigin}/en/guides`);
+  await page.locator(`#container-${nativeUnit}`).scrollIntoViewIfNeeded();
   await expectStatus(page, "native", "/en/guides", "script_loaded");
   await expectStatus(page, "native", "/en/guides", "creative_present");
   const creative = page.locator(`#container-${nativeUnit} iframe`);
@@ -158,7 +162,7 @@ test("persistent top creative is attributed to the new client route without relo
   const events = await adEvents(page, "horizontal", "/en/items");
   for (const event of events) {
     expect(event).toMatchObject({
-      format: "display", ad_unit: horizontalUnit, page_type: "catalogue_hub", config_version: "native-first-v1"
+      format: "display", ad_unit: horizontalUnit, page_type: "catalogue_hub", config_version: "task-aware-v2"
     });
     expect(["script_loaded", "slot_visible", "creative_present", "creative_visible", "creative_viewable"]).toContain(event.status);
   }
@@ -188,7 +192,7 @@ test("empty persistent top slot diagnoses missing creative on the current route 
   expect(events.map((event) => event.status)).toContain("script_loaded");
   expect(events.map((event) => event.status)).not.toContain("request_started");
   expect(events.find((event) => event.status === "creative_missing")).toMatchObject({
-    ad_unit: horizontalUnit, page_path: "/en/items", page_type: "catalogue_hub", config_version: "native-first-v1"
+    ad_unit: horizontalUnit, page_path: "/en/items", page_type: "catalogue_hub", config_version: "task-aware-v2"
   });
   expect((await adEvents(page, "horizontal", "/en/guides")).map((event) => event.status)).not.toContain("creative_missing");
   expect(requests.filter((path) => path === `/22/${horizontalUnit}`)).toHaveLength(1);
@@ -202,6 +206,7 @@ test("restoring a resized rectangle waits for its new loader before diagnosing m
   await installDeliveryFixture(context, baseURL, false);
   await page.clock.install();
   await page.goto(`${productionOrigin}/en/guides`);
+  await page.locator('[data-ad-container="rectangle"]').scrollIntoViewIfNeeded();
   await expectStatus(page, "rectangle", "/en/guides", "script_loaded");
 
   // Hold only the second request. The first load completed normally, leaving a
@@ -220,6 +225,7 @@ test("restoring a resized rectangle waits for its new loader before diagnosing m
     await expect(container.locator('[data-adsterra-unit]')).toHaveCount(0);
     const beforeRestore = (await adEvents(page, "rectangle", "/en/guides")).length;
     await container.evaluate((element) => {element.style.width = "400px";});
+    await container.scrollIntoViewIfNeeded();
     await expect.poll(() => secondRequests).toBe(1);
     await page.clock.fastForward(15_001);
     const restoredStatuses = (await adEvents(page, "rectangle", "/en/guides")).slice(beforeRestore).map((event) => event.status);

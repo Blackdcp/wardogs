@@ -43,9 +43,13 @@ describe("six-section homepage", () => {
     for (const asset of expected) expect(demand).toContain(`href="/${locale}${asset.href}"`);
     expect(demand).toContain(`href="/${locale}/items"`);
     expect(demand.match(/data-page-ad-inventory="home"/g)).toHaveLength(1);
-    expect(demand.match(/data-ad-placement="rectangle"/g)).toHaveLength(1);
+    expect(demand).not.toContain('data-ad-placement="rectangle"');
     expect(demand.match(/data-ad-format="native"/g)).toHaveLength(1);
-    expect(html.match(/data-page-ad-inventory="home"/g)).toHaveLength(1);
+    const database = html.split('data-home-section="database"')[1]?.split("</section>")[0] ?? "";
+    expect(database.match(/data-ad-placement="rectangle"/g)).toHaveLength(1);
+    expect(database).not.toContain('data-ad-format="native"');
+    expect(html.match(/data-page-ad-inventory="home"/g)).toHaveLength(2);
+    expect(html.match(/data-ad-placement="rectangle"/g)).toHaveLength(1);
     expect(html).not.toContain("data-site-search");
     expect(html).not.toContain("data-hero-popular-links");
     expect(html.match(/data-featured-tool=/g)).toHaveLength(4);

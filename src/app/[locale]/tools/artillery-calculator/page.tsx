@@ -1,4 +1,5 @@
 import {buildToolRelatedLinks, ToolRelatedGuides} from "@/components/tools/tool-related-guides";
+import {ToolSponsoredWorkspace} from "@/components/tools/tool-sponsored-workspace";
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {getTranslations} from "next-intl/server";
@@ -39,14 +40,18 @@ export default async function ArtilleryCalculatorPage({params}: PageProps) {
 
   return (
     <main className="site-container py-8 md:py-12">
-      <ArtilleryCalculator locale={locale} headerActions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]} />
+      <ToolSponsoredWorkspace
+        inventory="tools-artillery"
+        label={t("label")}
+        sponsoredSlot={<AdsterraDisplayBanner label={t("label")} placement="rectangle" />}
+      >
+        <ArtilleryCalculator locale={locale} headerActions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]} />
+      </ToolSponsoredWorkspace>
 
       <ToolRelatedGuides model={relatedLinks} locale={locale} />
 
-      {/* Dwell-Time Monetization: Players keeping fire control open during raids */}
       <section className="mt-12 pt-8 border-t border-[#2b3530]" data-page-ad-inventory="tools-artillery">
         <AdsterraNativeBanner label={t("label")} />
-        <AdsterraDisplayBanner label={t("label")} placement="rectangle" />
         <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
       </section>
     </main>

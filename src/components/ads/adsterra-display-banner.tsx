@@ -2,6 +2,7 @@
 
 import {useEffect, useRef, useState} from "react";
 import {X} from "lucide-react";
+import {MobileAdInventory} from "@/components/ads/mobile-ad-inventory";
 import {usePathname} from "next/navigation";
 import {AD_REPORTING_VERSION, getAdReportingMetadata} from "@/features/ads/ad-reporting";
 import {
@@ -20,6 +21,8 @@ import {
   type AdsterraBannerUnit
 } from "@/features/ads/adsterra-banner";
 import {isProductionHostname} from "@/lib/analytics-events";
+import {whenAdNearViewport} from "@/features/ads/ad-loading";
+import {AdSlotFallback, getAdFallbackCopy} from "./ad-slot-fallback";
 
 export {ADSTERRA_BANNER_UNITS} from "@/features/ads/adsterra-banner";
 export type {AdsterraBannerUnit} from "@/features/ads/adsterra-banner";
@@ -41,13 +44,18 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit, l
   const pathname = usePathname();
   const reportRef = useRef<((status: AdStatus) => void) | null>(null);
   const loadedState = useRef<{key: string; status: "script_loaded" | "script_error"} | null>(null);
+  const [fallback, setFallback] = useState(false);
+  const showFallback = fallback && placement === "rectangle";
 
   useEffect(() => {
     if (!ADSTERRA_ENABLED || !unit || !loadEnabled || !isProductionHostname(window.location.hostname)) return;
     const el = slotRef.current;
     if (!el) return;
 
-    const observation = observeAdSlot(el, placement, "display", getAdReportingMetadata(pathname, unit.key));
+    const observation = observeAdSlot(el, placement, "display", getAdReportingMetadata(pathname, unit.key, placement), (status, evidence) => {
+      if (status === "creative_present" || status === "request_started") setFallback(false);
+      if (!evidence.creativePresent && (status === "creative_missing" || status === "script_error")) setFallback(true);
+    });
     reportRef.current = observation.report;
     if (loadedState.current?.key === unit.key) observation.report(loadedState.current.status);
     return () => {
@@ -61,10 +69,11 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit, l
   useEffect(() => {
     if (!unit || !loadEnabled || !slotRef.current) return;
     loadedState.current = null;
-    const cancelLoad = mountAdsterraBanner(slotRef.current, unit, (status) => {
+    const container = slotRef.current;
+    const cancelLoad = whenAdNearViewport(container, () => mountAdsterraBanner(container, unit, (status) => {
       if (status === "script_loaded" || status === "script_error") loadedState.current = {key: unit.key, status};
       reportRef.current?.(status);
-    });
+    }));
     return () => {
       loadedState.current = null;
       cancelLoad();
@@ -75,19 +84,25 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit, l
 
   return (
     <aside
-      aria-label={label}
+      aria-label={showFallback ? getAdFallbackCopy(pathname).title : label}
       className={className}
       data-ad-placement={placement}
       data-ad-unit={unit.key}
       data-ad-config={AD_REPORTING_VERSION}
     >
-      <p className="mb-2 text-center text-[10px] font-semibold uppercase text-[#82938a]">{label}</p>
+      <p aria-hidden={showFallback || undefined} className={`mb-2 text-center text-[10px] font-semibold uppercase text-[#82938a]${showFallback ? " invisible" : ""}`}>{label}</p>
       <div
-        ref={slotRef}
-        className="mx-auto flex items-center justify-center"
+        className="relative mx-auto"
         style={{minHeight: unit.height, width: unit.width, maxWidth: loadEnabled ? undefined : "100%"}}
-        data-adsterra-unit={unit.key}
-      />
+      >
+        <div
+          ref={slotRef}
+          className="flex items-center justify-center"
+          style={{minHeight: unit.height, width: "100%"}}
+          data-adsterra-unit={unit.key}
+        />
+        {showFallback ? <AdSlotFallback pathname={pathname} /> : null}
+      </div>
     </aside>
   );
 }
@@ -184,14 +199,9 @@ export function AdsterraGlobalInventory({
   return (
     <>
       {ADSTERRA_MOBILE_STICKY_ENABLED ? (
-        <FixedBanner
-          label={label}
-          media="(max-width: 467px)"
-          placement="mobile-sticky"
-          dismissLabel={closeAd[locale]}
-          position="fixed inset-x-0 bottom-0 z-[70] mx-auto w-[320px] border-t border-[#2c3631] bg-[#0d0f0e] pt-1 min-[468px]:hidden"
-          unit={ADSTERRA_BANNER_UNITS.mobile320}
-        />
+        <MobileAdInventory dismissLabel={closeAd[locale]}>
+          <BannerSlot label={label} placement="mobile-sticky-creative" unit={ADSTERRA_BANNER_UNITS.mobile320} />
+        </MobileAdInventory>
       ) : null}
       <FixedBanner
         label={label}

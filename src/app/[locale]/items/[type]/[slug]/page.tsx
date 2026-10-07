@@ -117,20 +117,7 @@ export default async function ItemDetailPage({params}: PageProps) {
       </header>
 
       <article className="site-container max-w-4xl py-10 md:py-14">
-        <AdsterraNativeBanner label={articleT("advertisement")} />
-        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
-
-        <EvidencePanel
-          dataAsOf={baseItem.build}
-          evidence={baseItem.evidence}
-          locale={locale}
-          sourceUrl={baseItem.evidence.sourceUrl}
-        />
-
-        <ItemChangeHistory changes={baseItem.changeHistory} locale={locale} />
-
-        <section className="mt-12" aria-labelledby="facts-title" data-fact-freshness={freshness}>
+        <section aria-labelledby="facts-title" data-fact-freshness={freshness}>
           <p className="text-xs font-semibold uppercase text-[#d9b455]">{baseItem.evidence.build}</p>
           <h2 className="display-font mt-2 text-3xl text-white" id="facts-title">{factsHeading}</h2>
           <dl className="mt-5 grid gap-px bg-[#2c3631] sm:grid-cols-2">
@@ -174,6 +161,18 @@ export default async function ItemDetailPage({params}: PageProps) {
           </nav>
         ) : null}
 
+        <AdsterraNativeBanner label={articleT("advertisement")} />
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
+
+        <EvidencePanel
+          dataAsOf={baseItem.build}
+          evidence={baseItem.evidence}
+          locale={locale}
+          sourceUrl={baseItem.evidence.sourceUrl}
+        />
+
+        <ItemChangeHistory changes={baseItem.changeHistory} locale={locale} />
+
         <section className="mt-12 grid gap-6 md:grid-cols-2" aria-label={ui.evidenceTitle}>
           <div>
             <h2 className="display-font text-3xl text-white">{ui.confirmedFacts}</h2>
@@ -208,6 +207,8 @@ export default async function ItemDetailPage({params}: PageProps) {
             </ul>
           </div>
         </section>
+
+        <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
 
         <section className="mt-14 border-t border-[#2c3631] pt-9" aria-labelledby="sources-title">
           <h2 className="display-font text-3xl text-white" id="sources-title">{ui.sources}</h2>

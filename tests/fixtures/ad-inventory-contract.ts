@@ -23,7 +23,7 @@ export type AdInventorySlot = {
   format: "display" | "native";
   zone: string;
   count: 1;
-  section?: "proven-demand";
+  section?: "proven-demand" | "database";
 };
 
 const ZONES = {
@@ -37,7 +37,6 @@ const ZONES = {
 } as const;
 
 function slotsFor(pageTemplate: InventoryPageTemplate, viewport: InventoryViewport): AdInventorySlot[] {
-  const section = pageTemplate === "home" ? {section: "proven-demand" as const} : {};
   const slots: AdInventorySlot[] = [
     {
       pageTemplate,
@@ -46,7 +45,7 @@ function slotsFor(pageTemplate: InventoryPageTemplate, viewport: InventoryViewpo
       format: "display",
       zone: ZONES.rectangle,
       count: 1,
-      ...section
+      ...(pageTemplate === "home" ? {section: "database" as const} : {})
     },
     {
       pageTemplate,
@@ -55,7 +54,7 @@ function slotsFor(pageTemplate: InventoryPageTemplate, viewport: InventoryViewpo
       format: "native",
       zone: ZONES.native,
       count: 1,
-      ...section
+      ...(pageTemplate === "home" ? {section: "proven-demand" as const} : {})
     }
   ];
 

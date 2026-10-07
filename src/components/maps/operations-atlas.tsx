@@ -4,7 +4,7 @@
 import {HubHeader} from "@/components/ui/hub-header";
 import {SectionHeading} from "@/components/ui/section-heading";
 import Image from "next/image";
-import {useState} from "react";
+import {useState, type ReactNode} from "react";
 import {ArrowUpRight, BookOpen, CalendarCheck2, ImageOff} from "lucide-react";
 import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 import type {Locale} from "@/config/site";
@@ -25,6 +25,7 @@ type OperationsAtlasProps = {
   guideTitles: Record<string, string>;
   locale: Locale;
   toolLabels: Record<string, string>;
+  sponsoredSlot?: ReactNode;
 };
 
 const visualSizes = "(min-width: 1024px) 320px, (min-width: 640px) 38vw, calc(100vw - 32px)";
@@ -47,7 +48,7 @@ function visualLabel(copy: OperationsAtlasCopy, state: "verified" | "contextual"
   return copy.visualPending;
 }
 
-export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: OperationsAtlasProps) {
+export function OperationsAtlas({copy, guideTitles, locale, toolLabels, sponsoredSlot}: OperationsAtlasProps) {
   const [filter, setFilter] = useState<OperationsAtlasFilter>("all");
   const visibleRecords = filterOperationsAtlas(getLocalizedOperationsAtlasRecords(locale), filter);
   const itemUi = getItemUi(locale);
@@ -68,6 +69,8 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels}: Operati
           <WardogsMapViewer className="mt-5" locale={locale} />
           <Link className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#8cdfa9] hover:text-white" href="/tools/map" title={mapCopy.open}>{mapCopy.open}<ArrowUpRight aria-hidden="true" className="size-4" /></Link>
         </section>
+
+        {sponsoredSlot}
 
         <div className="py-6">
           <p className="mb-3 text-xs font-semibold uppercase text-[#8f9d96]">{copy.filtersLabel}</p>

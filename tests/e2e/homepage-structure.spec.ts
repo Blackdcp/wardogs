@@ -42,8 +42,9 @@ for (const locale of ["en", "ja"] as const) {
       await expect(demand.locator("[data-protected-demand]")).toHaveCount(6);
       await expect(demand.locator(`a[href='/${locale}/items']`)).toHaveCount(1);
       await expect(demand.locator('[data-page-ad-inventory="home"]')).toHaveCount(1);
-      await expect(page.locator('[data-page-ad-inventory="home"]')).toHaveCount(1);
-      await expect(demand.locator('[data-ad-placement="rectangle"]')).toHaveCount(1);
+      await expect(page.locator('[data-page-ad-inventory="home"]')).toHaveCount(2);
+      await expect(demand.locator('[data-ad-placement="rectangle"]')).toHaveCount(0);
+      await expect(page.locator('[data-home-section="database"] [data-ad-placement="rectangle"]')).toHaveCount(1);
       await expect(demand.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
       await expect(page.locator('[data-home-route]')).toHaveCount(3);
       await expect(page.locator('[data-featured-tool]')).toHaveCount(4);

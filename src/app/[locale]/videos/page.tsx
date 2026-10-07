@@ -1,6 +1,7 @@
 import {HubHeader} from "@/components/ui/hub-header";
 import {SectionHeading} from "@/components/ui/section-heading";
 import type {Metadata} from "next";
+import {Fragment} from "react";
 import {notFound} from "next/navigation";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {CurrentVideoSourceGrid} from "@/components/videos/current-video-source-grid";
@@ -62,14 +63,16 @@ export default async function VideosPage({params}: PageProps) {
       </section>
       <section className="site-container py-2" data-page-ad-inventory="videos">
         <AdsterraNativeBanner label={adsT("label")} />
-        <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
       <section className="site-container py-12 md:py-16">
         <SectionHeading eyebrow={`${ui.betaWorkflow} / ${ui.historicalReference}`} title={ui.allVideos} />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {sortedArticles.map((article, index) => (
-            <VideoArticleCard article={article} locale={locale} eager={index === 0} key={article.slug} />
+            <Fragment key={article.slug}>
+              <VideoArticleCard article={article} locale={locale} eager={index === 0} />
+              {index === Math.min(2, sortedArticles.length - 1) ? <div className="md:col-span-2 xl:col-span-3" data-page-ad-inventory="videos"><AdsterraDisplayBanner label={adsT("label")} placement="rectangle" /></div> : null}
+            </Fragment>
           ))}
         </div>
       </section>

@@ -79,7 +79,7 @@ describe("Adsterra page inventory", () => {
     expect(slots("guide-detail", "desktop").filter(({placement}) => placement === "global-top")).toHaveLength(1);
     expect(AD_INVENTORY_CONTRACT.filter(({pageTemplate, placement}) =>
       pageTemplate === "home" && placement === "inline-primary"
-    ).every(({section}) => section === "proven-demand")).toBe(true);
+    ).every(({section, format}) => section === (format === "native" ? "proven-demand" : "database"))).toBe(true);
   });
 
   it("monetizes the homepage and every primary index page", async () => {

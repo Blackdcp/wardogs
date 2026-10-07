@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type {ReactNode} from "react";
 import {ArrowLeft, Boxes} from "lucide-react";
 import {getCatalogueGroup} from "@/features/catalogue/catalogue-groups";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
@@ -19,6 +20,7 @@ import {seasonOneSourceUrl} from "@/features/catalogue/catalogue-evidence-data";
 type CatalogueCategoryViewProps = {
   guide: CatalogGuide;
   locale: Locale;
+  sponsoredSlot?: ReactNode;
 };
 
 function normalizedRecordName(value: string) {
@@ -87,7 +89,7 @@ function SeasonOneVehicleUpdate({locale}: {locale: Locale}) {
   );
 }
 
-export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProps) {
+export function CatalogueCategoryView({guide, locale, sponsoredSlot}: CatalogueCategoryViewProps) {
   const hero = getCatalogueCategoryMedia(guide.id);
   const records = hasImageExplorer(guide.id) ? getLocalizedCatalogueRecords(getCatalogueRecords(guide.id), locale) : [];
   const baseGroup = hasImageExplorer(guide.id) ? getCatalogueGroup(guide.id) : undefined;
@@ -142,6 +144,7 @@ export function CatalogueCategoryView({guide, locale}: CatalogueCategoryViewProp
         />
       ) : null}
 
+      {sponsoredSlot}
       <ItemCatalogGuide guide={linkedGuide} locale={locale} />
     </>
   );

@@ -40,6 +40,7 @@ type CatalogueHomeBandViewProps = {
   hubLabel?: string;
   entries: readonly CatalogueHomeBandEntry[];
   modelEntries?: readonly CatalogueHomeModelEntry[];
+  sponsoredSlot?: ReactNode;
   LinkComponent?: CatalogueLinkComponent;
 };
 
@@ -109,7 +110,7 @@ function CatalogueModelEntry({entry}: {entry: CatalogueHomeModelEntry}) {
   );
 }
 
-export function CatalogueHomeBandView({heading, description, modelHeading = heading, hubHref = "/items", hubLabel = heading, entries, modelEntries = [], LinkComponent = NativeLink}: CatalogueHomeBandViewProps) {
+export function CatalogueHomeBandView({heading, description, modelHeading = heading, hubHref = "/items", hubLabel = heading, entries, modelEntries = [], sponsoredSlot, LinkComponent = NativeLink}: CatalogueHomeBandViewProps) {
   const features = entries.filter((entry) => entry.key === "weapons" || entry.key === "vehicles");
   const previews = modelEntries.slice(0, 4);
 
@@ -132,12 +133,13 @@ export function CatalogueHomeBandView({heading, description, modelHeading = head
             </ul>
           </div>
         ) : null}
+        {sponsoredSlot ? <aside className="mt-6 border-t border-[#26312c] pt-5" data-home-sponsored-slot="catalogue">{sponsoredSlot}</aside> : null}
       </div>
     </section>
   );
 }
 
-export async function CatalogueHomeBand({locale}: {locale: Locale}) {
+export async function CatalogueHomeBand({locale, sponsoredSlot}: {locale: Locale; sponsoredSlot?: ReactNode}) {
   const t = await getTranslations({locale, namespace: "home.catalogue"});
   const sectionT = await getTranslations({locale, namespace: "home.discovery.sections.database"});
   const model = buildCatalogueHomeModel(locale);
@@ -162,5 +164,5 @@ export async function CatalogueHomeBand({locale}: {locale: Locale}) {
   const LocalizedLink: CatalogueLinkComponent = ({children, href, ...props}) => (
     <a aria-label={props.title} {...props} href={publicRoutePath(`/${locale}${href}`)} title={props.title}>{children}</a>
   );
-  return <CatalogueHomeBandView heading={sectionT("title")} description={sectionT("description")} modelHeading={t("publishedModels")} hubHref={model.destinations[0].href} hubLabel={model.hubLabel} entries={entries} modelEntries={modelEntries} LinkComponent={LocalizedLink} />;
+  return <CatalogueHomeBandView heading={sectionT("title")} description={sectionT("description")} modelHeading={t("publishedModels")} hubHref={model.destinations[0].href} hubLabel={model.hubLabel} entries={entries} modelEntries={modelEntries} sponsoredSlot={sponsoredSlot} LinkComponent={LocalizedLink} />;
 }

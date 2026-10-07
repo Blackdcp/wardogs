@@ -10,6 +10,8 @@ import MapsPage from "../../src/app/[locale]/maps/page";
 import TacticalMapPage from "../../src/app/[locale]/tools/map/page";
 import ArtilleryCalculatorPage from "../../src/app/[locale]/tools/artillery-calculator/page";
 import {locales} from "../../src/config/site";
+import {AdsterraNativeBanner} from "../../src/components/ads/adsterra-native-banner";
+import {AdsterraDisplayBanner} from "../../src/components/ads/adsterra-display-banner";
 
 vi.mock("next-intl/server", () => ({
   getTranslations: async () => (key: string) => key,
@@ -22,16 +24,16 @@ vi.mock("@/i18n/navigation", () => ({Link: "a"}));
 type InventoryProps = {
   children?: ReactNode;
   sponsoredSlot?: ReactNode;
-  "data-page-ad-inventory"?: string;
+  secondarySponsoredSlot?: ReactNode;
 };
 
 // Inspect the actual page composition, then render its real ad components.
 // No ad or page component is mocked; browser effects stay inactive during SSR.
-function findInventory(node: ReactNode, inventory: string): ReactElement<InventoryProps>[] {
-  if (Array.isArray(node)) return node.flatMap((child) => findInventory(child, inventory));
+function findInlineAds(node: ReactNode): ReactElement<InventoryProps>[] {
+  if (Array.isArray(node)) return node.flatMap(findInlineAds);
   if (!isValidElement<InventoryProps>(node)) return [];
-  if (node.props["data-page-ad-inventory"] === inventory) return [node];
-  return [node.props.children, node.props.sponsoredSlot].flatMap((child) => findInventory(child, inventory));
+  if (node.type === AdsterraNativeBanner || node.type === AdsterraDisplayBanner) return [node];
+  return [node.props.children, node.props.sponsoredSlot, node.props.secondarySponsoredSlot].flatMap(findInlineAds);
 }
 
 const templates = [
@@ -45,16 +47,18 @@ const templates = [
   {inventory: "tools-artillery", page: ArtilleryCalculatorPage}
 ] as const;
 
-describe("Native priority in existing inline ad blocks", () => {
+describe("existing inline inventory across all languages", () => {
   for (const {inventory, page} of templates) {
-    it.each(locales)(`${inventory} renders one Native before one rectangle for %s`, async (locale) => {
+    it.each(locales)(`${inventory} retains exactly one Native and one rectangle for %s`, async (locale) => {
       const tree = await page({params: Promise.resolve({locale, type: "weapons"})});
-      const blocks = findInventory(tree, inventory);
-      expect(blocks).toHaveLength(1);
-      const html = renderToStaticMarkup(blocks[0]);
+      const slots = findInlineAds(tree);
+      expect(slots).toHaveLength(2);
+      const html = slots.map((slot) => renderToStaticMarkup(slot)).join("");
       expect(html.match(/data-ad-slot="adsterra-native"/g)).toHaveLength(1);
       expect(html.match(/data-ad-placement="rectangle"/g)).toHaveLength(1);
-      expect(html.indexOf('data-ad-slot="adsterra-native"')).toBeLessThan(html.indexOf('data-ad-placement="rectangle"'));
+      if (!inventory.startsWith("tools-")) {
+        expect(html.indexOf('data-ad-slot="adsterra-native"')).toBeLessThan(html.indexOf('data-ad-placement="rectangle"'));
+      }
     });
   }
 });

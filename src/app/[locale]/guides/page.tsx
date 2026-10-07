@@ -1,6 +1,7 @@
 import {HubHeader} from "@/components/ui/hub-header";
 import {SectionHeading} from "@/components/ui/section-heading";
 import type {Metadata} from "next";
+import {Fragment} from "react";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {isLocale, siteLocales, type Locale} from "@/config/site";
@@ -69,17 +70,19 @@ export default async function GuidesPage({params}: PageProps) {
         </nav>
         <div data-page-ad-inventory="guides">
           <AdsterraNativeBanner label={adsT("label")} />
-          <AdsterraDisplayBanner label={adsT("label")} placement="rectangle" />
           <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         </div>
       </section>
       <VideoGuideStrip locale={locale} />
       <div className="site-container space-y-10 py-10 md:py-12">
-        {collections.map((collection) => (
-          <section className="scroll-mt-24" id={`collection-${collection.key}`} key={collection.key} aria-labelledby={`collection-${collection.key}-title`}>
-            <SectionHeading id={`collection-${collection.key}-title`} title={`${hubCopy.collections[collection.key]} (${collection.guides.length})`} />
-            <GuideGrid guides={collection.guides} readLabel={t("read")} categoryLabels={categoryLabels} />
-          </section>
+        {collections.map((collection, index) => (
+          <Fragment key={collection.key}>
+            <section className="scroll-mt-24" id={`collection-${collection.key}`} aria-labelledby={`collection-${collection.key}-title`}>
+              <SectionHeading id={`collection-${collection.key}-title`} title={`${hubCopy.collections[collection.key]} (${collection.guides.length})`} />
+              <GuideGrid guides={collection.guides} readLabel={t("read")} categoryLabels={categoryLabels} />
+            </section>
+            {index === 0 ? <div data-page-ad-inventory="guides"><AdsterraDisplayBanner label={adsT("label")} placement="rectangle" /></div> : null}
+          </Fragment>
         ))}
       </div>
     </main>

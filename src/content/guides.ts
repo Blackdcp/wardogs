@@ -1,6 +1,7 @@
 import {readFile, readdir} from "node:fs/promises";
 import path from "node:path";
 import type {MDXComponents} from "mdx/types";
+import type {ReactNode} from "react";
 import {compileMDX} from "next-mdx-remote/rsc";
 import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
@@ -8,6 +9,7 @@ import type {Locale} from "../config/site";
 import {getManifestEntry, guideManifest, type GuideManifestEntry} from "./manifest";
 import {remarkWardogsMdxPolicy} from "./mdx-policy";
 import {remarkDirectAnswer} from "./direct-answer";
+import {GUIDE_INLINE_SLOT, remarkGuideInlineSlot} from "./guide-inline-slot";
 import {validateGuideFrontmatter, type GuideFrontmatter} from "./schema";
 
 export type GuideDocument = {
@@ -104,15 +106,16 @@ export function localizeMdxInternalLinks(body: string, locale: Locale): string {
     .replace(new RegExp(`href="/(?!${localePattern}/)(guides|videos)([^"]*)"`, "g"), `href="/${locale}/$1$2"`);
 }
 
-export async function compileLocalizedGuideBody(body: string, components: MDXComponents, locale: Locale) {
+export async function compileLocalizedGuideBody(body: string, components: MDXComponents, locale: Locale, options?: {inlineAd?: ReactNode}) {
   let directAnswer: string | null = null;
+  const insertInlineAd = options?.inlineAd !== undefined;
   const compiled = await compileMDX({
     source: localizeMdxInternalLinks(body, locale),
-    components,
+    components: insertInlineAd ? {...components, [GUIDE_INLINE_SLOT]: () => options.inlineAd} : components,
     options: {
       blockJS: true,
       blockDangerousJS: true,
-      mdxOptions: {remarkPlugins: [remarkGfm, remarkWardogsMdxPolicy, remarkDirectAnswer((answer) => { directAnswer = answer; })]}
+      mdxOptions: {remarkPlugins: [remarkGfm, remarkWardogsMdxPolicy, remarkDirectAnswer((answer) => { directAnswer = answer; }), ...(insertInlineAd ? [remarkGuideInlineSlot] : [])]}
     }
   });
   return {...compiled, directAnswer};

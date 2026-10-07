@@ -45,3 +45,38 @@ The rollout also changes runtime delivery measurement, route attribution, and se
 GA4 reports and explorations require event-scoped custom dimensions for custom parameters; verify the exact parameter names emitted by the deployed runtime, including `placement`, `format`, `status`, and `locale`, plus `config_version`, `page_type`, and `ad_unit` for configuration/template/zone segmentation. Google documents a 24–48 hour availability delay after collection and registration. [Event parameter setup](https://developers.google.com/analytics/devguides/collection/ga4/event-parameters) · [Event-scoped custom dimensions](https://support.google.com/analytics/answer/14239696?hl=en).
 
 A rollback of this placement variable restores rectangle-before-Native only in the eight listed blocks. Keep verified delivery fixes and measurement improvements unless separate evidence identifies a problem in them. Record every subsequent configuration revision as a new ledger entry instead of silently changing `native-first-v1`.
+
+## task-aware-v2
+
+| Field | Value |
+| --- | --- |
+| Configuration version | `task-aware-v2` |
+| Baseline revision | `7f97cde6e07aefa8f70356c479d9a68422f2adc6` |
+| Intended rollout date | 2026-10-08 (Asia/Shanghai) |
+| Assignment | All eligible visits; a new operational baseline, not a randomized A/B test |
+| Vendor inventory | Existing approved Native and six display units; same keys and loader URLs |
+| External changes | No new advertising code applications, new networks, or format activation |
+| Release boundary | Record production revision and exact UTC verification time in private `.tmp` receipt |
+
+The release separates consecutive inline ads with useful content, places tool rectangles alongside sufficiently wide workspaces or directly after narrower workspaces, and preserves homepage sections, routes, translated content and per-page inventory. Mobile inventory remembers dismissal for the browser session and temporarily avoids menus, dialogs, keyboards, fullscreen, and intersecting tool controls. Temporary suppression retains the existing creative; it does not refresh the vendor request.
+
+Deep slots begin their first request within 600px of the viewport while the page is in the foreground. Display scripts retain their serialized global configuration lease. `queued`, `loader_wait` and `loader_stalled` diagnose the loading chain; a timeout never unlocks the queue or counts as no-fill. A confirmed delivery failure or missing creative can show clearly labelled first-party navigation in the reserved inline space. This fallback is outside the vendor observer, generates no ad impression, and yields to late creative evidence.
+
+### Measurement contract
+
+- Primary outcomes: vendor total USD revenue and revenue per 1,000 all measured sessions, aligned to complete UTC days. Missing session denominators remain unavailable; do not substitute GA event counts or only visitors who saw an ad.
+- Keep historical `placement` values. `section` (already registered in GA4) adds a stable `page_type:placement` identifier to `ad_status` and `ad_dismiss`. `page_type` distinguishes `map_tool` and `artillery_tool`. No visitor input, coordinates or share queries are collected.
+- Shared vendor IDs remain shared. These fields diagnose delivery by page but **do not allocate vendor dollars by page or position**. The user has chosen to keep the existing codes rather than request separate ones.
+- GA4's property calendar is UTC+8; the vendor's is UTC. Vendor October 8 is GA local October 8 08:00 through October 9 07:59. Align exports before calculating cross-platform ratios, and document measurement/consent coverage.
+- Guardrails: functional search and tools, no obstructed controls, no accidental navigation, continued guide discovery, return visits, and real-user performance. A longer session is not automatically a better session.
+- No revenue effect can be attributed to an individual change in this combined release. Keep a stable baseline before testing another commercial variable. Low daily revenue and rounded exports require more than a one-day comparison.
+
+### Operational report
+
+Run `npm run ads:report -- .tmp/private-snapshot.json`. Input is a private JSON object with `domain: "wardogswiki.com"`, `currency: "USD"`, `timezone: "UTC"`, and `daily` rows containing `date`, `impressions`, `revenue`, `completeUtcDay`. It excludes unfinished dates and computes weighted CPM from total revenue and impressions rather than averaging daily CPM.
+
+Optional `sessionsByUtcDate` entries must include `windowStart` and exclusive `windowEnd` as midnight UTC ISO strings, `scope: "all_measured_sessions"`, `hostname: "www.wardogswiki.com"`, and the deduplicated `sessions` count for that exact window. Do not sum overlapping hourly unique-session reports. The report rejects mismatched boundaries and leaves aggregate session RPM null if any included date lacks an aligned denominator. Revenue and reports remain private and are never committed.
+
+### Next controlled comparison using existing codes
+
+After this baseline stabilizes, change one layout variable at a time on a documented page group. Without separate revenue identifiers, an alternating schedule using the same existing zones can provide a weaker site-level comparison: pre-register equal complete UTC windows covering the same weekdays and keep the rest of the configuration stable. Label it observational, account for country/device changes, and do not present GA visibility as a randomized dollar lift. Promote changes only when the total-income signal and task/retention guardrails agree; keep results inconclusive when sample size is inadequate.

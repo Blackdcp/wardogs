@@ -1,0 +1,30 @@
+.layout {
+  min-width: 0;
+}
+
+.workspace {
+  min-width: 0;
+}
+
+.sponsor {
+  margin-top: 2rem;
+}
+
+/* Preserve the existing 1180px work surface plus both outer 160px ad rails.
+   Below this threshold the rectangle follows the tool, never its controls. */
+@media (min-width: 1920px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 1180px 300px;
+    gap: 24px;
+    width: 1504px;
+    margin-inline: -162px;
+    align-items: start;
+  }
+
+  .sponsor {
+    position: sticky;
+    top: 6rem;
+    margin-top: 0;
+  }
+}

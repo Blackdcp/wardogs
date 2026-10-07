@@ -50,7 +50,7 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
           >
             {t("skipToContent")}
           </a>
-          <div className="flex min-h-screen flex-col pb-[74px] min-[468px]:pb-0">
+          <div className="site-mobile-ad-clearance flex min-h-screen flex-col">
             <SiteHeader />
             <GlobalTopAd label={adsT("label")} />
             <div id="main-content" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
