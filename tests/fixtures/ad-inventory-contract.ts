@@ -6,12 +6,15 @@ export const INVENTORY_PAGE_TEMPLATES = [
   "videos-index",
   "guide-detail",
   "video-detail",
-  "item-detail"
+  "item-detail",
+  "maps-index",
+  "map-tool",
+  "artillery-tool"
 ] as const;
 
 export const INVENTORY_VIEWPORTS = ["mobile", "tablet", "desktop", "wide"] as const;
 
-export const DISABLED_AD_FORMATS = ["smartlink", "popunder", "social-bar"] as const;
+export const DISABLED_AD_FORMATS = ["popunder", "social-bar"] as const;
 
 type InventoryPageTemplate = (typeof INVENTORY_PAGE_TEMPLATES)[number];
 type InventoryViewport = (typeof INVENTORY_VIEWPORTS)[number];
@@ -19,10 +22,11 @@ type InventoryViewport = (typeof INVENTORY_VIEWPORTS)[number];
 export type AdInventorySlot = {
   pageTemplate: InventoryPageTemplate;
   viewport: InventoryViewport;
-  placement: "inline-primary" | "global-top" | "mobile-sticky" | "left-rail" | "right-rail";
+  placement: "inline-primary" | "global-top" | "mobile-sticky" | "left-rail" | "right-rail" | "inline-supplemental" | "tool-rail";
   format: "display" | "native";
   zone: string;
   count: 1;
+  eligibleLongContent?: true;
   section?: "proven-demand" | "database";
 };
 
@@ -89,6 +93,13 @@ function slotsFor(pageTemplate: InventoryPageTemplate, viewport: InventoryViewpo
       zone: ZONES.leaderboard,
       count: 1
     });
+  }
+
+  if (viewport === "desktop" || viewport === "wide") {
+    const tool = pageTemplate === "map-tool" || pageTemplate === "artillery-tool";
+    if (tool && viewport === "desktop") slots.push({pageTemplate, viewport, placement: "tool-rail", format: "display", zone: ZONES.leftRail, count: 1});
+    if (!tool) slots.push({pageTemplate, viewport, placement: "inline-supplemental", format: "display", zone: ZONES.horizontal, count: 1,
+      ...(["guide-detail", "video-detail", "item-type-index", "maps-index", "videos-index", "guides-index"].includes(pageTemplate) ? {eligibleLongContent: true as const} : {})});
   }
 
   if (viewport === "wide") {

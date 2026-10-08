@@ -16,7 +16,7 @@ import {getHomeLiveIntelEntries} from "@/features/home/home-live-intel";
 import {buildPageMetadata} from "@/lib/metadata";
 import {buildHomeJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
@@ -58,13 +58,12 @@ export default async function HomePage({params}: HomePageProps) {
           <div className="space-y-3" data-page-ad-inventory="home">
             <p className="px-1 font-mono text-[11px] font-semibold uppercase tracking-wide text-[#82938a]">{t("ads.sponsored")}</p>
             <AdsterraNativeBanner label={t("ads.label")} />
-            <AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />
           </div>
         }
       />
 
       <HomeLiveIntel locale={locale} entries={model.liveIntel} />
-      <HomeToolWorkbench locale={locale} tools={model.featuredTools} />
+      <HomeToolWorkbench locale={locale} tools={model.featuredTools} sponsoredSlot={<AdsterraSupplementalBanner label={t("ads.label")} />} />
       <CatalogueHomeBand
         locale={locale}
         sponsoredSlot={
@@ -73,7 +72,7 @@ export default async function HomePage({params}: HomePageProps) {
           </div>
         }
       />
-      <HomeLibrary locale={locale} destinations={model.library} />
+      <HomeLibrary locale={locale} destinations={model.library} sponsoredSlot={<AdsterraSmartlink cta={t("ads.smartlinkCta")} description={t("ads.smartlinkDescription")} label={t("ads.sponsored")} />} />
     </main>
   );
 }

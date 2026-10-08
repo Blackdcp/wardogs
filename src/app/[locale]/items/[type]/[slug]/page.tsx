@@ -28,7 +28,7 @@ import {getItemRelatedGuides} from "@/features/guides/related";
 import {TaskLink} from "@/components/ui/task-link";
 import {getTranslations} from "next-intl/server";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; type: string; slug: string}>};
@@ -162,7 +162,6 @@ export default async function ItemDetailPage({params}: PageProps) {
         ) : null}
 
         <AdsterraNativeBanner label={articleT("advertisement")} />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
 
         <EvidencePanel
           dataAsOf={baseItem.build}
@@ -187,6 +186,8 @@ export default async function ItemDetailPage({params}: PageProps) {
             </ul>
           </div>
         </section>
+
+        <AdsterraSupplementalBanner label={adsT("label")} />
 
         <section className="mt-12" aria-labelledby="role-title">
           <h2 className="display-font text-3xl text-white" id="role-title">{ui.howToUse}</h2>
@@ -255,6 +256,7 @@ export default async function ItemDetailPage({params}: PageProps) {
             </ul>
           </div>
         </section>
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </article>
     </main>
   );

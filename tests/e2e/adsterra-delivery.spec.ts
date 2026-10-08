@@ -97,7 +97,7 @@ test("empty native loader reports request, load and missing creative evidence wi
   for (const event of events) {
     expect(event).toMatchObject({
       format: "native", ad_unit: nativeUnit, page_path: "/en/guides",
-      page_type: "guide_hub", config_version: "task-aware-v2", locale: "en"
+      page_type: "guide_hub", config_version: "format-expansion-v3", locale: "en"
     });
     expect(["request_started", "script_loaded", "slot_visible", "creative_missing"]).toContain(event.status);
   }
@@ -162,7 +162,7 @@ test("persistent top creative is attributed to the new client route without relo
   const events = await adEvents(page, "horizontal", "/en/items");
   for (const event of events) {
     expect(event).toMatchObject({
-      format: "display", ad_unit: horizontalUnit, page_type: "catalogue_hub", config_version: "task-aware-v2"
+      format: "display", ad_unit: horizontalUnit, page_type: "catalogue_hub", config_version: "format-expansion-v3"
     });
     expect(["script_loaded", "slot_visible", "creative_present", "creative_visible", "creative_viewable"]).toContain(event.status);
   }
@@ -192,7 +192,7 @@ test("empty persistent top slot diagnoses missing creative on the current route 
   expect(events.map((event) => event.status)).toContain("script_loaded");
   expect(events.map((event) => event.status)).not.toContain("request_started");
   expect(events.find((event) => event.status === "creative_missing")).toMatchObject({
-    ad_unit: horizontalUnit, page_path: "/en/items", page_type: "catalogue_hub", config_version: "task-aware-v2"
+    ad_unit: horizontalUnit, page_path: "/en/items", page_type: "catalogue_hub", config_version: "format-expansion-v3"
   });
   expect((await adEvents(page, "horizontal", "/en/guides")).map((event) => event.status)).not.toContain("creative_missing");
   expect(requests.filter((path) => path === `/22/${horizontalUnit}`)).toHaveLength(1);
@@ -201,44 +201,120 @@ test("empty persistent top slot diagnoses missing creative on the current route 
   expect((await adEvents(page, "horizontal", "/en/items")).filter((event) => event.status === "creative_missing")).toHaveLength(1);
 });
 
-test("restoring a resized rectangle waits for its new loader before diagnosing missing creative", async ({page, context, baseURL}) => {
+test("restoring a resized rectangle does not request the same zone again during the page visit", async ({page, context, baseURL}) => {
   const rectangleUnit = "3342dc928824e6ed5c01555e7f9e9e0f";
-  await installDeliveryFixture(context, baseURL, false);
+  const requests = await installDeliveryFixture(context, baseURL, false);
   await page.clock.install();
   await page.goto(`${productionOrigin}/en/guides`);
-  await page.locator('[data-ad-container="rectangle"]').scrollIntoViewIfNeeded();
+  const container = page.locator('[data-ad-container="rectangle"]');
+  await container.scrollIntoViewIfNeeded();
   await expectStatus(page, "rectangle", "/en/guides", "script_loaded");
+  expect(requests.filter((path) => path === `/22/${rectangleUnit}`)).toHaveLength(1);
 
-  // Hold only the second request. The first load completed normally, leaving a
-  // terminal status that must stop being replayable when its loader is disposed.
-  let releaseSecond: () => void = () => {};
-  const secondResponse = new Promise<void>((resolve) => {releaseSecond = resolve;});
-  let secondRequests = 0;
-  await context.route(`https://bauval.org/22/${rectangleUnit}`, async (route) => {
-    secondRequests += 1;
-    await secondResponse;
-    await route.fulfill({contentType: "application/javascript", body: "/* Empty replacement loader. */"});
+  await container.evaluate((element) => {element.style.width = "288px";});
+  await expect(container.locator('[data-adsterra-unit]')).toHaveCount(0);
+  const beforeRestore = (await adEvents(page, "rectangle", "/en/guides")).length;
+  await container.evaluate((element) => {element.style.width = "400px";});
+  await container.scrollIntoViewIfNeeded();
+  await expect(container.locator('[data-ad-placement="rectangle"]')).toHaveAttribute("hidden", "");
+  await page.clock.fastForward(60_000);
+  expect(requests.filter((path) => path === `/22/${rectangleUnit}`)).toHaveLength(1);
+  const restoredStatuses = (await adEvents(page, "rectangle", "/en/guides")).slice(beforeRestore).map((event) => event.status);
+  expect(restoredStatuses).not.toContain("request_started");
+  expect(restoredStatuses).not.toContain("script_loaded");
+  expect(restoredStatuses).not.toContain("creative_missing");
+});
+
+async function smartlinkEvents(page: Page, name: "ad_exposure" | "ad_click"): Promise<Record<string, unknown>[]> {
+  return page.evaluate((eventName) => {
+    const layer = (window as Window & {dataLayer?: unknown[]}).dataLayer ?? [];
+    return layer.flatMap((entry) => {
+      const command = Array.from(entry as ArrayLike<unknown>);
+      const parameters = command[2] as Record<string, unknown> | undefined;
+      return command[0] === "event" && command[1] === eventName && parameters?.format === "smartlink" ? [parameters] : [];
+    });
+  }, name);
+}
+
+test("sponsored CTA counts one exposure per route visit and opens only a chosen link", async ({page, context, baseURL}) => {
+  await installDeliveryFixture(context, baseURL, false);
+  const destination = "https://araplhn.org/4/88f0d659df423718bd107ca16b5284cd";
+  let destinationRequests = 0;
+  await context.route(destination, (route) => {
+    destinationRequests += 1;
+    return route.fulfill({contentType: "text/html", body: "Local sponsored destination fixture"});
   });
-  try {
-    const container = page.locator('[data-ad-container="rectangle"]');
-    await container.evaluate((element) => {element.style.width = "288px";});
-    await expect(container.locator('[data-adsterra-unit]')).toHaveCount(0);
-    const beforeRestore = (await adEvents(page, "rectangle", "/en/guides")).length;
-    await container.evaluate((element) => {element.style.width = "400px";});
-    await container.scrollIntoViewIfNeeded();
-    await expect.poll(() => secondRequests).toBe(1);
-    await page.clock.fastForward(15_001);
-    const restoredStatuses = (await adEvents(page, "rectangle", "/en/guides")).slice(beforeRestore).map((event) => event.status);
-    expect(restoredStatuses).toContain("request_started");
-    expect(restoredStatuses).not.toContain("script_loaded");
-    expect(restoredStatuses).not.toContain("creative_missing");
+  await page.goto(`${productionOrigin}/en/guides?private=share-data#not-analytics`);
+  await page.locator("html").evaluate((element) => {element.dataset.smartlinkDocument = "same-document";});
+  const cta = page.locator('[data-ad-slot="adsterra-smartlink"] a');
+  await expect(cta).toHaveCount(1);
+  await expect(cta).toHaveAttribute("target", "_blank");
+  await expect(cta).toHaveAttribute("href", destination);
+  await cta.scrollIntoViewIfNeeded();
+  await expect.poll(() => smartlinkEvents(page, "ad_exposure")).toEqual([expect.objectContaining({
+    page_path: "/en/guides", page_type: "guide_hub", section: "guide_hub:smartlink",
+    ad_unit: "smartlink-1", locale: "en", config_version: "format-expansion-v3"
+  })]);
+  await cta.scrollIntoViewIfNeeded();
+  expect(destinationRequests).toBe(0);
+  expect(await smartlinkEvents(page, "ad_click")).toEqual([]);
 
-    releaseSecond();
-    await expect.poll(async () => (await adEvents(page, "rectangle", "/en/guides")).slice(beforeRestore).map((event) => event.status)).toContain("script_loaded");
-    await page.clock.fastForward(15_001);
-    await expect.poll(async () => (await adEvents(page, "rectangle", "/en/guides")).slice(beforeRestore).map((event) => event.status)).toContain("creative_missing");
-    expect(secondRequests).toBe(1);
-  } finally {
-    releaseSecond();
-  }
+  await page.getByRole("button", {name: "Catalogue", exact: true}).click();
+  await page.locator('header a[href="/en/items"]:visible').first().click();
+  await expect(page).toHaveURL(`${productionOrigin}/en/items`);
+  await cta.scrollIntoViewIfNeeded();
+  await expect.poll(() => smartlinkEvents(page, "ad_exposure")).toHaveLength(2);
+  expect((await smartlinkEvents(page, "ad_exposure"))[1]).toMatchObject({
+    page_path: "/en/items", page_type: "catalogue_hub", section: "catalogue_hub:smartlink"
+  });
+
+  await page.goBack();
+  await expect(page).toHaveURL(`${productionOrigin}/en/guides?private=share-data#not-analytics`);
+  await cta.scrollIntoViewIfNeeded();
+  await expect.poll(() => smartlinkEvents(page, "ad_exposure")).toHaveLength(3);
+  await expect(page.locator("html")).toHaveAttribute("data-smartlink-document", "same-document");
+  expect((await smartlinkEvents(page, "ad_exposure"))[2]).toMatchObject({page_path: "/en/guides", section: "guide_hub:smartlink"});
+  expect(destinationRequests).toBe(0);
+
+  const popupPromise = context.waitForEvent("page");
+  await cta.click();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL(destination);
+  await expect.poll(() => smartlinkEvents(page, "ad_click")).toEqual([{
+    ad_unit: "smartlink-1", page_path: "/en/guides", page_type: "guide_hub",
+    config_version: "format-expansion-v3", section: "guide_hub:smartlink",
+    format: "smartlink", placement: "smartlink", locale: "en"
+  }]);
+  expect(destinationRequests).toBe(1);
+  await popup.close();
+});
+
+test("a top banner suppressed after resizing can serve again on the next client route", async ({page, context, baseURL}) => {
+  const requests = await installDeliveryFixture(context, baseURL, true);
+  const sharedHorizontal = "c6d1a3e01dc90e01385598a3c84dcaea";
+  await page.clock.install();
+  await page.goto(`${productionOrigin}/en/guides`);
+  await expectStatus(page, "horizontal", "/en/guides", "script_loaded");
+  const contentBanner = page.locator('[data-ad-placement="content-horizontal"]');
+  await contentBanner.scrollIntoViewIfNeeded();
+  await expectStatus(page, "content-horizontal", "/en/guides", "script_loaded");
+  expect(requests.filter((path) => path === `/22/${sharedHorizontal}`)).toHaveLength(1);
+
+  // The body has already spent this zone's page-visit request. Resizing switches
+  // the top slot to that zone, so it must suppress itself without refreshing it.
+  await page.setViewportSize({width: 700, height: 900});
+  await page.evaluate(() => window.scrollTo({top: 0, behavior: "instant"}));
+  const topBanner = page.locator('[data-global-ad-position="top"] [data-ad-placement="horizontal"]');
+  await expect(topBanner).toHaveAttribute("hidden", "");
+  expect(requests.filter((path) => path === `/22/${sharedHorizontal}`)).toHaveLength(1);
+
+  await page.locator('footer a[href="/en/items"]').first().click();
+  await expect(page).toHaveURL(`${productionOrigin}/en/items`);
+  await page.evaluate(() => window.scrollTo({top: 0, behavior: "instant"}));
+  await expect(topBanner).toBeVisible();
+  await expectStatus(page, "horizontal", "/en/items", "script_loaded");
+  await expectStatus(page, "horizontal", "/en/items", "creative_present");
+  expect(requests.filter((path) => path === `/22/${sharedHorizontal}`)).toHaveLength(2);
+  await page.clock.fastForward(60_000);
+  expect(requests.filter((path) => path === `/22/${sharedHorizontal}`)).toHaveLength(2);
 });

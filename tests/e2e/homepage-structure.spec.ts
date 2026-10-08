@@ -48,7 +48,10 @@ for (const locale of ["en", "ja"] as const) {
       await expect(demand.locator('[data-ad-slot="adsterra-native"]')).toHaveCount(1);
       await expect(page.locator('[data-home-route]')).toHaveCount(3);
       await expect(page.locator('[data-featured-tool]')).toHaveCount(4);
-      await expect(page.locator('[data-hero-popular-links], [data-site-search], [data-live-event], [data-ad-slot="adsterra-smartlink"]')).toHaveCount(0);
+      await expect(page.locator('[data-hero-popular-links], [data-site-search], [data-live-event]')).toHaveCount(0);
+      await expect(page.locator('[data-home-section="library"] [data-ad-slot="adsterra-smartlink"] a')).toHaveCount(1);
+      await expect(page.locator('[data-home-section="command"] [data-ad-slot="adsterra-smartlink"]')).toHaveCount(0);
+      await expect(page.locator('[data-ad-placement="content-horizontal"]')).toHaveCount(viewport.width >= 1024 ? 1 : 0);
       expect(await page.locator('[data-home-placement="command"][data-home-task]').evaluateAll((nodes) => nodes.map((node) => node.getAttribute("data-home-task")))).toEqual(["season2", "search", "map", "calculator", "weapons", "status"]);
       const command = page.locator('[data-home-section="command"]');
       const seasonTwo = command.locator('a[data-home-task="season2"]');

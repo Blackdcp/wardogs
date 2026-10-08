@@ -3,7 +3,7 @@ import {ToolSponsoredWorkspace} from "@/components/tools/tool-sponsored-workspac
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {getTranslations} from "next-intl/server";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {ArtilleryCalculator} from "@/components/artillery/artillery-calculator";
@@ -43,17 +43,18 @@ export default async function ArtilleryCalculatorPage({params}: PageProps) {
       <ToolSponsoredWorkspace
         inventory="tools-artillery"
         label={t("label")}
+        railSlot={<AdsterraSupplementalBanner label={t("label")} placement="tool-rail" />}
         sponsoredSlot={<AdsterraDisplayBanner label={t("label")} placement="rectangle" />}
       >
         <ArtilleryCalculator locale={locale} headerActions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]} />
       </ToolSponsoredWorkspace>
 
-      <ToolRelatedGuides model={relatedLinks} locale={locale} />
 
       <section className="mt-12 pt-8 border-t border-[#2b3530]" data-page-ad-inventory="tools-artillery">
         <AdsterraNativeBanner label={t("label")} />
-        <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
       </section>
+      <ToolRelatedGuides model={relatedLinks} locale={locale} />
+      <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
     </main>
   );
 }

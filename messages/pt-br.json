@@ -736,8 +736,8 @@
   "ads": {
     "label": "Publicidade",
     "sponsored": "Patrocinado",
-    "smartlinkCta": "Ver recomendações patrocinadas",
-    "smartlinkDescription": "Abre um destino externo patrocinado em uma nova guia."
+    "smartlinkCta": "Visitar o anunciante",
+    "smartlinkDescription": "Abre o site externo do anunciante em uma nova guia."
   },
   "categories": {
     "access": "Acesso",
@@ -818,7 +818,7 @@
     "title": "Política de Privacidade",
     "intro": "Esta página descreve análises, publicidade, mídias externas e links do site.",
     "content": "Não operamos contas de jogadores nem coletamos credenciais do jogo. Em wardogswiki.com e www.wardogswiki.com, Google Analytics carrega automaticamente ao abrir a página. A tag usa cookies e coleta visualizações, interações no site e informações de navegador/dispositivo para analisar o uso. Analytics e solicitações diretas Adsterra podem ocorrer antes de clicar em links externos; as políticas dos provedores também se aplicam a essas solicitações. Configurações do navegador podem limitar cookies e identificadores.",
-    "advertising": "Anúncios nativos e banners do Adsterra, incluindo banners horizontais para desktop, barras laterais e banner móvel fixo dispensável, são carregados diretamente por scripts de exibição. Cliques de usuários abrem sites de anunciantes em novas abas. Formatos invasivos como Popunder, Social Bar e Smartlink permanecem totalmente desativados desde 2026-10-01. As solicitações de anúncios transmitem seu endereço IP, dados do navegador e informações do dispositivo para as redes de publicidade; cookies estão sujeitos aos controles de privacidade do navegador.",
+    "advertising": "Anúncios nativos e banners da Adsterra são carregados por scripts publicitários de terceiros. Links patrocinados claramente identificados (Smartlink) só abrem quando você decide acessá-los e levam a sites externos de anunciantes em uma nova guia. Algumas páginas podem testar formatos adicionais, como Social Bar ou Popunder; os formatos e posicionamentos variam conforme a página, o dispositivo e as configurações do teste. Anúncios de terceiros podem abrir sites de anunciantes em outra guia ou janela. As solicitações de anúncios podem enviar seu endereço IP, cabeçalhos do navegador e informações do dispositivo aos provedores antes de qualquer clique; aplicam-se as políticas de privacidade desses provedores e seus controles de cookies e identificadores no navegador. O site registra a visibilidade dos links patrocinados e os cliques voluntários para avaliar o posicionamento, sem tratar esses eventos como impressões publicitárias faturáveis.",
     "googlePolicy": "Política de Privacidade do Google"
   },
   "terms": {

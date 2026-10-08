@@ -11,6 +11,7 @@ import TacticalMapPage from "../../src/app/[locale]/tools/map/page";
 import ArtilleryCalculatorPage from "../../src/app/[locale]/tools/artillery-calculator/page";
 import {locales} from "../../src/config/site";
 import {AdsterraNativeBanner} from "../../src/components/ads/adsterra-native-banner";
+import {AdsterraSmartlink} from "../../src/components/ads/adsterra-smartlink";
 import {AdsterraDisplayBanner} from "../../src/components/ads/adsterra-display-banner";
 
 vi.mock("next-intl/server", () => ({
@@ -25,15 +26,17 @@ type InventoryProps = {
   children?: ReactNode;
   sponsoredSlot?: ReactNode;
   secondarySponsoredSlot?: ReactNode;
+  supplementalSlot?: ReactNode;
+  afterContentSlot?: ReactNode;
 };
 
 // Inspect the actual page composition, then render its real ad components.
 // No ad or page component is mocked; browser effects stay inactive during SSR.
-function findInlineAds(node: ReactNode): ReactElement<InventoryProps>[] {
-  if (Array.isArray(node)) return node.flatMap(findInlineAds);
+function findInlineAds(node: ReactNode, smartlink = false): ReactElement<InventoryProps>[] {
+  if (Array.isArray(node)) return node.flatMap((child) => findInlineAds(child, smartlink));
   if (!isValidElement<InventoryProps>(node)) return [];
-  if (node.type === AdsterraNativeBanner || node.type === AdsterraDisplayBanner) return [node];
-  return [node.props.children, node.props.sponsoredSlot, node.props.secondarySponsoredSlot].flatMap(findInlineAds);
+  if (smartlink ? node.type === AdsterraSmartlink : node.type === AdsterraNativeBanner || node.type === AdsterraDisplayBanner) return [node];
+  return [node.props.children, node.props.sponsoredSlot, node.props.secondarySponsoredSlot, node.props.supplementalSlot, node.props.afterContentSlot].flatMap((child) => findInlineAds(child, smartlink));
 }
 
 const templates = [
@@ -52,6 +55,9 @@ describe("existing inline inventory across all languages", () => {
     it.each(locales)(`${inventory} retains exactly one Native and one rectangle for %s`, async (locale) => {
       const tree = await page({params: Promise.resolve({locale, type: "weapons"})});
       const slots = findInlineAds(tree);
+      const smartlinks = findInlineAds(tree, true);
+      expect(smartlinks).toHaveLength(1);
+      expect(renderToStaticMarkup(smartlinks[0]).match(/data-ad-unit="smartlink-1"/g)).toHaveLength(1);
       expect(slots).toHaveLength(2);
       const html = slots.map((slot) => renderToStaticMarkup(slot)).join("");
       expect(html.match(/data-ad-slot="adsterra-native"/g)).toHaveLength(1);

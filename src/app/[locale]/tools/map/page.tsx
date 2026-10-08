@@ -4,7 +4,7 @@ import {ToolSponsoredWorkspace} from "@/components/tools/tool-sponsored-workspac
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {getTranslations} from "next-intl/server";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {MapTacticalIntel} from "@/components/map/map-tactical-intel";
@@ -61,6 +61,7 @@ export default async function TacticalMapPage({params}: PageProps) {
       <ToolSponsoredWorkspace
         inventory="tools-map"
         label={t("label")}
+        railSlot={<AdsterraSupplementalBanner label={t("label")} placement="tool-rail" />}
         sponsoredSlot={<AdsterraDisplayBanner label={t("label")} placement="rectangle" />}
       >
         <section aria-label={c.title}>
@@ -72,11 +73,11 @@ export default async function TacticalMapPage({params}: PageProps) {
 
       <section className="mt-8 pt-6 border-t border-[#2b3530]" data-page-ad-inventory="tools-map">
         <AdsterraNativeBanner label={t("label")} />
-        <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
       </section>
 
       {/* Second-Monitor Tactical Intel, Ballistics Tables & Theater Guide */}
       <MapTacticalIntel locale={locale} />
+      <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
     </main>
   );
 }

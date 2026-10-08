@@ -21,6 +21,7 @@ import {
   type AdsterraBannerUnit
 } from "@/features/ads/adsterra-banner";
 import {isProductionHostname} from "@/lib/analytics-events";
+import {mountUniqueBanner, visitAdPage} from "@/features/ads/ad-inventory";
 import {whenAdNearViewport} from "@/features/ads/ad-loading";
 import {AdSlotFallback, getAdFallbackCopy} from "./ad-slot-fallback";
 
@@ -42,10 +43,22 @@ type BannerSlotProps = {
 function BannerSlot({className = "", label = "Advertisement", placement, unit, loadEnabled = true}: BannerSlotProps) {
   const slotRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const pathnameRef = useRef(pathname);
+  const [suppressed, setSuppressed] = useState(false);
+  const suppressedRef = useRef(false);
+  const [visitRetry, setVisitRetry] = useState(0);
   const reportRef = useRef<((status: AdStatus) => void) | null>(null);
   const loadedState = useRef<{key: string; status: "script_loaded" | "script_error"} | null>(null);
   const [fallback, setFallback] = useState(false);
   const showFallback = fallback && placement === "rectangle";
+
+  useEffect(() => {
+    pathnameRef.current = pathname;
+    visitAdPage(document, pathname);
+    // An unused persistent shell may have lost its zone to body inventory on a
+    // resize. A new page may claim it, without refreshing an existing creative.
+    if (suppressedRef.current) setVisitRetry((value) => value + 1);
+  }, [pathname]);
 
   useEffect(() => {
     if (!ADSTERRA_ENABLED || !unit || !loadEnabled || !isProductionHostname(window.location.hostname)) return;
@@ -70,24 +83,28 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit, l
     if (!unit || !loadEnabled || !slotRef.current) return;
     loadedState.current = null;
     const container = slotRef.current;
-    const cancelLoad = whenAdNearViewport(container, () => mountAdsterraBanner(container, unit, (status) => {
+    suppressedRef.current = false;
+    setSuppressed(false);
+    const cancelLoad = whenAdNearViewport(container, () => mountUniqueBanner(container.ownerDocument, pathnameRef.current, unit.key, (report) => mountAdsterraBanner(container, unit, (status) => {
+      report(status);
       if (status === "script_loaded" || status === "script_error") loadedState.current = {key: unit.key, status};
       reportRef.current?.(status);
-    }));
+    }), (hidden) => { suppressedRef.current = hidden; setSuppressed(hidden); }));
     return () => {
       loadedState.current = null;
       cancelLoad();
     };
-  }, [loadEnabled, unit]);
+  }, [loadEnabled, unit, visitRetry]);
 
   if (!ADSTERRA_ENABLED || !unit) return null;
 
   return (
     <aside
+      hidden={suppressed}
       aria-label={showFallback ? getAdFallbackCopy(pathname).title : label}
       className={className}
       data-ad-placement={placement}
-      data-ad-unit={unit.key}
+      data-ad-unit={suppressed ? undefined : unit.key}
       data-ad-config={AD_REPORTING_VERSION}
     >
       <p aria-hidden={showFallback || undefined} className={`mb-2 text-center text-[10px] font-semibold uppercase text-[#82938a]${showFallback ? " invisible" : ""}`}>{label}</p>
@@ -140,6 +157,41 @@ export function AdsterraDisplayBanner({label, placement}: AdsterraDisplayBannerP
       />
     </div>
   );
+}
+
+/** These zones are additional inventory only while their global counterpart is absent. */
+export function AdsterraSupplementalBanner({label, placement = "content-horizontal"}: {
+  label?: string;
+  placement?: "content-horizontal" | "tool-rail";
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const [unit, setUnit] = useState<AdsterraBannerUnit | null>(null);
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!ADSTERRA_ENABLED || !container) return;
+    const query = window.matchMedia(placement === "tool-rail" ? "(min-width: 1440px) and (max-width: 1599px)" : "(min-width: 1024px)");
+    let width = 0;
+    const update = () => {
+      const top = document.querySelector('[data-global-ad-position="top"]');
+      const topUnit = top?.querySelector('[data-ad-unit]')?.getAttribute("data-ad-unit");
+      const available = placement === "tool-rail"
+        ? width >= 160
+        : width >= 468 && (!top || topUnit === ADSTERRA_BANNER_UNITS.leaderboard728.key);
+      setUnit(query.matches && available ? (placement === "tool-rail" ? ADSTERRA_BANNER_UNITS.rail300 : ADSTERRA_BANNER_UNITS.horizontal468) : null);
+    };
+    const stopWidth = observeAdContainerWidth(container, (next) => { width = next; update(); });
+    query.addEventListener("change", update);
+    // Top inventory can change after its own ResizeObserver or a client navigation.
+    const observer = new MutationObserver(update);
+    const top = document.querySelector('[data-global-ad-position="top"]');
+    if (top) observer.observe(top, {childList: true, subtree: true, attributes: true, attributeFilter: ["data-ad-unit"]});
+    return () => { stopWidth(); query.removeEventListener("change", update); observer.disconnect(); };
+  }, [pathname, placement]);
+  if (!ADSTERRA_ENABLED) return null;
+  return <div ref={containerRef} className="min-w-0 w-full" data-ad-container={placement}>
+    <BannerSlot className={placement === "tool-rail" ? "" : "my-10"} label={label} placement={placement} unit={unit} />
+  </div>;
 }
 
 function FixedBanner({label, media, placement, position, unit, dismissLabel}: {

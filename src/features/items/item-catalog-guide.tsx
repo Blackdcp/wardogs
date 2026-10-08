@@ -1,3 +1,4 @@
+import type {ReactNode} from "react";
 import {AlertTriangle, CheckCircle2, ExternalLink} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {localizedItemRoutePath, resolveItemRouteTarget} from "./item-route-availability";
@@ -28,9 +29,11 @@ function isIndexableGuideDetail(guideId: string, row: RecordLinkedCatalogRow) {
 type ItemCatalogGuideProps = {
   guide: CatalogGuide;
   locale: Locale;
+  supplementalSlot?: ReactNode;
+  afterContentSlot?: ReactNode;
 };
 
-export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
+export function ItemCatalogGuide({guide, locale, supplementalSlot, afterContentSlot}: ItemCatalogGuideProps) {
   const ui = getItemUi(locale);
   const sectionOffsets = guide.sections.map((_, sectionIndex) =>
     guide.sections.slice(0, sectionIndex).reduce((total, section) => total + section.rows.length, 0)
@@ -118,6 +121,8 @@ export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
         </div>
       </section>
 
+      {guide.sections.length >= 3 ? <div className="site-container">{supplementalSlot}</div> : null}
+
       <section className="border-y border-[#2c3631] bg-[#111512]">
         <div className="site-container grid gap-10 py-12 md:grid-cols-2 md:py-16">
           <div>
@@ -140,6 +145,8 @@ export function ItemCatalogGuide({guide, locale}: ItemCatalogGuideProps) {
           </div>
         </div>
       </section>
+
+      <div className="site-container">{afterContentSlot}</div>
 
       <section className="site-container py-12 md:py-16" aria-labelledby={`${guide.id}-official-sources`}>
         <h2 className="display-font text-3xl text-white" id={`${guide.id}-official-sources`}>{ui.officialSources}</h2>

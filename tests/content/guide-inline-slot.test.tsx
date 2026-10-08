@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm";
 import {compileLocalizedGuideBody, loadGuideDocument} from "../../src/content/guides";
 import {locales} from "../../src/config/site";
 import {guideManifest} from "../../src/content/manifest";
-import {GUIDE_INLINE_SLOT, findGuideInlineSlotBoundary, remarkGuideInlineSlot} from "../../src/content/guide-inline-slot";
+import {GUIDE_INLINE_SLOT, GUIDE_SUPPLEMENTAL_SLOT, findGuideInlineSlotBoundary, remarkGuideInlineSlot} from "../../src/content/guide-inline-slot";
 import {remarkWardogsMdxPolicy} from "../../src/content/mdx-policy";
 import {prepareGuideBodyForTaskPanel} from "../../src/features/guides/guide-task-body";
 import {getGuideTaskData} from "../../src/features/guides/guide-task-data";
@@ -65,6 +65,32 @@ describe("reserved guide inline ad slot", () => {
 
   it.each([false, true])("rejects author-supplied reserved tags even with insertion enabled=%s", async (enabled) => {
     await expect(compileLocalizedGuideBody(`<${GUIDE_INLINE_SLOT} />`, {}, "en", enabled ? {inlineAd: slot} : undefined)).rejects.toThrow(/not allowed/);
+  });
+
+  it("requires six H2 sections with body and preserves two complete sections between ads", async () => {
+    const secondary = <aside data-test-secondary-ad="true">Supplemental</aside>;
+    const makeBody = (count: number) => Array.from({length: count}, (_, i) => `## Section ${i + 1}\n\nComplete paragraph ${i + 1}.\n\n- Atomic list ${i + 1}`).join("\n\n");
+    for (const count of [3, 5, 6, 9]) {
+      const body = makeBody(count);
+      const baseline = await compileLocalizedGuideBody(body, {}, "en");
+      const compiled = await compileLocalizedGuideBody(body, {}, "en", {inlineAd: slot, supplementalAd: secondary});
+      const html = renderToStaticMarkup(compiled.content);
+      const primaryHtml = renderToStaticMarkup(slot);
+      const secondaryHtml = renderToStaticMarkup(secondary);
+      expect(html.split(primaryHtml)).toHaveLength(2);
+      expect(html.split(secondaryHtml)).toHaveLength(count >= 6 ? 2 : 1);
+      expect(html.replace(`${primaryHtml}\n`, "").replace(`${secondaryHtml}\n`, "")).toBe(renderToStaticMarkup(baseline.content));
+      if (count >= 6) {
+        const between = html.slice(html.indexOf(primaryHtml) + primaryHtml.length, html.indexOf(secondaryHtml));
+        expect(between.match(/<h2>/g)).toHaveLength(2);
+        expect(between).toContain("Complete paragraph 4.");
+        expect(html.indexOf(secondaryHtml)).toBeLessThan(html.indexOf("<h2>Section 5"));
+      }
+    }
+    const emptyHeadings = makeBody(5) + "\n\n## Empty six\n\n## Empty seven";
+    const compiled = await compileLocalizedGuideBody(emptyHeadings, {}, "en", {inlineAd: slot, supplementalAd: secondary});
+    expect(renderToStaticMarkup(compiled.content)).not.toContain("data-test-secondary-ad");
+    await expect(compileLocalizedGuideBody(`<${GUIDE_SUPPLEMENTAL_SLOT} />`, {}, "en", {inlineAd: slot, supplementalAd: secondary})).rejects.toThrow(/not allowed/);
   });
 
   it.each(locales)("preserves every original AST node and inserts once before the end of every long %s guide", async (locale) => {

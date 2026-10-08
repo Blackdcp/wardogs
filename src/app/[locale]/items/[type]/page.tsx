@@ -14,7 +14,7 @@ import {buildItemTypeJsonLd} from "@/lib/item-structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {getTranslations} from "next-intl/server";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
@@ -51,10 +51,9 @@ export default async function ItemTypePage({params}: PageProps) {
   return (
     <main>
       <JsonLd data={buildItemTypeJsonLd(locale, itemType.id)} />
-      <CatalogueCategoryView guide={catalogueGuide} locale={locale} sponsoredSlot={
+      <CatalogueCategoryView supplementalSlot={<AdsterraSupplementalBanner label={adsT("label")} />} afterContentSlot={<AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />} guide={catalogueGuide} locale={locale} sponsoredSlot={
         <section className="site-container py-2" data-page-ad-inventory="item-type">
           <AdsterraNativeBanner label={adsT("label")} />
-          <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         </section>
       } />
 

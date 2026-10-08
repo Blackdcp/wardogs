@@ -11,14 +11,16 @@ function componentName(element: ReactElement) {
 }
 
 describe("homepage composition", () => {
-  it("keeps six discovery sections while separating the two existing sponsored slots", async () => {
+  it("keeps six discovery sections and separates existing inventory from the desktop and voluntary additions", async () => {
     const page = await HomePage({params: Promise.resolve({locale: "en"})});
     const children = page.props.children.filter(isValidElement) as ReactElement<{sponsoredSlot?: ReactElement<{"data-page-ad-inventory"?: string}>}>[];
     expect(children.map(componentName)).toEqual([
       "JsonLd", "HomeSectionAnalytics", "HomeCommandDeck", "HomeProvenDemand", "HomeLiveIntel", "HomeToolWorkbench", "CatalogueHomeBand", "HomeLibrary"
     ]);
-    expect(children.filter((child) => child.props.sponsoredSlot)).toHaveLength(2);
+    expect(children.filter((child) => child.props.sponsoredSlot)).toHaveLength(4);
     expect(children.find((child) => componentName(child) === "HomeProvenDemand")?.props.sponsoredSlot?.props["data-page-ad-inventory"]).toBe("home");
     expect(children.find((child) => componentName(child) === "CatalogueHomeBand")?.props.sponsoredSlot?.props["data-page-ad-inventory"]).toBe("home");
+    expect(componentName(children.find((child) => componentName(child) === "HomeToolWorkbench")!.props.sponsoredSlot!)).toBe("AdsterraSupplementalBanner");
+    expect(componentName(children.find((child) => componentName(child) === "HomeLibrary")!.props.sponsoredSlot!)).toBe("AdsterraSmartlink");
   });
 });

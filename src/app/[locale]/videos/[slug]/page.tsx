@@ -14,7 +14,7 @@ import {buildPageMetadataWithImage} from "@/lib/metadata";
 import {loadGuideDocument} from "@/content/guides";
 import {getTranslations} from "next-intl/server";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
@@ -97,7 +97,6 @@ export default async function VideoArticlePage({params}: PageProps) {
         </aside>
 
         <AdsterraNativeBanner label={articleT("advertisement")} />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
 
         <section className="border-y border-[#2c3631] py-8" aria-labelledby="video-takeaways">
           <h2 className="display-font text-3xl text-white" id="video-takeaways">{ui.takeaways}</h2>
@@ -107,6 +106,8 @@ export default async function VideoArticlePage({params}: PageProps) {
             ))}
           </ul>
         </section>
+
+        {article.sections.length >= 3 ? <AdsterraSupplementalBanner label={adsT("label")} /> : null}
 
         <div className="guide-prose mt-10">
           {article.sections.map((section) => (
@@ -138,6 +139,7 @@ export default async function VideoArticlePage({params}: PageProps) {
           <ButtonLink href="/videos" title={ui.allVideos}>{ui.allVideos}</ButtonLink>
           <ButtonLink href={`/guides/${article.internalGuideSlug}`} title={relatedGuide?.frontmatter.title ?? ui.relatedGuide} variant="secondary">{ui.relatedGuide}</ButtonLink>
         </div>
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </article>
     </main>
   );

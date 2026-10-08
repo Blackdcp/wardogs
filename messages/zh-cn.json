@@ -736,8 +736,8 @@
   "ads": {
     "label": "广告",
     "sponsored": "赞助内容",
-    "smartlinkCta": "查看赞助推荐",
-    "smartlinkDescription": "在新标签页打开外部赞助页面。"
+    "smartlinkCta": "访问广告主网站",
+    "smartlinkDescription": "将在新标签页打开外部广告主网站。"
   },
   "categories": {
     "access": "测试资格",
@@ -818,7 +818,7 @@
     "title": "隐私政策",
     "intro": "本页说明本站的统计分析、广告、外部媒体和链接。",
     "content": "我们不经营玩家账户，也不收集游戏登录凭证。在 wardogswiki.com 和 www.wardogswiki.com 打开页面时，Google Analytics 会自动加载。其标签使用 Cookie，收集页面浏览、站内交互及浏览器/设备信息，用于分析网站使用情况。统计与直接 Adsterra 请求可能在点击外部链接之前发生；第三方政策也适用于这些请求。浏览器设置可限制 Cookie 和标识符。",
-    "advertising": "Adsterra 原生广告与展示横幅（包括桌面横幅、侧边栏和可关闭的移动端悬浮条）直接通过广告脚本加载。用户点击将在新标签页中打开广告主页面。自 2026-10-01 起，本站已彻底停用 Popunder 弹窗、Social Bar 与 Smartlink 等干扰性广告格式。请求广告内容时，您的 IP 地址以及浏览器与设备软硬件信息将传输给广告网络以完成广告渲染；相关 Cookie 遵循您的浏览器隐私设置。",
+    "advertising": "Adsterra 原生广告和展示横幅通过第三方广告脚本加载。明确标注的赞助链接（Smartlink）仅在您主动选择后，才会在新标签页打开外部广告主网站。部分页面可能测试 Social Bar、Popunder 等额外广告形式；具体形式和位置会因页面、设备及实验设置而变化。第三方广告可能在其他标签页或窗口打开广告主页面。广告请求可能在您点击之前向广告服务商发送 IP 地址、浏览器请求头和设备信息，相关处理受其隐私政策及您浏览器中的 Cookie 和标识符设置约束。本站会记录赞助链接的可见性和主动点击以评估位置效果，不将这些事件视为可计费广告展示。",
     "googlePolicy": "Google 隐私政策"
   },
   "terms": {

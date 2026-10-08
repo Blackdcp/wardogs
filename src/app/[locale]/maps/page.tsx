@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
 import {getTranslations} from "next-intl/server";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {OperationsAtlas} from "@/components/maps/operations-atlas";
@@ -67,10 +67,11 @@ export default async function MapsPage({params}: PageProps) {
         guideTitles={guideTitles}
         locale={locale}
         toolLabels={{"/tools/logistics-planner": tNav("logisticsPlanner")}}
+        supplementalSlot={<AdsterraSupplementalBanner label={tAds("label")} />}
+        afterContentSlot={<AdsterraSmartlink cta={tAds("smartlinkCta")} description={tAds("smartlinkDescription")} label={tAds("sponsored")} />}
         sponsoredSlot={
           <div data-page-ad-inventory="maps">
             <AdsterraNativeBanner label={tAds("label")} />
-            <AdsterraSmartlink cta={tAds("smartlinkCta")} description={tAds("smartlinkDescription")} label={tAds("sponsored")} />
           </div>
         }
       />

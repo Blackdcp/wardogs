@@ -736,8 +736,8 @@
   "ads": {
     "label": "Werbung",
     "sponsored": "Gesponsert",
-    "smartlinkCta": "Gesponserte Empfehlungen öffnen",
-    "smartlinkDescription": "Öffnet ein externes gesponsertes Ziel in einem neuen Tab."
+    "smartlinkCta": "Werbepartner besuchen",
+    "smartlinkDescription": "Öffnet die externe Website eines Werbepartners in einem neuen Tab."
   },
   "categories": {
     "access": "Zugang",
@@ -818,7 +818,7 @@
     "title": "Datenschutzerklärung",
     "intro": "Diese Seite erklärt Analyse, Werbung, externe Medien und Links auf der Website.",
     "content": "Wir verwalten keine Spielerkonten und erfassen keine Spielzugangsdaten. Auf wardogswiki.com und www.wardogswiki.com wird Google Analytics beim Öffnen einer Seite automatisch geladen. Das Tag nutzt Cookies und erfasst Seitenaufrufe, Website-Interaktionen sowie Browser-/Geräteinformationen zur Nutzungsanalyse. Analyse und direkte Adsterra-Anfragen können schon vor einem Klick auf externe Links stattfinden; Anbieterregeln gelten auch für diese Anfragen. Browsereinstellungen können Cookies und Kennungen begrenzen.",
-    "advertising": "Adsterra Native Ads und Display-Banner, einschließlich Desktop-Horizontalbanner, Seitenleisten und mobiler Einheiten, werden direkt über Publisher-Skripte geladen. Klicks öffnen Werbeseiten in neuen Tabs. Aufdringliche Formate wie Popunder, Social Bar und Smartlink bleiben seit dem 2026-10-01 deaktiviert. Werbeanfragen übermitteln Ihre IP-Adresse, Browser-Header und Geräte-Informationen an Werbenetzwerke; Cookies unterliegen den Datenschutzeinstellungen Ihres Browsers.",
+    "advertising": "Native Anzeigen und Banner von Adsterra werden über Werbeskripte Dritter geladen. Klar gekennzeichnete gesponserte Links (Smartlink) öffnen sich nur, wenn Sie sie auswählen, und führen in einem neuen Tab zu externen Websites von Werbetreibenden. Auf einzelnen Seiten können zusätzliche Werbeformate wie Social Bar oder Popunder getestet werden; Formate und Platzierungen können je nach Seite, Gerät und Testeinstellungen variieren. Werbung Dritter kann Zielseiten in einem weiteren Tab oder Fenster öffnen. Werbeanfragen können bereits vor einem Klick Ihre IP-Adresse, Browser-Header und Geräteinformationen an Werbeanbieter übermitteln. Dabei gelten deren Datenschutzrichtlinien sowie Ihre Browsereinstellungen für Cookies und Kennungen. Zur Bewertung der Platzierung erfasst die Website die Sichtbarkeit gesponserter Links und freiwillige Klicks, ohne diese Ereignisse als abrechenbare Werbeeinblendungen zu werten.",
     "googlePolicy": "Google-Datenschutzerklärung"
   },
   "terms": {

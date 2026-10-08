@@ -5,6 +5,7 @@ import GuidePage from "../../src/app/[locale]/guides/[slug]/page";
 import ItemPage from "../../src/app/[locale]/items/[type]/[slug]/page";
 import VideoPage from "../../src/app/[locale]/videos/[slug]/page";
 import ItemTypePage from "../../src/app/[locale]/items/[type]/page";
+import {AdsterraSmartlink} from "../../src/components/ads/adsterra-smartlink";
 import {AdsterraNativeBanner} from "../../src/components/ads/adsterra-native-banner";
 import {AdsterraDisplayBanner} from "../../src/components/ads/adsterra-display-banner";
 import {CatalogueCategoryView} from "../../src/components/catalogue/catalogue-category-view";
@@ -26,7 +27,12 @@ function elements(node: ReactNode): ReactElement<NodeProps>[] {
 function articleChildren(node: ReactElement<NodeProps>) {
   const article = elements(node.props.children).find((child) => child.type === "article");
   expect(article).toBeDefined();
-  return elements(article!.props.children);
+  const children = elements(article!.props.children);
+  const smartlinks = children.filter((child) => child.type === AdsterraSmartlink);
+  expect(smartlinks).toHaveLength(1);
+  expect(children.at(-1)?.type).toBe(AdsterraSmartlink);
+  expect(renderToStaticMarkup(smartlinks[0]).match(/data-ad-unit="smartlink-1"/g)).toHaveLength(1);
+  return children;
 }
 function assertAdSeparation(children: ReactElement<NodeProps>[], useful: (node: ReactElement<NodeProps>) => boolean) {
   const native = children.findIndex((node) => node.type === AdsterraNativeBanner);

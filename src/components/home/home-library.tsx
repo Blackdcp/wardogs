@@ -1,3 +1,4 @@
+import type {ReactNode} from "react";
 import {getTranslations} from "next-intl/server";
 import type {Locale} from "@/config/site";
 import type {DiscoveryDestination} from "@/features/discovery/discovery-types";
@@ -6,7 +7,7 @@ import {HomeSectionSentinel} from "@/components/seo/home-section-analytics";
 import {SectionHeading} from "@/components/ui/section-heading";
 import {Link} from "@/i18n/navigation";
 
-export async function HomeLibrary({locale, destinations}: {locale: Locale; destinations: readonly DiscoveryDestination[]}) {
+export async function HomeLibrary({locale, destinations, sponsoredSlot}: {locale: Locale; destinations: readonly DiscoveryDestination[]; sponsoredSlot?: ReactNode}) {
   const t = await getTranslations({locale});
   return (
     <section data-home-section="library" aria-labelledby="home-library-title" className="border-b border-[#26312c] bg-[#101512] py-8 sm:py-10">
@@ -25,6 +26,7 @@ export async function HomeLibrary({locale, destinations}: {locale: Locale; desti
         <nav className="mt-4 flex flex-wrap gap-x-5" aria-label={t("home.discovery.sections.library.title")}>{destinations.filter((destination) => !destination.id.startsWith("route-")).map((destination) => (
           <Link className="task-link task-link--text" key={destination.id} href={destination.href} data-home-task={destination.task} data-home-placement="library" title={t(destination.labelKey)}>{t(destination.labelKey)} →</Link>
         ))}</nav>
+        {sponsoredSlot}
       </div>
     </section>
   );

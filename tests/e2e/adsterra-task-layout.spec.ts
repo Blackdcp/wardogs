@@ -6,7 +6,7 @@ test.beforeEach(async ({page}) => {
 });
 
 for (const tool of ["map", "artillery-calculator"]) {
-  for (const width of [390, 1440, 1920]) {
+  for (const width of [390, 1440, 1599, 1600, 1920]) {
     test(`${tool} keeps a single rectangle outside its work surface at ${width}px`, async ({page}) => {
       await page.setViewportSize({width, height: 1000});
       await page.goto(`/en/tools/${tool}`);
@@ -29,6 +29,17 @@ for (const tool of ["map", "artillery-calculator"]) {
       } else {
         expect(ad!.y).toBeGreaterThanOrEqual(work!.y + work!.height);
         if (width === 1440) expect(work!.width).toBeGreaterThanOrEqual(1180);
+      }
+      if (width >= 1440 && width < 1600) {
+        const rail = page.locator('[data-tool-workspace-rail] [data-ad-placement="tool-rail"]');
+        await expect(rail).toHaveCount(1);
+        const railBox = await rail.boundingBox();
+        expect(railBox!.x).toBeGreaterThanOrEqual(work!.x + work!.width + 20);
+        expect(railBox!.x + railBox!.width).toBeLessThanOrEqual(width);
+        await expect(page.locator('[data-ad-placement="left-rail-creative"]')).toHaveCount(0);
+      } else {
+        await expect(page.locator('[data-ad-placement="tool-rail"]')).toHaveCount(0);
+        if (width >= 1600) await expect(page.locator('[data-ad-placement="left-rail-creative"]')).toHaveCount(1);
       }
       await expectNoHorizontalOverflow(page);
     });

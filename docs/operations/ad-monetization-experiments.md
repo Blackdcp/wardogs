@@ -80,3 +80,29 @@ Optional `sessionsByUtcDate` entries must include `windowStart` and exclusive `w
 ### Next controlled comparison using existing codes
 
 After this baseline stabilizes, change one layout variable at a time on a documented page group. Without separate revenue identifiers, an alternating schedule using the same existing zones can provide a weaker site-level comparison: pre-register equal complete UTC windows covering the same weekdays and keep the rest of the configuration stable. Label it observational, account for country/device changes, and do not present GA visibility as a randomized dollar lift. Promote changes only when the total-income signal and task/retention guardrails agree; keep results inconclusive when sample size is inadequate.
+
+## format-expansion-v3
+
+The owner requested an immediate expansion after reviewing `task-aware-v2`; its
+short observation period is not evidence that placement optimization succeeded
+or failed. This release adds voluntary Smartlink monetization across the eight
+locales and eligible desktop inventory using existing distinct display codes.
+It does not duplicate a zone to manufacture additional placements.
+
+See [the format rollout contract](ad-format-rollout.md) for placement, behavioral
+eligibility, supplier verification gates, and rollback. Social Bar, Popunder,
+and interstitials must be reported separately as prepared, eligible, requested,
+or verified live. A disabled supplier-verification gate means no script is
+requested, even when the experiment implementation's policy switch is enabled.
+
+`ad_exposure` means the voluntary Smartlink CTA is at least half visible in a
+foreground page; `ad_click` means a trusted visitor activation. Neither event is
+a vendor impression, a successful destination visit, or attributed revenue.
+They reuse `section`, `page_type`, `placement`, `ad_unit`, `locale`, and
+`config_version`, without recording sponsored URLs or query strings. Record
+the activation date of each vendor format separately from the v3 deployment.
+
+The simultaneous layout and Smartlink expansion is a new combined baseline.
+Do not report a randomized dollar lift from it. Behavioral cohorts, when
+verified and enabled, permit comparison of site engagement outcomes, but shared
+display/native revenue IDs do not yield clean per-cohort total revenue.

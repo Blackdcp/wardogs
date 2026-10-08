@@ -736,8 +736,8 @@
   "ads": {
     "label": "廣告",
     "sponsored": "贊助內容",
-    "smartlinkCta": "檢視贊助推薦",
-    "smartlinkDescription": "在新標籤頁開啟外部贊助頁面。"
+    "smartlinkCta": "前往廣告主網站",
+    "smartlinkDescription": "將在新分頁開啟外部廣告主網站。"
   },
   "categories": {
     "access": "測試資格",
@@ -818,7 +818,7 @@
     "title": "隱私政策",
     "intro": "本頁說明本站的統計分析、廣告、外部媒體與連結。",
     "content": "我們不經營玩家帳戶，也不收集遊戲登入憑證。在 wardogswiki.com 和 www.wardogswiki.com 開啟頁面時，Google Analytics 會自動載入。其標籤使用 Cookie，收集頁面瀏覽、站內互動及瀏覽器/裝置資訊，用於分析網站使用情況。統計與直接 Adsterra 請求可能在點擊外部連結之前發生；第三方政策也適用於這些請求。瀏覽器設定可限制 Cookie 與識別碼。",
-    "advertising": "Adsterra 原生廣告與展示橫幅（包括桌面橫幅、側邊欄和可關閉的行動端懸浮條）直接透過廣告腳本載入。使用者點擊將在新分頁中開啟廣告主頁面。自 2026-10-01 起，本站已徹底停用 Popunder 彈窗、Social Bar 與 Smartlink 等干擾性廣告格式。請求廣告內容時，您的 IP 位址以及瀏覽器與裝置軟硬體資訊將傳輸給廣告網路以完成廣告渲染；相關 Cookie 遵循您的瀏覽器隱私設定。",
+    "advertising": "Adsterra 原生廣告與展示橫幅透過第三方廣告指令碼載入。明確標示的贊助連結（Smartlink）僅在您主動選擇後，才會在新分頁開啟外部廣告主網站。部分頁面可能測試 Social Bar、Popunder 等額外廣告形式；實際形式與位置會因頁面、裝置及實驗設定而異。第三方廣告可能在其他分頁或視窗開啟廣告主頁面。廣告請求可能在您點擊之前，向廣告服務商傳送 IP 位址、瀏覽器請求標頭與裝置資訊，相關處理適用其隱私權政策及您瀏覽器中的 Cookie 與識別碼設定。本站會記錄贊助連結的可見性與主動點擊，以評估配置成效，不將這些事件視為可計費的廣告曝光。",
     "googlePolicy": "Google 隱私權政策"
   },
   "terms": {

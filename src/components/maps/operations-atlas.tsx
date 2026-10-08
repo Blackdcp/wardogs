@@ -26,6 +26,8 @@ type OperationsAtlasProps = {
   locale: Locale;
   toolLabels: Record<string, string>;
   sponsoredSlot?: ReactNode;
+  supplementalSlot?: ReactNode;
+  afterContentSlot?: ReactNode;
 };
 
 const visualSizes = "(min-width: 1024px) 320px, (min-width: 640px) 38vw, calc(100vw - 32px)";
@@ -48,7 +50,7 @@ function visualLabel(copy: OperationsAtlasCopy, state: "verified" | "contextual"
   return copy.visualPending;
 }
 
-export function OperationsAtlas({copy, guideTitles, locale, toolLabels, sponsoredSlot}: OperationsAtlasProps) {
+export function OperationsAtlas({copy, guideTitles, locale, toolLabels, sponsoredSlot, supplementalSlot, afterContentSlot}: OperationsAtlasProps) {
   const [filter, setFilter] = useState<OperationsAtlasFilter>("all");
   const visibleRecords = filterOperationsAtlas(getLocalizedOperationsAtlasRecords(locale), filter);
   const itemUi = getItemUi(locale);
@@ -90,7 +92,7 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels, sponsore
         </div>
 
         <ol className="border-t border-[#303b35]">
-          {visibleRecords.map((record) => {
+          {visibleRecords.map((record, index) => {
             const entry = copy.entries[record.id];
             const sourceUrl = record.evidence.sourceUrl;
             const localizedFacts = record.facts.map((fact) => localizeCatalogueFact(fact, locale));
@@ -219,6 +221,8 @@ export function OperationsAtlas({copy, guideTitles, locale, toolLabels, sponsore
                     </figure>
                   )}
                 </div>
+                {visibleRecords.length >= 4 && index === 1 ? <div className="hidden lg:col-span-2 lg:block">{supplementalSlot}</div> : null}
+                {index === visibleRecords.length - 2 ? <div className="lg:col-span-2">{afterContentSlot}</div> : null}
               </li>
             );
           })}

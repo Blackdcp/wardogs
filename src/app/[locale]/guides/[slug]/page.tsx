@@ -34,7 +34,7 @@ import {getCompatibilityDataset} from "@/features/tools/equipment-compatibility"
 import {prepareGuideBodyForTaskPanel} from "@/features/guides/guide-task-body";
 import {getGuideTaskData} from "@/features/guides/guide-task-data";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
@@ -66,7 +66,8 @@ export default async function GuideArticlePage({params}: PageProps) {
     getTranslations({locale, namespace: "categories"}),
     getRelatedGuides(locale, slug),
     compileLocalizedGuideBody(guideBody, mdxComponents, locale, {
-      inlineAd: <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />
+      inlineAd: <AdsterraDisplayBanner placement="rectangle" label={adsT("label")} />,
+      supplementalAd: <AdsterraSupplementalBanner label={adsT("label")} />
     })
   ]);
   const directAnswer = guide.frontmatter.directAnswer ?? compiled.directAnswer;
@@ -127,7 +128,6 @@ export default async function GuideArticlePage({params}: PageProps) {
           </aside>
         ) : null}
         <AdsterraNativeBanner label={t("advertisement")} />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         <VisualWorkflow locale={locale} slug={slug} />
         <MissionCase locale={locale} slug={slug} />
         <div className="guide-prose">{compiled.content}</div>
@@ -144,6 +144,7 @@ export default async function GuideArticlePage({params}: PageProps) {
           <ButtonLink href="/guides" title={t("back")}>{t("back")}</ButtonLink>
           <ButtonLink external href={officialLinks.steam} title="WARDOGS on Steam" variant="secondary">Steam</ButtonLink>
         </div>
+        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </article>
       <div className="border-t border-[#2c3631] bg-[#111512]">
         <RelatedGuides guides={related} locale={locale} title={t("related")} />

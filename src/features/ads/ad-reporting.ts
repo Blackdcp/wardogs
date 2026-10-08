@@ -2,7 +2,7 @@ import {isSiteLocale} from "@/config/site";
 import {normalizeAnalyticsPathname} from "@/lib/analytics-events";
 
 // Bump when placement or serving configuration changes; see the experiment ledger.
-export const AD_REPORTING_VERSION = "task-aware-v2";
+export const AD_REPORTING_VERSION = "format-expansion-v3";
 
 export function getAdReportingMetadata(pathname: string, adUnit: string, placement?: string) {
   const pagePath = normalizeAnalyticsPathname(pathname, process.env.NEXT_PUBLIC_BASE_PATH);

@@ -736,8 +736,8 @@
   "ads": {
     "label": "Reklama",
     "sponsored": "Sponsorowane",
-    "smartlinkCta": "Zobacz sponsorowane propozycje",
-    "smartlinkDescription": "Otwórz zewnętrzną stronę sponsora w nowej karcie."
+    "smartlinkCta": "Otwórz stronę reklamodawcy",
+    "smartlinkDescription": "Zewnętrzna strona reklamodawcy otworzy się w nowej karcie."
   },
   "categories": {
     "access": "Dostęp",
@@ -818,7 +818,7 @@
     "title": "Polityka prywatności",
     "intro": "Ta strona opisuje analitykę, reklamy, zewnętrzne media i linki witryny.",
     "content": "Nie prowadzimy kont graczy ani nie zbieramy danych logowania do gry. Na wardogswiki.com i www.wardogswiki.com Google Analytics ładuje się automatycznie przy otwarciu strony. Tag używa cookies i zbiera odsłony, interakcje w witrynie oraz informacje o przeglądarce/urządzeniu do analizy użytkowania. Analityka i bezpośrednie żądania Adsterra mogą wystąpić przed kliknięciem zewnętrznego linku; zasady dostawców dotyczą także tych żądań. Ustawienia przeglądarki mogą ograniczać cookies i identyfikatory.",
-    "advertising": "Reklamy natywne i banery Adsterra, w tym poziome banery na komputery, panele boczne oraz zamykany baner mobilny, są ładowane bezpośrednio przez skrypty wydawcy. Kliknięcia otwierają strony reklamodawców w nowych kartach. Uciążliwe formaty, takie jak Popunder, Social Bar i Smartlink, pozostają całkowicie wyłączone od 2026-10-01. Żądania reklamowe przesyłają Twój adres IP, dane przeglądarki i informacje o urządzeniu do sieci reklamowych; pliki cookie podlegają ustawieniom prywatności Twojej przeglądarki.",
+    "advertising": "Reklamy natywne i banery Adsterra są ładowane przez skrypty reklamowe podmiotów zewnętrznych. Wyraźnie oznaczone linki sponsorowane (Smartlink) otwierają się wyłącznie po ich wybraniu i prowadzą do zewnętrznych stron reklamodawców w nowej karcie. Na niektórych stronach mogą być testowane dodatkowe formaty, takie jak Social Bar lub Popunder; format i położenie reklam zależą od strony, urządzenia oraz ustawień testu. Reklamy zewnętrzne mogą otwierać strony reklamodawców w kolejnej karcie lub oknie. Żądania reklamowe mogą przekazywać dostawcom adres IP, nagłówki przeglądarki i informacje o urządzeniu jeszcze przed kliknięciem. Obowiązują ich zasady prywatności oraz ustawienia plików cookie i identyfikatorów w przeglądarce. Serwis rejestruje widoczność linków sponsorowanych i dobrowolne kliknięcia w celu oceny ich rozmieszczenia, ale nie uznaje tych zdarzeń za płatne wyświetlenia reklam.",
     "googlePolicy": "Polityka prywatności Google"
   },
   "terms": {

@@ -8,6 +8,9 @@ import {
   ADSTERRA_NATIVE_ENABLED,
   ADSTERRA_SMARTLINK_ENABLED,
   ADSTERRA_SOCIAL_BAR_ENABLED,
+  ADSTERRA_SOCIAL_BAR_VERIFIED,
+  ADSTERRA_POPUNDER_VERIFIED,
+  getSocialBarScriptForPath,
   BEHAVIORAL_POPUNDER_ENABLED
 } from "../../src/features/ads/ad-policy";
 import {
@@ -22,7 +25,13 @@ const pageFiles = [
   "src/app/[locale]/guides/page.tsx",
   "src/app/[locale]/items/page.tsx",
   "src/app/[locale]/items/[type]/page.tsx",
-  "src/app/[locale]/videos/page.tsx"
+  "src/app/[locale]/videos/page.tsx",
+  "src/app/[locale]/maps/page.tsx",
+  "src/app/[locale]/tools/map/page.tsx",
+  "src/app/[locale]/tools/artillery-calculator/page.tsx",
+  "src/app/[locale]/guides/[slug]/page.tsx",
+  "src/app/[locale]/videos/[slug]/page.tsx",
+  "src/app/[locale]/items/[type]/[slug]/page.tsx"
 ] as const;
 
 describe("Adsterra page inventory", () => {
@@ -40,16 +49,19 @@ describe("Adsterra page inventory", () => {
     expect(new Set(AD_INVENTORY_CONTRACT.map(({pageTemplate}) => pageTemplate))).toEqual(new Set(INVENTORY_PAGE_TEMPLATES));
     expect(new Set(AD_INVENTORY_CONTRACT.map(({viewport}) => viewport))).toEqual(new Set(INVENTORY_VIEWPORTS));
     expect(AD_INVENTORY_CONTRACT.every(({count}) => count === 1)).toBe(true);
-    expect(DISABLED_AD_FORMATS).toEqual(["smartlink", "popunder", "social-bar"]);
+    expect(DISABLED_AD_FORMATS).toEqual(["popunder", "social-bar"]);
     expect(new Set(AD_INVENTORY_CONTRACT.map(({zone}) => zone))).toEqual(new Set([
       ADSTERRA_NATIVE_ZONE_ID,
       ...Object.values(ADSTERRA_BANNER_UNITS).map(({key}) => key)
     ]));
     expect(ADSTERRA_NATIVE_ENABLED).toBe(true);
     expect(ADSTERRA_MOBILE_STICKY_ENABLED).toBe(true);
-    expect(ADSTERRA_SMARTLINK_ENABLED).toBe(false);
-    expect(ADSTERRA_SOCIAL_BAR_ENABLED).toBe(false);
-    expect(BEHAVIORAL_POPUNDER_ENABLED).toBe(false);
+    expect(ADSTERRA_SMARTLINK_ENABLED).toBe(true);
+    expect(ADSTERRA_SOCIAL_BAR_ENABLED && ADSTERRA_SOCIAL_BAR_VERIFIED).toBe(false);
+    expect(ADSTERRA_SOCIAL_BAR_VERIFIED).toBe(false);
+    expect(getSocialBarScriptForPath("/en/guides/wardogs-artillery-guide")).toBeNull();
+    expect(BEHAVIORAL_POPUNDER_ENABLED && ADSTERRA_POPUNDER_VERIFIED).toBe(false);
+    expect(ADSTERRA_POPUNDER_VERIFIED).toBe(false);
   });
 
   it("keeps one rectangle and one native slot on every monetized template", () => {
@@ -82,11 +94,21 @@ describe("Adsterra page inventory", () => {
     ).every(({section, format}) => section === (format === "native" ? "proven-demand" : "database"))).toBe(true);
   });
 
+  it("never reuses a display code in a page/viewport, and never adds a mobile rectangle", () => {
+    for (const pageTemplate of INVENTORY_PAGE_TEMPLATES) for (const viewport of INVENTORY_VIEWPORTS) {
+      const slots = AD_INVENTORY_CONTRACT.filter((slot) => slot.pageTemplate === pageTemplate && slot.viewport === viewport && slot.format === "display");
+      expect(new Set(slots.map(({zone}) => zone)).size, `${pageTemplate}/${viewport}`).toBe(slots.length);
+      if (viewport === "mobile" || viewport === "tablet") expect(slots.some(({placement}) => placement === "inline-supplemental" || placement === "tool-rail")).toBe(false);
+    }
+  });
+
   it("monetizes the homepage and every primary index page", async () => {
     for (const file of pageFiles) {
       const source = await readFile(file, "utf8");
       expect(source, file).toContain("AdsterraDisplayBanner");
       expect(source, file).toContain("AdsterraNativeBanner");
+      expect(source.match(/<AdsterraSmartlink\b/g), file).toHaveLength(1);
+      expect(source, file).toContain("<AdsterraSupplementalBanner");
     }
   });
 

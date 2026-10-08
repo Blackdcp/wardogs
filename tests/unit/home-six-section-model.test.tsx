@@ -12,9 +12,12 @@ vi.mock("next-intl/server", () => ({getTranslations: async () => (key: string) =
 vi.mock("@/i18n/navigation", () => ({Link: ({href, children, ...props}: {href: string; children?: ReactNode}) => <a {...props} href={publicRoutePath(`/${context.locale}${href}`)}>{children}</a>}));
 vi.mock("@/components/home/hero-search-box", () => ({HeroSearchBox: () => <button data-hero-search-trigger="true">Search</button>}));
 vi.mock("@/features/search/site-search-index", () => ({buildSiteSearchIndex: () => {throw new Error("Homepage must not preload the search index");}}));
-vi.mock("@/components/ads/adsterra-display-banner", () => ({AdsterraDisplayBanner: () => <div data-ad-placement="rectangle" />}));
+vi.mock("@/components/ads/adsterra-display-banner", () => ({
+  AdsterraDisplayBanner: () => <div data-ad-placement="rectangle" />,
+  AdsterraSupplementalBanner: () => <div data-ad-placement="content-horizontal" />
+}));
 vi.mock("@/components/ads/adsterra-native-banner", () => ({AdsterraNativeBanner: () => <div data-ad-format="native" />}));
-vi.mock("@/components/ads/adsterra-smartlink", () => ({AdsterraSmartlink: () => null}));
+vi.mock("@/components/ads/adsterra-smartlink", () => ({AdsterraSmartlink: () => <div data-ad-slot="adsterra-smartlink" />}));
 
 import * as model from "../../src/features/home/home-discovery-model";
 import {HomeLiveIntel} from "../../src/components/home/home-live-intel";
@@ -50,6 +53,11 @@ describe("six-section homepage", () => {
     expect(database).not.toContain('data-ad-format="native"');
     expect(html.match(/data-page-ad-inventory="home"/g)).toHaveLength(2);
     expect(html.match(/data-ad-placement="rectangle"/g)).toHaveLength(1);
+    const workbench = html.split('data-home-section="workbench"')[1]?.split("</section>")[0] ?? "";
+    const library = html.split('data-home-section="library"')[1]?.split("</section>")[0] ?? "";
+    expect(workbench.match(/data-ad-placement="content-horizontal"/g)).toHaveLength(1);
+    expect(library.match(/data-ad-slot="adsterra-smartlink"/g)).toHaveLength(1);
+    expect(demand).not.toContain('data-ad-slot="adsterra-smartlink"');
     expect(html).not.toContain("data-site-search");
     expect(html).not.toContain("data-hero-popular-links");
     expect(html.match(/data-featured-tool=/g)).toHaveLength(4);

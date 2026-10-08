@@ -13,7 +13,7 @@ import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 import {getVideoUi} from "@/features/videos/video-ui";
 import {buildPageMetadataWithImage} from "@/lib/metadata";
 import {getTranslations} from "next-intl/server";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
@@ -63,7 +63,6 @@ export default async function VideosPage({params}: PageProps) {
       </section>
       <section className="site-container py-2" data-page-ad-inventory="videos">
         <AdsterraNativeBanner label={adsT("label")} />
-        <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </section>
       <section className="site-container py-12 md:py-16">
         <SectionHeading eyebrow={`${ui.betaWorkflow} / ${ui.historicalReference}`} title={ui.allVideos} />
@@ -71,11 +70,13 @@ export default async function VideosPage({params}: PageProps) {
           {sortedArticles.map((article, index) => (
             <Fragment key={article.slug}>
               <VideoArticleCard article={article} locale={locale} eager={index === 0} />
+              {index === 8 && sortedArticles.length >= 12 ? <div className="md:col-span-2 xl:col-span-3" data-page-ad-inventory="videos"><AdsterraSupplementalBanner label={adsT("label")} /></div> : null}
               {index === Math.min(2, sortedArticles.length - 1) ? <div className="md:col-span-2 xl:col-span-3" data-page-ad-inventory="videos"><AdsterraDisplayBanner label={adsT("label")} placement="rectangle" /></div> : null}
             </Fragment>
           ))}
         </div>
       </section>
+      <div className="site-container"><AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} /></div>
     </main>
   );
 }

@@ -14,6 +14,8 @@ export const ANALYTICS_EVENTS = {
   mapAction: "map_action",
   adStatus: "ad_status",
   adDismiss: "ad_dismiss",
+  adExposure: "ad_exposure",
+  adClick: "ad_click",
   officialOutboundClick: "official_outbound_click",
   languageSwitch: "language_switch",
   catalogueFilter: "catalogue_filter",

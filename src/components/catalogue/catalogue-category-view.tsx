@@ -21,6 +21,8 @@ type CatalogueCategoryViewProps = {
   guide: CatalogGuide;
   locale: Locale;
   sponsoredSlot?: ReactNode;
+  supplementalSlot?: ReactNode;
+  afterContentSlot?: ReactNode;
 };
 
 function normalizedRecordName(value: string) {
@@ -89,7 +91,7 @@ function SeasonOneVehicleUpdate({locale}: {locale: Locale}) {
   );
 }
 
-export function CatalogueCategoryView({guide, locale, sponsoredSlot}: CatalogueCategoryViewProps) {
+export function CatalogueCategoryView({guide, locale, sponsoredSlot, supplementalSlot, afterContentSlot}: CatalogueCategoryViewProps) {
   const hero = getCatalogueCategoryMedia(guide.id);
   const records = hasImageExplorer(guide.id) ? getLocalizedCatalogueRecords(getCatalogueRecords(guide.id), locale) : [];
   const baseGroup = hasImageExplorer(guide.id) ? getCatalogueGroup(guide.id) : undefined;
@@ -145,7 +147,7 @@ export function CatalogueCategoryView({guide, locale, sponsoredSlot}: CatalogueC
       ) : null}
 
       {sponsoredSlot}
-      <ItemCatalogGuide guide={linkedGuide} locale={locale} />
+      <ItemCatalogGuide guide={linkedGuide} locale={locale} supplementalSlot={supplementalSlot} afterContentSlot={afterContentSlot} />
     </>
   );
 }

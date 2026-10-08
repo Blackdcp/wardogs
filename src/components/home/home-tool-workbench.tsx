@@ -1,3 +1,4 @@
+import type {ReactNode} from "react";
 import {getTranslations} from "next-intl/server";
 import type {Locale} from "@/config/site";
 import type {ToolDefinition} from "@/features/tools/tool-registry";
@@ -5,7 +6,7 @@ import {HomeSectionSentinel} from "@/components/seo/home-section-analytics";
 import {SectionHeading} from "@/components/ui/section-heading";
 import {Link} from "@/i18n/navigation";
 
-export async function HomeToolWorkbench({locale, tools}: {locale: Locale; tools: readonly ToolDefinition[]}) {
+export async function HomeToolWorkbench({locale, tools, sponsoredSlot}: {locale: Locale; tools: readonly ToolDefinition[]; sponsoredSlot?: ReactNode}) {
   const t = await getTranslations({locale});
   return (
     <section data-home-section="workbench" aria-labelledby="home-tools-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-8 sm:py-10">
@@ -23,6 +24,7 @@ export async function HomeToolWorkbench({locale, tools}: {locale: Locale; tools:
             </Link>
           </li>
         ))}</ul>
+        {sponsoredSlot}
       </div>
     </section>
   );

@@ -15,7 +15,7 @@ import type {GuideCategory} from "@/content/manifest";
 import {buildPageMetadata} from "@/lib/metadata";
 import {buildGuideIndexJsonLd} from "@/lib/structured-data";
 import {JsonLd} from "@/components/seo/json-ld";
-import {AdsterraDisplayBanner} from "@/components/ads/adsterra-display-banner";
+import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 
@@ -70,7 +70,6 @@ export default async function GuidesPage({params}: PageProps) {
         </nav>
         <div data-page-ad-inventory="guides">
           <AdsterraNativeBanner label={adsT("label")} />
-          <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
         </div>
       </section>
       <VideoGuideStrip locale={locale} />
@@ -81,10 +80,12 @@ export default async function GuidesPage({params}: PageProps) {
               <SectionHeading id={`collection-${collection.key}-title`} title={`${hubCopy.collections[collection.key]} (${collection.guides.length})`} />
               <GuideGrid guides={collection.guides} readLabel={t("read")} categoryLabels={categoryLabels} />
             </section>
+            {index === 2 && collections.length >= 4 ? <div data-page-ad-inventory="guides"><AdsterraSupplementalBanner label={adsT("label")} /></div> : null}
             {index === 0 ? <div data-page-ad-inventory="guides"><AdsterraDisplayBanner label={adsT("label")} placement="rectangle" /></div> : null}
           </Fragment>
         ))}
       </div>
+      <div className="site-container"><AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} /></div>
     </main>
   );
 }

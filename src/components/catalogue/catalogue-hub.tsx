@@ -12,7 +12,7 @@ import {formatCatalogueIndexCount, getItemUi} from "@/features/items/item-ui";
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
 
-export function CatalogueHub({locale, children, secondarySponsoredSlot}: {locale: Locale; children?: ReactNode; secondarySponsoredSlot?: ReactNode}) {
+export function CatalogueHub({locale, children, secondarySponsoredSlot, supplementalSlot}: {locale: Locale; children?: ReactNode; secondarySponsoredSlot?: ReactNode; supplementalSlot?: ReactNode}) {
   const {categories, featured, previews} = buildCatalogueHubModel(locale);
   const ui = getItemUi(locale);
   return (<>
@@ -98,6 +98,8 @@ export function CatalogueHub({locale, children, secondarySponsoredSlot}: {locale
           description={ui.featuredVehiclesDescription}
         />
       </div>
+
+      <div className="site-container">{supplementalSlot}</div>
 
       <section className="border-t border-[#2c3631] bg-[#111512]" aria-labelledby="published-guides-title">
         <div className="site-container py-12 md:py-16">
