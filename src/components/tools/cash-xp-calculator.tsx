@@ -183,7 +183,6 @@ export function CashXpCalculator({locale}: {locale: string}) {
     const url = new URL(window.location.href);
     url.search = encodeCashXpPlan(state);
     markToolShare(url, "cash-xp-calculator");
-    window.history.replaceState(null, "", url);
     setCopied(false);
     setShareError(false);
     try {

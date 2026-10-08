@@ -89,8 +89,6 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
     const url = new URL(window.location.href);
     url.search = encodedState;
     markToolShare(url, "loadout-budget");
-    window.history.replaceState(null, "", url);
-    setEdited({search: url.search, value: state});
     try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareStatus(copy.copied); }
     catch { setShareStatus(t.shareFailed); }
   }

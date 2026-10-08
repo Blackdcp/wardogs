@@ -113,7 +113,6 @@ export function AmmoMatcher({
     analytics.beginShare();
     const url = sharedUrl(state);
     markToolShare(url, "ammo-matcher");
-    window.history.replaceState(null, "", url);
     try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }

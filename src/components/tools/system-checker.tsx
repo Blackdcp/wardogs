@@ -66,7 +66,6 @@ export function SystemChecker({copy}: {copy: ToolCopy}) {
     const url = new URL(window.location.href);
     url.search = encodeSystemCheckState(state);
     markToolShare(url, "system-checker");
-    window.history.replaceState(null, "", url);
     try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }

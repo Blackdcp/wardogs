@@ -43,7 +43,6 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
     analytics.beginShare();
     const url = writeCompatibilitySelection(new URL(window.location.href), selection);
     markToolShare(url, "equipment-compatibility");
-    window.history.replaceState(null, "", url);
     try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setCopyState("copied"); }
     catch { setCopyState("failed"); }
   }

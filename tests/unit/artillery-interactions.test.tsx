@@ -18,7 +18,7 @@ import {getCompatibilityDataset} from "../../src/features/tools/equipment-compat
 import {getWorkflowCopy} from "../../src/features/tools/workflow-copy";
 import {ToolShareNotice} from "../../src/components/tools/tool-share-notice";
 import {getToolCopy} from "../../src/features/tools/tool-copy";
-import {decodeSystemCheckState, encodeSystemCheckState} from "../../src/features/tools/share-state";
+import {decodeBudgetState, decodeSystemCheckState, encodeSystemCheckState} from "../../src/features/tools/share-state";
 
 // Exercise the real component handlers without adding a DOM package or test hooks to production.
 const hooks = vi.hoisted(() => ({
@@ -122,7 +122,7 @@ beforeEach(() => {
   vi.stubGlobal("clearInterval", (id: number) => intervals.delete(id));
   browser = {
     location: {href: "http://localhost/en/tools/system-check", search: ""},
-    history: {replaceState: (_state, _unused, url) => { browser.location.href = String(url); hooks.search = new URL(String(url)).search; }},
+    history: {replaceState: vi.fn((_state, _unused, url) => { browser.location.href = String(url); hooks.search = new URL(String(url)).search; })},
     gtag: vi.fn(),
   };
   class Audio {
@@ -132,7 +132,8 @@ beforeEach(() => {
     createGain() { return {gain: {setValueAtTime() {}, exponentialRampToValueAtTime() {}}, connect() {}}; }
     close() { return Promise.resolve(); }
   }
-  vi.stubGlobal("window", {...browser, AudioContext: Audio});
+  vi.stubGlobal("window", {...browser, AudioContext: Audio, dispatchEvent: vi.fn()});
+  vi.stubGlobal("PopStateEvent", Event);
   clipboard = vi.fn().mockResolvedValue(undefined);
   vi.stubGlobal("navigator", {clipboard: {writeText: clipboard}});
 });
@@ -270,6 +271,8 @@ describe("system checker decimal sharing", () => {
     expect(labeledControl(nodes, copy.storage).props.step).toBe("any");
     await (button(nodes, copy.share).props.onClick as () => Promise<void>)();
     expect(decodeSystemCheckState(new URL(clipboard.mock.calls[0][0]).search)).toEqual({os: "windows-11", ramGb: 16.5, storageGb: 84.5, cpuTier: "recommended", gpuTier: "recommended"});
+    expect(browser.history.replaceState).not.toHaveBeenCalled();
+    hooks.search = new URL(clipboard.mock.calls[0][0]).search;
     hooks.slots.forEach((slot) => slot.cleanup?.()); hooks.slots = [];
     nodes = render(system);
     expect(labeledControl(nodes, copy.storage).props.value).toBe(84.5);
@@ -327,7 +330,7 @@ describe("tool share success boundary", () => {
     ["equipment-compatibility", () => EquipmentCompatibility({dataset: getCompatibilityDataset("en"), locale: "en"})],
   ];
   function shareButton(nodes: Element[]) {
-    const node = nodes.find((entry) => entry.type === "button" && /copy/i.test(`${text(entry)} ${entry.props["aria-label"] ?? ""}`));
+    const node = nodes.find((entry) => entry.type === "button" && /copy|copied/i.test(`${text(entry)} ${entry.props["aria-label"] ?? ""}`));
     expect(node).toBeDefined();
     return node!;
   }
@@ -360,6 +363,8 @@ describe("tool share success boundary", () => {
     resolve();
     await pending;
     expect(new URL(clipboard.mock.calls[0][0]).searchParams.get("wd_share")).toBe(tool);
+    expect(browser.history.replaceState).not.toHaveBeenCalled();
+    expect(browser.location.href).toBe("http://localhost/en/tools/system-check");
     render(component);
     expect(browser.gtag).toHaveBeenCalledExactlyOnceWith("event", "tool_action", {tool, locale: "en", action: "share", result: "copied"});
   });
@@ -369,6 +374,57 @@ describe("tool share success boundary", () => {
     await (shareButton(nodes).props.onClick as () => Promise<void>)();
     render(component);
     expect(browser.gtag).not.toHaveBeenCalled();
+    expect(browser.history.replaceState).not.toHaveBeenCalled();
+  });
+  it.each(components)("%s shares edited state without changing the current search key or history", async (tool, component) => {
+    const nodes = render(component);
+    let key: string;
+    let value: string;
+    if (tool === "system-checker") {
+      change(labeledControl(nodes, copy.storage), "84.5"); key = "storage"; value = "84.5";
+    } else if (tool === "cash-xp-calculator") {
+      (nodes.find((node) => node.props.max === 1000)!.props.onChange as (value: number) => void)(42);
+      key = "count"; value = "42";
+    } else if (tool === "loadout-budget") {
+      (nodes.find((node) => node.props.label === getWorkflowCopy("en").repeat)!.props.onChange as (value: number) => void)(2500);
+      key = "loadout"; value = "2500";
+    } else if (tool === "equipment-compatibility") {
+      change(nodes.find((node) => node.props.maxLength === 120)!, "private@example.test"); key = "fitQuery"; value = "private@example.test";
+    } else if (tool === "progression-route") {
+      change(labeledControl(nodes, copy.currentLevel), "12"); key = "pr_level"; value = "12";
+    } else if (tool === "logistics-planner") {
+      const stage = getLogisticsStages().find(({id}) => id !== "construction")!;
+      const control = labeledControl(nodes, stage.title);
+      (control.props.onChange as (event: unknown) => void)({target: {checked: true}});
+      key = "lp_stages"; value = `construction,${stage.id}`;
+    } else {
+      value = tool === "ammo-matcher" ? "amp-9" : "ak74";
+      change(nodes.find((node) => node.type === "select" && (tool === "ammo-matcher" || node.props.value === "amp-9"))!, value);
+      key = tool === "ammo-matcher" ? "weapon" : "left";
+    }
+    const locationBeforeShare = browser.location.href;
+    const searchBeforeShare = hooks.search;
+    vi.mocked(browser.history.replaceState).mockClear();
+    await (shareButton(render(component)).props.onClick as () => Promise<void>)();
+    await (shareButton(render(component)).props.onClick as () => Promise<void>)();
+    for (const [href] of clipboard.mock.calls) {
+      const url = new URL(href);
+      expect(url.searchParams.get(key)).toBe(value);
+      expect(url.searchParams.get("wd_share")).toBe(tool);
+    }
+    expect(browser.history.replaceState).not.toHaveBeenCalled();
+    expect(browser.location.href).toBe(locationBeforeShare);
+    expect(hooks.search).toBe(searchBeforeShare);
+    expect(browser.gtag.mock.calls.filter(([, event]) => event === "engaged_tool")).toHaveLength(1);
+    expect(browser.gtag.mock.calls.some(([, event]) => event === "page_view" || event === "result_shared_open")).toBe(false);
+    if (tool === "loadout-budget") {
+      expect(decodeBudgetState(new URL(clipboard.mock.calls[0][0]).search)?.loadout).toBe(2500);
+      hooks.slots.forEach((slot) => slot.cleanup?.()); hooks.slots = [];
+      hooks.search = new URL(clipboard.mock.calls[0][0]).search;
+      const restored = render(component);
+      expect(restored.find((node) => node.props.label === getWorkflowCopy("en").repeat)?.props.value).toBe(2500);
+      expect(browser.gtag.mock.calls.filter(([, event]) => event === "result_shared_open")).toHaveLength(1);
+    }
   });
   it("shows a localized cash/XP failure and clears it on a successful retry", async () => {
     const component = () => CashXpCalculator({locale: "zh-cn"});

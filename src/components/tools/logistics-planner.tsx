@@ -90,8 +90,6 @@ export function LogisticsPlanner({
     const url = new URL(window.location.href);
     url.search = encodedState;
     markToolShare(url, "logistics-planner");
-    window.history.replaceState(null, "", url);
-    setEditedState({search: url.search, value: state});
     try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }

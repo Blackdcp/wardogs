@@ -59,7 +59,6 @@ export function ProgressionRoute({
     const url = new URL(window.location.href);
     url.search = encodeProgressionRouteState(state, dataVersion);
     markToolShare(url, "progression-route");
-    window.history.replaceState(null, "", url);
     try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }

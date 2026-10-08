@@ -146,7 +146,6 @@ export function WeaponCompare({
     const url = new URL(window.location.href);
     url.search = encodeWeaponCompareState(state, dataVersion);
     markToolShare(url, "weapon-compare");
-    window.history.replaceState(null, "", url);
     try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }
