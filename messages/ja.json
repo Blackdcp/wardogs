@@ -835,6 +835,9 @@
     "guides": "攻略を見る"
   },
   "toolsHub": {
+    "communityLinks": "フィードバックと更新情報",
+    "feedback": "ツールの不具合を報告",
+    "rss": "ニュース・ガイド RSS（英語）",
     "title": "WARDOGS ツール一覧",
     "description": "次に取り組むことに合ったツールを選び、結果の根拠となる攻略や資料も確認しましょう。",
     "metaTitle": "WARDOGS ツール：マップ・装備・進行",

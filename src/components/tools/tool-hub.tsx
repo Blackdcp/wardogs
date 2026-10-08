@@ -1,6 +1,8 @@
 import {TaskLink} from "@/components/ui/task-link";
 import {HubHeader} from "@/components/ui/hub-header";
 import {SectionHeading} from "@/components/ui/section-heading";
+import {MessageSquareWarning, Rss} from "lucide-react";
+import {publicRoutePath} from "@/lib/public-url";
 import type {Locale} from "@/config/site";
 import type {GuideSummary} from "@/content/guides";
 import {TOOL_GROUPS, TOOL_REGISTRY} from "@/features/tools/tool-registry";
@@ -14,6 +16,10 @@ export function ToolHubView({locale, guides, t}: ToolHubProps) {
       <HubHeader title={t("toolsHub.title")} description={t("toolsHub.description")}>
           <nav className="mt-6 flex flex-wrap gap-3" aria-label={t("toolsHub.title")}>
             {TOOL_GROUPS.map((group) => <TaskLink href={`#tools-${group}`} label={t(`toolsHub.groups.${group}`)} key={group} />)}
+          </nav>
+          <nav className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-[#7fd0a1]" aria-label={t("toolsHub.communityLinks")}>
+            <a className="inline-flex min-h-11 min-w-0 items-center gap-2 hover:text-white" href={publicRoutePath(`/${locale}/contact`)} title={t("toolsHub.feedback")}><MessageSquareWarning aria-hidden="true" className="size-4 shrink-0" /><span className="break-words">{t("toolsHub.feedback")}</span></a>
+            <a className="inline-flex min-h-11 min-w-0 items-center gap-2 hover:text-white" href={publicRoutePath("/feed.xml")} type="application/rss+xml" hrefLang="en" title={t("toolsHub.rss")}><Rss aria-hidden="true" className="size-4 shrink-0" /><span className="break-words">{t("toolsHub.rss")}</span></a>
           </nav>
       </HubHeader>
       <div className="site-container py-10">

@@ -8,20 +8,29 @@ import {
 import * as googleAnalytics from "../../src/components/seo/google-analytics";
 import {siteLocales} from "../../src/config/site";
 import {notifyAnalyticsPageView, normalizeAnalyticsPathname} from "../../src/lib/analytics-events";
+import {sanitizeAnalyticsUrl} from "../../src/lib/analytics-page-context";
 
-function analyticsSandbox(hostname: string, pending: unknown[] = []) {
+function analyticsSandbox(hostname: string, pending: unknown[] = [], search = "") {
   const scripts: Record<string, unknown>[] = [];
+  const listeners = new Map<string, (() => void)[]>();
   const sandbox: Record<string, unknown> = {
-    location: {hostname},
+    URL,
+    location: new URL(`https://${hostname}/en${search}`),
     dataLayer: [...pending],
+    addEventListener: (name: string, listener: () => void) => listeners.set(name, [...(listeners.get(name) ?? []), listener]),
     document: {
+      referrer: "",
       getElementById: (id: string) => scripts.find((script) => script.id === id),
       createElement: () => ({}),
       head: {appendChild: (script: Record<string, unknown>) => scripts.push(script)}
     }
   };
+  sandbox.history = {
+    pushState: (_data: unknown, _unused: string, url?: string | URL) => { if (url != null) sandbox.location = new URL(url, String(sandbox.location)); },
+    replaceState: (_data: unknown, _unused: string, url?: string | URL) => { if (url != null) sandbox.location = new URL(url, String(sandbox.location)); },
+  };
   sandbox.window = sandbox;
-  return {sandbox, scripts, context: createContext(sandbox)};
+  return {sandbox, scripts, listeners, context: createContext(sandbox)};
 }
 
 describe("Google Analytics", () => {
@@ -58,7 +67,7 @@ describe("Google Analytics", () => {
     expect(googleAnalyticsConfigScript()).toContain("gtag('config', 'G-0GJ404WEYV')");
   });
 
-  it("preserves queued consent and events without overriding page or session fields", () => {
+  it("preserves queued consent and events with sanitized URL context and automatic page views", () => {
     const pending = [
       ["consent", "default", {analytics_storage: "denied"}],
       ["event", "catalogue_filter", {filter_value: "assault-rifle"}]
@@ -66,9 +75,10 @@ describe("Google Analytics", () => {
     const {sandbox, context} = analyticsSandbox("www.wardogswiki.com", pending);
     runInContext(googleAnalyticsConfigScript(), context);
     const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
-    expect(commands.slice(0, 2)).toEqual(pending);
+    expect(commands[0]).toEqual(pending[0]);
+    expect(commands[1]).toEqual(["event", "catalogue_filter", {filter_value: "assault-rifle", page_location: "https://www.wardogswiki.com/en", page_referrer: ""}]);
     expect(commands.map((entry) => entry[0])).toEqual(["consent", "event", "js", "config"]);
-    expect(commands.at(-1)).toEqual(["config", GOOGLE_TAG_ID]);
+    expect(commands.at(-1)).toEqual(["config", GOOGLE_TAG_ID, {page_location: "https://www.wardogswiki.com/en", page_referrer: ""}]);
     expect(commands.filter((entry) => entry[1] === "page_view")).toEqual([]);
   });
 
@@ -87,7 +97,75 @@ describe("Google Analytics", () => {
     expect(scripts[0]).toMatchObject({src: "https://www.googletagmanager.com/gtag/js?id=G-0GJ404WEYV", async: true});
     const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
     expect(commands.map((entry) => entry[0])).toEqual(["js", "config"]);
-    expect(commands.at(-1)).toEqual(["config", "G-0GJ404WEYV"]);
+    expect(commands.at(-1)).toEqual(["config", "G-0GJ404WEYV", {page_location: `https://${hostname}/en`, page_referrer: ""}]);
+  });
+
+  it("strips user state before initial config, queued and subsequent events, retaining bounded attribution", () => {
+    const search = "?fitQuery=private%40example.test&cash=9283&wd_share=equipment-compatibility&utm_source=discord&utm_medium=community#custom-label";
+    const {sandbox, context} = analyticsSandbox("www.wardogswiki.com", [["event", "engaged_tool", {tool: "equipment-compatibility"}]], search);
+    (sandbox.document as {referrer: string}).referrer = "https://source.example/story?email=private%40example.test#secret";
+    runInContext(googleAnalyticsConfigScript(), context);
+    runInContext("gtag('event', 'tool_action', {action: 'share', page_location: window.location.href})", context);
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    for (const command of commands.filter((entry) => entry[0] === "config" || entry[0] === "event")) {
+      expect(command[2]).toMatchObject({page_location: "https://www.wardogswiki.com/en?utm_source=discord&utm_medium=community", page_referrer: "https://source.example/story"});
+    }
+    expect(JSON.stringify(commands)).not.toMatch(/private|fitQuery|cash|wd_share|custom-label|secret|9283/);
+    expect(String(sandbox.location)).toContain("fitQuery=");
+    expect(JSON.stringify(commands)).not.toMatch(/send_page_view|session_id|session_number/);
+  });
+
+  it("updates context before history observers without adding manual page views or changing history", () => {
+    const {sandbox, context, listeners} = analyticsSandbox("www.wardogswiki.com");
+    runInContext(googleAnalyticsConfigScript(), context);
+    runInContext("history.pushState(null, '', '/ja/tools/ammo-matcher?fitQuery=private%40example.test&utm_source=moddb'); history.replaceState(null, '', '/ja/tools/ammo-matcher?fitQuery=changed')", context);
+    runInContext("gtag('event', 'engaged_tool', {tool: 'equipment-compatibility'})", context);
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    expect(commands.filter((entry) => entry[0] === "config")).toEqual([
+      ["config", GOOGLE_TAG_ID, {page_location: "https://www.wardogswiki.com/en", page_referrer: ""}],
+      ["config", GOOGLE_TAG_ID, {update: true, page_location: "https://www.wardogswiki.com/ja/tools/ammo-matcher?utm_source=moddb", page_referrer: "https://www.wardogswiki.com/en"}],
+      ["config", GOOGLE_TAG_ID, {update: true, page_location: "https://www.wardogswiki.com/ja/tools/ammo-matcher", page_referrer: "https://www.wardogswiki.com/en"}],
+    ]);
+    expect(commands.some((entry) => entry[1] === "page_view")).toBe(false);
+    expect(String(sandbox.location)).toContain("fitQuery=changed");
+    sandbox.location = new URL("https://www.wardogswiki.com/en?query=private#secret");
+    listeners.get("popstate")?.forEach((listener) => listener());
+    const last = Array.from((sandbox.dataLayer as ArrayLike<unknown>[]).at(-1)!);
+    expect(last[2]).toEqual({update: true, page_location: "https://www.wardogswiki.com/en", page_referrer: "https://www.wardogswiki.com/ja/tools/ammo-matcher"});
+  });
+
+  it("rejects duplicate, oversized and PII-like attribution while keeping valid campaign and click IDs", () => {
+    expect(sanitizeAnalyticsUrl("https://example.test/en?utm_source=discord&utm_campaign=tools-oct-08&gclid=Ab_123-xy&fitQuery=private#label"))
+      .toBe("https://example.test/en?utm_source=discord&utm_campaign=tools-oct-08&gclid=Ab_123-xy");
+    for (const query of ["utm_source=person%40example.test", "utm_source=one&utm_source=two", "utm_term=free+text", `gclid=${"x".repeat(201)}`, "utm_campaign=%2570rivate%2540example.test"]) {
+      expect(sanitizeAnalyticsUrl(`https://example.test/en?${query}`)).toBe("https://example.test/en");
+    }
+    expect(sanitizeAnalyticsUrl("javascript:alert(1)")).toBe("");
+    expect(sanitizeAnalyticsUrl("not a URL")).toBe("");
+  });
+
+  it("leaves page context unchanged when a history URL cannot be parsed", () => {
+    const {sandbox, context} = analyticsSandbox("www.wardogswiki.com");
+    runInContext(googleAnalyticsConfigScript(), context);
+    const count = (sandbox.dataLayer as unknown[]).length;
+    expect(() => runInContext("history.pushState(null, '', 'https://[')", context)).toThrow();
+    expect((sandbox.dataLayer as unknown[]).length).toBe(count);
+    expect(String(sandbox.location)).toBe("https://www.wardogswiki.com/en");
+  });
+
+  it("preserves the native history error and rolls back context without a fictional referrer", () => {
+    const {sandbox, context} = analyticsSandbox("www.wardogswiki.com", [], "?fitQuery=private");
+    (sandbox.document as {referrer: string}).referrer = "https://source.example/story?name=private";
+    (sandbox.history as {pushState: () => void}).pushState = () => { throw new Error("DataCloneError"); };
+    runInContext(googleAnalyticsConfigScript(), context);
+    expect(() => runInContext("history.pushState({}, '', '/ja?fitQuery=private')", context)).toThrow("DataCloneError");
+    runInContext("gtag('event', 'engaged_tool', {tool: 'ammo-matcher'})", context);
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    expect(commands.at(-1)?.[2]).toMatchObject({page_location: "https://www.wardogswiki.com/en", page_referrer: "https://source.example/story"});
+    const before = commands.length;
+    expect(() => runInContext("history.pushState(null, '', 'https://other.example/private')", context)).toThrow("DataCloneError");
+    expect((sandbox.dataLayer as unknown[]).length).toBe(before);
+    expect(commands.some((entry) => entry[1] === "page_view")).toBe(false);
   });
 
   it("forwards a custom event once when gtag is available, without a second queued copy", () => {

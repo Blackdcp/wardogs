@@ -5,6 +5,8 @@ import {useMemo, useRef, useState, useSyncExternalStore} from "react";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 import type {ToolCopy} from "@/features/tools/tool-copy";
 import {ToolShareNotice} from "./tool-share-notice";
+import {useToolAnalytics} from "./use-tool-analytics";
+import {isMarkedToolShare, markToolShare} from "@/features/tools/tool-analytics";
 import {getWorkflowCopy} from "@/features/tools/workflow-copy";
 import {
   decodeSystemCheckState,
@@ -34,16 +36,18 @@ export function SystemChecker({copy}: {copy: ToolCopy}) {
   const result = useMemo(() => evaluateSystemCheck(state), [state]);
   const lastTrackedResult = useRef<string | null>(null);
   const hasInvalidShare = !sharedState && ["os", "ram", "storage", "cpu", "gpu"].some((key) => new URLSearchParams(search).has(key));
+  const analytics = useToolAnalytics("system-checker", copy.locale, Boolean(sharedState) && isMarkedToolShare(search, "system-checker"));
 
   function updateState(next: SystemCheckState) {
     if ((Object.keys(defaults) as (keyof SystemCheckState)[]).every((key) => next[key] === state[key])) return;
+    analytics.engage();
     setEditedState(next);
     setCopied(false);
     setShareError(false);
     const verdict = evaluateSystemCheck(next).level;
     if (lastTrackedResult.current !== verdict) {
       lastTrackedResult.current = verdict;
-      trackAnalyticsEvent(ANALYTICS_EVENTS.toolResult, {tool: "system-checker", result: verdict});
+      trackAnalyticsEvent(ANALYTICS_EVENTS.toolResult, {tool: "system-checker", result: verdict, locale: copy.locale});
     }
   }
 
@@ -58,10 +62,12 @@ export function SystemChecker({copy}: {copy: ToolCopy}) {
   const resultText = {below: copy.resultBelow, review: copy.resultReview, minimum: copy.resultMinimum, recommended: copy.resultRecommended}[result.level];
 
   async function copyResult() {
+    analytics.beginShare();
     const url = new URL(window.location.href);
     url.search = encodeSystemCheckState(state);
+    markToolShare(url, "system-checker");
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "system-checker", action: "share", result: "copied"}); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }
 

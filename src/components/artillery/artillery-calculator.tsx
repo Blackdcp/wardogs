@@ -1,6 +1,7 @@
 "use client";
 
 import {ToolPageHeader} from "@/components/tools/tool-page-header";
+import {useToolAnalytics} from "@/components/tools/use-tool-analytics";
 import type {TaskLinkData} from "@/components/ui/task-link";
 import {useCallback, useEffect, useRef, useState} from "react";
 import Image from "next/image";
@@ -51,6 +52,7 @@ const LATERAL_OBSERVATION_OPTIONS: Array<{value: LateralObservation; label: stri
 ];
 
 export function ArtilleryCalculator({locale, headerActions}: Props) {
+  const analytics = useToolAnalytics("artillery-calculator", locale);
   const copy = getArtilleryCopy(locale);
   const [weaponId, setWeaponId] = useState<WeaponId>("mortar");
   const [trajectoryMode, setTrajectoryMode] = useState<TrajectoryMode>("single");
@@ -167,6 +169,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
   }
 
   function updateInputs(update: () => void) {
+    analytics.engage();
     cancelCountdown();
     resultPending.current = true;
     update();
@@ -196,6 +199,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
   // Start Splash Countdown
   const startFireCountdown = () => {
     if (!solution.valid || solution.timeOfFlightSeconds <= 0) return;
+    analytics.engage();
     cancelCountdown();
 
     const deadline = currentTimeMs() + solution.timeOfFlightSeconds * 1000;

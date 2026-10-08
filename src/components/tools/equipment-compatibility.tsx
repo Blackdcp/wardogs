@@ -1,6 +1,7 @@
 "use client";
 
-import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {hasSharedToolState, markToolShare} from "@/features/tools/tool-analytics";
+import {useToolAnalytics} from "./use-tool-analytics";
 
 import Image from "next/image";
 import {Check, Copy, ExternalLink, ImageOff, Search} from "lucide-react";
@@ -22,6 +23,7 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
   const copy = getCompatibilityCopy(locale);
   const search = useSyncExternalStore(subscribeLocation, () => window.location.search, () => "");
   const shared = useMemo(() => decodeCompatibilitySelection(search, dataset.weapons.map(({slug}) => slug)), [search, dataset]);
+  const analytics = useToolAnalytics("equipment-compatibility", locale, !shared.invalid && hasSharedToolState(search, writeCompatibilitySelection(new URL("https://analytics.invalid"), shared.selection).search, ["fitWeapon", "fitKind", "fitQuery", "fitNamed"], "equipment-compatibility"));
   const [edited, setEdited] = useState<{search: string; selection: CompatibilitySelection} | null>(null);
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
   const selection = edited?.search === search ? edited.selection : shared.selection;
@@ -29,6 +31,7 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
   const weaponNames = new Map(dataset.weapons.map(({slug, name}) => [slug, name]));
 
   function commit(next: CompatibilitySelection) {
+    analytics.engage();
     const url = writeCompatibilitySelection(new URL(window.location.href), next);
     setEdited({search: url.search, selection: next});
     setCopyState("idle");
@@ -37,9 +40,11 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
   }
 
   async function copySelection() {
+    analytics.beginShare();
     const url = writeCompatibilitySelection(new URL(window.location.href), selection);
+    markToolShare(url, "equipment-compatibility");
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "equipment-compatibility", action: "share", result: "copied"}); setCopyState("copied"); }
+    try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setCopyState("copied"); }
     catch { setCopyState("failed"); }
   }
 

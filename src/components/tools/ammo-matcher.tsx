@@ -1,6 +1,7 @@
 "use client";
 
-import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {hasSharedToolState, markToolShare} from "@/features/tools/tool-analytics";
+import {useToolAnalytics} from "./use-tool-analytics";
 
 import Image from "next/image";
 import {ArrowRight, Copy, ImageOff} from "lucide-react";
@@ -84,6 +85,7 @@ export function AmmoMatcher({
   const [copied, setCopied] = useState(false);
   const [shareError, setShareError] = useState(false);
   const dataVersion = useMemo(() => dataFingerprint(dataset), [dataset]);
+  const analytics = useToolAnalytics("ammo-matcher", copy.locale, hasSharedToolState(search, encodeAmmoMatcherState(sharedState), ["weapon", "ammo"], "ammo-matcher"));
   const result = useMemo(() => matchAmmoDataset(dataset, state), [dataset, state]);
 
   function sharedUrl(next: AmmoMatcherState) {
@@ -99,6 +101,7 @@ export function AmmoMatcher({
   }
 
   function commit(next: AmmoMatcherState) {
+    analytics.engage();
     setEditedState(next);
     setCopied(false);
     setShareError(false);
@@ -107,9 +110,11 @@ export function AmmoMatcher({
   }
 
   async function copyLink() {
+    analytics.beginShare();
     const url = sharedUrl(state);
+    markToolShare(url, "ammo-matcher");
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "ammo-matcher", action: "share", result: "copied"}); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }
 

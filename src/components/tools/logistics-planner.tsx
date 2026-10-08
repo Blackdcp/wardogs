@@ -1,6 +1,7 @@
 "use client";
 
-import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {hasSharedToolState, markToolShare} from "@/features/tools/tool-analytics";
+import {useToolAnalytics} from "./use-tool-analytics";
 
 import {ArrowDown, ArrowUp, Copy, ExternalLink} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
@@ -48,8 +49,9 @@ export function LogisticsPlanner({
   const [copied, setCopied] = useState(false);
   const [shareError, setShareError] = useState(false);
   const dataVersion = useMemo(() => dataFingerprint(stages), [stages]);
+  const analytics = useToolAnalytics("logistics-planner", copy.locale, hasSharedToolState(search, encodeLogisticsPlanState(sharedState), ["lp_stages", "lp_supplies"], "logistics-planner"));
   const encodedState = encodeLogisticsPlanState(state, dataVersion);
-  const tooLarge = !isToolShareWithinLimit(encodedState);
+  const tooLarge = !isToolShareWithinLimit(markToolShare(new URL(`https://share.invalid/?${encodedState}`), "logistics-planner").search);
   const validPlan = !state.supplies || supplyPlanSchema.safeParse(state.supplies).success;
   const stageById = useMemo(() => new Map(stages.map((stage) => [stage.id, stage])), [stages]);
   const plan = state.stages.flatMap((id) => {
@@ -58,6 +60,7 @@ export function LogisticsPlanner({
   });
 
   function commit(next: LogisticsPlanState) {
+    analytics.engage();
     setCopied(false);
     setShareError(false);
     const url = new URL(window.location.href);
@@ -83,11 +86,13 @@ export function LogisticsPlanner({
 
   async function copyLink() {
     if (tooLarge || !validPlan) return;
+    analytics.beginShare();
     const url = new URL(window.location.href);
     url.search = encodedState;
+    markToolShare(url, "logistics-planner");
     window.history.replaceState(null, "", url);
     setEditedState({search: url.search, value: state});
-    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "logistics-planner", action: "share", result: "copied"}); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }
 

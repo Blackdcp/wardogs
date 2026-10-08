@@ -14,11 +14,14 @@ import {assetPath} from "@/lib/assets";
 import {Link} from "@/i18n/navigation";
 import {publicRoutePath} from "@/lib/public-url";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {useToolAnalytics} from "@/components/tools/use-tool-analytics";
+import {isMarkedToolShare, markToolShare} from "@/features/tools/tool-analytics";
 
 type Props = {initialMap?: MapId; locale?: Locale; className?: string};
 const controlClass = "inline-flex size-11 shrink-0 items-center justify-center rounded border border-[#43534a] bg-[#18231e] text-white hover:bg-[#304538] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#91d8ad] disabled:opacity-40 aria-pressed:bg-[#3b654b]";
 
 export function WardogsMapViewer({initialMap = "bakurani", locale = "en", className = ""}: Props) {
+  const analytics = useToolAnalytics("map", locale);
   const [state, setState] = useState(() => initialMapState(initialMap));
   const stateRef = useRef(state);
   const markersByMap = useRef<Partial<Record<MapId, MapMarker[]>>>({});
@@ -86,6 +89,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
         const ruler = readMeasurementHash(window.location.hash, result.state.map);
         updateMeasurement(ruler.state ?? initialMeasurement(result.state.map));
         const plan = readTacticalPlanHash(window.location.hash, result.state.map);
+        if (!result.invalid && !ruler.invalid && !plan.invalid && isMarkedToolShare(window.location.search, "map")) analytics.openSharedResult();
         updateTacticalPlan(() => plan.state ?? initialTacticalPlan(result.state!.map));
         if (ruler.state) setMode("measure");
         if (plan.state?.fireSupport.points.length) setMode("range");
@@ -96,7 +100,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     restore();
     window.addEventListener("hashchange", restore);
     return () => window.removeEventListener("hashchange", restore);
-  }, [locale, updateState, updateMeasurement, updateTacticalPlan]);
+  }, [locale, analytics, updateState, updateMeasurement, updateTacticalPlan]);
 
   useEffect(() => {
     const element = viewportRef.current;
@@ -144,6 +148,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     const element = viewportRef.current;
     if (!element) return;
     const wheel = (event: WheelEvent) => {
+      analytics.engage();
       event.preventDefault();
       const rect = element.getBoundingClientRect();
       const point = {x: event.clientX - rect.left, y: event.clientY - rect.top};
@@ -151,21 +156,24 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     };
     element.addEventListener("wheel", wheel, {passive: false});
     return () => element.removeEventListener("wheel", wheel);
-  }, [updateState]);
+  }, [analytics, updateState]);
 
   function resetPointers() { pointers.current.clear(); pinch.current = null; tap.current = null; }
   function zoom(direction: 1 | -1) {
+    analytics.engage();
     updateState((previous) => ({...previous, view: boundView({...previous.view, zoom: previous.view.zoom + direction * 0.35}, size.width, size.height)}));
   }
   function addMarker(point: Point) {
     if (load !== "ready" || point.x < 0 || point.x > 1 || point.y < 0 || point.y > 1) return;
     if (stateRef.current.markers.length >= MAX_MARKERS) { setNotice(copy.limit); return; }
+    analytics.engage();
     updateState((previous) => ({...previous, markers: [...previous.markers, {id: `m${crypto.randomUUID()}`, ...point, label: `${copy.marker} ${previous.markers.length + 1}`}]}));
     trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: stateRef.current.map, action: "marker_added", locale});
     setPanel(true);
   }
   function addMeasurementPoint(point: Point) {
     if (load !== "ready" || !measuring) return;
+    analytics.engage();
     const current = measurementsByMap.current[stateRef.current.map] ?? initialMeasurement(stateRef.current.map);
     const next = placeMeasurementPoint(current, mode, point);
     updateMeasurement(next);
@@ -182,11 +190,13 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
   }
   function addRoutePoint(point: Point) {
     if (load !== "ready") return;
+    analytics.engage();
     updateTacticalPlan((previous) => placeRoutePoint(previous, point));
     trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: stateRef.current.map, action: "route_point", locale});
   }
   function addRangePoint(point: Point) {
     if (load !== "ready") return;
+    analytics.engage();
     updateTacticalPlan((previous) => placeRangePoint(previous, point));
     trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: stateRef.current.map, action: "range_point", locale});
   }
@@ -208,6 +218,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
   }
   function onPointerMove(event: PointerEvent<HTMLDivElement>) {
     if (!pointers.current.has(event.pointerId)) return;
+    analytics.engage();
     const before = [...pointers.current.values()];
     const point = localPoint(event);
     pointers.current.set(event.pointerId, point);
@@ -251,6 +262,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }
   async function share() {
+    analytics.beginShare();
     const url = new URL(window.location.href);
     url.pathname = publicRoutePath(`/${locale}/tools/map`);
     url.search = "";
@@ -259,6 +271,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     const plan = tacticalPlansByMap.current[shared.map] ?? tacticalPlan;
     const baseHash = ruler ? measurementHash(mapHash(shared), ruler) : mapHash(shared);
     url.hash = tacticalPlanHash(baseHash, plan);
+    markToolShare(url, "map");
     setShareLink(url.href);
     try {
       await navigator.clipboard.writeText(url.href);
@@ -266,12 +279,11 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
       trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: shared.map, action: "share", result: "copied", locale});
     } catch {
       setNotice(copy.shareLink);
-      trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: shared.map, action: "share", result: "manual_copy", locale});
     }
   }
 
   return (
-    <div ref={containerRef} aria-label={copy.map} aria-modal={fullscreen ? true : undefined} role={fullscreen ? "dialog" : "region"} onKeyDown={onContainerKey}
+    <div ref={containerRef} aria-label={copy.map} aria-modal={fullscreen ? true : undefined} role={fullscreen ? "dialog" : "region"} onKeyDown={onContainerKey} onChangeCapture={() => analytics.engage()}
       className={`${fullscreen ? "fixed inset-0 z-[1000] flex h-dvh flex-col overflow-y-auto" : `relative ${className}`} w-full min-w-0 border border-[#43534a] bg-[#0c110f]`} data-map-viewer data-fullscreen={fullscreen ?? "off"}>
       <div className="flex flex-wrap items-center gap-2 border-b border-[#43534a] bg-[#101a15] p-2">
         <label className="sr-only" htmlFor={`${id}-map`}>{copy.map}</label>

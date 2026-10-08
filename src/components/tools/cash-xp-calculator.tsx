@@ -2,7 +2,10 @@
 
 import {Copy} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
-import {ANALYTICS_EVENTS, createToolResultRecorder, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {createToolResultRecorder} from "@/lib/analytics-events";
+import {hasSharedToolState, markToolShare} from "@/features/tools/tool-analytics";
+import {getWorkflowCopy} from "@/features/tools/workflow-copy";
+import {useToolAnalytics} from "./use-tool-analytics";
 import {
   calculateCashXpPlan,
   decodeCashXpPlan,
@@ -154,30 +157,40 @@ export function CashXpCalculator({locale}: {locale: string}) {
   const text = copyByLocale[locale] ?? fallbackCopy;
   const search = useSyncExternalStore(subscribeToLocation, () => window.location.search, emptySearch);
   const sharedState = useMemo(() => search ? decodeCashXpPlan(search) : defaultCashXpPlan, [search]);
+  const analytics = useToolAnalytics("cash-xp-calculator", locale, hasSharedToolState(search, encodeCashXpPlan(sharedState), Object.keys(defaultCashXpPlan), "cash-xp-calculator"));
   const [editedState, setEditedState] = useState<CashXpPlan | null>(null);
   const [copied, setCopied] = useState(false);
+  const [shareError, setShareError] = useState(false);
   const state = editedState ?? sharedState;
   const result = calculateCashXpPlan(state);
 
   const resultRecorder = useMemo(() => createToolResultRecorder("cash-xp-calculator", locale), [locale]);
 
   function commit(next: Partial<CashXpPlan>) {
+    analytics.engage();
     const normalized = normalizeCashXpPlan({...state, ...next});
     resultRecorder(calculateCashXpPlan(normalized).netCash < 0 ? "cash_negative" : "cash_positive");
     setEditedState(normalized);
     setCopied(false);
+    setShareError(false);
     const url = new URL(window.location.href);
     url.search = encodeCashXpPlan(normalized);
     window.history.replaceState(null, "", url);
   }
 
   async function copyLink() {
+    analytics.beginShare();
     const url = new URL(window.location.href);
     url.search = encodeCashXpPlan(state);
+    markToolShare(url, "cash-xp-calculator");
     window.history.replaceState(null, "", url);
-    await navigator.clipboard.writeText(url.toString());
-    trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "cash-xp-calculator", action: "share", result: "copied", locale});
-    setCopied(true);
+    setCopied(false);
+    setShareError(false);
+    try {
+      await navigator.clipboard.writeText(url.toString());
+      analytics.shareCopied();
+      setCopied(true);
+    } catch { setShareError(true); }
   }
 
   const stats = [
@@ -192,6 +205,7 @@ export function CashXpCalculator({locale}: {locale: string}) {
 
   return (
     <section className="border-y border-[#354039] bg-[#111512]" aria-label={text.title}>
+      {shareError ? <p role="status" className="px-5 py-3 text-sm text-[#e4c35f]">{getWorkflowCopy(locale).shareFailed}</p> : null}
       <div className="border-b border-[#354039] px-5 py-4 md:px-8">
         <p className="text-xs font-semibold uppercase text-[#69c78f]">{text.eyebrow}</p>
         <h2 className="display-font mt-2 text-2xl text-white">{text.title}</h2>

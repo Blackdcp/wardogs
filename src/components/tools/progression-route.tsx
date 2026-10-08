@@ -1,6 +1,7 @@
 "use client";
 
-import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {hasSharedToolState, markToolShare} from "@/features/tools/tool-analytics";
+import {useToolAnalytics} from "./use-tool-analytics";
 
 import {Copy, ExternalLink} from "lucide-react";
 import {useMemo, useState, useSyncExternalStore} from "react";
@@ -37,12 +38,14 @@ export function ProgressionRoute({
   const [copied, setCopied] = useState(false);
   const [shareError, setShareError] = useState(false);
   const dataVersion = useMemo(() => dataFingerprint(routes), [routes]);
+  const analytics = useToolAnalytics("progression-route", copy.locale, hasSharedToolState(search, encodeProgressionRouteState(sharedState), ["pr_role", "pr_level"], "progression-route"));
   const route = useMemo(
     () => routes.find(({id}) => id === state.role) ?? routes[0],
     [routes, state.role],
   );
 
   function commit(next: ProgressionRouteState) {
+    analytics.engage();
     setEditedState(next);
     setCopied(false);
     setShareError(false);
@@ -52,10 +55,12 @@ export function ProgressionRoute({
   }
 
   async function copyLink() {
+    analytics.beginShare();
     const url = new URL(window.location.href);
     url.search = encodeProgressionRouteState(state, dataVersion);
+    markToolShare(url, "progression-route");
     window.history.replaceState(null, "", url);
-    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "progression-route", action: "share", result: "copied"}); setCopied(true); }
+    try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareError(false); setCopied(true); }
     catch { setShareError(true); }
   }
 

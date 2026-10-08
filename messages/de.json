@@ -835,6 +835,9 @@
     "guides": "Guides ansehen"
   },
   "toolsHub": {
+    "communityLinks": "Feedback und Neuigkeiten",
+    "feedback": "Tool-Problem melden",
+    "rss": "News und Guides per RSS (Englisch)",
     "title": "WARDOGS-Werkzeuge",
     "description": "Wähle ein Werkzeug für deine Aufgabe und kehre anschließend zum Leitfaden und den Belegen zurück.",
     "metaTitle": "WARDOGS-Werkzeuge: Karten, Ausrüstung und Fortschritt",

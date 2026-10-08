@@ -835,6 +835,9 @@
     "guides": "Browse Guides"
   },
   "toolsHub": {
+    "communityLinks": "Feedback and updates",
+    "feedback": "Report a tool issue",
+    "rss": "News and guides RSS (English)",
     "title": "WARDOGS Tools",
     "description": "Choose a tool for your next task, then return to the guide and evidence behind the result.",
     "metaTitle": "WARDOGS Tools: Maps, Loadouts and Progression",

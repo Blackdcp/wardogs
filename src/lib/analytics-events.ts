@@ -11,6 +11,8 @@ export const ANALYTICS_EVENTS = {
   toolStart: "tool_start",
   toolResult: "tool_result",
   toolAction: "tool_action",
+  resultSharedOpen: "result_shared_open",
+  engagedTool: "engaged_tool",
   mapAction: "map_action",
   adStatus: "ad_status",
   adDismiss: "ad_dismiss",

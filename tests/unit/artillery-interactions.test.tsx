@@ -2,6 +2,20 @@ import type {ReactNode} from "react";
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import {ArtilleryCalculator} from "../../src/components/artillery/artillery-calculator";
 import {SystemChecker} from "../../src/components/tools/system-checker";
+import {CashXpCalculator} from "../../src/components/tools/cash-xp-calculator";
+import {AmmoMatcher} from "../../src/components/tools/ammo-matcher";
+import {WeaponCompare} from "../../src/components/tools/weapon-compare";
+import {ProgressionRoute} from "../../src/components/tools/progression-route";
+import {LogisticsPlanner} from "../../src/components/tools/logistics-planner";
+import {LoadoutBudgetEditor} from "../../src/components/tools/loadout-budget-editor";
+import {EquipmentCompatibility} from "../../src/components/tools/equipment-compatibility";
+import {getAmmoMatcherDataset} from "../../src/features/tools/ammo-matcher-data";
+import {getComparableWeapons} from "../../src/features/tools/weapon-compare-data";
+import {getProgressionRoutes} from "../../src/features/tools/progression-routes";
+import {getLogisticsStages} from "../../src/features/tools/logistics-plan";
+import {getLoadoutCatalogue} from "../../src/features/tools/loadout-catalogue";
+import {getCompatibilityDataset} from "../../src/features/tools/equipment-compatibility";
+import {getWorkflowCopy} from "../../src/features/tools/workflow-copy";
 import {ToolShareNotice} from "../../src/components/tools/tool-share-notice";
 import {getToolCopy} from "../../src/features/tools/tool-copy";
 import {decodeSystemCheckState, encodeSystemCheckState} from "../../src/features/tools/share-state";
@@ -32,7 +46,14 @@ vi.mock("react", async (importOriginal) => ({
     return hooks.slots[index].value;
   },
   useCallback: (callback: unknown) => callback,
-  useMemo: (factory: () => unknown) => factory(),
+  useMemo(factory: () => unknown, dependencies: readonly unknown[]) {
+    const index = hooks.index++;
+    const previous = hooks.slots[index];
+    if (!previous || dependencies.some((value, i) => !Object.is(previous.dependencies?.[i], value))) {
+      hooks.slots[index] = {value: factory(), dependencies};
+    }
+    return hooks.slots[index].value;
+  },
   useSyncExternalStore: () => hooks.search,
   useEffect(effect: () => (() => void) | void, dependencies?: readonly unknown[]) {
     const index = hooks.index++;
@@ -219,6 +240,7 @@ describe("artillery input and timer regressions", () => {
     change(nodes.filter((entry) => entry.type === "input" && entry.props.type === "number")[0], "750");
     render(artillery);
     expect(browser.gtag.mock.calls).toEqual([
+      ["event", "engaged_tool", {tool: "artillery-calculator", locale: "en"}],
       ["event", "tool_result", {tool: "artillery-calculator", result: "valid", result_type: "ready", weapon: "mortar", input_mode: "direct", locale: "en"}],
       ["event", "tool_result_artillery_calculator_ready", {tool: "artillery-calculator", result: "valid", result_type: "ready", weapon: "mortar", input_mode: "direct", locale: "en", legacy_compat: true}],
       ["event", "tool_action", {tool: "artillery-calculator", result: "valid", action: "fire", weapon: "mortar", locale: "en"}],
@@ -272,10 +294,11 @@ describe("system checker decimal sharing", () => {
     expect(nodes.find((entry) => entry.type === ToolShareNotice)?.props.invalid).toBe(true);
   });
 
-  it("does not track hydration or repeated verdicts, and sends no hardware values", () => {
-    hooks.search = encodeSystemCheckState({os: "windows-11", ramGb: 16, storageGb: 84.5, cpuTier: "recommended", gpuTier: "recommended"});
+  it("tracks a shared open once without treating hydration as engagement or a calculated verdict", () => {
+    hooks.search = encodeSystemCheckState({os: "windows-11", ramGb: 16, storageGb: 84.5, cpuTier: "recommended", gpuTier: "recommended"}) + "&wd_share=system-checker";
     let nodes = render(system);
-    expect(browser.gtag).not.toHaveBeenCalled();
+    expect(browser.gtag).toHaveBeenCalledExactlyOnceWith("event", "result_shared_open", {tool: "system-checker", locale: "en"});
+    nodes = render(system);
     change(labeledControl(nodes, copy.storage), "90.5");
     nodes = render(system);
     change(labeledControl(nodes, copy.storage), "91.5");
@@ -283,8 +306,78 @@ describe("system checker decimal sharing", () => {
     change(labeledControl(nodes, copy.ram), "8");
     render(system);
     expect(browser.gtag.mock.calls).toEqual([
-      ["event", "tool_result", {tool: "system-checker", result: "recommended"}],
-      ["event", "tool_result", {tool: "system-checker", result: "below"}],
+      ["event", "result_shared_open", {tool: "system-checker", locale: "en"}],
+      ["event", "engaged_tool", {tool: "system-checker", locale: "en"}],
+      ["event", "tool_result", {tool: "system-checker", result: "recommended", locale: "en"}],
+      ["event", "tool_result", {tool: "system-checker", result: "below", locale: "en"}],
     ]);
+  });
+});
+
+describe("tool share success boundary", () => {
+  const copy = getToolCopy("en");
+  const components: [string, () => ReactNode][] = [
+    ["system-checker", () => SystemChecker({copy})],
+    ["cash-xp-calculator", () => CashXpCalculator({locale: "en"})],
+    ["ammo-matcher", () => AmmoMatcher({copy, dataset: getAmmoMatcherDataset(), initialState: {weapon: null, ammo: null}})],
+    ["weapon-compare", () => WeaponCompare({copy, weapons: getComparableWeapons(), initialState: {left: "amp-9", right: "deagle"}})],
+    ["progression-route", () => ProgressionRoute({copy, routes: getProgressionRoutes(), initialState: {role: "assault", currentLevel: null}})],
+    ["logistics-planner", () => LogisticsPlanner({copy, stages: getLogisticsStages(), initialState: {stages: ["construction"]}})],
+    ["loadout-budget", () => LoadoutBudgetEditor({copy, catalogue: getLoadoutCatalogue("en")})],
+    ["equipment-compatibility", () => EquipmentCompatibility({dataset: getCompatibilityDataset("en"), locale: "en"})],
+  ];
+  function shareButton(nodes: Element[]) {
+    const node = nodes.find((entry) => entry.type === "button" && /copy/i.test(`${text(entry)} ${entry.props["aria-label"] ?? ""}`));
+    expect(node).toBeDefined();
+    return node!;
+  }
+  it.each(components)("%s distinguishes an internal state link from a marked share and deduplicates opens", (tool, component) => {
+    const state: Record<string, string> = {
+      "system-checker": "os=windows-11&ram=16&storage=50&cpu=minimum&gpu=minimum",
+      "cash-xp-calculator": "count=12",
+      "ammo-matcher": "weapon=amp-9",
+      "weapon-compare": "left=amp-9&right=deagle",
+      "progression-route": "pr_role=assault&pr_level=12",
+      "logistics-planner": "lp_stages=construction",
+      "loadout-budget": "cash=10000&loadout=3000&vehicle=0&reserve=2000",
+      "equipment-compatibility": "fitQuery=private%40example.test",
+    };
+    hooks.search = state[tool];
+    render(component);
+    expect(browser.gtag).not.toHaveBeenCalled();
+    hooks.search += `&wd_share=${tool}`;
+    render(component);
+    render(component);
+    expect(browser.gtag).toHaveBeenCalledExactlyOnceWith("event", "result_shared_open", {tool, locale: "en"});
+  });
+  it.each(components)("%s emits one share only after clipboard resolution and not a self-open", async (tool, component) => {
+    let resolve!: () => void;
+    clipboard.mockImplementation(() => new Promise<void>((done) => { resolve = done; }));
+    const nodes = render(component);
+    const pending = (shareButton(nodes).props.onClick as () => Promise<void>)();
+    render(component);
+    expect(browser.gtag).not.toHaveBeenCalled();
+    resolve();
+    await pending;
+    expect(new URL(clipboard.mock.calls[0][0]).searchParams.get("wd_share")).toBe(tool);
+    render(component);
+    expect(browser.gtag).toHaveBeenCalledExactlyOnceWith("event", "tool_action", {tool, locale: "en", action: "share", result: "copied"});
+  });
+  it.each(components)("%s emits nothing when clipboard access is rejected", async (_tool, component) => {
+    clipboard.mockRejectedValue(new Error("Denied"));
+    const nodes = render(component);
+    await (shareButton(nodes).props.onClick as () => Promise<void>)();
+    render(component);
+    expect(browser.gtag).not.toHaveBeenCalled();
+  });
+  it("shows a localized cash/XP failure and clears it on a successful retry", async () => {
+    const component = () => CashXpCalculator({locale: "zh-cn"});
+    const share = (nodes: Element[]) => nodes.find((entry) => entry.type === "button")!;
+    clipboard.mockRejectedValueOnce(new Error("Denied"));
+    await (share(render(component)).props.onClick as () => Promise<void>)();
+    expect(text(render(component))).toContain(getWorkflowCopy("zh-cn").shareFailed);
+    await (share(render(component)).props.onClick as () => Promise<void>)();
+    expect(text(render(component))).not.toContain(getWorkflowCopy("zh-cn").shareFailed);
+    expect(browser.gtag).toHaveBeenCalledExactlyOnceWith("event", "tool_action", {tool: "cash-xp-calculator", locale: "zh-cn", action: "share", result: "copied"});
   });
 });

@@ -835,6 +835,9 @@
     "guides": "浏览攻略"
   },
   "toolsHub": {
+    "communityLinks": "反馈与更新",
+    "feedback": "反馈工具问题",
+    "rss": "新闻与攻略 RSS（英文）",
     "title": "WARDOGS 工具中心",
     "description": "按当前任务选择工具，再回到攻略核对结果依据。",
     "metaTitle": "WARDOGS 工具：地图、配装与成长规划",

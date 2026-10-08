@@ -1,7 +1,7 @@
 import {readFileSync} from "node:fs";
 import React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
-import {describe, expect, it} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
 import {locales} from "../../src/config/site";
 import {buildGuideIndex} from "../../src/features/guides/guide-index";
 import {TOOL_REGISTRY} from "../../src/features/tools/tool-registry";
@@ -16,6 +16,7 @@ function translate(locale: string) {
 }
 
 describe("localized Tools hub", () => {
+  afterEach(() => vi.unstubAllEnvs());
   it.each(locales)("renders all exact tool links, purpose, evidence limits and local related guides in %s", async (locale) => {
     const hubModule = await import("../../src/components/tools/tool-hub").catch(() => undefined);
     expect(hubModule, "Tools hub component must exist").toBeDefined();
@@ -26,6 +27,12 @@ describe("localized Tools hub", () => {
     expect(html.match(/data-tool-entry=/g)).toHaveLength(9);
     expect(html.match(/data-tool-group=/g)).toHaveLength(5);
     expect(html).toContain(t("toolsHub.evidenceDescription"));
+    expect(html).toContain(`href="/${locale}/contact"`);
+    expect(html).toContain('href="/feed.xml"');
+    expect(html).toContain('type="application/rss+xml"');
+    expect(html).toContain('hrefLang="en"');
+    expect(html).toContain(t("toolsHub.feedback"));
+    expect(html).toContain(t("toolsHub.rss"));
     for (const tool of TOOL_REGISTRY) {
       expect(html).toContain(`href="/${locale}${tool.href}"`);
       expect(html).toContain(t(tool.descriptionKey).replaceAll("&", "&amp;"));
@@ -33,5 +40,12 @@ describe("localized Tools hub", () => {
     }
     expect(html).not.toContain("toolsHub.");
     if (locale !== "en") expect(t("toolsHub.title")).not.toBe(translate("en")("toolsHub.title"));
+  });
+  it("keeps feedback and RSS usable with a static-export base path", async () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    const {ToolHubView} = await import("../../src/components/tools/tool-hub");
+    const html = renderToStaticMarkup(<ToolHubView locale="ja" guides={await buildGuideIndex("ja")} t={translate("ja")} />);
+    expect(html).toContain('href="/wardogs/ja/contact/"');
+    expect(html).toContain('href="/wardogs/feed.xml"');
   });
 });

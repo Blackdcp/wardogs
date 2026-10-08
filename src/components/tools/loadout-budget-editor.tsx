@@ -15,6 +15,8 @@ import {assetPath} from "@/lib/assets";
 import {EvidenceProvenance} from "./evidence-provenance";
 import {PlanNumber, planInputClass} from "./plan-number";
 import {ToolShareNotice} from "./tool-share-notice";
+import {useToolAnalytics} from "./use-tool-analytics";
+import {isMarkedToolShare, markToolShare} from "@/features/tools/tool-analytics";
 
 const defaults: BudgetState = {cash: 10_000, loadout: 3_000, vehicle: 0, reserve: 2_000};
 const emptySearch = () => "";
@@ -27,6 +29,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
   const isHydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const search = useSyncExternalStore(subscribe, () => window.location.search, emptySearch);
   const restored = useMemo(() => decodeBudgetState(search), [search]);
+  const analytics = useToolAnalytics("loadout-budget", copy.locale, Boolean(restored) && isMarkedToolShare(search, "loadout-budget"));
   const preselected = useMemo(() => {
     const ids = new URLSearchParams(search).getAll("pick");
     return ids.length > 0 && ids.length <= maximumPlanLines ? [...new Set(ids)].map((id): PurchaseLine => ({id, quantity: 1, unit: "unknown", unitPrice: null, frequency: "repeat"})) : [];
@@ -34,7 +37,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
   const [edited, setEdited] = useState<{search: string; value: BudgetState} | null>(null);
   const state: BudgetState = (edited?.search === search ? edited.value : null) ?? restored ?? (preselected.length ? {...defaults, mode: "items", lines: preselected} : defaults);
   const encodedState = encodeBudgetState(state, catalogue.dataVersion);
-  const tooLarge = !isToolShareWithinLimit(encodedState);
+  const tooLarge = !isToolShareWithinLimit(markToolShare(new URL(`https://share.invalid/?${encodedState}`), "loadout-budget").search);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState("");
   const [weapon, setWeapon] = useState("");
@@ -66,7 +69,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
     resultPending.current = false;
     resultRecorder(!result ? "incomplete" : result.reserveMet ? "reserve_met" : "reserve_missed");
   });
-  function commit(next: BudgetState) { resultPending.current = true; setEdited({search, value: next}); setShareStatus(""); }
+  function commit(next: BudgetState) { analytics.engage(); resultPending.current = true; setEdited({search, value: next}); setShareStatus(""); }
   function updateLine(index: number, patch: Partial<PurchaseLine>) { commit({...state, lines: lines.map((line, row) => row === index ? {...line, ...patch} : line)}); }
   function addItem() {
     if (!itemMap.has(selected)) return;
@@ -82,12 +85,14 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
   }
   async function share() {
     if (tooLarge) return;
+    analytics.beginShare();
     const url = new URL(window.location.href);
     url.search = encodedState;
+    markToolShare(url, "loadout-budget");
     window.history.replaceState(null, "", url);
     setEdited({search: url.search, value: state});
-    try { await navigator.clipboard.writeText(url.toString()); trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "loadout-budget", action: "share", result: "copied", locale: copy.locale}); setShareStatus(copy.copied); }
-    catch { trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "loadout-budget", action: "share", result: "clipboard_error", locale: copy.locale}); setShareStatus(t.shareFailed); }
+    try { await navigator.clipboard.writeText(url.toString()); analytics.shareCopied(); setShareStatus(copy.copied); }
+    catch { setShareStatus(t.shareFailed); }
   }
 
   return <section aria-busy={!isHydrated} className="border-y border-[#354039] bg-[#111512]" aria-labelledby="loadout-budget-form">

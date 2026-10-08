@@ -835,6 +835,9 @@
     "guides": "Ver guias"
   },
   "toolsHub": {
+    "communityLinks": "Feedback e novidades",
+    "feedback": "Relatar problema na ferramenta",
+    "rss": "Notícias e guias RSS (em inglês)",
     "title": "Ferramentas de WARDOGS",
     "description": "Escolha uma ferramenta para sua tarefa e volte ao guia e às fontes que sustentam o resultado.",
     "metaTitle": "Ferramentas WARDOGS: mapas, kits e progressão",
