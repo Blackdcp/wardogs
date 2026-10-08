@@ -19,7 +19,7 @@ export function MapMeasurementPanel({state, locale, mode, onChange, onMode, onCe
   const result = measureMap(state);
   const number = (value: number) => new Intl.NumberFormat(locale, {maximumSignificantDigits: 4}).format(value);
   const endpoints = mode === "calibrate" ? state.reference : state.points;
-  return <section className="border-t border-[#43534a] p-3 text-sm text-[#bacbc0]" data-map-measurement>
+  return <section className="border-t border-[#43534a] p-3 text-sm text-[#bacbc0]" data-map-measurement data-clarity-mask="true">
     <div className="flex flex-wrap items-center gap-2">
       <fieldset className="flex min-w-0 flex-wrap gap-3"><legend className="sr-only">{copy.title}</legend>
         {(["measure", "calibrate"] as const).map((value) => <label className="flex min-h-11 items-center gap-2" key={value}><input type="radio" name={`${id}-mode`} checked={mode === value} onChange={() => onMode(value)} />{value === "measure" ? copy.measure : copy.reference}</label>)}

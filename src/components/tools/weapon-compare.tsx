@@ -154,7 +154,7 @@ export function WeaponCompare({
     <section className="border-y border-[#354039] bg-[#111512]" aria-label={copy.comparison}>
       <ToolShareNotice search={search} locale={copy.locale} dataVersion={dataVersion} invalid={["left", "right"].some((key) => hasInvalidSelection(search, key, weapons.map(({slug}) => slug)))} />
       <div className="grid gap-5 p-5 sm:grid-cols-2 md:p-8">
-        <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{t.search}<input className="min-h-11 w-full border border-[#46534d] bg-[#0c100e] px-3 text-white" type="search" value={query} onChange={(event) => setQuery(event.target.value)} /></label>
+        <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{t.search}<input data-clarity-mask="true" className="min-h-11 w-full border border-[#46534d] bg-[#0c100e] px-3 text-white" type="search" value={query} onChange={(event) => setQuery(event.target.value)} /></label>
         <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{t.allTypes}<select className="min-h-11 w-full border border-[#46534d] bg-[#0c100e] px-3 text-white" value={subtype} onChange={(event) => setSubtype(event.target.value)}><option value="">{t.allTypes}</option>{[...new Set(weapons.map(({subtype}) => subtype))].map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
         {!filtered.length ? <p className="text-sm text-[#e4c35f] sm:col-span-2" role="status">{t.noResults}</p> : null}
         <label className="grid min-w-0 gap-2 text-sm font-semibold text-[#cbd5cf]">

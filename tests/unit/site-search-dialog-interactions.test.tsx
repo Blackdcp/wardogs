@@ -114,6 +114,16 @@ afterEach(async () => {
 });
 
 describe("search dialog request and analytics lifecycle", () => {
+  it("masks typed search text and the associated result context from session replay", async () => {
+    open(); requests[0].complete([entry]); await flushPromises();
+    const nodes = typeQuery("Havoc");
+    const dialog = nodes.find((node) => node.props.role === "dialog")!;
+    expect(dialog.props["data-clarity-mask"]).toBe("true");
+    const protectedNodes = elements(dialog.props.children);
+    expect(protectedNodes.find((node) => node.type === "input")?.props.value).toBe("Havoc");
+    expect(protectedNodes.some((node) => node.props.role === "option")).toBe(true);
+  });
+
   it.each(["", "/wardogs"])("loads the search index through the deployment base path %s", (basePath) => {
     vi.stubEnv("NEXT_PUBLIC_BASE_PATH", basePath);
     vi.stubEnv("GITHUB_PAGES", "true");

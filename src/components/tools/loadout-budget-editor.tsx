@@ -129,7 +129,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
       <p className="text-xs leading-5 text-[#a8b4ae]">{t.assumptions}</p>
       {itemsMode ? <div className="space-y-5 border-y border-[#354039] py-5">
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
-          <label className="grid gap-2 text-sm text-[#cbd5cf]">{t.search}<input className={planInputClass} type="search" value={query} onChange={(event) => {setQuery(event.target.value); setSelected("");}} /></label>
+          <label className="grid gap-2 text-sm text-[#cbd5cf]">{t.search}<input data-clarity-mask="true" className={planInputClass} type="search" value={query} onChange={(event) => {setQuery(event.target.value); setSelected("");}} /></label>
           <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{t.select}<select className={planInputClass} value={selected} onChange={(event) => setSelected(event.target.value)}><option value="">{found.length ? t.select : t.noResults}</option>{found.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
           <button className={`${buttonClass} self-end`} type="button" disabled={!selected || lines.length >= maximumPlanLines} onClick={addItem}><Plus size={16} aria-hidden="true" />{t.add}</button>
         </div>

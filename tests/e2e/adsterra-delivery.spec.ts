@@ -282,6 +282,7 @@ test("sponsored CTA counts one exposure per route visit and opens only a chosen 
   await expect(popup).toHaveURL(destination);
   await expect.poll(() => smartlinkEvents(page, "ad_click")).toEqual([{
     ad_unit: "smartlink-1", page_path: "/en/guides", page_type: "guide_hub",
+    page_location: `${productionOrigin}/en/guides`, page_referrer: `${productionOrigin}/en/items`,
     config_version: "format-expansion-v3", section: "guide_hub:smartlink",
     format: "smartlink", placement: "smartlink", locale: "en"
   }]);

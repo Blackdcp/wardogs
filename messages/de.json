@@ -819,7 +819,9 @@
     "intro": "Diese Seite erklärt Analyse, Werbung, externe Medien und Links auf der Website.",
     "content": "Wir verwalten keine Spielerkonten und erfassen keine Spielzugangsdaten. Auf wardogswiki.com und www.wardogswiki.com wird Google Analytics beim Öffnen einer Seite automatisch geladen. Das Tag nutzt Cookies und erfasst Seitenaufrufe, Website-Interaktionen sowie Browser-/Geräteinformationen zur Nutzungsanalyse. Analyse und direkte Adsterra-Anfragen können schon vor einem Klick auf externe Links stattfinden; Anbieterregeln gelten auch für diese Anfragen. Browsereinstellungen können Cookies und Kennungen begrenzen.",
     "advertising": "Native Anzeigen und Banner von Adsterra werden über Werbeskripte Dritter geladen. Klar gekennzeichnete gesponserte Links (Smartlink) öffnen sich nur, wenn Sie sie auswählen, und führen in einem neuen Tab zu externen Websites von Werbetreibenden. Auf einzelnen Seiten können zusätzliche Werbeformate wie Social Bar oder Popunder getestet werden; Formate und Platzierungen können je nach Seite, Gerät und Testeinstellungen variieren. Werbung Dritter kann Zielseiten in einem weiteren Tab oder Fenster öffnen. Werbeanfragen können bereits vor einem Klick Ihre IP-Adresse, Browser-Header und Geräteinformationen an Werbeanbieter übermitteln. Dabei gelten deren Datenschutzrichtlinien sowie Ihre Browsereinstellungen für Cookies und Kennungen. Zur Bewertung der Platzierung erfasst die Website die Sichtbarkeit gesponserter Links und freiwillige Klicks, ohne diese Ereignisse als abrechenbare Werbeeinblendungen zu werten.",
-    "googlePolicy": "Google-Datenschutzerklärung"
+    "googlePolicy": "Google-Datenschutzerklärung",
+    "clarity": "Microsoft Clarity ist optional. Mit deiner Einwilligung verwendet es Cookies und erfasst Klicks, Scrollbewegungen und Sitzungsaufzeichnungen, damit wir die Website verbessern können. Die Aufzeichnung beginnt erst nach deiner Zustimmung; frühere Besuche lassen sich nicht nachträglich aufzeichnen. Clarity wird nur auf Inhalts- und Navigationsseiten verwendet, wenn weder die Seitenadresse noch der verweisende Link URL-Parameter oder geteilte Einstellungen enthält. Interaktive Werkzeugseiten sind ausgeschlossen; ihre Nutzung wird separat durch die bestehende Website-Analyse erfasst. Für Eingabebereiche der Suche und der Karte verwenden wir Maskierung. Die Speicherung von Werbedaten durch Clarity bleibt deaktiviert. Du kannst deine Auswahl über „Clarity-Datenschutzeinstellungen“ im Seitenfuß ändern. Diese Auswahl gilt nur für Clarity und ändert keine Einstellungen von Google Analytics oder Adsterra.",
+    "microsoftPolicy": "Microsoft-Datenschutzerklärung"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Nutzungsbedingungen und Haftungshinweise",
@@ -882,5 +884,15 @@
         "description": "Vergleiche deine PC-Konfiguration mit den Anforderungen und folge dem passenden Diagnosezweig."
       }
     }
+  },
+  "clarity": {
+    "title": "Optionale Clarity-Analyse",
+    "description": "Erlaube Microsoft Clarity, Klicks, Scrollbewegungen und Sitzungsaufzeichnungen zu erfassen, damit wir dieses Wiki verbessern können. Diese Auswahl gilt nur für Clarity.",
+    "allow": "Clarity erlauben",
+    "decline": "Clarity ablehnen",
+    "settings": "Clarity-Datenschutzeinstellungen",
+    "privacy": "Datenschutzerklärung",
+    "statusAllowed": "Clarity-Analyse erlaubt",
+    "statusDenied": "Clarity-Analyse abgelehnt"
   }
 }

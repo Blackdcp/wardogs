@@ -72,7 +72,7 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
           </select>
         </label>
         <label className="grid min-w-0 gap-2 text-sm text-[#c4d0c9]">{copy.search}
-          <span className="flex min-h-11 items-center gap-2 border border-[#495a51] bg-[#101411] px-3"><Search aria-hidden="true" className="shrink-0" size={16} /><input className="w-full min-w-0 bg-transparent text-white outline-none" maxLength={120} value={selection.query} onChange={(event) => commit({...selection, query: event.target.value})} /></span>
+          <span className="flex min-h-11 items-center gap-2 border border-[#495a51] bg-[#101411] px-3"><Search aria-hidden="true" className="shrink-0" size={16} /><input data-clarity-mask="true" className="w-full min-w-0 bg-transparent text-white outline-none" maxLength={120} value={selection.query} onChange={(event) => commit({...selection, query: event.target.value})} /></span>
         </label>
       </div>
       <label className="mt-4 flex min-h-11 items-center gap-3 text-sm text-[#b7c3bd] has-disabled:opacity-50"><input checked={selection.namedOnly} disabled={!selection.weapon} onChange={(event) => commit({...selection, namedOnly: event.target.checked})} type="checkbox" />{copy.namedOnly}</label>

@@ -346,7 +346,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
             return <g data-range-overlay>{points.length === 2 && <line x1={points[0].x} y1={points[0].y} x2={points[1].x} y2={points[1].y} stroke={tacticalRange?.solution.valid ? "#8ce2ad" : "#f87171"} strokeWidth={3} />}{points.map((point, index) => <g key={index}><circle cx={point.x} cy={point.y} r={6} fill={index === 0 ? "#10b981" : "#ef4444"} stroke="#0c110f" strokeWidth={2} /><text x={point.x + 9} y={point.y - 9} fill={index === 0 ? "#8ce2ad" : "#fca5a5"} stroke="#0c110f" strokeWidth={3} paintOrder="stroke" fontSize={13}>{index === 0 ? "GUN" : "TGT"}</text></g>)}</g>;
           })()}
         </svg>}
-        {load === "ready" && state.markers.map((marker, index) => <button key={marker.id} data-map-marker title={`${copy.manual}: ${marker.label}`} aria-label={marker.label}
+        {load === "ready" && state.markers.map((marker, index) => <button key={marker.id} data-map-marker data-clarity-mask="true" title={`${copy.manual}: ${marker.label}`} aria-label={marker.label}
           className="absolute z-10 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-[#ab3047] text-xs font-bold text-white"
           style={{left: size.width / 2 + (marker.x - view.x) * baseSize * view.zoom, top: size.height / 2 + (marker.y - view.y) * baseSize * view.zoom}}
           onPointerDown={(event) => event.stopPropagation()} onClick={() => {setPanel(true); requestAnimationFrame(() => document.getElementById(`${id}-${marker.id}`)?.focus());}}>{index + 1}</button>)}
@@ -360,7 +360,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
       </div>
       {measuring && <MapMeasurementPanel key={state.map} state={measurement} locale={locale} mode={mode} ready={load === "ready"}
         onChange={updateMeasurement} onMode={(next) => {resetPointers(); setMode(next);}} onCenter={() => addMeasurementPoint({x: view.x, y: view.y})} onClose={() => {resetPointers(); setMode("pan");}} />}
-      {(mode === "route" || mode === "range" || tacticalPlan.route.points.length > 0 || tacticalPlan.fireSupport.points.length > 0) && <section className="border-t border-[#43534a] p-3 text-sm text-[#bacbc0]" data-tactical-planner-panel>
+      {(mode === "route" || mode === "range" || tacticalPlan.route.points.length > 0 || tacticalPlan.fireSupport.points.length > 0) && <section className="border-t border-[#43534a] p-3 text-sm text-[#bacbc0]" data-tactical-planner-panel data-clarity-mask="true">
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <div className="rounded border border-[#34463b] bg-[#101a15] p-3">
             <div className="flex items-center justify-between gap-3">
@@ -380,8 +380,8 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
         </div>
       </section>}
       <p role="status" className={notice ? "px-3 pb-3 text-sm text-[#b5e0c4]" : "sr-only"}>{notice}</p>
-      {shareLink && <label className="block px-3 pb-3 text-sm text-[#bacbc0]">{copy.shareLink}<input aria-label={copy.shareLink} readOnly value={shareLink} onFocus={(event) => event.target.select()} className="mt-1 w-full min-w-0 rounded border border-[#46594d] bg-[#111b15] p-2" /></label>}
-      {panel && <div id={`${id}-panel`} className="border-t border-[#35463b] p-3" data-map-reference-panel>
+      {shareLink && <label data-clarity-mask="true" className="block px-3 pb-3 text-sm text-[#bacbc0]">{copy.shareLink}<input aria-label={copy.shareLink} readOnly value={shareLink} onFocus={(event) => event.target.select()} className="mt-1 w-full min-w-0 rounded border border-[#46594d] bg-[#111b15] p-2" /></label>}
+      {panel && <div id={`${id}-panel`} className="border-t border-[#35463b] p-3" data-map-reference-panel data-clarity-mask="true">
         <div className="mb-3 flex items-center gap-2"><label className="sr-only" htmlFor={`${id}-search`}>{copy.search}</label><input id={`${id}-search`} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={copy.search} className="h-11 min-w-0 flex-1 rounded border border-[#46594d] bg-[#111b15] px-3 text-white" /><button aria-label={copy.close} title={copy.close} className={controlClass} onClick={() => setPanel(false)}><X size={18} /></button></div>
         <section className="mb-4 rounded border border-[#34463b] bg-[#101a15] p-3" data-map-layer-controls><h3 className="text-sm font-semibold text-white">Tactical layers</h3><div className="mt-2 flex flex-wrap gap-2">{tacticalPlan.layers.map((layer) => <button key={layer.id} type="button" aria-pressed={layer.enabled} className="rounded border border-[#34463b] px-3 py-1.5 text-xs font-semibold text-[#cfe0d8] aria-pressed:border-[#69c78f] aria-pressed:bg-[#183322]" onClick={() => updateTacticalPlan((previous) => toggleTacticalLayer(previous, layer.id))}>{layer.id.replace("-", " ")}</button>)}</div></section>
         <div className="grid gap-6 md:grid-cols-2">

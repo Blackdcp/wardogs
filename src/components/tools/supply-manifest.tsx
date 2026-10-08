@@ -13,7 +13,7 @@ export function SupplyManifest({copy, stages, plan, onChange}: {copy: ToolCopy; 
   const buttonClass = "inline-flex min-h-11 items-center justify-center gap-2 border border-[#46534d] px-3 py-2 text-sm text-white enabled:hover:border-[#69c78f] disabled:opacity-40";
   const updateLine = (index: number, patch: Partial<SupplyLine>) => onChange({...plan, lines: plan.lines.map((line, row) => row === index ? {...line, ...patch} : line)});
   const number = (value: number | null) => value === null ? t.unknown : value.toLocaleString(copy.locale, {maximumFractionDigits: 2});
-  return <section className="border-t border-[#354039] p-5 md:p-8" aria-labelledby="supply-manifest-title">
+  return <section className="border-t border-[#354039] p-5 md:p-8" aria-labelledby="supply-manifest-title" data-clarity-mask="true">
     <h2 id="supply-manifest-title" className="text-xl font-semibold text-white">{t.manifest}</h2>
     <p className="mt-2 text-xs leading-5 text-[#e4c35f]">{t.supplyNote}</p>
     <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

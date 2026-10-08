@@ -3,6 +3,7 @@ import {getTranslations} from "next-intl/server";
 import {officialLinks} from "@/config/site";
 import {Link} from "@/i18n/navigation";
 import {SiteBrand} from "./site-brand";
+import {ClaritySettingsButton} from "@/components/seo/microsoft-clarity";
 
 export async function SiteFooter() {
   const t = await getTranslations();
@@ -79,6 +80,7 @@ export async function SiteFooter() {
             <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/contact" title={t("footer.contact")}>{t("footer.contact")}</Link>
             <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/editorial-policy" title={t("footer.editorialPolicy")}>{t("footer.editorialPolicy")}</Link>
             <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/privacy" title={t("footer.privacy")}>{t("footer.privacy")}</Link>
+            <ClaritySettingsButton label={t("clarity.settings")} />
             <Link className="navigation-link inline-flex items-center transition-colors hover:text-[#c7d1cc]" href="/terms" title={t("footer.terms")}>{t("footer.terms")}</Link>
           </div>
         </div>

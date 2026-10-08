@@ -159,7 +159,7 @@ export function SiteSearchDialog({compact = false, placeholder, source = "header
       {triggerButton}
       {open && createPortal(
         <div className="fixed inset-0 z-[200] overflow-y-auto bg-black/75 px-4 py-8 sm:py-10" onMouseDown={(event) => {if (event.target === event.currentTarget) closeSearch();}}>
-          <section aria-label={t("home.search.label")} aria-modal="true" className="mx-auto w-full max-w-xl rounded-[8px] border border-[#344039] bg-[#101512] p-3 shadow-[0_24px_70px_rgba(0,0,0,0.45)] sm:p-4" data-search-dialog-panel="command" role="dialog" ref={dialogRef}>
+          <section aria-label={t("home.search.label")} aria-modal="true" className="mx-auto w-full max-w-xl rounded-[8px] border border-[#344039] bg-[#101512] p-3 shadow-[0_24px_70px_rgba(0,0,0,0.45)] sm:p-4" data-clarity-mask="true" data-search-dialog-panel="command" role="dialog" ref={dialogRef}>
             <div className="mb-3 flex items-center justify-between gap-3 px-1">
               <h2 className="display-font text-xl text-white sm:text-2xl">{t("home.search.title")}</h2>
               <button aria-label={t("common.closeMenu")} className="inline-flex size-10 items-center justify-center rounded-[4px] text-[#b8c3bd] transition-colors hover:bg-[#1b241f] hover:text-white" onClick={closeSearch} type="button"><X aria-hidden="true" /></button>

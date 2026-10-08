@@ -819,7 +819,9 @@
     "intro": "本頁說明本站的統計分析、廣告、外部媒體與連結。",
     "content": "我們不經營玩家帳戶，也不收集遊戲登入憑證。在 wardogswiki.com 和 www.wardogswiki.com 開啟頁面時，Google Analytics 會自動載入。其標籤使用 Cookie，收集頁面瀏覽、站內互動及瀏覽器/裝置資訊，用於分析網站使用情況。統計與直接 Adsterra 請求可能在點擊外部連結之前發生；第三方政策也適用於這些請求。瀏覽器設定可限制 Cookie 與識別碼。",
     "advertising": "Adsterra 原生廣告與展示橫幅透過第三方廣告指令碼載入。明確標示的贊助連結（Smartlink）僅在您主動選擇後，才會在新分頁開啟外部廣告主網站。部分頁面可能測試 Social Bar、Popunder 等額外廣告形式；實際形式與位置會因頁面、裝置及實驗設定而異。第三方廣告可能在其他分頁或視窗開啟廣告主頁面。廣告請求可能在您點擊之前，向廣告服務商傳送 IP 位址、瀏覽器請求標頭與裝置資訊，相關處理適用其隱私權政策及您瀏覽器中的 Cookie 與識別碼設定。本站會記錄贊助連結的可見性與主動點擊，以評估配置成效，不將這些事件視為可計費的廣告曝光。",
-    "googlePolicy": "Google 隱私權政策"
+    "googlePolicy": "Google 隱私權政策",
+    "clarity": "Microsoft Clarity 為可選用的分析工具。經您允許後，它會使用 Cookie，記錄點擊、捲動與工作階段回放，協助我們改善網站。記錄僅在您同意後開始，無法回放先前的造訪。Clarity 僅用於內容與導覽頁面，目前網址或來源連結含參數、共享狀態時不啟用。互動式工具頁面也不納入回放，其使用情況由既有網站統計另行衡量。我們對搜尋與地圖輸入區域套用遮罩處理，並維持 Clarity 的廣告資料儲存關閉。您可以隨時透過頁尾的「Clarity 隱私設定」變更選擇。此選擇僅適用於 Clarity，不會變更 Google Analytics 或 Adsterra 的設定。",
+    "microsoftPolicy": "Microsoft 隱私權聲明"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki 使用條款：攻略規範與免責宣告",
@@ -913,5 +915,15 @@
         "description": "比對系統需求與電腦規格，再依症狀進行疑難排解。"
       }
     }
+  },
+  "clarity": {
+    "title": "可選用的 Clarity 分析",
+    "description": "允許 Microsoft Clarity 記錄點擊、捲動與工作階段回放，協助我們改善 Wiki。此選擇僅適用於 Clarity。",
+    "allow": "允許 Clarity",
+    "decline": "拒絕 Clarity",
+    "settings": "Clarity 隱私設定",
+    "privacy": "隱私權政策",
+    "statusAllowed": "已允許 Clarity 分析",
+    "statusDenied": "已拒絕 Clarity 分析"
   }
 }

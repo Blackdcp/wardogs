@@ -819,7 +819,9 @@
     "intro": "This page describes the site’s analytics, advertising, external media and links.",
     "content": "We do not operate player accounts or collect game credentials. On wardogswiki.com and www.wardogswiki.com, Google Analytics loads automatically when a page opens. Its tag uses cookies and collects page views, site interactions and browser/device information for usage analysis. Analytics and direct Adsterra requests can occur before you click an external link; third-party policies apply to those requests as well as to destinations you choose to open. Browser settings can limit cookies and identifiers.",
     "advertising": "Adsterra native ads and display banners load through third-party publisher scripts. Clearly labelled sponsored links (Smartlink) open only when you choose them and lead to external advertiser websites in a new tab. Some pages may test additional advertising formats, such as Social Bar or Popunder; formats and placement can vary by page, device and experiment settings. Third-party ads may open advertiser destinations in another tab or window. Ad requests can send your IP address, browser headers and device information to advertising providers before you click; their privacy policies and your browser cookie and identifier controls apply. Our site records sponsored-link visibility and voluntary clicks to assess placement, without treating those events as billable impressions.",
-    "googlePolicy": "Google Privacy Policy"
+    "googlePolicy": "Google Privacy Policy",
+    "clarity": "Microsoft Clarity is optional. With your permission, it uses cookies and records clicks, scrolling and session replays to help us improve the site. It starts only after you allow it and cannot replay earlier visits. Clarity is limited to content and navigation pages without URL parameters or shared state in the page or referring link. Interactive tool pages are excluded; existing site analytics measure their use separately. We apply masking to search and map input areas. Clarity’s advertising storage remains disabled. You can change your choice through “Clarity privacy settings” in the footer. This choice applies only to Clarity; it does not change Google Analytics or Adsterra settings.",
+    "microsoftPolicy": "Microsoft Privacy Statement"
   },
   "terms": {
     "metaTitle": "WARDOGS Wiki Terms of Use: Guide Rules & Disclaimers",
@@ -882,5 +884,15 @@
         "description": "Compare your PC configuration with requirements and follow the appropriate diagnostic branch."
       }
     }
+  },
+  "clarity": {
+    "title": "Optional Clarity analytics",
+    "description": "Allow Microsoft Clarity to record clicks, scrolling and session replays to help improve this wiki. This choice applies only to Clarity.",
+    "allow": "Allow Clarity",
+    "decline": "Decline Clarity",
+    "settings": "Clarity privacy settings",
+    "privacy": "Privacy policy",
+    "statusAllowed": "Clarity analytics allowed",
+    "statusDenied": "Clarity analytics declined"
   }
 }

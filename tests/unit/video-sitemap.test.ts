@@ -6,11 +6,14 @@ import {videoArticles} from "../../src/features/videos/video-library";
 import {getLocalizedVideoArticles} from "../../src/features/videos/video-localization";
 
 describe("video sitemap", () => {
-  it("advertises a dedicated video sitemap in robots.txt", () => {
-    expect(robots().sitemap).toEqual([
-      "http://localhost:3000/sitemap.xml",
-      "http://localhost:3000/video-sitemap.xml"
-    ]);
+  it("allows all crawlers and advertises both sitemaps without the non-standard Host directive", () => {
+    expect(robots()).toEqual({
+      rules: {userAgent: "*", allow: "/"},
+      sitemap: [
+        "http://localhost:3000/sitemap.xml",
+        "http://localhost:3000/video-sitemap.xml"
+      ]
+    });
   });
 
   it("describes every localized watch page with a large thumbnail and embeddable player", () => {

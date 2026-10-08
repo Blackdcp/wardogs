@@ -8,6 +8,7 @@ import {SiteFooter} from "@/components/layout/site-footer";
 import {SiteHeader} from "@/components/layout/site-header";
 import {GoogleAnalytics} from "@/components/seo/google-analytics";
 import {SiteAnalytics} from "@/components/seo/site-analytics";
+import {MicrosoftClarity} from "@/components/seo/microsoft-clarity";
 import {AdsterraBehavioralAds} from "@/components/ads/adsterra-behavioral-ads";
 import {AdsterraGlobalInventory} from "@/components/ads/adsterra-display-banner";
 import {GlobalTopAd} from "@/components/ads/global-top-ad";
@@ -43,6 +44,7 @@ export default async function LocaleLayout({children, params}: LocaleLayoutProps
         <AdsterraBehavioralAds />
         <AdsterraGlobalInventory label={adsT("label")} locale={locale} />
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <MicrosoftClarity />
           <a
             href="#main-content"
             title={t("skipToContent")}

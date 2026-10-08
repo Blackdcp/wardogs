@@ -13,6 +13,7 @@ export default defineConfig({
     "adsterra-delivery.spec.ts",
     "adsterra-task-layout.spec.ts",
     "mobile-ad-experience.spec.ts",
+    "clarity-consent.spec.ts",
     "production-health.spec.ts"
   ],
   fullyParallel: false,

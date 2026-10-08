@@ -447,7 +447,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
       </div>
 
       {/* 2. Tactical Fire Control HUD (The Core Result Display) */}
-      <div className="relative overflow-hidden rounded-[6px] border border-[#3b5744] bg-[#111613] p-5" data-fire-solution-panel="true">
+      <div className="relative overflow-hidden rounded-[6px] border border-[#3b5744] bg-[#111613] p-5" data-fire-solution-panel="true" data-clarity-mask="true">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           {/* Main Firing Numbers */}
           <div className="grid flex-1 grid-cols-2 gap-4 sm:grid-cols-4">
@@ -595,13 +595,13 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
       </div>
 
       {mapImportNotice ? (
-        <div className="rounded-[6px] border border-[#3c5c46] bg-[#112018] p-4 text-sm text-[#d9f5e4]" data-artillery-map-import>
+        <div className="rounded-[6px] border border-[#3c5c46] bg-[#112018] p-4 text-sm text-[#d9f5e4]" data-artillery-map-import data-clarity-mask="true">
           <strong className="text-[#8ce2ad]">Map mission loaded.</strong> {mapImportNotice}
         </div>
       ) : null}
 
       <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]" aria-label="Observed correction and shot history">
-        <div className="rounded-[6px] border border-[#344039] bg-[#111613] p-5" data-artillery-correction>
+        <div className="rounded-[6px] border border-[#344039] bg-[#111613] p-5" data-artillery-correction data-clarity-mask="true">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="font-mono text-xs uppercase tracking-wider text-[#d9a93a]">Spotting correction</p>
@@ -636,7 +636,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
           </dl>
         </div>
 
-        <aside className="rounded-[6px] border border-[#344039] bg-[#111613] p-5" data-artillery-history>
+        <aside className="rounded-[6px] border border-[#344039] bg-[#111613] p-5" data-artillery-history data-clarity-mask="true">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="font-mono text-xs uppercase tracking-wider text-[#8ce2ad]">Fire log</p>
@@ -702,7 +702,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
 
           {/* Interactive Map Canvas Area */}
           <p id="artillery-map-instructions" className="mb-2 text-xs text-[#a8b8ae]">{copy.mapKeyboardInstructions}</p>
-          <p id="artillery-map-cursor" role="status" className="mb-3 text-xs text-[#8ce2ad]">
+          <p data-clarity-mask="true" id="artillery-map-cursor" role="status" className="mb-3 text-xs text-[#8ce2ad]">
             {copy.mapCursor}: {formatGridCoordinate(mapCursor, mapId)} · {placeTargetNext ? copy.targetPosition : copy.gunPosition}
           </p>
           <div
@@ -712,6 +712,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
             role="button"
             aria-label={copy.selectMap}
             aria-describedby="artillery-map-instructions artillery-map-cursor"
+            data-clarity-mask="true"
             className="group relative aspect-square w-full cursor-crosshair overflow-hidden rounded-lg border border-[#394d40] bg-black select-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#8ce2ad]"
           >
             {/* Basemap Image */}
@@ -804,6 +805,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
               </label>
               <div className="mt-2 flex items-center gap-3">
                 <input
+                  data-clarity-mask="true"
                   type="range"
                   aria-labelledby="artillery-distance-label"
                   min={rangeEnvelope.minRangeMeters}
@@ -813,6 +815,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
                   className="h-2 flex-1 cursor-pointer accent-[#62b984]"
                 />
                 <input
+                  data-clarity-mask="true"
                   type="number"
                   id="artillery-distance"
                   value={directDistance}
@@ -845,6 +848,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
               </label>
               <div className="mt-2 flex items-center gap-3">
                 <input
+                  data-clarity-mask="true"
                   type="range"
                   aria-labelledby="artillery-azimuth-label"
                   min={0}
@@ -854,6 +858,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
                   className="h-2 flex-1 cursor-pointer accent-[#62b984]"
                 />
                 <input
+                  data-clarity-mask="true"
                   type="number"
                   id="artillery-azimuth"
                   step="any"

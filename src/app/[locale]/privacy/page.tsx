@@ -19,5 +19,13 @@ export default async function PrivacyPage({params}: Props) {
   const locale: Locale = requested;
   setRequestLocale(locale);
   const t = await getTranslations({locale, namespace: "privacy"});
-  return <main className="site-container max-w-4xl py-16 md:py-24"><h1 className="display-font text-5xl text-white">{t("title")}</h1><p className="mt-8 text-xl text-[#c4cec9]">{t("intro")}</p><p className="mt-6 leading-8 text-[#a8b4ae]">{t("content")}</p><p className="mt-4"><a className="text-[#79d19c] underline underline-offset-4" href="https://policies.google.com/privacy" rel="noreferrer" target="_blank" title={t("googlePolicy")}>{t("googlePolicy")}</a></p><p className="mt-6 leading-8 text-[#a8b4ae]">{t("advertising")}</p></main>;
+  return <main className="site-container max-w-4xl py-16 md:py-24">
+    <h1 className="display-font text-5xl text-white">{t("title")}</h1>
+    <p className="mt-8 text-xl text-[#c4cec9]">{t("intro")}</p>
+    <p className="mt-6 leading-8 text-[#a8b4ae]">{t("content")}</p>
+    <p className="mt-4"><a className="text-[#79d19c] underline underline-offset-4" href="https://policies.google.com/privacy" rel="noreferrer" target="_blank" title={t("googlePolicy")}>{t("googlePolicy")}</a></p>
+    <p className="mt-6 leading-8 text-[#a8b4ae]">{t("clarity")}</p>
+    <p className="mt-4"><a className="text-[#79d19c] underline underline-offset-4" href="https://privacy.microsoft.com/privacystatement" rel="noreferrer" target="_blank" title={t("microsoftPolicy")}>{t("microsoftPolicy")}</a></p>
+    <p className="mt-6 leading-8 text-[#a8b4ae]">{t("advertising")}</p>
+  </main>;
 }

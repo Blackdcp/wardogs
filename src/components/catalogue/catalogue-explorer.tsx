@@ -131,6 +131,7 @@ export function CatalogueExplorer({locale, records, filters, labels, featuredIma
             <span className="relative mt-2 block">
               <Search aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#7f8e87]" />
               <input
+                data-clarity-mask="true"
                 aria-label={labels.searchLabel}
                 className="min-h-11 w-full border border-[#3b463f] bg-[#0d110f] py-2 pl-10 pr-3 text-base text-white placeholder:text-[#68746e]"
                 id={searchId}
