@@ -34,11 +34,22 @@ async function fixture(context: BrowserContext, baseURL: string | undefined) {
   return {requests, commands};
 }
 
-test("Clarity waits for consent, stays single across clean SPA, and revokes through a document reload", async ({page, context, baseURL}) => {
+test("Clarity opens only from footer settings, stays single across clean SPA, and revokes through a document reload", async ({page, context, baseURL}) => {
   const data = await fixture(context, baseURL);
   await page.goto(`${origin}/en`);
+  await expect(page.locator("[data-clarity-settings]")).toBeVisible();
+  await expect(page.locator("[data-clarity-consent]")).toHaveCount(0);
+  await page.locator("[data-clarity-settings]").click();
   await expect(page.locator("[data-clarity-consent]")).toBeVisible();
   expect(data.requests).toHaveLength(0);
+  await page.locator('[data-clarity-consent] a[href="/en/privacy"]').click();
+  await expect(page).toHaveURL(`${origin}/en/privacy`);
+  await expect(page.locator("[data-clarity-consent]")).toHaveCount(0);
+  await page.goBack();
+  await expect(page).toHaveURL(`${origin}/en`);
+  await expect(page.locator("[data-clarity-consent]")).toHaveCount(0);
+  expect(data.requests).toHaveLength(0);
+  await page.locator("[data-clarity-settings]").click();
   await page.locator('[data-clarity-choice="allowed"]').click();
   await expect.poll(() => data.requests.length).toBe(1);
   await expect.poll(() => data.commands).toEqual([["consentv2", {analytics_Storage: "granted", ad_Storage: "denied"}]]);
@@ -75,11 +86,14 @@ test("shared URLs, tool documents and local previews never load replay even with
   expect(data.requests).toHaveLength(0);
 });
 
-test("mobile prompt leaves the ad close control free and hides for search, navigation and interactive tools", async ({page, context, baseURL}) => {
+test("mobile settings stay closed until requested and leave ad, search and navigation controls free", async ({page, context, baseURL}) => {
   await fixture(context, baseURL);
   await page.setViewportSize({width: 390, height: 844});
   await page.goto(`${origin}/en`);
   const prompt = page.locator("[data-clarity-consent]");
+  await expect(page.locator("[data-clarity-settings]")).toBeVisible();
+  await expect(prompt).toHaveCount(0);
+  await page.locator("[data-clarity-settings]").click();
   await expect(prompt).toBeVisible();
   const closeAd = page.getByRole("button", {name: "Close advertisement", exact: true});
   await expect(closeAd).toBeVisible();
@@ -114,6 +128,7 @@ test("Clarity's tool document boundary preserves the existing GA homepage click 
   const homeClicks: unknown[][] = [];
   await context.exposeBinding("__captureHomeClick", (_source, args: unknown[]) => { homeClicks.push(args); });
   await page.goto(`${origin}/en`);
+  await page.locator("[data-clarity-settings]").click();
   await page.locator('[data-clarity-choice="allowed"]').click();
   await expect.poll(() => data.requests.length).toBe(1);
   await page.evaluate(() => {
