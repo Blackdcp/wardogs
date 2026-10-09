@@ -16,7 +16,7 @@ test.afterEach(async ({page, context}) => {
   await context.unrouteAll({behavior: "ignoreErrors"});
 });
 
-async function installDeliveryFixture(context: BrowserContext, baseURL: string | undefined, withCreative: boolean) {
+async function installDeliveryFixture(context: BrowserContext, baseURL: string | undefined, withCreative: boolean, failFirstUnits: readonly string[] = []) {
   if (!baseURL || !["localhost", "127.0.0.1", "[::1]"].includes(new URL(baseURL).hostname)) {
     throw new Error("Ad delivery tests require a local server; live production is never fetched.");
   }
@@ -41,6 +41,9 @@ async function installDeliveryFixture(context: BrowserContext, baseURL: string |
     }
     if (url.origin === "https://bauval.org" && /^\/(21|22)\/[a-f0-9]{32}$/.test(url.pathname)) {
       loaderRequests.push(url.pathname);
+      if (failFirstUnits.includes(url.pathname.split("/").at(-1)!) && loaderRequests.filter((path) => path === url.pathname).length === 1) {
+        return route.abort("connectionfailed");
+      }
       return route.fulfill({
         contentType: "application/javascript",
         body: withCreative ? `(() => {
@@ -168,6 +171,38 @@ test("persistent top creative is attributed to the new client route without relo
   }
   expect(requests.filter((path) => path === `/22/${horizontalUnit}`)).toHaveLength(1);
   expect(await adEvents(page, "horizontal", "/en/guides")).toEqual(firstRouteEvents);
+});
+
+test("a persistent script failure retries once on a new page and preserves the recovered creative", async ({page, context, baseURL}) => {
+  const requests = await installDeliveryFixture(context, baseURL, true, [horizontalUnit]);
+  await page.clock.install();
+  await page.goto(`${productionOrigin}/en/guides`);
+  await expectStatus(page, "horizontal", "/en/guides", "script_error");
+  const slot = page.locator('[data-global-ad-position="top"] [data-adsterra-unit]');
+  const script = slot.locator(`script[src="https://bauval.org/22/${horizontalUnit}"]`);
+  await expect(script).toHaveCount(1);
+  await script.evaluate((element) => element.setAttribute("data-failed-request", "first"));
+  await page.locator("html").evaluate((element) => {element.dataset.deliveryDocument = "same-document";});
+  await page.clock.fastForward(60_000);
+  expect(requests.filter((path) => path === `/22/${horizontalUnit}`)).toHaveLength(1);
+
+  await page.getByRole("button", {name: "Catalogue", exact: true}).click();
+  await page.locator('header a[href="/en/items"]:visible').first().click();
+  await expect(page).toHaveURL(`${productionOrigin}/en/items`);
+  await expect(page.locator("html")).toHaveAttribute("data-delivery-document", "same-document");
+  await expectStatus(page, "horizontal", "/en/items", "request_started");
+  await expectStatus(page, "horizontal", "/en/items", "creative_present");
+  await expect(script).toHaveCount(1);
+  await expect(slot.locator('[data-failed-request]')).toHaveCount(0);
+  await expect(slot.locator("iframe")).toHaveCount(1);
+  expect((await adEvents(page, "horizontal", "/en/items")).map((event) => event.status)).not.toContain("script_error");
+  expect(requests.filter((path) => path === `/22/${horizontalUnit}`)).toHaveLength(2);
+
+  await page.goBack();
+  await expect(page).toHaveURL(`${productionOrigin}/en/guides`);
+  await page.clock.fastForward(60_000);
+  await expect(slot.locator("iframe")).toHaveCount(1);
+  expect(requests.filter((path) => path === `/22/${horizontalUnit}`)).toHaveLength(2);
 });
 
 test("empty persistent top slot diagnoses missing creative on the current route without another request", async ({page, context, baseURL}) => {

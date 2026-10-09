@@ -57,7 +57,13 @@ function BannerSlot({className = "", label = "Advertisement", placement, unit, l
     visitAdPage(document, pathname);
     // An unused persistent shell may have lost its zone to body inventory on a
     // resize. A new page may claim it, without refreshing an existing creative.
-    if (suppressedRef.current) setVisitRetry((value) => value + 1);
+    const failed = loadedState.current?.status === "script_error";
+    if (failed) {
+      // Do not replay an old page's failure into the new page's observer.
+      loadedState.current = null;
+      setFallback(false);
+    }
+    if (suppressedRef.current || failed) setVisitRetry((value) => value + 1);
   }, [pathname]);
 
   useEffect(() => {

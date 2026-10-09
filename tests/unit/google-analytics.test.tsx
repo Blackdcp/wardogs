@@ -76,10 +76,83 @@ describe("Google Analytics", () => {
     runInContext(googleAnalyticsConfigScript(), context);
     const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
     expect(commands[0]).toEqual(pending[0]);
-    expect(commands[1]).toEqual(["event", "catalogue_filter", {filter_value: "assault-rifle", page_location: "https://www.wardogswiki.com/en", page_referrer: ""}]);
-    expect(commands.map((entry) => entry[0])).toEqual(["consent", "event", "js", "config"]);
-    expect(commands.at(-1)).toEqual(["config", GOOGLE_TAG_ID, {page_location: "https://www.wardogswiki.com/en", page_referrer: ""}]);
+    expect(commands[2]).toEqual(["config", GOOGLE_TAG_ID, {page_location: "https://www.wardogswiki.com/en", page_referrer: ""}]);
+    expect(commands.map((entry) => entry[0])).toEqual(["consent", "js", "config", "event"]);
+    expect(commands.at(-1)).toEqual(["event", "catalogue_filter", {filter_value: "assault-rifle", page_location: "https://www.wardogswiki.com/en", page_referrer: ""}]);
     expect(commands.filter((entry) => entry[1] === "page_view")).toEqual([]);
+    expect(Object.prototype.toString.call((sandbox.dataLayer as unknown[]).at(-1))).toBe("[object Arguments]");
+  });
+
+  it("initializes before early events without moving an event across a consent change", () => {
+    const denied = ["consent", "default", {analytics_storage: "denied"}];
+    const granted = ["consent", "update", {analytics_storage: "granted"}];
+    const defaults = ["set", {currency: "USD"}];
+    const {sandbox, context, scripts} = analyticsSandbox("www.wardogswiki.com", [
+      denied, defaults,
+      ["event", "ad_status", {status: "queued", placement: "native"}],
+      granted,
+      ["event", "ad_status", {status: "script_loaded", placement: "native"}]
+    ], "?utm_source=discord&private=example#hidden");
+    (sandbox.document as {referrer: string}).referrer = "https://source.example/story?private=example#hidden";
+    const originalLayer = sandbox.dataLayer;
+    runInContext(googleAnalyticsConfigScript(), context);
+    runInContext(googleAnalyticsConfigScript(), context);
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    expect(sandbox.dataLayer).toBe(originalLayer);
+    expect(commands.map((entry) => entry[0])).toEqual(["consent", "set", "js", "config", "event", "consent", "event"]);
+    expect(commands[0]).toEqual(denied);
+    expect(commands[1]).toEqual(defaults);
+    expect(commands[5]).toEqual(granted);
+    expect(commands[4][2]).toMatchObject({status: "queued"});
+    expect(commands[6][2]).toMatchObject({status: "script_loaded"});
+    for (const entry of commands.filter((entry) => entry[0] === "config" || entry[0] === "event")) {
+      expect(entry[2]).toMatchObject({page_location: "https://www.wardogswiki.com/en?utm_source=discord", page_referrer: "https://source.example/story"});
+    }
+    expect(scripts).toHaveLength(1);
+    expect(commands.filter((entry) => entry[0] === "config")).toHaveLength(1);
+  });
+
+  it("retains argument-style early commands and their event order", () => {
+    const {sandbox, context} = analyticsSandbox("www.wardogswiki.com");
+    runInContext("window.gtag = function () { window.dataLayer.push(arguments); }; gtag('consent', 'default', {analytics_storage: 'denied'}); gtag('event', 'ad_status', {status:'queued'}); gtag('event', 'tool_start', {tool:'map'});", context);
+    runInContext(googleAnalyticsConfigScript(), context);
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    expect(commands.map((entry) => entry[0])).toEqual(["consent", "js", "config", "event", "event"]);
+    expect(commands.filter((entry) => entry[0] === "event").map((entry) => entry[1])).toEqual(["ad_status", "tool_start"]);
+    expect((sandbox.dataLayer as ArrayLike<unknown>[]).filter((entry) => entry[0] === "event").every((entry) => Object.prototype.toString.call(entry) === "[object Arguments]")).toBe(true);
+  });
+
+  it("defaults only Google advertising uses to denied before initialization and queued events", () => {
+    const {sandbox, context} = analyticsSandbox("www.wardogswiki.com", [["event", "ad_status", {status: "queued"}]]);
+    runInContext(googleAnalyticsConfigScript(), context);
+    runInContext(googleAnalyticsConfigScript(), context);
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    expect(commands.map((entry) => entry[0])).toEqual(["consent", "js", "config", "event"]);
+    expect(commands[0]).toEqual(["consent", "default", {ad_user_data: "denied", ad_personalization: "denied"}]);
+    expect(Object.prototype.toString.call((sandbox.dataLayer as unknown[])[0])).toBe("[object Arguments]");
+    expect(JSON.stringify(commands[0])).not.toMatch(/analytics_storage|ad_storage|granted/);
+    runInContext("gtag('consent', 'update', {ad_user_data:'granted', ad_personalization:'granted'})", context);
+    expect(Array.from((sandbox.dataLayer as ArrayLike<unknown>[]).at(-1)!)).toEqual([
+      "consent", "update", {ad_user_data: "granted", ad_personalization: "granted"}
+    ]);
+  });
+
+  it.each([
+    ["default", {ad_user_data: "granted", ad_personalization: "granted"}],
+    ["default", {analytics_storage: "denied", region: ["DE", "FR"]}],
+    ["default", {ad_user_data: "denied"}],
+    ["update", {ad_user_data: "granted"}]
+  ])("does not supplement or override an existing %s consent chain", (kind, choice) => {
+    const consent = ["consent", kind, choice];
+    const before = ["event", "tool_start", {tool: "map"}];
+    const after = ["event", "tool_action", {action: "open"}];
+    const {sandbox, context} = analyticsSandbox("www.wardogswiki.com", [before, consent, after]);
+    runInContext(googleAnalyticsConfigScript(), context);
+    const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
+    expect(commands.map((entry) => entry[0])).toEqual(["js", "config", "event", "consent", "event"]);
+    expect(commands.filter((entry) => entry[0] === "consent")).toEqual([consent]);
+    expect(commands[2][1]).toBe("tool_start");
+    expect(commands[4][1]).toBe("tool_action");
   });
 
   it.each(["localhost", "127.0.0.1", "wardogs.pages.dev", "preview.wardogswiki.com", "wardogswiki.com.evil.example"])("does not configure or load production Analytics on %s", (hostname) => {
@@ -96,7 +169,7 @@ describe("Google Analytics", () => {
     expect(scripts).toHaveLength(1);
     expect(scripts[0]).toMatchObject({src: "https://www.googletagmanager.com/gtag/js?id=G-0GJ404WEYV", async: true});
     const commands = (sandbox.dataLayer as ArrayLike<unknown>[]).map((entry) => Array.from(entry));
-    expect(commands.map((entry) => entry[0])).toEqual(["js", "config"]);
+    expect(commands.map((entry) => entry[0])).toEqual(["consent", "js", "config"]);
     expect(commands.at(-1)).toEqual(["config", "G-0GJ404WEYV", {page_location: `https://${hostname}/en`, page_referrer: ""}]);
   });
 

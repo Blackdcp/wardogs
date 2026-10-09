@@ -32,6 +32,13 @@ describe("Japanese answers before historical context and troubleshooting", () =>
     before(html, "Steamのフレンド一覧", "音声不調を機器");
     expect(html).toContain("/ja/guides/wardogs-community-servers-guide");
     expect(html).toContain("/ja/guides/wardogs-known-issues");
+    before(html, "DeployのOfficial / Community / Infantry Mode / Low-Level区分", "Windowsで入力機器");
+    expect(html).toContain("Join後の接続表示と待機列の順位");
+    expect(html).toContain("ゲームの定員ではありません");
+    expect(guide.frontmatter.sources).toContainEqual(expect.objectContaining({
+      url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267",
+      kind: "official", checkedAt: "2026-10-09",
+    }));
   });
 
   it("keeps the wipe asset table ahead of patch history after task-panel preparation", async () => {
@@ -45,10 +52,16 @@ describe("Japanese answers before historical context and troubleshooting", () =>
     expect(html).not.toContain("Early Access移行の日時や対応表は未発表");
     expect(html).toContain("シーズン終了時のCash自動変換レートを確定するものではありません");
     expect(guide.frontmatter.sources.some(({kind, url}) => kind === "official" && url.includes("PQvtvAvl-78"))).toBe(true);
+    before(html, "日本時間の何時に切り替わるかは未発表", "資産別ワイプ確認表");
+    expect(html).toContain("過去の08:00 UTCメンテナンスを今回の開始時刻へ転用");
+    expect(guide.frontmatter.faq).toContainEqual(expect.objectContaining({
+      question: "WARDOGSの次のワイプはいつですか？日本時間で何時？",
+      answer: expect.stringContaining("正確な移行時刻と日本時間は未発表"),
+    }));
   });
 
   it("leads mortar users through loading and the calculator before dated emplacement examples", async () => {
-    const {task, html} = await renderJapaneseGuide("wardogs-mortar-guide");
+    const {guide, task, html} = await renderJapaneseGuide("wardogs-mortar-guide");
     expect(task?.directAnswer).toMatch(/対応弾薬と装填状態/);
     expect(task?.directAnswer).toMatch(/仰角・飛翔時間は推定値/);
     before(html, "装填失敗と照準誤差", "距離測定から迫撃砲計算機");
@@ -56,6 +69,18 @@ describe("Japanese answers before historical context and troubleshooting", () =>
     expect(html).toContain("L81と数値直接入力");
     expect(html).toContain("初期の推定メートル値は仮定の縮尺に基づく");
     expect(html).toContain("2026年9月15日時点のSeason 1");
+    before(html, "迫撃砲の作り方と最初の1発", "距離測定から迫撃砲計算機");
+    expect(html).toContain("2026年9月3日公開");
+    expect(html).toContain("現行クライアントの再現テストではありません");
+    expect(html).toContain("FOBへの弾薬搬入が必要");
+    expect(html).toContain("照準左のRNGは距離（m）、右のmilsは砲身の仰角");
+    expect(html).toContain("Supportレベル3という意味ではありません");
+    for (const seconds of [16, 32, 95, 201, 357, 747]) {
+      expect(html).toContain(`href="https://www.youtube.com/watch?v=wiWNoWiQy_Q&amp;t=${seconds}s"`);
+    }
+    expect(guide.frontmatter.sources).toContainEqual(expect.objectContaining({
+      url: "https://www.youtube.com/watch?v=wiWNoWiQy_Q", kind: "creator", checkedAt: "2026-10-09",
+    }));
   });
 
   it("puts helicopter takeoff and landing ahead of unverified device configuration", async () => {

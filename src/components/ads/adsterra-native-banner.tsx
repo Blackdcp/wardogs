@@ -31,6 +31,18 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
   const reportRef = useRef<((status: AdStatus) => void) | null>(null);
   const loadedState = useRef<"script_loaded" | "script_error" | null>(null);
   const [fallback, setFallback] = useState(false);
+  const [visitRetry, setVisitRetry] = useState(0);
+
+  useEffect(() => {
+    // A confirmed network failure must not disable this persistent slot for the
+    // rest of the visit. Only a new page permits another attempt; successful,
+    // empty and still-pending loaders are never refreshed on navigation.
+    if (loadedState.current === "script_error") {
+      loadedState.current = null;
+      setFallback(false);
+      setVisitRetry((value) => value + 1);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (!ADSTERRA_ENABLED || !ADSTERRA_NATIVE_ENABLED || !isProductionHostname(window.location.hostname)) return;
@@ -38,7 +50,7 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
     if (!container || !container.parentNode) return;
 
     const observation = observeAdSlot(container, "native", "native", getAdReportingMetadata(pathname, ADSTERRA_NATIVE_ZONE_ID, "native"), (status, evidence) => {
-      if (status === "creative_present") setFallback(false);
+      if (status === "creative_present" || status === "request_started") setFallback(false);
       if (!evidence.creativePresent && (status === "creative_missing" || status === "script_error")) setFallback(true);
     });
     reportRef.current = observation.report;
@@ -57,7 +69,7 @@ export function AdsterraNativeBanner({label}: AdsterraNativeBannerProps) {
       if (status === "script_loaded" || status === "script_error") loadedState.current = status;
       reportRef.current?.(status);
     }));
-  }, []);
+  }, [visitRetry]);
 
   if (!ADSTERRA_ENABLED || !ADSTERRA_NATIVE_ENABLED) return null;
 
