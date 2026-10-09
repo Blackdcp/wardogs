@@ -8,6 +8,24 @@ describe("seasonal search discovery", () => {
   const indices = new Map<Locale, SiteSearchEntry[]>();
   beforeAll(async () => {await Promise.all(locales.map(async (locale) => indices.set(locale, await buildSiteSearchIndex(locale))));});
   it.each([
+    ["en", ["mortar", "mortar calculator"]], ["ja", ["迫撃砲", "迫撃砲計算機"]],
+    ["ru", ["миномёт", "калькулятор миномета"]], ["de", ["Mörser", "Mörserrechner"]],
+    ["zh-cn", ["迫击炮", "迫击炮计算器"]], ["zh-tw", ["迫擊砲", "迫擊砲計算器"]],
+    ["pt-br", ["morteiro", "calculadora de morteiro"]], ["pl", ["moździerz", "kalkulator moździerza"]]
+  ] as const)("keeps mortar intents on maintained answers and explicit calculator terms on the tool in %s", (locale, nativeQueries) => {
+    const index = indices.get(locale)!;
+    for (const query of ["  MORTAR  ", nativeQueries[0]]) expect(["/items/weapons/mortar", "/guides/wardogs-mortar-guide", "/tools/artillery-calculator"], query).toContain(searchSiteIndex(index, query)[0]?.href);
+    for (const query of ["mortar calculator", nativeQueries[1]]) expect(searchSiteIndex(index, query)[0]?.href, query).toBe("/tools/artillery-calculator");
+    expect(index.some(({href}) => href === "/videos#candidate-YIJ9EE8wflk")).toBe(true);
+  });
+  it("retains basic map and gold entry points and the FOB guide among results", () => {
+    const index = indices.get("en")!;
+    for (const [query, destinations] of [["map", ["/maps", "/tools/map"]], ["gold", ["/gold-market"]]] as const) {
+      expect(destinations, query).toContain(searchSiteIndex(index, query)[0]?.href);
+    }
+    expect(searchSiteIndex(index, "fob").some(({href}) => href === "/guides/wardogs-fob-guide")).toBe(true);
+  });
+  it.each([
     ["en", "medic"], ["ja", "衛生兵"], ["ru", "медик"], ["de", "Sanitäter"],
     ["zh-cn", "医疗兵"], ["zh-tw", "醫療兵"], ["pt-br", "médico"], ["pl", "medyk"]
   ] as const)("separates %s role intent (%s) from medical equipment", (locale, roleQuery) => {

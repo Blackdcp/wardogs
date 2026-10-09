@@ -1,4 +1,7 @@
 import {defineConfig, devices} from "@playwright/test";
+import {execFileSync} from "node:child_process";
+
+process.env.WARDOGSWIKI_RELEASE_SHA ||= process.env.GITHUB_SHA || execFileSync("git", ["rev-parse", "HEAD"], {encoding: "utf8"}).trim();
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 

@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   allowedDevOrigins: ["127.0.0.1"],
   output: isGitHubPages ? "export" : undefined,
+  env: {
+    NEXT_PUBLIC_STATIC_EXPORT: isGitHubPages ? "true" : "false"
+  },
   basePath,
   trailingSlash: isGitHubPages,
   typescript: {

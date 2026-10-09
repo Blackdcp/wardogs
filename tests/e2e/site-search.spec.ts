@@ -65,6 +65,32 @@ test("search keeps one combobox focus model for arrows and Enter and restores it
   await expect(trigger).toBeFocused();
 });
 
+test("a stationary pointer cannot replace the first keyboard result when search results appear", async ({page}) => {
+  await page.goto("/en");
+  const trigger = page.locator('[data-home-task="search"]').first();
+  await expect(trigger).toBeVisible();
+  const box = await trigger.boundingBox();
+  expect(box).not.toBeNull();
+  // Leave the pointer exactly where the home search button was clicked. New
+  // results can render beneath it, but only a real movement should change focus.
+  await page.mouse.click(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  const dialog = page.getByRole("dialog");
+  const input = dialog.getByRole("combobox");
+  await input.fill("mortar");
+  const options = dialog.getByRole("option");
+  const first = options.first();
+  await expect(first).toBeVisible();
+  const firstId = await first.getAttribute("id");
+  const firstHref = await first.getAttribute("data-search-href");
+  expect(firstId).toBeTruthy();
+  expect(firstHref).toMatch(/^\/(?:items|guides|tools)\//);
+  await options.last().dispatchEvent("pointermove", {movementX: 0, movementY: 0});
+  await expect(first).toHaveAttribute("aria-selected", "true");
+  await expect(input).toHaveAttribute("aria-activedescendant", firstId!);
+  await input.press("Enter");
+  await expect(page).toHaveURL(new RegExp(`/en${escapePattern(firstHref!)}/?$`));
+});
+
 test("modal traps Tab while options stay pointer-activatable outside its Tab sequence", async ({page}) => {
   await page.goto("/en");
   await page.locator('[data-hero-search-trigger="true"]').click();

@@ -1,6 +1,6 @@
 import {existsSync, readdirSync, renameSync, rmdirSync, writeFileSync} from "node:fs";
 import {join, relative, resolve, sep} from "node:path";
-import {spawnSync} from "node:child_process";
+import {execFileSync, spawnSync} from "node:child_process";
 
 const proxyPath = resolve("src/proxy.ts");
 const disabledProxyPath = resolve("src/proxy.ts.pages-disabled");
@@ -71,6 +71,7 @@ try {
     cwd: process.cwd(),
     env: {
       ...process.env,
+      WARDOGSWIKI_RELEASE_SHA: process.env.WARDOGSWIKI_RELEASE_SHA || process.env.GITHUB_SHA || execFileSync("git", ["rev-parse", "HEAD"], {encoding: "utf8"}).trim(),
       GITHUB_PAGES: "true",
       NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH ?? "/wardogs",
       NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? "https://blackdcp.github.io/wardogs"

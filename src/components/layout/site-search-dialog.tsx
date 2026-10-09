@@ -204,7 +204,7 @@ export function SiteSearchDialog({compact = false, placeholder, source = "header
             </div>
             <div className="mt-2 max-h-[min(55vh,480px)] overflow-y-auto rounded-[6px]" id="global-site-search-results" role="listbox">
               {query.trim() && results.map((result, position) => (
-                <button aria-selected={selected === position} className={`flex min-h-[52px] w-full items-center justify-between gap-3 rounded-[4px] border-t border-[#263229] px-3 py-2 text-left transition-colors first:border-t-0 hover:bg-[#1e2d23] ${selected === position ? "bg-[#17241c]" : ""}`} data-search-href={result.href} id={`global-site-search-option-${position}`} key={result.id} onClick={() => openResult(result)} onMouseEnter={() => setSelected(position)} role="option" type="button" tabIndex={-1}>
+                <button aria-selected={selected === position} className={`flex min-h-[52px] w-full items-center justify-between gap-3 rounded-[4px] border-t border-[#263229] px-3 py-2 text-left transition-colors first:border-t-0 hover:bg-[#1e2d23] ${selected === position ? "bg-[#17241c]" : ""}`} data-search-href={result.href} id={`global-site-search-option-${position}`} key={result.id} onClick={() => openResult(result)} onPointerMove={(event) => {if (event.movementX !== 0 || event.movementY !== 0) setSelected(position);}} role="option" type="button" tabIndex={-1}>
                   <span className="min-w-0"><span className="block truncate text-sm font-semibold text-white">{result.title}</span><span className="block truncate text-xs text-[#9caea1]">{t(`home.search.types.${result.type}`)} · {result.category}</span></span>
                   <ArrowRight aria-hidden="true" className="size-4 shrink-0 text-[#79d19c]" />
                 </button>

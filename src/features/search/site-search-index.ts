@@ -22,6 +22,7 @@ import {getCreatorAttachmentRecords} from "@/features/tools/attachment-recipes";
 import {getAttachmentRecipeCopy} from "@/features/tools/attachment-recipe-copy";
 import {getDiscoverySearchAliases, getSearchCandidateSummary} from "./search-discovery-copy";
 import type {SiteSearchEntry as SearchEntry} from "./site-search-runtime";
+import {normalizeSearchText} from "./site-search-runtime";
 export {
   getNextSearchSelection,
   getSearchKeyboardAction,
@@ -61,13 +62,17 @@ function getMessage(locale: Locale, key: string): string {
 
 export async function buildSiteSearchIndex(locale: Locale): Promise<SearchEntry[]> {
   const guides = await listGuideSummaries(locale);
+  const mortarToolAliases = new Set(getDiscoverySearchAliases(locale, "/tools/artillery-calculator").map(normalizeSearchText));
   const guideEntries: SearchEntry[] = guides.map((guide) => {
     const task = getGuideTaskData(guide.slug, locale, guide.directAnswer);
+    // Explicit calculator searches belong to the executable tool. The guide still
+    // retains its title, range/mils aliases and complete how-to answer in the index.
+    const guideIntentAliases = getGuideIntentKeywords(locale, guide.slug).filter((term) => guide.slug !== "wardogs-mortar-guide" || !mortarToolAliases.has(normalizeSearchText(term)));
     return {
       id: `guide:${guide.slug}`,
       type: "guide",
       title: guide.title,
-      aliases: [guide.keyword, guide.slug.replaceAll("-", " "), guide.title.replace(/^WARDOGS\s*/i, "").split(/[:：]/)[0], ...guide.badges.map((badge) => badge.label), ...getGuideIntentKeywords(locale, guide.slug), ...getDiscoverySearchAliases(locale, `/guides/${guide.slug}`)],
+      aliases: [guide.keyword, guide.slug.replaceAll("-", " "), guide.title.replace(/^WARDOGS\s*/i, "").split(/[:：]/)[0], ...guide.badges.map((badge) => badge.label), ...guideIntentAliases, ...getDiscoverySearchAliases(locale, `/guides/${guide.slug}`)],
       summary: guide.description,
       taskIntent: [...(guide.directAnswer ? [guide.directAnswer] : []), ...(task ? [task.title, task.directAnswer, ...task.steps] : [])],
       category: getMessage(locale, `categories.${guide.category}`),
@@ -136,7 +141,7 @@ export async function buildSiteSearchIndex(locale: Locale): Promise<SearchEntry[
     id: `${item.searchType}:${item.href.replace(/^\/+/, "").replaceAll("/", ":")}`,
     type: item.searchType,
     title: item.label,
-    aliases: [item.href.split("/").filter(Boolean).join(" ").replaceAll("-", " "), ...(item.href === "/tools/loadout-budget" ? [getAttachmentRecipeCopy(locale).title, ...getCreatorAttachmentRecords(locale).map(({name}) => name.split(" · ")[0])] : [])],
+    aliases: [item.href.split("/").filter(Boolean).join(" ").replaceAll("-", " "), ...getDiscoverySearchAliases(locale, item.href), ...(item.href === "/tools/loadout-budget" ? [getAttachmentRecipeCopy(locale).title, ...getCreatorAttachmentRecords(locale).map(({name}) => name.split(" · ")[0])] : [])],
     summary: getMessage(locale, TOOL_REGISTRY.find((tool) => tool.href === item.href)?.descriptionKey ?? (item.href === "/tools" ? "toolsHub.description" : item.searchType === "map" ? "home.search.mapSummary" : "home.search.toolSummary")),
     taskIntent: [item.label],
     category: item.category,

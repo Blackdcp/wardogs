@@ -15,6 +15,7 @@ export default defineConfig({
     "mobile-ad-experience.spec.ts",
     "clarity-consent.spec.ts",
     "production-health.spec.ts",
+    "site-search.spec.ts",
     "oct9-community-content.spec.ts"
   ],
   fullyParallel: false,

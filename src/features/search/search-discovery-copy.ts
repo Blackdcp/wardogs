@@ -26,8 +26,20 @@ const medicRoleTerms: Record<Locale, readonly string[]> = {
   pl: ["medyk"]
 };
 
+const mortarToolTerms: Record<Locale, readonly string[]> = {
+  en: ["mortar", "mortar calculator"],
+  ja: ["迫撃砲", "迫撃砲計算機", "迫撃砲 計算機"],
+  ru: ["миномёт", "миномет", "минометный калькулятор", "калькулятор миномета"],
+  de: ["Mörser", "Mörserrechner", "Mörser Rechner"],
+  "pt-br": ["morteiro", "calculadora de morteiro"],
+  "zh-cn": ["迫击炮", "迫击炮计算器"],
+  "zh-tw": ["迫擊砲", "迫擊炮", "迫擊砲計算器"],
+  pl: ["moździerz", "kalkulator moździerza"]
+};
+
 export function getDiscoverySearchAliases(locale: Locale, href: string): string[] {
   const t = terms[locale];
+  if (href === "/tools/artillery-calculator") return ["mortar", "mortar calculator", ...mortarToolTerms[locale]];
   if (href === "/guides/wardogs-medic-revive-guide") return ["medic", ...medicRoleTerms[locale]];
   if (href === "/items/medical") return ["medical", "medical items"];
   if (href === "/guides/wardogs-season-2") return [...t.season, ...t.season.map((term) => term.replace(/\s+/g, "")), ...t.weapons, "Season 2", "Season 02", "new weapons", "M14"];

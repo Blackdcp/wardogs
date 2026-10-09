@@ -1,7 +1,11 @@
-import {afterEach, describe, expect, it, vi} from "vitest";
+import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import {publicAssetPath, publicAssetUrl, publicRoutePath, publicRouteUrl} from "../../src/lib/public-url";
 
 describe("public URL contract", () => {
+  beforeEach(() => {
+    vi.stubEnv("NEXT_PUBLIC_STATIC_EXPORT", undefined);
+  });
+
   afterEach(() => {
     vi.unstubAllEnvs();
   });
@@ -77,6 +81,33 @@ describe("public URL contract", () => {
     expect(publicRoutePath("/api/revision")).toBe("/wardogs/api/revision");
     expect(publicRoutePath("/sitemap.xml")).toBe("/wardogs/sitemap.xml");
     expect(publicAssetPath("/images/catalogue/vehicles/bobcat.webp")).toBe("/wardogs/images/catalogue/vehicles/bobcat.webp");
+  });
+
+  it("keeps root-domain Pages client routes canonical using the public export flag alone", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://www.wardogswiki.com");
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "");
+    vi.stubEnv("GITHUB_PAGES", undefined);
+    vi.stubEnv("NEXT_PUBLIC_STATIC_EXPORT", "true");
+
+    expect(publicRoutePath("/ja/guides/wardogs-solo-guide?t=91#related-title")).toBe("/ja/guides/wardogs-solo-guide/?t=91#related-title");
+    expect(publicRouteUrl("/ja/guides/wardogs-solo-guide")).toBe("https://www.wardogswiki.com/ja/guides/wardogs-solo-guide/");
+    expect(publicRoutePath("/")).toBe("/");
+    for (const file of ["/sitemap.xml", "/robots.txt", "/api/search-index/ja.json", "/api/search-index/ja", "/images/catalogue/vehicles/bobcat.webp?v=1#preview"]) {
+      expect(publicRoutePath(file), file).toBe(file);
+      expect(publicAssetPath(file), file).toBe(file);
+    }
+  });
+
+  it.each(["", "/wardogs"])("uses non-export Vercel routes without directory slashes at base path '%s'", (basePath) => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://www.wardogswiki.com");
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", basePath);
+    vi.stubEnv("GITHUB_PAGES", undefined);
+    vi.stubEnv("NEXT_PUBLIC_STATIC_EXPORT", "false");
+
+    expect(publicRoutePath("/ja/guides/wardogs-solo-guide/?t=91#related-title")).toBe(`${basePath}/ja/guides/wardogs-solo-guide?t=91#related-title`);
+    expect(publicRouteUrl("/ja/guides/wardogs-solo-guide")).toBe(`https://www.wardogswiki.com${basePath}/ja/guides/wardogs-solo-guide`);
+    expect(publicRoutePath("/sitemap.xml")).toBe(`${basePath}/sitemap.xml`);
+    expect(publicAssetPath("/images/catalogue/vehicles/bobcat.webp")).toBe(`${basePath}/images/catalogue/vehicles/bobcat.webp`);
   });
 
   it("includes the configured base path exactly once when the site URL already embeds it", () => {
