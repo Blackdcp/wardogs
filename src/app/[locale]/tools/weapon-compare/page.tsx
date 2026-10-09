@@ -9,6 +9,7 @@ import {getComparableWeapons} from "@/features/tools/weapon-compare-data";
 import {decodeWeaponCompareState} from "@/features/tools/share-state";
 import {getToolCopy} from "@/features/tools/tool-copy";
 import {buildPageMetadata} from "@/lib/metadata";
+import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 
 type PageProps = {
   params: Promise<{locale: string}>;
@@ -38,6 +39,7 @@ export default async function WeaponComparePage({params}: PageProps) {
     <main className="site-container py-10 md:py-16">
       <ToolPageHeader toolId="weapon-compare" eyebrow={copy.weaponCompareEyebrow} title={copy.weaponCompareTitle} description={copy.weaponCompareDescription} actions={[{href: `/${locale}/tools`, label: headerT("toolsHome")}]} />
       <WeaponCompare copy={copy} initialState={initialState} weapons={weapons} />
+      <ReleaseImpactPanel locale={locale} path="/tools/weapon-compare" />
       <ToolRelatedGuides model={relatedLinks} locale={locale} />
     </main>
   );

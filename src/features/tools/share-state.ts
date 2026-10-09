@@ -1,4 +1,5 @@
 import {inspectToolState, isToolShareWithinLimit, purchaseLinesSchema, readJsonParam, stampToolState, supplyPlanSchema, type PurchaseLine, type SupplyPlan} from "./workflow-state";
+import {combatScenarioSchema, type CombatScenario} from "./combat-scenario";
 
 export type HardwareTier = "below" | "minimum" | "recommended" | "unknown";
 export type WindowsVersion = "windows-10" | "windows-11" | "unsupported";
@@ -19,12 +20,14 @@ export type BudgetState = {
   once?: number;
   mode?: "total" | "items";
   lines?: PurchaseLine[];
+  buildLabel?: string;
 };
 
 export type WeaponCompareState = {
   left: string | null;
   right: string | null;
   differences?: boolean;
+  scenario?: CombatScenario;
 };
 
 export type AmmoMatcherState = {
@@ -143,6 +146,7 @@ export function encodeBudgetState(state: BudgetState, dataVersion?: string) {
   if (state.once !== undefined) params.set("once", String(state.once));
   if (state.mode) params.set("mode", state.mode);
   if (state.lines) params.set("lines", JSON.stringify(state.lines));
+  if (state.buildLabel !== undefined) params.set("build", state.buildLabel);
   return stampToolState(params, dataVersion);
 }
 
@@ -155,6 +159,11 @@ export function decodeBudgetState(value: string): BudgetState | null {
   const reserve = readMoneyParam(params, "reserve");
   if (cash === null || loadout === null || vehicle === null || reserve === null) return null;
   const state: BudgetState = {cash, loadout, vehicle, reserve};
+  if (params.has("build")) {
+    const build = params.getAll("build");
+    if (build.length !== 1 || build[0].length > 80) return null;
+    state.buildLabel = build[0];
+  }
   if (params.has("once")) {
     const once = readMoneyParam(params, "once");
     if (once === null) return null;
@@ -192,11 +201,12 @@ export function encodeWeaponCompareState(state: WeaponCompareState, dataVersion?
   if (state.left) params.set("left", state.left);
   if (state.right) params.set("right", state.right);
   if (state.differences !== undefined) params.set("differences", state.differences ? "1" : "0");
+  if (state.scenario) params.set("scenario", JSON.stringify(state.scenario));
   return stampToolState(params, dataVersion);
 }
 
 export function decodeWeaponCompareState(value: string, allowedSlugs: readonly string[]): WeaponCompareState {
-  if (inspectToolState(value).status === "unsupported") return {left: allowedSlugs[0] ?? null, right: allowedSlugs[1] ?? null};
+  if (!isToolShareWithinLimit(value) || inspectToolState(value).status === "unsupported") return {left: allowedSlugs[0] ?? null, right: allowedSlugs[1] ?? null};
   const params = new URLSearchParams(value.replace(/^\?/, ""));
   const allowed = new Set(allowedSlugs);
   const requestedLeft = readSingleAllowedParam(params, "left", allowed);
@@ -206,7 +216,8 @@ export function decodeWeaponCompareState(value: string, allowedSlugs: readonly s
     ? requestedRight
     : allowedSlugs.find((slug) => slug !== left) ?? null;
 
-  return {left, right, ...(params.getAll("differences").length === 1 && ["0", "1"].includes(params.get("differences") ?? "") ? {differences: params.get("differences") === "1"} : {})};
+  const scenario = readJsonParam(params, "scenario", combatScenarioSchema);
+  return {left, right, ...(params.getAll("differences").length === 1 && ["0", "1"].includes(params.get("differences") ?? "") ? {differences: params.get("differences") === "1"} : {}), ...(scenario && requestedLeft === left && requestedRight === right ? {scenario} : {})};
 }
 
 export function encodeAmmoMatcherState(state: AmmoMatcherState, dataVersion?: string) {

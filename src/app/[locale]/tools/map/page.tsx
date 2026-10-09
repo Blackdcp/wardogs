@@ -8,6 +8,7 @@ import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ad
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
 import {MapTacticalIntel} from "@/components/map/map-tactical-intel";
+import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 import {WardogsMapViewer} from "@/components/map/wardogs-map-viewer";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {interactiveMapPageCopy} from "@/features/maps/interactive-map-page-copy";
@@ -77,6 +78,7 @@ export default async function TacticalMapPage({params}: PageProps) {
 
       {/* Second-Monitor Tactical Intel, Ballistics Tables & Theater Guide */}
       <MapTacticalIntel locale={locale} />
+      <ReleaseImpactPanel locale={locale} path="/tools/map" />
       <AdsterraSmartlink cta={t("smartlinkCta")} description={t("smartlinkDescription")} label={t("sponsored")} />
     </main>
   );

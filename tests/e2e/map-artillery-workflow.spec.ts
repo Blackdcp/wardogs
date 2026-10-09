@@ -18,8 +18,8 @@ test("map tactical planning hands a fire mission to the artillery calculator", a
 
   const viewport = page.locator("[data-map-viewport]");
   await viewport.scrollIntoViewIfNeeded();
-  await page.getByRole("button", {name: "Plan route", exact: true}).click();
-  await expect(page.getByRole("button", {name: "Plan route", exact: true})).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", {name: "Route planner", exact: true}).click();
+  await expect(page.getByRole("button", {name: "Route planner", exact: true})).toHaveAttribute("aria-pressed", "true");
   await viewport.click({position: {x: 520, y: 260}});
   await viewport.click({position: {x: 700, y: 260}});
   await viewport.click({position: {x: 700, y: 360}});

@@ -5,7 +5,7 @@ keyword: "wardogs mortar guide"
 category: "guide"
 slug: "wardogs-mortar-guide"
 order: 29
-updatedAt: "2026-10-03"
+updatedAt: "2026-10-09"
 badges:
   - label: "Indirektes Feuer"
     tone: "accent"
@@ -86,14 +86,14 @@ Plane eine zweite Stellung und einen sicheren Weg dorthin. Lagere nicht mehr Sup
 
 ## Feuerablauf
 
-**Kartenabstand vor dem Prüfschuss:** Die [interaktive Karte](/de/tools/map) besitzt ein Messwerkzeug, aber keine bestätigte Umrechnung in Spielkoordinaten und keine Azimut-Ausgabe.
+**Kartenabstand vor dem Prüfschuss:** Die [interaktive Karte](/de/tools/map) besitzt ein Messwerkzeug, aber keine bestätigte Umrechnung in Spielkoordinaten. Feueraufträge liefern eine Kartenrichtung und öffnen den Artillerierechner.
 
-1. Wähle die passende Karte, warte auf das Bild und öffne das Lineal über **Entfernung messen**. Ohne Kalibrierung zeigt es nur Bildpixel, keine Meter.
-2. Wähle **Referenzstrecke** und setze zwei erkennbare Endpunkte per Klick oder Tippen. Alternativ verschiebst du die Ansicht und nutzt für jeden Punkt **Endpunkt in der Ansichtsmitte setzen**. Trage eine bekannte horizontale Referenzentfernung in Metern, deren Fehler, den Bildpixelfehler je Endpunkt, Quelle/Beobachtung und Spielversion ein. Wähle **Kalibrierung anwenden**. Ohne belastbare Referenz bleibst du bei Pixeln; die alten Beta-Rasterwerte unten liefern keinen automatischen Maßstab.
+1. Wähle die passende Karte, warte auf das Bild und öffne das Lineal über **Entfernung messen**. Ohne Kalibrierung zeigt es Bildpixel und geschätzte Meter anhand des nominellen Maßstabs der gewählten Karte. Dieser Standardmaßstab ist keine bestätigte Messung im Spiel.
+2. Wähle **Referenzstrecke** und setze zwei erkennbare Endpunkte per Klick oder Tippen. Alternativ verschiebst du die Ansicht und nutzt für jeden Punkt **Endpunkt in der Ansichtsmitte setzen**. Trage eine bekannte horizontale Referenzentfernung in Metern, deren Fehler, den Bildpixelfehler je Endpunkt, Quelle/Beobachtung und Spielversion ein. Wähle **Kalibrierung anwenden**. Ohne belastbare Referenz sind nominelle Meter nur eine Planungshilfe; die alten Beta-Rasterwerte bestätigen diesen Maßstab nicht.
 3. Setze unter **Entfernung messen** Feuerposition und Ziel als Endpunkte. Lies die geschätzte horizontale Entfernung und Grenzen aus den angegebenen Fehlern. Vorausgesetzt wird ein gleichmäßiger Bildmaßstab; berücksichtigt werden nur die eingegebenen Entfernungs- und Punktfehler, nicht unbestätigte Projektion, Gelände- oder Versionsunterschiede. Das ist weder Weglänge noch schräge Sichtlinienentfernung.
 4. Teile Punkte und Kalibrierung über die Teilen-Schaltfläche mit dem Spotter. Quelle und Spielversion stehen ebenfalls im Link; lasse private Kontodaten weg. Jede Karte hat eine eigene Kalibrierung. Übernimm keine fremde Referenz ungeprüft.
 
-Das ist Karten-Geometrie, **kein präziser Mörser- oder Artillerierechner**. Es gibt weder Schusswinkel noch Flugbahn oder eine garantierte Treffereinstellung. Prüfe Richtung/Azimut im aktuellen Client und beobachte den Einschlag; Höhen, Mündungsgeschwindigkeit und buildbezogene Ballistik sind hier unbestätigt. Danach folgt der Feuerablauf:
+Das Lineal misst Karten-Geometrie und ist **kein präziser Mörser- oder Artillerierechner**. Feueraufträge schätzen zusätzlich Richtung, Erhöhung und Flugzeit für die gewählte Waffe und Flugbahn. Die Richtung setzt Norden am oberen Bildrand voraus. Das Werkzeug liest keine Geländehöhen aus: Prüfe Richtung und Höhenunterschied im aktuellen Client und beobachte einen Prüfschuss. Die Werte sind Modellschätzungen, keine im aktuellen Spiel gemessene Treffergenauigkeit. Danach folgt der Feuerablauf:
 
 1. Ziel und Freundlage bestätigen.
 2. Entfernung und Richtung anhand der aktuellen Oberfläche einstellen.
@@ -140,7 +140,7 @@ Creator-Aufnahmen zeigen starke Situationen, aber keine endgültige Gesamtbalanc
 
 ### Von der Kartenmessung zum Mörserrechner
 
-Wählt in der [Kartenmessung](/de/tools/map) das passende Schlachtfeld und kalibriert anhand einer erkennbaren Referenzstrecke mit bekannter horizontaler Länge. Unkalibrierte Pixel sind keine Meter. Messt vom Geschütz zum Ziel; das Lineal liefert keine Spielkoordinaten oder Azimute.
+Wählt in der [Kartenmessung](/de/tools/map) das passende Schlachtfeld und kalibriert anhand einer erkennbaren Referenzstrecke mit bekannter horizontaler Länge. Die voreingestellten Meter beruhen auf einem nominellen Maßstab, nicht auf einer geprüften Spielreferenz; kalibriert vor gezielter Entfernungsmessung. Messt vom Geschütz zum Ziel; das Lineal liefert keine verifizierten Spielkoordinaten; Feueraufträge liefern zusätzlich eine Kartenrichtung.
 
 Wählt im [Artillerierechner](/de/tools/artillery-calculator) L81 und Direkteingabe. Tragt horizontale Meter und die Richtung aus dem aktuellen Client ein; prüft den Höhenunterschied separat. Erhöhung und Flugzeit sind Schätzungen. Bei abgelehnter Distanz prüft die Eingabe. Bestätigt freie Einschlagzone, feuert einen Beobachtungsschuss und korrigiert anhand des sichtbaren Einschlags.
 

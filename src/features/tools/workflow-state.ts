@@ -18,6 +18,9 @@ export const purchaseLineSchema = z.object({
   unit: z.enum(["unknown", "item", "pack", "round"]),
   unitPrice: amount.nullable(),
   frequency: z.enum(["repeat", "once"]),
+  unitWeight: amount.nullable().optional(),
+  pairedWeapon: z.string().max(160).optional(),
+  fit: z.enum(["unknown", "confirmed", "incompatible"]).optional(),
 });
 export type PurchaseLine = z.infer<typeof purchaseLineSchema>;
 

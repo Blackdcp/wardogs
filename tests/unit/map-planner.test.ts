@@ -35,7 +35,7 @@ describe("map tactical planner", () => {
     }
 
     expect(plan.route.points).toHaveLength(3);
-    expect(calculateRouteDistanceMeters(plan.route.points, "bakurani")).toBe(3200);
+    expect(calculateRouteDistanceMeters(plan.route.points, "bakurani")).toBe(3276.8);
 
     for (const point of Array.from({length: 15}, (_, index) => ({x: index / 20, y: 0.5}))) {
       plan = placeRoutePoint(plan, point);
@@ -52,7 +52,7 @@ describe("map tactical planner", () => {
 
     const range = calculateTacticalRange(plan, "bakurani");
     expect(range?.solution.valid).toBe(true);
-    expect(range?.distanceMeters).toBe(320);
+    expect(range?.distanceMeters).toBe(327.7);
     expect(range?.azimuthDegrees).toBe(90);
     expect(range?.gunGrid).toMatch(/^I9-/);
     expect(range?.targetGrid).toMatch(/^I9-/);
@@ -60,7 +60,7 @@ describe("map tactical planner", () => {
     const query = buildCalculatorSearch(plan, "bakurani");
     expect(query).toContain("map=bakurani");
     expect(query).toContain("weapon=mortar");
-    expect(query).toContain("distance=320");
+    expect(query).toContain("distance=327.7");
     expect(query).toContain("azimuth=90");
   });
 

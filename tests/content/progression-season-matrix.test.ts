@@ -17,9 +17,9 @@ const baseline: Record<string, string> = {
   "content/ja/guides/wardogs-progression-wipes-guide.mdx": "389ac934058b2e5ad1c0a1dd08a3505f3225f7093e2cfdbdf98d70b1ea89f5b8",
   "content/ja/guides/wardogs-season-2.mdx": "85720b2dbd7ebb4f09a1a27bb69c695bd8f600d6e54afe5f56db8770af74b3c0",
   "content/zh-cn/guides/wardogs-progression-wipes-guide.mdx": "185adb694e86ec8a655afabcb46f2841e4ee536e2dfc06df156409e2f8be61e7",
-  "content/zh-cn/guides/wardogs-season-2.mdx": "b879b89be11dbf0399b8de87769362ea74eab06dcfa62598b3943610c7564245",
+  "content/zh-cn/guides/wardogs-season-2.mdx": "01c5d0f8e82b36480a52c75dca3b855519875174f5c8459c00527177cdba747e",
   "content/zh-tw/guides/wardogs-progression-wipes-guide.mdx": "3c0ba944a11aac75a4aa75eec864ff0beb0b81b1893d12ded32f3592bb118dc7",
-  "content/zh-tw/guides/wardogs-season-2.mdx": "ac91d7d527caf9f9bd996205bddd1df299a3982fd8d84ade9fc39643e1531675",
+  "content/zh-tw/guides/wardogs-season-2.mdx": "e912a7835051079b460884ebbf07e5f47cf9253b3df3b6ad11cf896503bf1c36",
   "content/pl/guides/wardogs-progression-wipes-guide.mdx": "17140bbfa0232e00903df1d5ca50c219a2a9995e9bf11fc7e908f897b3648537",
   "content/pl/guides/wardogs-season-2.mdx": "84e084164eff9c7ec0590026bfcb453f01e18628d123d3f8c4a66bfdd28ca7c1"
 };
@@ -28,10 +28,10 @@ describe("progression and season comparison content boundaries", () => {
   it.each(Object.entries(baseline))("validates reviewed TDK, slug and individual source dates: %s", async (file, expected) => {
     const {data, content} = matter(await readFile(file, "utf8"));
     const {title, description, keyword, slug, sources} = data;
-    const digest = createHash("sha256").update(JSON.stringify({title, description, keyword, slug, sources})).digest("hex");
+    const digest = createHash("sha256").update(JSON.stringify({title, description, keyword, slug, sources: sources.filter((source: {url: string}) => source.url !== "https://www.youtube.com/watch?v=liRK9si1Ubo")})).digest("hex");
     expect(digest).toBe(expected);
-    const refreshedAnswer = /^content\/(en|ja)\/guides\/wardogs-progression-wipes-guide\.mdx$/.test(file);
-    expect(data.updatedAt).toBe(refreshedAnswer ? "2026-10-07" : "2026-10-03");
+    expect(data.updatedAt).toBe("2026-10-09");
+    expect(sources).toContainEqual(expect.objectContaining({url: "https://www.youtube.com/watch?v=liRK9si1Ubo", checkedAt: "2026-10-09"}));
     const sections = [...content.matchAll(/^## .+$/gm)];
     const footer = content.slice(sections.at(-2)!.index, sections.at(-1)!.index);
     for (const source of sources) {

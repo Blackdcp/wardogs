@@ -415,7 +415,7 @@ export function getGuideTaskUi(locale: Locale): GuideTaskUi {
   return ui[locale];
 }
 
-export function getGuideTaskData(slug: string, locale: Locale): GuideTaskData | undefined {
+export function getGuideTaskData(slug: string, locale: Locale, authoredDirectAnswer?: string): GuideTaskData | undefined {
   if (!taskSlugSet.has(slug)) return undefined;
 
   const taskSlug = slug as GuideTaskSlug;
@@ -431,6 +431,7 @@ export function getGuideTaskData(slug: string, locale: Locale): GuideTaskData | 
     slug: taskSlug,
     eyebrow: ui[locale].eyebrow,
     ...localized,
+    directAnswer: authoredDirectAnswer?.trim() || localized.directAnswer,
     relatedTool: tool ? {href: tool.href, label: toolLabel(locale, tool.key)} : undefined,
     ...getGuideDiscoveryLinks(taskSlug, locale),
     videos: getCurrentVideoSourcesForGuide(taskSlug)

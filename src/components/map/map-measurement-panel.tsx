@@ -2,8 +2,9 @@
 
 import {useId, useState} from "react";
 import {Check, Crosshair, RotateCcw, Trash2, X} from "lucide-react";
+import {getMapPlannerCopy} from "@/features/maps/map-planner-copy";
 import {getMapMeasurementCopy} from "@/features/maps/map-measurement-copy";
-import {imageDistance, mapMeasurementSchema, measureMap, type MapMeasurement, type MeasurementMode} from "@/features/maps/map-measurement";
+import {imageDistance, mapMeasurementSchema, resolveMapDistance, type MapMeasurement, type MeasurementMode} from "@/features/maps/map-measurement";
 
 type Props = {
   state: MapMeasurement; locale: string; mode: MeasurementMode;
@@ -14,9 +15,10 @@ const button = "inline-flex min-h-11 items-center justify-center gap-2 rounded b
 const input = "mt-1 h-11 w-full min-w-0 rounded border border-[#46594d] bg-[#111b15] px-2 text-sm text-white";
 export function MapMeasurementPanel({state, locale, mode, onChange, onMode, onCenter, onClose, ready}: Props) {
   const copy = getMapMeasurementCopy(locale);
+  const plannerCopy = getMapPlannerCopy(locale);
   const id = useId();
   const [error, setError] = useState(false);
-  const result = measureMap(state);
+  const result = resolveMapDistance(state.points, state.map, state);
   const number = (value: number) => new Intl.NumberFormat(locale, {maximumSignificantDigits: 4}).format(value);
   const endpoints = mode === "calibrate" ? state.reference : state.points;
   return <section className="border-t border-[#43534a] p-3 text-sm text-[#bacbc0]" data-map-measurement data-clarity-mask="true">
@@ -28,7 +30,7 @@ export function MapMeasurementPanel({state, locale, mode, onChange, onMode, onCe
       <button type="button" className={button} title={copy.clear} aria-label={copy.clear} onClick={() => {onChange({...state, ...(mode === "measure" ? {points: []} : {reference: [], calibration: undefined})}); setError(false);}}><RotateCcw size={18} /></button>
       <button type="button" className={`${button} ml-auto`} title={copy.close} aria-label={copy.close} onClick={onClose}><X size={18} /></button>
     </div>
-    <p className="mt-2 text-[#d7bb73]" data-measurement-provenance>{state.calibration ? copy.calibrated : copy.uncalibrated}</p>
+    <p className="mt-2 text-[#d7bb73]" data-measurement-provenance>{state.calibration ? copy.calibrated : plannerCopy.nominalScale}</p>
     <div className="mt-2 flex flex-wrap gap-x-6 gap-y-2" aria-live="polite">
       <p>{copy.waiting}: {endpoints.length}/2</p>
       {result && <p data-image-distance>{copy.pixels}: {number(result.pixels)} px</p>}
@@ -60,8 +62,7 @@ export function MapMeasurementPanel({state, locale, mode, onChange, onMode, onCe
       <p className="min-w-0 flex-1 break-words" data-calibration-source>{copy.source}: {state.calibration.source}<br />{copy.build}: {state.calibration.build}</p>
       <button type="button" className={button} title={copy.remove} aria-label={copy.remove} onClick={() => onChange({...state, calibration: undefined})}><Trash2 size={18} /></button>
     </div>}
-    <p className="mt-3 text-xs leading-5">{copy.limits}</p>
-    <p className="mt-1 text-xs leading-5">{copy.ballistics}</p>
+    <p className="mt-3 text-xs leading-5">{plannerCopy.limits}</p>
     <p className="mt-1 text-xs leading-5">{copy.privacy}</p>
   </section>;
 }

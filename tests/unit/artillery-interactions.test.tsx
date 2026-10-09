@@ -203,7 +203,7 @@ describe("artillery input and timer regressions", () => {
     tick(18_000);
     expect(frequencies).toEqual([880, 660, 660]);
     tick(25_000);
-    expect(text(render(artillery))).toContain("💥 Rounds On Target!");
+    expect(text(render(artillery))).toContain("Estimated timer elapsed");
     expect(frequencies).toEqual([880, 660, 660, 440]);
     expect(intervals.size).toBe(0);
   });
@@ -215,7 +215,7 @@ describe("artillery input and timer regressions", () => {
     expect(nodes.some((entry) => entry.type === "button" && text(entry) === "Cancel countdown")).toBe(true);
     expect(nodes.some((entry) => entry.type === "div" && text(entry) === "0.1s")).toBe(true);
     tick(18_800);
-    expect(text(render(artillery))).toContain("💥 Rounds On Target!");
+    expect(text(render(artillery))).toContain("Estimated timer elapsed");
   });
 
   it("cancels an active countdown, restarts from a new deadline and cleans up on unmount", () => {

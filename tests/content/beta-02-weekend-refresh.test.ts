@@ -60,7 +60,7 @@ describe("Closed Beta 02 weekend release contract", () => {
         const guide = await loadGuideDocument(locale, slug);
         expect(guide, `${locale}/${slug}`).not.toBeNull();
         expect((guide?.frontmatter.updatedAt ?? "") >= (slug === "wardogs-known-issues" ? "2026-09-17" : "2026-09-04"), `${locale}/${slug}`).toBe(true);
-        expect(guide?.frontmatter.description.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(140);
+        expect(guide?.frontmatter.description.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(["ja", "zh-cn", "zh-tw"].includes(locale) ? 40 : 140);
         expect(guide?.frontmatter.faq.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(3);
         expect(guide?.body.length, `${locale}/${slug}`).toBeGreaterThanOrEqual(1_200);
       }

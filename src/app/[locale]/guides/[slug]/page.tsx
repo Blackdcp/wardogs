@@ -36,6 +36,7 @@ import {getGuideTaskData} from "@/features/guides/guide-task-data";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
+import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 
 type PageProps = {params: Promise<{locale: string; slug: string}>};
 
@@ -57,7 +58,7 @@ export default async function GuideArticlePage({params}: PageProps) {
   const guide = await loadGuideDocument(locale, slug);
   if (!guide) notFound();
   const discoveryImage = getGuideDiscoveryImage(slug);
-  const taskData = getGuideTaskData(slug, locale);
+  const taskData = getGuideTaskData(slug, locale, guide.frontmatter.directAnswer);
   const guideBody = prepareGuideBodyForTaskPanel(guide.body, locale, Boolean(taskData));
   setRequestLocale(locale);
   const adsT = await getTranslations({locale, namespace: "ads"});
@@ -135,6 +136,7 @@ export default async function GuideArticlePage({params}: PageProps) {
         {slug === "wardogs-best-weapons-loadouts" || slug === "wardogs-money-guide" ? <LoadoutPresetList locale={locale} /> : null}
         {slug === "wardogs-ammo-reload-guide" ? <EquipmentCompatibility dataset={getCompatibilityDataset(locale)} locale={locale} /> : null}
         <ProgressionMatrix locale={locale} slug={slug} />
+        <ReleaseImpactPanel locale={locale} path={`/guides/${slug}`} />
         <SourceList sources={guide.frontmatter.sources} title={t("sources")} checkedLabel={t("sourceChecked")} />
         <section className="mt-14" aria-labelledby="faq-title">
           <h2 className="display-font text-3xl text-white" id="faq-title">{t("faq")}</h2>

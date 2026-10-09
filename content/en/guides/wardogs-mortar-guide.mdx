@@ -5,7 +5,7 @@ keyword: "wardogs mortar guide"
 category: "guide"
 slug: "wardogs-mortar-guide"
 order: 29
-updatedAt: "2026-10-06"
+updatedAt: "2026-10-09"
 badges:
   - label: "Fire Support"
     tone: "accent"
@@ -70,7 +70,7 @@ Start with a supplied firing position, the construction requirements shown by th
 3. **Check placement before committing resources.** Use the placement preview and read any rejection message. Check terrain, overlap and the displayed restriction while keeping the crew, supply access and exit clear. One rejected position does not establish a universal placement limit.
 4. **Complete construction and confirm the emplacement exists.** Follow the interaction shown by the current build, then verify the finished mortar can be interacted with. A preview, an unfinished structure and a usable emplacement are different states; compare the [mortar item entry](/en/items/weapons/mortar) for the equipment's historical context.
 5. **Load the ammunition the mortar requests.** Check the emplacement's current ammunition and loading prompt separately from construction. Closed Beta community testing linked mortar ammo to FOB ammunition resources; confirm what your build requests and use the [cargo receipt check](/en/guides/wardogs-cargo-guide) to establish that delivered resources registered. Nearby supplies alone do not prove the mortar is loaded.
-6. **Use one ranging shot before a volley.** Confirm the target and friendly positions with a spotter, then record range and current-client bearing. Use the [map ruler](/en/tools/map) and [artillery calculator](/en/tools/artillery-calculator) only with a matching weapon and valid units; an uncalibrated pixel distance is not meters. Observe the first impact, correct one setting at a time and stop if friendlies enter the impact area.
+6. **Use one ranging shot before a volley.** Confirm the target and friendly positions with a spotter, then record range and current-client bearing. Use the [map ruler](/en/tools/map) and [artillery calculator](/en/tools/artillery-calculator) only with a matching weapon and valid units; default meter values use a nominal map scale and need a known-distance reference before precise ranging. Observe the first impact, correct one setting at a time and stop if friendlies enter the impact area.
 
 If the loading prompt is absent, recheck the selected interaction, requested ammunition and resource state before changing range. A built mortar, nearby supplies and a loaded mortar are not equivalent states.
 
@@ -93,7 +93,7 @@ The durable skill is communication. Range and azimuth principles continue to mat
 
 ## Calculator-first mortar workflow
 
-For high-intent searches like `wardogs mortar calculator`, `wardogs arty calc` and `how to use mortar wardogs`, send the squad through one repeatable loop. First, open the [interactive map](/en/tools/map) and mark the mortar position and the target. Second, open the [artillery calculator](/en/tools/artillery-calculator), choose L81 Mortar, copy the measured distance and confirm the azimuth. Third, fire one ranging round and call the impact as short, long, left or right before starting a volley.
+To use the WARDOGS mortar calculator with a squad, follow one repeatable loop. First, open the [interactive map](/en/tools/map) and mark the mortar position and the target. Second, open the [artillery calculator](/en/tools/artillery-calculator), choose L81 Mortar, copy the measured distance and confirm the azimuth. Third, fire one ranging round and call the impact as short, long, left or right before starting a volley.
 
 This workflow is stronger than memorizing a single table because it catches the mistakes that ruin most indirect fire: wrong battlefield, wrong firing point, target moved after the measurement, friendly players entering the blast area, or a server rule that changes what the crew can use. If Infantry Mode leaves mortars available, the same process becomes even more important because targets cluster around tower stairs, windows, FOB exits and road crossings.
 
@@ -111,14 +111,14 @@ Azimuth describes horizontal direction; range describes distance. Start with the
 
 Fire one adjustment round or a deliberately small group when conditions allow. The spotter then reports whether impact is left, right, short, or long relative to the target. Change one component in measured steps, repeat, and only commit more ammunition after impacts are useful. If the target moves, stop and acquire a new solution rather than walking rounds through friendly routes.
 
-**Map distance before the ranging shot:** our [interactive map](/en/tools/map) has a usable ruler, but no verified game-world coordinate conversion or azimuth output. Use it as follows:
+**Map distance before the ranging shot:** our [interactive map](/en/tools/map) has a usable ruler, but no verified game-world coordinate conversion. Fire tasks provide a map bearing and hand off to the artillery calculator. Use it as follows:
 
-1. Select the matching map, wait for its image to load and open the ruler with **Measure distance**. Without calibration it reports image pixels only, not meters.
-2. Choose **Reference segment** and place two identifiable reference endpoints by clicking/tapping the image, or move the view and use **Set endpoint at view center** for each. Enter a known horizontal reference distance in meters, its distance error, each endpoint's image-pixel error, the source/observation and observed game build. Choose **Apply calibration**. If you lack a defensible reference, keep the pixel-only result; the old Beta grid estimates below are not an automatic scale.
+1. Select the matching map, wait for its image to load and open the ruler with **Measure distance**. Without calibration it shows image pixels and estimated meters using the selected map’s nominal scale. This default scale is not a verified in-game measurement.
+2. Choose **Reference segment** and place two identifiable reference endpoints by clicking/tapping the image, or move the view and use **Set endpoint at view center** for each. Enter a known horizontal reference distance in meters, its distance error, each endpoint's image-pixel error, the source/observation and observed game build. Choose **Apply calibration**. Without a defensible reference, treat nominal meters as a planning estimate only; the old Beta grid estimates below do not validate that scale.
 3. In **Measure distance**, place the firing position and target as the two endpoints. Read the estimated horizontal distance and bounds from supplied errors. This assumes uniform image scale; the bounds cover only your entered distance and point errors, not unverified projection, terrain or build differences. It is not route length or slant range.
 4. Use the share control to send the selected points and calibration to your spotter. Reference notes and build are included in the link: omit private account details. Each map has separate calibration; do not reuse another map's reference blindly.
 
-This is map geometry, **not a precise mortar or artillery calculator**. It supplies no firing elevation, shell trajectory or guaranteed-hit setting. Check direction/azimuth in the current client and confirm an observed impact; height, muzzle velocity and build-matched ballistics remain unverified here.
+The ruler measures map geometry; it is **not a precise mortar or artillery calculator**. Fire tasks separately estimate bearing, elevation and flight time for the selected weapon and mode. Bearing assumes north is at the top of the image. The map does not sample terrain heights: confirm direction and height difference in the current client, then observe a ranging shot. These are model estimates, not measured accuracy in the current game build.
 
 ## Spotting Loop
 
@@ -175,7 +175,7 @@ Disperse, move from repeated impacts, break spotting, identify likely firing rou
 
 ### Use the mortar calculator after measuring distance
 
-Open the [map ruler](/en/tools/map), choose the matching map and calibrate with an identifiable segment whose horizontal distance is known. An uncalibrated pixel result cannot be entered as meters. Measure between gun and target; the ruler does not supply game coordinates or azimuth.
+Open the [map ruler](/en/tools/map), choose the matching map and calibrate with an identifiable segment whose horizontal distance is known. Default meter values use a nominal scale, not a verified in-game reference; calibrate before relying on them for ranging. Measure between gun and target; the ruler does not supply verified game coordinates; fire tasks separately provide a map bearing.
 
 In the [artillery calculator](/en/tools/artillery-calculator), select L81 and Direct Numeric, enter horizontal meters and current-client bearing, and check the height difference separately. Treat elevation and flight time as estimates. If the tool rejects the distance, recheck the input rather than forcing a solution. Confirm friendlies are clear, fire one ranging round and correct from the observed impact.
 

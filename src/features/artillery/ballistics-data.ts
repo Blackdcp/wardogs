@@ -31,10 +31,13 @@ export interface FiringSolution {
   mode: TrajectoryMode;
 }
 
+// Nominal full-image span from community maps/*.json tileBounds × coordinateMetersPerUnit.
+// All three local basemaps stitch the complete pyramid; playable bounds are not the image scale.
+// Source: https://github.com/apollyon-sys/wardogs-calculator/tree/main/maps (2026-10-09).
 export const MAP_DIMENSIONS: Record<MapId, {name: string; sizeMeters: number; gridCols: number}> = {
-  bakurani: {name: "Bakurani", sizeMeters: 16000, gridCols: 16},
-  ozeti: {name: "Ozeti", sizeMeters: 32000, gridCols: 32},
-  zestafona: {name: "Zestafona", sizeMeters: 32000, gridCols: 32},
+  bakurani: {name: "Bakurani", sizeMeters: 16384, gridCols: 16},
+  ozeti: {name: "Ozeti", sizeMeters: 16384, gridCols: 32},
+  zestafona: {name: "Zestafona", sizeMeters: 16384, gridCols: 32},
 };
 
 // Empirical Community Measured Ballistics: [distanceMeters, elevationMil]

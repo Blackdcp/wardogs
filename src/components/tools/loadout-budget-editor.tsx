@@ -17,6 +17,8 @@ import {PlanNumber, planInputClass} from "./plan-number";
 import {ToolShareNotice} from "./tool-share-notice";
 import {useToolAnalytics} from "./use-tool-analytics";
 import {isMarkedToolShare, markToolShare} from "@/features/tools/tool-analytics";
+import {LoadoutChecksSummary, LoadoutLineChecks, SavedLoadouts} from "./loadout-workbench";
+import {getWorkbenchCopy} from "@/features/tools/workbench-copy";
 
 const defaults: BudgetState = {cash: 10_000, loadout: 3_000, vehicle: 0, reserve: 2_000};
 const emptySearch = () => "";
@@ -127,6 +129,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
         <PlanNumber label={t.legacyVehicle} value={state.vehicle} onChange={(vehicle) => commit({...state, vehicle: vehicle ?? 0})} />
       </div>
       <p className="text-xs leading-5 text-[#a8b4ae]">{t.assumptions}</p>
+      <label className="grid gap-2 text-sm text-[#cbd5cf]">{getWorkbenchCopy(copy.locale).build}<input data-clarity-mask="true" className={planInputClass} maxLength={80} value={state.buildLabel ?? ""} onChange={(event) => commit({...state, buildLabel: event.target.value})} /></label>
       {itemsMode ? <div className="space-y-5 border-y border-[#354039] py-5">
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
           <label className="grid gap-2 text-sm text-[#cbd5cf]">{t.search}<input data-clarity-mask="true" className={planInputClass} type="search" value={query} onChange={(event) => {setQuery(event.target.value); setSelected("");}} /></label>
@@ -149,10 +152,11 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
               </div>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <PlanNumber label={t.quantity} value={line.quantity} integer minimum={1} maximum={10_000} onChange={(quantity) => updateLine(index, {quantity: quantity ?? 1})} />
-                <label className="grid gap-2 text-sm text-[#cbd5cf]">{t.unit}<select className={planInputClass} value={line.unit} onChange={(event) => updateLine(index, {unit: event.target.value as PurchaseLine["unit"]})}>{(["unknown", "item", "pack", "round"] as const).map((unit) => <option value={unit} key={unit}>{t[unit]}</option>)}</select></label>
+                <label className="grid gap-2 text-sm text-[#cbd5cf]">{t.unit}<select className={planInputClass} value={line.unit} onChange={(event) => updateLine(index, {unit: event.target.value as PurchaseLine["unit"], unitPrice: null, unitWeight: null})}>{(["unknown", "item", "pack", "round"] as const).map((unit) => <option value={unit} key={unit}>{t[unit]}</option>)}</select></label>
                 <PlanNumber label={t.price} value={line.unitPrice} placeholder={t.unknown} onChange={(unitPrice) => updateLine(index, {unitPrice})} />
                 <label className="grid gap-2 text-sm text-[#cbd5cf]">{t.frequency}<select className={planInputClass} value={line.frequency} onChange={(event) => updateLine(index, {frequency: event.target.value as PurchaseLine["frequency"]})}><option value="repeat">{t.repeatShort}</option><option value="once">{t.onceShort}</option></select></label>
               </div>
+              <LoadoutLineChecks locale={copy.locale} line={line} lines={lines} catalogue={catalogue} onChange={(patch) => updateLine(index, patch)} />
             </li>;
           })}
         </ol>
@@ -165,6 +169,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
           })}</ul>
         </section> : null}
         <p className="text-xs leading-5 text-[#e4c35f]">{t.attachmentUnknown}</p>
+        <LoadoutChecksSummary locale={copy.locale} lines={lines} catalogue={catalogue} />
       </div> : null}
       <div aria-live="polite" className="border-t border-[#354039] pt-5">
         {!result ? <><p className="text-sm text-[#e4c35f]">{t.incomplete}</p><p className="mt-2 text-white">{t.subtotal}: {money(totals.repeat + totals.once + state.vehicle + (state.once ?? 0))}</p></> : <>
@@ -177,6 +182,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
       {tooLarge ? <p role="status" className="text-sm text-[#e4c35f]">{t.shareTooLarge}</p> : null}
       <button className={buttonClass} type="button" disabled={tooLarge} onClick={share}><Copy size={16} aria-hidden="true" />{copy.share}</button>
       <p role="status" className="text-sm text-[#a8b4ae]">{shareStatus}</p>
+      <SavedLoadouts locale={copy.locale} query={encodedState} dataVersion={catalogue.dataVersion} disabled={tooLarge} onRestore={commit} />
       </div>
     </fieldset>
   </section>;

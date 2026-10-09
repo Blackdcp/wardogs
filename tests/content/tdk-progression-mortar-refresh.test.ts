@@ -31,42 +31,42 @@ const boundaries = {
   en: {
     achievements: ["**Public condition:", "**Hidden condition:", "**Expected result, still locked:", "not a tested fix", "No fixed synchronization wait"],
     progression: ["Role/class level is not Career level", "not your Career level", "not the full unlock roster", "An empty changes list", "do **not** establish the season-end automatic cash-conversion rate"],
-    mortar: ["no verified game-world coordinate conversion or azimuth output", "image pixels only, not meters", "uniform image scale", "bounds cover only your entered distance and point errors", "not a precise mortar or artillery calculator", "Reference notes and build are included in the link"],
+    mortar: ["no verified game-world coordinate conversion", "estimated meters using the selected map’s nominal scale", "Bearing assumes north is at the top of the image", "does not sample terrain heights", "uniform image scale", "bounds cover only your entered distance and point errors", "not a precise mortar or artillery calculator", "Reference notes and build are included in the link"],
   },
   ru: {
     achievements: ["**Открытое условие:", "**Скрытое условие:", "**Результат ожидаемый, но значок закрыт:", "не испытанное исправление", "Фиксированное ожидание синхронизации"],
     progression: ["Уровень роли/класса не равен уровню карьеры", "не уровень Career", "не полный список открытий", "Пустой список означает", "**не** устанавливают курс автоматической конвертации"],
-    mortar: ["нет проверенного перевода в игровые координаты и вывода азимута", "только в пикселях изображения, не в метрах", "равномерный масштаб изображения", "только заданные ошибки расстояния и точек", "не точный миномётный или артиллерийский калькулятор", "включая заметки об источнике и версию игры"],
+    mortar: ["нет проверенного перевода в игровые координаты", "оценка метров по номинальному масштабу", "север у верхнего края изображения", "Высоты рельефа автоматически не считываются", "равномерный масштаб изображения", "только заданные ошибки расстояния и точек", "не точный миномётный или артиллерийский калькулятор", "включая заметки об источнике и версию игры"],
   },
   de: {
     achievements: ["**Öffentliche Bedingung:", "**Versteckte Bedingung:", "**Erwartetes Ergebnis, weiterhin gesperrt:", "keine getestete Fehlerbehebung", "Eine feste Synchronisationsfrist"],
     progression: ["Rollen-/Klassenlevel und Karriere-Level (Career) sind nicht dasselbe", "nicht dein Career-Level", "keine vollständige Freischaltliste", "Eine leere Änderungsliste", "**nicht** den Kurs der automatischen Cash-Umrechnung zum Saisonende"],
-    mortar: ["keine bestätigte Umrechnung in Spielkoordinaten und keine Azimut-Ausgabe", "nur Bildpixel, keine Meter", "gleichmäßiger Bildmaßstab", "nur die eingegebenen Entfernungs- und Punktfehler", "kein präziser Mörser- oder Artillerierechner", "Quelle und Spielversion stehen ebenfalls im Link"],
+    mortar: ["keine bestätigte Umrechnung in Spielkoordinaten", "geschätzte Meter anhand des nominellen Maßstabs", "Norden am oberen Bildrand", "keine Geländehöhen", "gleichmäßiger Bildmaßstab", "nur die eingegebenen Entfernungs- und Punktfehler", "kein präziser Mörser- oder Artillerierechner", "Quelle und Spielversion stehen ebenfalls im Link"],
   },
   "pt-br": {
     achievements: ["**Condição pública:", "**Condição oculta:", "**Resultado esperado, mas ainda bloqueada:", "não uma correção testada", "prazo fixo de sincronização"],
     progression: ["Nível de função/classe não é nível de Carreira", "não o nível Career", "não uma lista completa de desbloqueios", "Uma lista vazia indica", "**não** estabelecem a cotação da conversão automática"],
-    mortar: ["não conversão verificada para coordenadas do jogo nem saída de azimute", "pixels da imagem, não em metros", "escala da imagem é considerada uniforme", "apenas erros de distância e pontos fornecidos", "não uma calculadora precisa de morteiro ou artilharia", "Notas da referência e versão do jogo entram no link"],
+    mortar: ["não conversão verificada para coordenadas do jogo", "metros estimados pela escala nominal", "norte no topo da imagem", "não lê alturas do terreno", "escala da imagem é considerada uniforme", "apenas erros de distância e pontos fornecidos", "não é uma calculadora precisa de morteiro ou artilharia", "Notas da referência e versão do jogo entram no link"],
   },
   ja: {
     achievements: ["**公開条件がある場合：", "**条件が非公開の場合：", "**条件を満たしたように見えるのに未解除の場合：", "実機で検証した修正方法ではありません", "固定の同期待ち時間"],
     progression: ["ロール／クラスのレベルとCareerレベルは別", "Careerレベルを代わりに入れない", "全解除一覧", "変更欄が空でも", "シーズン終了時のCash自動変換レートを確定するものではありません"],
-    mortar: ["ゲーム座標への検証済み変換や方位角の出力はありません", "画像ピクセルの距離だけで、メートル値ではありません", "画像の縮尺が均一", "入力した距離・端点の誤差のみ", "正確な迫撃砲・砲兵計算機ではありません", "リンクには基準の記録とゲームのバージョンも含まれる"],
+    mortar: ["ゲーム座標への検証済み変換はありません", "仮定の縮尺による推定メートル値", "画像の上が北という仮定", "地形の標高は自動取得しない", "画像の縮尺が均一", "入力した距離・端点の誤差のみ", "正確な迫撃砲・砲兵計算機ではありません", "リンクには基準の記録とゲームのバージョンも含まれる"],
   },
   "zh-cn": {
     achievements: ["**条件已公开：", "**条件隐藏：", "**看似达标但仍未触发：", "不是已经实测有效的修复方案", "没有已确认的固定同步等待时间"],
     progression: ["角色／职业等级不等于生涯等级", "不要填 Career 等级", "不是完整解锁清单", "变更列表为空", "现行换汇率不等于季末剩余现金的自动转换率"],
-    mortar: ["没有经过验证的游戏世界坐标换算或方位角输出", "图片像素距离，不是米数", "图片比例均匀", "范围只覆盖输入的距离与端点误差", "不是精确迫击炮／火炮计算器", "链接会包含基准记录与游戏版本"],
+    mortar: ["没有经过验证的游戏世界坐标换算", "名义比例换算的估算米数", "图片上方为北", "不采样地形高度", "图片比例均匀", "范围只覆盖输入的距离与端点误差", "不是精确迫击炮／火炮计算器", "链接会包含基准记录与游戏版本"],
   },
   "zh-tw": {
     achievements: ["**條件已公開：", "**條件隱藏：", "**看似達標但仍未觸發：", "不是經過實測的修復方法", "沒有已確認的固定同步等待時間"],
     progression: ["角色／職業等級不等於生涯等級", "不要填 Career 等級", "不是完整解鎖清單", "變更列表為空", "現行匯率不等於季末剩餘現金的自動轉換率"],
-    mortar: ["沒有經過驗證的遊戲世界座標換算或方位角輸出", "圖片畫素距離，不是公尺數", "圖片比例均勻", "範圍只涵蓋輸入的距離及端點誤差", "不是精確的迫擊砲／火炮計算器", "連結會包含基準記錄和遊戲版本"],
+    mortar: ["沒有經過驗證的遊戲世界座標換算", "名義比例換算的估算公尺數", "圖片上方為北", "不取樣地形高度", "圖片比例均勻", "範圍只涵蓋輸入的距離及端點誤差", "不是精確的迫擊砲／火炮計算器", "連結會包含基準記錄和遊戲版本"],
   },
   pl: {
     achievements: ["**Jawny warunek:", "**Ukryty warunek:", "**Oczekiwany wynik, nadal blokada:", "nie przetestowana naprawa", "stałego czasu synchronizacji"],
     progression: ["Poziom roli/klasy to nie poziom kariery", "nie poziom Career", "nie pełną listę odblokowań", "Pusta lista oznacza", "**nie** ustalają one kursu automatycznej konwersji"],
-    mortar: ["nie zweryfikowane przeliczenie na współrzędne świata gry ani wynik azymutu", "tylko piksele obrazu, nie metry", "jednolitą skalę obrazu", "tylko podane błędy odległości i punktów", "nie precyzyjny kalkulator moździerza lub artylerii", "Notatki odniesienia i wersja gry również trafiają do linku"],
+    mortar: ["nie zweryfikowane przeliczenie na współrzędne świata gry", "szacowane metry według nominalnej skali", "północ przy górnej krawędzi obrazu", "nie pobiera wysokości terenu", "jednolitą skalę obrazu", "tylko podane błędy odległości i punktów", "nie precyzyjny kalkulator moździerza lub artylerii", "Notatki odniesienia i wersja gry również trafiają do linku"],
   },
 };
 
@@ -94,7 +94,7 @@ describe.each(locales)("TDK progression and mortar refresh: %s", (locale) => {
     for (const name of ["Fat Stacks", "Big Spender", "That was rude"]) expect(diagnosis).toContain(name);
     expect(diagnosis).toContain(`/${locale}/tools/loadout-budget`);
     expect(guide!.frontmatter.sources).toContainEqual(expect.objectContaining({
-      url: "https://steamcommunity.com/stats/1867240/achievements", kind: "official", checkedAt: "2026-09-26",
+      url: "https://steamcommunity.com/stats/1867240/achievements", kind: "official", checkedAt: "2026-10-09",
     }));
     const achievementNames = ["This is WARDOGS", "Ricochet", "Fat Stacks", "That was rude", "Long Shot", "Top Dog", "CZ Survivor", "Do Not Resuscitate", "Clean Sweep", "Big Spender"];
     for (const name of achievementNames) expect(body.split("\n").filter((line) => line.startsWith(`| ${name} |`))).toHaveLength(1);

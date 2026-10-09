@@ -1,21 +1,22 @@
 ---
 title: "WARDOGS Deploy Screen: Official, Community, Infantry"
 description: "Use the WARDOGS Deploy screen after Update 0.1.2: Official, Community, Infantry Mode, Low-Level servers, empty browser checks, and join flow."
+directAnswer: "If Deploy looks empty, clear search and restrictive filters, check Official and Community separately, then inspect Infantry Mode or Low-Level. An empty filtered list alone does not establish a game-wide outage."
 keyword: "wardogs deploy screen"
 category: "guide"
 slug: "wardogs-deploy-screen"
 order: 58
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-09"
 badges:
   - label: "Server Browser"
     tone: "accent"
   - label: "Troubleshooting"
     tone: "warning"
 faq:
-  - question: "Why is my WARDOGS Deploy screen empty?"
-    answer: "First clear filters and switch between Official, Community, Infantry and Low-Level views. If all views fail, compare with current official notices and record the exact state."
-  - question: "Is the Deploy screen a server outage indicator?"
-    answer: "Not by itself. It is a routing interface, and filters or category selection can make a healthy server pool look empty."
+  - question: "Why is my Deploy server list empty?"
+    answer: "If Deploy looks empty, clear search and restrictive filters, check Official and Community separately, then inspect Infantry Mode or Low-Level. An empty filtered list alone does not establish a game-wide outage."
+  - question: "Should I reinstall WARDOGS for an empty browser?"
+    answer: "Do not reinstall or disable protection just because one filtered view is empty. For a useful report, include the build, category, filters, region, timestamp, exact error and whether joining the same friend works."
 sources:
   - label: "Official Update 0.1.2 minor patch"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
@@ -37,65 +38,41 @@ sources:
 
 ## Quick Answer
 
-**Read the Deploy screen as a routing layer. If no servers show, clear filters, check Official and Community separately, test Infantry and Low-Level categories, then compare with the official announcements before blaming your PC.**
-
-This page is written as a current-build traffic capture page: it gives one direct answer, points to the relevant tool, and keeps uncertain values labelled until a primary source confirms them.
+If Deploy looks empty, clear search and restrictive filters, check Official and Community separately, then inspect Infantry Mode or Low-Level. An empty filtered list alone does not establish a game-wide outage.
 
 ## Confirmed Facts
 
-- Patch 0.11 split Official and Community browsing; Update 0.1.2 changed the Deploy UX again.
-- Update 0.1.2 explicitly calls out Infantry Mode and Low-Level community server visibility.
-- Community bug reports after 0.1.2 mention empty server browser views and filter confusion.
-- A server browser problem is different from WD-L020, WD-L018 or entitlement errors.
+Update 0.1.2 changes the Deploy selection flow and restores advanced Official filters. Infantry Mode and Low-Level expose community modifiers; their labels do not establish universal admission levels, vehicle rules or reward multipliers. Patch 0.11 is the earlier browser update.
 
 ## Action Plan
 
-### Reset filters first
+1. Open Deploy and select a server family.
+2. Clear text search and inspect region, empty/full visibility and other filters.
+3. Read the complete server name, population and rules before Join.
+4. Distinguish connecting, queue position and a returned error code.
+5. If all categories fail, compare the current service notice and record the time and region.
 
-Turn off restrictive filters before concluding that servers are offline.
+## Worked example
 
-### Check both browser families
+Your friend sees a Community server but Official is empty: first switch to Community and search its exact name. If it appears but refuses entry, capture the admission message; repeatedly refreshing a different list will not solve that restriction.
 
-Official and Community listings can differ. A result in one family does not prove the other is broken.
+## Common mistake
 
-### Use category labels deliberately
-
-Infantry Mode, Low-Level and normal servers can serve different players and expectations.
-
-### Compare status evidence
-
-If several categories are empty, check server-status and patch notes before changing your install.
-
-### Report exact state
-
-Useful reports include category, filters, region, time, error code and whether joining a friend worked.
-
-## Content Gap This Page Covers
-
-The new Deploy screen created search demand because players now decide between Official, Community, Infantry and Low-Level entries before they ever see a fight. This separate landing page keeps that intent from being buried inside a broad guide, then routes the reader into the exact tool or next article. The goal is to capture long-tail traffic without pretending that every live value is permanent.
-
-## Tool and Guide Workflow
-
-| Need | Open | Why |
-| --- | --- | --- |
-| Next step | [wardogs server status](/guides/wardogs-server-status) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs known issues](/guides/wardogs-known-issues) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs low level servers](/guides/wardogs-low-level-servers) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs community servers guide](/guides/wardogs-community-servers-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs crash fix](/guides/wardogs-crash-fix) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-
-## Editorial Notes for Current Build
-
-Values that depend on live servers, vendor stock, reward formulas, exact level gates or seasonal conversion rates must be rechecked in the current client. This page deliberately separates confirmed facts, measured observations and tactical recommendations so a patch can be updated without rewriting the entire guide.
+Do not reinstall or disable protection just because one filtered view is empty. For a useful report, include the build, category, filters, region, timestamp, exact error and whether joining the same friend works.
 
 ## Sources and Last Checked
 
-Check dates apply separately to the sources listed below; no single page-wide source date should be read as a blanket claim.
+Check dates apply separately to each source, not to the entire guide.
+
+- [Official Update 0.1.2 minor patch](https://store.steampowered.com/news/app/1867240/view/712287592723252267) — 2026-10-05
+- [Reddit community discussion: Low-Level servers](https://www.reddit.com/r/WarDogs/comments/1wu21j2/how_do_low_level_servers_work/) — 2026-10-05
+- [Reddit community discussion: new deployment screen](https://www.reddit.com/r/WarDogs/comments/1wu29z1/new_deployment_screen/) — 2026-10-05
+- [GamesRadar: WARDOGS infantry servers response](https://www.gamesradar.com/games/fps/wardogs-boss-admits-were-failing-on-getting-infantry-servers-to-you-guys-but-says-bulkhead-is-learning-more-and-more-how-to-balance-the-game-to-our-vision/) — 2026-10-05
 
 ## Related Guides
 
-- [Wardogs Server Status](/guides/wardogs-server-status)
-- [Wardogs Known Issues](/guides/wardogs-known-issues)
-- [Wardogs Low Level Servers](/guides/wardogs-low-level-servers)
-- [Wardogs Community Servers Guide](/guides/wardogs-community-servers-guide)
-- [Wardogs Crash Fix](/guides/wardogs-crash-fix)
+- [WARDOGS Server Status: Official Notices & Queue Checks](/en/guides/wardogs-server-status)
+- [WARDOGS Mic Not Working? Voice Chat Fixes & Known Issues](/en/guides/wardogs-known-issues)
+- [WARDOGS Low-Level Servers: Rules and Best Starts](/en/guides/wardogs-low-level-servers)
+- [WARDOGS Community Servers, RCON and Hosting](/en/guides/wardogs-community-servers-guide)
+- [WARDOGS Crashing or Won't Launch? WD-L020 & Safe Fixes](/en/guides/wardogs-crash-fix)

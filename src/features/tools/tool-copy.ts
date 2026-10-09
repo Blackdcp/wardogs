@@ -6,7 +6,7 @@ const copy = {
     systemTitle: "WARDOGS PC Configuration Check",
     systemDescription: "Compare your declared PC with the official Windows minimum and recommended tiers. This does not benchmark your hardware.",
     budgetTitle: "WARDOGS Loadout Budget",
-    budgetDescription: "Plan a life using amounts from the build you are playing. No pre-release catalogue price is inserted automatically.",
+    budgetDescription: "Plan spending with your current game prices, track weight and ammo compatibility, and save or share loadouts. Historical prices are not filled automatically.",
     officialBasis: "Official requirement basis",
     os: "Operating system",
     ram: "Installed RAM (GB)",
@@ -41,7 +41,7 @@ const copy = {
   },
   de: {
     systemTitle: "WARDOGS PC-Konfigurationscheck", systemDescription: "Vergleiche deine Angaben mit den offiziellen Windows-Mindest- und empfohlenen Anforderungen. Dies ist kein Benchmark.",
-    budgetTitle: "WARDOGS Loadout-Budget", budgetDescription: "Plane ein Leben mit den Preisen deines aktuellen Builds. Vorabpreise werden nicht automatisch eingesetzt.",
+    budgetTitle: "WARDOGS Loadout-Budget", budgetDescription: "Plane Ausgaben mit deinen aktuellen Spielpreisen, prüfe Gewicht und Munition und speichere oder teile Ausrüstung. Historische Preise werden nicht automatisch eingesetzt.",
     officialBasis: "Offizielle Anforderungsbasis", os: "Betriebssystem", ram: "Installierter RAM (GB)", storage: "Freier Speicher (GB)", cpu: "CPU-Vergleich", gpu: "GPU-Vergleich",
     windows10: "Windows 10, 64-Bit", windows11: "Windows 11, 64-Bit", unsupported: "Älteres Windows oder anderes OS", below: "Unter Minimum", minimum: "Mindestklasse", recommended: "Empfohlene Klasse", unknown: "Unsicher",
     result: "Ergebnis", resultBelow: "Unter dem veröffentlichten Minimum", resultReview: "Manueller Vergleich nötig", resultMinimum: "Erfüllt die veröffentlichte Mindeststufe", resultRecommended: "Erfüllt die empfohlene Stufe", limiting: "Prüfen", share: "Ergebnislink kopieren", copied: "Ergebnislink kopiert",
@@ -49,7 +49,7 @@ const copy = {
   },
   ru: {
     systemTitle: "Проверка конфигурации ПК для WARDOGS", systemDescription: "Сравните указанный ПК с официальными минимальными и рекомендуемыми требованиями Windows. Это не тест производительности.",
-    budgetTitle: "Бюджет комплекта WARDOGS", budgetDescription: "Планируйте одну жизнь по ценам текущей сборки. Цены из предварительных версий не подставляются.",
+    budgetTitle: "Бюджет комплекта WARDOGS", budgetDescription: "Планируйте расходы по своим игровым ценам, проверяйте вес и боеприпасы, сохраняйте и делитесь комплектами. Исторические цены не подставляются автоматически.",
     officialBasis: "Официальные требования", os: "Операционная система", ram: "ОЗУ (ГБ)", storage: "Свободное место (ГБ)", cpu: "Сравнение CPU", gpu: "Сравнение GPU",
     windows10: "Windows 10, 64-разрядная", windows11: "Windows 11, 64-разрядная", unsupported: "Старая Windows или другая ОС", below: "Ниже минимума", minimum: "Минимальный класс", recommended: "Рекомендуемый класс", unknown: "Не уверен",
     result: "Результат", resultBelow: "Ниже заявленного минимума", resultReview: "Нужно ручное сравнение", resultMinimum: "Соответствует заявленному минимуму", resultRecommended: "Соответствует рекомендуемому уровню", limiting: "Проверить", share: "Копировать ссылку", copied: "Ссылка скопирована",
@@ -57,7 +57,7 @@ const copy = {
   },
   "pt-br": {
     systemTitle: "Verificador de configuração de WARDOGS", systemDescription: "Compare o PC informado com os requisitos oficiais mínimo e recomendado para Windows. Isto não é um benchmark.",
-    budgetTitle: "Orçamento de equipamento de WARDOGS", budgetDescription: "Planeje uma vida com os valores da build atual. Nenhum preço de pré-lançamento é preenchido automaticamente.",
+    budgetTitle: "Orçamento de equipamento de WARDOGS", budgetDescription: "Planeje gastos com seus preços atuais, confira peso e munição e salve ou compartilhe equipamentos. Preços históricos não são preenchidos automaticamente.",
     officialBasis: "Base oficial de requisitos", os: "Sistema operacional", ram: "RAM instalada (GB)", storage: "Armazenamento livre (GB)", cpu: "Comparação de CPU", gpu: "Comparação de GPU",
     windows10: "Windows 10, 64 bits", windows11: "Windows 11, 64 bits", unsupported: "Windows antigo ou outro sistema", below: "Abaixo do mínimo", minimum: "Classe mínima", recommended: "Classe recomendada", unknown: "Não tenho certeza",
     result: "Resultado", resultBelow: "Abaixo do mínimo divulgado", resultReview: "Comparação manual necessária", resultMinimum: "Atende ao nível mínimo divulgado", resultRecommended: "Atende ao nível recomendado", limiting: "Revisar", share: "Copiar link do resultado", copied: "Link do resultado copiado",
@@ -65,7 +65,7 @@ const copy = {
   },
   ja: {
     systemTitle: "WARDOGS PC構成チェック", systemDescription: "入力したPCを公式のWindows最低・推奨要件と比較します。ベンチマークではありません。",
-    budgetTitle: "WARDOGS ロードアウト予算", budgetDescription: "現在プレイ中のビルドに表示された金額で1ライフを計画します。旧ビルド価格は自動入力しません。",
+    budgetTitle: "WARDOGS ロードアウト予算", budgetDescription: "現在のゲーム内価格で予算を計画し、重量と弾薬の適合を確認して装備を保存・共有できます。過去の価格は自動入力しません。",
     officialBasis: "公式要件に基づく比較", os: "OS", ram: "搭載RAM (GB)", storage: "空き容量 (GB)", cpu: "CPU比較", gpu: "GPU比較",
     windows10: "Windows 10 64-bit", windows11: "Windows 11 64-bit", unsupported: "古いWindowsまたは別OS", below: "最低未満", minimum: "最低クラス", recommended: "推奨クラス", unknown: "不明",
     result: "結果", resultBelow: "公表された最低要件未満", resultReview: "手動確認が必要", resultMinimum: "公表された最低要件を満たす", resultRecommended: "公表された推奨要件を満たす", limiting: "確認項目", share: "結果リンクをコピー", copied: "結果リンクをコピーしました",
@@ -73,17 +73,17 @@ const copy = {
   },
   "zh-cn": {
     systemTitle: "WARDOGS 电脑配置检测", systemDescription: "把你填写的电脑配置与 Steam 官方 Windows 最低、推荐配置比较。本工具不运行性能测试。",
-    budgetTitle: "WARDOGS 配装预算工具", budgetDescription: "使用当前游戏版本里显示的价格规划一次生命，不自动套用测试版本旧价格。",
+    budgetTitle: "WARDOGS 配装预算工具", budgetDescription: "使用当前游戏内价格规划预算，核对重量和弹药兼容关系，保存与分享配装。历史价格不会自动填入。",
     officialBasis: "官方配置依据", os: "操作系统", ram: "内存容量 (GB)", storage: "可用硬盘空间 (GB)", cpu: "CPU 对比", gpu: "显卡对比",
     windows10: "Windows 10 64 位", windows11: "Windows 11 64 位", unsupported: "旧版 Windows 或其他系统", below: "低于最低配置", minimum: "最低配置级别", recommended: "推荐配置级别", unknown: "不确定",
     result: "检测结果", resultBelow: "低于官方公布的最低配置", resultReview: "需要手动核对", resultMinimum: "达到官方公布的最低配置", resultRecommended: "达到官方公布的推荐配置", limiting: "需要复核", share: "复制结果链接", copied: "结果链接已复制",
     cash: "可用资金", loadout: "武器、弹药和装备", vehicle: "载具或团队支出", reserve: "计划保留资金", spent: "计划支出", remaining: "剩余资金", reserveMet: "已保留预算", reserveMissed: "未达到保留目标", buildWarning: "价格和平衡会随版本变化，请输入你当前游戏客户端中显示的数值。", source: "查看 Steam 官方配置",
   },
 
-  pl: {systemTitle:"Sprawdzenie konfiguracji PC do WARDOGS", systemDescription:"Porównaj podane parametry komputera z oficjalnym minimum i konfiguracją zalecaną dla Windows. To nie test wydajności sprzętu.", budgetTitle:"Budżet wyposażenia WARDOGS", budgetDescription:"Zaplanuj jedno życie według cen z używanej wersji gry. Ceny przedpremierowego katalogu nie są dodawane automatycznie.", officialBasis:"Oficjalne wymagania", os:"System operacyjny", ram:"Zainstalowany RAM (GB)", storage:"Wolne miejsce (GB)", cpu:"Porównanie procesora", gpu:"Porównanie karty graficznej", windows10:"Windows 10, 64-bitowy", windows11:"Windows 11, 64-bitowy", unsupported:"Starszy Windows lub inny system", below:"Poniżej minimum", minimum:"Klasa minimalna", recommended:"Klasa zalecana", unknown:"Nie wiem", result:"Wynik", resultBelow:"Poniżej podanego minimum", resultReview:"Potrzebne ręczne porównanie", resultMinimum:"Spełnia podane minimum", resultRecommended:"Spełnia podane wymagania zalecane", limiting:"Do sprawdzenia", share:"Kopiuj link wyniku", copied:"Skopiowano link wyniku", cash:"Dostępna gotówka", loadout:"Broń, amunicja i wyposażenie", vehicle:"Zakup pojazdu lub dla zespołu", reserve:"Planowana rezerwa", spent:"Planowane wydatki", remaining:"Pozostała gotówka", reserveMet:"Rezerwa zachowana", reserveMissed:"Niedobór rezerwy", buildWarning:"Ceny i balans zależą od wersji. Wpisz wartości wyświetlane w obecnej grze.", source:"Otwórz oficjalne wymagania Steam"},
+  pl: {systemTitle:"Sprawdzenie konfiguracji PC do WARDOGS", systemDescription:"Porównaj podane parametry komputera z oficjalnym minimum i konfiguracją zalecaną dla Windows. To nie test wydajności sprzętu.", budgetTitle:"Budżet wyposażenia WARDOGS", budgetDescription:"Planuj wydatki według swoich cen w grze, sprawdzaj masę i amunicję oraz zapisuj i udostępniaj zestawy. Dawne ceny nie są uzupełniane automatycznie.", officialBasis:"Oficjalne wymagania", os:"System operacyjny", ram:"Zainstalowany RAM (GB)", storage:"Wolne miejsce (GB)", cpu:"Porównanie procesora", gpu:"Porównanie karty graficznej", windows10:"Windows 10, 64-bitowy", windows11:"Windows 11, 64-bitowy", unsupported:"Starszy Windows lub inny system", below:"Poniżej minimum", minimum:"Klasa minimalna", recommended:"Klasa zalecana", unknown:"Nie wiem", result:"Wynik", resultBelow:"Poniżej podanego minimum", resultReview:"Potrzebne ręczne porównanie", resultMinimum:"Spełnia podane minimum", resultRecommended:"Spełnia podane wymagania zalecane", limiting:"Do sprawdzenia", share:"Kopiuj link wyniku", copied:"Skopiowano link wyniku", cash:"Dostępna gotówka", loadout:"Broń, amunicja i wyposażenie", vehicle:"Zakup pojazdu lub dla zespołu", reserve:"Planowana rezerwa", spent:"Planowane wydatki", remaining:"Pozostała gotówka", reserveMet:"Rezerwa zachowana", reserveMissed:"Niedobór rezerwy", buildWarning:"Ceny i balans zależą od wersji. Wpisz wartości wyświetlane w obecnej grze.", source:"Otwórz oficjalne wymagania Steam"},
   "zh-tw": {
     systemTitle: "WARDOGS 電腦配置檢測", systemDescription: "把你填寫的電腦配置與 Steam 官方 Windows 最低、推薦配置比較。本工具不執行效能測試。",
-    budgetTitle: "WARDOGS 配裝預算工具", budgetDescription: "使用當前遊戲版本里顯示的價格規劃一次生命，不自動套用測試版本舊價格。",
+    budgetTitle: "WARDOGS 配裝預算工具", budgetDescription: "使用目前遊戲內價格規劃預算，核對重量與彈藥相容性，儲存及分享配裝。歷史價格不會自動填入。",
     officialBasis: "官方配置依據", os: "作業系統", ram: "記憶體容量 (GB)", storage: "可用硬碟空間 (GB)", cpu: "CPU 對比", gpu: "顯示卡對比",
     windows10: "Windows 10 64 位", windows11: "Windows 11 64 位", unsupported: "舊版 Windows 或其他系統", below: "低於最低配置", minimum: "最低配置級別", recommended: "推薦配置級別", unknown: "不確定",
     result: "檢測結果", resultBelow: "低於官方公佈的最低配置", resultReview: "需要手動核對", resultMinimum: "達到官方公佈的最低配置", resultRecommended: "達到官方公佈的推薦配置", limiting: "需要複核", share: "複製結果連結", copied: "結果連結已複製",
@@ -94,7 +94,7 @@ const copy = {
 const evidenceToolCopy = {
   en: {
     weaponCompareTitle: "WARDOGS Weapon Compare",
-    weaponCompareDescription: "Compare only documented weapon fields. Every value keeps its source build and current, historical, or unknown evidence state.",
+    weaponCompareDescription: "Compare documented weapon stats and your measured combat scenarios. Current, historical and user-entered data stay clearly identified.",
     weaponCompareEyebrow: "Evidence-first loadout tool",
     ammoMatcherTitle: "WARDOGS Ammo Matcher",
     ammoMatcherDescription: "Look up weapon-to-ammunition and ammunition-to-weapon relationships only when the catalogue records an explicit match.",
@@ -131,7 +131,7 @@ const evidenceToolCopy = {
   },
   de: {
     weaponCompareTitle: "WARDOGS Waffenvergleich",
-    weaponCompareDescription: "Vergleiche nur dokumentierte Waffenfelder. Jeder Wert behält Build sowie aktuellen, historischen oder unbekannten Belegstatus.",
+    weaponCompareDescription: "Vergleiche dokumentierte Waffenwerte und eigene Kampfmessungen. Aktuelle, historische und selbst eingegebene Daten bleiben klar gekennzeichnet.",
     weaponCompareEyebrow: "Beleggestütztes Loadout-Werkzeug",
     ammoMatcherTitle: "WARDOGS Munitionszuordnung",
     ammoMatcherDescription: "Zeigt Waffen-Munitions-Beziehungen nur dann, wenn der Katalog eine ausdrückliche Zuordnung enthält.",
@@ -143,7 +143,7 @@ const evidenceToolCopy = {
   },
   ru: {
     weaponCompareTitle: "Сравнение оружия WARDOGS",
-    weaponCompareDescription: "Сравнивайте только документированные поля. Для каждого значения сохраняются сборка и статус: актуальное, историческое или неизвестное.",
+    weaponCompareDescription: "Сравнивайте документированные параметры оружия и собственные боевые замеры. Актуальные, исторические и введённые вами данные чётко обозначены.",
     weaponCompareEyebrow: "Инструмент на основе источников",
     ammoMatcherTitle: "Подбор боеприпасов WARDOGS",
     ammoMatcherDescription: "Связи оружия и боеприпасов показываются только при наличии прямой записи в каталоге.",
@@ -155,7 +155,7 @@ const evidenceToolCopy = {
   },
   "pt-br": {
     weaponCompareTitle: "Comparador de armas de WARDOGS",
-    weaponCompareDescription: "Compare apenas campos documentados. Cada valor mantém a build de origem e o estado atual, histórico ou desconhecido.",
+    weaponCompareDescription: "Compare estatísticas documentadas e seus testes de combate. Dados atuais, históricos e informados por você ficam claramente identificados.",
     weaponCompareEyebrow: "Ferramenta baseada em evidências",
     ammoMatcherTitle: "Correspondência de munição de WARDOGS",
     ammoMatcherDescription: "Consulte relações entre armas e munições somente quando houver uma correspondência explícita no catálogo.",
@@ -167,7 +167,7 @@ const evidenceToolCopy = {
   },
   ja: {
     weaponCompareTitle: "WARDOGS 武器比較",
-    weaponCompareDescription: "記録済みの項目だけを比較します。各値には、出典ビルドと現行・履歴・不明の証拠状態を表示します。",
+    weaponCompareDescription: "記録済みの武器データと自分で測定した戦闘条件を比較できます。現行・過去・ユーザー入力のデータを明確に区別します。",
     weaponCompareEyebrow: "証拠優先のロードアウトツール",
     ammoMatcherTitle: "WARDOGS 弾薬対応表",
     ammoMatcherDescription: "カタログに明示された関係だけを使って、武器から弾薬、弾薬から武器を検索します。",
@@ -179,7 +179,7 @@ const evidenceToolCopy = {
   },
   "zh-cn": {
     weaponCompareTitle: "WARDOGS 武器对比工具",
-    weaponCompareDescription: "只对比已经记录的武器字段。每个值都保留来源版本，并明确标注当前、历史或未知状态。",
+    weaponCompareDescription: "对比有来源的武器参数和你实测的战斗条件，明确区分当前资料、历史记录与用户输入。",
     weaponCompareEyebrow: "证据优先的配装工具",
     ammoMatcherTitle: "WARDOGS 武器弹药匹配器",
     ammoMatcherDescription: "仅在图鉴存在明确关系时，查询武器对应弹药或弹药对应武器，不根据名称猜测兼容性。",
@@ -190,10 +190,10 @@ const evidenceToolCopy = {
     strengths: "已记录使用背景", cautions: "证据限制", openItem: "打开证据页面", noConfirmedAmmo: "图鉴尚未记录该武器的明确弹药关系。", noConfirmedWeapons: "图鉴尚未记录该弹药的明确武器关系。", emptyMatcher: "选择武器、弹药或同时选择两者，查看已记录的对应关系。", copyToolLink: "复制工具链接", copiedToolLink: "工具链接已复制",
   },
 
-  pl: {weaponCompareTitle:"Porównanie broni WARDOGS", weaponCompareDescription:"Porównuj tylko udokumentowane parametry broni. Każda wartość zachowuje wersję źródłową i status dowodów: aktualny, historyczny lub nieznany.", weaponCompareEyebrow:"Dobór wyposażenia oparty na dowodach", ammoMatcherTitle:"Dobór amunicji WARDOGS", ammoMatcherDescription:"Sprawdzaj powiązania broni z amunicją i amunicji z bronią wyłącznie wtedy, gdy katalog zapisuje jednoznaczną zgodność.", ammoMatcherEyebrow:"Udokumentowane powiązania katalogowe", leftWeapon:"Pierwsza broń", rightWeapon:"Druga broń", selectWeapon:"Wybierz broń", selectAmmo:"Wybierz amunicję", comparison:"Porównanie udokumentowanych parametrów", weaponToAmmo:"Amunicja zapisana dla tej broni", ammoToWeapons:"Broń zapisana dla tej amunicji", currentEvidence:"Aktualne", historicalEvidence:"Historyczne", unknownEvidence:"Nieznane", imagePending:"Obraz niezweryfikowany", historicalWarning:"Obserwacje historyczne nie są zaleceniami dla obecnej wersji.", build:"Wersja", verified:"Sprawdzono", fieldRole:"Rola", fieldPrice:"Zaobserwowany koszt", fieldAmmunition:"Amunicja", fieldFireModes:"Tryby ognia", fieldWeight:"Masa", fieldProgression:"Warunek postępów", fieldRequiredLevel:"Wymagany poziom", strengths:"Udokumentowany kontekst", cautions:"Ograniczenia dowodów", openItem:"Otwórz stronę dowodów", noConfirmedAmmo:"Nie zapisano potwierdzonego powiązania amunicji z tą bronią.", noConfirmedWeapons:"Nie zapisano potwierdzonego powiązania broni z tą amunicją.", emptyMatcher:"Wybierz broń, typ amunicji lub oba, aby sprawdzić zapisane powiązania.", copyToolLink:"Kopiuj link narzędzia", copiedToolLink:"Skopiowano link narzędzia"},
+  pl: {weaponCompareTitle:"Porównanie broni WARDOGS", weaponCompareDescription:"Porównuj udokumentowane parametry broni i własne pomiary walki. Dane aktualne, historyczne i wpisane przez ciebie są wyraźnie oznaczone.", weaponCompareEyebrow:"Dobór wyposażenia oparty na dowodach", ammoMatcherTitle:"Dobór amunicji WARDOGS", ammoMatcherDescription:"Sprawdzaj powiązania broni z amunicją i amunicji z bronią wyłącznie wtedy, gdy katalog zapisuje jednoznaczną zgodność.", ammoMatcherEyebrow:"Udokumentowane powiązania katalogowe", leftWeapon:"Pierwsza broń", rightWeapon:"Druga broń", selectWeapon:"Wybierz broń", selectAmmo:"Wybierz amunicję", comparison:"Porównanie udokumentowanych parametrów", weaponToAmmo:"Amunicja zapisana dla tej broni", ammoToWeapons:"Broń zapisana dla tej amunicji", currentEvidence:"Aktualne", historicalEvidence:"Historyczne", unknownEvidence:"Nieznane", imagePending:"Obraz niezweryfikowany", historicalWarning:"Obserwacje historyczne nie są zaleceniami dla obecnej wersji.", build:"Wersja", verified:"Sprawdzono", fieldRole:"Rola", fieldPrice:"Zaobserwowany koszt", fieldAmmunition:"Amunicja", fieldFireModes:"Tryby ognia", fieldWeight:"Masa", fieldProgression:"Warunek postępów", fieldRequiredLevel:"Wymagany poziom", strengths:"Udokumentowany kontekst", cautions:"Ograniczenia dowodów", openItem:"Otwórz stronę dowodów", noConfirmedAmmo:"Nie zapisano potwierdzonego powiązania amunicji z tą bronią.", noConfirmedWeapons:"Nie zapisano potwierdzonego powiązania broni z tą amunicją.", emptyMatcher:"Wybierz broń, typ amunicji lub oba, aby sprawdzić zapisane powiązania.", copyToolLink:"Kopiuj link narzędzia", copiedToolLink:"Skopiowano link narzędzia"},
   "zh-tw": {
     weaponCompareTitle: "WARDOGS 武器對比工具",
-    weaponCompareDescription: "只對比已經記錄的武器欄位。每個值都保留來源版本，並明確標註當前、歷史或未知狀態。",
+    weaponCompareDescription: "比較有來源的武器參數與你實測的戰鬥條件，明確區分目前資料、歷史記錄與使用者輸入。",
     weaponCompareEyebrow: "證據優先的配裝工具",
     ammoMatcherTitle: "WARDOGS 武器彈藥匹配器",
     ammoMatcherDescription: "僅在圖鑑存在明確關係時，查詢武器對應彈藥或彈藥對應武器，不根據名稱猜測相容性。",

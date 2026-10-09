@@ -6,7 +6,7 @@ import {getItemLatestVerifiedAt, type ItemFreshnessSource} from "@/features/item
 import {videoArticles} from "@/features/videos/video-library";
 import {buildAlternates} from "@/lib/metadata";
 import {getPilotSitemapEntries} from "@/i18n/pilot-guides";
-import {editorialHubSources, getHomeLastModified, itemHubDate, latestDate, mapHubDate, resolveEditorialHubLastModified, resolveGuideUpdatedAt} from "@/lib/editorial-freshness";
+import {editorialHubSources, getHomeLastModified, itemHubDate, latestDate, mapHubDate, resolveEditorialHubLastModified, resolveGuideUpdatedAt, resolvePageContentUpdatedAt} from "@/lib/editorial-freshness";
 
 export {resolveEditorialHubLastModified, resolveMapHubLastModified} from "@/lib/editorial-freshness";
 
@@ -68,11 +68,8 @@ function resolvePageLastModified(locale: Locale, pathname: string) {
   if (pathname === "/items" || /^\/items\/[^/]+$/.test(pathname)) {
     return new Date(`${itemHubDate(pathname === "/items" ? undefined : pathname.slice("/items/".length))}T00:00:00.000Z`);
   }
-  if (pathname === "/tools") return new Date("2026-10-05T00:00:00.000Z");
-  if (freshHubPaths.has(pathname)) {
-    return new Date("2026-10-03T00:00:00.000Z");
-  }
-  return new Date("2026-08-16T00:00:00.000Z");
+  const previousDate = pathname === "/tools" ? "2026-10-05" : freshHubPaths.has(pathname) ? "2026-10-03" : "2026-08-16";
+  return new Date(`${resolvePageContentUpdatedAt(pathname, [previousDate])}T00:00:00.000Z`);
 }
 
 export function resolveItemLastModified(item: ItemFreshnessSource | undefined) {

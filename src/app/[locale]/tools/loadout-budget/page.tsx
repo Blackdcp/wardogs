@@ -7,6 +7,7 @@ import {LoadoutBudget} from "@/components/tools/loadout-budget";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {getToolCopy} from "@/features/tools/tool-copy";
 import {buildPageMetadata} from "@/lib/metadata";
+import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 
 type PageProps = {params: Promise<{locale: string}>};
 
@@ -29,6 +30,7 @@ export default async function LoadoutBudgetPage({params}: PageProps) {
     <main className="site-container py-10 md:py-16">
       <ToolPageHeader toolId="loadout-budget" titleId="loadout-budget-form" eyebrow={copy.buildWarning} title={copy.budgetTitle} description={copy.budgetDescription} actions={[{href: `/${requestedLocale}/tools`, label: headerT("toolsHome")}]} />
       <LoadoutBudget copy={copy} />
+      <ReleaseImpactPanel locale={requestedLocale} path="/tools/loadout-budget" />
       <ToolRelatedGuides model={relatedLinks} locale={requestedLocale} />
     </main>
   );

@@ -1,4 +1,5 @@
 import type {Locale} from "@/config/site";
+import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 import {publicRoutePath} from "@/lib/public-url";
 
 export type MarketKind = "black" | "gold";
@@ -35,9 +36,9 @@ const copy: Record<Locale, Record<MarketKind, Copy>> = {
       title: "WARDOGS Gold Market", description: "Understand the cash-to-Gold-Bar decision and cosmetic market without mistaking an old screenshot for a current exchange rate.",
       status: "No live exchange quote on this page", statusDetail: "BULKHEAD describes a fluctuating cash-to-Gold-Bar rate. A static page cannot tell you today's rate or current cosmetic prices. Read both values in the in-game exchange screen before deciding.",
       actionTitle: "Decide whether to convert", steps: ["Set aside a cash reserve for your next usable loadout and any near-term unlocks.", "Read the current rate in the in-game exchange screen and the Gold Market cost of the cosmetic you want.", "Convert only surplus cash if the trade works for your plan; beta screenshots and creator quotes are not current prices."],
-      evidenceTitle: "What the developer described", evidence: "BULKHEAD's Top Questions post says cash profits can be exchanged for Gold Bars for cosmetic unlocks in the Gold Market. Its Early Access & Beyond video says remaining cash converts automatically at season end, while Gold Bars and cosmetics persist across seasons.",
+      evidenceTitle: "What the developer described", evidence: "BULKHEAD's Top Questions post says cash profits can be exchanged for Gold Bars for cosmetic unlocks in the Gold Market. Its Early Access & Beyond video says remaining cash converts automatically at season end, while Gold Bars and cosmetics persist across seasons. At 32:38–33:14, developers say existing Gold Market products remain on sale across seasons, except the black-and-gold AK mentioned as a rotation exception. They also say Gold can be saved. A product leaving sale does not mean an owned cosmetic is deleted. Check the current listing before a purchase; this interview supplies neither a live exchange rate nor the final season-end rate.",
       unknownTitle: "What this guide cannot quote", unknown: "The live Gold Bar rate, chart history, cosmetic stock and prices, and exact rate at the next season boundary require current client or transition-notice evidence. This page has no verified rate feed.",
-      relatedTitle: "Keep exploring", relatedMarket: "Black Market and Vault", moneyGuide: "Cash and recovery guide", sourceTitle: "Official sources", checkedLabel: "Sources checked September 27, 2026"
+      relatedTitle: "Keep exploring", relatedMarket: "Black Market and Vault", moneyGuide: "Cash and recovery guide", sourceTitle: "Official sources", checkedLabel: "Market interview checked October 9, 2026"
     }
   },
   ru: {
@@ -53,9 +54,9 @@ const copy: Record<Locale, Record<MarketKind, Copy>> = {
       title: "WARDOGS: рынок золота", description: "Как оценить обмен денег на золотые слитки и покупку косметики без устаревшего курса.",
       status: "Актуального курса на этой странице нет", statusDetail: "BULKHEAD описывает меняющийся курс. Узнайте текущий курс и цены косметики в игре перед обменом.",
       actionTitle: "Перед обменом", steps: ["Оставьте денежный резерв на следующий комплект и ближайшие открытия.", "Проверьте курс в игровом окне обмена и цену нужной косметики.", "Обменивайте только свободные средства; цены из бета-версии не являются текущими."],
-      evidenceTitle: "Что сообщил разработчик", evidence: "В Top Questions сказано, что деньги можно обменять на слитки для косметики. Видео Early Access & Beyond описывает автоматический обмен остатка в конце сезона и сохранение слитков и косметики.",
+      evidenceTitle: "Что сообщил разработчик", evidence: "В Top Questions сказано, что деньги можно обменять на слитки для косметики. Видео Early Access & Beyond описывает автоматический обмен остатка в конце сезона и сохранение слитков и косметики. На 32:38–33:14 разработчики говорят, что прежние товары золотого рынка останутся в продаже между сезонами; отдельно названа ротация чёрно-золотого AK. Золото можно копить. Уход из продажи не означает удаление уже купленной косметики. Проверьте текущее предложение перед покупкой. В интервью нет текущего курса обмена или окончательного курса на границе сезона.",
       unknownTitle: "Что здесь не указано", unknown: "Текущий курс, история курса, ассортимент и точный курс на границе сезона требуют данных из игры или нового официального сообщения.",
-      relatedTitle: "Читайте также", relatedMarket: "Чёрный рынок и хранилище", moneyGuide: "Руководство по деньгам", sourceTitle: "Официальные источники", checkedLabel: "Источники проверены 27 сентября 2026 г."
+      relatedTitle: "Читайте также", relatedMarket: "Чёрный рынок и хранилище", moneyGuide: "Руководство по деньгам", sourceTitle: "Официальные источники", checkedLabel: "Интервью о рынке проверено 9 октября 2026 г."
     }
   },
   de: {
@@ -71,9 +72,9 @@ const copy: Record<Locale, Record<MarketKind, Copy>> = {
       title: "WARDOGS Goldmarkt", description: "Bargeld, Goldbarren und kosmetische Gegenstände verstehen, ohne einen alten Wechselkurs zu übernehmen.",
       status: "Kein aktueller Wechselkurs auf dieser Seite", statusDetail: "BULKHEAD beschreibt einen schwankenden Kurs. Prüfe den aktuellen Kurs und Kosmetikpreis vor dem Tausch im Spiel.",
       actionTitle: "Vor dem Umtausch", steps: ["Halte eine Geldreserve für die nächste Ausrüstung und baldige Freischaltungen zurück.", "Lies den Kurs im Austauschfenster und den Preis des gewünschten kosmetischen Gegenstands ab.", "Tausche nur überschüssiges Geld; Beta-Screenshots sind kein aktuelles Angebot."],
-      evidenceTitle: "Aussage des Entwicklers", evidence: "Top Questions beschreibt den Tausch von Geld in Goldbarren für Kosmetik im Goldmarkt. Early Access & Beyond beschreibt den automatischen Tausch am Saisonende und den Erhalt von Goldbarren und Kosmetik.",
+      evidenceTitle: "Aussage des Entwicklers", evidence: "Top Questions beschreibt den Tausch von Geld in Goldbarren für Kosmetik im Goldmarkt. Early Access & Beyond beschreibt den automatischen Tausch am Saisonende und den Erhalt von Goldbarren und Kosmetik. Bei 32:38–33:14 sagen die Entwickler, dass bisherige Goldmarkt-Produkte saisonübergreifend angeboten werden; als Rotationsausnahme nennen sie die schwarz-goldene AK. Gold lässt sich ansparen. Ein Verkaufsende bedeutet nicht, dass bereits gekaufte Kosmetik gelöscht wird. Prüfe das aktuelle Angebot vor dem Kauf. Das Interview nennt weder einen Live-Wechselkurs noch den endgültigen Saisonendkurs.",
       unknownTitle: "Hier nicht beziffert", unknown: "Aktueller Kurs, Kursverlauf, Sortiment und Saisonendkurs benötigen Daten aus dem Spiel oder eine offizielle Mitteilung.",
-      relatedTitle: "Weiterlesen", relatedMarket: "Schwarzmarkt und Tresor", moneyGuide: "Geld-Guide", sourceTitle: "Offizielle Quellen", checkedLabel: "Quellen geprüft am 27. September 2026"
+      relatedTitle: "Weiterlesen", relatedMarket: "Schwarzmarkt und Tresor", moneyGuide: "Geld-Guide", sourceTitle: "Offizielle Quellen", checkedLabel: "Marktinterview geprüft am 9. Oktober 2026"
     }
   },
   "pt-br": {
@@ -89,9 +90,9 @@ const copy: Record<Locale, Record<MarketKind, Copy>> = {
       title: "WARDOGS Mercado de Ouro", description: "Como avaliar a troca de dinheiro por barras de ouro e cosméticos sem usar uma cotação antiga.",
       status: "Sem cotação ao vivo nesta página", statusDetail: "A BULKHEAD descreve uma taxa variável. Confira a taxa e o preço dos cosméticos no jogo antes de trocar.",
       actionTitle: "Antes de converter", steps: ["Separe uma reserva de dinheiro para o próximo equipamento e desbloqueios próximos.", "Leia a taxa na tela de câmbio do jogo e o preço do cosmético desejado.", "Converta apenas o excedente; capturas da beta não são cotações atuais."],
-      evidenceTitle: "O que a desenvolvedora descreveu", evidence: "Top Questions diz que dinheiro pode virar barras de ouro para cosméticos. Early Access & Beyond descreve a conversão automática ao fim da temporada e a permanência de barras e cosméticos.",
+      evidenceTitle: "O que a desenvolvedora descreveu", evidence: "Top Questions diz que dinheiro pode virar barras de ouro para cosméticos. Early Access & Beyond descreve a conversão automática ao fim da temporada e a permanência de barras e cosméticos. Em 32:38–33:14, os desenvolvedores dizem que os produtos atuais do Mercado de Ouro continuam à venda entre temporadas, com a AK preta e dourada citada como exceção de rotação. É possível guardar ouro. Sair da loja não significa apagar cosméticos já comprados. Confira o catálogo no jogo antes de comprar; a entrevista não informa a cotação atual nem a taxa final da virada.",
       unknownTitle: "Sem valores confirmados aqui", unknown: "Taxa atual, histórico, catálogo e taxa na virada da temporada dependem do cliente atual ou de um aviso oficial.",
-      relatedTitle: "Continue lendo", relatedMarket: "Mercado Negro e Cofre", moneyGuide: "Guia de dinheiro", sourceTitle: "Fontes oficiais", checkedLabel: "Fontes verificadas em 27 de setembro de 2026"
+      relatedTitle: "Continue lendo", relatedMarket: "Mercado Negro e Cofre", moneyGuide: "Guia de dinheiro", sourceTitle: "Fontes oficiais", checkedLabel: "Entrevista do mercado verificada em 9 de outubro de 2026"
     }
   },
   ja: {
@@ -107,9 +108,9 @@ const copy: Record<Locale, Record<MarketKind, Copy>> = {
       title: "WARDOGS ゴールドマーケット", description: "古い交換レートに頼らず、現金からゴールドバーへの交換と外観アイテムの購入を考えるガイドです。",
       status: "このページに現在の交換レートはありません", statusDetail: "BULKHEADは変動レートを説明しています。交換前にゲーム内で現在のレートと外観アイテムの価格を確認してください。",
       actionTitle: "交換前の確認", steps: ["次の装備と近日中のアンロックに必要な現金を確保する。", "ゲーム内の交換画面でレートと欲しい外観アイテムの価格を確認する。", "余剰分だけ交換を検討する。ベータ版の画像は現在の価格ではない。"],
-      evidenceTitle: "開発元の説明", evidence: "Top Questionsは現金をゴールドバーに換え、外観アイテムに使うと説明しています。Early Access & Beyondはシーズン末の自動交換とバー・外観の継続を説明しています。",
+      evidenceTitle: "開発元の説明", evidence: "Top Questionsは現金をゴールドバーに換え、外観アイテムに使うと説明しています。Early Access & Beyondはシーズン末の自動交換とバー・外観の継続を説明しています。 32:38–33:14で、既存Gold Market商品は次シーズンも販売を継続し、黒金のAKを販売ローテーションの例外として挙げています。ゴールドは貯めておけます。販売終了と購入済み外観の削除は別です。購入前に現在の商品表示を確認してください。この発言は現在の交換レートやシーズン終了時の確定レートを示しません。",
       unknownTitle: "ここでは提示できない値", unknown: "現在のレート、履歴、商品とシーズン境界のレートには、現行ゲームか新しい公式告知が必要です。",
-      relatedTitle: "関連ページ", relatedMarket: "ブラックマーケットと保管庫", moneyGuide: "資金ガイド", sourceTitle: "公式情報", checkedLabel: "情報確認日: 2026年9月27日"
+      relatedTitle: "関連ページ", relatedMarket: "ブラックマーケットと保管庫", moneyGuide: "資金ガイド", sourceTitle: "公式情報", checkedLabel: "市場インタビュー確認：2026年10月9日"
     }
   },
   "zh-cn": {
@@ -125,9 +126,9 @@ const copy: Record<Locale, Record<MarketKind, Copy>> = {
       title: "WARDOGS 黄金市场", description: "了解现金兑换金条、赛季结算与外观购买规则，并在决定兑换前核对游戏内当前汇率和价格。",
       status: "本页没有实时兑换报价", statusDetail: "BULKHEAD 说明现金兑换金条的汇率会变化。兑换前请在游戏内核对当前汇率和目标外观的价格。",
       actionTitle: "兑换前怎么判断", steps: ["先留出下一套可用装备及近期解锁所需的现金。", "在游戏内兑换界面查看汇率，再查看想要的外观需要多少金条。", "只考虑兑换不影响作战的余款；Beta 截图不是当前报价。"],
-      evidenceTitle: "开发者实际说了什么", evidence: "《Top Questions》说明现金可兑换金条，用于黄金市场的外观解锁。《Early Access & Beyond》说明赛季末剩余现金会自动转换，金条和外观跨赛季保留。",
+      evidenceTitle: "开发者实际说了什么", evidence: "《Top Questions》说明现金可兑换金条，用于黄金市场的外观解锁。《Early Access & Beyond》说明赛季末剩余现金会自动转换，金条和外观跨赛季保留。 32:38–33:14中，开发者说明已有 Gold Market 商品跨季继续销售，特别提及黑金 AK 是销售轮换的例外；Gold 可以继续储存。商品停售不等于删除已购买的外观。购买前仍应看当前商店；访谈没有给出实时兑换汇率或赛季结束时的最终汇率。",
       unknownTitle: "本页不能提供的数值", unknown: "当前汇率、历史曲线、商品与价格，以及赛季切换时的执行汇率，需要现行客户端或新的官方通知。",
-      relatedTitle: "继续了解", relatedMarket: "黑市与仓库", moneyGuide: "现金与回本指南", sourceTitle: "官方来源", checkedLabel: "来源核查于 2026 年 9 月 27 日"
+      relatedTitle: "继续了解", relatedMarket: "黑市与仓库", moneyGuide: "现金与回本指南", sourceTitle: "官方来源", checkedLabel: "市场访谈核验：2026年10月9日"
     }
   },
 
@@ -148,9 +149,9 @@ gold: {title: "Rynek złota WARDOGS", description: "Oceń wymianę gotówki na s
         title: "WARDOGS 黃金市場", description: "了解現金兌換金條、賽季結算與外觀購買規則，並在決定兌換前核對遊戲內目前匯率和價格。",
         status: "本頁沒有即時兌換報價", statusDetail: "BULKHEAD 說明現金兌換金條的匯率會變化。兌換前請在遊戲核心對當前匯率和目標外觀的價格。",
         actionTitle: "兌換前怎麼判斷", steps: ["先留出下一套可用裝備及近期解鎖所需的現金。", "在遊戲內兌換介面檢視匯率，再檢視想要的外觀需要多少金條。", "只考慮兌換不影響作戰的餘款；Beta 截圖不是當前報價。"],
-        evidenceTitle: "開發者實際說了什麼", evidence: "《Top Questions》說明現金可兌換金條，用於黃金市場的外觀解鎖。《Early Access & Beyond》說明賽季末剩餘現金會自動轉換，金條和外觀跨賽季保留。",
+        evidenceTitle: "開發者實際說了什麼", evidence: "《Top Questions》說明現金可兌換金條，用於黃金市場的外觀解鎖。《Early Access & Beyond》說明賽季末剩餘現金會自動轉換，金條和外觀跨賽季保留。 Przy 32:38–33:14 twórcy mówią o pozostawieniu obecnych produktów złotego rynku w sprzedaży między sezonami, z czarno-złotym AK jako wyjątkiem rotacji. Złoto można odkładać. Wycofanie oferty nie oznacza usunięcia posiadanego już kosmetyku. Sprawdź bieżący sklep przed zakupem; wywiad nie podaje aktualnego kursu ani kursu końca sezonu. 32:38–33:14中，開發者說明已有 Gold Market 商品跨季繼續銷售，特別提及黑金 AK 是銷售輪換的例外；Gold 可以繼續儲存。商品停售不等於刪除已購買的外觀。購買前仍應看當前商店；訪談沒有給出實時兌換匯率或賽季結束時的最終匯率。",
         unknownTitle: "本頁不能提供的數值", unknown: "當前匯率、歷史曲線、商品與價格，以及賽季切換時的執行匯率，需要現行客戶端或新的官方通知。",
-        relatedTitle: "繼續瞭解", relatedMarket: "黑市與倉庫", moneyGuide: "現金與回本指南", sourceTitle: "官方來源", checkedLabel: "來源核查於 2026 年 9 月 27 日"
+        relatedTitle: "繼續瞭解", relatedMarket: "黑市與倉庫", moneyGuide: "現金與回本指南", sourceTitle: "官方來源", checkedLabel: "市場訪談核驗：2026年10月9日"
     }
 }
 };
@@ -161,6 +162,7 @@ const sources = {
     {label: "BULKHEAD — Early Access & Beyond video", href: "https://www.youtube.com/watch?v=PQvtvAvl-78&t=153s"}
   ],
   gold: [
+    {label: "BULKHEAD — Push to Talk, 32:38–33:14 (2026-10-09)", href: "https://www.youtube.com/watch?v=liRK9si1Ubo&t=1958s"},
     {label: "BULKHEAD — WARDOGS Top Questions", href: "https://store.steampowered.com/news/app/1867240/view/1825093633182385"},
     {label: "BULKHEAD — Early Access & Beyond video", href: "https://www.youtube.com/watch?v=PQvtvAvl-78&t=153s"}
   ]
@@ -179,7 +181,7 @@ export function MarketGuide({locale, kind}: {locale: Locale; kind: MarketKind}) 
       <p className="font-mono text-xs uppercase tracking-widest text-[#68bd8d]">WARDOGS / MARKET INTEL</p>
       <h1 className="display-font mt-4 text-4xl leading-tight text-white md:text-6xl">{content.title}</h1>
       <p className="mt-5 max-w-3xl text-base leading-7 text-[#b6c2ba] md:text-lg">{content.description}</p>
-      <p className="mt-6 text-xs text-[#8fa198]"><time dateTime="2026-09-27">{content.checkedLabel}</time></p>
+      <p className="mt-6 text-xs text-[#8fa198]"><time dateTime={kind === "gold" ? "2026-10-09" : "2026-09-27"}>{content.checkedLabel}</time></p>
     </div></header>
     <div className="site-container max-w-5xl py-10 md:py-14">
       <section className="border-l-4 border-[#d9a93a] bg-[#1b211b] px-5 py-6" aria-labelledby="market-status">
@@ -201,6 +203,7 @@ export function MarketGuide({locale, kind}: {locale: Locale; kind: MarketKind}) 
           <a href={publicRoutePath(`/${locale}/guides/wardogs-money-guide`)} title={content.moneyGuide}>{content.moneyGuide} →</a>
         </div>
       </nav>
+      {kind === "gold" && <ReleaseImpactPanel locale={locale} path="/gold-market" />}
       <aside className="mt-12 border-t border-[#354039] pt-8" aria-labelledby="market-sources"><h2 id="market-sources" className="display-font text-2xl text-white">{content.sourceTitle}</h2>
         <ul className="mt-4 space-y-2 text-sm text-[#79d19c]">{sources[kind].map((source) => <li key={source.href}><a href={source.href} title={source.label} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul>
       </aside>

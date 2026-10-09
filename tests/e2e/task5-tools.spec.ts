@@ -1,6 +1,7 @@
 import {expect, test, type Page} from "@playwright/test";
 import {getComparableWeapons} from "../../src/features/tools/weapon-compare-data";
 import {decodeWeaponCompareState} from "../../src/features/tools/share-state";
+import {expectCopiedToolState} from "./helpers";
 
 declare global {
   interface Window {
@@ -53,7 +54,7 @@ test("German mobile tools keep selectors contained and expose provenance while s
 
   await page.getByRole("button", {name: "Werkzeuglink kopieren"}).click();
   await expect(page.getByRole("button", {name: "Werkzeuglink kopiert"})).toBeVisible();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
+  await expectCopiedToolState(page, "weapon-compare");
 
   await page.goto("/de/tools/ammo-matcher?weapon=amp-9");
   await expectNoHorizontalOverflow(page);
@@ -68,7 +69,7 @@ test("German mobile tools keep selectors contained and expose provenance while s
 
   await page.getByRole("button", {name: "Werkzeuglink kopieren"}).click();
   await expect(page.getByRole("button", {name: "Werkzeuglink kopiert"})).toBeVisible();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
+  await expectCopiedToolState(page, "ammo-matcher");
 
   await page.goto("/de/tools/ammo-matcher?weapon=mp5");
   await expect(page.getByText("Quellenklasse: Historische Creator-Quelle")).toBeVisible();
@@ -90,6 +91,8 @@ test("invalid repeated weapon parameters use static defaults and recover after h
   await serverPage.goto(invalidUrl);
   const serverSelects = serverPage.getByRole("region", {name: "Dokumentierter Feldvergleich"}).getByRole("combobox", {name: /^(Erste|Zweite) Waffe$/});
   await expect(serverSelects).toHaveCount(2);
+  await expect(serverSelects.nth(0)).toBeDisabled();
+  await expect(serverSelects.nth(1)).toBeDisabled();
   expect(await serverSelects.evaluateAll((selects) =>
     selects.map((select) => (select as HTMLSelectElement).value))).toEqual([staticDefault.left, staticDefault.right]);
   await serverContext.close();
@@ -107,6 +110,8 @@ test("invalid repeated weapon parameters use static defaults and recover after h
   await expect(hydratedSelects).toHaveCount(2);
   await expect(hydratedSelects.nth(0)).toHaveValue(expectedValues[0]!);
   await expect(hydratedSelects.nth(1)).toHaveValue(expectedValues[1]!);
+  await expect(hydratedSelects.nth(0)).toBeEnabled();
+  await expect(hydratedSelects.nth(1)).toBeEnabled();
   await hydratedPage.getByRole("combobox", {name: "Erste Waffe"}).selectOption("fal");
   await expect(hydratedPage).toHaveURL((url) => url.searchParams.get("left") === "fal" && url.searchParams.get("right") === "amp-9");
   expect(consoleErrors.filter((message) => /hydration|did not match|server rendered/i.test(message))).toEqual([]);

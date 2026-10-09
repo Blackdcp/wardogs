@@ -5,7 +5,7 @@ keyword: "wardogs mortar guide"
 category: "guide"
 slug: "wardogs-mortar-guide"
 order: 29
-updatedAt: "2026-10-03"
+updatedAt: "2026-10-09"
 badges:
   - label: "Tiro indireto"
     tone: "accent"
@@ -86,14 +86,14 @@ Comece com uma rodada de referência ou salva curta. Espere o tempo de voo e a c
 
 Não copie números de elevação de um vídeo sem confirmar mapa, posição e interface. Mesmo no mesmo local, origem diferente muda a solução. Valores de Beta não são tabela universal.
 
-**Medição no mapa antes do tiro de ajuste:** o [mapa interativo](/pt-br/tools/map) tem régua, mas não conversão verificada para coordenadas do jogo nem saída de azimute.
+**Medição no mapa antes do tiro de ajuste:** o [mapa interativo](/pt-br/tools/map) tem régua, mas não conversão verificada para coordenadas do jogo. Tarefas de fogo mostram direção no mapa e abrem a calculadora de artilharia.
 
-1. Selecione o mapa correto, espere a imagem carregar e abra a régua com **Medir distância**. Sem calibração, o resultado fica em pixels da imagem, não em metros.
-2. Escolha **Segmento de referência** e marque dois pontos reconhecíveis clicando/tocando na imagem. Como alternativa, mova a vista e use **Definir extremidade no centro da vista** para cada ponto. Informe uma distância horizontal conhecida em metros, o erro dessa distância, o erro de cada ponto em pixels, a fonte/observação e a versão do jogo. Escolha **Aplicar calibração**. Sem referência justificável, mantenha os pixels; as antigas estimativas da grade Beta abaixo não definem a escala automaticamente.
+1. Selecione o mapa correto, espere a imagem carregar e abra a régua com **Medir distância**. Sem calibração, aparecem pixels e metros estimados pela escala nominal do mapa escolhido. Essa escala inicial não foi confirmada por medição no jogo.
+2. Escolha **Segmento de referência** e marque dois pontos reconhecíveis clicando/tocando na imagem. Como alternativa, mova a vista e use **Definir extremidade no centro da vista** para cada ponto. Informe uma distância horizontal conhecida em metros, o erro dessa distância, o erro de cada ponto em pixels, a fonte/observação e a versão do jogo. Escolha **Aplicar calibração**. Sem referência justificável, use os metros nominais apenas no planejamento; as antigas estimativas da grade Beta não validam essa escala.
 3. Em **Medir distância**, marque a posição de tiro e o alvo. Leia a estimativa horizontal e os limites calculados com os erros informados. A escala da imagem é considerada uniforme; os limites cobrem apenas erros de distância e pontos fornecidos, não projeção, terreno ou diferenças de versão não verificadas. Não é comprimento de rota nem distância inclinada.
 4. Use o botão de compartilhar para enviar os pontos e a calibração ao observador. Notas da referência e versão do jogo entram no link; não inclua dados privados da conta. Cada mapa tem calibração separada: não reutilize outra referência sem conferir.
 
-Isso é geometria do mapa, **não uma calculadora precisa de morteiro ou artilharia**. Não fornece elevação de tiro, trajetória ou ajuste com acerto garantido. Confira direção/azimute no cliente atual e observe o impacto; alturas, velocidade inicial e balística dessa versão continuam sem verificação aqui.
+A régua mede geometria do mapa; ela **não é uma calculadora precisa de morteiro ou artilharia**. As tarefas de fogo estimam separadamente direção, elevação e tempo de voo para a arma e o modo selecionados. A direção pressupõe norte no topo da imagem. A ferramenta não lê alturas do terreno: confira direção e desnível no cliente e observe um tiro de ajuste. São estimativas de modelo, não precisão medida na versão atual do jogo.
 
 ## Coordenação com o ataque
 
@@ -127,7 +127,7 @@ Dispersar, quebrar visão do observador, mover recursos e atacar a cadeia de spo
 
 ### Da medição do mapa à calculadora de morteiro
 
-Na [régua do mapa](/pt-br/tools/map), escolha o campo correto e calibre com dois pontos identificáveis cuja distância horizontal seja conhecida. Pixels sem calibração não são metros. Meça da arma ao alvo; a régua não fornece coordenadas do jogo ou azimute.
+Na [régua do mapa](/pt-br/tools/map), escolha o campo correto e calibre com dois pontos identificáveis cuja distância horizontal seja conhecida. Os metros iniciais usam escala nominal, não uma referência verificada no jogo; calibre antes da medição para o tiro de ajuste. Meça da arma ao alvo; a régua não fornece coordenadas verificadas do jogo; tarefas de fogo também mostram direção no mapa.
 
 Na [calculadora de artilharia](/pt-br/tools/artillery-calculator), escolha L81 e Entrada Numérica, informe metros horizontais e direção confirmada no cliente; verifique o desnível separadamente. Elevação e tempo de voo são estimativas. Se a distância for rejeitada, reveja a entrada. Confirme aliados fora do impacto, dispare um tiro de ajuste e corrija pela explosão observada.
 

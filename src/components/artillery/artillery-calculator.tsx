@@ -20,11 +20,13 @@ import {
   type TrajectoryMode,
   type WeaponId
 } from "@/features/artillery/ballistics-data";
+import {getArtilleryMissionCopy} from "@/features/artillery/artillery-mission-copy";
+import {getMapPlannerCopy} from "@/features/maps/map-planner-copy";
 import {getArtilleryCopy} from "@/features/artillery/artillery-copy";
 import {assetPath} from "@/lib/assets";
 import {Link} from "@/i18n/navigation";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
-import {decodeCalculatorSearch, pushShotHistory, recommendObservedCorrection, summarizeShot, type LateralObservation, type RangeObservation, type ShotHistoryEntry} from "@/features/artillery/artillery-mission";
+import {decodeCalculatorSearch, readShotHistory, pushShotHistory, recommendObservedCorrection, summarizeShot, type LateralObservation, type RangeObservation, type ShotHistoryEntry} from "@/features/artillery/artillery-mission";
 
 interface Props {
   locale: Locale;
@@ -54,6 +56,8 @@ const LATERAL_OBSERVATION_OPTIONS: Array<{value: LateralObservation; label: stri
 export function ArtilleryCalculator({locale, headerActions}: Props) {
   const analytics = useToolAnalytics("artillery-calculator", locale);
   const copy = getArtilleryCopy(locale);
+  const missionCopy = getArtilleryMissionCopy(locale);
+  const plannerCopy = getMapPlannerCopy(locale);
   const [weaponId, setWeaponId] = useState<WeaponId>("mortar");
   const [trajectoryMode, setTrajectoryMode] = useState<TrajectoryMode>("single");
   const [mapId, setMapId] = useState<MapId>("bakurani");
@@ -72,7 +76,8 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
   const [rangeObservation, setRangeObservation] = useState<RangeObservation>("on");
   const [lateralObservation, setLateralObservation] = useState<LateralObservation>("on");
   const [shotHistory, setShotHistory] = useState<ShotHistoryEntry[]>([]);
-  const [mapImportNotice, setMapImportNotice] = useState("");
+  const [mapImportNotice, setMapImportNotice] = useState(false);
+  const [importedScale, setImportedScale] = useState<{map: MapId; meters: number; source: string}>();
 
   // Timer & Audio
   const [audioEnabled, setAudioEnabled] = useState(true);
@@ -98,14 +103,15 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
         setInputMode("direct");
         setDirectDistance(imported.distanceMeters);
         setDirectAzimuth(imported.azimuthDegrees);
-        setMapImportNotice("Imported from the tactical map. Review height delta, then fire or apply a spotting correction.");
+        setMapImportNotice(true);
+        if (imported.mapScaleMeters) setImportedScale({map: imported.map, meters: imported.mapScaleMeters, source: imported.scaleSource ?? "nominal"});
         resultPending.current = true;
       }
       try {
         const stored = window.localStorage?.getItem("wardogs:artillery-history");
         if (stored) {
           const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed)) setShotHistory(parsed.slice(0, 6));
+          setShotHistory(readShotHistory(parsed));
         }
       } catch {
         // localStorage can be unavailable in hardened browsers.
@@ -124,7 +130,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
   // Compute Solution
   let solution: FiringSolution;
   if (inputMode === "map") {
-    const distanceMeters = calculateDistanceMeters(gunPoint, targetPoint, mapId);
+    const distanceMeters = importedScale?.map === mapId ? Math.round(Math.hypot(targetPoint.x - gunPoint.x, targetPoint.y - gunPoint.y) * importedScale.meters * 10) / 10 : calculateDistanceMeters(gunPoint, targetPoint, mapId);
     const azimuth = calculateAzimuth(gunPoint, targetPoint);
     solution = calculateFiringSolution({
       weaponId,
@@ -275,13 +281,16 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
   const mapSpec = MAP_DIMENSIONS[mapId];
   const gunGrid = formatGridCoordinate(gunPoint, mapId);
   const targetGrid = formatGridCoordinate(targetPoint, mapId);
-  const observedCorrection = recommendObservedCorrection({range: rangeObservation, lateral: lateralObservation, distanceMeters: solution.distanceMeters, azimuthDegrees: solution.azimuthDegrees});
+  const observedCorrection = recommendObservedCorrection({weaponId, mode: effectiveTrajectoryMode, heightDeltaMeters: directHeightDelta, range: rangeObservation, lateral: lateralObservation, distanceMeters: solution.distanceMeters, azimuthDegrees: solution.azimuthDegrees});
 
   function applyObservedCorrection() {
+    if (!observedCorrection.valid) return;
     updateInputs(() => {
       setInputMode("direct");
       setDirectDistance(observedCorrection.nextDistanceMeters);
       setDirectAzimuth(observedCorrection.nextAzimuthDegrees);
+      setRangeObservation("on");
+      setLateralObservation("on");
     });
     trackAnalyticsEvent(ANALYTICS_EVENTS.toolAction, {tool: "artillery-calculator", action: "spotting_correction", result: "applied", weapon: weaponId, locale});
   }
@@ -297,7 +306,8 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
             <button
               type="button"
               onClick={() => setAudioEnabled(!audioEnabled)}
-              title={audioEnabled ? "Audio Cues Enabled" : "Audio Muted"}
+              title={audioEnabled ? missionCopy.audioOn : missionCopy.audioOff}
+              aria-label={audioEnabled ? missionCopy.audioOn : missionCopy.audioOff}
               className={`flex size-10 items-center justify-center rounded-lg border transition-colors ${
                 audioEnabled
                   ? "border-[#497058] bg-[#1a2d22] text-[#8ce2ad]"
@@ -494,13 +504,13 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
             {/* 4. TIME OF FLIGHT */}
             <div className="rounded-lg border border-[#2e4738] bg-[#0a110d] p-3 text-center">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#81cfa0]">
-                {copy.timeOfFlight}
+                {missionCopy.estimatedTof}
               </span>
               <div className="display-font mt-1 text-2xl font-extrabold text-[#f3bd64] sm:text-3xl">
                 {solution.valid ? `${solution.timeOfFlightSeconds.toFixed(1)}s` : "---"}
               </div>
               <span className="font-mono text-[10px] text-[#8f7d54]">
-                {solution.valid ? copy.readyToFire : "Out of limits"}
+                {solution.valid ? copy.readyToFire : copy.outOfRange}
               </span>
             </div>
           </div>
@@ -510,7 +520,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
             {countdown !== null && countdown > 0 ? (
               <div className="flex flex-col items-center">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#f3bd64] animate-pulse">
-                  {copy.splashIn}
+                  {missionCopy.estimatedImpact}
                 </span>
                 <div className="display-font text-4xl font-extrabold text-[#f8be77]">
                   {countdown.toFixed(1)}s
@@ -530,14 +540,14 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
             ) : splashTriggered ? (
               <div className="flex flex-col items-center text-center">
                 <div className="display-font text-xl font-bold text-[#6be896] animate-bounce">
-                  {copy.splashImpact}
+                  {missionCopy.timerElapsed}
                 </div>
                 <button
                   type="button"
                   onClick={startFireCountdown}
                   className="mt-2 rounded-lg bg-[#274433] px-4 py-1.5 text-xs font-bold text-white hover:bg-[#345c45]"
                 >
-                  Fire Again
+                  {missionCopy.fireAgain}
                 </button>
               </div>
             ) : (
@@ -561,6 +571,8 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
             )}
           </div>
         </div>
+
+        <p className="mt-3 text-xs leading-5 text-[#d7bb73]">{missionCopy.timingHelp}</p>
 
         {/* Height delta control sub-bar */}
         <div className="mt-4 flex flex-wrap items-center justify-between border-t border-[#23352b] pt-3 text-xs text-[#8da095]">
@@ -594,60 +606,63 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
         </div>
       </div>
 
+      <p className="text-xs leading-5 text-[#d7bb73]">{missionCopy.heightHelp}</p>
+
       {mapImportNotice ? (
         <div className="rounded-[6px] border border-[#3c5c46] bg-[#112018] p-4 text-sm text-[#d9f5e4]" data-artillery-map-import data-clarity-mask="true">
-          <strong className="text-[#8ce2ad]">Map mission loaded.</strong> {mapImportNotice}
+          <strong className="text-[#8ce2ad]">{missionCopy.imported}</strong> {missionCopy.importHelp}
         </div>
       ) : null}
 
-      <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]" aria-label="Observed correction and shot history">
+      <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]" aria-label={missionCopy.correction}>
         <div className="rounded-[6px] border border-[#344039] bg-[#111613] p-5" data-artillery-correction data-clarity-mask="true">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="font-mono text-xs uppercase tracking-wider text-[#d9a93a]">Spotting correction</p>
-              <h2 className="display-font mt-1 text-2xl text-white">Adjust after the observed splash</h2>
-              <p className="mt-1 text-sm leading-6 text-[#9dafb5]">Call where the round landed, then apply a safe next-distance and bearing correction. It keeps raw coordinates out of analytics.</p>
+              <p className="font-mono text-xs uppercase tracking-wider text-[#d9a93a]">{missionCopy.correction}</p>
+              <h2 className="display-font mt-1 text-2xl text-white">{missionCopy.title}</h2>
+              <p className="mt-1 text-sm leading-6 text-[#9dafb5]">{missionCopy.help}</p>
             </div>
-            <button type="button" onClick={applyObservedCorrection} className="inline-flex min-h-11 items-center justify-center rounded-[6px] border border-[#528d68] bg-[#24583a] px-4 py-2 text-sm font-bold text-white hover:bg-[#2d6a46]">Apply correction</button>
+            <button type="button" onClick={applyObservedCorrection} disabled={!observedCorrection.valid} className="inline-flex min-h-11 items-center justify-center rounded-[6px] border border-[#528d68] bg-[#24583a] px-4 py-2 text-sm font-bold text-white hover:bg-[#2d6a46]">{missionCopy.apply}</button>
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <fieldset className="rounded border border-[#2d3e34] bg-[#0b110e] p-3">
-              <legend className="px-1 text-xs font-semibold uppercase text-[#8ca094]">Range splash</legend>
+              <legend className="px-1 text-xs font-semibold uppercase text-[#8ca094]">{missionCopy.range}</legend>
               <div className="mt-2 flex flex-wrap gap-2">
-                {RANGE_OBSERVATION_OPTIONS.map(({value, label}) => (
-                  <button key={value} type="button" aria-pressed={rangeObservation === value} onClick={() => setRangeObservation(value)} className="rounded border border-[#34463b] px-3 py-1.5 text-xs font-semibold text-[#d9e6de] aria-pressed:border-[#69c78f] aria-pressed:bg-[#183322]">{label}</button>
+                {RANGE_OBSERVATION_OPTIONS.map(({value}) => (
+                  <button key={value} type="button" aria-pressed={rangeObservation === value} onClick={() => setRangeObservation(value)} className="rounded border border-[#34463b] px-3 py-1.5 text-xs font-semibold text-[#d9e6de] aria-pressed:border-[#69c78f] aria-pressed:bg-[#183322]">{missionCopy[value]}</button>
                 ))}
               </div>
             </fieldset>
             <fieldset className="rounded border border-[#2d3e34] bg-[#0b110e] p-3">
-              <legend className="px-1 text-xs font-semibold uppercase text-[#8ca094]">Lateral splash</legend>
+              <legend className="px-1 text-xs font-semibold uppercase text-[#8ca094]">{missionCopy.lateral}</legend>
               <div className="mt-2 flex flex-wrap gap-2">
-                {LATERAL_OBSERVATION_OPTIONS.map(({value, label}) => (
-                  <button key={value} type="button" aria-pressed={lateralObservation === value} onClick={() => setLateralObservation(value)} className="rounded border border-[#34463b] px-3 py-1.5 text-xs font-semibold text-[#d9e6de] aria-pressed:border-[#69c78f] aria-pressed:bg-[#183322]">{label}</button>
+                {LATERAL_OBSERVATION_OPTIONS.map(({value}) => (
+                  <button key={value} type="button" aria-pressed={lateralObservation === value} onClick={() => setLateralObservation(value)} className="rounded border border-[#34463b] px-3 py-1.5 text-xs font-semibold text-[#d9e6de] aria-pressed:border-[#69c78f] aria-pressed:bg-[#183322]">{value === "on" ? missionCopy.line : missionCopy[value]}</button>
                 ))}
               </div>
             </fieldset>
           </div>
+          {!observedCorrection.valid && <p role="status" className="mt-3 text-sm text-[#f3bd64]">{missionCopy.invalid}</p>}
           <dl className="mt-4 grid gap-3 border-t border-[#26372e] pt-4 text-sm sm:grid-cols-4">
-            <div><dt className="text-xs uppercase text-[#7d9086]">Next distance</dt><dd className="font-mono text-lg font-bold text-white">{observedCorrection.nextDistanceMeters}m</dd></div>
-            <div><dt className="text-xs uppercase text-[#7d9086]">Next azimuth</dt><dd className="font-mono text-lg font-bold text-white">{observedCorrection.nextAzimuthDegrees.toFixed(1)}°</dd></div>
-            <div><dt className="text-xs uppercase text-[#7d9086]">Elevation cue</dt><dd className="font-mono text-sm font-bold text-[#8ce2ad]">{observedCorrection.elevationHint.replace("_", " ")}</dd></div>
-            <div><dt className="text-xs uppercase text-[#7d9086]">Lateral cue</dt><dd className="font-mono text-sm font-bold text-[#f3bd64]">{observedCorrection.lateralHint}</dd></div>
+            <div><dt className="text-xs uppercase text-[#7d9086]">{missionCopy.nextDistance}</dt><dd className="font-mono text-lg font-bold text-white">{observedCorrection.nextDistanceMeters}m</dd></div>
+            <div><dt className="text-xs uppercase text-[#7d9086]">{missionCopy.nextAzimuth}</dt><dd className="font-mono text-lg font-bold text-white">{observedCorrection.nextAzimuthDegrees.toFixed(1)}°</dd></div>
+            <div><dt className="text-xs uppercase text-[#7d9086]">{missionCopy.elevationCue}</dt><dd className="font-mono text-sm font-bold text-[#8ce2ad]">{missionCopy[observedCorrection.elevationHint]}{observedCorrection.nextElevationMil !== undefined ? ` · ${observedCorrection.nextElevationMil}` : ""}</dd></div>
+            <div><dt className="text-xs uppercase text-[#7d9086]">{missionCopy.lateralCue}</dt><dd className="font-mono text-sm font-bold text-[#f3bd64]">{missionCopy[observedCorrection.lateralHint]}</dd></div>
           </dl>
         </div>
 
         <aside className="rounded-[6px] border border-[#344039] bg-[#111613] p-5" data-artillery-history data-clarity-mask="true">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="font-mono text-xs uppercase tracking-wider text-[#8ce2ad]">Fire log</p>
-              <h2 className="display-font mt-1 text-xl text-white">Recent shots</h2>
+              <p className="font-mono text-xs uppercase tracking-wider text-[#8ce2ad]">{missionCopy.log}</p>
+              <h2 className="display-font mt-1 text-xl text-white">{missionCopy.recent}</h2>
             </div>
-            <button type="button" onClick={() => {setShotHistory([]); try { window.localStorage?.removeItem("wardogs:artillery-history"); } catch {}}} className="rounded border border-[#34463b] px-2 py-1 text-xs text-[#b8c8be]">Clear</button>
+            <button type="button" onClick={() => {setShotHistory([]); try { window.localStorage?.removeItem("wardogs:artillery-history"); } catch {}}} className="rounded border border-[#34463b] px-2 py-1 text-xs text-[#b8c8be]">{missionCopy.clear}</button>
           </div>
           <ol className="mt-4 space-y-2 text-xs leading-5 text-[#b8c8be]">
             {shotHistory.length ? shotHistory.map((entry, index) => (
               <li key={`${entry.weaponName}-${entry.distanceMeters}-${index}`} className="rounded border border-[#25352c] bg-[#0b110e] p-3 font-mono text-[#dce7e1]">{summarizeShot(entry)}</li>
-            )) : <li className="rounded border border-dashed border-[#34463b] p-3">Fire a valid solution to build a local shot log.</li>}
+            )) : <li className="rounded border border-dashed border-[#34463b] p-3">{missionCopy.empty}</li>}
           </ol>
         </aside>
       </section>
@@ -701,6 +716,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
           </div>
 
           {/* Interactive Map Canvas Area */}
+          <p className="mb-2 text-xs text-[#d7bb73]">{importedScale?.map === mapId && importedScale.source === "user-supplied" ? plannerCopy.userScale : plannerCopy.nominalScale} {plannerCopy.limits}</p>
           <p id="artillery-map-instructions" className="mb-2 text-xs text-[#a8b8ae]">{copy.mapKeyboardInstructions}</p>
           <p data-clarity-mask="true" id="artillery-map-cursor" role="status" className="mb-3 text-xs text-[#8ce2ad]">
             {copy.mapCursor}: {formatGridCoordinate(mapCursor, mapId)} · {placeTargetNext ? copy.targetPosition : copy.gunPosition}

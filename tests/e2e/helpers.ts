@@ -1,5 +1,29 @@
 import {expect, type Page} from "@playwright/test";
 
+export async function expectCopiedToolState(page: Page, tool: string) {
+  const current = new URL(page.url());
+  const shared = new URL(await page.evaluate(() => navigator.clipboard.readText()));
+  expect(shared.origin).toBe(current.origin);
+  expect(shared.pathname).toBe(current.pathname);
+  expect(shared.hash).toBe(current.hash);
+  expect(shared.searchParams.getAll("wd_share")).toEqual([tool]);
+
+  // Copying creates a fresh share record; the address bar retains the last edit.
+  const timestamps = shared.searchParams.getAll("createdAt");
+  expect(timestamps).toHaveLength(1);
+  expect(Number.isFinite(Date.parse(timestamps[0]))).toBe(true);
+  expect(new Date(timestamps[0]).toISOString()).toBe(timestamps[0]);
+  expect(Date.parse(timestamps[0])).toBeGreaterThanOrEqual(Date.parse(current.searchParams.get("createdAt")!));
+
+  for (const url of [current, shared]) {
+    url.searchParams.delete("createdAt");
+    url.searchParams.delete("wd_share");
+    url.searchParams.sort();
+  }
+  // Keep all actual selections, schema and data-version checks exact.
+  expect(shared.search).toBe(current.search);
+}
+
 export async function installDeterministicExternalMediaFallback(page: Page) {
   await page.route("https://i.ytimg.com/**", (route) => route.abort("failed"));
 }

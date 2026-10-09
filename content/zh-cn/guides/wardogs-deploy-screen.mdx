@@ -1,21 +1,22 @@
 ---
 title: "WARDOGS Deploy 服务器选择指南"
-description: "WARDOGS Deploy 服务器选择指南：围绕当前版本、Season 2、服务器、进度和小队计划，整理玩家今天需要判断的风险、工具、来源和下一步行动。 数值随版本变化，重要花费前请先核对当前客户端。 数值随版本变化，重要花费前请先核对当前客户端。 数值随版本变化，重要花费前请先核对当前客户端。"
+description: "Deploy列表为空时，先清除搜索与过严筛选，分别查看Official和Community，再检查Infantry Mode、Low-Level。一个筛选结果为空，不足以证明全服故障。"
+directAnswer: "Deploy列表为空时，先清除搜索与过严筛选，分别查看Official和Community，再检查Infantry Mode、Low-Level。一个筛选结果为空，不足以证明全服故障。"
 keyword: "wardogs deploy screen"
 category: "guide"
 slug: "wardogs-deploy-screen"
 order: 58
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-09"
 badges:
   - label: "Server Browser"
     tone: "accent"
   - label: "Troubleshooting"
     tone: "warning"
 faq:
-  - question: "Why is my WARDOGS Deploy screen empty?"
-    answer: "First clear filters and switch between Official, Community, Infantry and Low-Level views. If all views fail, compare with current official notices and record the exact state."
-  - question: "Is the Deploy screen a server outage indicator?"
-    answer: "Not by itself. It is a routing interface, and filters or category selection can make a healthy server pool look empty."
+  - question: "Deploy服务器列表为什么是空的？"
+    answer: "Deploy列表为空时，先清除搜索与过严筛选，分别查看Official和Community，再检查Infantry Mode、Low-Level。一个筛选结果为空，不足以证明全服故障。"
+  - question: "服务器列表为空就应该重装游戏吗？"
+    answer: "不要仅因一张筛选后的列表为空就重装游戏或降低保护设置。有效报告应包括版本、分类、筛选、地区、时刻、完整错误以及加入同一位朋友的结果，让搜索问题与连接问题能够区分。"
 sources:
   - label: "Official Update 0.1.2 minor patch"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
@@ -35,47 +36,43 @@ sources:
     checkedAt: "2026-10-05"
 ---
 
-## 快速答案
+## 直接回答
 
-Deploy Screen 是服务器和模式的路由层，不是简单的开始按钮。你需要先判断 Official、Community、Infantry、Low-Level 和筛选条件，再决定要进哪一类对局。空列表通常先排查筛选和分类，而不是立刻重装游戏。
+Deploy列表为空时，先清除搜索与过严筛选，分别查看Official和Community，再检查Infantry Mode、Low-Level。一个筛选结果为空，不足以证明全服故障。
 
-## 已确认事实
+## 确认信息
 
-- Patch 0.11 已经把 Official 与 Community server browser 分开。
-- Update 0.1.2 又调整了 Deploy 体验，并把 Infantry Mode、Low-Level servers 放进更明显的位置。
-- 社区 bug 反馈显示，玩家会遇到空列表、筛选误导、分类混淆和好友加入 workaround。
-- Deploy 问题和 WD-L020、WD-L018、反作弊、权限错误不是同一类问题。
+Update 0.1.2改动了Deploy选择流程，并恢复Official高级筛选。Infantry Mode和Low-Level展示社区服分类，不代表统一的等级门槛、载具规则或奖励倍率。Patch 0.11是更早的浏览器更新。
 
-## 行动方案
+## 操作步骤
 
-### 第一步清空筛选
+1. 打开Deploy并选择服务器类别。
+2. 清除搜索，检查地区以及空服/满服显示条件。
+3. Join前阅读完整名称、人数和规则。
+4. 分清连接中、排队位置和明确错误代码。
+5. 所有分类都失败时，对照官方通知并记录时间与地区。
 
-先关闭可能限制结果的过滤项，包括地区、满服、空服、模式、社区类型等。很多“没有服务器”的情况，其实是筛选组合太窄。
+## 实际示例
 
-### 分开检查 Official 和 Community
+朋友在Community看到某服务器，而Official为空，先切到Community搜索同一个完整名称。若能看到但加入被拒，应记录准入提示；反复刷新错误的列表不能解决等级或入服限制。
 
-Official 没结果不等于 Community 也没结果，反过来也一样。Patch 0.11 以后这两个入口应该分开判断。
+## 常见错误
 
-### 单独测试 Infantry 和 Low-Level
+不要仅因一张筛选后的列表为空就重装游戏或降低保护设置。有效报告应包括版本、分类、筛选、地区、时刻、完整错误以及加入同一位朋友的结果，让搜索问题与连接问题能够区分。
 
-如果你是为了步兵局或低等级入口来玩，就不要只看默认列表。切到对应分类，确认列表、人数和规则是否符合预期。
+## 来源与核验日期
 
-### 和状态页交叉验证
+核查日期按下方每条来源分别记录，不代表整篇内容都在当天重新核验。
 
-如果所有分类都异常，再去看 server status、patch notes 和 known issues。只有多个入口同时失败，才更像服务端或版本问题。
-
-### 报告要有可复现信息
-
-有用的反馈包括时间、地区、分类、筛选条件、错误码、是否能跟好友加入，以及客户端版本。只说“Deploy 坏了”很难定位。
-
-## 来源和核查日期
-
-核查日期按下方每条来源分别记录；不要把单个页面日期理解为所有信息的统一核查日期。
+- [Official Update 0.1.2 minor patch](https://store.steampowered.com/news/app/1867240/view/712287592723252267) — 2026-10-05
+- [Reddit community discussion: Low-Level servers](https://www.reddit.com/r/WarDogs/comments/1wu21j2/how_do_low_level_servers_work/) — 2026-10-05
+- [Reddit community discussion: new deployment screen](https://www.reddit.com/r/WarDogs/comments/1wu29z1/new_deployment_screen/) — 2026-10-05
+- [GamesRadar: WARDOGS infantry servers response](https://www.gamesradar.com/games/fps/wardogs-boss-admits-were-failing-on-getting-infantry-servers-to-you-guys-but-says-bulkhead-is-learning-more-and-more-how-to-balance-the-game-to-our-vision/) — 2026-10-05
 
 ## 相关攻略
 
-- [wardogs server status](/zh-cn/guides/wardogs-server-status)
-- [wardogs known issues](/zh-cn/guides/wardogs-known-issues)
-- [wardogs low level servers](/zh-cn/guides/wardogs-low-level-servers)
-- [wardogs community servers guide](/zh-cn/guides/wardogs-community-servers-guide)
-- [wardogs crash fix](/zh-cn/guides/wardogs-crash-fix)
+- [WARDOGS 服务器状态：官方公告与队列排查](/zh-cn/guides/wardogs-server-status)
+- [WARDOGS 上线问题观察：Beta 02 问题复核清单](/zh-cn/guides/wardogs-known-issues)
+- [WARDOGS 低等级服务器指南](/zh-cn/guides/wardogs-low-level-servers)
+- [WARDOGS 社区服务器、RCON 与主机托管完整攻略](/zh-cn/guides/wardogs-community-servers-guide)
+- [WARDOGS 崩溃修复：启动失败、重启与卡顿排查](/zh-cn/guides/wardogs-crash-fix)

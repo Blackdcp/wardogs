@@ -1,21 +1,22 @@
 ---
 title: "WARDOGS Deploy画面とサーバー選択"
-description: "WARDOGS Deploy画面とサーバー選択。現在のビルド、Season 2、サーバー、進行、分隊計画に必要な判断、リスク、ツール、出典、次の行動を整理します。 数値はビルド依存なので、重要な出費前にゲーム内で確認してください。 数値はビルド依存なので、重要な出費前にゲーム内で確認してください。"
+description: "Deployが空なら検索文字と絞り込みを解除し、OfficialとCommunityを別々に確認してからInfantry ModeやLow-Levelを試します。フィルター後の一覧が空なだけでは全体障害とは判断できません。"
+directAnswer: "Deployが空なら検索文字と絞り込みを解除し、OfficialとCommunityを別々に確認してからInfantry ModeやLow-Levelを試します。フィルター後の一覧が空なだけでは全体障害とは判断できません。"
 keyword: "wardogs deploy screen"
 category: "guide"
 slug: "wardogs-deploy-screen"
 order: 58
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-09"
 badges:
   - label: "Server Browser"
     tone: "accent"
   - label: "Troubleshooting"
     tone: "warning"
 faq:
-  - question: "Why is my WARDOGS Deploy screen empty?"
-    answer: "First clear filters and switch between Official, Community, Infantry and Low-Level views. If all views fail, compare with current official notices and record the exact state."
-  - question: "Is the Deploy screen a server outage indicator?"
-    answer: "Not by itself. It is a routing interface, and filters or category selection can make a healthy server pool look empty."
+  - question: "Deployのサーバー一覧が空なのはなぜですか？"
+    answer: "Deployが空なら検索文字と絞り込みを解除し、OfficialとCommunityを別々に確認してからInfantry ModeやLow-Levelを試します。フィルター後の一覧が空なだけでは全体障害とは判断できません。"
+  - question: "一覧が空なら再インストールが必要ですか？"
+    answer: "空の一覧だけで再インストールしないでください。報告にはビルド、種別、フィルター、地域、時刻、正確なエラー、同じ友人への参加結果を添えると、検索条件と接続問題を切り分けられます。"
 sources:
   - label: "Official Update 0.1.2 minor patch"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
@@ -37,65 +38,41 @@ sources:
 
 ## クイック回答
 
-**Read the Deploy screen as a routing layer. If no servers show, clear filters, check Official and Community separately, test Infantry and Low-Level categories, then compare with the official announcements before blaming your PC.**
-
-このページは現行ビルド向けの検索着地点です。直接の答え、関連ツールへの導線、未確認値の明確なラベルをセットで扱います。
+Deployが空なら検索文字と絞り込みを解除し、OfficialとCommunityを別々に確認してからInfantry ModeやLow-Levelを試します。フィルター後の一覧が空なだけでは全体障害とは判断できません。
 
 ## 確認済み情報
 
-- Patch 0.11 split Official and Community browsing; Update 0.1.2 changed the Deploy UX again.
-- Update 0.1.2 explicitly calls out Infantry Mode and Low-Level community server visibility.
-- Community bug reports after 0.1.2 mention empty server browser views and filter confusion.
-- A server browser problem is different from WD-L020, WD-L018 or entitlement errors.
+Update 0.1.2はDeployの選択画面を変更し、Officialの詳細フィルターを復帰させています。Infantry ModeとLow-Levelはコミュニティサーバーの区分で、共通の参加レベル、車両制限、報酬倍率を保証しません。Patch 0.11は以前のブラウザー更新です。
 
-## 行動プラン
+## 操作手順
 
-### Reset filters first
+1. Deployでサーバー種別を選ぶ。
+2. 検索、地域、空き/満員の表示条件を確認する。
+3. Join前に正式なサーバー名、人数、ルールを読む。
+4. 接続中、待機列の順位、エラーコードを区別する。
+5. 全区分で失敗する場合は公式情報と発生時刻・地域を記録する。
 
-Turn off restrictive filters before concluding that servers are offline.
+## 実践例
 
-### Check both browser families
+友人がCommunityのサーバーを見つけたのにOfficialが空なら、まずCommunityへ切り替えて同じ名前を探します。表示されても拒否される場合は参加条件のメッセージを確認します。別一覧を何度更新してもその制限は解決しません。
 
-Official and Community listings can differ. A result in one family does not prove the other is broken.
+## よくある失敗
 
-### Use category labels deliberately
-
-Infantry Mode, Low-Level and normal servers can serve different players and expectations.
-
-### Compare status evidence
-
-If several categories are empty, check server-status and patch notes before changing your install.
-
-### Report exact state
-
-Useful reports include category, filters, region, time, error code and whether joining a friend worked.
-
-## このページが埋める不足
-
-The new Deploy screen created search demand because players now decide between Official, Community, Infantry and Low-Level entries before they ever see a fight. This separate landing page keeps that intent from being buried inside a broad guide, then routes the reader into the exact tool or next article. The goal is to capture long-tail traffic without pretending that every live value is permanent.
-
-## Tool and Guide Workflow
-
-| Need | Open | Why |
-| --- | --- | --- |
-| Next step | [wardogs server status](/ja/guides/wardogs-server-status) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs known issues](/ja/guides/wardogs-known-issues) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs low level servers](/ja/guides/wardogs-low-level-servers) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs community servers guide](/ja/guides/wardogs-community-servers-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs crash fix](/ja/guides/wardogs-crash-fix) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-
-## Editorial Notes for Current Build
-
-Values that depend on live servers, vendor stock, reward formulas, exact level gates or seasonal conversion rates must be rechecked in the current client. This page deliberately separates confirmed facts, measured observations and tactical recommendations so a patch can be updated without rewriting the entire guide.
+空の一覧だけで再インストールしないでください。報告にはビルド、種別、フィルター、地域、時刻、正確なエラー、同じ友人への参加結果を添えると、検索条件と接続問題を切り分けられます。
 
 ## 出典と確認日
 
-確認日は下記の各情報源に個別に適用されます。ページ全体の単一確認日として扱わないでください。
+確認日は下記の各情報源に個別に適用され、ページ全体の確認日ではありません。
+
+- [Official Update 0.1.2 minor patch](https://store.steampowered.com/news/app/1867240/view/712287592723252267) — 2026-10-05
+- [Reddit community discussion: Low-Level servers](https://www.reddit.com/r/WarDogs/comments/1wu21j2/how_do_low_level_servers_work/) — 2026-10-05
+- [Reddit community discussion: new deployment screen](https://www.reddit.com/r/WarDogs/comments/1wu29z1/new_deployment_screen/) — 2026-10-05
+- [GamesRadar: WARDOGS infantry servers response](https://www.gamesradar.com/games/fps/wardogs-boss-admits-were-failing-on-getting-infantry-servers-to-you-guys-but-says-bulkhead-is-learning-more-and-more-how-to-balance-the-game-to-our-vision/) — 2026-10-05
 
 ## 関連ガイド
 
-- [Wardogs Server Status](/ja/guides/wardogs-server-status)
-- [Wardogs Known Issues](/ja/guides/wardogs-known-issues)
-- [Wardogs Low Level Servers](/ja/guides/wardogs-low-level-servers)
-- [Wardogs Community Servers Guide](/ja/guides/wardogs-community-servers-guide)
-- [Wardogs Crash Fix](/ja/guides/wardogs-crash-fix)
+- [WARDOGSサーバー状況：公式告知と待機列の確認](/ja/guides/wardogs-server-status)
+- [WARDOGS発売時の注意点：Beta 02問題の再確認](/ja/guides/wardogs-known-issues)
+- [WARDOGS 低レベルサーバー入門](/ja/guides/wardogs-low-level-servers)
+- [WARDOGS コミュニティサーバー・RCON・ホスティング](/ja/guides/wardogs-community-servers-guide)
+- [WARDOGS クラッシュ対策ガイド：起動失敗、PC再起動、カクつき](/ja/guides/wardogs-crash-fix)

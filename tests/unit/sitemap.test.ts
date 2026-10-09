@@ -14,6 +14,8 @@ import {videoArticles} from "../../src/features/videos/video-library";
 import {videoCandidates} from "../../src/features/videos/video-candidates";
 import {getServiceUpdates} from "../../src/features/news/service-updates";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "../../src/features/news/news-data";
+import {getReleaseImpacts} from "../../src/features/releases/release-impacts";
+import {resolvePageContentUpdatedAt} from "../../src/lib/editorial-freshness";
 
 const origin = "http://localhost:3000";
 
@@ -69,17 +71,39 @@ describe("sitemap", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
     const dateOf = (pathname: string) => new Date(entriesByUrl.get(`${origin}/en${pathname}`)!.lastModified!).toISOString().slice(0, 10);
     const guideDate = (slug: string) => String(matter(readFileSync(`content/en/guides/${slug}.mdx`, "utf8")).data.updatedAt);
-    const videoDates = [...videoArticles.map(({updatedDate}) => updatedDate), ...videoCandidates.map(({metadataCheckedAt}) => metadataCheckedAt)];
+    const videoDates = [...videoArticles.map(({updatedDate}) => updatedDate), ...videoCandidates.map(({metadataCheckedAt}) => metadataCheckedAt), ...getReleaseImpacts("/videos").map(({reviewedAt}) => reviewedAt)];
     const latestGuide = [...guideManifest.map(({slug}) => guideDate(slug)), ...videoDates].sort().at(-1)!;
     expect(dateOf("/guides")).toBe(latestGuide);
     expect(dateOf("/videos")).toBe(videoDates.sort().at(-1));
     expect(dateOf("/news")).toBe([...NEWS_UPDATES.map(({date}) => date), ...getServiceUpdates("en").map(({date}) => date), ...NEWS_CHECKLIST_SLUGS.map(guideDate)].sort().at(-1));
-    for (const pathname of ["/tools/loadout-budget", "/tools/logistics-planner", "/tools/map"]) {
+    for (const pathname of ["/tools/logistics-planner", "/tools/ammo-matcher", "/tools/progression-route"]) {
       expect(dateOf(pathname)).toBe("2026-10-03");
     }
     for (const pathname of ["/guides", "/videos", "/maps", "/items", "/news"]) {
       expect(dateOf("") >= dateOf(pathname), pathname).toBe(true);
     }
+  });
+
+  it("publishes the eight revised product pages with their actual October 9 revision in every locale", () => {
+    const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
+    for (const locale of locales) {
+      for (const pathname of ["/tools", "/tools/map", "/tools/artillery-calculator", "/tools/weapon-compare", "/tools/loadout-budget", "/gold-market", "/videos", "/items/weapons"]) {
+        const url = `${origin}/${locale}${pathname}`;
+        expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe("2026-10-09T00:00:00.000Z");
+      }
+      for (const pathname of ["/about", "/contact", "/black-market", "/skins"]) {
+        const url = `${origin}/${locale}${pathname}`;
+        expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe("2026-08-16T00:00:00.000Z");
+      }
+    }
+  });
+
+  it("keeps later evidence newer than the feature release and does not revise unrelated pages", () => {
+    for (const pathname of ["/tools/map", "/videos", "/gold-market", "/items/weapons"]) {
+      expect(resolvePageContentUpdatedAt(pathname, ["2026-10-12"]), pathname).toBe("2026-10-12");
+    }
+    expect(resolvePageContentUpdatedAt("/tools/logistics-planner", ["2026-10-03"])).toBe("2026-10-03");
+    expect(resolvePageContentUpdatedAt("/items/vehicles", ["2026-09-20"])).toBe("2026-09-20");
   });
 
   it("does not let an unfeatured detail update falsely refresh the item homepage", () => {
@@ -235,22 +259,24 @@ describe("sitemap", () => {
   });
 
   it("includes each localized operations atlas exactly once", () => {
-    const urls = sitemap().map((entry) => entry.url);
+    const entries = sitemap();
+    const urls = entries.map((entry) => entry.url);
 
     for (const locale of locales) {
       const url = `${origin}/${locale}/maps`;
       expect(urls.filter((candidate) => candidate === url), url).toHaveLength(1);
-      expect(sitemap().find((entry) => entry.url === url)?.alternates?.languages).toEqual(pageAlternates("/maps"));
+      expect(entries.find((entry) => entry.url === url)?.alternates?.languages).toEqual(pageAlternates("/maps"));
     }
   });
 
   it("includes the interactive three-basemap tool in all eight locales", () => {
-    const urls = sitemap().map((entry) => entry.url);
+    const entries = sitemap();
+    const urls = entries.map((entry) => entry.url);
 
     for (const locale of locales) {
       const url = `${origin}/${locale}/tools/map`;
       expect(urls.filter((candidate) => candidate === url), url).toHaveLength(1);
-      expect(sitemap().find((entry) => entry.url === url)?.alternates?.languages).toEqual(pageAlternates("/tools/map"));
+      expect(entries.find((entry) => entry.url === url)?.alternates?.languages).toEqual(pageAlternates("/tools/map"));
     }
   });
 

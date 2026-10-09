@@ -17,6 +17,7 @@ import {getTranslations} from "next-intl/server";
 import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
+import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 
 type PageProps = {params: Promise<{locale: string; type: string}>};
 
@@ -91,6 +92,7 @@ export default async function ItemTypePage({params}: PageProps) {
           </div>
         </section>
       ) : null}
+      {itemType.id === "weapons" && <div className="site-container"><ReleaseImpactPanel locale={locale} path="/items/weapons" /></div>}
     </main>
   );
 }

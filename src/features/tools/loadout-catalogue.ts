@@ -13,12 +13,15 @@ export type LoadoutCatalogueItem = {
   image?: string;
   imageAlt?: string;
   priceReference: string | null;
+  weightReference: string | null;
+  calibreKey?: string | null;
   evidence: CatalogueEvidence;
 };
 
 export function getLoadoutCatalogue(locale: Locale) {
   const records = catalogueRecords.filter((record) => !["maps", "mechanics"].includes(record.type));
   const localized = getLocalizedCatalogueRecords(records, resolveToolLocale(locale));
+  const calibreKeys = new Map(records.filter((record) => record.type === "ammo" && record.subtype === "Calibre").map((record) => [record.name, record.slug]));
   const items: LoadoutCatalogueItem[] = records.map((record, index) => ({
     id: `${record.type}/${record.slug}`,
     name: localized[index]?.name ?? record.name,
@@ -26,6 +29,9 @@ export function getLoadoutCatalogue(locale: Locale) {
     ...(record.mediaState === "verified" && record.image && record.imageAlt ? {image: record.image, imageAlt: record.imageAlt} : {}),
     // A displayed historical price is a reference, never an automatic purchase price.
     priceReference: record.facts.find(({label, value}) => /^(Alpha price|Closed Beta price|Season 1 vendor price)$/.test(label) && /^\$[\d,.]+$/.test(value))?.value ?? null,
+    weightReference: record.facts.find(({label, value}) => /^(Weight|Weight or calibre)$/.test(label) && /^\d+(\.\d+)? kg$/.test(value))?.value ?? null,
+    // Explicit calibre identity, never inferred from an attachment/load name or missing match.
+    calibreKey: record.type === "ammo" && record.subtype === "Calibre" ? record.slug : calibreKeys.get(record.facts.find(({label}) => label === (record.type === "weapons" ? "Ammunition" : "Calibre"))?.value ?? "") ?? null,
     evidence: record.evidence,
   }));
   const relationships = getAmmoMatcherDataset(resolveToolLocale(locale)).relationships;

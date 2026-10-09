@@ -1,21 +1,22 @@
 ---
 title: "WARDOGS 金錢與 XP 計算器指南"
-description: "WARDOGS 金錢與 XP 計算器指南：圍繞當前版本、Season 2、伺服器、進度和小隊計畫，整理玩家今天需要判斷的風險、工具、來源和下一步行動。 數值隨版本變化，重要花費前請先核對當前客戶端。 數值隨版本變化，重要花費前請先核對當前客戶端。 數值隨版本變化，重要花費前請先核對當前客戶端。"
+description: "現金和XP規劃器應輸入當前實際觀察的獎勵。記錄任務、耗時和成本，再比較淨現金與目標進度軌道。工具根據你的輸入估算，不是服務器的官方實時獎勵表。"
+directAnswer: "現金和XP規劃器應輸入當前實際觀察的獎勵。記錄任務、耗時和成本，再比較淨現金與目標進度軌道。工具根據你的輸入估算，不是服務器的官方實時獎勵表。"
 keyword: "wardogs cash xp calculator"
 category: "guide"
 slug: "wardogs-cash-xp-calculator"
 order: 60
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-09"
 badges:
   - label: "Tool Cluster"
     tone: "accent"
   - label: "Build-Sensitive"
     tone: "warning"
 faq:
-  - question: "Does WARDOGS have a fixed cash and XP calculator?"
-    answer: "The site now provides a planning calculator, but players should enter observed current-build rewards instead of trusting old fixed tables."
-  - question: "Can I use XP farming servers for the calculator?"
-    answer: "No. Update 0.1.2 and developer comments make exploit or staged farming a risk, not a reliable progression strategy."
+  - question: "如何計算每分鐘淨現金收入？"
+    answer: "這是算術示例，不是遊戲獎勵值：10分鐘收入600、支出150，淨收入450，即每分鐘45。下一趟如果損失載具，要把替換費用與等待計入。只統計成功的一趟會誇大實際效率，不能據此保證未來每趟收益。"
+  - question: "能把一次獎勵無限乘次數來預測XP嗎？"
+    answer: "現金更高不代表目標職業升級更快。不要把第一次獎勵無限乘以次數，也不要把工具中選中的熱區或重複行為補正當作已證實的服務器公式。相同版本與相近條件的記錄才適合比較。"
 sources:
   - label: "Official Update 0.1.2 minor patch"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
@@ -35,50 +36,43 @@ sources:
     checkedAt: "2026-10-05"
 ---
 
-## 快速答案
+## 直接回答
 
-Cash & XP Calculator 的目標不是發布一张“永远正确”的獎勵表，而是让玩家把當前客户端看到的獎勵输入進去，估算一条路線是否值得重复。你输入基础現金、基础 XP、次數、倍率、重复效率和成本，工具输出总收益、净現金、目標差距和回本次數。
+現金和XP規劃器應輸入當前實際觀察的獎勵。記錄任務、耗時和成本，再比較淨現金與目標進度軌道。工具根據你的輸入估算，不是服務器的官方實時獎勵表。
 
-## 已確認事实
+## 確認資訊
 
-- 官方確認 WARDOGS 會獎勵 revive、transport、objective control 等行為，但没有發布稳定的全量獎勵表。
-- Update 0.1.2 改了多条現金和 XP 滥用路線，舊收益表需要重新验证。
-- Season 2 清檔會影响晚赛季刷钱和刷 XP 的价值判断。
-- 竞品已经在用 calculator 抢這類流量，我们需要用工具頁承接同样的搜索意圖。
+Update 0.1.2調整了漏洞收益處理及復活判定，舊獎勵表不能保證當前固定回報。Career XP、職業XP、現金必須分開記；公開的賽季現金和XP重置規則也影響賽末目標。
 
-## 行动方案
+## 操作步驟
 
-### 先记录基础獎勵
+1. 行動前記錄現金、Career XP和一個職業的XP。
+2. 完成正常的救援、運輸、補給或目標任務。
+3. 記錄各項變化、耗時與裝備開銷。
+4. 輸入實測值，單獨標記區域和重複行為假設。
+5. 補丁後重新測量再比較路線。
 
-不要一上来就套倍數。先完成一次明确动作，记下當前客户端显示的現金和 XP，再把這個值填入計算器。
+## 實際範例
 
-### 區分現金和 XP
+這是算術示例，不是遊戲獎勵值：10分鐘收入600、支出150，淨收入450，即每分鐘45。下一趟如果損失載具，要把替換費用與等待計入。只統計成功的一趟會誇大實際效率，不能據此保證未來每趟收益。
 
-一個任务可能現金高但角色 XP 低，也可能 XP 高但亏装备。計算器把 cash 和 XP 分開显示，避免用一個“收益”掩盖真实成本。
+## 常見錯誤
 
-### 输入成本而不是只看毛收入
+現金更高不代表目標職業升級更快。不要把第一次獎勵無限乘以次數，也不要把工具中選中的熱區或重複行為補正當作已證實的服務器公式。相同版本與相近條件的記錄才適合比較。
 
-配装、載具、弹药和工具都會影响净現金。毛收入 1000，如果你為此消耗 1400 的车和装备，這条路線并不赚钱。
+## 來源與核驗日期
 
-### 用重复效率表达风險
+核查日期按下方每條來源分別記錄，不代表整篇內容都在當天重新核驗。
 
-越重复的路線越容易被敌人针對，也越可能遇到伺服器规则、隊友需求和補給限制。把效率从 100% 调低，可以更接近真实對局。
+- [Official Update 0.1.2 minor patch](https://store.steampowered.com/news/app/1867240/view/712287592723252267) — 2026-10-05
+- [PC Gamer: WARDOGS XP grind analysis](https://www.pcgamer.com/games/fps/i-did-the-math-on-my-wardogs-xp-grind-and-now-i-wish-i-hadnt/) — 2026-10-05
+- [PC Gamer: WARDOGS endgame and XP response](https://www.pcgamer.com/games/fps/wardogs-boss-talks-balance-xp-and-why-the-endgame-is-sh-t-right-now/) — 2026-10-05
+- [WARDOGS creator route video: level 100 run](https://www.youtube.com/watch?v=3T64Rn9fWsI) — 2026-10-05
 
-### 每次补丁後重新采样
+## 相關攻略
 
-如果 patch notes 提到 reward、exploit、server authoritative checks 或 economy，就不要继續用舊参數。重新跑一次基础观测，再分享新的计算連結。
-
-## 来源和核查日期
-
-核查日期按下方每條來源分別記錄；不要把單個頁面日期理解為所有資訊的統一核查日期。
-
-## 相关攻略
-
-- [cash xp calculator](/zh-tw/tools/cash-xp-calculator)
-- [loadout budget](/zh-tw/tools/loadout-budget)
-- [progression route](/zh-tw/tools/progression-route)
-- [wardogs money guide](/zh-tw/guides/wardogs-money-guide)
-- [wardogs level 100 route](/zh-tw/guides/wardogs-level-100-route)
-
-## 使用範例
-如果你剛完成一次 revive、運輸或 Hot Zone 行動，先把遊戲內顯示的現金與 XP 分別填入基礎欄位，再把次數設為你準備重複的回合數。若路線需要載具、維修或高價裝備，把成本填進下方欄位；若路線容易被敵人反制，請降低重複效率，而不是假設每一次都能滿額完成。這樣得到的是可討論的計畫，不是未經確認的官方收益表。
+- [現金與XP計算器](/zh-tw/tools/cash-xp-calculator)
+- [配裝預算](/zh-tw/tools/loadout-budget)
+- [職業進度規劃](/zh-tw/tools/progression-route)
+- [WARDOGS 賺錢攻略：現金、預算與低風險收入](/zh-tw/guides/wardogs-money-guide)
+- [WARDOGS 100級路線與 XP 規劃](/zh-tw/guides/wardogs-level-100-route)

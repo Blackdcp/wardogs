@@ -1,21 +1,22 @@
 ---
 title: "WARDOGS 迫撃砲メタとSPH-2対策"
-description: "WARDOGS 迫撃砲メタとSPH-2対策。現在のビルド、Season 2、サーバー、進行、分隊計画に必要な判断、リスク、ツール、出典、次の行動を整理します。 数値はビルド依存なので、重要な出費前にゲーム内で確認してください。 数値はビルド依存なので、重要な出費前にゲーム内で確認してください。"
+description: "迫撃砲への対抗は射撃の循環を断つことです。発射方向を観測し、FOBの重要機能を分散し、補給を守り、予測される設備を移します。L81かSPH-2かは要員、補給、露出で判断します。"
+directAnswer: "迫撃砲への対抗は射撃の循環を断つことです。発射方向を観測し、FOBの重要機能を分散し、補給を守り、予測される設備を移します。L81かSPH-2かは要員、補給、露出で判断します。"
 keyword: "wardogs mortar meta"
 category: "guide"
 slug: "wardogs-mortar-meta"
 order: 62
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-09"
 badges:
   - label: "Meta"
     tone: "accent"
   - label: "Counterplay"
     tone: "warning"
 faq:
-  - question: "Are mortars overpowered in WARDOGS?"
-    answer: "Mortars are a current balance complaint, but the practical answer is to treat them as a pressure system with spotting, supply and relocation counters."
-  - question: "Should I use SPH-2 or FOB mortars?"
-    answer: "Use SPH-2 when the team can crew, protect and resupply it. Use FOB mortars for cheaper pressure when spotting and counterfire risk are manageable."
+  - question: "継続する迫撃砲に分隊でどう対抗しますか？"
+    answer: "迫撃砲への対抗は射撃の循環を断つことです。発射方向を観測し、FOBの重要機能を分散し、補給を守り、予測される設備を移します。L81かSPH-2かは要員、補給、露出で判断します。"
+  - question: "射程を延ばすと常にmilを下げるのですか？"
+    answer: "すべての弾道に同じ仰角調整の決まりは使えません。距離を延ばすと低弾道ではmilが増え、高弾道では減る場合があります。選んだ武器とモードの新しい解に従い、表の範囲外では無理に設定を作らないでください。"
 sources:
   - label: "Official Update 0.1.2 minor patch"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
@@ -33,65 +34,40 @@ sources:
 
 ## クイック回答
 
-**The counter to mortar pressure is not one trick. Use map measurement, spread FOB assets, hide the resupply lane, force the firing team to relocate, and reserve SPH-2 or counter-battery only when spotting can confirm the target.**
-
-このページは現行ビルド向けの検索着地点です。直接の答え、関連ツールへの導線、未確認値の明確なラベルをセットで扱います。
+迫撃砲への対抗は射撃の循環を断つことです。発射方向を観測し、FOBの重要機能を分散し、補給を守り、予測される設備を移します。L81かSPH-2かは要員、補給、露出で判断します。
 
 ## 確認済み情報
 
-- The site already has a mortar guide and artillery calculator, but the search intent has shifted toward balance and counterplay.
-- Press coverage links mortar pressure with endgame and balance complaints.
-- Community discussion specifically debates mortar camera and spam.
-- SPH-2 and L81 mortar planning should remain separated because their cost, crew, exposure and range behavior differ.
+不満や報道はバランス議論の証拠で、現行爆風ダメージの実測ではありません。L81とSPH-2は計算データと射撃モードが異なります。カメラや爆風の弱体化案は、配信パッチの根拠なしに実装済みと扱えません。
 
-## 行動プラン
+## 操作手順
 
-### Measure before firing
+1. 正しい地図を既知の水平距離で校正する。
+2. 発射地点と目標、武器と射撃モードを選ぶ。
+3. 推定距離、方位、高低差データの不足を確認する。
+4. 観測できる初弾1発から限定斉射へ進む。
+5. 着弾修正を記録し、捕捉されたら移設する。
 
-Use the map and artillery calculator for a first estimate; confirm with a spotting correction before a volley.
+## 実践例
 
-### Do not stack FOB assets
+同じ荷下ろし場所へ繰り返し着弾するなら、まず補給品を移し、遮蔽された搬入を回復します。防衛側は散開し、観測手が発射方向を探します。推測した位置への盲目的な反撃では制圧できたか判断できません。
 
-Mortar pressure punishes compact bases. Separate spawn, ammo and vehicle repair functions.
+## よくある失敗
 
-### Hunt the firing loop
-
-Look for repeated origin direction, resupply timing and correction cadence instead of chasing every impact crater.
-
-### Use SPH-2 deliberately
-
-A self-propelled gun is a team investment. It needs crew, protection, ammo and a relocation route.
-
-### Log balance changes
-
-If mortar camera or splash behavior changes, update tactics before preserving old meta advice.
-
-## このページが埋める不足
-
-Mortar spam, mortar camera and SPH-2 value are now current community and press topics, so the answer needs to be meta-aware rather than a basic firing tutorial. This separate landing page keeps that intent from being buried inside a broad guide, then routes the reader into the exact tool or next article. The goal is to capture long-tail traffic without pretending that every live value is permanent.
-
-## Tool and Guide Workflow
-
-| Need | Open | Why |
-| --- | --- | --- |
-| Next step | [wardogs mortar guide](/ja/guides/wardogs-mortar-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs artillery guide](/ja/guides/wardogs-artillery-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [artillery calculator](/ja/tools/artillery-calculator) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [map](/ja/tools/map) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs fob layouts](/ja/guides/wardogs-fob-layouts) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-
-## Editorial Notes for Current Build
-
-Values that depend on live servers, vendor stock, reward formulas, exact level gates or seasonal conversion rates must be rechecked in the current client. This page deliberately separates confirmed facts, measured observations and tactical recommendations so a patch can be updated without rewriting the entire guide.
+すべての弾道に同じ仰角調整の決まりは使えません。距離を延ばすと低弾道ではmilが増え、高弾道では減る場合があります。選んだ武器とモードの新しい解に従い、表の範囲外では無理に設定を作らないでください。
 
 ## 出典と確認日
 
-確認日は下記の各情報源に個別に適用されます。ページ全体の単一確認日として扱わないでください。
+確認日は下記の各情報源に個別に適用され、ページ全体の確認日ではありません。
+
+- [Official Update 0.1.2 minor patch](https://store.steampowered.com/news/app/1867240/view/712287592723252267) — 2026-10-05
+- [PC Gamer: WARDOGS endgame, XP and mortar concerns](https://www.pcgamer.com/games/fps/wardogs-boss-talks-balance-xp-and-why-the-endgame-is-sh-t-right-now/) — 2026-10-05
+- [Reddit: mortar cam balance discussion](https://www.reddit.com/r/WarDogs/comments/1wxbvf8/best_way_to_nerf_mortars_remove_mortarcam/) — 2026-10-05
 
 ## 関連ガイド
 
-- [Wardogs Mortar Guide](/ja/guides/wardogs-mortar-guide)
-- [Wardogs Artillery Guide](/ja/guides/wardogs-artillery-guide)
-- [Artillery Calculator](/ja/tools/artillery-calculator)
-- [Map](/ja/tools/map)
-- [Wardogs Fob Layouts](/ja/guides/wardogs-fob-layouts)
+- [WARDOGS 迫撃砲の使い方：装填・照準・着弾修正](/ja/guides/wardogs-mortar-guide)
+- [WARDOGS 自走砲ガイド：SPH-2の照準・乗員・リロード](/ja/guides/wardogs-artillery-guide)
+- [火砲・迫撃砲計算機](/ja/tools/artillery-calculator)
+- [インタラクティブマップ](/ja/tools/map)
+- [WARDOGS FOB配置：対迫撃砲と補給](/ja/guides/wardogs-fob-layouts)

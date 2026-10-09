@@ -5,7 +5,7 @@ import {useToolAnalytics} from "./use-tool-analytics";
 
 import Image from "next/image";
 import {Copy, ExternalLink} from "lucide-react";
-import {useMemo, useState, useSyncExternalStore} from "react";
+import {useMemo, useRef, useState, useSyncExternalStore} from "react";
 import type {ComparableWeapon, ToolEvidenceState, WeaponComparisonValue} from "@/features/tools/weapon-compare-data";
 import {compareWeaponOptions, comparisonRowDiffers, searchComparableWeapons} from "@/features/tools/weapon-compare-runtime";
 import {decodeWeaponCompareState, encodeWeaponCompareState, type WeaponCompareState} from "@/features/tools/share-state";
@@ -16,8 +16,12 @@ import {EvidenceProvenance} from "./evidence-provenance";
 import {ToolShareNotice} from "./tool-share-notice";
 import {dataFingerprint, hasInvalidSelection} from "@/features/tools/workflow-state";
 import {getWorkflowCopy} from "@/features/tools/workflow-copy";
+import {calculateCombatScenario, emptyCombatScenario, type CombatScenario} from "@/features/tools/combat-scenario";
+import {CombatScenarioPanel} from "./combat-scenario-panel";
+import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
 
 const emptySearch = () => "";
+const subscribeHydration = () => () => {};
 
 function subscribeToLocation(onStoreChange: () => void) {
   window.addEventListener("popstate", onStoreChange);
@@ -98,19 +102,21 @@ export function WeaponCompare({
   weapons: readonly ComparableWeapon[];
   initialState: WeaponCompareState;
 }) {
+  const isHydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const search = useSyncExternalStore(subscribeToLocation, () => window.location.search, emptySearch);
   const sharedState = useMemo(() => search
     ? decodeWeaponCompareState(search, weapons.map(({slug}) => slug))
     : initialState, [search, weapons, initialState]);
-  const [editedState, setEditedState] = useState<WeaponCompareState | null>(null);
-  const state = editedState ?? sharedState;
+  const [editedState, setEditedState] = useState<{search: string; value: WeaponCompareState} | null>(null);
+  const state = editedState?.search === search ? editedState.value : sharedState;
   const [copied, setCopied] = useState(false);
   const [shareError, setShareError] = useState(false);
   const [query, setQuery] = useState("");
   const [subtype, setSubtype] = useState("");
   const t = getWorkflowCopy(copy.locale);
   const dataVersion = useMemo(() => dataFingerprint(weapons), [weapons]);
-  const analytics = useToolAnalytics("weapon-compare", copy.locale, hasSharedToolState(search, encodeWeaponCompareState(sharedState), ["left", "right", "differences"], "weapon-compare"));
+  const analytics = useToolAnalytics("weapon-compare", copy.locale, hasSharedToolState(search, encodeWeaponCompareState(sharedState), ["left", "right", "differences", "scenario"], "weapon-compare"));
+  const previousScenarioResult = useRef("");
   const filtered = useMemo(() => searchComparableWeapons(weapons, query, subtype), [weapons, query, subtype]);
   const options = weapons.filter((weapon) => weapon.slug === state.left || weapon.slug === state.right || filtered.includes(weapon));
   const comparison = useMemo(() => state.left && state.right
@@ -119,7 +125,7 @@ export function WeaponCompare({
 
   function commit(next: WeaponCompareState) {
     analytics.engage();
-    setEditedState(next);
+    setEditedState({search, value: next});
     setCopied(false);
     setShareError(false);
     const url = new URL(window.location.href);
@@ -131,14 +137,26 @@ export function WeaponCompare({
     const right = state.right === left
       ? weapons.find(({slug}) => slug !== left)?.slug ?? null
       : state.right;
-    commit({...state, left, right});
+    commit({...state, left, right, scenario: state.scenario ? {...state.scenario, left: {...emptyCombatScenario.left}, ...(right !== state.right ? {right: {...emptyCombatScenario.right}} : {})} : undefined});
   }
 
   function updateRight(right: string) {
     const left = state.left === right
       ? weapons.find(({slug}) => slug !== right)?.slug ?? null
       : state.left;
-    commit({...state, left, right});
+    commit({...state, left, right, scenario: state.scenario ? {...state.scenario, right: {...emptyCombatScenario.right}, ...(left !== state.left ? {left: {...emptyCombatScenario.left}} : {})} : undefined});
+  }
+
+  function updateScenario(scenario: CombatScenario) {
+    commit({...state, scenario});
+    const verdict = (["left", "right"] as const).map((side) => {
+      const result = calculateCombatScenario(scenario, side);
+      return result.status === "estimated" ? result.seconds === null ? "shots_only" : "time_ready" : result.status;
+    }).join("_");
+    if (previousScenarioResult.current !== verdict) {
+      previousScenarioResult.current = verdict;
+      trackAnalyticsEvent(ANALYTICS_EVENTS.toolResult, {tool: "weapon-compare", locale: copy.locale, result: verdict});
+    }
   }
 
   async function copyLink() {
@@ -151,8 +169,9 @@ export function WeaponCompare({
   }
 
   return (
-    <section className="border-y border-[#354039] bg-[#111512]" aria-label={copy.comparison}>
+    <section className="border-y border-[#354039] bg-[#111512]" aria-label={copy.comparison} aria-busy={!isHydrated}>
       <ToolShareNotice search={search} locale={copy.locale} dataVersion={dataVersion} invalid={["left", "right"].some((key) => hasInvalidSelection(search, key, weapons.map(({slug}) => slug)))} />
+      <fieldset className="m-0 min-w-0 border-0 p-0" disabled={!isHydrated}>
       <div className="grid gap-5 p-5 sm:grid-cols-2 md:p-8">
         <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{t.search}<input data-clarity-mask="true" className="min-h-11 w-full border border-[#46534d] bg-[#0c100e] px-3 text-white" type="search" value={query} onChange={(event) => setQuery(event.target.value)} /></label>
         <label className="grid min-w-0 gap-2 text-sm text-[#cbd5cf]">{t.allTypes}<select className="min-h-11 w-full border border-[#46534d] bg-[#0c100e] px-3 text-white" value={subtype} onChange={(event) => setSubtype(event.target.value)}><option value="">{t.allTypes}</option>{[...new Set(weapons.map(({subtype}) => subtype))].map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
@@ -181,6 +200,7 @@ export function WeaponCompare({
 
       {comparison ? (
         <div className="border-t border-[#354039]">
+          <CombatScenarioPanel locale={copy.locale} value={state.scenario ?? emptyCombatScenario} names={{left: comparison.left.name, right: comparison.right.name}} onChange={updateScenario} />
           <h2 className="px-5 pt-7 text-sm font-semibold uppercase text-[#9ba9a2] md:px-8">{copy.comparison}</h2>
           {state.differences && !comparison.rows.some(comparisonRowDiffers) ? <p role="status" className="p-5 text-sm text-[#a8b4ae]">{t.noDifferences}</p> : null}
           <div className="mt-4 grid grid-cols-2 border-y border-[#354039] bg-[#1b221f] sm:grid-cols-[minmax(5.75rem,0.55fr)_repeat(2,minmax(0,1fr))]">
@@ -209,6 +229,7 @@ export function WeaponCompare({
           </div>
         </div>
       ) : null}
+      </fieldset>
     </section>
   );
 }

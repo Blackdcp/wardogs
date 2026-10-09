@@ -14,10 +14,28 @@ import {getServiceUpdates} from "@/features/news/service-updates";
 import {videoArticles} from "@/features/videos/video-library";
 import {videoCandidates} from "@/features/videos/video-candidates";
 import {HOME_UPDATED_AT} from "@/features/home/home-data";
+import {getReleaseImpacts} from "@/features/releases/release-impacts";
+
+// Actual feature revisions, not the build date or a global site refresh.
+const toolContentUpdatedAt: Record<string, string> = {
+  "/tools": "2026-10-09",
+  "/tools/map": "2026-10-09",
+  "/tools/artillery-calculator": "2026-10-09",
+  "/tools/weapon-compare": "2026-10-09",
+  "/tools/loadout-budget": "2026-10-09"
+};
 
 export function latestDate(dates: string[]) {
   return dates.reduce((latest, candidate) =>
     Date.parse(candidate) > Date.parse(latest) ? candidate : latest, "2026-08-16");
+}
+
+export function resolvePageContentUpdatedAt(pathname: string, sourceDates: string[] = []) {
+  return latestDate([
+    ...sourceDates,
+    ...(toolContentUpdatedAt[pathname] ? [toolContentUpdatedAt[pathname]] : []),
+    ...getReleaseImpacts(pathname).map(({reviewedAt}) => reviewedAt)
+  ]);
 }
 
 export function itemHubDate(type?: string) {
@@ -37,7 +55,7 @@ export function itemHubDate(type?: string) {
     record.evidence.verifiedAt,
     ...record.changeHistory.map(({verifiedAt}) => verifiedAt)
   ]));
-  return latestDate([...items.map(getItemLatestVerifiedAt), ...catalogueDates, getCatalogGuide(type)?.lastReviewedAt ?? "2026-08-16"]);
+  return resolvePageContentUpdatedAt(`/items/${type}`, [...items.map(getItemLatestVerifiedAt), ...catalogueDates, getCatalogGuide(type)?.lastReviewedAt ?? "2026-08-16"]);
 }
 
 export function resolveMapHubLastModified(catalogueDates: string[], guideDates: string[]) {
@@ -78,7 +96,7 @@ export function editorialHubSources(locale: Locale): EditorialHubSources {
       ...getServiceUpdates(locale).map(({date}) => date),
       ...NEWS_CHECKLIST_SLUGS.map((slug) => resolveGuideUpdatedAt(locale, slug))
     ],
-    videos: [...videoArticles.map(({updatedDate}) => updatedDate), ...videoCandidates.map(({metadataCheckedAt}) => metadataCheckedAt)],
+    videos: [resolvePageContentUpdatedAt("/videos", [...videoArticles.map(({updatedDate}) => updatedDate), ...videoCandidates.map(({metadataCheckedAt}) => metadataCheckedAt)])],
     items: [itemHubDate()],
     maps: [mapHubDate(locale).toISOString().slice(0, 10)]
   };

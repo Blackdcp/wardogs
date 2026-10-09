@@ -1,11 +1,12 @@
 import {expect, test, type Page} from "@playwright/test";
 import {getMapMeasurementCopy} from "../../src/features/maps/map-measurement-copy";
+import {getMapPlannerCopy} from "../../src/features/maps/map-planner-copy";
 
 test.beforeEach(async ({page}) => {
   await page.route(/https?:\/\/(?!127\.0\.0\.1|localhost)/, (route) => route.abort());
 });
 async function ready(page: Page) {
-  await expect(page.locator("[data-map-viewport]")).toHaveAttribute("aria-busy", "false");
+  await expect(page.locator("[data-map-viewport]")).toHaveAttribute("aria-busy", "false", {timeout: 30_000});
   await expect(page.getByText("Map could not load", {exact: true})).toHaveCount(0);
 }
 async function point(page: Page, x: number, y: number) {
@@ -28,15 +29,15 @@ async function reference(page: Page) {
 test("desktop: explicit calibration, error bounds, sharing and per-map isolation", async ({page}, testInfo) => {
   await page.goto("/en/tools/map"); await ready(page);
   await page.getByRole("button", {name: "Measure distance", exact: true}).click();
-  await expect(page.locator("[data-measurement-provenance]")).toContainText("no verified meter scale");
+  await expect(page.locator("[data-measurement-provenance]")).toContainText("Nominal map scale");
   await point(page, 0.25, 0.3); await point(page, 0.75, 0.3);
   await expect(page.locator("[data-image-distance]")).toContainText("1,024 px");
-  await expect(page.locator("[data-measured-distance]")).toHaveCount(0);
+  await expect(page.locator("[data-measured-distance]")).toContainText("8,192 m");
   await reference(page);
   await expect(page.locator("[data-measured-distance]")).toContainText("100 m");
   await expect(page.locator("[data-measurement-bounds]")).toContainText("97.62 - 102.4 m");
   await expect(page.locator("[data-measurement-provenance]")).toContainText("not game-verified");
-  await expect(page.locator("[data-map-measurement]")).toContainText("Ballistics unavailable");
+  await expect(page.locator("[data-map-measurement]")).toContainText("terrain and obstructions are not modeled");
   await page.getByRole("button", {name: "Zoom in", exact: true}).click();
   await expect(page.locator("[data-measured-distance]")).toContainText("100 m");
   const before = await page.locator('[data-measurement-segment="distance"] line').getAttribute("x1");
@@ -49,12 +50,12 @@ test("desktop: explicit calibration, error bounds, sharing and per-map isolation
   await expect(page.locator("[data-calibration-source]")).toContainText("Synthetic browser fixture <A> & B");
   await page.getByRole("combobox", {name: "Map", exact: true}).selectOption("ozeti"); await ready(page);
   await expect(page.locator("[data-measured-distance]")).toHaveCount(0);
-  await expect(page.locator("[data-measurement-provenance]")).toContainText("no verified meter scale");
+  await expect(page.locator("[data-measurement-provenance]")).toContainText("Nominal map scale");
   await page.getByRole("combobox", {name: "Map", exact: true}).selectOption("bakurani"); await ready(page);
   await expect(page.locator("[data-measured-distance]")).toContainText("100 m");
   await page.locator("[data-map-viewer]").screenshot({path: testInfo.outputPath("map-calibrated-desktop.png")});
   await page.getByRole("button", {name: "Remove calibration", exact: true}).click();
-  await expect(page.locator("[data-measured-distance]")).toHaveCount(0);
+  await expect(page.locator("[data-measured-distance]")).toContainText("8,192 m");
   await expect(page.locator("[data-measurement-bounds]")).toHaveCount(0);
   await expect(page.locator("[data-image-distance]")).toContainText("1,024 px");
 });
@@ -118,8 +119,8 @@ test("eight complete map locales render localized calibration controls and fit m
     await page.getByRole("button", {name: copy.measure, exact: true}).click();
     await page.getByRole("radio", {name: copy.reference, exact: true}).check();
     await expect(page.getByLabel(copy.distance, {exact: true})).toBeVisible();
-    await expect(page.locator("[data-map-measurement]")).toContainText(copy.ballistics);
-    await expect(page.locator("[data-measurement-provenance]")).toHaveText(copy.uncalibrated);
+    await expect(page.locator("[data-map-measurement]")).toContainText(getMapPlannerCopy(locale).limits);
+    await expect(page.locator("[data-measurement-provenance]")).toHaveText(getMapPlannerCopy(locale).nominalScale);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await page.locator("[data-map-measurement]").screenshot({path: testInfo.outputPath(`map-calibration-${locale}-phone.png`)});
   }

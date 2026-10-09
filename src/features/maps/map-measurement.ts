@@ -1,3 +1,4 @@
+import {MAP_DIMENSIONS} from "@/features/artillery/ballistics-data";
 import {z} from "zod";
 import {MAP_DATA_VERSION, mapIds, type MapId, type Point} from "./map-state";
 
@@ -81,4 +82,24 @@ export function readMeasurementHash(hash: string, map: MapId): {state?: MapMeasu
     const parsed = mapMeasurementSchema.safeParse(JSON.parse(value));
     return parsed.success && parsed.data.map === map ? {state: parsed.data, invalid: false} : {invalid: true};
   } catch { return {invalid: true}; }
+}
+
+// All map workflows use this scale, including the ruler, routes and calculator handoff.
+// The legacy dimensions remain explicitly nominal until the user supplies a reference.
+export function resolveMapScale(map: MapId, measurement?: MapMeasurement) {
+  const parsed = measurement?.map === map ? mapMeasurementSchema.safeParse(measurement) : undefined;
+  const state = parsed?.success ? parsed.data : undefined;
+  if (state?.calibration) {
+    return {metersPerMapSide: state.calibration.distanceMeters / (imageDistance(state.reference)! / BASEMAP_SIDE_PX), provenance: "user-supplied" as const};
+  }
+  return {metersPerMapSide: MAP_DIMENSIONS[map].sizeMeters, provenance: "nominal" as const};
+}
+
+export function resolveMapDistance(points: readonly Point[], map: MapId, measurement?: MapMeasurement) {
+  const pixels = imageDistance(points);
+  if (pixels === undefined || !points.every((point) => pointSchema.safeParse(point).success)) return undefined;
+  const scale = resolveMapScale(map, measurement);
+  const calibrated = scale.provenance === "user-supplied" && measurement ? measureMap({...measurement, points: [...points]}) : undefined;
+  return {...scale, pixels, meters: pixels / BASEMAP_SIDE_PX * scale.metersPerMapSide,
+    lowerMeters: calibrated?.lowerMeters, upperMeters: calibrated?.upperMeters};
 }

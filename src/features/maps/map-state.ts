@@ -5,10 +5,13 @@ export const mapIds = ["bakurani", "ozeti", "zestafona"] as const;
 export type MapId = (typeof mapIds)[number];
 export const mapNames: Record<MapId, string> = {bakurani: "Bakurani", ozeti: "Ozeti", zestafona: "Zestafona"};
 export const MAX_MARKERS = 16;
+export const markerKinds = ["objectives", "fob", "supply", "air", "intel"] as const;
+export type MarkerKind = typeof markerKinds[number];
 const unit = z.number().finite().min(0).max(1);
 const markerSchema = z.object({
   id: z.string().regex(/^m[0-9a-z-]{1,40}$/), x: unit, y: unit,
   label: z.string().trim().min(1).max(60),
+  kind: z.enum(markerKinds).optional(),
 }).strict();
 export const mapStateSchema = z.object({
   schema: z.literal(1),

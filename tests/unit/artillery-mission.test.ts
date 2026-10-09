@@ -4,6 +4,7 @@ import {
   decodeCalculatorSearch,
   encodeCalculatorSearch,
   pushShotHistory,
+  readShotHistory,
   recommendObservedCorrection,
   summarizeShot,
   type ShotHistoryEntry,
@@ -41,4 +42,26 @@ describe("artillery mission workflow", () => {
     expect(history[0].distanceMeters).toBe(300 + ARTILLERY_HISTORY_LIMIT + 1);
     expect(summarizeShot(history[0])).toContain("L81 Mortar · Bakurani · 307m · 90.0° · 643 mil · 17.7s");
   });
+});
+
+
+describe("trajectory-specific spotting", () => {
+  it("raises the SPH-2 low-arc mil for a short shot and lowers it for a long shot", () => {
+    expect(recommendObservedCorrection({weaponId: "sph2", mode: "low", range: "short", lateral: "on", distanceMeters: 1500, azimuthDegrees: 90})).toMatchObject({valid: true, nextDistanceMeters: 1575, elevationHint: "increase_mil", nextElevationMil: 60});
+    expect(recommendObservedCorrection({weaponId: "sph2", mode: "low", range: "long", lateral: "on", distanceMeters: 1500, azimuthDegrees: 90})).toMatchObject({valid: true, elevationHint: "decrease_mil"});
+  });
+  it("uses high arc and height-adjusted solutions and refuses corrections beyond table coverage", () => {
+    expect(recommendObservedCorrection({weaponId: "sph2", mode: "high", heightDeltaMeters: 25, range: "short", lateral: "on", distanceMeters: 1500, azimuthDegrees: 90})).toMatchObject({valid: true, elevationHint: "decrease_mil"});
+    expect(recommendObservedCorrection({weaponId: "sph2", mode: "low", range: "short", lateral: "on", distanceMeters: 2600, azimuthDegrees: 90})).toMatchObject({valid: false, elevationHint: "unavailable", nextElevationMil: undefined});
+  });
+  it("retains the selected calibration through calculator handoff", () => {
+    const input = {map: "ozeti" as const, weaponId: "mortar" as const, mode: "single" as const, distanceMeters: 400, azimuthDegrees: 180, source: "map" as const, mapScaleMeters: 20000, scaleSource: "user-supplied" as const};
+    expect(decodeCalculatorSearch(encodeCalculatorSearch(input))).toEqual(input);
+    expect(decodeCalculatorSearch(encodeCalculatorSearch(input).replace("mapScale=20000", "mapScale=-1"))).toBeUndefined();
+  });
+});
+
+it("rejects corrupted local fire logs without breaking the calculator", () => {
+  const valid = {weaponName: "L81", mapName: "Bakurani", distanceMeters: 500, azimuthDegrees: 90, elevationMil: 425, timeOfFlightSeconds: 20.5};
+  expect(readShotHistory([null, "bad", {...valid, distanceMeters: "500"}, {...valid, elevationMil: NaN}, valid])).toEqual([valid]);
 });

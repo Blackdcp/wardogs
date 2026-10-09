@@ -1,4 +1,5 @@
 import {expect, test, type Page} from "@playwright/test";
+import {expectCopiedToolState} from "./helpers";
 
 const mobileViewport = {width: 375, height: 812};
 
@@ -26,7 +27,7 @@ test("mobile progression and logistics tools keep ordered share state", async ({
   await expect(page).toHaveURL((url) => url.searchParams.get("pr_role") === "pilot" && url.searchParams.get("pr_level") === "22" && url.searchParams.get("schema") === "2");
   await page.getByRole("button", {name: "Copy tool link"}).click();
   await expect(page.getByRole("button", {name: "Tool link copied"})).toBeVisible();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
+  await expectCopiedToolState(page, "progression-route");
 
   await page.goto("/en/tools/logistics-planner?lp_stages=transport%2Csupply%2Crecovery");
   await expectNoHorizontalOverflow(page);
@@ -43,7 +44,7 @@ test("mobile progression and logistics tools keep ordered share state", async ({
   await page.getByRole("checkbox", {name: "Recovery"}).uncheck();
   await expect(page).toHaveURL((url) => url.searchParams.get("lp_stages") === "supply,transport");
   await page.getByRole("button", {name: "Copy tool link"}).click();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
+  await expectCopiedToolState(page, "logistics-planner");
 });
 
 test("invalid repeated progression state recovers identically in SSR and hydration", async ({browser}) => {

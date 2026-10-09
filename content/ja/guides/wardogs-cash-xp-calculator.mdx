@@ -1,21 +1,22 @@
 ---
 title: "WARDOGS Cash & XP 計算ガイド"
-description: "WARDOGS Cash & XP 計算ガイド。現在のビルド、Season 2、サーバー、進行、分隊計画に必要な判断、リスク、ツール、出典、次の行動を整理します。 数値はビルド依存なので、重要な出費前にゲーム内で確認してください。 数値はビルド依存なので、重要な出費前にゲーム内で確認してください。"
+description: "キャッシュ・XP計画には実際に観測した報酬を入力します。行動、所要時間、費用を記録し、純収入と必要なXP系統を比較します。計算機は入力値の試算で、公式の最新報酬配信ではありません。"
+directAnswer: "キャッシュ・XP計画には実際に観測した報酬を入力します。行動、所要時間、費用を記録し、純収入と必要なXP系統を比較します。計算機は入力値の試算で、公式の最新報酬配信ではありません。"
 keyword: "wardogs cash xp calculator"
 category: "guide"
 slug: "wardogs-cash-xp-calculator"
 order: 60
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-09"
 badges:
   - label: "Tool Cluster"
     tone: "accent"
   - label: "Build-Sensitive"
     tone: "warning"
 faq:
-  - question: "Does WARDOGS have a fixed cash and XP calculator?"
-    answer: "The site now provides a planning calculator, but players should enter observed current-build rewards instead of trusting old fixed tables."
-  - question: "Can I use XP farming servers for the calculator?"
-    answer: "No. Update 0.1.2 and developer comments make exploit or staged farming a risk, not a reliable progression strategy."
+  - question: "1分当たりの純収入はどう計算しますか？"
+    answer: "仮の計算例でありゲームの報酬値ではありません。10分で600を受け取り150を使った場合、純収入は450、1分当たり45です。次の輸送で車両を失ったら交換費と待ち時間も含めます。成功した便だけを数えると実際より良く見えます。"
+  - question: "一度の報酬を掛け算してXP稼ぎを予測できますか？"
+    answer: "キャッシュが多いこととロール進行が速いことは別です。初回の報酬を無制限に掛け合わせたり、選んだ補正を公式のサーバー計算式と扱ったりしないでください。同じビルド、同じ条件で比べます。"
 sources:
   - label: "Official Update 0.1.2 minor patch"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
@@ -37,65 +38,41 @@ sources:
 
 ## クイック回答
 
-**Use the calculator as a planning layer, not an official payout table. Enter a reward you actually observed in the current client, test zone or repeat assumptions, and compare the result with your reserve and Season 2 plan.**
-
-このページは現行ビルド向けの検索着地点です。直接の答え、関連ツールへの導線、未確認値の明確なラベルをセットで扱います。
+キャッシュ・XP計画には実際に観測した報酬を入力します。行動、所要時間、費用を記録し、純収入と必要なXP系統を比較します。計算機は入力値の試算で、公式の最新報酬配信ではありません。
 
 ## 確認済み情報
 
-- Official material rewards revives, transport and objective control, but does not publish every live reward value in a stable table.
-- Update 0.1.2 changed cash and XP exploit handling, so older fixed farming charts need review.
-- Season 2 reset policy changes the value of late-season cash and XP.
-- The site now links this intent to budget, progression and money planning instead of leaving it buried.
+Update 0.1.2は不正な稼ぎ方への対策と蘇生判定を変更しています。古い報酬表は現在の固定収入を保証しません。Career XP、ロールXP、キャッシュは別々に計測します。公開されたシーズン終了時のリセット方針も目標に影響します。
 
-## 行動プラン
+## 操作手順
 
-### Record the base reward
+1. 開始前のキャッシュ、Career XP、対象ロールXPを記録する。
+2. 通常の蘇生、輸送、補給、拠点行動を完了する。
+3. 増減、時間、装備費を記録する。
+4. 実測値を入力し、ゾーンや反復の仮定を明記する。
+5. パッチ後に再計測して比較する。
 
-Write down the cash and XP from one completed action before stacking bonuses or assumptions.
+## 実践例
 
-### Separate cash from XP
+仮の計算例でありゲームの報酬値ではありません。10分で600を受け取り150を使った場合、純収入は450、1分当たり45です。次の輸送で車両を失ったら交換費と待ち時間も含めます。成功した便だけを数えると実際より良く見えます。
 
-A task can be useful for cash, role XP, Career XP or battlefield impact. Do not merge them into one score.
+## よくある失敗
 
-### Apply context deliberately
-
-Population, objective state, Hot Zone and repeat penalties should be toggled consciously, not hidden in a headline.
-
-### Compare with replacement cost
-
-A profitable action can still be bad if it burns a vehicle, kit or time window.
-
-### Recheck after patches
-
-Patch notes and server-side changes can invalidate yesterday’s route.
-
-## このページが埋める不足
-
-Competitors are turning reward math into calculator traffic. This page gives our site a clean landing page for that search while avoiding fake exact tables. This separate landing page keeps that intent from being buried inside a broad guide, then routes the reader into the exact tool or next article. The goal is to capture long-tail traffic without pretending that every live value is permanent.
-
-## Tool and Guide Workflow
-
-| Need | Open | Why |
-| --- | --- | --- |
-| Next step | [cash xp calculator](/ja/tools/cash-xp-calculator) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [loadout budget](/ja/tools/loadout-budget) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [progression route](/ja/tools/progression-route) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs money guide](/ja/guides/wardogs-money-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs level 100 route](/ja/guides/wardogs-level-100-route) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-
-## Editorial Notes for Current Build
-
-Values that depend on live servers, vendor stock, reward formulas, exact level gates or seasonal conversion rates must be rechecked in the current client. This page deliberately separates confirmed facts, measured observations and tactical recommendations so a patch can be updated without rewriting the entire guide.
+キャッシュが多いこととロール進行が速いことは別です。初回の報酬を無制限に掛け合わせたり、選んだ補正を公式のサーバー計算式と扱ったりしないでください。同じビルド、同じ条件で比べます。
 
 ## 出典と確認日
 
-確認日は下記の各情報源に個別に適用されます。ページ全体の単一確認日として扱わないでください。
+確認日は下記の各情報源に個別に適用され、ページ全体の確認日ではありません。
+
+- [Official Update 0.1.2 minor patch](https://store.steampowered.com/news/app/1867240/view/712287592723252267) — 2026-10-05
+- [PC Gamer: WARDOGS XP grind analysis](https://www.pcgamer.com/games/fps/i-did-the-math-on-my-wardogs-xp-grind-and-now-i-wish-i-hadnt/) — 2026-10-05
+- [PC Gamer: WARDOGS endgame and XP response](https://www.pcgamer.com/games/fps/wardogs-boss-talks-balance-xp-and-why-the-endgame-is-sh-t-right-now/) — 2026-10-05
+- [WARDOGS creator route video: level 100 run](https://www.youtube.com/watch?v=3T64Rn9fWsI) — 2026-10-05
 
 ## 関連ガイド
 
-- [Cash Xp Calculator](/ja/tools/cash-xp-calculator)
-- [Loadout Budget](/ja/tools/loadout-budget)
-- [Progression Route](/ja/tools/progression-route)
-- [Wardogs Money Guide](/ja/guides/wardogs-money-guide)
-- [Wardogs Level 100 Route](/ja/guides/wardogs-level-100-route)
+- [キャッシュ・XP計算機](/ja/tools/cash-xp-calculator)
+- [装備予算](/ja/tools/loadout-budget)
+- [進行ルート](/ja/tools/progression-route)
+- [WARDOGS マネーガイド：最初の10,000ドルと復旧](/ja/guides/wardogs-money-guide)
+- [WARDOGS レベル100ルートとXP稼ぎ](/ja/guides/wardogs-level-100-route)

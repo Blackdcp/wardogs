@@ -1,21 +1,22 @@
 ---
 title: "WARDOGS Deploy: Oficial, Comunidade e Infantry"
 description: "WARDOGS Deploy: Oficial, Comunidade e Infantry: decisões atuais, riscos, ferramentas, fontes e próximos passos para a build de hoje, Season 2, servidores, pr..."
+directAnswer: "Se Deploy estiver vazio, remova a busca e filtros restritos, confira Official e Community separadamente e depois Infantry Mode ou Low-Level. Uma lista filtrada vazia não comprova uma queda geral."
 keyword: "wardogs deploy screen"
 category: "guide"
 slug: "wardogs-deploy-screen"
 order: 58
-updatedAt: "2026-10-05"
+updatedAt: "2026-10-09"
 badges:
   - label: "Server Browser"
     tone: "accent"
   - label: "Troubleshooting"
     tone: "warning"
 faq:
-  - question: "Why is my WARDOGS Deploy screen empty?"
-    answer: "First clear filters and switch between Official, Community, Infantry and Low-Level views. If all views fail, compare with current official notices and record the exact state."
-  - question: "Is the Deploy screen a server outage indicator?"
-    answer: "Not by itself. It is a routing interface, and filters or category selection can make a healthy server pool look empty."
+  - question: "Por que minha lista Deploy está vazia?"
+    answer: "Se Deploy estiver vazio, remova a busca e filtros restritos, confira Official e Community separadamente e depois Infantry Mode ou Low-Level. Uma lista filtrada vazia não comprova uma queda geral."
+  - question: "Devo reinstalar por causa da lista vazia?"
+    answer: "Não reinstale o jogo por causa de um filtro vazio. Um relato útil inclui versão, categoria, filtros, região, horário, código exato e se entrar pelo mesmo amigo funciona."
 sources:
   - label: "Official Update 0.1.2 minor patch"
     url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
@@ -37,65 +38,41 @@ sources:
 
 ## Resposta rápida
 
-**Read the Deploy screen as a routing layer. If no servers show, clear filters, check Official and Community separately, test Infantry and Low-Level categories, then compare with the official announcements before blaming your PC.**
-
-Esta página funciona como uma página de captura atual: entrega uma resposta direta, aponta para a ferramenta certa e mantém valores incertos marcados até confirmação primária.
+Se Deploy estiver vazio, remova a busca e filtros restritos, confira Official e Community separadamente e depois Infantry Mode ou Low-Level. Uma lista filtrada vazia não comprova uma queda geral.
 
 ## Fatos confirmados
 
-- Patch 0.11 split Official and Community browsing; Update 0.1.2 changed the Deploy UX again.
-- Update 0.1.2 explicitly calls out Infantry Mode and Low-Level community server visibility.
-- Community bug reports after 0.1.2 mention empty server browser views and filter confusion.
-- A server browser problem is different from WD-L020, WD-L018 or entitlement errors.
+Update 0.1.2 muda a seleção Deploy e restaura filtros avançados de Official. Infantry Mode e Low-Level destacam modificadores comunitários; os rótulos não definem um limite universal de nível, veículos ou recompensas. Patch 0.11 é a atualização anterior do navegador.
 
-## Plano de ação
+## Passo a passo
 
-### Reset filters first
+1. Abra Deploy e escolha a família de servidores.
+2. Limpe a busca e revise região e exibição de vazios/cheios.
+3. Leia nome completo, população e regras antes de Join.
+4. Diferencie conexão, posição na fila e código de erro.
+5. Se todas as categorias falharem, consulte avisos e anote horário e região.
 
-Turn off restrictive filters before concluding that servers are offline.
+## Exemplo prático
 
-### Check both browser families
+Seu amigo vê um servidor Community, mas Official está vazio: mude primeiro para Community e procure o nome exato. Se a entrada for negada, registre a mensagem. Atualizar outra categoria não resolve a restrição de acesso.
 
-Official and Community listings can differ. A result in one family does not prove the other is broken.
+## Erro comum
 
-### Use category labels deliberately
+Não reinstale o jogo por causa de um filtro vazio. Um relato útil inclui versão, categoria, filtros, região, horário, código exato e se entrar pelo mesmo amigo funciona.
 
-Infantry Mode, Low-Level and normal servers can serve different players and expectations.
+## Fontes e datas de verificação
 
-### Compare status evidence
+As datas se aplicam separadamente a cada fonte, não ao guia inteiro.
 
-If several categories are empty, check server-status and patch notes before changing your install.
-
-### Report exact state
-
-Useful reports include category, filters, region, time, error code and whether joining a friend worked.
-
-## Lacuna coberta por esta página
-
-The new Deploy screen created search demand because players now decide between Official, Community, Infantry and Low-Level entries before they ever see a fight. This separate landing page keeps that intent from being buried inside a broad guide, then routes the reader into the exact tool or next article. The goal is to capture long-tail traffic without pretending that every live value is permanent.
-
-## Tool and Guide Workflow
-
-| Need | Open | Why |
-| --- | --- | --- |
-| Next step | [wardogs server status](/pt-br/guides/wardogs-server-status) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs known issues](/pt-br/guides/wardogs-known-issues) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs low level servers](/pt-br/guides/wardogs-low-level-servers) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs community servers guide](/pt-br/guides/wardogs-community-servers-guide) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-| Next step | [wardogs crash fix](/pt-br/guides/wardogs-crash-fix) | Continue the same decision with a tool, source-backed guide, or related operational page. |
-
-## Editorial Notes for Current Build
-
-Values that depend on live servers, vendor stock, reward formulas, exact level gates or seasonal conversion rates must be rechecked in the current client. This page deliberately separates confirmed facts, measured observations and tactical recommendations so a patch can be updated without rewriting the entire guide.
-
-## Fontes e data de verificação
-
-As datas se aplicam separadamente às fontes listadas abaixo; uma data da página não é uma checagem geral de todas as informações.
+- [Official Update 0.1.2 minor patch](https://store.steampowered.com/news/app/1867240/view/712287592723252267) — 2026-10-05
+- [Reddit community discussion: Low-Level servers](https://www.reddit.com/r/WarDogs/comments/1wu21j2/how_do_low_level_servers_work/) — 2026-10-05
+- [Reddit community discussion: new deployment screen](https://www.reddit.com/r/WarDogs/comments/1wu29z1/new_deployment_screen/) — 2026-10-05
+- [GamesRadar: WARDOGS infantry servers response](https://www.gamesradar.com/games/fps/wardogs-boss-admits-were-failing-on-getting-infantry-servers-to-you-guys-but-says-bulkhead-is-learning-more-and-more-how-to-balance-the-game-to-our-vision/) — 2026-10-05
 
 ## Guias relacionados
 
-- [Wardogs Server Status](/pt-br/guides/wardogs-server-status)
-- [Wardogs Known Issues](/pt-br/guides/wardogs-known-issues)
-- [Wardogs Low Level Servers](/pt-br/guides/wardogs-low-level-servers)
-- [Wardogs Community Servers Guide](/pt-br/guides/wardogs-community-servers-guide)
-- [Wardogs Crash Fix](/pt-br/guides/wardogs-crash-fix)
+- [Status dos servidores WARDOGS: avisos e filas](/pt-br/guides/wardogs-server-status)
+- [WARDOGS: riscos de lançamento após o Beta 02](/pt-br/guides/wardogs-known-issues)
+- [WARDOGS Low-Level Servers: regras e início](/pt-br/guides/wardogs-low-level-servers)
+- [WARDOGS: servidores da comunidade e RCON](/pt-br/guides/wardogs-community-servers-guide)
+- [WARDOGS Crash Fix: inicialização, reinícios e travadas](/pt-br/guides/wardogs-crash-fix)

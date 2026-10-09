@@ -29,7 +29,7 @@ for (const width of [390, 1440]) {
     await expect(page.getByRole("button", {name: "Fire Round (TOF Timer)", exact: true})).toBeDisabled();
     await distance.fill("380");
     await page.getByRole("button", {name: "Fire Round (TOF Timer)", exact: true}).click();
-    await expect(page.getByText("Splash In", {exact: true})).toBeVisible();
+    await expect(page.getByText("Estimated impact in", {exact: true})).toBeVisible();
     await page.getByRole("button", {name: "Cancel countdown", exact: true}).click();
     await expect(page.getByRole("button", {name: "Fire Round (TOF Timer)", exact: true})).toBeEnabled();
     await expectNoHorizontalOverflow(page);

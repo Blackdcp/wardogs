@@ -54,7 +54,7 @@ describe("Japanese answers before historical context and troubleshooting", () =>
     before(html, "装填失敗と照準誤差", "距離測定から迫撃砲計算機");
     before(html, "/ja/tools/artillery-calculator", "Season 1で確認した3種類");
     expect(html).toContain("L81と数値直接入力");
-    expect(html).toContain("未校正のピクセル値をメートルとして入力しない");
+    expect(html).toContain("初期の推定メートル値は仮定の縮尺に基づく");
     expect(html).toContain("2026年9月15日時点のSeason 1");
   });
 

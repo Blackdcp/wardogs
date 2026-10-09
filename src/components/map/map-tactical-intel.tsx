@@ -9,6 +9,8 @@ import {
   getTacticalIntelCopy
 } from "@/features/maps/map-tactical-data";
 import {Link} from "@/i18n/navigation";
+import {COMMUNITY_POI_SOURCE} from "@/features/maps/map-community-pois";
+import {fieldReferenceCopy} from "@/features/maps/map-field-reference-copy";
 
 type MapTacticalIntelProps = {
   locale: Locale;
@@ -146,6 +148,9 @@ export function MapTacticalIntel({locale}: MapTacticalIntelProps) {
             {copy.theatersTitle}
           </h3>
           <p className="mt-1 text-sm text-[#a8b4ae]">{copy.theatersSubtitle}</p>
+          <a className="mt-2 inline-flex items-center gap-1 text-xs text-[#8ce2ad] underline underline-offset-4" href={COMMUNITY_POI_SOURCE} title={fieldReferenceCopy[locale].source} target="_blank" rel="noopener noreferrer">
+            {fieldReferenceCopy[locale].source}<ExternalLink aria-hidden="true" className="size-3" />
+          </a>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">

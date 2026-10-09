@@ -16,6 +16,7 @@ import {getTranslations} from "next-intl/server";
 import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
+import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 
 type PageProps = {params: Promise<{locale: string}>};
 
@@ -54,6 +55,7 @@ export default async function VideosPage({params}: PageProps) {
   return (
     <main>
       <HubHeader eyebrow={ui.eyebrow} title={ui.hubTitle} description={ui.hubDescription(videoArticles.length)} />
+      <div className="site-container"><ReleaseImpactPanel locale={locale} path="/videos" /></div>
       <VideoCandidateList locale={locale} />
       <section className="border-b border-[#2c3631] bg-[#151b18]">
         <div className="site-container py-12 md:py-16">

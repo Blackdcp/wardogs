@@ -1,13 +1,17 @@
 "use client";
 
 import {useCallback, useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEvent} from "react";
-import {Crosshair, Hand, LoaderCircle, MapPin, Maximize2, Minimize2, RotateCcw, Ruler, Search, Share2, Trash2, X, ZoomIn, ZoomOut, Route as RouteIcon, Layers} from "lucide-react";
+import {Crosshair, Hand, LoaderCircle, MapPin, Maximize2, Minimize2, RotateCcw, Ruler, Search, Share2, Trash2, X, ZoomIn, ZoomOut, Route as RouteIcon, Layers, Download, Upload, Undo2} from "lucide-react";
 import type {Locale} from "@/config/site";
 import {getOperationsAtlasCopy, getLocalizedOperationsAtlasRecords} from "@/features/maps/operations-atlas";
 import {getMapViewerCopy} from "@/features/maps/map-viewer-copy";
-import {beginMapPinch, boundView, defaultView, imagePoint, initialMapState, mapHash, mapIds, mapNames, mapPinchView, MAX_MARKERS, readMapHash, transformView, viewportPoint, type MapId, type MapMarker, type MapPinch, type MapState, type Point} from "@/features/maps/map-state";
+import {beginMapPinch, boundView, defaultView, imagePoint, initialMapState, mapHash, mapIds, mapNames, mapPinchView, MAX_MARKERS, markerKinds, readMapHash, transformView, viewportPoint, type MapId, type MapMarker, type MarkerKind, type MapPinch, type MapState, type Point} from "@/features/maps/map-state";
 import {initialMeasurement, measurementHash, placeMeasurementPoint, readMeasurementHash, type MapMeasurement} from "@/features/maps/map-measurement";
-import {buildCalculatorSearch, calculateRouteDistanceMeters, calculateTacticalRange, initialTacticalPlan, placeRangePoint, placeRoutePoint, readTacticalPlanHash, tacticalPlanHash, toggleTacticalLayer, type TacticalPlan} from "@/features/maps/map-planner";
+import {buildCalculatorSearch, calculateRouteDistanceMeters, calculateTacticalRange, initialTacticalPlan, placeRangePoint, placeRoutePoint, readTacticalPlanHash, tacticalPlanHash, toggleTacticalLayer, type TacticalPlan, exportMapPlan, importMapPlan} from "@/features/maps/map-planner";
+import {getMapPlannerCopy} from "@/features/maps/map-planner-copy";
+import {COMMUNITY_POI_SOURCE, communityPois, communityPoiLayer, clusterCommunityPois, type CommunityPoi} from "@/features/maps/map-community-pois";
+import {getArtilleryCopy} from "@/features/artillery/artillery-copy";
+import {WEAPON_REGISTRY, type WeaponId, type TrajectoryMode} from "@/features/artillery/ballistics-data";
 import {getMapMeasurementCopy} from "@/features/maps/map-measurement-copy";
 import {MapMeasurementPanel} from "./map-measurement-panel";
 import {assetPath} from "@/lib/assets";
@@ -34,6 +38,9 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
   const [attempt, setAttempt] = useState(0);
   const [fullscreen, setFullscreen] = useState<"native" | "fallback" | null>(null);
   const [mode, setMode] = useState<"pan" | "marker" | "measure" | "calibrate" | "route" | "range">("pan");
+  const [markerKind, setMarkerKind] = useState<MarkerKind>("intel");
+  const [selectedPoi, setSelectedPoi] = useState<string>();
+  const importRef = useRef<HTMLInputElement>(null);
   const [panel, setPanel] = useState(false);
   const [query, setQuery] = useState("");
   const [notice, setNotice] = useState("");
@@ -49,14 +56,20 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
   const imageKey = `${state.map}-${attempt}`;
   const load = imageStatus?.key === imageKey ? imageStatus.status : "loading";
   const copy = getMapViewerCopy(locale);
+  const plannerCopy = getMapPlannerCopy(locale);
+  const artilleryCopy = getArtilleryCopy(locale);
   const measurementCopy = getMapMeasurementCopy(locale);
   const measuring = mode === "measure" || mode === "calibrate";
   const atlasCopy = getOperationsAtlasCopy(locale);
   const records = getLocalizedOperationsAtlasRecords(locale);
   const view = boundView(state.view, size.width, size.height);
   const baseSize = Math.min(size.width, size.height);
-  const tacticalRange = calculateTacticalRange(tacticalPlan, state.map);
-  const routeDistanceMeters = calculateRouteDistanceMeters(tacticalPlan.route.points, state.map);
+  const tacticalRange = calculateTacticalRange(tacticalPlan, state.map, measurement);
+  const routeDistanceMeters = calculateRouteDistanceMeters(tacticalPlan.route.points, state.map, measurement);
+  const poiLabel = (poi: CommunityPoi) => `${plannerCopy[poi.kind]} ${poi.number}`;
+  const currentPois = communityPois.filter((poi) => poi.map === state.map);
+  const visiblePois = currentPois.filter((poi) => `${poiLabel(poi)} ${poi.kind}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
+  const layerEnabled = (layer: string) => tacticalPlan.layers.find(({id}) => id === layer)?.enabled;
   const visibleReferences = records.filter((record) => {
     const entry = atlasCopy.entries[record.id];
     return `${entry.title} ${entry.context} ${record.id}`.toLocaleLowerCase().includes(query.toLocaleLowerCase().trim());
@@ -163,12 +176,13 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     analytics.engage();
     updateState((previous) => ({...previous, view: boundView({...previous.view, zoom: previous.view.zoom + direction * 0.35}, size.width, size.height)}));
   }
-  function addMarker(point: Point) {
+  function addMarker(point: Point, label?: string, kind: MarkerKind = markerKind) {
     if (load !== "ready" || point.x < 0 || point.x > 1 || point.y < 0 || point.y > 1) return;
     if (stateRef.current.markers.length >= MAX_MARKERS) { setNotice(copy.limit); return; }
     analytics.engage();
-    updateState((previous) => ({...previous, markers: [...previous.markers, {id: `m${crypto.randomUUID()}`, ...point, label: `${copy.marker} ${previous.markers.length + 1}`}]}));
+    updateState((previous) => ({...previous, markers: [...previous.markers, {id: `m${crypto.randomUUID()}`, ...point, label: label ?? `${copy.marker} ${previous.markers.length + 1}`, kind}]}));
     trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: stateRef.current.map, action: "marker_added", locale});
+    updateTacticalPlan((previous) => toggleTacticalLayer(previous, kind, true));
     setPanel(true);
   }
   function addMeasurementPoint(point: Point) {
@@ -271,6 +285,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     const plan = tacticalPlansByMap.current[shared.map] ?? tacticalPlan;
     const baseHash = ruler ? measurementHash(mapHash(shared), ruler) : mapHash(shared);
     url.hash = tacticalPlanHash(baseHash, plan);
+    if (url.hash.length > 16_000) {setNotice(plannerCopy.shareTooLarge); return;}
     markToolShare(url, "map");
     setShareLink(url.href);
     try {
@@ -280,6 +295,34 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     } catch {
       setNotice(copy.shareLink);
     }
+  }
+
+  function focusPoint(point: Point) {
+    setPanel(false);
+    viewportRef.current?.focus({preventScroll: true});
+    updateState((previous) => ({...previous, view: boundView({zoom: 6, ...point}, size.width, size.height)}));
+  }
+  function setMissionPoint(point: Point, target: boolean) {
+    updateTacticalPlan((previous) => ({...previous, fireSupport: {...previous.fireSupport, points: target ? [previous.fireSupport.points[0] ?? {x: view.x, y: view.y}, point] : [point, ...(previous.fireSupport.points[1] ? [previous.fireSupport.points[1]] : [])]}}));
+    setMode("range"); setPanel(false);
+  }
+  function savePlanFile() {
+    const cleanMap = {...state, markers: state.markers.map((marker) => ({...marker, label: marker.label.trim() || copy.marker}))};
+    const text = exportMapPlan({format: "wardogs-map-plan", version: 1, map: cleanMap, ruler: measurement, plan: tacticalPlan});
+    const url = URL.createObjectURL(new Blob([text], {type: "application/json"}));
+    const link = document.createElement("a"); link.href = url; link.download = `wardogs-${state.map}-plan.json`; link.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    analytics.engage();
+  }
+  async function loadPlanFile(file?: File) {
+    if (!file) return;
+    if (file.size > 64_000) {setNotice(plannerCopy.invalidFile); return;}
+    try {
+      const restored = importMapPlan(await file.text());
+      if (!restored) {setNotice(plannerCopy.invalidFile); return;}
+      updateState(() => restored.map); updateMeasurement(restored.ruler); updateTacticalPlan(() => restored.plan);
+      setMode("pan"); setNotice(plannerCopy.imported); analytics.engage();
+    } catch {setNotice(plannerCopy.invalidFile);}
   }
 
   return (
@@ -300,15 +343,15 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
           <button className={controlClass} title={copy.pan} aria-label={copy.pan} aria-pressed={mode === "pan"} onClick={() => setMode("pan")}><Hand size={19} /></button>
           <button className={controlClass} title={copy.add} aria-label={copy.add} aria-pressed={mode === "marker"} onClick={() => setMode("marker")} disabled={load !== "ready"}><MapPin size={19} /></button>
           <button className={controlClass} title={copy.center} aria-label={copy.center} onClick={() => addMarker({x: view.x, y: view.y})} disabled={load !== "ready"}><Crosshair size={19} /></button>
-          <button className={controlClass} title="Plan route" aria-label="Plan route" aria-pressed={mode === "route"} onClick={() => setMode(mode === "route" ? "pan" : "route")} disabled={load !== "ready"}><RouteIcon size={19} /></button>
-          <button className={controlClass} title="Fire mission" aria-label="Fire mission" aria-pressed={mode === "range"} onClick={() => setMode(mode === "range" ? "pan" : "range")} disabled={load !== "ready"}><Layers size={19} /></button>
+          <button className={controlClass} title={plannerCopy.routeTitle} aria-label={plannerCopy.routeTitle} aria-pressed={mode === "route"} onClick={() => setMode(mode === "route" ? "pan" : "route")} disabled={load !== "ready"}><RouteIcon size={19} /></button>
+          <button className={controlClass} title={plannerCopy.rangeTitle} aria-label={plannerCopy.rangeTitle} aria-pressed={mode === "range"} onClick={() => setMode(mode === "range" ? "pan" : "range")} disabled={load !== "ready"}><Layers size={19} /></button>
           <button className={controlClass} title={copy.search} aria-label={copy.search} aria-expanded={panel} aria-controls={`${id}-panel`} onClick={() => setPanel(!panel)}><Search size={19} /></button>
           <button className={controlClass} title={copy.share} aria-label={copy.share} onClick={share}><Share2 size={19} /></button>
           <button ref={fullscreenButtonRef} className={controlClass} title={fullscreen ? copy.exitFullscreen : copy.fullscreen} aria-label={fullscreen ? copy.exitFullscreen : copy.fullscreen} onClick={toggleFullscreen}>{fullscreen ? <Minimize2 size={19} /> : <Maximize2 size={19} />}</button>
         </div>
       </div>
       <div ref={viewportRef} data-map-viewport tabIndex={0} aria-label={`${mapNames[state.map]} ${copy.map}`} aria-busy={load === "loading"}
-        className={`relative w-full overflow-hidden touch-none select-none bg-[#080d0b] ${mode !== "pan" ? "cursor-crosshair" : "cursor-grab active:cursor-grabbing"} ${fullscreen ? "min-h-[280px] flex-1 shrink-0" : "h-[440px] md:h-[600px]"}`}
+        className={`relative w-full overflow-hidden touch-none select-none bg-[#080d0b] ${mode !== "pan" ? "cursor-crosshair" : "cursor-grab active:cursor-grabbing"} ${fullscreen ? "min-h-[280px] flex-1 shrink-0" : "h-[min(62dvh,440px)] min-h-[280px] md:h-[600px]"}`}
         onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerEnd} onPointerCancel={onPointerEnd} onLostPointerCapture={onPointerEnd}
         onKeyDown={(event) => {
           if (event.key === "+" || event.key === "=") { event.preventDefault(); zoom(1); }
@@ -343,12 +386,20 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
           })()}
           {tacticalPlan.layers.find(({id}) => id === "fire-support")?.enabled && (() => {
             const points = tacticalPlan.fireSupport.points.map((point) => viewportPoint(point, view, size.width, size.height));
-            return <g data-range-overlay>{points.length === 2 && <line x1={points[0].x} y1={points[0].y} x2={points[1].x} y2={points[1].y} stroke={tacticalRange?.solution.valid ? "#8ce2ad" : "#f87171"} strokeWidth={3} />}{points.map((point, index) => <g key={index}><circle cx={point.x} cy={point.y} r={6} fill={index === 0 ? "#10b981" : "#ef4444"} stroke="#0c110f" strokeWidth={2} /><text x={point.x + 9} y={point.y - 9} fill={index === 0 ? "#8ce2ad" : "#fca5a5"} stroke="#0c110f" strokeWidth={3} paintOrder="stroke" fontSize={13}>{index === 0 ? "GUN" : "TGT"}</text></g>)}</g>;
+            return <g data-range-overlay>{points.length === 2 && <line x1={points[0].x} y1={points[0].y} x2={points[1].x} y2={points[1].y} stroke={tacticalRange?.solution.valid ? "#8ce2ad" : "#f87171"} strokeWidth={3} />}{points.map((point, index) => <g key={index}><circle cx={point.x} cy={point.y} r={6} fill={index === 0 ? "#10b981" : "#ef4444"} stroke="#0c110f" strokeWidth={2} /><text x={point.x + 9} y={point.y - 9} fill={index === 0 ? "#8ce2ad" : "#fca5a5"} stroke="#0c110f" strokeWidth={3} paintOrder="stroke" fontSize={13}>{index === 0 ? artilleryCopy.gunPosition : artilleryCopy.targetPosition}</text></g>)}</g>;
           })()}
         </svg>}
-        {load === "ready" && state.markers.map((marker, index) => <button key={marker.id} data-map-marker data-clarity-mask="true" title={`${copy.manual}: ${marker.label}`} aria-label={marker.label}
+        {load === "ready" && tacticalPlan.communityPois !== false && clusterCommunityPois(currentPois.filter((poi) => layerEnabled(communityPoiLayer(poi)) && (poi.kind === "tower" || poi.kind === "spawn_board" || poi.id === selectedPoi || (poi.kind === "garage_vendor" && view.zoom >= 4))), baseSize * view.zoom).map((group) => {
+          const poi = group.pois[0], clustered = group.pois.length > 1;
+          const label = clustered ? `${plannerCopy.community} (${group.pois.length})` : poiLabel(poi);
+          return <button key={group.pois.map(({id}) => id).join("-")} data-community-poi disabled={mode !== "pan"} title={`${plannerCopy.community}: ${label}`} aria-label={label}
+            className={`absolute z-10 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center border-2 border-[#e7bd63] bg-[#18231e] text-xs font-bold text-[#fff1c8] ${clustered ? "rounded-full ring-2 ring-[#18231e]" : "rounded"}`}
+            style={{pointerEvents: mode === "pan" ? "auto" : "none", left: size.width / 2 + (group.x - view.x) * baseSize * view.zoom, top: size.height / 2 + (group.y - view.y) * baseSize * view.zoom}}
+            onPointerDown={(event) => event.stopPropagation()} onClick={() => {if (clustered) {focusPoint(group); return;} setSelectedPoi(poi.id); setQuery(poiLabel(poi)); setPanel(true);}}>{clustered ? `+${group.pois.length}` : poi.kind === "tower" ? poi.number : "◆"}</button>;
+        })}
+        {load === "ready" && state.markers.filter((marker) => layerEnabled(marker.kind ?? "intel")).map((marker, index) => <button key={marker.id} data-map-marker disabled={mode !== "pan"} data-clarity-mask="true" title={`${copy.manual}: ${marker.label}`} aria-label={marker.label}
           className="absolute z-10 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-[#ab3047] text-xs font-bold text-white"
-          style={{left: size.width / 2 + (marker.x - view.x) * baseSize * view.zoom, top: size.height / 2 + (marker.y - view.y) * baseSize * view.zoom}}
+          style={{pointerEvents: mode === "pan" ? "auto" : "none", left: size.width / 2 + (marker.x - view.x) * baseSize * view.zoom, top: size.height / 2 + (marker.y - view.y) * baseSize * view.zoom}}
           onPointerDown={(event) => event.stopPropagation()} onClick={() => {setPanel(true); requestAnimationFrame(() => document.getElementById(`${id}-${marker.id}`)?.focus());}}>{index + 1}</button>)}
         {load !== "ready" && <div className="absolute inset-0 flex items-center justify-center bg-[#080d0b]/90 p-6 text-center text-white" role={load === "error" ? "alert" : "status"}>
           <div>{load === "loading" && <LoaderCircle className="mx-auto mb-3 animate-spin" aria-hidden="true" />}<p>{load === "loading" ? copy.loading : copy.failed}</p>
@@ -356,42 +407,72 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
         </div>}
       </div>
       <div className="flex items-center gap-2 border-t border-[#35463b] p-3 text-xs text-[#d7bb73]">
-        <button title={measurementCopy.measure} aria-label={measurementCopy.measure} aria-pressed={measuring} className={controlClass} disabled={load !== "ready"} onClick={() => {resetPointers(); setMode(measuring ? "pan" : "measure");}}><Ruler size={18} /></button><p>{measurement.calibration ? measurementCopy.calibrated : measurementCopy.uncalibrated}</p>
+        <button title={measurementCopy.measure} aria-label={measurementCopy.measure} aria-pressed={measuring} className={controlClass} disabled={load !== "ready"} onClick={() => {resetPointers(); setMode(measuring ? "pan" : "measure");}}><Ruler size={18} /></button><p>{measurement.calibration ? plannerCopy.userScale : plannerCopy.nominalScale}</p>
       </div>
       {measuring && <MapMeasurementPanel key={state.map} state={measurement} locale={locale} mode={mode} ready={load === "ready"}
         onChange={updateMeasurement} onMode={(next) => {resetPointers(); setMode(next);}} onCenter={() => addMeasurementPoint({x: view.x, y: view.y})} onClose={() => {resetPointers(); setMode("pan");}} />}
-      {(mode === "route" || mode === "range" || tacticalPlan.route.points.length > 0 || tacticalPlan.fireSupport.points.length > 0) && <section className="border-t border-[#43534a] p-3 text-sm text-[#bacbc0]" data-tactical-planner-panel data-clarity-mask="true">
+      {(mode === "route" || mode === "range") && <section className="max-h-[45dvh] overflow-y-auto border-t border-[#43534a] p-3 text-sm text-[#bacbc0] lg:max-h-none" data-tactical-planner-panel data-clarity-mask="true">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <button className="min-h-11 rounded border border-[#43534a] px-3" onClick={() => mode === "route" ? addRoutePoint({x: view.x, y: view.y}) : addRangePoint({x: view.x, y: view.y})}>{plannerCopy.addCenter}</button>
+          <button className={controlClass} title={plannerCopy.undo} aria-label={plannerCopy.undo} onClick={() => updateTacticalPlan((previous) => mode === "route" ? {...previous, route: {...previous.route, points: previous.route.points.slice(0, -1)}} : {...previous, fireSupport: {...previous.fireSupport, points: previous.fireSupport.points.slice(0, -1)}})}><Undo2 size={18} /></button>
+          <button className={`${controlClass} ml-auto`} title={plannerCopy.closeTasks} aria-label={plannerCopy.closeTasks} onClick={() => setMode("pan")}><X size={18} /></button>
+        </div>
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-          <div className="rounded border border-[#34463b] bg-[#101a15] p-3">
+          <div className={`${mode === "route" ? "" : "hidden lg:block"} rounded border border-[#34463b] bg-[#101a15] p-3`}>
             <div className="flex items-center justify-between gap-3">
-              <div><h3 className="font-semibold text-white">Route planner</h3><p className="mt-1 text-xs text-[#8fa296]">Click route points in order. Share keeps the plan in the URL.</p></div>
-              <button type="button" className={controlClass} title="Clear route" aria-label="Clear route" onClick={() => updateTacticalPlan((previous) => ({...previous, route: {...previous.route, points: []}}))}><Trash2 size={18} /></button>
+              <div><h3 className="font-semibold text-white">{plannerCopy.routeTitle}</h3><p className="mt-1 text-xs text-[#8fa296]">{plannerCopy.routeHelp}</p></div>
+              <button type="button" className={controlClass} title={plannerCopy.clearRoute} aria-label={plannerCopy.clearRoute} onClick={() => updateTacticalPlan((previous) => ({...previous, route: {...previous.route, points: []}}))}><Trash2 size={18} /></button>
             </div>
-            <dl className="mt-3 grid grid-cols-2 gap-3 text-xs"><div><dt className="uppercase text-[#7f8d86]">Points</dt><dd className="font-mono text-lg text-white">{tacticalPlan.route.points.length}</dd></div><div><dt className="uppercase text-[#7f8d86]">Total distance</dt><dd className="font-mono text-lg text-[#f0b75f]">{Math.round(routeDistanceMeters)}m</dd></div></dl>
+            <dl className="mt-3 grid grid-cols-2 gap-3 text-xs"><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.points}</dt><dd className="font-mono text-lg text-white">{tacticalPlan.route.points.length}</dd></div><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.total}</dt><dd className="font-mono text-lg text-[#f0b75f]">{Math.round(routeDistanceMeters)}m</dd></div></dl>
           </div>
-          <div className="rounded border border-[#34463b] bg-[#101a15] p-3">
+          <div className={`${mode === "range" ? "" : "hidden lg:block"} rounded border border-[#34463b] bg-[#101a15] p-3`}>
             <div className="flex items-center justify-between gap-3">
-              <div><h3 className="font-semibold text-white">Map rangefinder</h3><p className="mt-1 text-xs text-[#8fa296]">Click gun, then target. Open calculator with distance and azimuth prefilled.</p></div>
-              <button type="button" className={controlClass} title="Clear fire mission" aria-label="Clear fire mission" onClick={() => updateTacticalPlan((previous) => ({...previous, fireSupport: {...previous.fireSupport, points: []}}))}><Trash2 size={18} /></button>
+              <div><h3 className="font-semibold text-white">{plannerCopy.rangeTitle}</h3><p className="mt-1 text-xs text-[#8fa296]">{plannerCopy.rangeHelp}</p></div>
+              <button type="button" className={controlClass} title={plannerCopy.clearRange} aria-label={plannerCopy.clearRange} onClick={() => updateTacticalPlan((previous) => ({...previous, fireSupport: {...previous.fireSupport, points: []}}))}><Trash2 size={18} /></button>
             </div>
-            {tacticalRange ? <dl className="mt-3 grid grid-cols-2 gap-3 text-xs"><div><dt className="uppercase text-[#7f8d86]">Distance</dt><dd className="font-mono text-lg text-white">{tacticalRange.distanceMeters}m</dd></div><div><dt className="uppercase text-[#7f8d86]">Azimuth</dt><dd className="font-mono text-lg text-white">{tacticalRange.azimuthDegrees.toFixed(1)}°</dd></div><div><dt className="uppercase text-[#7f8d86]">Mils</dt><dd className="font-mono text-lg text-[#8ce2ad]">{tacticalRange.solution.valid ? tacticalRange.solution.elevationMil : "--"}</dd></div><div><dt className="uppercase text-[#7f8d86]">TOF</dt><dd className="font-mono text-lg text-[#d9a93a]">{tacticalRange.solution.valid ? `${tacticalRange.solution.timeOfFlightSeconds.toFixed(1)}s` : "out"}</dd></div></dl> : <p className="mt-3 text-xs text-[#8fa296]">Waiting for two points.</p>}
-            {tacticalRange ? <Link className="mt-3 inline-flex min-h-11 items-center rounded border border-[#528d68] bg-[#24583a] px-4 py-2 text-sm font-bold text-white hover:bg-[#2d6a46]" href={`/tools/artillery-calculator${buildCalculatorSearch(tacticalPlan, state.map)}`} title="Open calculator with this fire mission">Open calculator with mission</Link> : null}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <label className="min-w-0">{artilleryCopy.selectWeapon}<select value={tacticalPlan.fireSupport.weaponId} className="ml-2 min-h-11 rounded border border-[#43534a] bg-[#18231e] p-2" onChange={(event) => {const weaponId = event.target.value as WeaponId; updateTacticalPlan((previous) => ({...previous, fireSupport: {...previous.fireSupport, weaponId, mode: WEAPON_REGISTRY[weaponId].defaultMode}}));}}>{Object.values(WEAPON_REGISTRY).map((weapon) => <option key={weapon.id} value={weapon.id}>{weapon.name}</option>)}</select></label>
+              {tacticalPlan.fireSupport.weaponId === "sph2" && <label>{artilleryCopy.trajectoryMode}<select value={tacticalPlan.fireSupport.mode} className="ml-2 min-h-11 rounded border border-[#43534a] bg-[#18231e] p-2" onChange={(event) => updateTacticalPlan((previous) => ({...previous, fireSupport: {...previous.fireSupport, mode: event.target.value as TrajectoryMode}}))}><option value="high">{artilleryCopy.highArc}</option><option value="low">{artilleryCopy.lowArc}</option></select></label>}
+            </div>
+            {tacticalRange ? <dl className="mt-3 grid grid-cols-2 gap-3 text-xs"><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.distance}</dt><dd className="font-mono text-lg text-white">{tacticalRange.distanceMeters}m</dd></div><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.azimuth}</dt><dd className="font-mono text-lg text-white">{tacticalRange.azimuthDegrees.toFixed(1)}°</dd></div><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.mils}</dt><dd className="font-mono text-lg text-[#8ce2ad]">{tacticalRange.solution.valid ? tacticalRange.solution.elevationMil : "--"}</dd></div><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.tof}</dt><dd className="font-mono text-lg text-[#d9a93a]">{tacticalRange.solution.valid ? `${tacticalRange.solution.timeOfFlightSeconds.toFixed(1)}s` : plannerCopy.outOfRange}</dd></div></dl> : <p className="mt-3 text-xs text-[#8fa296]">{plannerCopy.waiting}</p>}
+            {tacticalRange ? <Link className="mt-3 inline-flex min-h-11 items-center rounded border border-[#528d68] bg-[#24583a] px-4 py-2 text-sm font-bold text-white hover:bg-[#2d6a46]" href={`/tools/artillery-calculator${buildCalculatorSearch(tacticalPlan, state.map, measurement)}`} title={plannerCopy.openCalculator}>{plannerCopy.openCalculator}</Link> : null}
           </div>
         </div>
+        <p className="mt-3 text-xs text-[#d7bb73]">{plannerCopy.limits}</p>
+        {mode === "range" && <p className="mt-2 text-xs text-[#d7bb73]">{plannerCopy.timingHelp}</p>}
+        {tacticalRange?.lowerMeters !== undefined && tacticalRange.upperMeters !== undefined && <p className="mt-2 text-xs">{measurementCopy.bounds}: {Math.round(tacticalRange.lowerMeters)}–{Math.round(tacticalRange.upperMeters)} m</p>}
       </section>}
       <p role="status" className={notice ? "px-3 pb-3 text-sm text-[#b5e0c4]" : "sr-only"}>{notice}</p>
       {shareLink && <label data-clarity-mask="true" className="block px-3 pb-3 text-sm text-[#bacbc0]">{copy.shareLink}<input aria-label={copy.shareLink} readOnly value={shareLink} onFocus={(event) => event.target.select()} className="mt-1 w-full min-w-0 rounded border border-[#46594d] bg-[#111b15] p-2" /></label>}
-      {panel && <div id={`${id}-panel`} className="border-t border-[#35463b] p-3" data-map-reference-panel data-clarity-mask="true">
+      {panel && <div id={`${id}-panel`} className="max-h-[55dvh] overflow-y-auto border-t border-[#35463b] p-3 lg:max-h-[700px]" data-map-reference-panel data-clarity-mask="true">
         <div className="mb-3 flex items-center gap-2"><label className="sr-only" htmlFor={`${id}-search`}>{copy.search}</label><input id={`${id}-search`} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={copy.search} className="h-11 min-w-0 flex-1 rounded border border-[#46594d] bg-[#111b15] px-3 text-white" /><button aria-label={copy.close} title={copy.close} className={controlClass} onClick={() => setPanel(false)}><X size={18} /></button></div>
-        <section className="mb-4 rounded border border-[#34463b] bg-[#101a15] p-3" data-map-layer-controls><h3 className="text-sm font-semibold text-white">Tactical layers</h3><div className="mt-2 flex flex-wrap gap-2">{tacticalPlan.layers.map((layer) => <button key={layer.id} type="button" aria-pressed={layer.enabled} className="rounded border border-[#34463b] px-3 py-1.5 text-xs font-semibold text-[#cfe0d8] aria-pressed:border-[#69c78f] aria-pressed:bg-[#183322]" onClick={() => updateTacticalPlan((previous) => toggleTacticalLayer(previous, layer.id))}>{layer.id.replace("-", " ")}</button>)}</div></section>
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          <label className="text-sm text-[#bacbc0]">{plannerCopy.kind}<select value={markerKind} className="ml-2 min-h-11 rounded border border-[#43534a] bg-[#18231e] p-2" onChange={(event) => {setMarkerKind(event.target.value as MarkerKind); setMode("marker");}}>{markerKinds.map((kind) => <option key={kind} value={kind}>{plannerCopy[kind]}</option>)}</select></label>
+          <button className={controlClass} title={plannerCopy.exportPlan} aria-label={plannerCopy.exportPlan} onClick={savePlanFile}><Download size={18} /></button>
+          <button className={controlClass} title={plannerCopy.importPlan} aria-label={plannerCopy.importPlan} onClick={() => importRef.current?.click()}><Upload size={18} /></button>
+          <input ref={importRef} aria-label={plannerCopy.importPlan} type="file" accept=".json,application/json" className="sr-only" onChange={(event) => {void loadPlanFile(event.target.files?.[0]); event.target.value = "";}} />
+          <p className="basis-full text-xs text-[#bacbc0]">{plannerCopy.importHelp}</p>
+        </div>
+        <section className="mb-4 rounded border border-[#34463b] bg-[#101a15] p-3" data-map-layer-controls><h3 className="text-sm font-semibold text-white">{plannerCopy.layers}</h3><div className="mt-2 flex flex-wrap gap-2">{tacticalPlan.layers.map((layer) => <button key={layer.id} type="button" aria-pressed={layer.enabled} className="rounded border border-[#34463b] px-3 py-1.5 text-xs font-semibold text-[#cfe0d8] aria-pressed:border-[#69c78f] aria-pressed:bg-[#183322]" onClick={() => updateTacticalPlan((previous) => toggleTacticalLayer(previous, layer.id))}>{plannerCopy[layer.id]}</button>)}</div></section>
+        <section className="mb-4 rounded border border-[#34463b] bg-[#101a15] p-3" data-community-poi-panel>
+          <label className="flex min-h-11 items-center gap-2 font-semibold text-white"><input type="checkbox" checked={tacticalPlan.communityPois !== false} onChange={(event) => updateTacticalPlan((previous) => ({...previous, communityPois: event.target.checked}))} />{plannerCopy.community} ({currentPois.length})</label>
+          <p className="text-xs leading-5 text-[#d7bb73]">{plannerCopy.communityHelp} <a href={COMMUNITY_POI_SOURCE} title="GitHub · Apollyon" target="_blank" rel="noreferrer" className="underline">GitHub · Apollyon</a> · <a href={assetPath("/licenses/apollyon-map-data.txt")} title="MIT" className="underline">MIT</a></p>
+          <ul className="mt-3 grid max-h-64 gap-2 overflow-y-auto sm:grid-cols-2">{visiblePois.map((poi) => <li key={poi.id} className={`rounded border p-2 ${selectedPoi === poi.id ? "border-[#e7bd63]" : "border-[#34463b]"}`}><button className="min-h-11 text-left text-sm font-semibold text-[#f3da8e]" onClick={() => {setSelectedPoi(poi.id); focusPoint(poi);}}>{poiLabel(poi)}</button><div className="flex flex-wrap gap-2 text-xs text-[#bacbc0]"><button className="min-h-11 rounded border border-[#43534a] px-2" onClick={() => addMarker(poi, poiLabel(poi), communityPoiLayer(poi))}>{plannerCopy.useMarker}</button><button className="min-h-11 rounded border border-[#43534a] px-2" onClick={() => {addRoutePoint(poi); setMode("route"); setPanel(false);}}>{plannerCopy.routePoint}</button></div></li>)}</ul>
+        </section>
         <div className="grid gap-6 md:grid-cols-2">
           <section><h3 className="text-sm font-semibold text-white">{copy.references}</h3><ul className="mt-2 space-y-3">{visibleReferences.map((record) => <li key={record.id} className="border-b border-[#35463b] pb-2 text-sm" data-map-reference>
             <a className="text-[#9adeb4] underline" href={publicRoutePath(`/${locale}/guides/${record.guideSlug}`)} title={atlasCopy.entries[record.id].title}>{atlasCopy.entries[record.id].title}</a><p className="my-1 text-xs text-[#d7bb73]">{copy.unlocated}</p><a className="break-words text-xs text-[#b8c8be]" href={record.evidence.sourceUrl} title={record.sourceLabel} rel="noreferrer" target="_blank">{record.sourceLabel}</a>
           </li>)}</ul>{!visibleReferences.length && <p className="mt-2 text-sm text-[#b8c8be]">{copy.empty}</p>}</section>
           <section><h3 className="text-sm font-semibold text-white">{copy.manual} ({state.markers.length}/{MAX_MARKERS})</h3><p className="mt-2 text-xs text-[#b8c8be]">{copy.privacy}</p>
-            <ul className="mt-3 space-y-2">{state.markers.filter((marker) => marker.label.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())).map((marker) => <li key={marker.id} className="flex gap-2">
-              <input id={`${id}-${marker.id}`} aria-label={copy.label} maxLength={60} value={marker.label} className="min-w-0 flex-1 rounded border border-[#46594d] bg-[#111b15] px-2 text-sm text-white" onChange={(event) => {const label = event.target.value; updateState((previous) => ({...previous, markers: previous.markers.map((entry) => entry.id === marker.id ? {...entry, label} : entry)}));}} onBlur={() => updateState((previous) => ({...previous, markers: previous.markers.map((entry) => ({...entry, label: entry.label.trim() || copy.marker}))}))} />
-              <button aria-label={`${copy.remove}: ${marker.label}`} title={copy.remove} className={controlClass} onClick={() => updateState((previous) => ({...previous, markers: previous.markers.filter(({id: markerId}) => markerId !== marker.id)}))}><Trash2 size={18} /></button>
+            <ul className="mt-3 space-y-3">{state.markers.filter((marker) => `${marker.label} ${plannerCopy[marker.kind ?? "intel"]}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())).map((marker) => <li key={marker.id} className="rounded border border-[#35463b] p-2">
+              <div className="flex gap-2"><input id={`${id}-${marker.id}`} aria-label={copy.label} maxLength={60} value={marker.label} className="min-h-11 min-w-0 flex-1 rounded border border-[#46594d] bg-[#111b15] px-2 text-sm text-white" onChange={(event) => {const label = event.target.value; updateState((previous) => ({...previous, markers: previous.markers.map((entry) => entry.id === marker.id ? {...entry, label} : entry)}));}} onBlur={() => updateState((previous) => ({...previous, markers: previous.markers.map((entry) => ({...entry, label: entry.label.trim() || copy.marker}))}))} /><button aria-label={`${copy.remove}: ${marker.label}`} title={copy.remove} className={controlClass} onClick={() => updateState((previous) => ({...previous, markers: previous.markers.filter(({id: markerId}) => markerId !== marker.id)}))}><Trash2 size={18} /></button></div>
+              <div className="mt-2 grid grid-cols-2 gap-2"><label className="col-span-2 text-xs text-[#bacbc0]">{plannerCopy.kind}<select value={marker.kind ?? "intel"} className="ml-2 min-h-11 rounded border border-[#43534a] bg-[#18231e] p-2" onChange={(event) => updateState((previous) => ({...previous, markers: previous.markers.map((entry) => entry.id === marker.id ? {...entry, kind: event.target.value as MarkerKind} : entry)}))}>{markerKinds.map((kind) => <option key={kind} value={kind}>{plannerCopy[kind]}</option>)}</select></label>{(["x", "y"] as const).map((axis) => <label key={axis} className="text-xs text-[#bacbc0]">{plannerCopy[axis]}<input type="number" min={0} max={100} step="0.01" value={Number((marker[axis] * 100).toFixed(4))} className="mt-1 min-h-11 w-full min-w-0 rounded border border-[#46594d] bg-[#111b15] px-2" onChange={(event) => {const value = event.target.valueAsNumber / 100; if (Number.isFinite(value) && value >= 0 && value <= 1) updateState((previous) => ({...previous, markers: previous.markers.map((entry) => entry.id === marker.id ? {...entry, [axis]: value} : entry)}));}} /></label>)}</div>
+              <div className="mt-2 flex flex-wrap gap-2 text-xs text-[#9adeb4]">
+                <button className="min-h-11 rounded border border-[#46594d] px-2" onClick={() => focusPoint(marker)}>{plannerCopy.focus}</button>
+                <button className="min-h-11 rounded border border-[#46594d] px-2" onClick={() => setMissionPoint(marker, false)}>{plannerCopy.setGun}</button>
+                <button className="min-h-11 rounded border border-[#46594d] px-2" onClick={() => setMissionPoint(marker, true)}>{plannerCopy.setTarget}</button>
+                <button className="min-h-11 rounded border border-[#46594d] px-2" onClick={() => {addRoutePoint(marker); setMode("route"); setPanel(false);}}>{plannerCopy.routePoint}</button>
+              </div>
             </li>)}</ul></section>
         </div>
       </div>}

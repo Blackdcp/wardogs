@@ -101,13 +101,13 @@ describe("Artillery & Mortar Ballistics Engine", () => {
     expect(uphill.elevationMil).toBeLessThan(flat.elevationMil);
   });
 
-  it("calculates real distances from map coordinates", () => {
+  it("calculates nominal distances from full-image map coordinates", () => {
     // 16km x 16km map
     // 0.1 of map = 1600 meters
     const p1 = {x: 0.4, y: 0.5};
     const p2 = {x: 0.5, y: 0.5};
     const dist = calculateDistanceMeters(p1, p2, "bakurani");
-    expect(dist).toBe(1600);
+    expect(dist).toBe(1638.4);
   });
 
   it("formats military grid coordinates with keypad notation", () => {

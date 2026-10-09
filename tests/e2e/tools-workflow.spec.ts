@@ -65,9 +65,14 @@ for (const width of [1440, 390]) {
     await expect(page.getByRole("spinbutton", {name: "Cash available"})).toHaveValue("20000");
 
     await page.goto("/en/tools/weapon-compare?left=amp-9&right=deagle");
+    // Query state is restored after hydration; native SSR controls can be edited
+    // before the handlers exist, which is not a completed tool interaction.
+    await expect(page.getByRole("combobox", {name: "First weapon"})).toHaveValue("amp-9");
+    await expect(page.getByRole("combobox", {name: "Second weapon"})).toHaveValue("deagle");
     await page.getByRole("searchbox", {name: "Search catalogue"}).fill("fal");
     await page.getByRole("combobox", {name: "First weapon"}).selectOption("fal");
     await page.getByRole("checkbox", {name: "Only differences"}).check();
+    await expect(page).toHaveURL((url) => url.searchParams.get("left") === "fal" && url.searchParams.get("right") === "deagle" && url.searchParams.get("differences") === "1");
     const comparisonUrl = page.url();
     await page.goto(comparisonUrl);
     await expect(page.getByRole("checkbox", {name: "Only differences"})).toBeChecked();

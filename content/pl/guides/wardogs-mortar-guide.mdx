@@ -5,7 +5,7 @@ keyword: "wardogs mortar guide"
 category: "guide"
 slug: "wardogs-mortar-guide"
 order: 29
-updatedAt: "2026-10-03"
+updatedAt: "2026-10-09"
 badges:
   - label: "Wsparcie ogniowe"
     tone: "accent"
@@ -91,14 +91,14 @@ Azimuth opisuje kierunek poziomy; Range opisuje odległość. Zacznij od aktualn
 
 Gdy warunki pozwalają, oddaj jeden strzał korygujący lub celowo małą grupę. Obserwator zgłasza wtedy, czy upadek jest w lewo, w prawo, za krótko czy za daleko względem celu. Zmieniaj jeden składnik kontrolowanymi krokami, powtarzaj i zwiększ zużycie amunicji dopiero po użytecznych trafieniach. Gdy cel się poruszy, przerwij i ustal nową nastawę zamiast prowadzić pociski przez trasy sojuszników.
 
-**Pomiar na mapie przed strzałem próbnym:** [mapa interaktywna](/pl/tools/map) ma linijkę, ale nie zweryfikowane przeliczenie na współrzędne świata gry ani wynik azymutu.
+**Pomiar na mapie przed strzałem próbnym:** [mapa interaktywna](/pl/tools/map) ma linijkę, ale nie zweryfikowane przeliczenie na współrzędne świata gry. Zadania ogniowe pokazują kierunek na mapie i otwierają kalkulator artylerii.
 
-1. Wybierz właściwą mapę, zaczekaj na obraz i otwórz linijkę przez **Zmierz odległość**. Bez kalibracji wynik podaje tylko piksele obrazu, nie metry.
-2. Wybierz **Odcinek odniesienia** i ustaw dwa rozpoznawalne punkty kliknięciem lub dotknięciem. Możesz też przesuwać widok i dla każdego użyć **Ustaw punkt w środku widoku**. Wpisz znaną odległość poziomą w metrach, jej błąd, błąd każdego punktu w pikselach, źródło/obserwację i wersję gry. Wybierz **Zastosuj kalibrację**. Bez uzasadnionego odniesienia zachowaj piksele; dawne szacunki siatki beta poniżej nie wyznaczają skali automatycznie.
+1. Wybierz właściwą mapę, zaczekaj na obraz i otwórz linijkę przez **Zmierz odległość**. Bez kalibracji widać piksele i szacowane metry według nominalnej skali wybranej mapy. Ta skala domyślna nie została potwierdzona pomiarem w grze.
+2. Wybierz **Odcinek odniesienia** i ustaw dwa rozpoznawalne punkty kliknięciem lub dotknięciem. Możesz też przesuwać widok i dla każdego użyć **Ustaw punkt w środku widoku**. Wpisz znaną odległość poziomą w metrach, jej błąd, błąd każdego punktu w pikselach, źródło/obserwację i wersję gry. Wybierz **Zastosuj kalibrację**. Bez uzasadnionego odniesienia traktuj nominalne metry tylko jako pomoc w planowaniu; dawne szacunki siatki beta nie potwierdzają tej skali.
 3. W trybie **Zmierz odległość** ustaw stanowisko i cel jako końce odcinka. Odczytaj szacowaną odległość poziomą i zakres wynikający z wpisanych błędów. Zakłada się jednolitą skalę obrazu; zakres obejmuje tylko podane błędy odległości i punktów, nie niezweryfikowane odwzorowanie, teren lub różnice wersji. To nie długość trasy ani odległość skośna.
 4. Przyciskiem udostępniania wyślij obserwatorowi punkty i kalibrację. Notatki odniesienia i wersja gry również trafiają do linku; pomiń prywatne dane konta. Każda mapa ma osobną kalibrację, więc nie przenoś innego odniesienia bez sprawdzenia.
 
-To geometria mapy, **nie precyzyjny kalkulator moździerza lub artylerii**. Nie podaje kąta podniesienia, trajektorii ani nastawy gwarantującej trafienie. Kierunek/azymut sprawdź w obecnym kliencie, a potem obserwuj upadek; wysokości, prędkość początkowa i balistyka tej wersji nie są tutaj zweryfikowane.
+Linijka mierzy geometrię mapy; to **nie precyzyjny kalkulator moździerza lub artylerii**. Zadania ogniowe osobno szacują azymut, podniesienie i czas lotu dla wybranej broni i trybu. Azymut zakłada północ przy górnej krawędzi obrazu. Narzędzie nie pobiera wysokości terenu: sprawdź kierunek i różnicę wysokości w kliencie, a potem obserwuj strzał próbny. To wynik modelu, nie celność zmierzona w obecnej wersji gry.
 
 ## Pętla obserwacji
 
@@ -155,7 +155,7 @@ Rozprosz się, odchodź od powtarzających się trafień, zerwij obserwację, ro
 
 ### Od pomiaru mapy do kalkulatora moździerza
 
-W [linijce mapy](/pl/tools/map) wybierz właściwe pole bitwy i skalibruj rozpoznawalny odcinek o znanej długości poziomej. Nieskalibrowane piksele nie są metrami. Zmierz odległość od działa do celu; linijka nie podaje współrzędnych gry ani azymutu.
+W [linijce mapy](/pl/tools/map) wybierz właściwe pole bitwy i skalibruj rozpoznawalny odcinek o znanej długości poziomej. Domyślne metry wynikają ze skali nominalnej, nie ze sprawdzonego odniesienia w grze; skalibruj mapę przed pomiarem do strzału próbnego. Zmierz odległość od działa do celu; linijka nie podaje zweryfikowanych współrzędnych gry; zadania ogniowe pokazują również kierunek na mapie.
 
 W [kalkulatorze artylerii](/pl/tools/artillery-calculator) wybierz L81 i wprowadzanie liczbowe, podaj poziome metry i kierunek z klienta. Różnicę wysokości sprawdź osobno. Nastawa i czas lotu są szacunkami. Przy odrzuconej odległości sprawdź dane. Potwierdź brak sojuszników w miejscu trafienia, oddaj jeden strzał próbny i popraw według obserwowanego wybuchu.
 
