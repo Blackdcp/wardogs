@@ -164,6 +164,10 @@ test("Gold offer calculation protects playing cash and clears stale results afte
   const path = page.locator("[data-season-task-path]");
   await expect(path.locator("[aria-current=page]")).toHaveText("ゴールドマーケット");
   await path.locator('a[href="/ja/guides/wardogs-launch-checklist"]').click();
+  await expect(page).toHaveURL(/\/ja\/guides\/wardogs-launch-checklist$/);
+  // This native link loads a new document. Wait for its stylesheets before
+  // measuring layout; an H1 can be present while CSS is still loading.
+  await page.waitForLoadState("load");
   await expect(page.locator("main h1")).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
