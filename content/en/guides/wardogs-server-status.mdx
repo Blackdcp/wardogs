@@ -70,11 +70,14 @@ sources:
 ---
 ## Full servers, update queues and mixed-level friends
 
-A visible 100/100 server with a queue is a capacity problem, not evidence that all WARDOGS services are down. Keep the queue if it is progressing. Rejoining can sacrifice your place; changing filters does not create capacity. If your group switches, agree the same server and region before anyone buys equipment.
+1. **Server visible at 100/100:** stay in a queue that is progressing. Record the position now and again before deciding it is stuck; a full server still running is not a global outage. If the squad switches, choose the same region/server together before anyone buys a kit. Rejoining can lose your place.
+2. **Queue does not appear to move:** first distinguish the displayed connecting phase from a numbered queue, then check whether the interface still responds. Compare the current announcement and client build. If maintenance or a required update is confirmed, follow that notice once; otherwise preserve two timestamps and the exact stage instead of repeatedly restarting or claiming an ETA.
+3. **Empty list:** clear text, mode and eligibility filters, select one region, refresh once and wait for the result. Confirm you launched the main WARDOGS app, not the ended Playtest, and that its Steam update finished. Ask one teammate on the same build/region to repeat the same filters. If they see servers, compare filters/session/account; if neither does, compare official notices and report the matching evidence. A nearly empty low-level server still has entry rules: mixed-level friends need a regular server that accepts everyone.
+4. **Join fails after a server is listed:** keep the exact denial or disconnect message. Access/eligibility goes through the correct Steam account, retail access and server rules. A disconnect with the client still open goes through service/connection checks. A closed process goes to [crash diagnosis](/en/guides/wardogs-crash-fix). Reinstalling Windows or changing graphics cannot create a seat.
 
-The September 30 update separates the connecting state from the queue position. Compare the client build and current announcement when a restart or patch is involved. Empty results can also come from region/category filters. The website does not provide live server telemetry and cannot promise a seat or a restart time.
+Use the stage-specific record below when the branch still fails. It records attempts already made, so support can continue from the result rather than repeat the first step. This page has no live telemetry or promised restart time.
 
-Friends of different levels must all meet the selected server's displayed rules. A nearly empty low-level server does not waive its eligibility restriction. Choose a suitable regular server together instead of asking a higher-level friend to reset an account. Do not convert a maintenance time whose timezone is unspecified into your local time.
+<DiagnosticRecord locale="en" kind="connection" />
 
 ## Update 0.1.2: September 30 minor patch
 
@@ -103,11 +106,9 @@ This page records dated official incidents, not live uptime. Match a new failure
 
 ## Fast status check
 
-1. Open the official Steam store and confirm whether the purchase button has changed to an install or play state.
-2. Open the official Steam announcement feed for maintenance, delay, queue, or hotfix notices.
-3. Restart Steam once so account entitlements and the release branch refresh.
-4. Confirm that you are launching WARDOGS, not the ended WARDOGS Playtest branch.
-5. Record the UTC time, region, exact message, and build number before reporting an outage.
+Check the official announcement and the main WARDOGS library entry first. If a numbered queue is advancing, stay in it; do not restart Steam just to refresh the account.
+
+Only when an access error remains after verifying the correct account, completed update and retail app, and you are not holding a progressing queue place, close the client and restart Steam once. Retry the same server and preserve the exact before/after result. If nothing changes, use the connection record above rather than repeat the restart.
 
 ## Empty server browser or no matches
 
@@ -137,7 +138,7 @@ Steam lists September 10 as the Early Access date. Beta 02 ended September 6, an
 
 ## What Players Search For
 
-Players searching for WARDOGS server status usually need one of four answers: whether Steam has unlocked, whether login queues are global, why the browser is empty, or whether one account has an entitlement problem. This page keeps those questions separate.
+A full server calls for a queue or a squad-agreed alternative. An empty list calls for matching filters and build. An access denial calls for the account and server eligibility checks. A client that closes calls for crash diagnosis. Choose the matching branch above before changing the PC.
 
 ## How to Use This Guide
 

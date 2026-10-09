@@ -3,6 +3,8 @@ import path from "node:path";
 import {describe, expect, it} from "vitest";
 import {compileLocalizedGuideBody, loadGuideDocument} from "../../src/content/guides";
 import {mdxComponents} from "../../src/components/mdx/mdx-components";
+import {renderToStaticMarkup} from "react-dom/server";
+import {getDiagnosticRecordCopy} from "../../src/features/guides/diagnostic-record-copy";
 
 const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const;
 const support = "https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846";
@@ -53,8 +55,17 @@ describe.each(locales)("October player workflows in %s", locale => {
     for (const slug of ["wardogs-fob-guide", "wardogs-fob-layouts"]) {
       const guide = await loadGuideDocument(locale, slug);
       expect(guide!.frontmatter.sources).toContainEqual(expect.objectContaining({url: fobVideo, kind: "creator", checkedAt: "2026-10-09"}));
-      expect(guide!.body).toContain("Hesco");
       expect(guide!.body).toContain("Talon");
+      if (slug === "wardogs-fob-layouts") {
+        expect(guide!.body).toContain("Hesco");
+        for (const time of ["0:44–3:17", "3:37–4:59", "5:05–7:16", "7:27–9:57", "10:08–14:35", "16:18"]) {
+          expect(guide!.body).toContain(time);
+        }
+      } else {
+        // Construction detail lives in the dedicated layout article; the overview
+        // must retain a working route to it instead of duplicating the whole build.
+        expect(guide!.body).toContain(`/${locale}/guides/wardogs-fob-layouts`);
+      }
     }
     const artillery = await loadGuideDocument(locale, "wardogs-artillery-guide");
     expect(artillery!.frontmatter.sources).toContainEqual(expect.objectContaining({url: droneDiscussion, kind: "community"}));
@@ -62,6 +73,24 @@ describe.each(locales)("October player workflows in %s", locale => {
       expect(artillery!.body).toContain(`/${locale}/${route}`);
     }
     const settings = await loadGuideDocument(locale, "wardogs-best-settings");
-    for (const marker of ["CPU", "GPU", "RAM", "Windows"]) expect(settings!.body).toContain(marker);
+    const compiledSettings = await compileLocalizedGuideBody(settings!.body, mdxComponents, locale);
+    const renderedSettings = renderToStaticMarkup(compiledSettings.content);
+    for (const marker of ["CPU", "GPU", "RAM"]) expect(renderedSettings).toContain(marker);
+    expect(renderedSettings).toContain('data-diagnostic-record="performance"');
+    expect(renderedSettings).toContain(getDiagnosticRecordCopy(locale, "performance").labels[2]);
+  });
+
+  it("compiles the complete operational guides and connects spending to the real target calculator", async () => {
+    for (const slug of ["wardogs-money-guide", "wardogs-cargo-guide", "wardogs-fob-guide", "wardogs-fob-layouts", "wardogs-solo-guide", "wardogs-squad-guide", "wardogs-report-player", "wardogs-launch-checklist", "wardogs-what-to-buy-before-wipe"]) {
+      const guide = await loadGuideDocument(locale, slug);
+      await expect(compileLocalizedGuideBody(guide!.body, mdxComponents, locale)).resolves.toHaveProperty("content");
+    }
+    const spending = await loadGuideDocument(locale, "wardogs-what-to-buy-before-wipe");
+    expect(spending!.body).toContain(`/${locale}/gold-market#gold-target-budget`);
+    const money = await loadGuideDocument(locale, "wardogs-money-guide");
+    expect(money!.frontmatter.sources).toContainEqual(expect.objectContaining({
+      url: "https://www.youtube.com/watch?v=Qx1ndM1tc2Y", kind: "creator", checkedAt: "2026-10-09"
+    }));
+    for (const timestamp of ["Qx1ndM1tc2Y&t=85s", "Qx1ndM1tc2Y&t=3354s"]) expect(money!.body).toContain(timestamp);
   });
 });

@@ -16,7 +16,9 @@ export default defineConfig({
     "clarity-consent.spec.ts",
     "production-health.spec.ts",
     "site-search.spec.ts",
-    "oct9-community-content.spec.ts"
+    "oct9-community-content.spec.ts",
+    "attachment-recipes.spec.ts",
+    "diagnostic-records.spec.ts"
   ],
   fullyParallel: false,
   workers: 1,

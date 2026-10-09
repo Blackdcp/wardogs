@@ -120,6 +120,7 @@ describe.each(cases)("TDK building answer refresh: $locale", (entry) => {
       expect(data.updatedAt >= "2026-09-30", slug).toBe(true);
       const octoberAdditions = new Set([
         "https://www.youtube.com/watch?v=z7wMLQQtIIM",
+        "https://www.youtube.com/watch?v=PhAVGZMIYCg",
         "https://www.youtube.com/watch?v=j7hJXEXo5U8",
         "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1555761804012158987",
         "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1557732174055219311",

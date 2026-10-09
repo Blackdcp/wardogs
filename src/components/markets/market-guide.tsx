@@ -1,4 +1,5 @@
 import {GoldBudgetPanel} from "@/components/markets/gold-budget-panel";
+import {SeasonTaskPath} from "@/components/releases/season-task-path";
 import type {Locale} from "@/config/site";
 import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 import {publicRoutePath} from "@/lib/public-url";
@@ -205,7 +206,7 @@ export function MarketGuide({locale, kind}: {locale: Locale; kind: MarketKind}) 
           <a href={publicRoutePath(`/${locale}/guides/wardogs-money-guide`)} title={content.moneyGuide}>{content.moneyGuide} →</a>
         </div>
       </nav>
-      {kind === "gold" && <ReleaseImpactPanel locale={locale} path="/gold-market" />}
+      {kind === "gold" && <><SeasonTaskPath locale={locale} path="/gold-market" /><ReleaseImpactPanel locale={locale} path="/gold-market" /></>}
       <aside className="mt-12 border-t border-[#354039] pt-8" aria-labelledby="market-sources"><h2 id="market-sources" className="display-font text-2xl text-white">{content.sourceTitle}</h2>
         <ul className="mt-4 space-y-2 text-sm text-[#79d19c]">{sources[kind].map((source) => <li key={source.href}><a href={source.href} title={source.label} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>)}</ul>
       </aside>

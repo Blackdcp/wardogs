@@ -1,9 +1,10 @@
 import type {Locale} from "@/config/site";
+import {recentMatchCopy, type RecentVideoCopy} from "./recent-match-copy";
 
-type Copy = {title: string; answer: string; notes: readonly [string, string, string, string, string]; chapterTitles: readonly [string, string, string, string, string]};
-type Localized = Record<Locale, Copy>;
-// Authored source-specific summaries. These do not reuse the legacy beta templates.
+type Localized = Record<Locale, RecentVideoCopy>;
+// Authored, source-specific summaries; recorded cases are not live-client tests.
 export const recentVideoCopy: Record<string, Localized> = {
+  ...recentMatchCopy,
   "liRK9si1Ubo": {
     "en": {
       "title": "WARDOGS Season 2: the developer interview, by decision",
@@ -155,7 +156,7 @@ export const recentVideoCopy: Record<string, Localized> = {
       "title": "WARDOGS attachments: compare Evo4Fun's tests with your loadout",
       "answer": "Choose attachments around the fight you expect: aiming speed, recoil control, magazine capacity and sight picture compete. Evo4Fun mixes datamined statistics, firing-range observations and personal recommendations; they are not all equally certain.",
       "notes": [
-        "1:31–2:21 — The TDG/RVG comparison is a trade between recoil control and aiming speed. The percentages are the creator's reported data, not an official balance sheet. Compare one grip at a time on the same weapon before committing your budget.",
+        "1:31–2:21 — In the creator's datamined comparison, TDG gives 30% vertical recoil reduction with a 10% ADS-speed penalty. RVG gives five percentage points less vertical control and two less horizontal control, but a 10% ADS-speed bonus. That makes RVG the handling option for an entry fight, while TDG prioritizes a steadier burst. These are reported modifiers, not our measured aim times; changing several parts at once hides which trade-off caused the result.",
         "4:08–5:38 — An optic changes sight picture as well as aiming behavior. The author qualifies confidence in optic ADS values in the description; the automatic caption also varies the 1.5× sight's name. Match the actual item in your menu instead of buying from a possibly mistranscribed name.",
         "6:25–6:56 and 10:49–11:04 — Magazine choices should fit the engagement and reload opportunity. More capacity can help a long push, while the handling cost can matter in a quick close fight. The AMP-9 example starts from a 20-round magazine; check the live item before copying it.",
         "7:32–8:30 — Use the M4/AK-74 discussion to set up a repeatable comparison around 40 metres. Keep weapon, ammo, position and burst length fixed; change one attachment, record the result, then repeat. Do not turn a single creator's preferred kit into an unconditional best build.",
@@ -173,7 +174,7 @@ export const recentVideoCopy: Record<string, Localized> = {
       "title": "WARDOGS-Anbauteile: Evo4Funs Tests fürs eigene Loadout nutzen",
       "answer": "Wähle Anbauteile nach der geplanten Distanz: Zielgeschwindigkeit, Rückstoß, Magazin und Visierbild konkurrieren. Evo4Fun kombiniert ausgelesene Daten, Schießstandbeobachtungen und persönliche Empfehlungen mit unterschiedlicher Sicherheit.",
       "notes": [
-        "1:31–2:21 — TDG gegen RVG bedeutet Rückstoßkontrolle gegen Zielgeschwindigkeit. Die Prozentwerte sind vom Creator berichtete Daten, keine offizielle Tabelle. Vergleiche jeweils einen Griff an derselben Waffe, bevor du Geld ausgibst.",
+        "1:31–2:21 — Laut den ausgelesenen Daten des Autors bietet TDG 30% weniger vertikalen Rückstoß bei 10% weniger ADS-Geschwindigkeit. RVG kontrolliert vertikal fünf und horizontal zwei Prozentpunkte weniger, bietet aber 10% mehr ADS-Geschwindigkeit. Damit ist RVG die Handhabungsoption für den Einstieg, TDG die Wahl für ruhigere Feuerstöße. Gemeldete Modifikatoren, keine von uns gemessenen Zielzeiten; mehrere gleichzeitige Änderungen verdecken die Ursache.",
         "4:08–5:38 — Ein Visier verändert auch das Sichtbild. Der Autor schränkt die Sicherheit der ADS-Werte in seiner Beschreibung ein; die Untertitel variieren den Namen des 1,5-fachen Visiers. Gleiche den echten Gegenstand im Menü ab.",
         "6:25–6:56 und 10:49–11:04 — Wähle das Magazin nach Gefecht und Nachladefenster. Mehr Patronen helfen bei längeren Vorstößen, können aber die Handhabung belasten. Das AMP-9-Beispiel beginnt mit 20 Patronen; prüfe den aktuellen Gegenstand.",
         "7:32–8:30 — Nutze die M4-/AK-74-Passage für einen Vergleich bei etwa 40 Metern. Gleiche Waffe, Munition, Position und Feuerstoß; ändere ein Anbauteil, protokolliere und wiederhole. Eine bevorzugte Zusammenstellung ist kein universell bestes Loadout.",
@@ -191,7 +192,7 @@ export const recentVideoCopy: Record<string, Localized> = {
       "title": "Обвесы WARDOGS: как применять тесты Evo4Fun",
       "answer": "Выбирайте обвес под бой: скорость прицеливания, отдача, ёмкость и обзор конкурируют. Evo4Fun сочетает извлечённые данные, наблюдения на полигоне и личные советы с разной степенью уверенности.",
       "notes": [
-        "1:31–2:21 — TDG и RVG предлагают разный баланс отдачи и скорости прицеливания. Проценты сообщены автором, это не официальная таблица. Сравнивайте по одной рукоятке на том же оружии перед покупкой.",
+        "1:31–2:21 — По извлечённым автором данным TDG уменьшает вертикальную отдачу на 30%, снижая скорость ADS на 10%. RVG даёт на пять процентных пунктов меньше вертикального и на два меньше горизонтального контроля, но повышает скорость ADS на 10%. RVG подходит для быстрого входа, TDG — для более ровной очереди. Это сообщённые модификаторы, не наши замеры времени; меняя сразу несколько деталей, вы теряете причину результата.",
         "4:08–5:38 — Прицел меняет видимость и поведение при наведении. Автор оговаривает уверенность в ADS оптики; субтитры по-разному передают название прицела 1,5×. Сверяйте предмет в игровом меню.",
         "6:25–6:56 и 10:49–11:04 — Магазин выбирают с учётом боя и возможности перезарядиться. Дополнительные патроны помогают при длинном штурме, но обращение тоже важно. Пример AMP-9 начинается с 20 патронов; проверьте текущий предмет.",
         "7:32–8:30 — Сравнение M4 и AK-74 можно повторить примерно на 40 метрах. Фиксируйте оружие, патроны, позицию и длину очереди; меняйте одну деталь и повторяйте замеры. Любимый комплект автора не универсален.",
@@ -209,7 +210,7 @@ export const recentVideoCopy: Record<string, Localized> = {
       "title": "Acessórios de WARDOGS: aplique os testes de Evo4Fun",
       "answer": "Escolha acessórios para o combate esperado: ADS, recuo, capacidade e visão competem. Evo4Fun combina dados extraídos, observações no campo de tiro e preferências; a certeza varia entre eles.",
       "notes": [
-        "1:31–2:21 — TDG contra RVG troca controle de recuo por velocidade ao mirar. Os percentuais são dados relatados pelo criador, não uma tabela oficial. Compare uma empunhadura por vez na mesma arma antes de gastar.",
+        "1:31–2:21 — Nos dados extraídos pelo autor, TDG reduz 30% do recuo vertical com penalidade de 10% na velocidade de ADS. RVG oferece cinco pontos percentuais menos de controle vertical e dois menos de horizontal, mas dá bônus de 10% na velocidade de ADS. RVG favorece a entrada rápida; TDG prioriza rajadas mais estáveis. São modificadores relatados, não tempos medidos por nós; mudar várias peças juntas esconde qual troca causou o resultado.",
         "4:08–5:38 — A mira muda a imagem e o comportamento ao apontar. O autor ressalva os valores de ADS das ópticas na descrição; as legendas variam o nome da mira 1,5×. Confira o item real no menu.",
         "6:25–6:56 e 10:49–11:04 — O carregador depende da luta e da chance de recarregar. Capacidade ajuda em avanços longos, mas a perda de manuseio pode pesar. O exemplo da AMP-9 parte de 20 tiros; confira a versão atual.",
         "7:32–8:30 — Use o trecho M4/AK-74 para comparar a cerca de 40 metros. Mantenha arma, munição, posição e rajada; mude um acessório, anote e repita. A preferência de um criador não é uma montagem universal.",
@@ -227,7 +228,7 @@ export const recentVideoCopy: Record<string, Localized> = {
       "title": "WARDOGS アタッチメント：Evo4Funの比較を自分の装備に活かす",
       "answer": "交戦距離に合わせ、ADS速度・反動・装弾数・見やすさを比較します。Evo4Funの動画は抽出データ、射撃場での観察、個人の好みを含むため、すべてを同じ確度で扱えません。",
       "notes": [
-        "1:31–2:21 — TDGとRVGは反動制御と構えやすさの取捨選択です。割合は作者が報告したデータで、公式性能表ではありません。同じ銃でグリップだけを替えて比較してから購入します。 ADSだけを速くするか、連射時の狙いを保ちやすくするかを先に決めます。数値がよい部品を並べるのではなく、同じ距離で繰り返した着弾と照準までの時間を別々に記録し、目的に合う方を残します。",
+        "1:31–2:21 — 作者が紹介する抽出データでは、TDGは縦反動を30%抑える代わりにADS速度が10%低下します。RVGは縦の抑制が5ポイント、横が2ポイント小さい一方、ADS速度は10%上がるという比較です。突入時の構えやすさを選ぶならRVG、連射を安定させる方向ならTDGという取捨選択になります。これは作者が報告した補正値で、本站が照準までの時間を測った結果ではありません。同時に銃口や照準器まで変えると、どの変更が扱いやすさを変えたか分からなくなります。",
         "4:08–5:38 — 照準器はADSだけでなく視界も変えます。説明欄には光学サイトのADS値への留保があり、自動字幕の1.5倍サイト名も揺れています。字幕名だけで買わず、実際のメニューで確認してください。 倍率だけではなく、サイトの外枠が周囲の敵を隠さないかも確認します。サイト名が字幕と異なる場合はそのまま同一製品と判断せず、現在の装備画面に表示された名称を試験記録へ転記してください。",
         "6:25–6:56・10:49–11:04 — マガジンは交戦時間とリロードの機会で選びます。長い攻撃には容量が役立ちますが、近距離では取り回しも重要です。AMP-9の例は20発から比較しており、現行アイテムを確認する必要があります。 装弾数を変える試験では他のパーツを固定します。最初の交戦で何発使い、どこで安全に再装填できたかを記録すれば、容量増加がその役割に役立つのか、単に使い切らない弾を増やすだけかを比べられます。",
         "7:32–8:30 — M4・AK-74の話を約40mでの比較練習に使えます。銃、弾、姿勢、連射数をそろえ、部品を1つだけ変更して記録・反復します。作者の好みを万能な最強構成にしないでください。 配装計画には武器と候補パーツを追加し、価格と装着可否は実際の装備画面で入力します。別の武器や弾薬に替えた結果を同じ試験として混ぜず、一つ前の構成へ戻して再現するかも確認します。",
@@ -245,7 +246,7 @@ export const recentVideoCopy: Record<string, Localized> = {
       "title": "WARDOGS 配件实测解析：把 Evo4Fun 的比较用于自己的配装",
       "answer": "按交战任务比较开镜速度、后坐力、容量和视野。Evo4Fun 混合使用了数据挖掘、靶场观察和个人推荐，三类信息的确定程度不同。",
       "notes": [
-        "1:31–2:21 — TDG 与 RVG 是控后坐和开镜速度的取舍。百分比来自作者报告的数据，并非官方平衡表。购买前固定同一把枪，每次只换一个握把做对照。 先确定目标是更快举枪还是更容易压住连续射击。固定距离分别记录举枪时间和重复弹着分组，不把单项修正最大的部件直接当作最优解。",
+        "1:31–2:21 — 按作者介绍的拆包数据，TDG减少30%垂直后坐力，但ADS速度降低10%；RVG比它少5个百分点垂直控制、少2个百分点水平控制，换来ADS速度增加10%。因此近距离入场更看重快速抬枪时可考虑RVG，连射稳定优先时考虑TDG。这是作者报告的修正值，不是本站测出的开镜毫秒数。一次只换握把，保留其他配件，才看得出更快开镜与后坐力之间的实际取舍；不要把两种百分比直接当成同一种收益相加。",
         "4:08–5:38 — 瞄具同时影响观察画面与开镜表现。作者在描述中保留了光学镜 ADS 数值的不确定性；1.5倍镜名称在自动字幕中也有多个拼写。应核对游戏内实际物品，不要按字幕误写的名字购买。 除倍率外，也检查镜框是否挡住侧边目标。字幕名称与当前菜单不一致时，记录游戏内准确名称，不把读音相近当作已确认同一型号。",
         "6:25–6:56、10:49–11:04 — 弹匣选择取决于交战长度和换弹窗口。长时间推进可能更需要容量，近战快速反应则要考虑操控代价。AMP-9 以20发弹匣为对照起点，实际购买仍查看当前物品。 比较容量时固定其他配件，记下首轮交火实际用了多少发、何时能安全换弹。这样才能判断大弹匣对任务有用，还是只增加没有用上的容量。",
         "7:32–8:30 — 用 M4、AK-74 的讨论安排约40米对照：固定枪械、弹药、位置和连射长度，每次只换一个配件，记录结果并重复。某位作者偏好的组合不是无条件最强配装。 把候选武器与部件放进配装清单，价格及安装可行性由当前装备界面核对。更换枪或弹种后另开记录，再回到原配置看结果能否重现。",
@@ -263,7 +264,7 @@ export const recentVideoCopy: Record<string, Localized> = {
       "title": "WARDOGS 配件實測解析：把Evo4Fun的比較用在自己的配裝",
       "answer": "依交戰任務比較瞄準速度、後座力、容量與視野。Evo4Fun混合使用資料挖掘、靶場觀察和個人推薦，三類資訊的確定程度不同。",
       "notes": [
-        "1:31–2:21 — TDG與RVG是在後座力控制及瞄準速度間取捨。百分比來自作者報告的資料，不是官方平衡表。購買前固定同一把槍，每次只換一個握把比較。 先決定要更快舉槍，還是更容易控制連續射擊。固定距離分別記錄舉槍時間與重複彈著分組，不把單項修正最大的零件直接當成最優解。",
+        "1:31–2:21 — 依作者介紹的資料解析，TDG降低30%垂直後座力，但ADS速度降低10%；RVG比它少5個百分點垂直控制、少2個百分點水平控制，換來ADS速度增加10%。近距離突入重視快速舉槍時可考慮RVG，連射穩定優先時考慮TDG。這是作者回報的修正值，不是本站測得的開鏡毫秒數。一次只換握把並保留其他配件，才能分辨快速瞄準與後座力的取捨，別將不同項目的百分比直接相加。",
         "4:08–5:38 — 瞄具同時影響畫面與瞄準表現。作者在說明欄保留光學鏡ADS數值的不確定性；1.5倍鏡名稱在自動字幕中也有不同拼法。請核對遊戲中的實際物品，別依誤寫名稱購買。 除了倍率，也檢查鏡框會不會擋住側邊目標。字幕名稱與目前選單不一致時，記錄遊戲內的確切名稱，不把讀音相近當成已確認同款。",
         "6:25–6:56、10:49–11:04 — 彈匣選擇取決於交戰時間及換彈機會。持續推進可能更需要容量，近戰則須考慮操作代價。AMP-9以20發彈匣為比較起點，購買時仍應確認當前物品。 比較容量時固定其他配件，記下第一輪交火實際用了幾發、何時能安全換彈，才能判斷較大彈匣是否幫助任務，而非只是增加用不到的容量。",
         "7:32–8:30 — 可用M4、AK-74的討論安排約40公尺對照：固定槍械、彈藥、位置及連射長度，每次更換一項配件並記錄、重複。作者偏好的組合不等於通用最強配裝。 把候選武器與配件放進配裝清單，依目前裝備介面核對價格與安裝可行性。換槍或換彈種就另開紀錄，再回到原配置確認是否能重現。",
@@ -281,7 +282,7 @@ export const recentVideoCopy: Record<string, Localized> = {
       "title": "Dodatki WARDOGS: zastosuj porównania Evo4Fun",
       "answer": "Dobieraj dodatki do starcia: szybkość ADS, odrzut, pojemność i widoczność konkurują. Evo4Fun łączy dane wydobyte z gry, obserwacje na strzelnicy i własne preferencje o różnej pewności.",
       "notes": [
-        "1:31–2:21 — TDG i RVG to kompromis kontroli odrzutu i szybkości celowania. Procenty pochodzą z danych autora, nie oficjalnej tabeli. Porównuj jeden chwyt naraz na tej samej broni przed zakupem.",
+        "1:31–2:21 — Według danych odczytanych przez autora TDG zmniejsza pionowy odrzut o 30%, kosztem 10% szybkości ADS. RVG daje o pięć punktów procentowych mniej kontroli pionowej i o dwa mniej poziomej, lecz zwiększa szybkość ADS o 10%. RVG sprzyja szybkiemu wejściu, TDG stabilniejszej serii. To podane modyfikatory, nie nasze pomiary czasu celowania; jednoczesna zmiana kilku części ukrywa przyczynę różnicy.",
         "4:08–5:38 — Celownik zmienia obraz i celowanie. Autor zastrzega niepewność ADS optyki; napisy różnie zapisują nazwę celownika 1,5×. Sprawdź rzeczywisty przedmiot w menu zamiast kupować według błędnej transkrypcji.",
         "6:25–6:56 i 10:49–11:04 — Magazynek dobieraj do długości walki i możliwości przeładowania. Pojemność pomaga przy długim szturmie, lecz koszt obsługi ma znaczenie w zwarciu. Przykład AMP-9 zaczyna się od 20 nabojów; sprawdź aktualny przedmiot.",
         "7:32–8:30 — Fragment M4/AK-74 wykorzystaj do prób na około 40 metrach. Zachowaj broń, amunicję, pozycję i serię; zmieniaj jeden dodatek, zapisuj wynik i powtarzaj. Ulubiony zestaw autora nie jest zawsze najlepszy.",
@@ -302,9 +303,9 @@ export const recentVideoCopy: Record<string, Localized> = {
       "answer": "This compact firing-range build combines a sealed FOB, shelter, mortar pit and Talon. Copy its supply and access planning before copying the walls: the author shows awkward door access, and a sealed base creates a real recovery cost after death.",
       "notes": [
         "0:00 — The proposed initial run uses one transport, one building-supply pallet and one ammunition pallet. This is the author's demonstrated starting plan, not a universal bill of materials. Confirm current unlocks, supplies and terrain before buying; firing-range construction is faster than a live match.",
-        "3:41 — Build the shell and shelter while keeping working access open. At 7:27 the mortar position is placed relative to the shelter. Before sealing, walk the actual route between receiving cargo, cover and weapon stations with your teammate.",
+        "3:41 — Follow the demonstrated order: raised outer walls, indirect-fire shelter, then a Recon tower with its ladder facing inward. The early wall sequence uses three pieces per side (1:40); at 2:38 a wall placed too far forward prevents the corner from snapping, so align the preview and close the gap before completing it. Keep doors open while working, add the upper Hesco pieces, then place the mortar pit at 7:27. This is an order of operations, not a counted total-material bill.",
         "9:21–11:25 — Build the Talon from the edge, not standing on the unfinished object: the author warns of being pushed into the surrounding blocks. The side pockets are intended as escape cover; test climbing back out instead of assuming that a visually enclosed pocket is usable.",
-        "14:07–14:44 — The door is an escape hatch, not a reliable entrance; the wall and door can trap the player. The description also says death recovery needs a parachute or dismantling and rebuilding a Hesco access point. Budget a hammer, replacement materials and a second person's access plan.",
+        "14:07–14:44 — The door is an escape hatch, not a reliable entrance; the wall and door can trap the player. The description also says death recovery needs a parachute or dismantling and rebuilding a Hesco access point. Budget a hammer, replacement materials and a second person's access plan. Use the small staircase to enter the Talon position instead. At 18:17–18:41 the author finds the rear sandbag prevents climbing and leaves it one build stage lower; preserve that climb route before adding more head cover.",
         "15:01–18:41 — Extra head cover can obstruct low-angle Talon shots and climbing. The claimed mortar reach is a single layout observation, not a terrain or collision guarantee. Use the map and logistics planner for supply and route planning; confirm firing arcs, exits and resupply in the current build before treating this as a defended live FOB."
       ],
       "chapterTitles": [
@@ -320,9 +321,9 @@ export const recentVideoCopy: Record<string, Localized> = {
       "answer": "Der Schießstand-Bau verbindet geschlossene FOB, Unterstand, Mörser und Talon. Übernimm zuerst Versorgung und Zugang: Der Autor zeigt problematische Türen, und nach dem Tod verursacht die geschlossene Basis echte Rückkehrkosten.",
       "notes": [
         "0:00 — Ein Transport, eine Baumaterialpalette und eine Munitionspalette sind der gezeigte Startplan, keine allgemeine Stückliste. Prüfe Freischaltungen, Vorräte und Gelände. Am Schießstand geht der Bau schneller als im Match.",
-        "3:41 — Errichte Außenhülle und Unterstand mit offenen Arbeitswegen. Bei 7:27 folgt der Mörserplatz. Gehe mit dem Partner den Weg zwischen Warenannahme, Deckung und Waffen ab, bevor du alles verschließt.",
+        "3:41 — Gezeigte Reihenfolge: erhöhte Außenwände, Schutzraum gegen indirektes Feuer, dann Recon-Turm mit Leiter nach innen. Der erste Wandabschnitt nutzt drei Teile je Seite (1:40). Bei 2:38 verhindert eine zu weit vorn gesetzte Wand das Einrasten der Ecke: Vorschau ausrichten und Lücke schließen, bevor fertiggebaut wird. Türen während der Arbeit offenlassen, obere Hesco ergänzen, dann bei 7:27 den Mörserplatz setzen. Keine vollständig gezählte Materialliste.",
         "9:21–11:25 — Baue den Talon vom Rand, nicht auf dem unfertigen Objekt: Laut Autor kann man in die Blöcke gedrückt werden. Seitentaschen sollen Fluchtdeckung bieten; prüfe auch das Heraussteigen.",
-        "14:07–14:44 — Die Tür ist ein Fluchtausgang, kein zuverlässiger Eingang; Wand und Tür können festklemmen. Nach dem Tod verlangt die Beschreibung Fallschirm oder Abbau und Neubau eines Hesco-Zugangs. Plane Hammer, Ersatzmaterial und Partnerzugang ein.",
+        "14:07–14:44 — Die Tür ist ein Fluchtausgang, kein zuverlässiger Eingang; Wand und Tür können festklemmen. Nach dem Tod verlangt die Beschreibung Fallschirm oder Abbau und Neubau eines Hesco-Zugangs. Plane Hammer, Ersatzmaterial und Partnerzugang ein. Nutze stattdessen die kleine Treppe zum Talon. Bei 18:17–18:41 blockiert der hintere Sandsack das Klettern; der Autor lässt ihn eine Baustufe niedriger. Den Kletterweg vor zusätzlichem Kopfschutz freihalten.",
         "15:01–18:41 — Zusätzlicher Kopfschutz kann flache Talon-Schüsse und Klettern behindern. Die genannte Mörserreichweite ist eine Layout-Beobachtung, keine Gelände- oder Kollisionsgarantie. Prüfe mit Karte und Logistikplanung Nachschub, Schusswinkel und Ausgänge vor dem Live-Einsatz."
       ],
       "chapterTitles": [
@@ -338,9 +339,9 @@ export const recentVideoCopy: Record<string, Localized> = {
       "answer": "Постройка на полигоне объединяет закрытую FOB, укрытие, миномёт и Talon. Сначала планируйте снабжение и вход: автор показывает проблемы с дверью, а закрытая база усложняет возвращение после смерти.",
       "notes": [
         "0:00 — Один транспорт, поддон стройматериалов и поддон боеприпасов — показанный стартовый план, не универсальная смета. Проверьте открытия, запасы и местность. На полигоне строительство быстрее, чем в матче.",
-        "3:41 — Возводите оболочку и укрытие с открытыми рабочими проходами. В 7:27 размещается миномёт. До закрытия пройдите с напарником путь от приёма груза до укрытия и оружия.",
+        "3:41 — Порядок показанного строительства: поднятые внешние стены, укрытие от непрямого огня, затем Recon-башня лестницей внутрь. Начальный участок использует три детали с каждой стороны (1:40). В 2:38 стена слишком выдвинута и мешает привязке угла: выровняйте предварительное размещение и закройте щель до завершения стройки. Двери пока открыты, затем верхние Hesco и в 7:27 миномётная позиция. Это порядок работ, не полный подсчёт материалов.",
         "9:21–11:25 — Стройте Talon с края, не стоя на незавершённой установке: автор предупреждает о застревании в блоках. Боковые карманы предназначены для отхода; проверьте, что из них можно выбраться.",
-        "14:07–14:44 — Дверь служит аварийным выходом, а не надёжным входом: у стены можно застрять. После смерти описание предлагает парашют или разборку и восстановление входа через Hesco. Оставьте молоток, материалы и доступ для напарника.",
+        "14:07–14:44 — Дверь служит аварийным выходом, а не надёжным входом: у стены можно застрять. После смерти описание предлагает парашют или разборку и восстановление входа через Hesco. Оставьте молоток, материалы и доступ для напарника. Входите к Talon по маленькой лестнице. В 18:17–18:41 задний мешок мешает подъёму, и автор оставляет его на одну строительную ступень ниже. Не перекрывайте путь дополнительной защитой головы.",
         "15:01–18:41 — Защита головы может перекрывать низкие выстрелы Talon и мешать подъёму. Заявленная дальность миномёта относится к одной схеме, а не гарантирует отсутствие столкновений. Планируйте снабжение на карте и проверяйте сектора огня, выходы и пополнение в текущей версии."
       ],
       "chapterTitles": [
@@ -356,9 +357,9 @@ export const recentVideoCopy: Record<string, Localized> = {
       "answer": "A construção no campo de tiro reúne FOB fechada, abrigo, morteiro e Talon. Copie primeiro o plano de suprimentos e acesso: o autor mostra uma porta problemática, e morrer cria um custo real para voltar à base.",
       "notes": [
         "0:00 — Um transporte, um palete de construção e um de munição são o plano inicial demonstrado, não uma lista universal de materiais. Confira desbloqueios, estoque e terreno. A construção no campo de tiro é mais rápida que na partida.",
-        "3:41 — Monte a estrutura e o abrigo mantendo as passagens de trabalho abertas. Aos 7:27 vem o morteiro. Antes de fechar, percorra com a dupla o caminho entre entrega de carga, cobertura e armas.",
+        "3:41 — Siga a ordem mostrada: paredes externas elevadas, abrigo contra fogo indireto e torre Recon com escada para dentro. O trecho inicial usa três peças por lado (1:40). Em 2:38 uma parede adiantada impede o encaixe do canto: alinhe a prévia e feche a fresta antes de concluir. Deixe portas abertas durante o trabalho, acrescente Hesco superiores e só então coloque o morteiro em 7:27. É uma sequência de construção, não a contagem total de material.",
         "9:21–11:25 — Construa o Talon pela borda, sem ficar sobre o objeto incompleto: o autor alerta que você pode ficar preso nos blocos. Os bolsões laterais servem como fuga; teste também a subida para sair deles.",
-        "14:07–14:44 — A porta funciona como saída, não entrada confiável; parede e porta podem prender o jogador. A descrição exige paraquedas ou desmontar e reconstruir um acesso de Hesco após morrer. Reserve martelo, materiais e uma rota para a dupla.",
+        "14:07–14:44 — A porta funciona como saída, não entrada confiável; parede e porta podem prender o jogador. A descrição exige paraquedas ou desmontar e reconstruir um acesso de Hesco após morrer. Reserve martelo, materiais e uma rota para a dupla. Entre no Talon pela pequena escada. Em 18:17–18:41 o saco de areia traseiro impede a subida, e o autor o deixa um estágio de construção abaixo. Preserve a rota de escalada antes de ampliar a proteção da cabeça.",
         "15:01–18:41 — Cobertura extra pode bloquear tiros baixos do Talon e a escalada. O alcance citado do morteiro é observação de um projeto, não garantia de terreno ou colisão. Use mapa e logística para planejar reposição e confira arcos, saídas e acesso na versão atual."
       ],
       "chapterTitles": [
@@ -374,9 +375,9 @@ export const recentVideoCopy: Record<string, Localized> = {
       "answer": "射撃場で作る密閉FOBに、シェルター、迫撃砲、Talonを組み合わせた構成です。壁の形より先に補給と出入りを考えましょう。動画には扉の引っ掛かりがあり、死亡後に戻る手段も必要です。",
       "notes": [
         "0:00 — 輸送車両1台、建築資材1パレット、弾薬1パレットが作者の開始案です。万能な資材表ではありません。アンロック、在庫、地形を確認し、射撃場では実戦より建築が速い点も考慮します。 この開始案から実戦で必要な購入金額や運搬回数まで確定することはできません。出発前に受け手、荷下ろし地点、建築用と弾薬用の荷物を確認し、補給車を失った場合に続行するか撤退するかも決めます。",
-        "3:41 — 作業用の通路を開けたまま外壁とシェルターを作り、7:27で迫撃砲位置を配置します。封鎖前に、荷受け場所から遮蔽物・兵器までの移動を相方と実際に歩いて確かめます。 出入りできるだけでなく、持ち込む物資を曲がり角から目的地まで運べるかを確かめます。見た目の左右対称より、負傷者の退避と追加補給を妨げない配置を優先し、封鎖は確認後の最後の作業にします。",
+        "3:41 — 動画の順序は高くした外壁、間接射撃用シェルター、梯子を内側へ向けたReconタワーです。最初の外壁では各辺3個と説明しています（1:40）。2:38では先に置いた壁が前へ出すぎて角がスナップせず、まだ完成させていなかったため、左の壁に合わせて隙間を埋め直せています。プレビューで角を合わせてから建て、作業中は扉を開けておきます。上側のHescoを追加した後、7:27で迫撃砲の位置を決めます。これは実際の工程であり、全体の資材数を数え終えた一覧ではありません。",
         "9:21–11:25 — Talonは未完成の本体に乗らず端から建てます。周囲のブロックに押し込まれる危険を作者が説明しています。横の退避スペースは入るだけでなく、登って戻れるかも試してください。 完成した構造物がプレイヤーの足元や退避路をふさぐ可能性を確認します。相方がいる場合は外から経路を見てもらい、閉じ込められた時に何を撤去するかを完成前に相談しておくと復旧を判断しやすくなります。",
-        "14:07–14:44 — 扉は脱出用で、安定した入口ではありません。壁との間に引っ掛かります。説明欄では死亡後の再入場にパラシュートかHescoの撤去・再建が必要とされています。ハンマー、予備資材、相方の経路を確保します。 死亡して装備を失った後も同じ経路で戻れるとは限りません。外側から入場を試し、撤去と再建に必要な道具を再取得できるかを確認してください。出口が一度使えたことを、繰り返し入れる入口の証拠にはしません。",
+        "14:07–14:44 — 扉は脱出用で、安定した入口ではありません。壁との間に引っ掛かります。説明欄では死亡後の再入場にパラシュートかHescoの撤去・再建が必要とされています。ハンマー、予備資材、相方の経路を確保します。 死亡して装備を失った後も同じ経路で戻れるとは限りません。外側から入場を試し、撤去と再建に必要な道具を再取得できるかを確認してください。出口が一度使えたことを、繰り返し入れる入口の証拠にはしません。 Talonへ入るときは小さな階段を使います。18:17–18:41では後方の土嚢で登れなくなり、作者は一段低い施工状態に戻しています。頭部の遮蔽を増やす前に、退避場所から上がる経路を残してください。",
         "15:01–18:41 — 頭部を守る追加遮蔽は低角度のTalon射撃や登り動作を妨げます。迫撃砲の到達距離はこの構成での観察であり地形・衝突の保証ではありません。マップと補給プランナーを使い、現行版で射界、出口、補給口を確認します。 最後に射撃と補給を別々に試し、遮蔽物を追加するたびに同じ確認を繰り返します。低い目標へ撃てない場合は計算機の数値を変える前に、砲身の前や足元の構造物が射線を遮っていないか調べます。"
       ],
       "chapterTitles": [
@@ -392,9 +393,9 @@ export const recentVideoCopy: Record<string, Localized> = {
       "answer": "这套靶场演示结合封闭 FOB、掩体、迫击炮坑和 Talon。先学补给与进出规划，再照搬墙体：作者明确展示了门口卡人，封闭基地也会增加死亡后返回的成本。",
       "notes": [
         "0:00 — 作者以一辆运输车、一板建材和一板弹药为起步方案，不代表所有地形与版本的固定材料清单。购买前核对解锁、资源和地形；靶场的建造速度也比实际对局更快。 起步物资并不能直接推出实战总造价或运输次数。出发前确认接货人、卸货位置、建材与弹药分工，也决定补给车损失后是继续还是撤退。",
-        "3:41 — 封闭外壳与掩体成形，施工通道先留开；7:27再布置迫击炮坑。完全封口之前，和队友走一遍卸货、找掩体和操作武器之间的真实路线。 不能只测空手走通，还要检查补给能否绕过转角送到使用点。掩体是否对称次于伤员撤退与后续补货，封墙应留到验证路线之后。",
+        "3:41 — 实际顺序是抬高外墙、间接火力掩体、梯子朝内的Recon塔。前面1:40的外墙步骤是每侧三块；2:38因为第一面墙放得太靠前，墙角无法吸附。作者没有先把全部墙建完，而是重新对齐左墙并补缝，这能避免拆掉成品返工。施工时门保持打开，再补上层Hesco，最后到7:27安放迫击炮坑。先做外壳和施工通路，再封闭入口，而不是照完成截图一次封死所有位置。这里给的是源视频的建造顺序，不是假造精确总材料清单。",
         "9:21–11:25 — 从边缘建造 Talon，不要站在尚未完工的本体上，作者警告可能被推入周围方块。侧边凹位用于紧急躲避，但要测试能否爬回，不要认为看着封闭就一定好用。 检查完工物体会不会挤占脚下与退路。有队友时让其从外侧观察，提前约定卡住后撤掉哪一块，避免封闭完成才发现无处恢复。",
-        "14:07–14:44 — 那扇门更适合作为逃生口，不是可靠入口；墙体和门会让玩家卡住。描述还要求死亡后用降落伞回入，或锤拆 Hesco 再重建入口。需预留锤子、补墙材料和队友的进出安排。 阵亡丢装后未必还能走原路径回来，应从外侧测试重新进入，并确认能再次取得拆建工具。门成功出去一次，不等于它是可靠的重复入口。",
+        "14:07–14:44 — 那扇门更适合作为逃生口，不是可靠入口；墙体和门会让玩家卡住。描述还要求死亡后用降落伞回入，或锤拆 Hesco 再重建入口。需预留锤子、补墙材料和队友的进出安排。 阵亡丢装后未必还能走原路径回来，应从外侧测试重新进入，并确认能再次取得拆建工具。门成功出去一次，不等于它是可靠的重复入口。 Talon入口改走小阶梯。18:17–18:41作者发现后侧沙袋建高后无法攀回去，便保留低一阶的施工状态；加头部掩护之前先保住从躲避处返回炮位的路线。",
         "15:01–18:41 — 增加头部掩体可能挡住 Talon 的低角度射击和攀爬。视频中的迫击炮射程是单个布局观察，不能当作地形与碰撞保证。地图和物流工具用于规划补给，实际仍应在当前版本测试射界、出口和回补路线。 射击与补给分别验收，每次加掩体后复测。打不到低处目标时，先检查炮口和脚下建筑挡线，不要把建筑碰撞当成计算器需要修正的距离。"
       ],
       "chapterTitles": [
@@ -410,9 +411,9 @@ export const recentVideoCopy: Record<string, Localized> = {
       "answer": "這套靶場示範結合封閉FOB、掩體、迫擊砲陣地與Talon。先學補給及出入規劃，再仿照牆體：作者展示了門口卡人，封閉基地也增加死亡後返回的成本。",
       "notes": [
         "0:00 — 作者用一輛運輸車、一板建材和一板彈藥作為起步方案，不代表各種地形與版本的固定材料表。購買前核對解鎖、資源與地形；靶場建造也比實戰更快。 起始物資不能直接推出實戰總造價或運輸次數。出發前確認收貨人、卸貨位置、建材與彈藥分工，也決定補給車損失後要繼續還是撤退。",
-        "3:41 — 外殼與掩體成形時，先保留施工通道；7:27再安排迫擊砲位置。完全封口前，和隊友走過卸貨、躲避與操作武器之間的實際路線。 不能只測空手走得通，也要檢查補給能否繞過轉角送到使用點。掩體對稱與否次於傷員撤離和後續補貨，封牆應留到路線驗證之後。",
+        "3:41 — 實際順序是抬高外牆、間接火力掩體、梯子朝內的Recon塔。1:40外牆步驟為每側三塊；2:38第一面牆放得太前面，牆角無法吸附。作者沒有先把牆全部建完，而是重新對齊左牆並補縫，避免拆成品重做。施工時保持開門，再補上層Hesco，到7:27才放迫擊砲坑。先完成外殼與施工通道，再封閉入口，別依完工截圖一次封死。這是原影片的施工順序，不是杜撰精確總材料表。",
         "9:21–11:25 — 請從邊緣建造Talon，別站在未完工的本體上，作者提醒可能被推入周圍方塊。側邊凹位用來緊急躲避，也要確認爬得回來，不能只看外觀判斷安全。 檢查完工物件是否擠占腳下與退路。有隊友時請他從外側觀察，先約定卡住後拆哪一塊，別等全部封閉才發現無法恢復。",
-        "14:07–14:44 — 那扇門較適合作為逃生口，不是可靠入口；牆與門可能卡住玩家。說明欄也要求死亡後用降落傘進入，或拿鎚子拆掉Hesco再重建。須保留工具、補牆材料及隊友的出入安排。 陣亡失去裝備後未必還能走原路回來，應從外側測試重新進入，並確認能再取得拆建工具。門成功出去一次，不等於它是可靠的重複入口。",
+        "14:07–14:44 — 那扇門較適合作為逃生口，不是可靠入口；牆與門可能卡住玩家。說明欄也要求死亡後用降落傘進入，或拿鎚子拆掉Hesco再重建。須保留工具、補牆材料及隊友的出入安排。 陣亡失去裝備後未必還能走原路回來，應從外側測試重新進入，並確認能再取得拆建工具。門成功出去一次，不等於它是可靠的重複入口。 Talon入口改走小階梯。18:17–18:41後側沙袋加高後爬不回去，作者便保留低一階的施工狀態；增加頭部掩護前，先保住從躲避處返回砲位的路線。",
         "15:01–18:41 — 增加頭部掩體可能擋住Talon低角度射擊與攀爬。影片的迫擊砲射程只是該配置的觀察，不是地形與碰撞保證。地圖及物流工具協助規劃，仍需在當前版本檢查射界、出口與補給動線。 射擊與補給分開驗收，每次加掩體後重測。打不到低處目標時，先檢查砲口與腳下建築擋線，別把建築碰撞當成計算機距離需要修正。"
       ],
       "chapterTitles": [
@@ -428,9 +429,9 @@ export const recentVideoCopy: Record<string, Localized> = {
       "answer": "Projekt ze strzelnicy łączy zamkniętą FOB, schron, moździerz i Talon. Najpierw zaplanuj dostawy i wejście: autor pokazuje blokującą się drogę, a śmierć utrudnia powrót do zamkniętej bazy.",
       "notes": [
         "0:00 — Jeden transport, paleta materiałów i paleta amunicji to pokazany plan startowy, nie uniwersalna lista zakupów. Sprawdź odblokowania, zapasy i teren. Na strzelnicy budowanie jest szybsze niż w meczu.",
-        "3:41 — Stawiaj obudowę i schron z otwartymi przejściami roboczymi. W 7:27 powstaje stanowisko moździerza. Przed zamknięciem przejdź z partnerem od odbioru ładunku do osłony i broni.",
+        "3:41 — Pokazana kolejność to podwyższone ściany, schron przeciw ostrzałowi pośredniemu i wieża Recon z drabiną do środka. Początkowy odcinek ma trzy elementy na stronę (1:40). W 2:38 zbyt wysunięta ściana blokuje dopasowanie narożnika: wyrównaj podgląd i zamknij szczelinę przed ukończeniem. Drzwi zostają otwarte na czas prac; później górne Hesco i stanowisko moździerza w 7:27. To kolejność działań, nie pełny spis materiałów.",
         "9:21–11:25 — Buduj Talona z krawędzi, bez stania na nieukończonym obiekcie: autor ostrzega przed wepchnięciem w bloki. Boczne wnęki służą do ucieczki; sprawdź, czy potrafisz z nich wyjść.",
-        "14:07–14:44 — Drzwi są wyjściem awaryjnym, nie pewnym wejściem; można utknąć przy ścianie. Opis wymaga po śmierci spadochronu albo rozebrania i odbudowania przejścia Hesco. Zostaw młotek, materiały i drogę partnerowi.",
+        "14:07–14:44 — Drzwi są wyjściem awaryjnym, nie pewnym wejściem; można utknąć przy ścianie. Opis wymaga po śmierci spadochronu albo rozebrania i odbudowania przejścia Hesco. Zostaw młotek, materiały i drogę partnerowi. Do Talona wejdź małymi schodkami. W 18:17–18:41 tylny worek blokuje wspinanie, więc autor zostawia go o etap budowy niżej. Zachowaj powrót z osłony, zanim podniesiesz ochronę głowy.",
         "15:01–18:41 — Dodatkowa osłona głowy może blokować niski strzał Talona i wspinanie. Zasięg moździerza pochodzi z jednego układu, nie gwarantuje braku kolizji. Planuj dostawy na mapie i sprawdź sektory ostrzału, wyjścia oraz uzupełnianie w bieżącej wersji."
       ],
       "chapterTitles": [

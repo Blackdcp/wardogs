@@ -31,7 +31,7 @@ const candidate = (data: Omit<VideoCandidate, "metadataCheckedAt" | "transcriptV
   embedPlaybackVerified: false
 });
 
-// Original watch-page metadata and displayed chapters, not validated game instructions.
+// Original watch-page metadata; recent chapter links are authored from the stated caption review.
 export const videoCandidates: readonly VideoCandidate[] = [
   ...recentVideos.filter(video => !video.articleSlug).map((video): VideoCandidate => ({
     youtubeId: video.id, title: video.title, channel: video.channel, language: "en",

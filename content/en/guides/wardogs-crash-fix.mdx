@@ -104,13 +104,13 @@ sources:
 ---
 ## Twenty-second freezes, long-session crashes and leftover processes
 
-Recent community reports describe a freeze followed by the game closing, crashes after a long session, and a game process remaining after exit. These are symptoms to record, not proof of a memory leak or one universal driver fault. Distinguish a temporary frametime spike, a server disconnect, the application closing and the entire PC restarting.
+**The image freezes but recovers:** leave the client running if it still progresses, note the task and minutes since launch, then use the [performance A/B/A comparison](/en/guides/wardogs-best-settings). A brief recovery is not a successful crash fix.
 
-Write down how many minutes you played, the exact build, server/region, map area, task and error. If the process remains after you have exited and its reporting has finished, check Task Manager before launching a second copy. Save work before ending an unresponsive process. Preserve a crash report or dump for the official support channel privately; it may contain machine or account details and does not belong in a public forum attachment by default.
+**The process closes or stops responding:** preserve the exact code and the last successful action. After the crash reporter finishes, check Task Manager for a leftover WARDOGS process before starting another copy. Save other work before ending a confirmed unresponsive game process. Follow the code-specific and safe checks below one at a time; record the result after each.
 
-For a reproducible case, compare the same route and duration with one setting changed. Keep the original configuration so you can restore it. Do not uninstall security components, roll every driver back or disable protection on the strength of a single player's diagnosis. Use the [settings comparison record](/en/guides/wardogs-best-settings) below that guide's diagnosis section; a WD launch code uses the separate code-specific steps here.
+**The same failure returns:** stop cycling through the same repairs. Give official support the build, session duration, steps to reproduce, last action, error and the checks already tried. After a hotfix, repeat the same route and duration once and attach the new result to the existing case. A private crash dump can contain account or machine details; use the support channel for it.
 
-Reports include crashes with memory not full and with TAA enabled. Neither disabling FSR nor assigning a 96 GB pagefile is a verified universal fix. Keep system-managed memory settings unless a reproducible diagnosis or official support gives a specific reason to change them; do not copy BIOS changes from a community anecdote.
+**The whole PC restarts or loses power:** stop repeat launches and use the system-stability branch below. Community reports of high RAM, TAA crashes or a 96 GB pagefile do not establish a memory leak or a universal remedy; keep memory settings system-managed unless diagnosis or official support identifies a reason to change them.
 
 ## Official support: choose the correct channel
 

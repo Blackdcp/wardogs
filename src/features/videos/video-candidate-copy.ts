@@ -29,45 +29,45 @@ type ReviewCopy = {
 const reviewCopy: Record<Locale, ReviewCopy> = {
   en: {
     summary: "September 30 review: automatic caption exports and selected source-video frames are distinguished below. Captions may contain errors and were not independently checked against the audio. No full-video viewing, game-client reproduction or site-embed playback verification. Creator videos are not official guidance; chapters are navigation only.",
-    reviewed: "Evidence review", captions: {"full-track-read": "Full automatic caption track exported; full text read", "excerpts-read": "Full automatic caption track exported; selected passages read", unavailable: "No caption export obtained"},
+    reviewed: "Evidence review", captions: {"full-track-read": "Full caption track exported; full text read", "excerpts-read": "Full caption track exported; selected passages read", unavailable: "No caption export obtained"},
     footage: "Source footage sampled", intro: "Intro only", noFootage: "Source footage not inspected",
     evidenceCautions: {"wipe-estimate": "The creator presents October 10 as a working wipe estimate, not an official confirmed date.", "floating-roof": "The creator calls the floating roof an exploit and expects it to be patched. Do not treat it as durable building guidance.", "input-overlay": "The creator says the overlay arrow shows cursor position relative to screen center, not raw mouse movement."}
   },
   ja: {
     summary: "9月30日確認。自動字幕の取得・読解と元動画の部分的な画面確認を分けて表示します。字幕には誤認識があり、音声との独立照合はしていません。全編視聴、ゲーム内再現、当サイトの埋め込み再生は未検証です。公式攻略ではなく、チャプターは視聴位置の案内です。",
-    reviewed: "確認日", captions: {"full-track-read": "自動字幕トラック全体を取得・全文を読解", "excerpts-read": "自動字幕トラック全体を取得・一部を読解", unavailable: "字幕を取得できず"},
+    reviewed: "確認日", captions: {"full-track-read": "字幕トラック全体を取得・全文を読解", "excerpts-read": "字幕トラック全体を取得・一部を読解", unavailable: "字幕を取得できず"},
     footage: "元動画の画面を部分確認", intro: "導入部分のみ", noFootage: "元動画の画面は未確認",
     evidenceCautions: {"wipe-estimate": "投稿者が示す10月10日は暫定的なワイプ予想で、公式の確定日ではありません。", "floating-roof": "投稿者自身が浮いた屋根を不具合利用と呼び、修正を予想しています。継続して使える建築手順とは見なせません。", "input-overlay": "投稿者によると矢印は画面中央に対するカーソル位置であり、マウスの生の移動量ではありません。"}
   },
   ru: {
     summary: "Проверка 30 сентября: экспорт и чтение автосубтитров отделены от выборочного просмотра кадров исходного видео. Возможны ошибки распознавания; независимой сверки с аудио не было. Полный просмотр, воспроизведение в клиенте игры и проверка встроенного плеера сайта не выполнены. Это не официальные инструкции; главы служат навигацией.",
-    reviewed: "Дата проверки", captions: {"full-track-read": "Полная дорожка автосубтитров экспортирована; весь текст прочитан", "excerpts-read": "Полная дорожка автосубтитров экспортирована; прочитаны отдельные фрагменты", unavailable: "Экспорт субтитров не получен"},
+    reviewed: "Дата проверки", captions: {"full-track-read": "Полная дорожка субтитров экспортирована; весь текст прочитан", "excerpts-read": "Полная дорожка субтитров экспортирована; прочитаны отдельные фрагменты", unavailable: "Экспорт субтитров не получен"},
     footage: "Выборочно просмотрены кадры источника", intro: "Только вступление", noFootage: "Кадры источника не просмотрены",
     evidenceCautions: {"wipe-estimate": "10 октября названо автором предварительной оценкой даты вайпа, а не официально подтвержденной датой.", "floating-roof": "Автор называет парящую крышу эксплойтом и ожидает исправления. Это не надежное долгосрочное руководство по строительству.", "input-overlay": "Автор поясняет: стрелка показывает положение курсора относительно центра экрана, а не непосредственное движение мыши."}
   },
   de: {
     summary: "Prüfung vom 30. September: Export und Lesen automatischer Untertitel sind von Stichproben der Originalaufnahmen getrennt. Untertitel können Fehler enthalten; kein unabhängiger Audioabgleich. Keine vollständige Sichtung, Nachstellung im Spielclient oder Prüfung des Website-Players. Keine offiziellen Anleitungen; Kapitel dienen der Navigation.",
-    reviewed: "Prüfdatum", captions: {"full-track-read": "Vollständige automatische Untertitelspur exportiert; gesamten Text gelesen", "excerpts-read": "Vollständige automatische Untertitelspur exportiert; ausgewählte Passagen gelesen", unavailable: "Kein Untertitelexport erhalten"},
+    reviewed: "Prüfdatum", captions: {"full-track-read": "Vollständige Untertitelspur exportiert; gesamten Text gelesen", "excerpts-read": "Vollständige Untertitelspur exportiert; ausgewählte Passagen gelesen", unavailable: "Kein Untertitelexport erhalten"},
     footage: "Originalaufnahmen stichprobenartig gesichtet", intro: "Nur Einleitung", noFootage: "Originalaufnahmen nicht gesichtet",
     evidenceCautions: {"wipe-estimate": "Der Autor nennt den 10. Oktober als vorläufige Wipe-Schätzung, nicht als offiziell bestätigten Termin.", "floating-roof": "Der Autor nennt das schwebende Dach einen Exploit und erwartet einen Patch. Keine dauerhaft verlässliche Bauanleitung.", "input-overlay": "Laut Autor zeigt der Overlay-Pfeil die Cursorposition relativ zur Bildschirmmitte, nicht die rohe Mausbewegung."}
   },
   "pt-br": {
     summary: "Revisão de 30 de setembro: exportação e leitura de legendas automáticas estão separadas da inspeção de trechos visuais do vídeo original. As legendas podem conter erros e não foram conferidas independentemente com o áudio. Sem revisão integral do vídeo, reprodução no jogo ou verificação do player do site. Não são instruções oficiais; capítulos servem à navegação.",
-    reviewed: "Data da revisão", captions: {"full-track-read": "Faixa completa de legendas automáticas exportada; texto integral lido", "excerpts-read": "Faixa completa de legendas automáticas exportada; trechos selecionados lidos", unavailable: "Exportação de legendas não obtida"},
+    reviewed: "Data da revisão", captions: {"full-track-read": "Faixa completa de legendas exportada; texto integral lido", "excerpts-read": "Faixa completa de legendas exportada; trechos selecionados lidos", unavailable: "Exportação de legendas não obtida"},
     footage: "Trechos visuais do original inspecionados", intro: "Somente introdução", noFootage: "Imagens do original não inspecionadas",
     evidenceCautions: {"wipe-estimate": "O criador apresenta 10 de outubro como estimativa provisória do wipe, não como data oficialmente confirmada.", "floating-roof": "O criador chama o teto flutuante de exploit e espera uma correção. Não o trate como técnica de construção duradoura.", "input-overlay": "O criador explica que a seta mostra a posição do cursor em relação ao centro da tela, não o movimento bruto do mouse."}
   },
   "zh-cn": {
     summary: "9月30日复核：下方分别标明自动字幕导出、文本阅读范围和原视频画面抽查。自动字幕可能识别错误，未独立逐句对照音频；未完整观看所有视频、未在游戏客户端复现、未验证本站嵌入播放。创作者视频不是官方攻略，章节仅用于定位。",
-    reviewed: "证据复核", captions: {"full-track-read": "完整自动字幕轨已导出；已阅读全文", "excerpts-read": "完整自动字幕轨已导出；仅阅读选段", unavailable: "未取得字幕导出"},
+    reviewed: "证据复核", captions: {"full-track-read": "完整字幕轨已导出；已阅读全文", "excerpts-read": "完整字幕轨已导出；仅阅读选段", unavailable: "未取得字幕导出"},
     footage: "原视频画面抽查", intro: "仅开场片段", noFootage: "未查看到原视频画面",
     evidenceCautions: {"wipe-estimate": "作者把10月10日作为暂定清档估计，不是官方确认日期。", "floating-roof": "作者自己称悬空屋顶为漏洞利用，并预计会被修复，不能当作长期有效的建造规则。", "input-overlay": "作者说明叠加箭头表示光标相对屏幕中心的位置，并非原始鼠标移动轨迹。"}
   },
 
-  pl: {summary:"Przegląd z 30 września: poniżej rozróżniamy eksport automatycznych napisów i wybrane klatki źródłowych filmów. Napisy mogą zawierać błędy i nie zostały niezależnie porównane z dźwiękiem. Nie obejrzano całych filmów, nie odtworzono czynności w grze ani nie zweryfikowano odtwarzacza na stronie. Materiały twórców nie są oficjalnymi instrukcjami; rozdziały służą nawigacji.", reviewed:"Przegląd dowodów", captions:{"full-track-read":"Wyeksportowano pełną ścieżkę automatycznych napisów; przeczytano cały tekst", "excerpts-read":"Wyeksportowano pełną ścieżkę automatycznych napisów; przeczytano wybrane fragmenty", unavailable:"Nie uzyskano eksportu napisów"}, footage:"Sprawdzono wybrane klatki źródła", intro:"Tylko wstęp", noFootage:"Nie sprawdzono obrazu źródłowego", evidenceCautions:{"wipe-estimate":"Twórca przedstawia 10 października jako roboczą prognozę resetu, nie oficjalnie potwierdzoną datę.", "floating-roof":"Twórca nazywa unoszący się dach exploitem i oczekuje jego naprawy. Nie traktuj tego jako trwałej metody budowania.", "input-overlay":"Według twórcy strzałka nakładki pokazuje położenie kursora względem środka ekranu, a nie surowy ruch myszy."}},
+  pl: {summary:"Przegląd z 30 września: poniżej rozróżniamy eksport automatycznych napisów i wybrane klatki źródłowych filmów. Napisy mogą zawierać błędy i nie zostały niezależnie porównane z dźwiękiem. Nie obejrzano całych filmów, nie odtworzono czynności w grze ani nie zweryfikowano odtwarzacza na stronie. Materiały twórców nie są oficjalnymi instrukcjami; rozdziały służą nawigacji.", reviewed:"Przegląd dowodów", captions:{"full-track-read":"Wyeksportowano pełną ścieżkę napisów; przeczytano cały tekst", "excerpts-read":"Wyeksportowano pełną ścieżkę napisów; przeczytano wybrane fragmenty", unavailable:"Nie uzyskano eksportu napisów"}, footage:"Sprawdzono wybrane klatki źródła", intro:"Tylko wstęp", noFootage:"Nie sprawdzono obrazu źródłowego", evidenceCautions:{"wipe-estimate":"Twórca przedstawia 10 października jako roboczą prognozę resetu, nie oficjalnie potwierdzoną datę.", "floating-roof":"Twórca nazywa unoszący się dach exploitem i oczekuje jego naprawy. Nie traktuj tego jako trwałej metody budowania.", "input-overlay":"Według twórcy strzałka nakładki pokazuje położenie kursora względem środka ekranu, a nie surowy ruch myszy."}},
   "zh-tw": {
     summary: "9月30日複核：下方分別標明自動字幕匯出、文本閱讀範圍和原影片畫面抽查。自動字幕可能識別錯誤，未獨立逐句對照音訊；未完整觀看所有影片、未在遊戲客戶端復現、未驗證本站嵌入播放。創作者影片不是官方攻略，章節僅用於定位。",
-    reviewed: "證據複核", captions: { "full-track-read": "完整自動字幕軌已匯出；已閱讀全文", "excerpts-read": "完整自動字幕軌已匯出；僅閱讀選段", unavailable: "未取得字幕匯出" },
+    reviewed: "證據複核", captions: { "full-track-read": "完整字幕軌已匯出；已閱讀全文", "excerpts-read": "完整字幕軌已匯出；僅閱讀選段", unavailable: "未取得字幕匯出" },
     footage: "原影片畫面抽查", intro: "僅開場片段", noFootage: "未檢視到原影片畫面",
     evidenceCautions: { "wipe-estimate": "作者把10月10日作為暫定清檔估計，不是官方確認日期。", "floating-roof": "作者自己稱懸空屋頂為漏洞利用，並預計會被修復，不能當作長期有效的建造規則。", "input-overlay": "作者說明疊加箭頭表示游標相對螢幕中心的位置，並非原始滑鼠移動軌跡。" }
 }

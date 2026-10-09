@@ -78,9 +78,12 @@ describe("seasonal search discovery", () => {
     expect(searchSiteIndex(index, "Bigfry").some(({href}) => href === "/videos/wardogs-season-2-developer-interview")).toBe(true);
     expect(searchSiteIndex(index, "Evo4Fun").some(({href}) => href === "/videos/wardogs-attachments-tested")).toBe(true);
     expect(searchSiteIndex(index, "You've been using the WRONG attachments").some(({href}) => href === "/videos/wardogs-attachments-tested")).toBe(true);
-    const radio = searchSiteIndex(index, "RadioGLHF").find(({href}) => href === "/videos#candidate-Qx1ndM1tc2Y");
+    const radio = searchSiteIndex(index, "RadioGLHF").find(({href}) => href === "/videos/wardogs-fob-income-breakdown");
     expect(radio?.summary).toBeTruthy();
-    expect(radio?.summary).toContain(getRecentCandidateCopy(locale, "Qx1ndM1tc2Y"));
+    expect(index.some(({href}) => href === "/videos#candidate-Qx1ndM1tc2Y")).toBe(false);
+    expect(searchSiteIndex(index, "Colvin").some(({href}) => href === "/videos/wardogs-offensive-support-playstyle")).toBe(true);
+    const candidate = searchSiteIndex(index, "Nalerian").find(({href}) => href === "/videos#candidate-NC7nsS8qKBM");
+    expect(candidate?.summary).toContain(getRecentCandidateCopy(locale, "NC7nsS8qKBM"));
     expect(index.some(({href}) => href === "/videos/wardogs-full-match-334k")).toBe(false);
     expect(searchSiteIndex(index, "RVG")[0]?.href).toBe("/tools/loadout-budget");
   });

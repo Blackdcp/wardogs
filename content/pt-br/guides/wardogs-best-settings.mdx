@@ -78,19 +78,14 @@ sources:
 ---
 ## Separe FPS baixo, frametime e dessincronização de rede
 
-FPS médio alto não exclui frames longos isolados. Veículos podem voltar de posição por rede/servidor mesmo com renderização fluida. Compare mesmo servidor, rota, função da câmera e duração; outra região, mapa ou combate mais intenso não é teste controlado.
+1. **Separe o sintoma antes de mexer nos gráficos.** FPS sempre baixo pede teste de renderização; média alta com pausas pede teste de tempo de quadro. Se a câmera é suave mas jogadores ou veículos voltam para trás, mantenha os gráficos e compare primeiro servidor, região e ping. Processo que fecha segue o guia de crash.
+2. **Registre A.** Salve as configurações, espere uma preparação visível terminar e escolha uma rota repetível de 60 segundos. Registre FPS, picos de tempo de quadro disponíveis, ping e minutos desde a abertura. Use a mesma perspectiva e função: motorista e artilheiro não são condições equivalentes.
+3. **Teste B e restaure A.** Para renderização irregular, primeiro tente um limite de FPS sustentável; para FPS constantemente baixo, reduza a escala de renderização ou uma opção gráfica pesada. Mude só esse valor. Repita os 60 segundos, restaure o original e repita novamente. DLSS/FSR/TAA, resolução e overlays são testes separados.
+4. **Mantenha apenas melhora reproduzível.** Aceite B quando pausas diminuírem em repetições comparáveis sem perda inaceitável de visibilidade ou resposta. Se só a primeira execução melhora, a carga do servidor muda ou o último A também melhora, a causa não foi isolada: repita depois. Restaure A se B piorar mira, clareza ou estabilidade. Deixe medições ausentes em branco; RAM alta ou uma travada não comprovam vazamento.
 
-Copie a ficha para a execução inicial e a alterada:
+Para uma falha reproduzível, use o registro abaixo e o suporte em [problemas conhecidos](/pt-br/guides/wardogs-known-issues).
 
-- Data, hora e fuso; versão do jogo; Windows e driver GPU:
-- CPU, GPU, RAM; resolução, escala e perfil gráfico:
-- Servidor/região, área, ping, infantaria/motorista/artilheiro:
-- Minutos desde abrir; rota e duração do teste:
-- FPS médio e percentil/frametime, se a ferramenta mostrar:
-- Uso de RAM; processo permaneceu após sair:
-- Uma única alteração; resultado; valor original restaurado:
-
-O que não mediu deve ficar desconhecido. Em congelamentos periódicos, registre intervalo e se recupera ou fecha. Repita um bom resultado antes de adotá-lo. Não prometa ganho universal de um botão nem recomende rollback geral de drivers. Envie reproduções pelo suporte em [problemas conhecidos](/pt-br/guides/wardogs-known-issues).
+<DiagnosticRecord locale="pt-br" kind="performance" />
 
 ## Registro histórico: Verificação em vídeo da Temporada 1 - 17 de setembro de 2026
 
@@ -116,7 +111,7 @@ As melhores configurações de WARDOGS são as que entregam uma taxa de quadros 
 
 ## O que os jogadores pesquisam
 
-Buscas por `wardogs best settings` costumam misturar três perguntas: "meu PC roda?", "como reduzir travadas?" e "qual preset dá vantagem?" A primeira é respondida pelos requisitos oficiais; as outras exigem teste local. Um preset muito baixo pode dar mais margem de FPS, mas legibilidade, latência, VRAM e estabilidade de frame time também importam. O objetivo é uma experiência consistente, não apenas o maior número instantâneo no contador.
+Abaixo da meta de hardware publicada, comece com preset baixo disponível ou escala de renderização menor. Com média alta e pausas, use o ramo de tempo de quadro A/B/A. Com câmera fluida e jogadores voltando de posição, investigue a conexão primeiro. A média de FPS sozinha não separa esses casos.
 
 ## Como usar este guia
 
@@ -136,9 +131,9 @@ Use o vídeo para ideias de comparação, não como uma lista para copiar. Se es
 
 ## Método para buscar 60 FPS estáveis
 
-Defina 60 FPS como uma meta de teste somente se ela combinar com seu monitor e hardware. Comece com resolução e preset moderados, jogue uma situação repetível por alguns minutos e registre as quedas. Ajuste uma categoria por vez, como sombras, efeitos, distância de visualização ou resolução interna, e repita o mesmo teste. Alterar tudo de uma vez esconde qual opção realmente ajudou.
+Mantenha driver e aplicativos de fundo iguais no primeiro A/B/A e anote as versões. Se suspeitar de atualização do driver ou overlay, teste isso separadamente e crie uma nova referência depois.
 
-Um limite de FPS que a máquina sustenta tende a ser mais útil que picos altos seguidos de travadas. Texturas devem caber na VRAM disponível; reduzir uma opção de CPU pode ajudar quando a placa de vídeo não é o gargalo, e upscaling altera o equilíbrio entre clareza e carga. Não prometa ganhos numéricos sem medir na sua build.
+Use o registro inicial com a mesma rota, função e duração. Comece com um preset jogável compatível com os requisitos publicados. Um objetivo cheio serve de validação final, mas estande vazio e combate caótico não formam um par controlado. Compare travadas e visibilidade além do FPS médio; mantenha a mudança só se a repetição de A sustentar a conclusão.
 
 ## Quando o ajuste não resolve
 

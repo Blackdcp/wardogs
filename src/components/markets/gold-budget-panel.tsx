@@ -1,4 +1,5 @@
 import type {Locale} from "@/config/site";
+import {GoldBudgetCalculator} from "./gold-budget-calculator";
 import {publicRoutePath} from "@/lib/public-url";
 
 type BudgetCopy = {title: string; intro: string; steps: readonly string[]; headings: readonly [string, string]; rows: readonly (readonly [string, string])[]; example: string; budget: string; wipe: string};
@@ -18,6 +19,7 @@ export function GoldBudgetPanel({locale}: {locale: Locale}) {
   return <section className="mt-12 border-t border-[#354039] pt-8" aria-labelledby="gold-target-budget">
     <h2 id="gold-target-budget" className="display-font text-3xl text-white">{c.title}</h2>
     <p className="mt-3 text-sm leading-7 text-[#b6c2ba]">{c.intro}</p>
+    <GoldBudgetCalculator locale={locale} />
     <ol className="mt-5 list-decimal space-y-3 pl-5 text-sm leading-7 text-[#c3cec6]">{c.steps.map(step => <li key={step}>{step}</li>)}</ol>
     <div className="mt-6 overflow-x-auto"><table className="w-full text-left text-sm leading-6"><thead><tr>{c.headings.map(heading => <th className="border-b border-[#465149] px-3 py-3 text-[#79d19c]" key={heading}>{heading}</th>)}</tr></thead><tbody>{c.rows.map(([state, decision]) => <tr key={state}><th className="border-b border-[#354039] px-3 py-3 font-medium text-white" scope="row">{state}</th><td className="border-b border-[#354039] px-3 py-3 text-[#b6c2ba]">{decision}</td></tr>)}</tbody></table></div>
     <p className="mt-4 text-sm leading-7 text-[#b6c2ba]">{c.example}</p>

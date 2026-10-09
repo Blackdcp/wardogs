@@ -61,6 +61,26 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
       }
       continue;
     }
+    if (/^src\/(?:components|features)\/markets\//.test(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/(?:gold-market|black-market)$`));
+      continue;
+    }
+    if (/^src\/(?:components|features)\/videos\//.test(file) || file === "src/components/mdx/official-video.tsx") {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/videos(?:\/|$)`));
+      continue;
+    }
+    if (/^src\/(?:components|features)\/releases\//.test(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/(?:guides|tools|videos|gold-market)(?:\/|$)`));
+      continue;
+    }
+    if (file === "src/components/guides/related-guides.tsx" || file === "src/app/[locale]/guides/[slug]/page.tsx") {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/guides(?:\/|$)`));
+      continue;
+    }
+    if (/^src\/features\/news\//.test(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}(?:\/news)?$`));
+      continue;
+    }
     if (/^src\/(?:components|features)\/home\//.test(file) || file === "src/app/[locale]/page.tsx") {
       wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}$`));
       continue;
@@ -96,16 +116,8 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
       wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/(?:guides|items)(?:\/|$)`));
       continue;
     }
-    if (/^src\/features\/videos\/video-(?:articles(?:\.[^.]+)?|library|structured-data)\.ts$/.test(file)) {
-      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/videos(?:\/|$)`));
-      continue;
-    }
     if (["src/lib/metadata.ts", "src/lib/structured-data.ts", "src/app/sitemap.ts"].includes(file)) {
       wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}(?:\/|$)`));
-      continue;
-    }
-    if (file === "src/features/news/news-data.ts") {
-      for (const locale of localeIdsPattern.split("|")) wantedPaths.add(`/${locale}/news`);
       continue;
     }
     if ([
@@ -114,10 +126,6 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
       "src/features/maps/interactive-map-page-copy.ts"
     ].includes(file) || /^public\/images\/maps\/[^/]+\/overview\.(?:png|webp)$/.test(file)) {
       for (const locale of localeIdsPattern.split("|")) wantedPaths.add(`/${locale}/tools/map`);
-      continue;
-    }
-    if (file === "src/features/videos/video-library.ts") {
-      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/videos(?:\/|$)`));
       continue;
     }
     if (file === "src/features/items/weapon-items.ts") {

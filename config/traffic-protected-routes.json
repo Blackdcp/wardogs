@@ -15875,6 +15875,198 @@
       "locales": [
         "zh-tw"
       ]
+    },
+    {
+      "path": "/en/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "/en/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "/ja/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "path": "/ja/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "path": "/de/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "path": "/de/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "path": "/pt-br/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pt-br"
+      ]
+    },
+    {
+      "path": "/pt-br/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pt-br"
+      ]
+    },
+    {
+      "path": "/ru/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ru"
+      ]
+    },
+    {
+      "path": "/ru/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ru"
+      ]
+    },
+    {
+      "path": "/pl/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pl"
+      ]
+    },
+    {
+      "path": "/pl/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pl"
+      ]
+    },
+    {
+      "path": "/zh-cn/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-cn"
+      ]
+    },
+    {
+      "path": "/zh-cn/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-cn"
+      ]
+    },
+    {
+      "path": "/zh-tw/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-tw"
+      ]
+    },
+    {
+      "path": "/zh-tw/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-tw"
+      ]
     }
   ],
   "legacy": [
@@ -38818,6 +39010,22 @@
       "path": "/videos/wardogs-ir-rangefinder-hotfix",
       "expectedStatus": 308,
       "target": "/en/videos/wardogs-ir-rangefinder-hotfix",
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "path": "/videos/wardogs-fob-income-breakdown",
+      "expectedStatus": 308,
+      "target": "/en/videos/wardogs-fob-income-breakdown",
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "path": "/videos/wardogs-offensive-support-playstyle",
+      "expectedStatus": 308,
+      "target": "/en/videos/wardogs-offensive-support-playstyle",
       "sources": [
         "legacy"
       ]

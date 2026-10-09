@@ -1,4 +1,5 @@
 import type {Locale} from "@/config/site";
+import {getRecentMatchNews} from "./recent-match-news";
 
 // These are publication/event dates in Asia/Shanghai, never editorial checkedAt dates.
 const records = [
@@ -59,5 +60,5 @@ const copy: Record<Locale, readonly Copy[]> = {
   ]
 };
 export function getRecentNews(locale: Locale) {
-  return records.map((record, index) => ({...record, status: "Confirmed" as const, title: copy[locale][index][0], description: copy[locale][index][1], badge: copy[locale][index][2], dateLabel: copy[locale][index][3]}));
+  return [...records.map((record, index) => ({...record, status: "Confirmed" as const, title: copy[locale][index][0], description: copy[locale][index][1], badge: copy[locale][index][2], dateLabel: copy[locale][index][3]})), ...getRecentMatchNews(locale)];
 }

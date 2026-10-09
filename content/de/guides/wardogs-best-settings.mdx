@@ -81,19 +81,14 @@ sources:
 ---
 ## FPS, Frametimes und Netzwerk getrennt vergleichen
 
-Hohe durchschnittliche FPS schließen einzelne lange Frames nicht aus. Zurückspringende Fahrzeuge können trotz flüssiger Darstellung mit Netzwerk oder Server zusammenhängen. Gleichen Server, Weg, Kameraposten und Zeitraum nutzen; eine andere Karte oder stärkerer Kampf ist kein sauberer Vergleich.
+1. **Vor Grafikänderungen den Fehler einordnen.** Durchgehend niedrige FPS sprechen für einen Rendertest, hohe Durchschnitts-FPS mit Pausen für einen Frametime-Test. Bewegt sich die Kamera flüssig, aber Spieler oder Fahrzeuge springen zurück, lass die Grafik gleich und vergleiche zuerst Server, Region und Ping. Ein beendeter Prozess gehört zur Absturzdiagnose.
+2. **A sichern.** Speichere die Einstellungen, lass sichtbare Vorbereitungen abschließen und wähle dieselbe 60-Sekunden-Route. Erfasse FPS, verfügbare Frametime-Spitzen, Ping und Minuten seit Start. Perspektive und Rolle müssen gleich sein; Fahrer und Richtschütze sind kein Vergleichspaar.
+3. **B testen, dann A wiederherstellen.** Bei ungleichmäßiger Darstellung teste zuerst eine haltbare FPS-Grenze; bei dauerhaft niedrigen FPS eine geringere Renderskalierung oder genau eine teure Grafikoption. Wiederhole dieselben 60 Sekunden, stelle den ursprünglichen Wert wieder her und teste erneut. DLSS/FSR/TAA, Auflösung und Overlays sind getrennte Versuche.
+4. **Nur wiederholbare Verbesserungen behalten.** Behalte B, wenn Pausen in vergleichbaren Wiederholungen abnehmen, ohne Sicht oder Eingabe unvertretbar zu verschlechtern. Hilft nur der erste Lauf, ändert sich die Serverlast oder wird auch das letzte A besser, ist die Ursache nicht isoliert: später wiederholen. Verschlechtert B Zielen, Sicht oder Stabilität, stelle A wieder her. Fehlende Messwerte bleiben leer; RAM-Auslastung oder ein einzelner Hänger beweisen kein Leck.
 
-Diese Vorlage für Ausgangslage und geänderten Lauf kopieren:
+Für einen wiederholbaren Fehler nutze das Protokoll und den Supportweg unter [bekannten Problemen](/de/guides/wardogs-known-issues).
 
-- Datum, Uhrzeit, Zeitzone; Build; Windows- und GPU-Treiberversion:
-- CPU, GPU, RAM; Auflösung, Render-Skalierung und Grafikprofil:
-- Server/Region, Kartenbereich, Ping, Infanterie/Fahrer/Schütze:
-- Minuten seit Start; Strecke und Testdauer:
-- Durchschnitts-FPS und verfügbare Frametime-/Perzentilmessung:
-- RAM-Nutzung; Prozess nach Spielende noch vorhanden:
-- Genau eine Änderung; Ergebnis; wiederhergestellter Originalwert:
-
-Unbekannte Messwerte als unbekannt notieren. Bei periodischem Stillstand Intervall sowie Erholung oder Absturz unterscheiden. Ergebnis vor Übernahme wiederholen; kein Schalter garantiert allgemein mehr FPS. Keine pauschalen Treiber-Rollbacks. Reproduzierbare Fehler über den Supportweg in [bekannten Problemen](/de/guides/wardogs-known-issues) melden.
+<DiagnosticRecord locale="de" kind="performance" />
 
 ## Historischer Prüfpunkt: Season-1-Videoabgleich - 17. September 2026
 
@@ -119,9 +114,7 @@ Die besten WARDOGS-Einstellungen sind kein einzelner Zahlenblock für jeden PC. 
 
 ## Wonach Spieler suchen
 
-Wer nach `wardogs best settings` sucht, will meist zugleich mehr FPS, weniger Stottern und Gegner besser sehen. Diese Ziele widersprechen sich manchmal. Extreme Qualität kann eine hohe Auflösung gut aussehen lassen, aber Bildzeiten verschlechtern; sehr niedrige Details können dagegen Sicht oder Lesbarkeit beeinträchtigen. Deshalb ist ein wiederholbarer Test wichtiger als ein blind kopierter Screenshot.
-
-Besonders wichtig ist die Quellenlage. **Official requirements** kommen von Steam und definieren die veröffentlichte Hardware- und Leistungsabsicht. Der offizielle BULKHEAD-Devlog bestätigt die Namen Potato Mode und Overkill Mode sowie das 60+ FPS-Entwicklungsziel. Der ergänzende **creator report** liefert praktische Eindrücke aus einem bestimmten Build, darf aber nicht als universelle Leistungsregel ausgegeben werden.
+Unterhalb der veröffentlichten Hardwareziele mit einem verfügbaren niedrigen Preset oder geringerer Renderskalierung beginnen. Bei hohem Durchschnitt und Hängern den Frametime-A/B/A-Zweig nutzen. Bleibt die Kamera flüssig, während Spieler zurückspringen, zuerst die Verbindung untersuchen. Der FPS-Durchschnitt allein trennt diese Fälle nicht.
 
 ## So nutzt du diesen Guide
 
@@ -135,9 +128,9 @@ Nutze diese Angaben als Ausgangspunkt, nicht als Anlass, ein neues System nur na
 
 ## Ein kontrollierter Einstellungs-Test
 
-Lege zuerst ein realistisches Ziel fest: zum Beispiel gleichmäßige 60 FPS, wenn dein Bildschirm und deine Hardware davon profitieren. Setze ein passendes Framelimit und spiele eine vergleichbare Situation. Beobachte nicht nur den höchsten FPS-Wert, sondern auch kurze Hänger beim Drehen, bei Effekten oder beim ersten Kontakt mit einem Bereich.
+Für den ersten A/B/A-Vergleich Treiber und Hintergrundprogramme unverändert lassen und Versionen notieren. Wird ein Treiberupdate oder Overlay als Ursache vermutet, dies getrennt testen und danach eine neue Ausgangsmessung anlegen.
 
-Reduziere danach Schritt für Schritt schwere Details oder Auflösungsskalierung und kontrolliere, ob Sichtweite, Silhouetten und Zielerkennung noch brauchbar bleiben. Schließe Aufnahme-, Chat- und Monitoring-Overlays testweise. Bleibt ein Problem bestehen, nutze den [WARDOGS Crash Fix](/de/guides/wardogs-crash-fix), statt es als reine Grafikeinstellung zu behandeln. Dort wird zwischen Zugang, Startproblemen und lokaler Leistung unterschieden.
+Das Protokoll oben mit gleicher Route, Rolle und Dauer nutzen. Mit einem spielbaren Preset passend zu den veröffentlichten Anforderungen beginnen. Ein volles Zielgebiet eignet sich zur Abschlusskontrolle, aber ruhiger Schießstand und chaotisches Gefecht sind kein kontrolliertes Paar. Hänger und Sichtbarkeit mitprüfen; eine Änderung erst behalten, wenn auch der wiederhergestellte A-Lauf die Zuordnung stützt.
 
 ## Potato Mode und Overkill Mode richtig lesen
 

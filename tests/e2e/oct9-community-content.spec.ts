@@ -1,6 +1,7 @@
 import {expect, test, type Page} from "@playwright/test";
 import {locales} from "../../src/config/site";
 import {getGoldBudgetCopy} from "../../src/components/markets/gold-budget-panel";
+import {goldBudgetCalculatorCopy} from "../../src/features/markets/gold-budget-copy";
 import {recentVideoCopy} from "../../src/features/videos/recent-video-copy";
 import {recentVideoUi} from "../../src/features/videos/recent-video-data";
 
@@ -25,9 +26,11 @@ async function expectNoHorizontalOverflow(page: Page) {
 
 for (const video of [
   {locale: "en" as const, width: 1440, height: 900, id: "liRK9si1Ubo", slug: "wardogs-season-2-developer-interview", chapter: "46:04", seconds: 2764, chapterIndex: 1},
+  {locale: "en" as const, width: 1440, height: 900, id: "Qx1ndM1tc2Y", slug: "wardogs-fob-income-breakdown", chapter: "55:54", seconds: 3354, chapterIndex: 5},
+  {locale: "ja" as const, width: 390, height: 844, id: "PhAVGZMIYCg", slug: "wardogs-offensive-support-playstyle", chapter: "8:14", seconds: 494, chapterIndex: 3},
   {locale: "ja" as const, width: 390, height: 844, id: "z7wMLQQtIIM", slug: "wardogs-solo-duo-fob-layout", chapter: "14:07", seconds: 847, chapterIndex: 3}
 ]) {
-  test(`new ${video.locale} watch page keeps the player above the fold and navigates a real chapter at ${video.width}px`, async ({page}, info) => {
+  test(`new ${video.locale} ${video.slug} watch page keeps the player above the fold and navigates a real chapter at ${video.width}px`, async ({page}, info) => {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.setViewportSize({width: video.width, height: video.height});
@@ -56,6 +59,19 @@ for (const video of [
     expect(errors).toEqual([]);
   });
 }
+
+test("promoted videos preserve previously shared candidate anchors", async ({page}) => {
+  for (const [id, slug] of [["Qx1ndM1tc2Y", "wardogs-fob-income-breakdown"], ["PhAVGZMIYCg", "wardogs-offensive-support-playstyle"]]) {
+    await page.goto(`/en/videos#candidate-${id}`);
+    await expect(page.locator(`#candidate-${id}`)).toHaveCount(1);
+    const card = page.locator(`[data-current-video-source="${id}"]`);
+    await expect(card).toBeInViewport();
+    await expect(card.locator("a").first()).toHaveAttribute("href", `/en/videos/${slug}`);
+    await card.locator("a").first().click();
+    await expect(page).toHaveURL(new RegExp(`/en/videos/${slug}$`));
+    await expect(page.locator("[data-video-primary-player] iframe")).toBeVisible();
+  }
+});
 
 test("Gold budgets render all eight languages with complete steps and contained mobile layout", async ({page}, info) => {
   const errors: string[] = [];
@@ -125,4 +141,29 @@ test("solo and reporting guides have usable localized related links and no self-
       await expectNoHorizontalOverflow(page);
     }
   }
+});
+
+test("Gold offer calculation protects playing cash and clears stale results after editing", async ({page}) => {
+  await page.setViewportSize({width: 390, height: 844});
+  await page.goto("/ja/gold-market");
+  const panel = page.locator("[data-gold-budget-calculator]");
+  const copy = goldBudgetCalculatorCopy.ja;
+  for (const [key, value] of Object.entries({target: "30", owned: "21", cash: "1000000", reserve: "200000", offerGold: "9", offerCash: "750000"})) {
+    await panel.getByLabel(copy.fields[key as keyof typeof copy.fields], {exact: true}).fill(value);
+  }
+  await panel.getByRole("button", {name: copy.calculate, exact: true}).click();
+  await expect(panel.getByRole("status")).toContainText(copy.fits);
+  await expect(panel.getByRole("status")).toContainText("250,000");
+  await panel.getByLabel(copy.fields.offerCash, {exact: true}).fill("900000");
+  await expect(panel.getByRole("status")).toBeEmpty();
+  await panel.getByRole("button", {name: copy.calculate, exact: true}).click();
+  await expect(panel.getByRole("status")).toContainText(copy.reserveRisk);
+  await panel.getByRole("button", {name: copy.reset, exact: true}).click();
+  await expect(panel.getByLabel(copy.fields.target, {exact: true})).toHaveValue("");
+  await expect(panel.getByRole("status")).toBeEmpty();
+  const path = page.locator("[data-season-task-path]");
+  await expect(path.locator("[aria-current=page]")).toHaveText("ゴールドマーケット");
+  await path.locator('a[href="/ja/guides/wardogs-launch-checklist"]').click();
+  await expect(page.locator("main h1")).toBeVisible();
+  await expectNoHorizontalOverflow(page);
 });

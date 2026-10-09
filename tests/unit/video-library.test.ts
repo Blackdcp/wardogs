@@ -13,7 +13,7 @@ import {EXPECTED_CURRENT_VIDEO_LEDGER, REJECTED_CURRENT_VIDEO_IDS} from "../fixt
 
 describe("video article library", () => {
   it("keeps every collected YouTube source as its own indexable article", () => {
-    expect(videoArticles).toHaveLength(35);
+    expect(videoArticles).toHaveLength(37);
     expect(videoArticles.filter(article => !article.captionReview).map(({youtubeId}) => youtubeId)).toEqual([
       "ugkuP4a3xk4",
       "-k6IV0ITLDo",
@@ -47,7 +47,7 @@ describe("video article library", () => {
       "7O5QJNRzXzQ",
       "JSAu5nlLjJw"
     ]);
-    expect(new Set(videoArticles.map(({slug}) => slug)).size).toBe(35);
+    expect(new Set(videoArticles.map(({slug}) => slug)).size).toBe(37);
     expect(videoArticles.every((article) => article.internalGuideSlug.length > 0)).toBe(true);
   });
 

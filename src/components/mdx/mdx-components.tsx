@@ -8,6 +8,7 @@ import {OfficialVideo} from "./official-video";
 import {OfficialScreenshot} from "./official-screenshot";
 import {SourceNote} from "./source-note";
 import {Steps} from "./steps";
+import {DiagnosticRecord} from "../guides/diagnostic-record";
 
 function nodeText(node: ReactNode): string {
   if (typeof node === "string" || typeof node === "number") return String(node);
@@ -60,5 +61,6 @@ export const mdxComponents: MDXComponents = {
   OfficialVideo,
   OfficialScreenshot,
   SourceNote,
-  Steps
+  Steps,
+  DiagnosticRecord
 };

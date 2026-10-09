@@ -155,9 +155,22 @@ describe("search dialog request and analytics lifecycle", () => {
     listeners.get("keydown")?.forEach((listener) => listener(event));
     expect(event.preventDefault).toHaveBeenCalledOnce();
     expect(first.focus).toHaveBeenCalledExactlyOnceWith({preventScroll: true});
-    const result = nodes.find((node) => node.type === "button" && node.props.onMouseEnter)!;
+    const result = nodes.find((node) => node.type === "button" && node.props.role === "option")!;
     expect(result.props.tabIndex).toBe(-1);
     expect(nodes.find((node) => node.type === "input")?.props["aria-activedescendant"]).toBe("global-site-search-option-0");
+    closeButton();
+  });
+
+  it("only changes result selection when the pointer actually moves", async () => {
+    open(); requests[0].complete([entry, {...entry, id: "guide:havoc-flight", title: "Havoc flight", href: "/guides/havoc-flight"}]); await flushPromises();
+    const nodes = typeQuery("Havoc");
+    const options = nodes.filter((node) => node.props.role === "option");
+    expect(options).toHaveLength(2);
+    const move = options[1].props.onPointerMove as (event: {movementX: number; movementY: number}) => void;
+    move({movementX: 0, movementY: 0});
+    expect(render().find((node) => node.type === "input")?.props["aria-activedescendant"]).toBe("global-site-search-option-0");
+    move({movementX: 1, movementY: 0});
+    expect(render().find((node) => node.type === "input")?.props["aria-activedescendant"]).toBe("global-site-search-option-1");
     closeButton();
   });
 

@@ -9,6 +9,13 @@ const productionScriptPath = path.join(root, "scripts", "deploy-production.mjs")
 const SITE_ORIGIN = "https://www.wardogswiki.com";
 
 describe("IndexNow deployment notification", () => {
+  it("notifies data-driven video and market updates without depending on MDX changes", async () => {
+    const {deriveIndexNowUrls} = await import(pathToFileURL(scriptPath).href) as {deriveIndexNowUrls: (files: string[], urls: string[]) => string[]};
+    const locales = ["en", "ja", "de", "ru", "pl", "pt-br", "zh-cn", "zh-tw"];
+    const affected = locales.flatMap(locale => [`/${locale}/gold-market`, `/${locale}/videos/wardogs-fob-income-breakdown`, `/${locale}/videos`]).map(p => `${SITE_ORIGIN}${p}`);
+    const input = [...affected, `${SITE_ORIGIN}/en/items`, `${SITE_ORIGIN}/en/privacy`];
+    expect(deriveIndexNowUrls(["src/features/videos/recent-match-copy.ts", "src/components/markets/gold-budget-calculator.tsx"], input)).toEqual(affected);
+  });
   it("notifies newly full-site languages without resubmitting unrelated old locales", async () => {
     const indexNow = await import(pathToFileURL(scriptPath).href) as {
       deriveIndexNowUrls: (files: string[], urls: string[]) => string[];

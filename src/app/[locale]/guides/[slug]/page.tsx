@@ -149,7 +149,7 @@ export default async function GuideArticlePage({params}: PageProps) {
         <AdsterraSmartlink cta={adsT("smartlinkCta")} description={adsT("smartlinkDescription")} label={adsT("sponsored")} />
       </article>
       <div className="border-t border-[#2c3631] bg-[#111512]">
-        <RelatedGuides guides={related} locale={locale} title={t("related")} />
+        <RelatedGuides guides={related} locale={locale} title={t("related")} path={`/guides/${slug}`} />
       </div>
     </main>
   );

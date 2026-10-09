@@ -1,5 +1,6 @@
 import {expect, test} from "@playwright/test";
 import {getAttachmentRecipeCopy} from "../../src/features/tools/attachment-recipe-copy";
+import {getAttachmentRecordCopy} from "../../src/features/tools/attachment-record-copy";
 import {getToolCopy} from "../../src/features/tools/tool-copy";
 import {getWorkbenchCopy} from "../../src/features/tools/workbench-copy";
 
@@ -66,5 +67,56 @@ for (const {locale, width} of [{locale: "en" as const, width: 1440}, {locale: "j
     await expect(matrix.getByText(`PBS4 · ${t.muzzle}`, {exact: true})).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width + 1);
     expect(errors).toEqual([]);
+  });
+}
+
+for (const {locale, width} of [{locale: "en" as const, width: 1440}, {locale: "ja" as const, width: 390}]) {
+  test(`custom attachment identity remains paired with measurements through save, restore and share in ${locale}`, async ({page}) => {
+    const t = getAttachmentRecipeCopy(locale);
+    const record = getAttachmentRecordCopy(locale);
+    const saved = getWorkbenchCopy(locale);
+    const tool = getToolCopy(locale);
+    await page.setViewportSize({width, height: 900});
+    await page.goto(`/${locale}/tools/loadout-budget`);
+    const panel = page.locator("#attachment-tests");
+    await panel.locator("summary").click();
+    await panel.getByRole("button", {name: record.start, exact: true}).click();
+    await expect(panel.getByText(record.note, {exact: true})).toBeVisible();
+    const ads = panel.getByRole("spinbutton", {name: t.ads, exact: true});
+    await expect(ads).toBeDisabled();
+    await panel.getByRole("textbox", {name: record.weapon, exact: true}).fill("M249 SAW");
+    await expect(ads).toBeEnabled();
+    await panel.getByRole("textbox", {name: record.grip, exact: true}).fill("TDG");
+    await panel.getByRole("textbox", {name: record.muzzle, exact: true}).fill("none");
+    await page.getByRole("textbox", {name: saved.build, exact: true}).fill("Recorded build A");
+    await panel.getByRole("combobox", {name: t.bipod, exact: true}).selectOption("mounted");
+    await ads.fill("240");
+    const saves = page.locator("details").filter({has: page.locator("summary").filter({hasText: saved.saves})}).last();
+    await saves.locator("summary").click();
+    await saves.getByRole("textbox", {name: saved.name, exact: true}).fill("LMG test A");
+    await saves.getByRole("button", {name: saved.save, exact: true}).click();
+    await expect(saves.getByRole("status")).toHaveText(saved.saved);
+    await panel.getByRole("textbox", {name: record.weapon, exact: true}).fill("PKM");
+    await expect(ads).toHaveValue("");
+    await ads.fill("300");
+    await saves.getByRole("listitem").filter({hasText: "LMG test A"}).getByRole("button", {name: saved.restore, exact: true}).click();
+    await expect(panel.getByRole("textbox", {name: record.weapon, exact: true})).toHaveValue("M249 SAW");
+    await expect(ads).toHaveValue("240");
+    await page.getByRole("button", {name: tool.share, exact: true}).click();
+    await expect(page.getByText(tool.copied, {exact: true})).toBeVisible();
+    const shared = await page.evaluate(() => navigator.clipboard.readText());
+    expect(JSON.parse(new URL(shared).searchParams.get("attachmentTest")!)).toMatchObject({recipeId: "custom", weapon: "M249 SAW", grip: "TDG", muzzle: "none", adsMilliseconds: 240});
+    await page.goto(shared);
+    await expect(panel.getByRole("textbox", {name: record.weapon, exact: true})).toHaveValue("M249 SAW");
+    await expect(ads).toHaveValue("240");
+    await panel.getByRole("button", {name: `${t.apply}: ${t.recipes[0]}`, exact: true}).click();
+    await expect(panel.getByRole("textbox", {name: record.weapon, exact: true})).toHaveValue("M4");
+    await expect(panel.getByRole("textbox", {name: record.grip, exact: true})).toHaveValue("RVG");
+    await expect(ads).toHaveValue("");
+    await ads.fill("180");
+    await panel.getByRole("textbox", {name: record.muzzle, exact: true}).fill("Another muzzle");
+    await expect(ads).toHaveValue("");
+    await expect(panel.getByRole("heading", {name: `${t.observation}: ${record.title}`, exact: true})).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width + 1);
   });
 }

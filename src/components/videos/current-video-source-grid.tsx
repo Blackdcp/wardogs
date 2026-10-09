@@ -68,6 +68,7 @@ export function CurrentVideoSourceGrid({locale, sources}: {
 
           return (
             <article className="scroll-mt-24 overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" data-current-video-source={source.youtubeId} id={currentVideoAnchorId(source.youtubeId)} key={source.youtubeId}>
+              {["Qx1ndM1tc2Y", "PhAVGZMIYCg"].includes(source.youtubeId) && <span id={`candidate-${source.youtubeId}`} className="block scroll-mt-24" aria-hidden="true" />}
               <a className="group block" href={source.articleSlug ? publicRoutePath(`/${locale}/videos/${source.articleSlug}`) : source.sourceUrl} rel={source.articleSlug ? undefined : "noreferrer"} target={source.articleSlug ? undefined : "_blank"} title={`${source.title} - ${source.channel}`}>
                 <span className="relative block aspect-video overflow-hidden border-b border-[#2c3631] bg-[#0d100e]">
                   <VideoThumbnailImage alt={`${source.title} video thumbnail`} eager={index === 0} youtubeId={source.youtubeId} />

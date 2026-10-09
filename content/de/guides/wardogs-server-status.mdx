@@ -65,11 +65,14 @@ sources:
 ---
 ## Volle Server, Update-Queues und Freunde verschiedener Level
 
-100/100 mit Warteschlange ist eine Kapazitätsfrage und kein Beleg für einen Totalausfall. Eine vorrückende Queue abwarten; erneutes Beitreten kann den Platz kosten. Filter schaffen keine freien Plätze. Beim Wechsel vorher gemeinsam Region und Server festlegen.
+1. **Server mit 100/100 sichtbar:** Bleib in einer fortschreitenden Warteschlange. Notiere den Platz zu zwei Zeitpunkten, bevor du Stillstand annimmst; ein voller laufender Server ist kein globaler Ausfall. Wechselt der Squad, einigt euch vor Kitkäufen auf dieselbe Region und denselben Server. Erneutes Einreihen kann den Platz kosten.
+2. **Die Schlange scheint stillzustehen:** Unterscheide Verbindungsaufbau von einer nummerierten Schlange und prüfe, ob die Oberfläche reagiert. Vergleiche aktuelle Meldung und Clientbuild. Nur bei bestätigter Wartung oder erforderlichem Update folgst du der Anweisung einmal; sonst sichere zwei Zeitpunkte und die genaue Phase, statt ständig neu zu starten oder eine Wartezeit zu versprechen.
+3. **Leere Liste:** Lösche Text-, Modus- und Zugangsfilter, wähle eine Region, aktualisiere einmal und warte. Starte das Hauptspiel WARDOGS statt des beendeten Playtests; das Steam-Update muss fertig sein. Ein Mitspieler mit gleichem Build und gleicher Region prüft dieselben Filter. Sieht er Server, vergleicht Filter, Sitzung und Konto; sehen beide nichts, gleicht offizielle Meldungen ab und berichtet die gemeinsamen Daten. Auch fast leere Einsteigerserver haben Zugangsregeln; Freunde verschiedener Level wählen einen passenden regulären Server.
+4. **Beitritt scheitert trotz Liste:** Sichere die genaue Ablehnung oder Trennungsmeldung. Berechtigung betrifft Steam-Konto, Hauptspielzugang und Serverregeln. Bleibt der Client offen, prüfe Verbindung und Dienst; endet der Prozess, nutze die [Absturzdiagnose](/de/guides/wardogs-crash-fix). Windows-Neuinstallation oder Grafikänderungen schaffen keinen freien Platz.
 
-Das Update vom 30. September unterscheidet Verbindungszustand und Queue-Position. Bei Neustarts Client-Build und aktuelle Meldung vergleichen. Leere Ergebnisse können an Regions- oder Kategorienfiltern liegen. Diese Website hat keine Live-Servertelemetrie und garantiert weder Platz noch Neustartzeit.
+Bleibt der Fehler, enthält das Protokoll unten bereits versuchte Schritte und Ergebnisse. So kann Support am richtigen Punkt fortsetzen. Diese Seite hat keine Live-Telemetrie oder garantierte Neustartzeit.
 
-Alle Freunde müssen die angezeigten Regeln des Servers erfüllen. Ein fast leerer Anfänger-Server hebt die Levelbeschränkung nicht auf. Gemeinsam einen passenden regulären Server wählen, statt Fortschritt zurückzusetzen. Wartungsangaben ohne Zeitzone nicht eigenmächtig in Ortszeit umrechnen.
+<DiagnosticRecord locale="de" kind="connection" />
 
 ## Update 0.1.2: kleines Update vom 30. September
 
@@ -95,11 +98,9 @@ Der Aufruf vom 24. September zum Neustart und erneuten Download von etwa 16 GB b
 
 ## Schnelle Prüfung
 
-1. Öffne den offiziellen Steam-Shop und prüfe, ob Installieren oder Spielen verfügbar ist.
-2. Suche im offiziellen Meldungsfeed nach Wartung, Verzögerung, Warteschlange oder Hotfix.
-3. Starte Steam einmal neu und prüfe Konto, Edition und Bibliothekseintrag.
-4. Starte WARDOGS, nicht den beendeten WARDOGS-Playtest.
-5. Notiere UTC-Zeit, Region, genaue Meldung und Build-Nummer.
+Zuerst offizielle Meldungen und den Eintrag des Hauptspiels prüfen. Rückt die nummerierte Warteschlange vor, darin bleiben; Steam nicht bloß zur Kontoaktualisierung neu starten.
+
+Nur wenn der Zugriffsfehler trotz richtigem Konto, abgeschlossenem Update und Hauptspiel bleibt und kein fortschreitender Warteschlangenplatz verloren geht: Client schließen, Steam einmal neu starten, denselben Server erneut versuchen und Vorher/Nachher festhalten. Ohne Änderung das Verbindungsprotokoll oben weitergeben statt den Neustart zu wiederholen.
 
 ## Leerer Serverbrowser
 

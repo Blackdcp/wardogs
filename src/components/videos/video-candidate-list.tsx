@@ -1,7 +1,7 @@
 "use client";
 
 import type {Locale} from "@/config/site";
-import {getRecentCandidateCopy} from "@/features/videos/recent-candidate-copy";
+import {getRecentCandidateCopy, getRecentCandidateChapterLabel} from "@/features/videos/recent-candidate-copy";
 import {recentVideoUi} from "@/features/videos/recent-video-data";
 import {useState} from "react";
 import {ExternalLink, Play, X} from "lucide-react";
@@ -36,8 +36,8 @@ export function VideoCandidateList({locale}: {locale: Locale}) {
           <p>{ui.reviewed}: <time dateTime={recentCopy ? video.metadataCheckedAt : CANDIDATE_EVIDENCE_CHECKED_AT}>{recentCopy ? video.metadataCheckedAt : CANDIDATE_EVIDENCE_CHECKED_AT}</time> · {evidence.captionReview === "not-reviewed" ? recentVideoUi[locale].metadata : ui.captions[evidence.captionReview]}</p>
           {evidence.footage.length ? <ul className="flex flex-wrap gap-x-5 gap-y-1">{evidence.footage.map(sample => <li key={sample.seconds}>{ui.footage}{sample.scope === "intro" ? ` (${ui.intro})` : ""}: <a title={`${video.title}: ${videoTimestamp(sample.seconds)}`} className="text-[#79d19c] underline underline-offset-4" href={candidateWatchUrl(video.youtubeId, sample.seconds)} target="_blank" rel="noreferrer">{videoTimestamp(sample.seconds)}</a></li>)}</ul> : <p>{ui.noFootage}</p>}
         </div>
-        <p className="mt-2 text-xs text-[#a8b4ae]">{ui.metadata}: <time dateTime={video.metadataCheckedAt}>{video.metadataCheckedAt}</time> · {video.chapters.length ? ui.chapters : ui.noChapters}</p>
-        {video.chapters.length > 0 && <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#79d19c]">{video.chapters.map(chapter => <li key={chapter.seconds}><a title={`${video.title}: ${chapter.label}`} href={candidateWatchUrl(video.youtubeId, chapter.seconds)} target="_blank" rel="noreferrer">{Math.floor(chapter.seconds / 60)}:{String(chapter.seconds % 60).padStart(2, "0")} {recentCopy ? "" : chapter.label}</a></li>)}</ul>}
+        <p className="mt-2 text-xs text-[#a8b4ae]">{ui.metadata}: <time dateTime={video.metadataCheckedAt}>{video.metadataCheckedAt}</time> · {video.chapters.length ? recentCopy ? recentVideoUi[locale].chapters : ui.chapters : ui.noChapters}</p>
+        {video.chapters.length > 0 && <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#79d19c]">{video.chapters.map((chapter, index) => <li key={chapter.seconds}><a title={`${video.title}: ${getRecentCandidateChapterLabel(locale, video.youtubeId, index) ?? chapter.label}`} href={candidateWatchUrl(video.youtubeId, chapter.seconds)} target="_blank" rel="noreferrer">{Math.floor(chapter.seconds / 60)}:{String(chapter.seconds % 60).padStart(2, "0")} {getRecentCandidateChapterLabel(locale, video.youtubeId, index) ?? chapter.label}</a></li>)}</ul>}
         <div className="mt-4 flex flex-wrap gap-5 text-sm text-[#79d19c]">
           <a className="inline-flex items-center gap-1" title={`${video.title} - ${video.channel}`} href={candidateWatchUrl(video.youtubeId)} target="_blank" rel="noreferrer">{ui.watch}<ExternalLink aria-hidden="true" className="size-3" /></a>
           <a title={`${ui.guide}: ${video.title}`} href={publicRoutePath(`/${locale}/guides/${video.guideSlug}`)}>{ui.guide}</a>

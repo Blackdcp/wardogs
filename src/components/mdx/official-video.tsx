@@ -20,6 +20,8 @@ const noVideoUrlSubscription = () => () => {};
 const defaultVideoUrlStart = () => 0;
 
 const approvedVideoIds = new Set([
+  "Qx1ndM1tc2Y",
+  "PhAVGZMIYCg",
   "liRK9si1Ubo",
   "kC3P-klWNxk",
   "z7wMLQQtIIM",

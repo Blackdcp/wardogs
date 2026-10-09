@@ -5,7 +5,7 @@ import {AttachmentRecipePanel} from "@/components/tools/attachment-recipe-panel"
 import {getLoadoutCatalogue} from "@/features/tools/loadout-catalogue";
 import {attachmentRecipes, applyAttachmentRecipe, getCreatorAttachmentRecords} from "@/features/tools/attachment-recipes";
 import {getAttachmentRecipeCopy} from "@/features/tools/attachment-recipe-copy";
-import {emptyAttachmentObservation, updateAttachmentObservation} from "@/features/tools/attachment-observation";
+import {attachmentObservationSchema, emptyAttachmentObservation, updateAttachmentObservation} from "@/features/tools/attachment-observation";
 import {decodeBudgetState, encodeBudgetState, type BudgetState} from "@/features/tools/share-state";
 import {checkLoadoutFit, readSavedLoadouts, restoreSavedLoadout, totalLoadoutWeight} from "@/features/tools/loadout-workbench";
 import {maximumPlanLines, totalPurchases} from "@/features/tools/workflow-state";
@@ -14,6 +14,33 @@ const catalogue = getLoadoutCatalogue("en");
 const base: BudgetState = {cash: 4000, loadout: 2000, reserve: 1000, vehicle: 0};
 
 describe("creator attachment recipes and observation records", () => {
+  it("shares and restores an explicitly named custom LMG setup without creating a creator recommendation", () => {
+    const observation = {...emptyAttachmentObservation("custom"), weapon: "M249 SAW", grip: "TDG", muzzle: "Top Comp", rangeMeters: 40, bipod: "mounted" as const, adsMilliseconds: 240};
+    const state = {...base, buildLabel: "Observed build A", attachmentTest: observation};
+    const query = encodeBudgetState(state);
+    expect(decodeBudgetState(query)).toEqual(state);
+    const saved = readSavedLoadouts(JSON.stringify([{id: "lmg-a", name: "LMG A", query, savedAt: "2026-10-09T01:00:00Z"}]));
+    expect(saved).toHaveLength(1);
+    expect(restoreSavedLoadout(saved[0])).toEqual(state);
+    expect(state).not.toHaveProperty("lines");
+    expect(updateAttachmentObservation(observation, {grip: "none"}).adsMilliseconds).toBeNull();
+    expect(updateAttachmentObservation(observation, {muzzle: "none"}).adsMilliseconds).toBeNull();
+    expect(updateAttachmentObservation(observation, {weapon: "PKM"}).adsMilliseconds).toBeNull();
+    expect(updateAttachmentObservation(observation, {notes: "Repeated three times"}).adsMilliseconds).toBe(240);
+  });
+  it("rejects a custom measurement with no weapon or oversized identity, retaining legacy recipe records", () => {
+    const missingWeapon = {...emptyAttachmentObservation("custom"), weapon: "  ", adsMilliseconds: 240};
+    expect(attachmentObservationSchema.safeParse(missingWeapon).success).toBe(false);
+    expect(decodeBudgetState(encodeBudgetState({...base, attachmentTest: missingWeapon}))).toBeNull();
+    expect(attachmentObservationSchema.safeParse({...emptyAttachmentObservation("custom"), weapon: "A".repeat(81)}).success).toBe(false);
+    const legacy = {...emptyAttachmentObservation("evo-m4-control"), adsMilliseconds: 180};
+    delete legacy.weapon;
+    delete legacy.grip;
+    delete legacy.muzzle;
+    expect(decodeBudgetState(encodeBudgetState({...base, attachmentTest: legacy}))?.attachmentTest).toEqual(legacy);
+    const changed = updateAttachmentObservation({...emptyAttachmentObservation("evo-m4-control"), adsMilliseconds: 180}, {grip: "another grip"});
+    expect(changed).toMatchObject({recipeId: "custom", weapon: "M4", adsMilliseconds: null});
+  });
   it.each(attachmentRecipes)("adds $id as explicit unknown purchases and fit", (recipe) => {
     const result = applyAttachmentRecipe(base, recipe.id, catalogue);
     expect(result.status).toBe("applied");

@@ -5,6 +5,7 @@ describe("MDX components", () => {
   it("exports only the approved custom components", () => {
     expect(Object.keys(mdxComponents).sort()).toEqual([
       "ComparisonTable",
+      "DiagnosticRecord",
       "FactGrid",
       "FactionVisuals",
       "Notice",

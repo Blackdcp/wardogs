@@ -84,19 +84,14 @@ sources:
 ---
 ## FPS, czas klatki i sieć porównuj osobno
 
-Wysoki średni FPS nie wyklucza pojedynczych długich klatek. Pojazd może cofać się przez sieć/serwer mimo płynnego renderowania. Porównuj ten sam serwer, trasę, rolę kamery i czas; inna mapa lub większa walka nie są czystym porównaniem.
+1. **Najpierw rozpoznaj objaw.** Stale niski FPS wymaga testu obciążenia renderowania, wysoka średnia z pauzami — czasu klatki. Jeśli kamera jest płynna, ale gracze lub pojazdy cofają się, zachowaj grafikę i najpierw porównaj serwer, region i ping. Zamykanie procesu należy do diagnozy awarii.
+2. **Zapisz A.** Zachowaj ustawienia, poczekaj na koniec widocznego przygotowania i wybierz powtarzalną trasę na 60 sekund. Zapisz FPS, dostępne skoki czasu klatki, ping i minuty od startu. Utrzymaj perspektywę i rolę: kierowca i strzelec nie są parą porównawczą.
+3. **Sprawdź B, potem przywróć A.** Przy nierównym renderowaniu najpierw sprawdź osiągalny stale limit FPS; przy stale niskim FPS zmniejsz skalę renderowania albo jedną kosztowną opcję. Zmień tylko tę wartość, powtórz 60 sekund, przywróć oryginał i powtórz ponownie. DLSS/FSR/TAA, rozdzielczość i nakładki to osobne testy.
+4. **Zachowaj tylko powtarzalną poprawę.** B ma sens, gdy pauz jest mniej w porównywalnych powtórzeniach bez niedopuszczalnej utraty widoczności lub reakcji. Poprawa tylko pierwszego przebiegu, zmiana obciążenia serwera albo lepszy końcowy A nie izolują przyczyny — powtórz później. Przy gorszym celowaniu, obrazie lub stabilności przywróć A. Nieznane pomiary zostaw puste: duże użycie RAM lub jeden skok nie dowodzą wycieku.
 
-Skopiuj zapis dla próby bazowej i zmienionej:
+Dla powtarzalnego błędu użyj formularza niżej i kanału wsparcia ze [znanych problemów](/pl/guides/wardogs-known-issues).
 
-- Data, godzina, strefa; wersja gry; Windows i sterownik GPU:
-- CPU, GPU, RAM; rozdzielczość, skala renderowania, profil:
-- Serwer/region, miejsce, ping, piechota/kierowca/strzelec:
-- Minuty od startu; trasa i czas próby:
-- Średni FPS i dostępny pomiar percentyla/czasu klatki:
-- Użycie RAM; czy proces pozostał po wyjściu:
-- Jedna zmiana; wynik; przywrócona wartość oryginalna:
-
-Nieznany pomiar oznacz jako nieznany. Przy okresowym zawieszeniu zapisuj odstęp i to, czy gra wraca, czy się zamyka. Powtórz poprawę przed przyjęciem; nie obiecuj uniwersalnego zysku z opcji ani ogólnego cofania sterowników. Odtwarzalne błędy zgłaszaj według [znanych problemów](/pl/guides/wardogs-known-issues).
+<DiagnosticRecord locale="pl" kind="performance" />
 
 ## Historyczny punkt kontrolny: Porównanie z materiałem Season 1 - 17 września 2026
 
@@ -122,9 +117,7 @@ Najlepsze ustawienia WARDOGS stawiają na stabilną liczbę klatek i przewidywal
 
 ## Czego szukają gracze
 
-Zapytania `best graphics settings wardogs`, `wardogs fps` i `how optimized is wardogs` zwykle dotyczą dwóch różnych kwestii. Pierwsza to zgodność komputera z opublikowanym celem. Druga to ustawienia ograniczające spadki w walce bez utrudniania rozpoznawania odległych graczy, pojazdów i znaczników celu.
-
-Nie ma rzetelnego uniwersalnego profilu. Komputer ograniczony przez CPU w walce 100 graczy zachowuje się inaczej niż komputer ograniczony przez GPU przy 4K. Oficjalny dziennik określa zamierzony zakres wydajności, a nagrania twórców pokazują konkretną wersję w praktyce. Warto ustalić powtarzalny punkt odniesienia, zmieniać jedną grupę ustawień i oceniać najgorsze momenty walki, nie najwyższą liczbę widzianą podczas stania w miejscu.
+Poniżej opublikowanego celu sprzętowego zacznij od dostępnego niskiego presetu lub niższej skali renderowania. Przy wysokiej średniej i pauzach użyj gałęzi czasu klatki A/B/A. Gdy kamera jest płynna, lecz gracze cofają się, najpierw zbadaj połączenie. Sama średnia FPS nie rozróżnia tych przypadków.
 
 ## Jak korzystać z poradnika
 
@@ -132,14 +125,9 @@ Przed strojeniem sprawdź [wymagania sprzętowe WARDOGS](/pl/guides/wardogs-syst
 
 ## Test bazowy
 
-1. Przed porównaniem wyników zaktualizuj sterownik graficzny i uruchom ponownie Windows.
-2. Zamknij nakładki i programy w tle powodujące wyraźne przycięcia, ale pozostaw zwykły czat głosowy, jeśli tak rzeczywiście grasz.
-3. Zacznij od pełnego ekranu, natywnej rozdzielczości monitora i profilu najbliższego opublikowanemu celowi Steam dla twojego sprzętu.
-4. Testuj wewnątrz zatłoczonej Control Zone, z widocznymi pojazdami, dymem, eksplozjami i budowlami.
-5. Zapisz średnie FPS tylko jako kontekst; większą uwagę zwracaj na powtarzające się przycięcia, opóźnienie sterowania i najniższą utrzymującą się płynność.
-6. Zmieniaj jedną grupę ustawień naraz i powtarzaj podobną walkę.
+W pierwszym A/B/A pozostaw sterownik i aplikacje w tle bez zmian, zapisując wersje. Podejrzaną aktualizację sterownika lub nakładkę testuj osobno, a potem utwórz nową bazę.
 
-Zrzut ekranu innego gracza nie dowodzi twojego wyniku. Liczą się rozdzielczość, CPU, sterownik, szybkość pamięci, oprogramowanie w tle i aktualna wersja gry.
+Użyj początkowego formularza z tą samą trasą, rolą i czasem. Zacznij od grywalnego presetu zgodnego z wymaganiami. Zatłoczony cel przydaje się do końcowej kontroli, ale pusty poligon i chaotyczna walka nie są kontrolowaną parą. Porównuj przycięcia i widoczność oraz średni FPS; zachowaj zmianę dopiero, gdy powrót do A potwierdza wniosek.
 
 ## Priorytety w rywalizacji
 

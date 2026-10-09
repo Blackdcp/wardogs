@@ -85,19 +85,14 @@ sources:
 ---
 ## Record low FPS, frametime stutter and network desync separately
 
-Average FPS can remain high while individual frames stall. Conversely, vehicle rubber-banding can be a network/server symptom even when rendering is smooth. Compare the same route, camera role and test duration, preferably on the same server; a different map, region or crowded fight is not a clean A/B comparison.
+1. **Choose the branch before changing graphics.** Low FPS throughout a scene calls for a rendering test. High average FPS with visible pauses calls for a frametime test. Smooth camera movement with players or vehicles snapping back calls for a connection test: keep graphics unchanged and compare server/region and ping first. A process that closes belongs in the crash guide.
+2. **Establish A.** Save the current settings. Let any visible preparation finish, choose a repeatable 60-second route, then record FPS, frametime spikes if available, ping and minutes since launch. Use the same viewpoint and role; driver versus gunner is not a matched pair.
+3. **Test B, then restore A.** For uneven rendering, first try a frame cap the machine can sustain; for consistently low FPS, try one lower render scale or one costly graphics setting. Change only that one value. Run the same 60 seconds, restore the original value and repeat. DLSS/FSR/TAA changes, resolution and overlays are separate experiments, not one combined “fix.”
+4. **Keep only a reproducible improvement.** Keep B when pauses decrease on repeated comparable runs without unacceptable visibility or input changes. If only the first run improves, server load changes, or the final A also improves, the comparison does not isolate the setting: repeat later rather than claim a fix. Restore A if B makes aiming, clarity or stability worse. Unmeasured values stay blank; neither high RAM use nor a single hitch proves a leak.
 
-Copy this baseline, then duplicate it for the changed run:
+Use the record below for a repeatable issue; send a crash or a failure after the same route through the support path in [known issues](/en/guides/wardogs-known-issues).
 
-- Date, time and timezone; game build; Windows and GPU driver version:
-- CPU, GPU, installed RAM; resolution, render scale and graphics preset:
-- Server/region, map area, ping and driver/gunner/infantry role:
-- Minutes since launch; test route and duration:
-- Average FPS plus low-percentile or frametime observation, if your tool provides it:
-- RAM use and whether the game remained running after exit:
-- One changed setting; result; restored original value:
-
-Record unavailable measurements as unknown. Do not turn a guessed memory figure into a confirmed leak. For periodic freezing, note the interval and whether the game recovers or closes. Repeat a useful result before treating it as an improvement; do not promise a universal FPS boost from one toggle or recommend a blanket driver rollback. Send reproducible failures through the official support route in [known issues](/en/guides/wardogs-known-issues).
+<DiagnosticRecord locale="en" kind="performance" />
 
 ## Historical checkpoint: Season 1 video cross-check - September 17, 2026
 
@@ -123,9 +118,7 @@ The best WARDOGS settings prioritize a stable frame rate and predictable frame t
 
 ## What Players Search For
 
-Searches for `best graphics settings wardogs`, `wardogs fps` and `how optimized is wardogs` usually ask two different questions. One is whether the PC meets the published target. The other is which settings reduce combat drops without making distant players, vehicles and objective markers difficult to read.
-
-There is no honest universal preset. A CPU-limited machine in a 100-player fight behaves differently from a GPU-limited machine at 4K. The official devlog establishes the intended performance range, while creator footage shows one build in practice. The useful process is to create a repeatable baseline, change one group of settings, and judge the worst combat moments rather than the highest number seen while standing still.
+If the PC falls below the published hardware target, start with a supported low preset or lower render scale. If average FPS is high but play still pauses, use the frametime A/B/A branch above. If camera motion is smooth while other players snap back, investigate connection conditions instead. An attractive average FPS number cannot distinguish those cases.
 
 ## How to Use This Guide
 
@@ -133,14 +126,9 @@ Check [WARDOGS System Requirements](/en/guides/wardogs-system-requirements) befo
 
 ## Baseline Test
 
-1. Update the graphics driver and restart Windows before comparing results.
-2. Close overlays or background tools that create obvious stutter, but keep normal voice chat if that reflects real play.
-3. Begin with fullscreen, your monitor's native resolution and the preset closest to Steam's published target for your hardware.
-4. Test inside a populated Control Zone with vehicles, smoke, explosions and construction visible.
-5. Record average FPS only as context; pay more attention to repeated hitches, delayed input and the lowest sustained moments.
-6. Change one setting group at a time and repeat the same kind of battle.
+Keep the current driver and background applications unchanged for the first A/B/A comparison. Record their versions; if a driver update or an overlay is the suspected cause, test that separately and establish a fresh baseline afterwards.
 
-Do not use another player's screenshot as proof of your result. Resolution, CPU, driver, memory speed, background software and the current game build all matter.
+Use the opening comparison record for the same route, role and duration. Begin from a playable preset that fits the published requirements. A populated objective is a useful final check, but a quiet range run and a chaotic fight are not a controlled pair. Compare pauses and visibility as well as average FPS; retain a change only after the restored A run supports the result.
 
 ## Competitive Priorities
 
