@@ -8,7 +8,10 @@ export type VideoArticle = {
   youtubeId: string;
   sourceLabel: string;
   sourceUrl: string;
+  /** YouTube publication day; do not use as the new analysis article's first publication. */
   publishedDate: string;
+  /** First publication of this site's analysis, when separately verified. */
+  articlePublishedDate?: string;
   updatedDate: string;
   publishedAt?: string;
   durationSeconds?: number;

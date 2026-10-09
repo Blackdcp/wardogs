@@ -182,6 +182,7 @@ describe("IndexNow deployment notification", () => {
     ];
 
     expect(indexNow.deriveIndexNowUrls(["src/features/guides/guide-task-data.ts"], urls)).toEqual(urls.slice(1, 3));
+    expect(indexNow.deriveIndexNowUrls(["src/features/guides/guide-search-intents.ts"], urls)).toEqual(urls.slice(1, 3));
     expect(indexNow.deriveIndexNowUrls(["src/components/guides/guide-task-panel.tsx"], urls)).toEqual(urls.slice(1, 3));
     expect(indexNow.deriveIndexNowUrls(["src/features/videos/video-articles.pl.ts"], urls)).toEqual(urls.slice(5, 7));
     expect(indexNow.deriveIndexNowUrls(["src/features/guides/related.ts"], urls)).toEqual(urls.slice(1, 5));

@@ -13,6 +13,7 @@ import {getVideoUi} from "@/features/videos/video-ui";
 import {videoTimestamp} from "@/features/videos/video-candidate-evidence";
 import {publicRoutePath} from "@/lib/public-url";
 import {recentVideoUi} from "@/features/videos/recent-video-data";
+import {getRecentVideoSeo} from "@/features/videos/recent-video-seo-copy";
 import {buildPageMetadataWithImage} from "@/lib/metadata";
 import {loadGuideDocument} from "@/content/guides";
 import {getTranslations} from "next-intl/server";
@@ -31,18 +32,19 @@ export async function generateMetadata({params}: PageProps): Promise<Metadata> {
   if (!isLocale(locale)) return {};
   const article = getLocalizedVideoArticle(locale, slug);
   const ui = getVideoUi(locale);
+  const seo = getRecentVideoSeo(locale, slug);
   return article ? buildPageMetadataWithImage(
     locale,
     `/videos/${article.slug}`,
     article.title,
-    article.description,
+    seo?.description ?? article.description,
     {
       url: videoThumbnailUrl(article.youtubeId),
       width: 1280,
       height: 720,
       alt: `${article.sourceLabel} ${ui.thumbnail}`
     },
-    `WARDOGS ${article.title}, WARDOGS video, WARDOGS gameplay, WARDOGS guide, ${article.sourceLabel}`
+    seo ? ["WARDOGS", ...seo.keywords].join(", ") : `WARDOGS ${article.title}, WARDOGS video, WARDOGS gameplay, WARDOGS guide, ${article.sourceLabel}`
   ) : {};
 }
 
@@ -91,6 +93,7 @@ export default async function VideoArticlePage({params}: PageProps) {
             </p>
           </div>
           {article.captionReview && <div className="mt-4 space-y-2 text-xs leading-5 text-[#a8b4ae]" data-video-review-scope>
+            {article.articlePublishedDate && <p>{recentVideoUi[locale].articlePublished}: <time dateTime={article.articlePublishedDate}>{article.articlePublishedDate}</time></p>}
             <p>{recentVideoUi[locale].published}: <time dateTime={article.publishedAt}>{article.publishedDate}</time> · {recentVideoUi[locale].checked}: {article.updatedDate}</p>
             <p>{recentVideoUi[locale].timezone} · {recentVideoUi[locale].full}</p>
           </div>}

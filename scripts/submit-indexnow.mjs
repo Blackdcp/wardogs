@@ -104,6 +104,7 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
     }
     if ([
       "src/features/guides/guide-task-data.ts",
+      "src/features/guides/guide-search-intents.ts",
       "src/features/guides/guide-routes.ts",
       "src/features/guides/guide-collections.ts",
       "src/components/guides/guide-task-panel.tsx",

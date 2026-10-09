@@ -36,7 +36,7 @@ export function buildVideoArticleJsonLd(locale: Locale, article: VideoArticle): 
       description: article.description,
       mainEntityOfPage: url,
       author: {"@type": "Organization", name: "WARDOGS Wiki Editorial Team", url: buildLocalizedUrl(locale, "/editorial-policy")},
-      datePublished: article.publishedDate,
+      datePublished: article.articlePublishedDate ?? article.publishedDate,
       dateModified: article.updatedDate,
       image: videoThumbnailUrl(article.youtubeId)
     },

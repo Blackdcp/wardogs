@@ -15,6 +15,7 @@ export function getRecentVideoArticles(locale: Locale): VideoArticle[] {
       youtubeId: video.id, sourceLabel: `${video.channel}: ${video.title}`,
       sourceUrl: `https://www.youtube.com/watch?v=${video.id}`,
       publishedDate: recentVideoDate(video), publishedAt: video.publishedAt,
+      articlePublishedDate: video.articlePublishedDate,
       durationSeconds: video.durationSeconds, updatedDate: RECENT_VIDEO_CHECKED_AT,
       kind: "creator", priority: -40 + index, internalGuideSlug: video.guideSlug,
       relatedToolPath: video.toolPath, captionReview: "full-track-read",

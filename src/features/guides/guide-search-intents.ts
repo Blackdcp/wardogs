@@ -2,6 +2,26 @@ import type {Locale} from "@/config/site";
 
 // Related queries share a useful page; existing primary keywords remain in metadata.
 const intents: Record<string, Record<Locale, readonly string[]>> = {
+  "wardogs-solo-guide": {
+    "en": ["solo beginner route", "play without a mic", "solo loadout budget", "find a squad as a solo player"],
+    "ja": ["ソロ初心者の立ち回り", "マイクなしで遊ぶ", "ソロ装備の予算", "一人で分隊に参加"],
+    "zh-cn": ["独狼新手路线", "不开麦怎么玩", "单排配装预算", "一个人怎么找小队"],
+    "zh-tw": ["獨狼新手路線", "不開麥怎麼玩", "單排配裝預算", "一個人怎麼找小隊"],
+    "ru": ["как играть одному новичку", "играть без микрофона", "бюджет снаряжения для соло", "как одиночке найти отряд"],
+    "de": ["als Anfänger solo spielen", "ohne Mikrofon spielen", "Budget für Solo-Ausrüstung", "als Solospieler einen Squad finden"],
+    "pt-br": ["rota para iniciante solo", "jogar sem microfone", "orçamento de equipamento solo", "encontrar esquadrão jogando sozinho"],
+    "pl": ["jak grać solo jako początkujący", "gra bez mikrofonu", "budżet wyposażenia solo", "jak znaleźć drużynę grając samemu"],
+  },
+  "wardogs-report-player": {
+    "en": ["report a cheater", "ban appeal", "report a renamed player", "community server ban", "player report evidence"],
+    "ja": ["チーターを通報", "BAN異議申し立て", "名前を変えたプレイヤーの通報", "コミュニティサーバーBAN", "通報の証拠"],
+    "zh-cn": ["举报作弊玩家", "封禁申诉", "玩家改名后怎么举报", "社区服务器封禁", "举报证据模板"],
+    "zh-tw": ["檢舉作弊玩家", "停權申訴", "玩家改名後怎麼檢舉", "社群伺服器停權", "檢舉證據範本"],
+    "ru": ["пожаловаться на читера", "обжаловать бан", "жалоба на игрока после смены ника", "бан на сервере сообщества", "доказательства для жалобы"],
+    "de": ["Cheater melden", "Bann anfechten", "Spieler nach Namensänderung melden", "Community-Server-Bann", "Beweise für eine Spielermeldung"],
+    "pt-br": ["denunciar jogador trapaceiro", "recorrer de banimento", "denunciar jogador que mudou de nome", "banimento em servidor comunitário", "provas para denúncia"],
+    "pl": ["zgłosić oszusta", "odwołanie od bana", "zgłosić gracza po zmianie nicku", "ban na serwerze społeczności", "dowody do zgłoszenia"],
+  },
   "wardogs-squad-guide": {
     "en": ["play with friends", "invite friends", "join the same team"],
     "ja": ["フレンドと遊ぶ", "フレンド招待", "同じチームに入る"],
