@@ -20,7 +20,7 @@ export const MAX_ROUTE_POINTS = 17;
 const unit = z.number().finite().min(0).max(1);
 const pointSchema = z.object({x: unit, y: unit}).strict();
 const tacticalLayerSchema = z.object({id: z.enum(DEFAULT_TACTICAL_LAYERS.map(({id}) => id) as [TacticalLayerId, ...TacticalLayerId[]]), enabled: z.boolean()}).strict();
-const weaponIdSchema = z.custom<WeaponId>((value) => typeof value === "string" && value in WEAPON_REGISTRY);
+const weaponIdSchema = z.enum(Object.keys(WEAPON_REGISTRY) as [WeaponId, ...WeaponId[]]);
 const trajectoryModeSchema = z.custom<TrajectoryMode>((value) => typeof value === "string" && ["single", "high", "low"].includes(value));
 export const tacticalPlanSchema = z.object({
   schema: z.literal(1),
@@ -47,8 +47,11 @@ export type TacticalRange = {
   solution: FiringSolution;
 };
 
-function validPoint(point: Point) {
-  return pointSchema.safeParse(point).success;
+function coordinates(point: Point): Point | undefined {
+  // UI actions may receive a marker/POI record. Store only its coordinates;
+  // file import still validates complete point objects with the strict schema.
+  const parsed = pointSchema.safeParse({x: point.x, y: point.y});
+  return parsed.success ? parsed.data : undefined;
 }
 
 function modeForWeapon(weaponId: WeaponId, mode: TrajectoryMode): TrajectoryMode {
@@ -64,15 +67,26 @@ export function toggleTacticalLayer(plan: TacticalPlan, id: TacticalLayerId, ena
 }
 
 export function placeRoutePoint(plan: TacticalPlan, point: Point): TacticalPlan {
-  if (!validPoint(point)) return plan;
-  const points = plan.route.points.length >= MAX_ROUTE_POINTS ? [point] : [...plan.route.points, point];
-  return {...plan, route: {...plan.route, points}};
+  const position = coordinates(point);
+  if (!position || plan.route.points.length >= MAX_ROUTE_POINTS) return plan;
+  return {...toggleTacticalLayer(plan, "routes", true), route: {...plan.route, points: [...plan.route.points, position]}};
 }
 
 export function placeRangePoint(plan: TacticalPlan, point: Point): TacticalPlan {
-  if (!validPoint(point)) return plan;
-  const points = plan.fireSupport.points.length === 2 ? [point] : [...plan.fireSupport.points, point];
-  return {...plan, fireSupport: {...plan.fireSupport, points}};
+  const position = coordinates(point);
+  if (!position) return plan;
+  const points = plan.fireSupport.points.length === 2 ? [position] : [...plan.fireSupport.points, position];
+  return {...toggleTacticalLayer(plan, "fire-support", true), fireSupport: {...plan.fireSupport, points}};
+}
+
+export function setTacticalMissionPoint(plan: TacticalPlan, point: Point, role: "gun" | "target"): TacticalPlan {
+  const position = coordinates(point);
+  if (!position) return plan;
+  const [gun, target] = plan.fireSupport.points;
+  // A target cannot imply a gun at the current viewport center or any other point.
+  if (role === "target" && !gun) return plan;
+  const points = role === "target" ? [gun!, position] : [position, ...(target ? [target] : [])];
+  return {...toggleTacticalLayer(plan, "fire-support", true), fireSupport: {...plan.fireSupport, points}};
 }
 
 export function calculateRouteDistanceMeters(points: readonly Point[], map: MapId, measurement?: MapMeasurement) {

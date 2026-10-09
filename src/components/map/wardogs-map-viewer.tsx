@@ -7,7 +7,7 @@ import {getOperationsAtlasCopy, getLocalizedOperationsAtlasRecords} from "@/feat
 import {getMapViewerCopy} from "@/features/maps/map-viewer-copy";
 import {beginMapPinch, boundView, defaultView, imagePoint, initialMapState, mapHash, mapIds, mapNames, mapPinchView, MAX_MARKERS, markerKinds, readMapHash, transformView, viewportPoint, type MapId, type MapMarker, type MarkerKind, type MapPinch, type MapState, type Point} from "@/features/maps/map-state";
 import {initialMeasurement, measurementHash, placeMeasurementPoint, readMeasurementHash, type MapMeasurement} from "@/features/maps/map-measurement";
-import {buildCalculatorSearch, calculateRouteDistanceMeters, calculateTacticalRange, initialTacticalPlan, placeRangePoint, placeRoutePoint, readTacticalPlanHash, tacticalPlanHash, toggleTacticalLayer, type TacticalPlan, exportMapPlan, importMapPlan} from "@/features/maps/map-planner";
+import {buildCalculatorSearch, calculateRouteDistanceMeters, calculateTacticalRange, initialTacticalPlan, placeRangePoint, placeRoutePoint, readTacticalPlanHash, tacticalPlanHash, toggleTacticalLayer, type TacticalPlan, exportMapPlan, importMapPlan, MAX_ROUTE_POINTS, setTacticalMissionPoint} from "@/features/maps/map-planner";
 import {getMapPlannerCopy} from "@/features/maps/map-planner-copy";
 import {COMMUNITY_POI_SOURCE, communityPois, communityPoiLayer, clusterCommunityPois, type CommunityPoi} from "@/features/maps/map-community-pois";
 import {getArtilleryCopy} from "@/features/artillery/artillery-copy";
@@ -204,8 +204,11 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
   }
   function addRoutePoint(point: Point) {
     if (load !== "ready") return;
+    const current = tacticalPlansByMap.current[stateRef.current.map] ?? tacticalPlan;
+    if (current.route.points.length >= MAX_ROUTE_POINTS) {setNotice(plannerCopy.routeLimit.replace("{limit}", String(MAX_ROUTE_POINTS))); return;}
     analytics.engage();
     updateTacticalPlan((previous) => placeRoutePoint(previous, point));
+    setNotice("");
     trackAnalyticsEvent(ANALYTICS_EVENTS.mapAction, {map_id: stateRef.current.map, action: "route_point", locale});
   }
   function addRangePoint(point: Point) {
@@ -303,7 +306,10 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
     updateState((previous) => ({...previous, view: boundView({zoom: 6, ...point}, size.width, size.height)}));
   }
   function setMissionPoint(point: Point, target: boolean) {
-    updateTacticalPlan((previous) => ({...previous, fireSupport: {...previous.fireSupport, points: target ? [previous.fireSupport.points[0] ?? {x: view.x, y: view.y}, point] : [point, ...(previous.fireSupport.points[1] ? [previous.fireSupport.points[1]] : [])]}}));
+    const current = tacticalPlansByMap.current[stateRef.current.map] ?? tacticalPlan;
+    if (target && !current.fireSupport.points[0]) {setNotice(plannerCopy.gunRequired); return;}
+    updateTacticalPlan((previous) => setTacticalMissionPoint(previous, point, target ? "target" : "gun"));
+    setNotice("");
     setMode("range"); setPanel(false);
   }
   function savePlanFile() {
@@ -423,7 +429,7 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
               <div><h3 className="font-semibold text-white">{plannerCopy.routeTitle}</h3><p className="mt-1 text-xs text-[#8fa296]">{plannerCopy.routeHelp}</p></div>
               <button type="button" className={controlClass} title={plannerCopy.clearRoute} aria-label={plannerCopy.clearRoute} onClick={() => updateTacticalPlan((previous) => ({...previous, route: {...previous.route, points: []}}))}><Trash2 size={18} /></button>
             </div>
-            <dl className="mt-3 grid grid-cols-2 gap-3 text-xs"><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.points}</dt><dd className="font-mono text-lg text-white">{tacticalPlan.route.points.length}</dd></div><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.total}</dt><dd className="font-mono text-lg text-[#f0b75f]">{Math.round(routeDistanceMeters)}m</dd></div></dl>
+            <dl className="mt-3 grid grid-cols-2 gap-3 text-xs"><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.points}</dt><dd className="font-mono text-lg text-white">{tacticalPlan.route.points.length}/{MAX_ROUTE_POINTS}</dd></div><div><dt className="uppercase text-[#7f8d86]">{plannerCopy.total}</dt><dd className="font-mono text-lg text-[#f0b75f]">{Math.round(routeDistanceMeters)}m</dd></div></dl>
           </div>
           <div className={`${mode === "range" ? "" : "hidden lg:block"} rounded border border-[#34463b] bg-[#101a15] p-3`}>
             <div className="flex items-center justify-between gap-3">
@@ -464,13 +470,14 @@ export function WardogsMapViewer({initialMap = "bakurani", locale = "en", classN
             <a className="text-[#9adeb4] underline" href={publicRoutePath(`/${locale}/guides/${record.guideSlug}`)} title={atlasCopy.entries[record.id].title}>{atlasCopy.entries[record.id].title}</a><p className="my-1 text-xs text-[#d7bb73]">{copy.unlocated}</p><a className="break-words text-xs text-[#b8c8be]" href={record.evidence.sourceUrl} title={record.sourceLabel} rel="noreferrer" target="_blank">{record.sourceLabel}</a>
           </li>)}</ul>{!visibleReferences.length && <p className="mt-2 text-sm text-[#b8c8be]">{copy.empty}</p>}</section>
           <section><h3 className="text-sm font-semibold text-white">{copy.manual} ({state.markers.length}/{MAX_MARKERS})</h3><p className="mt-2 text-xs text-[#b8c8be]">{copy.privacy}</p>
+            {state.markers.length > 0 && !tacticalPlan.fireSupport.points[0] && <p className="mt-2 text-xs text-[#d7bb73]">{plannerCopy.gunRequired}</p>}
             <ul className="mt-3 space-y-3">{state.markers.filter((marker) => `${marker.label} ${plannerCopy[marker.kind ?? "intel"]}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())).map((marker) => <li key={marker.id} className="rounded border border-[#35463b] p-2">
               <div className="flex gap-2"><input id={`${id}-${marker.id}`} aria-label={copy.label} maxLength={60} value={marker.label} className="min-h-11 min-w-0 flex-1 rounded border border-[#46594d] bg-[#111b15] px-2 text-sm text-white" onChange={(event) => {const label = event.target.value; updateState((previous) => ({...previous, markers: previous.markers.map((entry) => entry.id === marker.id ? {...entry, label} : entry)}));}} onBlur={() => updateState((previous) => ({...previous, markers: previous.markers.map((entry) => ({...entry, label: entry.label.trim() || copy.marker}))}))} /><button aria-label={`${copy.remove}: ${marker.label}`} title={copy.remove} className={controlClass} onClick={() => updateState((previous) => ({...previous, markers: previous.markers.filter(({id: markerId}) => markerId !== marker.id)}))}><Trash2 size={18} /></button></div>
               <div className="mt-2 grid grid-cols-2 gap-2"><label className="col-span-2 text-xs text-[#bacbc0]">{plannerCopy.kind}<select value={marker.kind ?? "intel"} className="ml-2 min-h-11 rounded border border-[#43534a] bg-[#18231e] p-2" onChange={(event) => updateState((previous) => ({...previous, markers: previous.markers.map((entry) => entry.id === marker.id ? {...entry, kind: event.target.value as MarkerKind} : entry)}))}>{markerKinds.map((kind) => <option key={kind} value={kind}>{plannerCopy[kind]}</option>)}</select></label>{(["x", "y"] as const).map((axis) => <label key={axis} className="text-xs text-[#bacbc0]">{plannerCopy[axis]}<input type="number" min={0} max={100} step="0.01" value={Number((marker[axis] * 100).toFixed(4))} className="mt-1 min-h-11 w-full min-w-0 rounded border border-[#46594d] bg-[#111b15] px-2" onChange={(event) => {const value = event.target.valueAsNumber / 100; if (Number.isFinite(value) && value >= 0 && value <= 1) updateState((previous) => ({...previous, markers: previous.markers.map((entry) => entry.id === marker.id ? {...entry, [axis]: value} : entry)}));}} /></label>)}</div>
               <div className="mt-2 flex flex-wrap gap-2 text-xs text-[#9adeb4]">
                 <button className="min-h-11 rounded border border-[#46594d] px-2" onClick={() => focusPoint(marker)}>{plannerCopy.focus}</button>
                 <button className="min-h-11 rounded border border-[#46594d] px-2" onClick={() => setMissionPoint(marker, false)}>{plannerCopy.setGun}</button>
-                <button className="min-h-11 rounded border border-[#46594d] px-2" onClick={() => setMissionPoint(marker, true)}>{plannerCopy.setTarget}</button>
+                <button className="min-h-11 rounded border border-[#46594d] px-2 disabled:cursor-not-allowed disabled:opacity-50" disabled={!tacticalPlan.fireSupport.points[0]} onClick={() => setMissionPoint(marker, true)}>{plannerCopy.setTarget}</button>
                 <button className="min-h-11 rounded border border-[#46594d] px-2" onClick={() => {addRoutePoint(marker); setMode("route"); setPanel(false);}}>{plannerCopy.routePoint}</button>
               </div>
             </li>)}</ul></section>

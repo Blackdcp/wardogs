@@ -18,6 +18,7 @@ import {currentVideoAnchorId, currentVideoSources, videoArticles} from "@/featur
 import {getLocalizedVideoArticles} from "@/features/videos/video-localization";
 import {videoCandidates} from "@/features/videos/video-candidates";
 import {getRecentCandidateCopy} from "@/features/videos/recent-candidate-copy";
+import {getRecentVideoSeo} from "@/features/videos/recent-video-seo-copy";
 import {getCreatorAttachmentRecords} from "@/features/tools/attachment-recipes";
 import {getAttachmentRecipeCopy} from "@/features/tools/attachment-recipe-copy";
 import {getDiscoverySearchAliases, getSearchCandidateSummary} from "./search-discovery-copy";
@@ -62,12 +63,13 @@ function getMessage(locale: Locale, key: string): string {
 
 export async function buildSiteSearchIndex(locale: Locale): Promise<SearchEntry[]> {
   const guides = await listGuideSummaries(locale);
-  const mortarToolAliases = new Set(getDiscoverySearchAliases(locale, "/tools/artillery-calculator").map(normalizeSearchText));
+  const artilleryToolAliases = new Set(getDiscoverySearchAliases(locale, "/tools/artillery-calculator").map(normalizeSearchText));
   const guideEntries: SearchEntry[] = guides.map((guide) => {
     const task = getGuideTaskData(guide.slug, locale, guide.directAnswer);
     // Explicit calculator searches belong to the executable tool. The guide still
     // retains its title, range/mils aliases and complete how-to answer in the index.
-    const guideIntentAliases = getGuideIntentKeywords(locale, guide.slug).filter((term) => guide.slug !== "wardogs-mortar-guide" || !mortarToolAliases.has(normalizeSearchText(term)));
+    const isArtilleryGuide = guide.slug === "wardogs-mortar-guide" || guide.slug === "wardogs-artillery-guide";
+    const guideIntentAliases = getGuideIntentKeywords(locale, guide.slug).filter((term) => !isArtilleryGuide || !artilleryToolAliases.has(normalizeSearchText(term)));
     return {
       id: `guide:${guide.slug}`,
       type: "guide",
@@ -97,12 +99,18 @@ export async function buildSiteSearchIndex(locale: Locale): Promise<SearchEntry[
       };
     });
 
-  const reviewedVideoEntries: SearchEntry[] = getLocalizedVideoArticles(locale).map((video) => ({
-    id: `video:${video.youtubeId}`, type: "video", title: video.title,
-    aliases: [video.sourceLabel, video.slug.replaceAll("-", " "), videoArticles.find(({youtubeId}) => youtubeId === video.youtubeId)?.title ?? ""], summary: video.description,
-    taskIntent: [video.quickAnswer, ...video.takeaways, ...video.sections.map(({heading}) => heading)],
-    category: getMessage(locale, "home.search.videoCategory"), href: `/videos/${video.slug}`
-  }));
+  const reviewedVideoEntries: SearchEntry[] = getLocalizedVideoArticles(locale).map((video) => {
+    const recentTopics = getRecentVideoSeo(locale, video.slug);
+    return {
+      id: `video:${video.youtubeId}`, type: "video", title: video.title,
+      aliases: [video.sourceLabel, video.slug.replaceAll("-", " "), videoArticles.find(({youtubeId}) => youtubeId === video.youtubeId)?.title ?? ""], summary: video.description,
+      // Use the recent analyses' actual vocabulary, including details beyond the
+      // first sentence. Supporting text must not promote broad video topics over
+      // the existing Season 2 / solo guide aliases.
+      taskIntent: [video.quickAnswer, ...video.takeaways, ...video.sections.map(({heading}) => heading), ...(recentTopics ? [...recentTopics.keywords, ...video.sections.flatMap(({body}) => body)] : [])],
+      category: getMessage(locale, "home.search.videoCategory"), href: `/videos/${video.slug}`
+    };
+  });
   const currentVideoEntries: SearchEntry[] = currentVideoSources.map((video) => ({
       id: `video:${video.youtubeId}`,
       type: "video",

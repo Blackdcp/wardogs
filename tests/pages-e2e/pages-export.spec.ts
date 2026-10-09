@@ -157,6 +157,22 @@ test("basePath homepage search loads the localized static index and opens a resu
   await expect(page).toHaveURL(new RegExp(`${basePath}/en/(?:guides|items|tools)/`));
 });
 
+test("watch articles and evidence links retain the deployment base in every language", async ({request}) => {
+  for (const locale of locales) {
+    const watch = await request.get(deployed(`/${locale}/videos/wardogs-attachments-tested/`));
+    expect(watch.status()).toBe(200);
+    const html = await watch.text();
+    const watchLinks = [...html.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(match => match[1]);
+    for (const path of [`/${locale}/videos`, `/${locale}/editorial-policy`, `/${locale}/guides/wardogs-best-weapons-loadouts`]) {
+      expect(watchLinks).toContain(`${deployed(path)}/`);
+    }
+    const guide = await request.get(deployed(`/${locale}/guides/wardogs-best-weapons-loadouts/`));
+    expect(guide.status()).toBe(200);
+    const guideLinks = [...(await guide.text()).matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(match => match[1]);
+    expect(guideLinks.some(href => href.startsWith(deployed(`/${locale}/videos/#`)))).toBe(true);
+  }
+});
+
 test("restores shared tool selections from query parameters after hydration", async ({page}) => {
   await page.goto(deployed("/en/tools/weapon-compare/?left=amp-9&right=deagle"));
   await expect(page.getByRole("combobox", {name: "First weapon"})).toHaveValue("amp-9");

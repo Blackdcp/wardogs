@@ -9,6 +9,12 @@ const productionScriptPath = path.join(root, "scripts", "deploy-production.mjs")
 const SITE_ORIGIN = "https://www.wardogswiki.com";
 
 describe("IndexNow deployment notification", () => {
+  it("notifies calculator and map runtime fixes and watch templates without unrelated submissions", async () => {
+    const {deriveIndexNowUrls} = await import(pathToFileURL(scriptPath).href) as {deriveIndexNowUrls: (files: string[], urls: string[]) => string[]};
+    const paths = ["/en/tools/map", "/ja/tools/map", "/en/tools/artillery-calculator", "/ru/tools/artillery-calculator", "/en/videos", "/ja/videos/wardogs-attachments-tested", "/en/items", "/en/privacy"];
+    const urls = paths.map(p => `${SITE_ORIGIN}${p}`);
+    expect(deriveIndexNowUrls(["src/features/maps/map-planner.ts", "src/features/artillery/artillery-mission.ts", "src/app/[locale]/videos/[slug]/page.tsx"], urls)).toEqual(urls.slice(0, 6));
+  });
   it("notifies data-driven video and market updates without depending on MDX changes", async () => {
     const {deriveIndexNowUrls} = await import(pathToFileURL(scriptPath).href) as {deriveIndexNowUrls: (files: string[], urls: string[]) => string[]};
     const locales = ["en", "ja", "de", "ru", "pl", "pt-br", "zh-cn", "zh-tw"];

@@ -5,6 +5,8 @@ import {getToolDefinition} from "@/features/tools/tool-registry";
 import {getItemUi} from "@/features/items/item-ui";
 import {SectionHeading} from "@/components/ui/section-heading";
 import {TaskLink} from "@/components/ui/task-link";
+import {getRecentVideoArticles} from "@/features/videos/recent-video-articles";
+import {getVideoUi} from "@/features/videos/video-ui";
 
 export async function buildToolRelatedLinks(toolId: string, locale: Locale) {
   const tool = getToolDefinition(toolId);
@@ -16,7 +18,8 @@ export async function buildToolRelatedLinks(toolId: string, locale: Locale) {
     return guide;
   });
   const catalogue = [...new Map(tool.relatedGuideSlugs.flatMap((slug) => getGuideDiscoveryLinks(slug, locale).relatedCatalogue).map((link) => [link.href, link])).values()];
-  return {tool, guides, catalogue};
+  const videos = getRecentVideoArticles(locale).filter((article) => article.relatedToolPath === tool.href);
+  return {tool, guides, catalogue, videos};
 }
 
 export type ToolRelatedLinksModel = Awaited<ReturnType<typeof buildToolRelatedLinks>>;
@@ -37,6 +40,12 @@ export function ToolRelatedGuidesView({model, locale}: {model: ToolRelatedLinksM
           </ul>
         </div>
       ) : null}
+      {model.videos.length ? <div className="mt-5" data-tool-related-videos>
+        <p className="text-sm font-semibold text-white">{getVideoUi(locale).readBreakdown}</p>
+        <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+          {model.videos.map((video) => <li className="min-w-0" key={video.slug}><TaskLink href={`/${locale}/videos/${video.slug}`} label={video.title} variant="text" /></li>)}
+        </ul>
+      </div> : null}
     </nav>
   );
 }

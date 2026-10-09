@@ -1,5 +1,8 @@
 import type {Locale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
+import {getGuideTaskData} from "@/features/guides/guide-task-data";
+import {getRecentVideoArticles} from "@/features/videos/recent-video-articles";
+import {publicRoutePath} from "@/lib/public-url";
 
 // Historical access searches still land on these pages. Lead readers to the
 // current product and roadmap before suggesting another expired test guide.
@@ -11,12 +14,14 @@ const currentAccessGuideSlugs: Record<string, readonly string[]> = {
 };
 
 // Keep established operating and troubleshooting guides reachable from adjacent
-// English entry pages instead of allowing manifest order to choose every card.
-const englishTaskGuideSlugs: Record<string, readonly string[]> = {
+// localized entry pages instead of allowing manifest order to choose every card.
+const operatingTaskGuideSlugs: Record<string, readonly string[]> = {
   "wardogs-artillery-guide": ["wardogs-mortar-guide", "wardogs-map", "wardogs-fob-guide"],
   "wardogs-mortar-guide": ["wardogs-artillery-guide", "wardogs-fob-guide", "wardogs-map"],
   "wardogs-cargo-guide": ["wardogs-fob-guide", "wardogs-equipment-tools-guide", "wardogs-money-guide"],
   "wardogs-fob-guide": ["wardogs-cargo-guide", "wardogs-mortar-guide", "wardogs-fob-layouts"],
+  "wardogs-fob-layouts": ["wardogs-fob-guide", "wardogs-cargo-guide", "wardogs-mortar-guide"],
+  "wardogs-equipment-tools-guide": ["wardogs-best-weapons-loadouts", "wardogs-ammo-reload-guide", "wardogs-fob-guide"],
   "wardogs-controls": ["wardogs-crash-fix", "wardogs-best-settings", "wardogs-helicopter-guide"],
   "wardogs-crash-fix": ["wardogs-known-issues", "wardogs-best-settings", "wardogs-system-requirements"]
 };
@@ -43,7 +48,15 @@ const seasonalTaskGuideSlugs: Record<string, readonly string[]> = {
 };
 
 export function buildRelatedGuideHref(locale: Locale, slug: string) {
-  return `/${locale}/guides/${slug}`;
+  return publicRoutePath(`/${locale}/guides/${slug}`);
+}
+
+// Pages with a task panel already render their source analyses in context.
+// Only fill the missing return edge, using the video's explicit guide relation.
+export function getGuideRelatedVideoLinks(locale: Locale, slug: string) {
+  const existingVideos = getGuideTaskData(slug, locale)?.videos ?? [];
+  return getRecentVideoArticles(locale).filter((article) => article.internalGuideSlug === slug
+    && !existingVideos.some((source) => source.articleSlug === article.slug));
 }
 
 export async function getRelatedGuides(locale: Locale, slug: string, limit = 3) {
@@ -51,7 +64,7 @@ export async function getRelatedGuides(locale: Locale, slug: string, limit = 3) 
   const current = guides.find((guide) => guide.slug === slug);
   if (!current) return [];
 
-  const prioritySlugs = seasonalTaskGuideSlugs[slug] ?? (locale === "en" ? englishTaskGuideSlugs[slug] : undefined)
+  const prioritySlugs = seasonalTaskGuideSlugs[slug] ?? operatingTaskGuideSlugs[slug]
     ?? currentAccessGuideSlugs[slug] ?? [];
   const prioritized = prioritySlugs
     .map((relatedSlug) => guides.find((guide) => guide.slug === relatedSlug))
@@ -66,9 +79,9 @@ export async function getRelatedGuides(locale: Locale, slug: string, limit = 3) 
 export async function getItemRelatedGuides(locale: Locale, item: {type: string; slug: string; relatedGuides: readonly string[]}) {
   const guides = await listGuideSummaries(locale);
   const bySlug = new Map(guides.map((guide) => [guide.slug, guide]));
-  const taskSlugs = locale === "en" && (item.slug === "mortar" || item.slug === "l81-mortar")
+  const taskSlugs = item.slug === "mortar" || item.slug === "l81-mortar"
     ? ["wardogs-mortar-guide", "wardogs-artillery-guide", "wardogs-map"]
-    : item.slug === "sph-2" || item.slug === "mortar" || item.slug === "l81-mortar"
+    : item.slug === "sph-2"
     ? ["wardogs-artillery-guide", "wardogs-mortar-guide", "wardogs-map"]
     : item.type === "weapons"
       ? ["wardogs-best-weapons-loadouts", "wardogs-ammo-reload-guide", "wardogs-money-guide"]

@@ -37,14 +37,36 @@ const mortarToolTerms: Record<Locale, readonly string[]> = {
   pl: ["moździerz", "kalkulator moździerza"]
 };
 
+// These names describe shipped functions, not new tools or live-price feeds.
+// Keep explicit calculator / map-marker intent on the executable destination.
+const toolTaskTerms: Record<Locale, {gold: string[]; map: string[]; artillery: string[]}> = {
+  en: {gold: ["gold budget", "gold calculator"], map: ["interactive map", "map pins", "map markers"], artillery: ["artillery calculator"]},
+  de: {gold: ["Goldbudget", "Gold Budget", "Goldrechner"], map: ["interaktive Karte", "Kartenmarkierungen"], artillery: ["Artillerierechner", "Artillerie Rechner"]},
+  ru: {gold: ["бюджет золота", "калькулятор золота"], map: ["интерактивная карта", "метки на карте"], artillery: ["калькулятор артиллерии", "артиллерийский калькулятор"]},
+  "pt-br": {gold: ["orçamento de ouro", "calculadora de ouro"], map: ["mapa interativo", "marcadores do mapa"], artillery: ["calculadora de artilharia"]},
+  ja: {gold: ["ゴールド予算", "ゴールド計算機"], map: ["インタラクティブマップ", "マップピン"], artillery: ["砲兵計算機"]},
+  "zh-cn": {gold: ["黄金预算", "黄金计算器"], map: ["交互地图", "互动地图", "地图标记"], artillery: ["火炮计算器"]},
+  "zh-tw": {gold: ["黃金預算", "黃金計算器"], map: ["互動地圖", "地圖標記"], artillery: ["火砲計算器", "火炮計算器"]},
+  pl: {gold: ["budżet złota", "kalkulator złota"], map: ["mapa interaktywna", "znaczniki mapy"], artillery: ["kalkulator artylerii"]}
+};
+
+// CJK word order is not interchangeable under substring matching: the title's
+// 玩家举报 / 玩家檢舉 does not match the ordinary action 举报玩家 / 檢舉玩家.
+const reportActionTerms: Partial<Record<Locale, readonly string[]>> = {
+  "zh-cn": ["举报玩家"],
+  "zh-tw": ["檢舉玩家"]
+};
+
 export function getDiscoverySearchAliases(locale: Locale, href: string): string[] {
   const t = terms[locale];
-  if (href === "/tools/artillery-calculator") return ["mortar", "mortar calculator", ...mortarToolTerms[locale]];
+  if (href === "/tools/artillery-calculator") return ["mortar", "mortar calculator", "artillery calculator", ...mortarToolTerms[locale], ...toolTaskTerms[locale].artillery];
+  if (href === "/tools/map") return toolTaskTerms[locale].map;
   if (href === "/guides/wardogs-medic-revive-guide") return ["medic", ...medicRoleTerms[locale]];
+  if (href === "/guides/wardogs-report-player") return [...(reportActionTerms[locale] ?? [])];
   if (href === "/items/medical") return ["medical", "medical items"];
   if (href === "/guides/wardogs-season-2") return [...t.season, ...t.season.map((term) => term.replace(/\s+/g, "")), ...t.weapons, "Season 2", "Season 02", "new weapons", "M14"];
   if (href === "/guides/wardogs-progression-wipes-guide") return t.wipe;
-  if (href === "/gold-market") return [...t.gold, "gold market"];
+  if (href === "/gold-market") return [...t.gold, "gold market", "gold budget", "gold calculator", ...toolTaskTerms[locale].gold];
   if (href === "/guides/wardogs-helicopter-guide") return [...t.antiAir, "Verbe", "Verba anti air", "anti helicopter"];
   if (href === "/guides/wardogs-community-servers-guide") return ["1of1", "1 of 1", "community servers"];
   return [];

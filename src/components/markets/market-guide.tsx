@@ -3,6 +3,7 @@ import {SeasonTaskPath} from "@/components/releases/season-task-path";
 import type {Locale} from "@/config/site";
 import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 import {publicRoutePath} from "@/lib/public-url";
+import {getRecentVideoArticles} from "@/features/videos/recent-video-articles";
 
 export type MarketKind = "black" | "gold";
 
@@ -177,6 +178,7 @@ export function getMarketCopy(locale: Locale, kind: MarketKind): Copy {
 export function MarketGuide({locale, kind}: {locale: Locale; kind: MarketKind}) {
   const content = getMarketCopy(locale, kind);
   const otherMarket = kind === "black" ? "gold-market" : "black-market";
+  const relatedVideos = kind === "gold" ? getRecentVideoArticles(locale).filter(article => article.relatedToolPath === "/gold-market" || article.slug === "wardogs-season-2-developer-interview") : [];
 
   return <main>
     <header className="border-b border-[#2c3631] bg-[#111512] py-14 md:py-20"><div className="site-container max-w-5xl">
@@ -204,6 +206,7 @@ export function MarketGuide({locale, kind}: {locale: Locale; kind: MarketKind}) 
         <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3 text-sm font-semibold text-[#79d19c]">
           <a href={publicRoutePath(`/${locale}/${otherMarket}`)} title={content.relatedMarket}>{content.relatedMarket} →</a>
           <a href={publicRoutePath(`/${locale}/guides/wardogs-money-guide`)} title={content.moneyGuide}>{content.moneyGuide} →</a>
+          {relatedVideos.map(video => <a key={video.slug} href={publicRoutePath(`/${locale}/videos/${video.slug}`)} title={video.title}>{video.title} →</a>)}
         </div>
       </nav>
       {kind === "gold" && <><SeasonTaskPath locale={locale} path="/gold-market" /><ReleaseImpactPanel locale={locale} path="/gold-market" /></>}

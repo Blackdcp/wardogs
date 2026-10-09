@@ -41,7 +41,7 @@ export function ContextualVideoEvidence({locale, sources}: {locale: Locale; sour
                 <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">{source.articleSlug ? recentVideoUi[locale].chapters : ui.youtubeSource}<ExternalLink aria-hidden="true" className="size-4" /></span>
               </span>
             </a>
-            <a className="flex min-h-11 items-center justify-between gap-3 border-t border-[#2c3631] px-4 py-3 text-xs font-semibold uppercase text-[#b8c3bd] hover:bg-[#1b241f] hover:text-white" href={`/${locale}/videos#${currentVideoAnchorId(source.youtubeId)}`} title={ui.videoHub}>
+            <a className="flex min-h-11 items-center justify-between gap-3 border-t border-[#2c3631] px-4 py-3 text-xs font-semibold uppercase text-[#b8c3bd] hover:bg-[#1b241f] hover:text-white" href={publicRoutePath(`/${locale}/videos#${currentVideoAnchorId(source.youtubeId)}`)} title={ui.videoHub}>
               <span className="min-w-0" style={{overflowWrap: "anywhere"}}>{ui.videoHub}</span>
               <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
             </a>

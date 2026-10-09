@@ -26,7 +26,7 @@ import {getArtilleryCopy} from "@/features/artillery/artillery-copy";
 import {assetPath} from "@/lib/assets";
 import {Link} from "@/i18n/navigation";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
-import {decodeCalculatorSearch, readShotHistory, pushShotHistory, recommendObservedCorrection, summarizeShot, type LateralObservation, type RangeObservation, type ShotHistoryEntry} from "@/features/artillery/artillery-mission";
+import {decodeCalculatorSearch, hasCalculatorMissionSearch, readShotHistory, pushShotHistory, recommendObservedCorrection, summarizeShot, type LateralObservation, type RangeObservation, type ShotHistoryEntry} from "@/features/artillery/artillery-mission";
 
 interface Props {
   locale: Locale;
@@ -77,6 +77,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
   const [lateralObservation, setLateralObservation] = useState<LateralObservation>("on");
   const [shotHistory, setShotHistory] = useState<ShotHistoryEntry[]>([]);
   const [mapImportNotice, setMapImportNotice] = useState(false);
+  const [invalidImportNotice, setInvalidImportNotice] = useState(false);
   const [importedScale, setImportedScale] = useState<{map: MapId; meters: number; source: string}>();
 
   // Timer & Audio
@@ -106,6 +107,8 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
         setMapImportNotice(true);
         if (imported.mapScaleMeters) setImportedScale({map: imported.map, meters: imported.mapScaleMeters, source: imported.scaleSource ?? "nominal"});
         resultPending.current = true;
+      } else if (hasCalculatorMissionSearch(window.location.search)) {
+        setInvalidImportNotice(true);
       }
       try {
         const stored = window.localStorage?.getItem("wardogs:artillery-history");
@@ -175,6 +178,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
   }
 
   function updateInputs(update: () => void) {
+    setInvalidImportNotice(false);
     analytics.engage();
     cancelCountdown();
     resultPending.current = true;
@@ -608,6 +612,7 @@ export function ArtilleryCalculator({locale, headerActions}: Props) {
 
       <p className="text-xs leading-5 text-[#d7bb73]">{missionCopy.heightHelp}</p>
 
+      {invalidImportNotice ? <p role="alert" data-artillery-import-error className="rounded border border-[#8c6c30] bg-[#221c12] px-4 py-3 text-sm leading-6 text-[#f0d28d]">{missionCopy.invalidImport}</p> : null}
       {mapImportNotice ? (
         <div className="rounded-[6px] border border-[#3c5c46] bg-[#112018] p-4 text-sm text-[#d9f5e4]" data-artillery-map-import data-clarity-mask="true">
           <strong className="text-[#8ce2ad]">{missionCopy.imported}</strong> {missionCopy.importHelp}

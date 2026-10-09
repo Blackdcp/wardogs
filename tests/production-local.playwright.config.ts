@@ -18,7 +18,9 @@ export default defineConfig({
     "site-search.spec.ts",
     "oct9-community-content.spec.ts",
     "attachment-recipes.spec.ts",
-    "diagnostic-records.spec.ts"
+    "diagnostic-records.spec.ts",
+    "artillery-import-recovery.spec.ts",
+    "map-input-recovery.spec.ts"
   ],
   fullyParallel: false,
   workers: 1,

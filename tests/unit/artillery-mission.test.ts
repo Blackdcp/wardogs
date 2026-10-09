@@ -3,6 +3,7 @@ import {
   ARTILLERY_HISTORY_LIMIT,
   decodeCalculatorSearch,
   encodeCalculatorSearch,
+  hasCalculatorMissionSearch,
   pushShotHistory,
   readShotHistory,
   recommendObservedCorrection,
@@ -11,6 +12,22 @@ import {
 } from "../../src/features/artillery/artillery-mission";
 
 describe("artillery mission workflow", () => {
+  it.each(["constructor", "__proto__", "toString", "valueOf", "hasOwnProperty"])("rejects inherited weapon name %s without crashing", (weapon) => {
+    expect(decodeCalculatorSearch(`?map=bakurani&weapon=${weapon}&mode=single&distance=380&azimuth=45`)).toBeUndefined();
+  });
+
+  it.each(["", "&azimuth=", "&azimuth=%20"])("does not turn missing or blank bearing into north: %s", (bearing) => {
+    expect(decodeCalculatorSearch(`?map=bakurani&weapon=mortar&mode=single&distance=380${bearing}`)).toBeUndefined();
+  });
+
+  it("accepts explicit north and distinguishes incomplete missions from unrelated query strings", () => {
+    expect(decodeCalculatorSearch("?map=bakurani&weapon=mortar&mode=single&distance=380&azimuth=0")).toMatchObject({azimuthDegrees: 0});
+    expect(decodeCalculatorSearch("?map=bakurani&weapon=mortar&mode=single&distance=380&azimuth=0&mapScale=")).toBeUndefined();
+    expect(hasCalculatorMissionSearch("?utm_source=discord&source=map")).toBe(false);
+    expect(hasCalculatorMissionSearch("")).toBe(false);
+    expect(hasCalculatorMissionSearch("?distance=380")).toBe(true);
+  });
+
   it("encodes and restores calculator inputs without coordinates or private share state", () => {
     const search = encodeCalculatorSearch({map: "bakurani", weaponId: "mortar", mode: "single", distanceMeters: 320, azimuthDegrees: 90, source: "map"});
     expect(search).toBe("?map=bakurani&weapon=mortar&mode=single&distance=320&azimuth=90&source=map");

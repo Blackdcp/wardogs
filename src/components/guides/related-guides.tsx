@@ -1,10 +1,13 @@
 import {ArrowRight} from "lucide-react";
 import type {Locale} from "@/config/site";
 import type {GuideSummary} from "@/content/guides";
-import {buildRelatedGuideHref} from "@/features/guides/related";
+import {buildRelatedGuideHref, getGuideRelatedVideoLinks} from "@/features/guides/related";
 import {SeasonTaskPath} from "@/components/releases/season-task-path";
+import {TaskLink} from "@/components/ui/task-link";
+import {getVideoUi} from "@/features/videos/video-ui";
 
 export function RelatedGuides({guides, locale, title, path}: {guides: GuideSummary[]; locale: Locale; title: string; path?: string}) {
+  const videos = path?.startsWith("/guides/") ? getGuideRelatedVideoLinks(locale, path.slice("/guides/".length)) : [];
   return (
     <section className="site-container py-14" aria-labelledby="related-title">
       {path && <SeasonTaskPath locale={locale} path={path} />}
@@ -18,6 +21,12 @@ export function RelatedGuides({guides, locale, title, path}: {guides: GuideSumma
           </a>
         ))}
       </div>
+      {videos.length ? <nav className="mt-6 border-t border-[#344039] pt-5" aria-label={getVideoUi(locale).readBreakdown} data-guide-related-videos>
+        <p className="text-sm font-semibold text-white">{getVideoUi(locale).readBreakdown}</p>
+        <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+          {videos.map((video) => <li className="min-w-0" key={video.slug}><TaskLink href={`/${locale}/videos/${video.slug}`} label={video.title} variant="text" /></li>)}
+        </ul>
+      </nav> : null}
     </section>
   );
 }

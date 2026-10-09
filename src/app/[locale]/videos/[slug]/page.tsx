@@ -68,7 +68,7 @@ export default async function VideoArticlePage({params}: PageProps) {
       <JsonLd data={buildVideoArticleJsonLd(locale, article)} />
       <header className="border-b border-[#2c3631] bg-[#101411] py-12 md:py-16">
         <div className="site-container max-w-4xl">
-          <a className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href={`/${locale}/videos`} title={ui.allVideos}>
+          <a className="inline-flex min-h-11 items-center gap-2 text-sm text-[#8bb59d] hover:text-white" href={publicRoutePath(`/${locale}/videos`)} title={ui.allVideos}>
             <ArrowLeft aria-hidden="true" size={16} />
             {ui.allVideos}
           </a>
@@ -89,7 +89,7 @@ export default async function VideoArticlePage({params}: PageProps) {
               {ui.lastUpdated} <time dateTime={article.updatedDate}>{article.updatedDate}</time>
             </p>
             <p className="text-xs text-[#8b9992]">
-              {articleT("byline")} <a className="font-semibold text-[#8bb59d] hover:text-white" href={`/${locale}/editorial-policy`} title={articleT("teamName")}>{articleT("teamName")}</a>
+              {articleT("byline")} <a className="font-semibold text-[#8bb59d] hover:text-white" href={publicRoutePath(`/${locale}/editorial-policy`)} title={articleT("teamName")}>{articleT("teamName")}</a>
             </p>
           </div>
           {article.captionReview && <div className="mt-4 space-y-2 text-xs leading-5 text-[#a8b4ae]" data-video-review-scope>
@@ -142,7 +142,7 @@ export default async function VideoArticlePage({params}: PageProps) {
             <span className="block text-sm font-semibold text-[#79d19c]">{article.sourceLabel} <ExternalLink aria-hidden="true" className="inline size-4" /></span>
             <span className="mt-2 block text-xs uppercase text-[#8b9992]">{ui.youtubeSource}</span>
           </a>
-          <a className="bg-[#151b18] p-5 hover:bg-[#1b241f]" href={`/${locale}/guides/${article.internalGuideSlug}`} title={relatedGuide?.frontmatter.title ?? ui.relatedGuide}>
+          <a className="bg-[#151b18] p-5 hover:bg-[#1b241f]" href={publicRoutePath(`/${locale}/guides/${article.internalGuideSlug}`)} title={relatedGuide?.frontmatter.title ?? ui.relatedGuide}>
             <span className="block text-sm font-semibold text-[#79d19c]">{ui.relatedGuide}</span>
             <span className="mt-2 block text-xs uppercase text-[#8b9992]">{ui.internalGuide}: {relatedGuide?.frontmatter.title ?? article.internalGuideSlug}</span>
           </a>

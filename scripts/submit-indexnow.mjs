@@ -65,8 +65,16 @@ export function deriveIndexNowUrls(changedFiles, sitemapUrls) {
       wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/(?:gold-market|black-market)$`));
       continue;
     }
-    if (/^src\/(?:components|features)\/videos\//.test(file) || file === "src/components/mdx/official-video.tsx") {
+    if (/^src\/(?:components|features)\/videos\//.test(file) || /^src\/app\/\[locale\]\/videos(?:\/|$)/.test(file) || file === "src/components/mdx/official-video.tsx") {
       wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/videos(?:\/|$)`));
+      continue;
+    }
+    if (/^src\/(?:components|features)\/artillery\//.test(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/tools\/artillery-calculator$`));
+      continue;
+    }
+    if (/^src\/(?:components\/map|features\/maps)\//.test(file)) {
+      wantedPatterns.push(new RegExp(`^\/${localizedPathPattern}\/tools\/map$`));
       continue;
     }
     if (/^src\/(?:components|features)\/releases\//.test(file)) {

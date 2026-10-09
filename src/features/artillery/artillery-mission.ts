@@ -51,7 +51,7 @@ function isMapId(value: string): value is MapId {
 }
 
 function isWeaponId(value: string): value is WeaponId {
-  return value in WEAPON_REGISTRY;
+  return Object.hasOwn(WEAPON_REGISTRY, value);
 }
 
 function isModeForWeapon(weaponId: WeaponId, value: string): value is TrajectoryMode {
@@ -84,10 +84,10 @@ export function decodeCalculatorSearch(search: string): CalculatorMissionInput |
   const map = params.get("map") ?? "";
   const weapon = params.get("weapon") ?? "";
   const mode = params.get("mode") ?? "";
-  const distance = Number(params.get("distance"));
-  const azimuth = Number(params.get("azimuth"));
+  const distance = parseMissionNumber(params.get("distance"));
+  const azimuth = parseMissionNumber(params.get("azimuth"));
   const source = params.get("source") ?? undefined;
-  const scale = params.has("mapScale") ? Number(params.get("mapScale")) : undefined;
+  const scale = params.has("mapScale") ? parseMissionNumber(params.get("mapScale")) : undefined;
   const scaleSource = params.get("scaleSource") ?? undefined;
 
   if (!isMapId(map) || !isWeaponId(weapon) || !isModeForWeapon(weapon, mode)) return undefined;
@@ -99,6 +99,15 @@ export function decodeCalculatorSearch(search: string): CalculatorMissionInput |
   if (scaleSource !== undefined && scaleSource !== "user-supplied" && scaleSource !== "nominal") return undefined;
   if (scaleSource && scale === undefined) return undefined;
   return {map, weaponId: weapon, mode, distanceMeters: distance, azimuthDegrees: azimuth, source, ...(scale === undefined ? {} : {mapScaleMeters: scale, scaleSource})};
+}
+
+function parseMissionNumber(value: string | null) {
+  return value === null || value.trim() === "" ? NaN : Number(value);
+}
+
+export function hasCalculatorMissionSearch(search: string) {
+  const params = new URLSearchParams(search);
+  return ["map", "weapon", "mode", "distance", "azimuth", "mapScale", "scaleSource"].some(key => params.has(key));
 }
 
 export function recommendObservedCorrection(input: ObservedCorrectionInput): ObservedCorrection {

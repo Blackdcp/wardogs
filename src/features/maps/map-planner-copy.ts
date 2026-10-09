@@ -1,6 +1,8 @@
 import type {Locale} from "@/config/site";
 
 const en = {
+  "routeLimit": "This route holds up to {limit} points. Undo a point or clear the route before adding another. Your existing route is unchanged.",
+  "gunRequired": "Set a gun position before choosing a target.",
   "timingHelp": "Flight time and the timer are linear estimates, not measured impacts. Do not use them for precise synchronized volleys.",
   "shareTooLarge": "This plan is too large for a link. Use Save plan file.",
   "routeTitle": "Route planner",
@@ -55,6 +57,8 @@ const en = {
 export type MapPlannerCopy = typeof en;
 const copies: Record<Locale, MapPlannerCopy> = {en,
 "zh-cn": {
+  "routeLimit": "路线最多容纳 {limit} 个点。请先撤销一个点或清除路线，再添加新点；原路线已保留。",
+  "gunRequired": "请先设置炮位，再选择目标。",
   "timingHelp": "飞行时间和计时器为线性估算，并非实测落点时间，不可用于精确同步齐射。",
   "shareTooLarge": "此计划超过链接容量，请使用“保存计划文件”。",
   "routeTitle": "路线规划",
@@ -107,6 +111,8 @@ const copies: Record<Locale, MapPlannerCopy> = {en,
   "outOfRange": "超出射表范围"
 },
 "zh-tw": {
+  "routeLimit": "路線最多可放置 {limit} 個點。請先撤銷一個點或清除路線，再新增；原路線已保留。",
+  "gunRequired": "請先設定砲位，再選擇目標。",
   "timingHelp": "飛行時間和計時器為線性估算，並非實測落點時間，不可用於精確同步齊射。",
   "shareTooLarge": "此計畫超過連結容量，請使用「儲存計畫檔案」。",
   "routeTitle": "路線規劃",
@@ -159,6 +165,8 @@ const copies: Record<Locale, MapPlannerCopy> = {en,
   "outOfRange": "超出射表範圍"
 },
 "ja": {
+  "routeLimit": "経路は最大{limit}点です。追加する前に1点戻すか経路を消去してください。既存の経路は保持されています。",
+  "gunRequired": "目標を選ぶ前に砲位置を設定してください。",
   "timingHelp": "飛翔時間とタイマーは線形推定で、実測した着弾時刻ではありません。精密な同時着弾射撃には使用できません。",
   "shareTooLarge": "この計画はリンクの上限を超えています。計画ファイルを保存してください。",
   "routeTitle": "経路計画",
@@ -211,6 +219,8 @@ const copies: Record<Locale, MapPlannerCopy> = {en,
   "outOfRange": "射表の範囲外"
 },
 "de": {
+  "routeLimit": "Diese Route erlaubt höchstens {limit} Punkte. Vor dem Hinzufügen einen Punkt zurücknehmen oder die Route löschen. Die vorhandene Route bleibt erhalten.",
+  "gunRequired": "Vor der Zielauswahl eine Geschützposition setzen.",
   "timingHelp": "Flugzeit und Timer sind lineare Schätzungen, keine gemessenen Einschlagzeiten. Nicht für präzise synchronisierte Salven verwenden.",
   "shareTooLarge": "Dieser Plan ist zu groß für einen Link. Als Datei speichern.",
   "routeTitle": "Routenplaner",
@@ -263,6 +273,8 @@ const copies: Record<Locale, MapPlannerCopy> = {en,
   "outOfRange": "Außerhalb der Schusstafel"
 },
 "ru": {
+  "routeLimit": "В маршруте не более {limit} точек. Перед добавлением отмените точку или очистите маршрут. Существующий маршрут сохранён.",
+  "gunRequired": "Перед выбором цели задайте позицию орудия.",
   "timingHelp": "Время полёта и таймер — линейные оценки, а не измеренное время попадания. Не используйте их для точной синхронизации залпов.",
   "shareTooLarge": "План слишком велик для ссылки. Сохраните файл плана.",
   "routeTitle": "Планировщик маршрута",
@@ -315,6 +327,8 @@ const copies: Record<Locale, MapPlannerCopy> = {en,
   "outOfRange": "За пределами таблицы стрельбы"
 },
 "pt-br": {
+  "routeLimit": "A rota aceita até {limit} pontos. Desfaça um ponto ou limpe a rota antes de adicionar outro. A rota atual foi preservada.",
+  "gunRequired": "Defina a posição da arma antes de escolher o alvo.",
   "timingHelp": "O tempo de voo e o cronômetro são estimativas lineares, não tempos de impacto medidos. Não use para sincronizar salvas com precisão.",
   "shareTooLarge": "O plano é grande demais para um link. Salve o arquivo do plano.",
   "routeTitle": "Planejador de rotas",
@@ -367,6 +381,8 @@ const copies: Record<Locale, MapPlannerCopy> = {en,
   "outOfRange": "Fora da tabela de tiro"
 },
 "pl": {
+  "routeLimit": "Trasa mieści maksymalnie {limit} punktów. Cofnij punkt lub wyczyść trasę przed dodaniem następnego. Dotychczasowa trasa została zachowana.",
+  "gunRequired": "Przed wyborem celu ustaw pozycję działa.",
   "timingHelp": "Czas lotu i licznik są liniowymi szacunkami, nie zmierzonym czasem trafienia. Nie używaj ich do precyzyjnej synchronizacji salw.",
   "shareTooLarge": "Plan jest zbyt duży dla linku. Zapisz plik planu.",
   "routeTitle": "Planer trasy",

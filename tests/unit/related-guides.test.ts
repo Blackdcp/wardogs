@@ -1,10 +1,11 @@
-import {describe, expect, it} from "vitest";
+import {afterEach, describe, expect, it, vi} from "vitest";
 import {buildRelatedGuideHref, getItemRelatedGuides, getRelatedGuides} from "../../src/features/guides/related";
 import {getItemBySlug} from "../../src/features/items/item-library";
 import {localizeMdxInternalLinks} from "../../src/content/guides";
 import {locales} from "../../src/config/site";
 
 describe("related guides", () => {
+  afterEach(() => vi.unstubAllEnvs());
   it.each(locales)("continues the season, wipe and issue tasks in %s", async (locale) => {
     for (const [slug, expected] of [
       ["wardogs-season-2", ["wardogs-progression-wipes-guide", "wardogs-what-to-buy-before-wipe", "wardogs-patch-notes"]],
@@ -15,19 +16,24 @@ describe("related guides", () => {
       expect((await getRelatedGuides(locale, slug)).map(({slug}) => slug)).toEqual(expected);
     }
   });
-  it.each([
+  const operatingTasks = [
     ["wardogs-artillery-guide", "wardogs-mortar-guide"],
     ["wardogs-mortar-guide", "wardogs-artillery-guide"],
     ["wardogs-cargo-guide", "wardogs-fob-guide"],
     ["wardogs-fob-guide", "wardogs-cargo-guide"],
+    ["wardogs-fob-layouts", "wardogs-fob-guide"],
+    ["wardogs-equipment-tools-guide", "wardogs-best-weapons-loadouts"],
     ["wardogs-controls", "wardogs-crash-fix"],
     ["wardogs-crash-fix", "wardogs-known-issues"]
-  ])("keeps the English %s continuation to %s visible before category fallbacks", async (slug, continuation) => {
-    const related = await getRelatedGuides("en", slug, 3);
-    expect(related[0]?.slug).toBe(continuation);
-    expect(related).toHaveLength(3);
-    expect(new Set(related.map(({slug}) => slug)).size).toBe(3);
-    expect(related.some((guide) => guide.slug === slug)).toBe(false);
+  ];
+  it.each(locales)("keeps operating continuations before category fallbacks in %s", async (locale) => {
+    for (const [slug, continuation] of operatingTasks) {
+      const related = await getRelatedGuides(locale, slug, 3);
+      expect(related[0]?.slug, slug).toBe(continuation);
+      expect(related).toHaveLength(3);
+      expect(new Set(related.map(({slug}) => slug)).size).toBe(3);
+      expect(related.some((guide) => guide.slug === slug)).toBe(false);
+    }
   });
 
   it.each([
@@ -73,6 +79,20 @@ describe("related guides", () => {
   it("builds locale-prefixed URLs for static exported related guide links", () => {
     expect(buildRelatedGuideHref("en", "wardogs-factions")).toBe("/en/guides/wardogs-factions");
     expect(buildRelatedGuideHref("pt-br", "wardogs-early-access")).toBe("/pt-br/guides/wardogs-early-access");
+  });
+
+  it("preserves the base path and directory route for an auxiliary static export", () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/wardogs");
+    vi.stubEnv("NEXT_PUBLIC_STATIC_EXPORT", "true");
+    expect(buildRelatedGuideHref("ja", "wardogs-mortar-guide")).toBe("/wardogs/ja/guides/wardogs-mortar-guide/");
+  });
+
+  it.each(locales)("leads mortar items to the matching operating guide in %s", async (locale) => {
+    for (const slug of ["mortar", "l81-mortar"]) {
+      const related = await getItemRelatedGuides(locale, getItemBySlug(slug)!);
+      expect(related[0].slug).toBe("wardogs-mortar-guide");
+      expect(new Set(related.map(({slug}) => slug)).size).toBe(related.length);
+    }
   });
 
   it("localizes handwritten MDX internal guide links before rendering", () => {
