@@ -1,3 +1,4 @@
+import {RECENT_VIDEO_CHECKED_AT, recentVideoDate, recentVideos} from "./recent-video-data";
 export type CandidateLanguage = "en" | "ja" | "ru" | "de";
 export type CandidateCaution = "operations" | "calculator" | "gold" | "rollback" | "layout" | "axis" | "sponsor" | "disputed";
 
@@ -7,7 +8,9 @@ export interface VideoCandidate {
   channel: string;
   language: CandidateLanguage;
   publishedDate: string;
-  metadataCheckedAt: "2026-09-30";
+  metadataCheckedAt: string;
+  durationSeconds?: number;
+  relatedToolPath?: string;
   // Metadata provenance only; caption/frame review is in video-candidate-evidence.ts.
   evidence: "metadata-and-chapters" | "metadata-only";
   // Exporting/reading automatic captions does not validate them against the audio.
@@ -30,6 +33,14 @@ const candidate = (data: Omit<VideoCandidate, "metadataCheckedAt" | "transcriptV
 
 // Original watch-page metadata and displayed chapters, not validated game instructions.
 export const videoCandidates: readonly VideoCandidate[] = [
+  ...recentVideos.filter(video => !video.articleSlug).map((video): VideoCandidate => ({
+    youtubeId: video.id, title: video.title, channel: video.channel, language: "en",
+    publishedDate: recentVideoDate(video), metadataCheckedAt: RECENT_VIDEO_CHECKED_AT,
+    durationSeconds: video.durationSeconds, relatedToolPath: video.toolPath,
+    evidence: video.chapters.length ? "metadata-and-chapters" : "metadata-only",
+    transcriptVerified: false, gameplayVerified: false, embedPlaybackVerified: false,
+    guideSlug: video.guideSlug, caution: "operations", chapters: video.chapters
+  })),
   candidate({youtubeId: "BIvKEmXlw78", title: "WARDOGS: Complete Mortar Guide", channel: "LifeofKino", language: "en", publishedDate: "2026-09-18", guideSlug: "wardogs-mortar-guide", caution: "operations", chapters: [{seconds: 10, label: "Building a Mortar & Ammo for a Mortar"}, {seconds: 65, label: "Aiming Mortars"}]}),
   candidate({youtubeId: "YIJ9EE8wflk", title: "Wardogs - Mortar/Stingray base - Stingray Tutorial - Choosing where to build", channel: "RadioGLHF", language: "en", publishedDate: "2026-09-27", guideSlug: "wardogs-fob-guide", caution: "layout", chapters: []}),
   candidate({youtubeId: "LfDuaJXN_g0", title: "WARDOGS Mortar Calculator – Perfect Your Aim! Free Tool + Voice Commands #wardogs #wardogsgame", channel: "ThePretender", language: "en", publishedDate: "2026-09-26", guideSlug: "wardogs-mortar-guide", caution: "calculator", chapters: [{seconds: 120, label: "Calculator"}, {seconds: 192, label: "Voice commands"}, {seconds: 358, label: "Browser compatibility"}]}),

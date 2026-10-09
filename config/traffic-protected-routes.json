@@ -15299,6 +15299,582 @@
       "locales": [
         "pl"
       ]
+    },
+    {
+      "path": "/en/guides/wardogs-solo-guide",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "/en/guides/wardogs-report-player",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "/en/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "/en/videos/wardogs-attachments-tested",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "/en/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "/en/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "en"
+      ]
+    },
+    {
+      "path": "/ja/guides/wardogs-solo-guide",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "path": "/ja/guides/wardogs-report-player",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "path": "/ja/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "path": "/ja/videos/wardogs-attachments-tested",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "path": "/ja/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "path": "/ja/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ja"
+      ]
+    },
+    {
+      "path": "/de/guides/wardogs-solo-guide",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "path": "/de/guides/wardogs-report-player",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "path": "/de/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "path": "/de/videos/wardogs-attachments-tested",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "path": "/de/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "path": "/de/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "de"
+      ]
+    },
+    {
+      "path": "/pt-br/guides/wardogs-solo-guide",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pt-br"
+      ]
+    },
+    {
+      "path": "/pt-br/guides/wardogs-report-player",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pt-br"
+      ]
+    },
+    {
+      "path": "/pt-br/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pt-br"
+      ]
+    },
+    {
+      "path": "/pt-br/videos/wardogs-attachments-tested",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pt-br"
+      ]
+    },
+    {
+      "path": "/pt-br/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pt-br"
+      ]
+    },
+    {
+      "path": "/pt-br/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pt-br"
+      ]
+    },
+    {
+      "path": "/ru/guides/wardogs-solo-guide",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ru"
+      ]
+    },
+    {
+      "path": "/ru/guides/wardogs-report-player",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ru"
+      ]
+    },
+    {
+      "path": "/ru/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ru"
+      ]
+    },
+    {
+      "path": "/ru/videos/wardogs-attachments-tested",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ru"
+      ]
+    },
+    {
+      "path": "/ru/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ru"
+      ]
+    },
+    {
+      "path": "/ru/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "ru"
+      ]
+    },
+    {
+      "path": "/pl/guides/wardogs-solo-guide",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pl"
+      ]
+    },
+    {
+      "path": "/pl/guides/wardogs-report-player",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pl"
+      ]
+    },
+    {
+      "path": "/pl/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pl"
+      ]
+    },
+    {
+      "path": "/pl/videos/wardogs-attachments-tested",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pl"
+      ]
+    },
+    {
+      "path": "/pl/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pl"
+      ]
+    },
+    {
+      "path": "/pl/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "pl"
+      ]
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-solo-guide",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-cn"
+      ]
+    },
+    {
+      "path": "/zh-cn/guides/wardogs-report-player",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-cn"
+      ]
+    },
+    {
+      "path": "/zh-cn/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-cn"
+      ]
+    },
+    {
+      "path": "/zh-cn/videos/wardogs-attachments-tested",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-cn"
+      ]
+    },
+    {
+      "path": "/zh-cn/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-cn"
+      ]
+    },
+    {
+      "path": "/zh-cn/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-cn"
+      ]
+    },
+    {
+      "path": "/zh-tw/guides/wardogs-solo-guide",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-tw"
+      ]
+    },
+    {
+      "path": "/zh-tw/guides/wardogs-report-player",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-tw"
+      ]
+    },
+    {
+      "path": "/zh-tw/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-tw"
+      ]
+    },
+    {
+      "path": "/zh-tw/videos/wardogs-attachments-tested",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-tw"
+      ]
+    },
+    {
+      "path": "/zh-tw/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-tw"
+      ]
+    },
+    {
+      "path": "/zh-tw/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 200,
+      "tier": "growth",
+      "sources": [
+        "sitemap",
+        "internal-link"
+      ],
+      "locales": [
+        "zh-tw"
+      ]
     }
   ],
   "legacy": [
@@ -38194,6 +38770,54 @@
       "path": "/zh-tw/zh-tw/videos/wardogs-weapons-tested",
       "expectedStatus": 308,
       "target": "/zh-tw/videos/wardogs-weapons-tested",
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "path": "/guides/wardogs-solo-guide",
+      "expectedStatus": 308,
+      "target": "/en/guides/wardogs-solo-guide",
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "path": "/guides/wardogs-report-player",
+      "expectedStatus": 308,
+      "target": "/en/guides/wardogs-report-player",
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "path": "/videos/wardogs-season-2-developer-interview",
+      "expectedStatus": 308,
+      "target": "/en/videos/wardogs-season-2-developer-interview",
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "path": "/videos/wardogs-attachments-tested",
+      "expectedStatus": 308,
+      "target": "/en/videos/wardogs-attachments-tested",
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "path": "/videos/wardogs-solo-duo-fob-layout",
+      "expectedStatus": 308,
+      "target": "/en/videos/wardogs-solo-duo-fob-layout",
+      "sources": [
+        "legacy"
+      ]
+    },
+    {
+      "path": "/videos/wardogs-ir-rangefinder-hotfix",
+      "expectedStatus": 308,
+      "target": "/en/videos/wardogs-ir-rangefinder-hotfix",
       "sources": [
         "legacy"
       ]

@@ -13,14 +13,18 @@ import {decodeCompatibilitySelection, filterCompatibilityEntries, writeCompatibi
 import {Link} from "@/i18n/navigation";
 import {assetPath} from "@/lib/assets";
 import {formatLocalizedDate} from "@/lib/localized-date";
+import {getAttachmentRecipeCopy} from "@/features/tools/attachment-recipe-copy";
 
 function subscribeLocation(callback: () => void) {
   window.addEventListener("popstate", callback);
   return () => window.removeEventListener("popstate", callback);
 }
+const subscribeHydration = () => () => {};
 
 export function EquipmentCompatibility({dataset, locale}: {dataset: CompatibilityDataset; locale: Locale}) {
   const copy = getCompatibilityCopy(locale);
+  const creatorCopy = getAttachmentRecipeCopy(locale);
+  const isHydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const search = useSyncExternalStore(subscribeLocation, () => window.location.search, () => "");
   const shared = useMemo(() => decodeCompatibilitySelection(search, dataset.weapons.map(({slug}) => slug)), [search, dataset]);
   const analytics = useToolAnalytics("equipment-compatibility", locale, !shared.invalid && hasSharedToolState(search, writeCompatibilitySelection(new URL("https://analytics.invalid"), shared.selection).search, ["fitWeapon", "fitKind", "fitQuery", "fitNamed"], "equipment-compatibility"));
@@ -48,11 +52,13 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
   }
 
   return (
-    <section className="mt-12 border-t border-[#354039] pt-8" id="equipment-compatibility" aria-labelledby="compatibility-title" data-compatibility-matrix>
+    <section className="mt-12 border-t border-[#354039] pt-8" id="equipment-compatibility" aria-busy={!isHydrated} aria-labelledby="compatibility-title" data-compatibility-matrix>
+      <fieldset className="m-0 min-w-0 border-0 p-0" disabled={!isHydrated}>
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0 max-w-3xl">
           <h2 className="text-2xl font-bold leading-tight text-white" id="compatibility-title">{copy.title}</h2>
           <p className="mt-3 text-sm leading-6 text-[#b7c3bd]">{copy.intro}</p>
+          <p className="mt-2 text-xs leading-5 text-[#a8b4ae]">{creatorCopy.intro}</p>
         </div>
         <button aria-label={copy.copy} className="flex size-11 shrink-0 items-center justify-center border border-[#495a51] text-[#80cea1] hover:bg-[#193023]" onClick={copySelection} title={copy.copy} type="button">
           {copyState === "copied" ? <Check aria-hidden="true" size={18} /> : <Copy aria-hidden="true" size={18} />}
@@ -68,7 +74,7 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
         </label>
         <label className="grid min-w-0 gap-2 text-sm text-[#c4d0c9]">{copy.kind}
           <select aria-label={copy.kind} className="min-h-11 w-full min-w-0 border border-[#495a51] bg-[#101411] px-3 text-white" value={selection.kind} onChange={(event) => commit({...selection, kind: event.target.value as CompatibilitySelection["kind"]})}>
-            <option value="all">{copy.all}</option><option value="magazine">{copy.magazine}</option><option value="optic">{copy.optic}</option>
+            <option value="all">{copy.all}</option><option value="magazine">{copy.magazine}</option><option value="optic">{copy.optic}</option><option value="grip">{creatorCopy.grip}</option><option value="muzzle">{creatorCopy.muzzle}</option>
           </select>
         </label>
         <label className="grid min-w-0 gap-2 text-sm text-[#c4d0c9]">{copy.search}
@@ -78,17 +84,17 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
       <label className="mt-4 flex min-h-11 items-center gap-3 text-sm text-[#b7c3bd] has-disabled:opacity-50"><input checked={selection.namedOnly} disabled={!selection.weapon} onChange={(event) => commit({...selection, namedOnly: event.target.checked})} type="checkbox" />{copy.namedOnly}</label>
       <div className="mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label={copy.title}>
         <table className="w-full min-w-[680px] border-collapse text-left text-sm">
-          <thead className="border-y border-[#495a51] text-xs text-[#a9bbb1]"><tr>{[copy.item, copy.named, copy.specification, copy.current].map((label) => <th className="px-3 py-3 font-semibold" key={label} scope="col">{label}</th>)}</tr></thead>
+          <thead className="border-y border-[#495a51] text-xs text-[#a9bbb1]"><tr>{[copy.item, creatorCopy.named, creatorCopy.specification, copy.current].map((label) => <th className="px-3 py-3 font-semibold" key={label} scope="col">{label}</th>)}</tr></thead>
           <tbody>{entries.map((entry) => <tr className="border-b border-[#354039] align-top" key={entry.slug} data-fit="unknown">
             <th className="w-[40%] px-3 py-4 font-normal" scope="row">
               <div className="flex items-start gap-3">
                 {entry.image ? <Image alt={entry.imageAlt ?? entry.name} className="size-14 shrink-0 object-contain" height={56} loading="lazy" src={assetPath(entry.image)} width={56} /> : <ImageOff aria-hidden="true" className="size-8 shrink-0 text-[#8b9992]" />}
-                <div className="min-w-0"><p className="break-words font-semibold text-white">{entry.name}</p><span className="mt-1 block text-xs text-[#dfc56b]">{copy.historical}</span>
+                <div className="min-w-0"><p className="break-words font-semibold text-white">{entry.name}</p><span className="mt-1 block text-xs text-[#dfc56b]">{entry.origin === "creator" ? creatorCopy.reported : copy.historical}</span>
                   <details className="mt-2 text-xs leading-5 text-[#a9bbb1]"><summary className="cursor-pointer text-[#80cea1]">{copy.evidence}</summary>
                     <p className="mt-2">{copy.version}: {entry.evidence.build}</p>
                     <p>{copy.checked}: {formatLocalizedDate(entry.evidence.verifiedAt, locale)}</p>
                     <p className="mt-2">{copy.purchase}: {copy.unitUnknown}</p>
-                    <p className="mt-2">{copy.scope}</p>
+                    <p className="mt-2">{entry.origin === "creator" ? creatorCopy.scope : copy.scope}</p>
                     {entry.evidence.sourceUrl ? <a className="mt-2 inline-flex min-h-9 items-center gap-1 text-[#80cea1]" href={entry.evidence.sourceUrl} rel="noreferrer" target="_blank" title={`${copy.source}: ${entry.name}`}>{copy.source}<ExternalLink aria-hidden="true" size={12} /></a> : <Link className="mt-2 inline-flex min-h-9 text-[#80cea1]" href="/editorial-policy" title={copy.archive}>{copy.archive}</Link>}
                   </details>
                 </div>
@@ -103,6 +109,7 @@ export function EquipmentCompatibility({dataset, locale}: {dataset: Compatibilit
       {!entries.length ? <p className="border-b border-[#354039] py-5 text-sm text-[#c4d0c9]" role="status">{copy.empty}</p> : null}
       <h3 className="mt-6 text-base font-semibold text-white">{copy.checklist}</h3>
       <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-[#b7c3bd]">{copy.checks.map((check) => <li key={check}>{check}</li>)}</ol>
+      </fieldset>
     </section>
   );
 }

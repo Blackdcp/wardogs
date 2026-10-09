@@ -7,6 +7,9 @@ import {VideoThumbnailImage} from "@/components/videos/video-thumbnail-image";
 import {getCurrentVideoUi} from "@/features/videos/current-video-localization";
 import {currentVideoAnchorId, currentVideoTopics, type CurrentVideoSource, type CurrentVideoTopic} from "@/features/videos/video-library";
 import {getVideoUi} from "@/features/videos/video-ui";
+import {recentVideoCopy} from "@/features/videos/recent-video-copy";
+import {recentVideoUi} from "@/features/videos/recent-video-data";
+import {publicRoutePath} from "@/lib/public-url";
 import {formatLocalizedDate} from "@/lib/localized-date";
 
 type TopicFilter = "all" | CurrentVideoTopic;
@@ -65,7 +68,7 @@ export function CurrentVideoSourceGrid({locale, sources}: {
 
           return (
             <article className="scroll-mt-24 overflow-hidden rounded-[6px] border border-[#344039] bg-[#111713]" data-current-video-source={source.youtubeId} id={currentVideoAnchorId(source.youtubeId)} key={source.youtubeId}>
-              <a className="group block" href={source.sourceUrl} rel="noreferrer" target="_blank" title={`${source.title} - ${source.channel}`}>
+              <a className="group block" href={source.articleSlug ? publicRoutePath(`/${locale}/videos/${source.articleSlug}`) : source.sourceUrl} rel={source.articleSlug ? undefined : "noreferrer"} target={source.articleSlug ? undefined : "_blank"} title={`${source.title} - ${source.channel}`}>
                 <span className="relative block aspect-video overflow-hidden border-b border-[#2c3631] bg-[#0d100e]">
                   <VideoThumbnailImage alt={`${source.title} video thumbnail`} eager={index === 0} youtubeId={source.youtubeId} />
                   <span className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-transparent" />
@@ -73,20 +76,20 @@ export function CurrentVideoSourceGrid({locale, sources}: {
                     <PlayCircle className="size-5" />
                   </span>
                   <span className="absolute right-3 top-3 border border-[#68bd8d]/40 bg-[#111512]/90 px-2 py-1 text-[11px] font-semibold uppercase text-[#79d19c]">
-                    {videoUi.seasonOneCurrent}
+                    {source.articleSlug ? recentVideoUi[locale].current : videoUi.seasonOneCurrent}
                   </span>
                 </span>
                 <span className="block min-h-[220px] p-4" style={{overflowWrap: "anywhere"}}>
                   <span className="block text-xs font-semibold uppercase text-[#d9a93a]">{topic.label}</span>
                   <span className="mt-2 block text-xs font-semibold uppercase text-[#b8c3bd]">{source.channel}</span>
-                  <span className="display-font mt-3 block text-xl leading-tight text-white">{source.title}</span>
-                  <span className="mt-3 block text-sm leading-6 text-[#a8b4ae]">{topic.summary}</span>
+                  <span className="display-font mt-3 block text-xl leading-tight text-white">{recentVideoCopy[source.youtubeId]?.[locale].title ?? source.title}</span>
+                  <span className="mt-3 block text-sm leading-6 text-[#a8b4ae]">{recentVideoCopy[source.youtubeId]?.[locale].answer ?? topic.summary}</span>
                   <span className="mt-4 grid gap-2 text-xs text-[#8b9992] sm:grid-cols-2">
                     <span className="inline-flex min-w-0 items-start gap-1.5"><CalendarDays aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{ui.published} <time dateTime={source.publishedDate}>{formatLocalizedDate(source.publishedDate, locale)}</time></span></span>
                     <span className="inline-flex min-w-0 items-start gap-1.5"><CheckCircle2 aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{ui.reviewed} <time dateTime={source.reviewedAt}>{formatLocalizedDate(source.reviewedAt, locale)}</time></span></span>
                     <span className="inline-flex min-w-0 items-start gap-1.5 sm:col-span-2"><Clock3 aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{source.durationMinutes} min</span></span>
                   </span>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">YouTube<ExternalLink aria-hidden="true" className="size-4" /></span>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">{source.articleSlug ? videoUi.readBreakdown : "YouTube"}<ExternalLink aria-hidden="true" className="size-4" /></span>
                 </span>
               </a>
               <a className="flex min-h-10 items-center justify-between gap-3 border-t border-[#26312c] px-4 py-2.5 text-xs font-semibold uppercase text-[#b8c3bd] hover:bg-[#1b241f] hover:text-white" href={`/${locale}/guides/${source.internalGuideSlug}`} title={ui.viewGuide}>

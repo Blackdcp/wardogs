@@ -5,7 +5,7 @@ keyword: "wardogs linux proton"
 category: "guide"
 slug: "wardogs-linux-proton"
 order: 48
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-09"
 badges:
   - label: "Linux 暫不官方支援"
     tone: "warning"
@@ -24,20 +24,35 @@ sources:
   - label: "WARDOGS 官方 Linux 相容性更新"
     url: "https://steamcommunity.com/app/1867240/discussions/0/588436698284962639"
     kind: "official"
-    checkedAt: "2026-09-26"
+    checkedAt: "2026-10-09"
   - label: "WARDOGS Steam 官方頁面"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
     checkedAt: "2026-09-05"
+  - label: "Linux Support 社群討論，非官方支援公告"
+    url: "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1551967453574332556"
+    kind: "community"
+    checkedAt: "2026-10-09"
 ---
 
 {/* compatibility-matrix */}
 ## 可用相容性報告需要哪些欄位
-本輪沒有新增親自復現的Linux或Steam Deck成功/失敗樣本。[9月25日開發者表態](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639)未給支援的Proton版本或時間表。
 
-樣本需日期、正式客戶端構建、系統/發行版與kernel、GPU/驅動、Proton版本、啟動修改。分別記錄程序啟動、到選單、進伺服器、完整對局、重連，不能將“到選單”寫成“多人可玩”，單次完賽也不是官方支援保證。
+{/* linux-diagnostic-flow */}
 
-失敗同樣留上述欄位和完整錯誤。不在空表填推測成功，不把Beta樣本搬成正式版結果；不提供反作弊繞過、替換執行檔或未核命令。
+**2026-10-09 複核：**官方範圍仍以 2026-09-25 聲明為準，沒有確認支援的 Proton 版本或時間表。[Linux Support 討論](https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1551967453574332556)包含支援訴求和個人體驗，沒有新的官方相容承諾。本次未獨立重現現行 Linux 或 Steam Deck 的成功、失敗案例。
+
+| 階段 | 檢查並記錄什麼 | 結果能說明什麼 |
+| --- | --- | --- |
+| Linux 原生版 | 核對官方發行是否明確提供原生用戶端。 | Windows 用戶端透過 Proton 執行，不等於 Linux 原生支援。 |
+| Proton 啟動 | 記錄準確 Proton 版本與啟動參數，區分程序啟動、選單開啟；退出時保留原始錯誤。 | 能進選單只說明這套環境完成了啟動階段。 |
+| 反作弊與連線 | 先看[伺服器公告](/zh-tw/guides/wardogs-server-status)，再分別記錄加入伺服器、打完一局、重新連線結果，單獨保存反作弊或連線錯誤。 | 一次失敗不能單獨確定是 Proton、反作弊還是服務故障；不要繞過檢查。 |
+| Steam Deck | 記錄 SteamOS、輸入配置、解析度、畫質，分別檢查操作與整局持續效能。 | 能啟動或能用控制器，不等於獲得 Playable/Verified 狀態，也不代表效能達標。 |
+
+1. 保留基準：日期時間、遊戲組建、發行版/OS 與核心、GPU 與驅動程式、Proton 版本、啟動參數、錯誤原文、最後成功階段。保存相關記錄檔，公開前去除帳號識別資訊和私人路徑。
+2. 一次只改一個設定，在同一階段複測。個別玩家切換 DLSS 或反鋸齒後改善，不是通用 Linux 修復；記錄前後設定和結果。
+3. 熱修後確認比較雙方使用同一**新遊戲組建**，保留舊組建失敗記錄，再測啟動、加入、完整對局和重新連線。不要把 Beta 的成功移植成正式版結論。
+4. 如果出現 WD-L020，把錯誤和 OS 一起回報。[已知問題](/zh-tw/guides/wardogs-known-issues)裡的 Windows 更新步驟不是 Linux 操作指南。官方平台支援和 Windows 修復是兩件事，這裡不提供繞過指令或替換執行檔。
 
 ## 相容性矩陣
 
@@ -107,7 +122,7 @@ Steam 頁面上的 Windows 硬體配置只適用於 Windows 版本。它不能�
 
 核查日期按下方每條來源分別記錄，不是全篇統一核驗日期。頁頭的內容更新日期不代表所有事實均已複核；下文舊日期保留其當時證據範圍，不等於當前客戶端實測或伺服器即時狀態。
 
-原始 Linux 宣告及 2026-09-25 的補充內容，已於 2026-09-26 對照[開發者的 Steam 置頂帖](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639)核查。補充內容沒有給出相容版本或時間表。Windows PC 平臺及未來可能出現的 Steam Deck 標記仍以 Steam 商店為準。
+原始 Linux 宣告及 2026-09-25 的補充內容，已於 2026-10-09 對照[開發者的 Steam 置頂帖](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639)核查。補充內容沒有給出相容版本或時間表。Windows PC 平臺及未來可能出現的 Steam Deck 標記仍以 Steam 商店為準。
 
 ## 相關攻略
 

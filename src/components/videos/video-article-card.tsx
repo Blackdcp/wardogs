@@ -4,6 +4,7 @@ import {VideoThumbnailImage} from "@/components/videos/video-thumbnail-image";
 import {getVideoEra, type VideoArticle} from "@/features/videos/video-library";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 import {getVideoUi} from "@/features/videos/video-ui";
+import {recentVideoUi} from "@/features/videos/recent-video-data";
 
 export function videoArticleHref(locale: Locale, slug: string) {
   return `/${locale}/videos/${slug}`;
@@ -14,7 +15,7 @@ export {videoThumbnailUrl};
 export function VideoArticleCard({article, locale, eager = false}: {article: VideoArticle; locale: Locale; eager?: boolean}) {
   const ui = getVideoUi(locale);
   const era = getVideoEra(article);
-  const eraLabel = era === "historical" ? ui.historicalReference : ui.betaWorkflow;
+  const eraLabel = era === "current-analysis" ? recentVideoUi[locale].current : era === "historical" ? ui.historicalReference : ui.betaWorkflow;
   return (
     <a
       href={videoArticleHref(locale, article.slug)}

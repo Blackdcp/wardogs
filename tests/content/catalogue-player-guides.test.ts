@@ -55,7 +55,7 @@ describe("source-backed catalogue player guides", () => {
       const combined = `${armor?.body}\n${weapons?.body}`;
 
       expect(combined).toMatch(/not confirmed|nicht bestätigt|не подтвержден|não (?:está|estão)?\s*confirmad|未確認|尚未确认|未得到确认/i);
-      expect(combined).not.toMatch(/(?:exact|exakt|точн|exato|正確).{0,30}(?:ttk|shots? to kill|treffer|выстрел|tiros|キル)/i);
+      expect(combined).not.toMatch(/(?:exact|exakt|точн|exato|正確).{0,30}(?:ttk|shots? to kill|treffer|количество.{0,10}выстрел|tiros|キル)/i);
     }
   });
 

@@ -7,6 +7,7 @@ import {notFound} from "next/navigation";
 import {isLocale, locales, type Locale} from "@/config/site";
 import {listGuideSummaries} from "@/content/guides";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "@/features/news/news-data";
+import {getRecentNews} from "@/features/news/recent-news";
 import {getServiceUpdates} from "@/features/news/service-updates";
 import {Link} from "@/i18n/navigation";
 import {buildPageMetadata} from "@/lib/metadata";
@@ -41,9 +42,10 @@ export default async function NewsPage({params}: PageProps) {
   ]);
   const guideBySlug = new Map(guides.map((guide) => [guide.slug, guide]));
   const timeline = [
+    ...getRecentNews(locale),
     ...getServiceUpdates(locale),
     ...NEWS_UPDATES.map(item => ({...item, title: t(`timeline.items.${item.titleKey}.title`), description: t(`timeline.items.${item.titleKey}.description`), sources: [] as readonly string[]}))
-  ];
+  ].sort((a, b) => b.date.localeCompare(a.date));
   const checklistGuides = NEWS_CHECKLIST_SLUGS.map((slug) => guideBySlug.get(slug)).filter((guide): guide is NonNullable<typeof guide> => Boolean(guide));
 
   return (
@@ -64,7 +66,7 @@ export default async function NewsPage({params}: PageProps) {
                   <div className="flex flex-wrap items-center gap-3">
                     <time className="font-mono text-xs uppercase text-[#9fa9a4]">{formatLocalizedDate(item.date, locale)}</time>
                     <span className={`inline-flex rounded-[4px] border px-2 py-1 text-[11px] font-semibold uppercase ${statusTone[item.status]}`}>
-                      {t(`timeline.status.${item.status}`)}
+                      {"badge" in item ? item.badge : t(`timeline.status.${item.status}`)}
                     </span>
                   </div>
                   <h3 className="display-font mt-3 text-2xl text-[#f2f5f3]">{item.title}</h3>

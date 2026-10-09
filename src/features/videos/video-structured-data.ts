@@ -45,7 +45,8 @@ export function buildVideoArticleJsonLd(locale: Locale, article: VideoArticle): 
       "@type": "VideoObject",
       name: article.sourceLabel,
       description: article.description,
-      uploadDate: asUtcDateTime(article.publishedDate),
+      uploadDate: article.publishedAt ?? asUtcDateTime(article.publishedDate),
+      ...(article.durationSeconds ? {duration: `PT${article.durationSeconds}S`} : {}),
       embedUrl: `https://www.youtube-nocookie.com/embed/${article.youtubeId}`,
       thumbnailUrl: videoThumbnailUrl(article.youtubeId),
       ...(clips.length ? {hasPart: clips} : {})
@@ -73,7 +74,8 @@ export function buildVideoSitemapXml() {
       `      <video:title>${escapeXml(article.title)}</video:title>`,
       `      <video:description>${escapeXml(article.description)}</video:description>`,
       `      <video:player_loc allow_embed="yes">${escapeXml(`https://www.youtube-nocookie.com/embed/${article.youtubeId}`)}</video:player_loc>`,
-      `      <video:publication_date>${asUtcDateTime(article.publishedDate)}</video:publication_date>`,
+      `      <video:publication_date>${article.publishedAt ?? asUtcDateTime(article.publishedDate)}</video:publication_date>`,
+      ...(article.durationSeconds ? [`      <video:duration>${article.durationSeconds}</video:duration>`] : []),
       "    </video:video>",
       "  </url>"
     ].join("\n");

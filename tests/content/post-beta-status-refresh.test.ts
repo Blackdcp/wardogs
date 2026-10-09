@@ -125,7 +125,9 @@ describe("WARDOGS current and historical status boundaries", () => {
     expect(await loadGuideDocument("en", "wardogs-100k-clip-contest")).not.toBeNull();
     const liveIntel = await getHomeLiveIntelEntries("en");
     expect(liveIntel.map(({href}) => href)).not.toContain("/guides/wardogs-beta");
-    expect(liveIntel.map(({href}) => href)).not.toContain("/guides/wardogs-100k-clip-contest");
+    const contest = liveIntel.find(({href}) => href === "/guides/wardogs-100k-clip-contest");
+    expect(contest?.current).toBe(false);
+    expect(contest?.statusLabel).toMatch(/closed|ended/i);
     expect(liveIntel.map(({href}) => href)).toContain("/guides/wardogs-season-2");
   });
 });

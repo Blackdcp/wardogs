@@ -1,55 +1,92 @@
 ---
-title: "WARDOGS 最佳畫面設定：穩定幀率與清晰度"
-description: "WARDOGS 大規模戰鬥會同時壓迫 CPU、GPU 與網路。本文按官方最低和推薦配置建立可重複基線，說明 Potato Mode、Overkill Mode 與 60+ FPS 開發目標的真實邊界，再給出解析度、升頻、陰影、特效、動態模糊、視野和幀時間的逐項調整順序，避免把創作者單機結果當成所有電腦的保證。"
-keyword: "wardogs best settings"
-category: "guide"
-slug: "wardogs-best-settings"
+title: WARDOGS 最佳畫面設定：穩定幀率與清晰度
+description: >-
+  WARDOGS 大規模戰鬥會同時壓迫 CPU、GPU 與網路。本文按官方最低和推薦配置建立可重複基線，說明 Potato Mode、Overkill
+  Mode 與 60+ FPS
+  開發目標的真實邊界，再給出解析度、升頻、陰影、特效、動態模糊、視野和幀時間的逐項調整順序，避免把創作者單機結果當成所有電腦的保證。
+keyword: wardogs best settings
+category: guide
+slug: wardogs-best-settings
 order: 31
-updatedAt: "2026-10-03"
+updatedAt: '2026-10-09'
 badges:
-  - label: "效能調校"
-    tone: "accent"
-  - label: "版本相關"
-    tone: "warning"
+  - label: 效能調校
+    tone: accent
+  - label: 版本相關
+    tone: warning
 faq:
-  - question: "WARDOGS 最佳畫面設定是什麼？"
-    answer: "沒有適用於所有電腦的單一預設。先按官方配置選擇基線，在玩家、載具、煙霧和破壞密集的戰鬥中測試，再一次只降低一組高負載選項。"
-  - question: "Potato Mode 是什麼？"
-    answer: "BULKHEAD 官方開發日誌把 Potato Mode 描述為低端硬體的效能路徑；它不等於任何低配電腦都保證 60fps。"
-  - question: "Overkill Mode 適合競技玩嗎？"
-    answer: "它面向高效能硬體和更高視覺質量，不是預設競技預設。只有在最重負載下仍有穩定餘量時再嘗試。"
-  - question: "為什麼訓練區域流暢，正式戰鬥會掉幀？"
-    answer: "百人戰鬥中的玩家、載具、建築、破壞、煙霧和伺服器負載遠高於空場；應以擁擠 Control Zone 的最低幀與幀時間為準。"
+  - question: WARDOGS 最佳畫面設定是什麼？
+    answer: 沒有適用於所有電腦的單一預設。先按官方配置選擇基線，在玩家、載具、煙霧和破壞密集的戰鬥中測試，再一次只降低一組高負載選項。
+  - question: Potato Mode 是什麼？
+    answer: BULKHEAD 官方開發日誌把 Potato Mode 描述為低端硬體的效能路徑；它不等於任何低配電腦都保證 60fps。
+  - question: Overkill Mode 適合競技玩嗎？
+    answer: 它面向高效能硬體和更高視覺質量，不是預設競技預設。只有在最重負載下仍有穩定餘量時再嘗試。
+  - question: 為什麼訓練區域流暢，正式戰鬥會掉幀？
+    answer: 百人戰鬥中的玩家、載具、建築、破壞、煙霧和伺服器負載遠高於空場；應以擁擠 Control Zone 的最低幀與幀時間為準。
 sources:
-  - label: "WARDOGS Steam 官方配置"
-    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
-    kind: "official"
-    checkedAt: "2026-09-01"
-  - label: "WARDOGS 七件事創作者概覽"
-    url: "https://www.youtube.com/watch?v=-k6IV0ITLDo"
-    kind: "creator"
-    checkedAt: "2026-09-01"
-  - label: "BULKHEAD 效能開發日誌"
-    url: "https://www.linkedin.com/posts/bulkhead_new-devlog-level-design-performance-activity-7483535791831478273-9DOJ"
-    kind: "official"
-    checkedAt: "2026-09-01"
-  - label: "BULKHEAD WARDOGS 官方頁面"
-    url: "https://bulkhead.com/games/wardogs/"
-    kind: "official"
-    checkedAt: "2026-09-01"
-  - label: "WARDOGS Closed Beta 02 官方公告"
-    url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"
-    kind: "official"
-    checkedAt: "2026-09-04"
-  - label: "Closed Beta 02 伺服器時間官方修訂"
-    url: "https://x.com/BULKHEAD/status/2095447401725153576"
-    kind: "official"
-    checkedAt: "2026-09-04"
-  - label: "IceManIsaac: ULTIMATE WARDOGS SETTINGS GUIDE! Before & After Comparisons Benchmarked"
-    url: "https://www.youtube.com/watch?v=v0V69ZYMlgY"
-    kind: "creator"
-    checkedAt: "2026-09-17"
+  - label: WARDOGS Steam 官方配置
+    url: 'https://store.steampowered.com/app/1867240/WARDOGS/'
+    kind: official
+    checkedAt: '2026-09-01'
+  - label: WARDOGS 七件事創作者概覽
+    url: 'https://www.youtube.com/watch?v=-k6IV0ITLDo'
+    kind: creator
+    checkedAt: '2026-09-01'
+  - label: BULKHEAD 效能開發日誌
+    url: >-
+      https://www.linkedin.com/posts/bulkhead_new-devlog-level-design-performance-activity-7483535791831478273-9DOJ
+    kind: official
+    checkedAt: '2026-09-01'
+  - label: BULKHEAD WARDOGS 官方頁面
+    url: 'https://bulkhead.com/games/wardogs/'
+    kind: official
+    checkedAt: '2026-09-01'
+  - label: WARDOGS Closed Beta 02 官方公告
+    url: >-
+      https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807
+    kind: official
+    checkedAt: '2026-09-04'
+  - label: Closed Beta 02 伺服器時間官方修訂
+    url: 'https://x.com/BULKHEAD/status/2095447401725153576'
+    kind: official
+    checkedAt: '2026-09-04'
+  - label: >-
+      IceManIsaac: ULTIMATE WARDOGS SETTINGS GUIDE! Before & After Comparisons
+      Benchmarked
+    url: 'https://www.youtube.com/watch?v=v0V69ZYMlgY'
+    kind: creator
+    checkedAt: '2026-09-17'
+  - label: 性能問題反饋
+    url: >-
+      https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 凍結與崩潰討論
+    url: >-
+      https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 駕駛員與炮手視角
+    url: >-
+      https://discord.com/channels/1464219389913071646/1557911216490549368/1557911216490549368
+    kind: community
+    checkedAt: '2026-10-09'
 ---
+## 把低 FPS、幀時間卡頓和網絡不同步分開記錄
+
+平均 FPS 高也可能有單幀停頓；反過來，車輛回彈可能來自網絡或服務器，即使畫面渲染平穩也會發生。前後對比應儘量使用同服、同路線、同視角職責和同樣時長，換地圖、跨區或更擁擠的交戰不能當成乾淨的對照。
+
+複製下面的基線，再為改動後的測試複製一份：
+
+- 日期、時間與時區；遊戲版本；Windows 與顯卡驅動版本：
+- CPU、GPU、總內存；分辨率、渲染比例、畫質預設：
+- 服務器與區域、地圖位置、ping、步兵或駕駛員/炮手視角：
+- 啟動後已運行分鐘數；測試路線和持續時長：
+- 平均 FPS；工具提供時記錄低分位幀率或幀時間表現：
+- 內存佔用；退出後遊戲進程是否仍在：
+- 唯一改動項；結果；恢復的原值：
+
+無法測量就寫未知，不把猜測的內存數字當洩漏證據。週期凍結要記錄間隔、是否恢復還是直接關閉。有效變化重複一次再採納，不承諾某開關必然提升 FPS，也不一刀切回滾驅動。可復現失敗按[已知問題](/zh-tw/guides/wardogs-known-issues)裡的官方支持流程提交。
 
 ## 歷史 checkpoint: Season 1 影片交叉核驗 - 2026 年 9 月 17 日
 
@@ -142,6 +179,10 @@ BULKHEAD 官方開發日誌提到 **Potato Mode、Overkill Mode 和 60+ FPS** �
 僅在目前選單提供開關時關閉干擾追蹤的模糊，再複測。降解析度幾乎沒改善時，檢查 CPU 負載、溫度和戰鬥規模，不要一直降紋理。[硬體檢查工具](/zh-tw/tools/system-check)只比對公開硬體要求，不預測實戰 FPS。把渲染卡頓和網路延遲分開記錄。
 
 ## 來源和最後檢查
+
+- [性能問題反饋](https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/) — 2026-10-09
+- [凍結與崩潰討論](https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070) — 2026-10-09
+- [駕駛員與炮手視角](https://discord.com/channels/1464219389913071646/1557911216490549368/1557911216490549368) — 2026-10-09
 
 核查日期按下方每條來源分別記錄，不是全篇統一核驗日期。頁頭的內容更新日期不代表所有事實均已複核；下文舊日期保留其當時證據範圍，不等於當前客戶端實測或伺服器即時狀態。
 

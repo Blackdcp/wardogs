@@ -36,6 +36,9 @@ const competitorHosts = new Set([
 ]);
 
 const approvedExactUrls = new Set([
+  "https://www.wardogs.com/safety",
+  "https://www.wardogs.com/enforcement",
+  "https://support.team17.com/en",
   "https://1of1servers.com/blog/wardogs-bulkhead-partnership",
   "https://www.linkedin.com/posts/bulkhead_new-devlog-level-design-performance-activity-7483535791831478273-9DOJ"
 ]);

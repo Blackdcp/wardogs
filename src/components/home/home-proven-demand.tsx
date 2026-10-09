@@ -6,10 +6,14 @@ import type {TrafficAsset} from "@/features/discovery/discovery-types";
 import {HomeSectionSentinel} from "@/components/seo/home-section-analytics";
 import {SectionHeading} from "@/components/ui/section-heading";
 import {Link} from "@/i18n/navigation";
+import {getHomeDemandHandoffs} from "@/features/home/home-traffic-assets";
+import {getReleaseImpactCopy} from "@/features/releases/release-impacts";
 
 export async function HomeProvenDemand({locale, assets, guides, sponsoredSlot}: {locale: Locale; assets: readonly TrafficAsset[]; guides: readonly GuideSummary[]; sponsoredSlot: ReactNode}) {
   const t = await getTranslations({locale});
   const bySlug = new Map(guides.map((guide) => [guide.slug, guide]));
+  const handoffs = getHomeDemandHandoffs(locale);
+  const handoffLabels = getReleaseImpactCopy(locale).links;
   return (
     <section data-home-section="proven-demand" aria-labelledby="home-demand-title" className="border-b border-[#26312c] bg-[#0b0e0c] py-8 sm:py-10">
       <HomeSectionSentinel section="proven-demand" />
@@ -30,6 +34,13 @@ export async function HomeProvenDemand({locale, assets, guides, sponsoredSlot}: 
             </li>;
           })}
         </ul>
+        {handoffs.length > 0 ? <ul className="mt-2 flex flex-wrap gap-x-6 border-t border-[#26312c] pt-1" data-home-demand-handoffs="true">
+          {handoffs.map(({href, task}) => <li key={href}>
+            <Link className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#a9d8bb] underline decoration-[#466651] underline-offset-4 hover:text-white" href={href} data-home-task={task} data-home-placement="proven-demand" title={handoffLabels[href]}>
+              {handoffLabels[href]} <span aria-hidden="true">→</span>
+            </Link>
+          </li>)}
+        </ul> : null}
         <aside className="mt-5 rounded-[6px] border border-[#344039] bg-[#101512] p-3" data-home-sponsored-slot="true">{sponsoredSlot}</aside>
       </div>
     </section>

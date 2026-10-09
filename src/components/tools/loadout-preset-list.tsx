@@ -7,6 +7,10 @@ import {getToolCopy} from "@/features/tools/tool-copy";
 import {getWorkflowCopy} from "@/features/tools/workflow-copy";
 import {assetPath} from "@/lib/assets";
 import {EvidenceProvenance} from "./evidence-provenance";
+import {attachmentCreatorSource, attachmentRecipes, applyAttachmentRecipe} from "@/features/tools/attachment-recipes";
+import {getAttachmentRecipeCopy} from "@/features/tools/attachment-recipe-copy";
+import {encodeBudgetState} from "@/features/tools/share-state";
+import {publicRoutePath} from "@/lib/public-url";
 
 export function LoadoutPresetList({locale}: {locale: Locale}) {
   const t = getLoadoutPresetCopy(locale);
@@ -14,6 +18,7 @@ export function LoadoutPresetList({locale}: {locale: Locale}) {
   const items = new Map(catalogue.items.map((item) => [item.id, item]));
   const toolCopy = getToolCopy(locale);
   const workflowCopy = getWorkflowCopy(locale);
+  const attachmentCopy = getAttachmentRecipeCopy(locale);
 
   return <section className="not-prose my-8 min-w-0 border-y border-[#354039] py-6" aria-label={t.heading}>
     <h2 className="text-xl font-semibold text-white">{t.heading}</h2>
@@ -44,5 +49,20 @@ export function LoadoutPresetList({locale}: {locale: Locale}) {
         <a className="mt-5 inline-flex min-h-11 max-w-full items-center gap-2 border border-[#397b59] px-3 py-2 text-sm font-semibold text-white hover:bg-[#244332]" href={getLoadoutPresetHref(preset, locale, catalogue.dataVersion)} title={`${t.open}: ${preset.title}`}><span className="min-w-0 break-words">{t.open}: {preset.title}</span><ArrowRight size={16} className="shrink-0" aria-hidden="true" /></a>
       </article>)}
     </div>
+    <details className="mt-6 border-t border-[#354039] pt-4">
+      <summary className="min-h-11 cursor-pointer font-semibold text-white">{attachmentCopy.title}</summary>
+      <p className="mt-2 text-sm leading-6 text-[#a8b4ae]">{attachmentCopy.intro}</p>
+      <ul className="mt-3 divide-y divide-[#354039]">{attachmentRecipes.map((recipe, index) => {
+        const result = applyAttachmentRecipe({cash: 10_000, loadout: 0, vehicle: 0, reserve: 2_000}, recipe.id, catalogue);
+        return <li className="space-y-2 py-3" key={recipe.id}>
+          <p className="text-sm font-semibold text-white">{attachmentCopy.recipes[index]}</p>
+          <p className="text-xs leading-5 text-[#a8b4ae]">{attachmentCopy.recipeNotes[index]}</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {result.status === "applied" ? <a className="inline-flex min-h-11 items-center text-sm font-semibold text-[#84d5a5]" title={`${attachmentCopy.open}: ${attachmentCopy.recipes[index]}`} href={publicRoutePath(`/${locale}/tools/loadout-budget?${encodeBudgetState(result.state, catalogue.dataVersion)}#attachment-tests`)}>{attachmentCopy.open}</a> : null}
+            <a className="inline-flex min-h-11 items-center text-sm text-[#84d5a5]" title={`${attachmentCopy.source}: ${attachmentCopy.recipes[index]}`} href={`${attachmentCreatorSource.url}&t=${recipe.seconds}s`} target="_blank" rel="noreferrer">{attachmentCopy.source}</a>
+          </div>
+        </li>;
+      })}</ul>
+    </details>
   </section>;
 }

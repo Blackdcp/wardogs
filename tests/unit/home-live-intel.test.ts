@@ -37,6 +37,12 @@ describe("home live intel evidence", () => {
     expect(intel.resolveHomeLiveIntel([candidate, {...candidate, id: "older", verifiedAt: "2026-09-10"}])).toHaveLength(1);
   });
 
+  it("attributes new editorial links to their actual player tasks", async () => {
+    const entries = await intel.getHomeLiveIntelEntries("en");
+    expect(entries.find(entry => entry.href === "/guides/wardogs-fob-layouts")?.task).toBe("fob");
+    expect(entries.find(entry => entry.href === "/guides/wardogs-100k-clip-contest")?.task).toBe("news");
+  });
+
   it.each(locales)("resolves at most three source-backed entries for %s", async (locale) => {
     const entries = await intel.getHomeLiveIntelEntries(locale);
     expect(entries.length).toBeGreaterThan(0);

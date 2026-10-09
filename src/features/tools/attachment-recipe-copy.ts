@@ -1,0 +1,91 @@
+import type {Locale} from "@/config/site";
+
+const en = {
+  title: "Creator attachment test recipes", intro: "Evo4Fun compares handling trade-offs. These recipes come from the video transcript reviewed October 9; the recorded client build, current fit, prices and weights are unverified. Reported modifiers are not built into our calculators.",
+  source: "Watch the comparison", buildUnknown: "Creator recording · build unconfirmed", grip: "Grip", muzzle: "Muzzle", reported: "Creator-reported pairing", named: "Weapon named by the source", specification: "Recorded specification", scope: "The creator names this pairing; install it in your client to check fit. This is not an official attachment or damage table.",
+  apply: "Add recipe to my plan", applied: "Recipe added. Existing items and budgets kept; remove alternative attachments before buying. Check the optic, ammunition and exact magazine separately.", limit: "The item or share limit would be exceeded. Your plan is unchanged.", unavailable: "A recipe item is unavailable. Your plan is unchanged.", conflict: "An attachment is already assigned to another weapon. Remove or reassign that line before applying this recipe; your plan is unchanged.",
+  observation: "Your attachment test record", note: "Saved and shared with this loadout. Include only game observations; do not enter account or personal details. Empty measurements remain unknown and do not alter STK/TTK. Changing test conditions or the client build clears the ADS measurement.",
+  range: "Test distance (m)", optic: "Exact optic", ammo: "Exact ammunition", stance: "Stance", bipod: "Bipod state", magazine: "Magazine capacity tested", ads: "Measured ADS time (ms)", notes: "Group pattern, method and repetitions", unknown: "Not recorded", standing: "Standing", crouched: "Crouched", prone: "Prone", stowed: "Stowed", unmounted: "Open, not mounted", mounted: "Mounted", clear: "Clear test measurements", open: "Open attachment test plan",
+  recipes: ["M4: RVG + Top Comp", "AK74: RVG + CQB74", "AK74: AFG + PBS4"],
+  recipeNotes: ["Creator recommends a 30-round M4 magazine. Its exact catalogue model is not identified, so it is a check to complete, not an automatically paired magazine.", "Control-focused AK74 candidate. Keep a 30-round magazine for the first comparison, then test capacity changes separately.", "Suppressed AK74 alternative. The creator suggests comparing both builds at 40 m; that distance is a test condition, not a damage guarantee."],
+  checks: ["Keep the same weapon, ammunition, optic, stance, distance and recorded client build. Change one attachment at a time.", "Record ADS timing and repeatable shot groups separately. A better grouping does not establish damage or time-to-kill.", "Test the bipod stowed, open but not mounted, and mounted. The creator reports a small unmounted recoil penalty at 14:33; no magnitude is established here."]
+};
+export type AttachmentRecipeCopy = typeof en;
+const copy: Record<Locale, AttachmentRecipeCopy> = {
+  en,
+  "zh-cn": {
+    title: "创作者配件对照配方", intro: "Evo4Fun 对比了操控取舍。配方来自 10 月 9 日核对的视频字幕；录制客户端版本、当前适配、价格和重量尚未实测。博主报告的修正值不会写入计算器。",
+    source: "观看原始对照", buildUnknown: "创作者录制 · 版本未确认", grip: "握把", muzzle: "枪口", reported: "创作者报告的搭配", named: "来源提到的武器", specification: "记录规格", scope: "博主提到了此搭配，请在当前客户端安装核对。这里不是官方配件或伤害参数表。",
+    apply: "把配方追加到清单", applied: "已追加配方，保留原有项目与预算。购买前移除备选配件；瞄具、弹药和准确弹匣型号仍需单独核对。", limit: "追加后超过项目或分享长度限制，原清单未变。", unavailable: "配方中有项目不可用，原清单未变。", conflict: "有配件已绑定其他武器。请先移除或重新绑定该项目，再追加配方；原清单未变。",
+    observation: "你的配件测试记录", note: "随配装一起保存和分享。只填游戏观察，不填写账号或个人信息。空白测量保持未知，不改变击杀枪数或击杀时间。 修改测试条件或客户端版本会清空举枪计时。",
+    range: "测试距离（米）", optic: "准确瞄具型号", ammo: "准确弹药型号", stance: "姿态", bipod: "两脚架状态", magazine: "测试弹匣容量", ads: "实测举枪时间（毫秒）", notes: "弹着分组、方法与重复次数", unknown: "未记录", standing: "站立", crouched: "蹲姿", prone: "卧姿", stowed: "收起", unmounted: "展开但未架设", mounted: "已架设", clear: "清空测试测量", open: "打开配件测试清单",
+    recipes: ["M4：RVG + Top Comp", "AK74：RVG + CQB74", "AK74：AFG + PBS4"],
+    recipeNotes: ["博主建议 M4 使用 30 发弹匣，但未确认对应的准确目录型号，因此只列为待核对事项，不自动绑定弹匣。", "偏向控枪的 AK74 候选。首次对照保持 30 发弹匣，再单独测试容量变化。", "AK74 消音备选。博主建议在 40 米对照两套配装；这是测试条件，不是伤害保证。"],
+    checks: ["固定武器、弹药、瞄具、姿态、距离和客户端版本，每次只改一个配件。", "分别记录举枪计时和重复弹着分组。更好的分组不能证明伤害或击杀时间。", "分别测试两脚架收起、展开未架设和已架设。博主在 14:33 报告未架设时有轻微后坐力代价，此处没有确认幅度。"]
+  },
+  "zh-tw": {
+    title: "創作者配件對照配方", intro: "Evo4Fun 比較了操控取捨。配方來自 10 月 9 日核對的影片字幕；錄製用戶端版本、目前相容性、價格和重量尚未實測。創作者報告的修正值不會寫入計算機。",
+    source: "觀看原始對照", buildUnknown: "創作者錄製 · 版本未確認", grip: "握把", muzzle: "槍口", reported: "創作者報告的搭配", named: "來源提到的武器", specification: "記錄規格", scope: "創作者提到了此搭配，請在目前用戶端安裝核對。這裡不是官方配件或傷害參數表。",
+    apply: "把配方加入清單", applied: "已加入配方，保留原有項目與預算。購買前移除備選配件；瞄具、彈藥與確切彈匣型號仍需單獨核對。", limit: "加入後超過項目或分享長度限制，原清單未變。", unavailable: "配方中有項目不可用，原清單未變。", conflict: "有配件已綁定其他武器。請先移除或重新綁定該項目，再加入配方；原清單未變。",
+    observation: "你的配件測試紀錄", note: "隨配裝一起儲存和分享。只填遊戲觀察，不填寫帳號或個人資訊。空白測量保持未知，不改變擊殺槍數或擊殺時間。 修改測試條件或用戶端版本會清空舉槍計時。",
+    range: "測試距離（公尺）", optic: "確切瞄具型號", ammo: "確切彈藥型號", stance: "姿態", bipod: "兩腳架狀態", magazine: "測試彈匣容量", ads: "實測舉槍時間（毫秒）", notes: "彈著分組、方法與重複次數", unknown: "未記錄", standing: "站立", crouched: "蹲姿", prone: "臥姿", stowed: "收起", unmounted: "展開但未架設", mounted: "已架設", clear: "清空測試測量", open: "開啟配件測試清單",
+    recipes: ["M4：RVG + Top Comp", "AK74：RVG + CQB74", "AK74：AFG + PBS4"],
+    recipeNotes: ["創作者建議 M4 使用 30 發彈匣，但未確認對應的確切目錄型號，因此只列為待核對事項，不自動綁定彈匣。", "偏向控槍的 AK74 候選。首次對照保持 30 發彈匣，再單獨測試容量變化。", "AK74 消音備選。創作者建議在 40 公尺對照兩套配裝；這是測試條件，不是傷害保證。"],
+    checks: ["固定武器、彈藥、瞄具、姿態、距離與用戶端版本，每次只改一個配件。", "分別記錄舉槍計時和重複彈著分組。更好的分組不能證明傷害或擊殺時間。", "分別測試兩腳架收起、展開未架設與已架設。創作者在 14:33 報告未架設時有輕微後坐力代價，此處沒有確認幅度。"]
+  },
+  ja: {
+    title: "配信者のアタッチメント比較レシピ", intro: "Evo4Funによる操作性の比較です。10月9日に確認した字幕を基にしています。撮影ビルド、現行版の装着、価格、重量は未検証です。報告された補正値を計算機に組み込みません。",
+    source: "元の比較を見る", buildUnknown: "配信者の録画・ビルド未確認", grip: "グリップ", muzzle: "銃口", reported: "配信者が紹介した組み合わせ", named: "情報源で言及された武器", specification: "記録された仕様", scope: "配信者が紹介した組み合わせです。現行クライアントで装着を確認してください。公式の性能表ではありません。",
+    apply: "レシピを計画に追加", applied: "追加しました。既存の項目と予算は保持します。購入前に代替パーツを外し、照準器、弾薬、マガジンの正確な型番を確認してください。", limit: "項目数または共有サイズの上限を超えます。計画は変更していません。", unavailable: "利用できない項目があります。計画は変更していません。", conflict: "パーツが別の武器に割り当てられています。先にその行を削除するか割り当てを変えてください。計画は変更していません。",
+    observation: "自分のアタッチメント試験記録", note: "装備と一緒に保存・共有されます。ゲームの観察のみ記入し、アカウントや個人情報は入れないでください。空欄は未知のまま、STK/TTKには反映しません。 条件やクライアントのビルドを変えるとADS測定値を消去します。",
+    range: "試験距離（m）", optic: "照準器の正確な型番", ammo: "弾薬の正確な型番", stance: "姿勢", bipod: "二脚の状態", magazine: "試験した装弾数", ads: "実測ADS時間（ms）", notes: "着弾群・方法・反復回数", unknown: "未記録", standing: "立ち", crouched: "しゃがみ", prone: "伏せ", stowed: "収納", unmounted: "展開・未接地", mounted: "接地", clear: "測定記録を消去", open: "比較用の装備計画を開く",
+    recipes: ["M4：RVG + Top Comp", "AK74：RVG + CQB74", "AK74：AFG + PBS4"],
+    recipeNotes: ["配信者はM4に30発マガジンを推奨。正確なカタログ型番が未確認のため自動で組み合わせません。", "反動制御重視のAK74候補。最初は30発で固定し、容量の変更は別に試します。", "AK74の消音案。配信者は40mで両案の比較を推奨しています。試験条件であり、ダメージ保証ではありません。"],
+    checks: ["武器、弾薬、照準器、姿勢、距離、ビルドを固定し、一度に一つのパーツだけ変更します。", "ADS時間と反復した着弾群を別々に記録します。集弾性だけでダメージやTTKは判断できません。", "二脚を収納・展開未接地・接地で比較します。14:33で配信者は未接地時の小さな反動増加を報告していますが、増加率は未確認です。"]
+  },
+  de: {
+    title: "Aufsatz-Testrezepte von Creators", intro: "Evo4Fun vergleicht Handhabung. Grundlage ist das am 9. Oktober geprüfte Transkript. Aufnahme-Build, aktuelle Passform, Preise und Gewichte sind ungeprüft. Berichtete Modifikatoren werden nicht in Rechner übernommen.",
+    source: "Originalvergleich ansehen", buildUnknown: "Creator-Aufnahme · Build unbestätigt", grip: "Griff", muzzle: "Mündung", reported: "Vom Creator genannte Kombination", named: "In der Quelle genannte Waffe", specification: "Dokumentierte Spezifikation", scope: "Der Creator nennt diese Kombination. Prüfe die Montage im aktuellen Client; dies ist keine offizielle Werte- oder Schadenstabelle.",
+    apply: "Rezept zum Plan hinzufügen", applied: "Hinzugefügt; vorhandene Einträge und Budgets bleiben. Entferne Alternativaufsätze vor dem Kauf und prüfe Optik, Munition und genaues Magazin separat.", limit: "Die Eintrags- oder Freigabegrenze würde überschritten. Plan unverändert.", unavailable: "Ein Rezepteintrag fehlt. Plan unverändert.",
+    conflict: "Ein Aufsatz ist bereits einer anderen Waffe zugeordnet. Entferne oder ändere diese Zeile zuerst; der Plan bleibt unverändert.",
+    observation: "Dein Aufsatz-Testprotokoll", note: "Wird mit der Ausrüstung gespeichert und geteilt. Nur Spielbeobachtungen, keine Konto- oder Personendaten eintragen. Leere Messwerte bleiben unbekannt und ändern STK/TTK nicht. Eine Änderung der Bedingungen oder des Client-Builds löscht den ADS-Messwert.",
+    range: "Testentfernung (m)", optic: "Genaue Optik", ammo: "Genaue Munition", stance: "Haltung", bipod: "Zweibeinzustand", magazine: "Getestete Magazinkapazität", ads: "Gemessene ADS-Zeit (ms)", notes: "Treffergruppe, Methode und Wiederholungen", unknown: "Nicht erfasst", standing: "Stehend", crouched: "Hockend", prone: "Liegend", stowed: "Eingeklappt", unmounted: "Ausgeklappt, nicht aufgestützt", mounted: "Aufgestützt", clear: "Testmessungen löschen", open: "Aufsatz-Testplan öffnen",
+    recipes: ["M4: RVG + Top Comp", "AK74: RVG + CQB74", "AK74: AFG + PBS4"],
+    recipeNotes: ["Der Creator empfiehlt ein 30-Schuss-Magazin für die M4. Das genaue Katalogmodell fehlt; es wird nicht automatisch zugeordnet.", "AK74-Kandidat für Rückstoßkontrolle. Zunächst 30 Schuss beibehalten, andere Kapazitäten separat testen.", "Gedämpfte AK74-Alternative. Der Creator schlägt einen Vergleich beider Builds auf 40 m vor; das ist eine Testbedingung, keine Schadensgarantie."],
+    checks: ["Waffe, Munition, Optik, Haltung, Entfernung und Client-Build beibehalten. Nur einen Aufsatz gleichzeitig ändern.", "ADS-Zeit und wiederholbare Treffergruppen getrennt messen. Engere Gruppen belegen keinen Schaden oder TTK.", "Zweibein eingeklappt, offen ohne Auflage und aufgestützt testen. Bei 14:33 berichtet der Creator einen kleinen Rückstoßnachteil ohne Auflage; dessen Größe ist hier nicht belegt."]
+  },
+  ru: {
+    title: "Варианты модулей для проверки", intro: "Evo4Fun сравнивает удобство оружия. Варианты взяты из субтитров, проверенных 9 октября. Версия записи, текущая совместимость, цены и вес не проверены. Заявленные модификаторы не добавлены в калькуляторы.",
+    source: "Смотреть сравнение", buildUnknown: "Запись автора · версия не подтверждена", grip: "Рукоятка", muzzle: "Дульный модуль", reported: "Сочетание по словам автора", named: "Оружие, названное источником", specification: "Записанная характеристика", scope: "Автор называет это сочетание. Проверьте установку в текущем клиенте; это не официальная таблица характеристик или урона.",
+    apply: "Добавить вариант в план", applied: "Добавлено; прежние позиции и бюджет сохранены. Удалите альтернативные модули перед покупкой, отдельно проверьте прицел, патроны и точную модель магазина.", limit: "Будет превышен лимит позиций или ссылки. План не изменён.", unavailable: "Позиция варианта недоступна. План не изменён.",
+    conflict: "Модуль уже связан с другим оружием. Сначала удалите строку или измените связь; план не изменён.",
+    observation: "Ваш журнал проверки модулей", note: "Сохраняется и передаётся вместе с комплектом. Указывайте только игровые наблюдения без личных данных. Пустые измерения остаются неизвестными и не меняют STK/TTK. При изменении условий или версии клиента измерение ADS очищается.",
+    range: "Дистанция проверки (м)", optic: "Точный прицел", ammo: "Точные патроны", stance: "Положение", bipod: "Состояние сошек", magazine: "Проверенная ёмкость магазина", ads: "Измеренное время прицеливания (мс)", notes: "Группа попаданий, метод и повторы", unknown: "Не записано", standing: "Стоя", crouched: "Сидя", prone: "Лёжа", stowed: "Сложены", unmounted: "Открыты, без опоры", mounted: "На опоре", clear: "Очистить измерения", open: "Открыть план проверки модулей",
+    recipes: ["M4: RVG + Top Comp", "AK74: RVG + CQB74", "AK74: AFG + PBS4"],
+    recipeNotes: ["Автор советует для M4 магазин на 30 патронов. Точная каталожная модель не установлена, поэтому магазин автоматически не привязывается.", "Вариант AK74 для контроля отдачи. Сначала оставьте 30 патронов, затем отдельно сравните ёмкости.", "Вариант AK74 с глушителем. Автор предлагает сравнить оба на 40 м; это условие проверки, не гарантия урона."],
+    checks: ["Сохраняйте оружие, патроны, прицел, положение, дистанцию и версию клиента. Меняйте только один модуль за раз.", "Отдельно измеряйте время прицеливания и повторяемые группы попаданий. Кучность не доказывает урон или TTK.", "Проверьте сложенные сошки, открытые без опоры и установленные. В 14:33 автор сообщает о небольшом штрафе отдачи без опоры; величина здесь не установлена."]
+  },
+  "pt-br": {
+    title: "Configurações de acessórios para testar", intro: "Evo4Fun compara controle e manuseio. As sugestões vêm da transcrição conferida em 9 de outubro. Versão gravada, encaixe atual, preços e pesos não foram verificados. Modificadores relatados não entram nas calculadoras.",
+    source: "Ver comparação original", buildUnknown: "Gravação do criador · versão não confirmada", grip: "Empunhadura", muzzle: "Boca do cano", reported: "Combinação relatada pelo criador", named: "Arma citada pela fonte", specification: "Especificação registrada", scope: "O criador cita esta combinação. Confira a montagem no cliente atual; não é uma tabela oficial de atributos ou dano.",
+    apply: "Adicionar configuração ao plano", applied: "Adicionado, preservando itens e orçamento. Remova acessórios alternativos antes de comprar e confira mira, munição e modelo exato do carregador separadamente.", limit: "O limite de itens ou do link seria excedido. Plano mantido.", unavailable: "Um item da configuração não está disponível. Plano mantido.",
+    conflict: "Um acessório já está ligado a outra arma. Remova ou altere essa linha primeiro; o plano não foi alterado.",
+    observation: "Seu registro de teste de acessórios", note: "Salvo e compartilhado com o equipamento. Registre apenas observações de jogo, sem dados pessoais. Medições vazias continuam desconhecidas e não alteram STK/TTK. Alterar as condições ou a versão do cliente limpa a medida de ADS.",
+    range: "Distância do teste (m)", optic: "Mira exata", ammo: "Munição exata", stance: "Postura", bipod: "Estado do bipé", magazine: "Capacidade testada do carregador", ads: "Tempo de ADS medido (ms)", notes: "Agrupamento, método e repetições", unknown: "Não registrado", standing: "Em pé", crouched: "Agachado", prone: "Deitado", stowed: "Recolhido", unmounted: "Aberto, sem apoio", mounted: "Apoiado", clear: "Limpar medições", open: "Abrir plano de teste de acessórios",
+    recipes: ["M4: RVG + Top Comp", "AK74: RVG + CQB74", "AK74: AFG + PBS4"],
+    recipeNotes: ["O criador recomenda 30 cartuchos para a M4. O modelo exato do catálogo não foi identificado; não vinculamos um carregador automaticamente.", "Opção de AK74 focada no recuo. Comece com 30 cartuchos e teste outras capacidades separadamente.", "Alternativa de AK74 com supressor. O criador sugere comparar as duas a 40 m; é uma condição de teste, não garantia de dano."],
+    checks: ["Mantenha arma, munição, mira, postura, distância e versão do cliente. Troque um acessório por vez.", "Registre tempo de ADS e agrupamentos repetíveis separadamente. Agrupamento melhor não comprova dano ou TTK.", "Teste o bipé recolhido, aberto sem apoio e apoiado. Em 14:33, o criador relata uma pequena penalidade de recuo sem apoio; a intensidade não foi estabelecida aqui."]
+  },
+  pl: {
+    title: "Zestawy dodatków twórcy do sprawdzenia", intro: "Evo4Fun porównuje wygodę i kontrolę broni. Zestawy pochodzą z napisów sprawdzonych 9 października. Wersja nagrania, obecne dopasowanie, ceny i masa nie są zweryfikowane. Podane modyfikatory nie trafiają do kalkulatorów.",
+    source: "Obejrzyj porównanie", buildUnknown: "Nagranie twórcy · wersja niepotwierdzona", grip: "Chwyt", muzzle: "Wylot lufy", reported: "Połączenie podane przez twórcę", named: "Broń wymieniona w źródle", specification: "Zapisany parametr", scope: "Twórca wymienia to połączenie. Sprawdź montaż w obecnym kliencie; to nie oficjalna tabela parametrów lub obrażeń.",
+    apply: "Dodaj zestaw do planu", applied: "Dodano, zachowując pozycje i budżet. Usuń alternatywne dodatki przed zakupem; osobno sprawdź celownik, amunicję i dokładny model magazynka.", limit: "Przekroczono by limit pozycji lub linku. Plan bez zmian.", unavailable: "Pozycja zestawu jest niedostępna. Plan bez zmian.",
+    conflict: "Dodatek jest już przypisany do innej broni. Najpierw usuń lub zmień ten wiersz; plan pozostaje bez zmian.",
+    observation: "Twój zapis testu dodatków", note: "Zapisywany i udostępniany razem z wyposażeniem. Wpisuj tylko obserwacje z gry, bez danych osobowych. Puste pomiary pozostają nieznane i nie zmieniają STK/TTK. Zmiana warunków lub wersji klienta usuwa pomiar czasu celowania.",
+    range: "Dystans testu (m)", optic: "Dokładny celownik", ammo: "Dokładna amunicja", stance: "Postawa", bipod: "Stan dwójnogu", magazine: "Testowana pojemność magazynka", ads: "Zmierzony czas celowania (ms)", notes: "Skupienie, metoda i powtórzenia", unknown: "Nie zapisano", standing: "Stojąca", crouched: "Kucająca", prone: "Leżąca", stowed: "Złożony", unmounted: "Otwarty, niepodparty", mounted: "Podparty", clear: "Wyczyść pomiary", open: "Otwórz plan testu dodatków",
+    recipes: ["M4: RVG + Top Comp", "AK74: RVG + CQB74", "AK74: AFG + PBS4"],
+    recipeNotes: ["Twórca poleca do M4 magazynek na 30 nabojów. Dokładny model katalogowy jest nieznany, więc nie przypisujemy magazynka automatycznie.", "AK74 z naciskiem na kontrolę odrzutu. Najpierw zachowaj 30 nabojów, inne pojemności sprawdź osobno.", "Wariant AK74 z tłumikiem. Twórca proponuje porównanie obu na 40 m; to warunek testu, nie gwarancja obrażeń."],
+    checks: ["Zachowaj broń, amunicję, celownik, postawę, dystans i wersję klienta. Zmieniaj tylko jeden dodatek naraz.", "Osobno mierz czas celowania i powtarzalne skupienie. Lepsze skupienie nie dowodzi obrażeń ani TTK.", "Sprawdź dwójnóg złożony, otwarty bez podparcia i podparty. W 14:33 twórca opisuje małą karę odrzutu bez podparcia; jej wielkość nie jest tu ustalona."]
+  }
+};
+export function getAttachmentRecipeCopy(locale: Locale) {return copy[locale];}

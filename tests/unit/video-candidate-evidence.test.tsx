@@ -5,12 +5,13 @@ import {getVideoCandidateCopy} from "../../src/features/videos/video-candidate-c
 import {videoCandidates} from "../../src/features/videos/video-candidates";
 import {CANDIDATE_EVIDENCE_CHECKED_AT, getVideoCandidateEvidence, videoCandidateEvidence, videoTimestamp} from "../../src/features/videos/video-candidate-evidence";
 
-const locales = ["en", "ja", "ru", "de", "pt-br", "zh-cn"];
+const locales = ["en", "ja", "ru", "de", "pt-br", "zh-cn", "zh-tw", "pl"] as const;
 
 describe("candidate caption and footage evidence", () => {
-  it("accounts for all fourteen candidates without calling exports verification", () => {
+  it("preserves fourteen reviewed candidates and six metadata-only additions without calling exports verification", () => {
     expect(Object.keys(videoCandidateEvidence).sort()).toEqual(videoCandidates.map(video => video.youtubeId).sort());
     const evidence = Object.values(videoCandidateEvidence);
+    expect(evidence.filter(item => item.captionReview === "not-reviewed")).toHaveLength(6);
     expect(evidence.filter(item => item.captionReview === "full-track-read")).toHaveLength(10);
     expect(evidence.filter(item => item.captionReview === "excerpts-read")).toHaveLength(3);
     expect(evidence.filter(item => item.captionReview === "unavailable")).toHaveLength(1);

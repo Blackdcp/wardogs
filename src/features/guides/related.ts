@@ -21,6 +21,27 @@ const englishTaskGuideSlugs: Record<string, readonly string[]> = {
   "wardogs-crash-fix": ["wardogs-known-issues", "wardogs-best-settings", "wardogs-system-requirements"]
 };
 
+// The next task after a seasonal answer is the same in every language. Keep
+// dated evergreen pages as destinations instead of manufacturing seasonal URLs.
+const seasonalTaskGuideSlugs: Record<string, readonly string[]> = {
+  "wardogs-season-2": ["wardogs-progression-wipes-guide", "wardogs-what-to-buy-before-wipe", "wardogs-patch-notes"],
+  "wardogs-progression-wipes-guide": ["wardogs-what-to-buy-before-wipe", "wardogs-money-guide", "wardogs-season-2"],
+  "wardogs-money-guide": ["wardogs-progression-wipes-guide", "wardogs-what-to-buy-before-wipe", "wardogs-best-weapons-loadouts"],
+  "wardogs-what-to-buy-before-wipe": ["wardogs-progression-wipes-guide", "wardogs-money-guide", "wardogs-best-weapons-loadouts"],
+  "wardogs-patch-notes": ["wardogs-season-2", "wardogs-server-status", "wardogs-known-issues"],
+  "wardogs-server-status": ["wardogs-patch-notes", "wardogs-crash-fix", "wardogs-community-servers-guide"],
+  "wardogs-community-servers-guide": ["wardogs-server-status", "wardogs-squad-guide", "wardogs-progression-wipes-guide"],
+  "wardogs-known-issues": ["wardogs-crash-fix", "wardogs-server-status", "wardogs-patch-notes"],
+  "wardogs-launch-checklist": ["wardogs-beginner-guide", "wardogs-season-2", "wardogs-squad-guide"],
+  "wardogs-beginner-guide": ["wardogs-deploy-screen", "wardogs-squad-guide", "wardogs-money-guide"],
+  "wardogs-download": ["wardogs-launch-checklist", "wardogs-crash-fix", "wardogs-patch-notes"],
+  "wardogs-best-weapons-loadouts": ["wardogs-ammo-reload-guide", "wardogs-armor-damage-ttk-guide", "wardogs-season-2"],
+  "wardogs-helicopter-guide": ["wardogs-controls", "wardogs-cargo-guide", "wardogs-fob-guide"],
+  "wardogs-roadmap": ["wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-patch-notes"],
+  "wardogs-solo-guide": ["wardogs-low-level-servers", "wardogs-money-guide", "wardogs-squad-guide"],
+  "wardogs-report-player": ["wardogs-discord", "wardogs-known-issues", "wardogs-server-status"]
+};
+
 export function buildRelatedGuideHref(locale: Locale, slug: string) {
   return `/${locale}/guides/${slug}`;
 }
@@ -30,7 +51,7 @@ export async function getRelatedGuides(locale: Locale, slug: string, limit = 3) 
   const current = guides.find((guide) => guide.slug === slug);
   if (!current) return [];
 
-  const prioritySlugs = (locale === "en" ? englishTaskGuideSlugs[slug] : undefined)
+  const prioritySlugs = seasonalTaskGuideSlugs[slug] ?? (locale === "en" ? englishTaskGuideSlugs[slug] : undefined)
     ?? currentAccessGuideSlugs[slug] ?? [];
   const prioritized = prioritySlugs
     .map((relatedSlug) => guides.find((guide) => guide.slug === relatedSlug))

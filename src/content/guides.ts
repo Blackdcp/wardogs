@@ -19,7 +19,7 @@ export type GuideDocument = {
 };
 
 export type GuideSummary = Pick<GuideFrontmatter,
-  "title" | "description" | "keyword" | "category" | "slug" | "order" | "updatedAt" | "badges"
+  "title" | "description" | "directAnswer" | "keyword" | "category" | "slug" | "order" | "updatedAt" | "badges"
 >;
 
 export function parseGuideSource(source: string, entry: GuideManifestEntry, locale: Locale = "en"): {frontmatter: GuideFrontmatter; body: string} {
@@ -51,6 +51,7 @@ export async function listGuideSummaries(
   return guides.filter((guide): guide is GuideDocument => guide !== null).map(({frontmatter}) => ({
     title: frontmatter.title,
     description: frontmatter.description,
+    directAnswer: frontmatter.directAnswer,
     keyword: frontmatter.keyword,
     category: frontmatter.category,
     slug: frontmatter.slug,

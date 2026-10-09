@@ -19,6 +19,7 @@ import {getWorkflowCopy} from "@/features/tools/workflow-copy";
 import {calculateCombatScenario, emptyCombatScenario, type CombatScenario} from "@/features/tools/combat-scenario";
 import {CombatScenarioPanel} from "./combat-scenario-panel";
 import {ANALYTICS_EVENTS, trackAnalyticsEvent} from "@/lib/analytics-events";
+import {getAttachmentRecipeCopy} from "@/features/tools/attachment-recipe-copy";
 
 const emptySearch = () => "";
 const subscribeHydration = () => () => {};
@@ -229,6 +230,7 @@ export function WeaponCompare({
           </div>
         </div>
       ) : null}
+      <div className="border-t border-[#354039] px-5 py-5 md:px-8"><Link href="/tools/loadout-budget#attachment-tests" title={getAttachmentRecipeCopy(copy.locale).open} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#84d5a5]">{getAttachmentRecipeCopy(copy.locale).open}<ExternalLink size={16} aria-hidden="true" /></Link></div>
       </fieldset>
     </section>
   );

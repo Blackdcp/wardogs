@@ -17,6 +17,6 @@ describe("homepage data", () => {
       "3 Teams",
       "2 x 2 km Control Zone"
     ]);
-    expect(HOME_UPDATED_AT).toBe("2026-10-05");
+    expect(HOME_UPDATED_AT).toBe("2026-10-09");
   });
 });

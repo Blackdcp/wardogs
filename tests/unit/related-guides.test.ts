@@ -2,8 +2,19 @@ import {describe, expect, it} from "vitest";
 import {buildRelatedGuideHref, getItemRelatedGuides, getRelatedGuides} from "../../src/features/guides/related";
 import {getItemBySlug} from "../../src/features/items/item-library";
 import {localizeMdxInternalLinks} from "../../src/content/guides";
+import {locales} from "../../src/config/site";
 
 describe("related guides", () => {
+  it.each(locales)("continues the season, wipe and issue tasks in %s", async (locale) => {
+    for (const [slug, expected] of [
+      ["wardogs-season-2", ["wardogs-progression-wipes-guide", "wardogs-what-to-buy-before-wipe", "wardogs-patch-notes"]],
+      ["wardogs-progression-wipes-guide", ["wardogs-what-to-buy-before-wipe", "wardogs-money-guide", "wardogs-season-2"]],
+      ["wardogs-patch-notes", ["wardogs-season-2", "wardogs-server-status", "wardogs-known-issues"]],
+      ["wardogs-community-servers-guide", ["wardogs-server-status", "wardogs-squad-guide", "wardogs-progression-wipes-guide"]]
+    ] as const) {
+      expect((await getRelatedGuides(locale, slug)).map(({slug}) => slug)).toEqual(expected);
+    }
+  });
   it.each([
     ["wardogs-artillery-guide", "wardogs-mortar-guide"],
     ["wardogs-mortar-guide", "wardogs-artillery-guide"],

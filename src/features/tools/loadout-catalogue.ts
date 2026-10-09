@@ -5,6 +5,7 @@ import type {CatalogueEvidence} from "@/features/catalogue/catalogue-types";
 import {getAmmoMatcherDataset} from "./ammo-matcher-data";
 import {dataFingerprint} from "./workflow-state";
 import {resolveToolLocale} from "./tool-copy";
+import {getCreatorAttachmentRecords, type AttachmentKind} from "./attachment-recipes";
 
 export type LoadoutCatalogueItem = {
   id: string;
@@ -15,6 +16,7 @@ export type LoadoutCatalogueItem = {
   priceReference: string | null;
   weightReference: string | null;
   calibreKey?: string | null;
+  attachmentKind?: AttachmentKind;
   evidence: CatalogueEvidence;
 };
 
@@ -35,7 +37,9 @@ export function getLoadoutCatalogue(locale: Locale) {
     evidence: record.evidence,
   }));
   const relationships = getAmmoMatcherDataset(resolveToolLocale(locale)).relationships;
-  return {items, relationships, dataVersion: dataFingerprint({records, relationships})};
+  const creatorAttachments = getCreatorAttachmentRecords(locale);
+  items.push(...creatorAttachments.map((record) => ({id: `attachments/${record.slug}`, name: record.name, type: "attachments", attachmentKind: record.kind, priceReference: null, weightReference: null, evidence: record.evidence})));
+  return {items, relationships, dataVersion: dataFingerprint({records, relationships, creatorAttachments: getCreatorAttachmentRecords("en")})};
 }
 
 export type LoadoutCatalogue = ReturnType<typeof getLoadoutCatalogue>;

@@ -2,6 +2,34 @@ import {expect, test} from "@playwright/test";
 
 const escapePattern = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+test.beforeEach(async ({context, baseURL}) => {
+  const origin = new URL(baseURL!).origin;
+  await context.route("**/*", (route) => new URL(route.request().url()).origin === origin ? route.continue() : route.abort());
+  await context.routeWebSocket("**/*", (route) => new URL(route.url()).host === new URL(origin).host ? route.connectToServer() : route.close());
+});
+
+for (const locale of ["en", "ja"] as const) {
+  test(`season, market and creator searches reach real destinations in ${locale}`, async ({page}) => {
+    await page.setViewportSize({width: locale === "ja" ? 390 : 1440, height: 900});
+    await page.goto(`/${locale}`);
+    await page.locator('[data-hero-search-trigger="true"]').click();
+    const dialog = page.getByRole("dialog");
+    const input = dialog.getByRole("combobox");
+    for (const [query, href] of [
+      [locale === "ja" ? "シーズン2" : "new weapons", "/guides/wardogs-season-2"],
+      [locale === "ja" ? "ゴールドマーケット" : "gold market", "/gold-market"],
+      ["M14", "/guides/wardogs-season-2"], ["1of1", "/guides/wardogs-community-servers-guide"],
+      ["Bigfry", "/videos/wardogs-season-2-developer-interview"], ["RVG", "/tools/loadout-budget"]
+    ]) {
+      await input.fill(query);
+      await expect(dialog.locator(`[data-search-href="${href}"]`)).toBeVisible();
+    }
+    await input.fill("RVG");
+    await dialog.locator('[data-search-href="/tools/loadout-budget"]').click();
+    await expect(page).toHaveURL(new RegExp(`/${locale}/tools/loadout-budget/?$`));
+  });
+}
+
 test("search keeps one combobox focus model for arrows and Enter and restores its trigger on Escape", async ({page}) => {
   await page.goto("/en");
   const trigger = page.locator('[data-hero-search-trigger="true"]');

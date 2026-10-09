@@ -4,6 +4,7 @@ import {videoArticles, type VideoArticle} from "./video-library";
 import {getVideoUi} from "./video-ui";
 import {videoArticleCopyPl} from "./video-articles.pl";
 import {videoArticleCopyZhTw} from "./video-articles.zh-tw";
+import {getRecentVideoArticle} from "./recent-video-articles";
 
 type TranslatedLocale = Exclude<Locale, "en" | "zh-tw">;
 type TemplateTopicLocale = Exclude<TranslatedLocale, "pl">;
@@ -167,12 +168,12 @@ function localizedClips(article: VideoArticle, locale: "pl" | "zh-cn") {
 }
 
 const titles: Record<TranslatedLocale, Record<VideoArticle["slug"], string>> = {
-  pl: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS: omówienie filmu - ${polishTopics[article.slug]}`])) as Record<VideoArticle["slug"], string>,
-  ru: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS: разбор видео — ${topics[article.slug].ru}`])) as Record<VideoArticle["slug"], string>,
-  de: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS Video-Guide: ${topics[article.slug].de}`])) as Record<VideoArticle["slug"], string>,
-  "pt-br": Object.fromEntries(videoArticles.map((article) => [article.slug, `Guia em vídeo de WARDOGS: ${topics[article.slug]["pt-br"]}`])) as Record<VideoArticle["slug"], string>,
-  ja: Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS動画攻略: ${topics[article.slug].ja}`])) as Record<VideoArticle["slug"], string>,
-  "zh-cn": Object.fromEntries(videoArticles.map((article) => [article.slug, `WARDOGS 视频攻略：${topics[article.slug]["zh-cn"]}`])) as Record<VideoArticle["slug"], string>
+  pl: Object.fromEntries(videoArticles.filter(article => !article.captionReview).map((article) => [article.slug, `WARDOGS: omówienie filmu - ${polishTopics[article.slug]}`])) as Record<VideoArticle["slug"], string>,
+  ru: Object.fromEntries(videoArticles.filter(article => !article.captionReview).map((article) => [article.slug, `WARDOGS: разбор видео — ${topics[article.slug].ru}`])) as Record<VideoArticle["slug"], string>,
+  de: Object.fromEntries(videoArticles.filter(article => !article.captionReview).map((article) => [article.slug, `WARDOGS Video-Guide: ${topics[article.slug].de}`])) as Record<VideoArticle["slug"], string>,
+  "pt-br": Object.fromEntries(videoArticles.filter(article => !article.captionReview).map((article) => [article.slug, `Guia em vídeo de WARDOGS: ${topics[article.slug]["pt-br"]}`])) as Record<VideoArticle["slug"], string>,
+  ja: Object.fromEntries(videoArticles.filter(article => !article.captionReview).map((article) => [article.slug, `WARDOGS動画攻略: ${topics[article.slug].ja}`])) as Record<VideoArticle["slug"], string>,
+  "zh-cn": Object.fromEntries(videoArticles.filter(article => !article.captionReview).map((article) => [article.slug, `WARDOGS 视频攻略：${topics[article.slug]["zh-cn"]}`])) as Record<VideoArticle["slug"], string>
 };
 
 function localizedArticle(article: VideoArticle, locale: TranslatedLocale): VideoArticle {
@@ -285,13 +286,15 @@ export function getLocalizedVideoArticles(locale: Locale): VideoArticle[] {
   if (locale === "zh-tw" || locale === "pl") {
     const translations = locale === "pl" ? videoArticleCopyPl : videoArticleCopyZhTw;
     return videoArticles.map((article) => {
+      const recent = getRecentVideoArticle(locale, article.slug);
+      if (recent) return recent;
       const copy = translations[article.slug];
       if (!copy) throw new Error(`Missing complete ${locale} video article: ${article.slug}`);
       const clips = localizedClips(article, locale === "pl" ? "pl" : "zh-cn");
       return {...article, ...copy, ...(clips ? {clips: locale === "pl" ? clips : toTraditional(clips)} : {})};
     });
   }
-  return videoArticles.map((article) => localizedArticle(article, locale));
+  return videoArticles.map((article) => getRecentVideoArticle(locale, article.slug) ?? localizedArticle(article, locale));
 }
 
 export function getLocalizedVideoArticle(locale: Locale, slug: string): VideoArticle | undefined {

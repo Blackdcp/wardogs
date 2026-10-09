@@ -60,7 +60,9 @@ describe("artillery operating answers and video intent", () => {
   it("retains old fragment targets, model discovery and build-labeled economic evidence", async () => {
     const guide = await loadGuideDocument("en", "wardogs-artillery-guide");
     const headings = [...guide!.body.matchAll(/^#{2,3} (.+)$/gm)].map((match) => match[1]);
-    expect(headings).toHaveLength(protectedHeadings.length);
+    const octoberThreatHeading = "Drone pressure: observation, relocation and a stop condition";
+    expect(headings).toHaveLength(protectedHeadings.length + 1);
+    expect(headings.filter(value => value === octoberThreatHeading)).toHaveLength(1);
     for (const heading of protectedHeadings) expect(headings.filter((value) => value === heading), heading).toHaveLength(1);
     for (const destination of ["/en/items/vehicles/sph-2", "/en/guides/wardogs-progression-wipes-guide", "/en/tools/loadout-budget?pick=vehicles%2Fsph-2", "/en/tools/map", "/en/tools/artillery-calculator"]) {
       expect(guide!.body).toContain(destination);

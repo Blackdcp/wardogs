@@ -1,63 +1,103 @@
 ---
-title: "WARDOGS 崩溃修复：启动失败、重启与卡顿排查"
-description: "WARDOGS 无法启动时，按 WD-L014、WD-L018 与 WD-L020 分支排查：前两项仍在官方修复中，0.1.2 已修复 Windows KB5124010 相关 WD-L020。核对 Steam 文件、显卡驱动和 Elytra，区分在线认证、排队、闪退、卡死与整机重启，记录版本和失败步骤再提交支持报告。"
-keyword: "wardogs crash fix"
-category: "guide"
-slug: "wardogs-crash-fix"
+title: WARDOGS 崩溃修复：启动失败、重启与卡顿排查
+description: >-
+  WARDOGS 无法启动时，按 WD-L014、WD-L018 与 WD-L020 分支排查：前两项仍在官方修复中，0.1.2 已修复 Windows
+  KB5124010 相关 WD-L020。核对 Steam 文件、显卡驱动和
+  Elytra，区分在线认证、排队、闪退、卡死与整机重启，记录版本和失败步骤再提交支持报告。
+keyword: wardogs crash fix
+category: guide
+slug: wardogs-crash-fix
 order: 25
-updatedAt: "2026-10-03"
+updatedAt: '2026-10-09'
 badges:
-  - label: "故障排查"
-    tone: "accent"
-  - label: "版本相关"
-    tone: "warning"
+  - label: 故障排查
+    tone: accent
+  - label: 版本相关
+    tone: warning
 faq:
-  - question: "WARDOGS 登录排队算崩溃吗？"
-    answer: "不算。仍会响应的队列或服务器容量提示属于访问延迟；客户端关闭、进程卡死、错误弹窗或整机重启才是另一类故障。"
-  - question: "WARDOGS 第一次启动应该等多久？"
-    answer: "若客户端仍有响应并显示正在准备文件或着色器，应先允许它完整执行一次；所需时间会因硬件和版本而不同。"
-  - question: "WARDOGS 反复崩溃先做什么？"
-    answer: "干净重启后验证 Steam 文件、更新显卡驱动、关闭叠加与监控工具、恢复默认频率，再用保守画质逐项测试。"
-  - question: "微软 KB5121003 是否确认了 WARDOGS 的问题？"
-    answer: "没有。微软记录的是部分游戏与 RGB 相关组件可能出现的通用 Windows 问题，文章没有点名 WARDOGS。"
+  - question: WARDOGS 登录排队算崩溃吗？
+    answer: 不算。仍会响应的队列或服务器容量提示属于访问延迟；客户端关闭、进程卡死、错误弹窗或整机重启才是另一类故障。
+  - question: WARDOGS 第一次启动应该等多久？
+    answer: 若客户端仍有响应并显示正在准备文件或着色器，应先允许它完整执行一次；所需时间会因硬件和版本而不同。
+  - question: WARDOGS 反复崩溃先做什么？
+    answer: 干净重启后验证 Steam 文件、更新显卡驱动、关闭叠加与监控工具、恢复默认频率，再用保守画质逐项测试。
+  - question: 微软 KB5121003 是否确认了 WARDOGS 的问题？
+    answer: 没有。微软记录的是部分游戏与 RGB 相关组件可能出现的通用 Windows 问题，文章没有点名 WARDOGS。
 sources:
-  - label: "Team17：启动错误 WD-L020"
-    url: "https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/"
-    kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "微软：KB5124010 预览更新"
-    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update"
-    kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "WARDOGS Steam 官方商店页"
-    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
-    kind: "official"
-    checkedAt: "2026-09-01"
-  - label: "微软 Windows 更新 KB5121003"
-    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/08/kb5121003-windows-11-24h2-25h2-security-update"
-    kind: "official"
-    checkedAt: "2026-09-01"
-  - label: "创作者 WARDOGS 性能设置指南"
-    url: "https://www.youtube.com/watch?v=fupZGU7LJaU"
-    kind: "creator"
-    checkedAt: "2026-09-01"
-  - label: "WARDOGS Closed Beta 02 官方公告"
-    url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"
-    kind: "official"
-    checkedAt: "2026-09-04"
-  - label: "Closed Beta 02 服务器时间官方修订"
-    url: "https://x.com/BULKHEAD/status/2095447401725153576"
-    kind: "official"
-    checkedAt: "2026-09-04"
-  - label: "官方 Update 0.1.2 小型补丁"
-    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
-    kind: "official"
-    checkedAt: "2026-10-03"
-  - label: "开发者 WD-L014 与 WD-L018 启动问题公告"
-    url: "https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/"
-    kind: "official"
-    checkedAt: "2026-10-03"
+  - label: Team17：启动错误 WD-L020
+    url: 'https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/'
+    kind: official
+    checkedAt: '2026-09-30'
+  - label: 微软：KB5124010 预览更新
+    url: >-
+      https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update
+    kind: official
+    checkedAt: '2026-09-30'
+  - label: WARDOGS Steam 官方商店页
+    url: 'https://store.steampowered.com/app/1867240/WARDOGS/'
+    kind: official
+    checkedAt: '2026-09-01'
+  - label: 微软 Windows 更新 KB5121003
+    url: >-
+      https://support.microsoft.com/en-us/servicing/os/windows-11/2026/08/kb5121003-windows-11-24h2-25h2-security-update
+    kind: official
+    checkedAt: '2026-09-01'
+  - label: 创作者 WARDOGS 性能设置指南
+    url: 'https://www.youtube.com/watch?v=fupZGU7LJaU'
+    kind: creator
+    checkedAt: '2026-09-01'
+  - label: WARDOGS Closed Beta 02 官方公告
+    url: >-
+      https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807
+    kind: official
+    checkedAt: '2026-09-04'
+  - label: Closed Beta 02 服务器时间官方修订
+    url: 'https://x.com/BULKHEAD/status/2095447401725153576'
+    kind: official
+    checkedAt: '2026-09-04'
+  - label: 官方 Update 0.1.2 小型补丁
+    url: 'https://store.steampowered.com/news/app/1867240/view/712287592723252267'
+    kind: official
+    checkedAt: '2026-10-03'
+  - label: 开发者 WD-L014 与 WD-L018 启动问题公告
+    url: 'https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/'
+    kind: official
+    checkedAt: '2026-10-03'
+  - label: 冻结与崩溃讨论
+    url: >-
+      https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 性能问题反馈
+    url: >-
+      https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 官方支持说明
+    url: >-
+      https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846
+    kind: official
+    checkedAt: '2026-10-09'
+  - label: Team17 Support
+    url: 'https://support.team17.com/en'
+    kind: official
+    checkedAt: '2026-10-09'
 ---
+## 冻结约20秒退出、长局崩溃与退出后的残留进程
+
+近期社区讨论出现冻结后关闭、玩较长时间才崩溃，以及退出后游戏进程仍在的描述。这些是需要记录的症状，不足以证明内存泄漏或某个驱动就是根因。先区分短暂帧时间尖峰、服务器断线、游戏自行关闭和整台电脑重启。
+
+记录运行多久才发生、准确版本、服务器与区域、地图位置、执行动作和错误。确认已经退出、崩溃上报完成后，先在任务管理器检查残留进程，再决定是否启动第二份游戏；结束无响应进程前保存其他工作。崩溃报告或 dump 留给官方支持私下分析，其中可能有设备或账号信息，不要直接公开上传。
+
+可复现时用同一路线、相近时长只改一个设置，保留原值便于恢复。不要因单个玩家判断就卸载安全组件、统一回滚驱动或关闭保护。使用[设置攻略的前后对照模板](/zh-cn/guides/wardogs-best-settings)；WD 启动代码则走本页独立的代码分支。
+
+现有玩家报告包含内存未占满也崩溃、开启 TAA 仍崩溃的情况。“关闭 FSR”或“把分页文件改成96 GB”都不是经过验证的通用修复。没有可复现诊断或官方支持明确指引时，保留系统管理的内存设置，不根据单条经验修改 BIOS。
+
+## 官方支持：按问题选择入口
+
+官方支持说明发布于9月10日、9月23日编辑，本页于10月9日核查。技术问题、玩家举报和游戏封禁申诉指引，可通过官方 Discord 的 **@WARDOGS Support bot** 进入；技术问题也可使用 [Team17 支持](https://support.team17.com/en)。举报请准备视频、截图、玩家名称和对局信息。
+
+建议投递到开发者反馈区（目前为 feedback），提交不代表保证采纳。**Discord 封禁找 Discord 管理员，Player Support 无法解除。** 官网列出的永久账号封禁申诉邮箱，与社区服务器管理员处理本服限制，也不是同一流程。
 
 ## WD-L020与登录卡住的分诊
 [9 月 30 日 Update 0.1.2 公告](https://store.steampowered.com/news/app/1867240/view/712287592723252267)已确认修复 Windows 11 KB5124010 引起的 WD-L020。先更新 Steam 主游戏并验证文件，再考虑旧预览更新回滚建议。该修复仅针对这个原因；其他 WD-L020 成因、错误代码、卡死和整机重启仍需分别排查。
@@ -178,6 +218,11 @@ Steam 的文件验证用于检查本地安装，不等于删除账号所有权�
 没有。关闭它们是低风险隔离步骤，不是对某个软件的永久定罪。
 
 ## 来源和最后检查
+
+- [冻结与崩溃讨论](https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070) — 2026-10-09
+- [性能问题反馈](https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/) — 2026-10-09
+- [官方支持说明](https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846) — 2026-10-09
+- [Team17 Support](https://support.team17.com/en) — 2026-10-09
 
 核查日期按下方每条来源分别记录，不是全篇统一核验日期。页头的内容更新日期不代表所有事实均已复核；下文旧日期保留其当时证据范围，不等于当前客户端实测或服务器实时状态。
 

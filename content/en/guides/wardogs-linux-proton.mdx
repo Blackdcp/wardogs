@@ -5,7 +5,7 @@ keyword: "wardogs linux proton"
 category: "guide"
 slug: "wardogs-linux-proton"
 order: 48
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-09"
 badges:
   - label: "Linux Not Supported"
     tone: "warning"
@@ -24,11 +24,15 @@ sources:
   - label: "Official WARDOGS Linux compatibility update"
     url: "https://steamcommunity.com/app/1867240/discussions/0/588436698284962639"
     kind: "official"
-    checkedAt: "2026-09-26"
+    checkedAt: "2026-10-09"
   - label: "WARDOGS on Steam"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
     checkedAt: "2026-09-05"
+  - label: "Linux Support community discussion; not a support announcement"
+    url: "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1551967453574332556"
+    kind: "community"
+    checkedAt: "2026-10-09"
 ---
 
 {/* compatibility-matrix */}
@@ -67,11 +71,22 @@ Players looking for `wardogs linux`, `wardogs proton`, or `wardogs steam deck` u
 That means a successful community test may be interesting, but it cannot answer whether a later client, anti-cheat update, multiplayer session, or handheld performance profile will be supported. Use the current official statement when deciding whether to buy for Linux, and keep any community report clearly labeled as a report.
 
 ## What a usable compatibility report must include
-No new Linux or Steam Deck success/failure sample was reproduced for this update. The [September 25 developer position](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639) still provides no supported Proton version or timeline in the reviewed material.
 
-A report needs test date, retail build, distribution/OS and kernel, GPU/driver, Proton version and any launch modifications. Mark outcomes separately: process starts, menu opens, server join succeeds, complete match, reconnect. Reaching the menu is not evidence that multiplayer works; one completed session is not an official support promise.
+{/* linux-diagnostic-flow */}
 
-Keep failed results with the same fields and exact error. Do not fill an empty results table with inferred success or transfer a Beta sample to retail. No anti-cheat bypass, replacement executable or unverified command is supplied here.
+**Rechecked 2026-10-09:** the official statement remains the 2026-09-25 position, with no supported Proton version or timetable. The [Linux Support discussion](https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1551967453574332556) contains requests and individual experiences, not a new official compatibility announcement. We have not reproduced a current Linux or Steam Deck success/failure sample.
+
+| Stage | Check and record | What the result establishes |
+| --- | --- | --- |
+| Native Linux | Check whether the official release actually lists a native client. | A Windows client running through Proton is not native Linux support. |
+| Proton launch | Record the exact Proton version and launch options, then whether the process starts and the menu opens. Keep the exact error if it exits. | Reaching the menu confirms only that launch step on that setup. |
+| Anti-cheat and multiplayer | Check [server notices](/en/guides/wardogs-server-status), then distinguish server join, completed match and reconnect. Record any anti-cheat or connection error separately. | A failure does not by itself identify Proton, anti-cheat or a service outage as the cause. Do not bypass checks. |
+| Steam Deck | Record SteamOS version, input layout, resolution and graphics settings; test controls and sustained match performance separately. | Booting or using a controller does not establish Playable/Verified status or acceptable performance. |
+
+1. Keep a baseline: date/time, game build, distribution/OS and kernel, GPU and driver, Proton version, launch options, exact error and the last successful stage. Retain relevant logs; remove account identifiers and private paths before posting.
+2. Change one setting at a time and repeat the same stage. An individual report that changing DLSS or anti-aliasing helped is not a universal Linux fix; record before/after settings and results.
+3. After a hotfix, verify that every comparison uses the same **new game build**, retain the old build's failure record, and repeat launch, join, match and reconnect. Do not carry a Beta success forward as a retail result.
+4. If you see WD-L020, include it in the report with your OS. Windows-specific update steps in [known issues](/en/guides/wardogs-known-issues) are not Linux instructions. Keep the supported-platform question separate from a Windows repair; no bypass commands or replacement executable are supplied here.
 
 ## What This Does Not Confirm
 
@@ -113,7 +128,7 @@ Do not treat a workaround as official support and do not bypass anti-cheat or al
 
 Check dates apply separately to the sources listed below, not to the whole article. The content update date does not certify every fact. Earlier dated notes retain their original evidence scope, not a live-client or service-status check.
 
-The original Linux support statement and its 2026-09-25 follow-up were checked in the [developer's pinned Steam discussion](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639) on 2026-09-26. The September 25 addition provided no compatibility milestone or timeline. The Steam store remains the source for the Windows PC platform and any future Steam Deck label.
+The original Linux support statement and its 2026-09-25 follow-up were checked in the [developer's pinned Steam discussion](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639) on 2026-10-09. The September 25 addition provided no compatibility milestone or timeline. The Steam store remains the source for the Windows PC platform and any future Steam Deck label.
 
 ## Related Guides
 

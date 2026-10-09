@@ -13,8 +13,8 @@ import {EXPECTED_CURRENT_VIDEO_LEDGER, REJECTED_CURRENT_VIDEO_IDS} from "../fixt
 
 describe("video article library", () => {
   it("keeps every collected YouTube source as its own indexable article", () => {
-    expect(videoArticles).toHaveLength(31);
-    expect(videoArticles.map(({youtubeId}) => youtubeId)).toEqual([
+    expect(videoArticles).toHaveLength(35);
+    expect(videoArticles.filter(article => !article.captionReview).map(({youtubeId}) => youtubeId)).toEqual([
       "ugkuP4a3xk4",
       "-k6IV0ITLDo",
       "J5QZXLENLgQ",
@@ -47,24 +47,24 @@ describe("video article library", () => {
       "7O5QJNRzXzQ",
       "JSAu5nlLjJw"
     ]);
-    expect(new Set(videoArticles.map(({slug}) => slug)).size).toBe(31);
+    expect(new Set(videoArticles.map(({slug}) => slug)).size).toBe(35);
     expect(videoArticles.every((article) => article.internalGuideSlug.length > 0)).toBe(true);
   });
 
   it("promotes the strongest video articles first", () => {
     expect(getFeaturedVideoArticles(3).map(({slug}) => slug)).toEqual([
-      "wardogs-huge-news-progression",
-      "wardogs-support-skill-leveling",
-      "wardogs-kamikaze-drone-guide"
+      "wardogs-season-2-developer-interview",
+      "wardogs-attachments-tested",
+      "wardogs-solo-duo-fob-layout"
     ]);
   });
 
   it("publishes a current Season 1 source watchlist without duplicating archived breakdowns", () => {
     expect(CURRENT_VIDEO_SOURCES_REVIEWED_AT).toBe("2026-09-17");
-    expect(currentVideoSources.map(({youtubeId, title, channel, publishedDate, sourceUrl, topic, internalGuideSlug, reviewedAt, buildLabel, sourceClass}) => ({youtubeId, title, channel, publishedDate, sourceUrl, topic, internalGuideSlug, reviewedAt, buildLabel, sourceClass}))).toEqual(EXPECTED_CURRENT_VIDEO_LEDGER);
+    expect(currentVideoSources.filter(source => !source.articleSlug).map(({youtubeId, title, channel, publishedDate, sourceUrl, topic, internalGuideSlug, reviewedAt, buildLabel, sourceClass}) => ({youtubeId, title, channel, publishedDate, sourceUrl, topic, internalGuideSlug, reviewedAt, buildLabel, sourceClass}))).toEqual(EXPECTED_CURRENT_VIDEO_LEDGER);
     expect(new Set(currentVideoSources.map(({youtubeId}) => youtubeId)).size).toBe(currentVideoSources.length);
 
-    const archivedIds = new Set(videoArticles.map(({youtubeId}) => youtubeId));
+    const archivedIds = new Set(videoArticles.filter(article => !article.captionReview).map(({youtubeId}) => youtubeId));
     for (const source of currentVideoSources) {
       expect(archivedIds.has(source.youtubeId), source.youtubeId).toBe(false);
       expect(source.publishedDate >= "2026-09-10", source.youtubeId).toBe(true);
@@ -72,7 +72,7 @@ describe("video article library", () => {
       expect(source.durationMinutes, source.youtubeId).toBeGreaterThan(0);
       expect(source.internalGuideSlug.length, source.youtubeId).toBeGreaterThan(0);
       expect(source.buildLabel, source.youtubeId).toBe("Season 1 current");
-      expect(source.reviewedAt, source.youtubeId).toBe(CURRENT_VIDEO_SOURCES_REVIEWED_AT);
+      expect(source.reviewedAt, source.youtubeId).toBe(source.articleSlug ? "2026-10-09" : CURRENT_VIDEO_SOURCES_REVIEWED_AT);
       expect(source.sourceClass, source.youtubeId).toBe("creator-current");
     }
 
@@ -123,11 +123,11 @@ describe("video article library", () => {
   it("separates reusable beta workflows from historical video evidence", () => {
     expect(getVideoEra(videoArticles.find(({slug}) => slug === "wardogs-best-settings")!)).toBe("beta-workflow");
     expect(getVideoEra(videoArticles.find(({slug}) => slug === "wardogs-huge-news-progression")!)).toBe("historical");
-    expect(new Set(videoArticles.map(getVideoEra))).toEqual(new Set(["beta-workflow", "historical"]));
+    expect(new Set(videoArticles.map(getVideoEra))).toEqual(new Set(["beta-workflow", "historical", "current-analysis"]));
   });
 
   it("treats each video page as a full article instead of a short summary", () => {
-    for (const article of videoArticles) {
+    for (const article of videoArticles.filter(article => !article.captionReview)) {
       const bodyText = [
         article.quickAnswer,
         ...article.takeaways,

@@ -52,12 +52,13 @@ describe("September 30 evidence-bounded guide and video refresh", () => {
   });
 
   it("separates fourteen metadata candidates from the September 17 library", () => {
-    expect(videoCandidates).toHaveLength(14);
-    expect(new Set(videoCandidates.map(video => video.youtubeId)).size).toBe(14);
-    expect(videoCandidates.filter(video => video.language === "ja")).toHaveLength(3);
-    expect(videoCandidates.filter(video => video.language === "ru")).toHaveLength(3);
+    const septemberCandidates = videoCandidates.filter(video => video.metadataCheckedAt === "2026-09-30");
+    expect(septemberCandidates).toHaveLength(14);
+    expect(new Set(septemberCandidates.map(video => video.youtubeId)).size).toBe(14);
+    expect(septemberCandidates.filter(video => video.language === "ja")).toHaveLength(3);
+    expect(septemberCandidates.filter(video => video.language === "ru")).toHaveLength(3);
     expect(CURRENT_VIDEO_SOURCES_REVIEWED_AT).toBe("2026-09-17");
-    for (const video of videoCandidates) {
+    for (const video of septemberCandidates) {
       expect(video.youtubeId).toMatch(/^[A-Za-z0-9_-]{11}$/);
       expect(video.publishedDate >= "2026-09-18" && video.publishedDate <= "2026-09-30").toBe(true);
       expect(video.metadataCheckedAt).toBe("2026-09-30");
@@ -68,9 +69,9 @@ describe("September 30 evidence-bounded guide and video refresh", () => {
       expect(video.chapters.map(chapter => chapter.seconds)).toEqual([...video.chapters.map(chapter => chapter.seconds)].sort((a, b) => a - b));
       expect(candidateWatchUrl(video.youtubeId)).toBe(`https://www.youtube.com/watch?v=${video.youtubeId}`);
     }
-    expect(videoCandidates.find(video => video.youtubeId === "6Xp6IRzDL4g")?.caution).toBe("axis");
-    expect(videoCandidates.find(video => video.youtubeId === "SVLgG_eiLs8")?.caution).toBe("disputed");
-    expect(videoCandidates.find(video => video.youtubeId === "gt7EZW5joDg")?.caution).toBe("sponsor");
+    expect(septemberCandidates.find(video => video.youtubeId === "6Xp6IRzDL4g")?.caution).toBe("axis");
+    expect(septemberCandidates.find(video => video.youtubeId === "SVLgG_eiLs8")?.caution).toBe("disputed");
+    expect(septemberCandidates.find(video => video.youtubeId === "gt7EZW5joDg")?.caution).toBe("sponsor");
     expect(getVideoCandidates("ja").slice(0, 3).every(video => video.language === "ja")).toBe(true);
     expect(getVideoCandidates("ru").slice(0, 3).every(video => video.language === "ru")).toBe(true);
   });

@@ -10,6 +10,7 @@ import {getFeaturedItems, itemLibrary, itemTypes} from "@/features/items/item-li
 import {getItemLatestVerifiedAt} from "@/features/items/item-freshness";
 import {operationsAtlasRecords} from "@/features/maps/operations-atlas";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "@/features/news/news-data";
+import {getRecentNews} from "@/features/news/recent-news";
 import {getServiceUpdates} from "@/features/news/service-updates";
 import {videoArticles} from "@/features/videos/video-library";
 import {videoCandidates} from "@/features/videos/video-candidates";
@@ -22,7 +23,9 @@ const toolContentUpdatedAt: Record<string, string> = {
   "/tools/map": "2026-10-09",
   "/tools/artillery-calculator": "2026-10-09",
   "/tools/weapon-compare": "2026-10-09",
-  "/tools/loadout-budget": "2026-10-09"
+  "/tools/loadout-budget": "2026-10-09",
+  "/tools/ammo-matcher": "2026-10-09",
+  "/gold-market": "2026-10-09"
 };
 
 export function latestDate(dates: string[]) {
@@ -93,6 +96,7 @@ export function editorialHubSources(locale: Locale): EditorialHubSources {
     guides: guideManifest.map(({slug}) => resolveGuideUpdatedAt(locale, slug)),
     news: [
       ...NEWS_UPDATES.map(({date}) => date),
+      ...getRecentNews(locale).map(({date}) => date),
       ...getServiceUpdates(locale).map(({date}) => date),
       ...NEWS_CHECKLIST_SLUGS.map((slug) => resolveGuideUpdatedAt(locale, slug))
     ],

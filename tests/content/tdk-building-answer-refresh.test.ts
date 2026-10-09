@@ -13,7 +13,7 @@ import {getCatalogueRecord} from "../../src/features/catalogue/catalogue-records
 const slugs = ["wardogs-fob-guide", "wardogs-equipment-tools-guide"] as const;
 const cases = [
   {
-    locale: "en", h2Counts: [20, 16],
+    locale: "en", h2Counts: [22, 18],
     headings: ["Building will not place: which check comes next?", "A hammer or supplies: who resolves the missing requirement?"],
     editorial: /[Ee]ditorial/,
     branches: ["Terrain or overlap", "Tool, unlock or permission", "Missing resources", "Quantity or stacking"],
@@ -23,7 +23,7 @@ const cases = [
     hashes: ["1e91af4572801de51205d18d93f550ec1e86227a48eb5a3e52c45d40d15bf62d", "f21ae9bca5a4eea5144a0502286b63af996bf2563b8f25efc607c39dbb24ab65"]
   },
   {
-    locale: "ru", h2Counts: [17, 12],
+    locale: "ru", h2Counts: [19, 15],
     headings: ["Постройка не ставится: что проверить дальше?", "Нужен молоток или ресурс: кто устраняет нехватку?"],
     editorial: /редакции|Редакционная/,
     branches: ["Рельеф или пересечение", "Инструмент, открытие или права", "Не хватает ресурсов", "Количество или установка друг на друга"],
@@ -33,7 +33,7 @@ const cases = [
     hashes: ["d73b532bb543559360779644d703a919a381ffce15af3faf4994b96dd039f9df", "2f41feb2d273b6befe8927586d50215b889f5067fa58f10582e0cec045b2cc57"]
   },
   {
-    locale: "de", h2Counts: [17, 12],
+    locale: "de", h2Counts: [19, 15],
     headings: ["Bau lässt sich nicht platzieren: was prüfe ich jetzt?", "Hammer oder Material: wer behebt den Engpass?"],
     editorial: /Redaktionelle/,
     branches: ["Gelände oder Überschneidung", "Werkzeug, Freischaltung oder Berechtigung", "Fehlende Ressourcen", "Anzahl oder Stapelung"],
@@ -43,7 +43,7 @@ const cases = [
     hashes: ["d08c410f9147af4638f65a155ee5608de64bf5449d599f33815a078cbd57dda3", "98a62c63670257148b7e8af6edc008a237a69db21f69c739c681b7ee77c7a2cd"]
   },
   {
-    locale: "pt-br", h2Counts: [17, 12],
+    locale: "pt-br", h2Counts: [19, 15],
     headings: ["A construção não encaixa: o que conferir agora?", "Martelo ou material: quem resolve a falta?"],
     editorial: /editoria/,
     branches: ["Terreno ou sobreposição", "Ferramenta, desbloqueio ou permissão", "Falta de recursos", "Quantidade ou empilhamento"],
@@ -53,7 +53,7 @@ const cases = [
     hashes: ["3fdf8c584f46465ee394fafcc5aa2ec75715b227da4a8376477c08e8d2b76be8", "8df8fec09166e38263bd2d9bbb88d9c8dfe6ba7fdb57e0788a165faa21a8f030"]
   },
   {
-    locale: "ja", h2Counts: [12, 12],
+    locale: "ja", h2Counts: [15, 15],
     headings: ["建築できない時は何を確認する？", "ハンマーか資材か：誰が不足を解消する？"],
     editorial: /編集部/,
     branches: ["地形・重なり", "工具・解除・権限", "資材不足", "個数・積み重ね"],
@@ -63,7 +63,7 @@ const cases = [
     hashes: ["db6ed7e311bef5ab407fa48318e0a151312b239426a87aa2c9336867792922bf", "04933a8659e065139b79307ec359c2db298a3897a02bc677373374b447823efc"]
   },
   {
-    locale: "zh-cn", h2Counts: [19, 14],
+    locale: "zh-cn", h2Counts: [21, 16],
     headings: ["建筑放不下，下一步查什么？", "缺锤子还是缺材料，由谁处理？"],
     editorial: /编辑/,
     branches: ["地形或重叠", "工具、解锁或权限", "缺资源", "数量或堆叠"],
@@ -73,7 +73,7 @@ const cases = [
     hashes: ["18a4d5a9fba88fbfa7cc3e04a29226a65ef18493641c0d05850d32cd77909985", "7b607d87228a0864e81d61d556fcb16ba3a69656b51f7d5f59152db351cfbe9d"]
   },
   {
-    locale: "zh-tw", h2Counts: [19, 14],
+    locale: "zh-tw", h2Counts: [21, 16],
     headings: ["建築放不下，接著該查什麼？", "缺錘子還是缺材料，該由誰處理？"],
     editorial: /編輯/,
     branches: ["地形或重疊", "工具、解鎖或權限", "缺資源", "數量或堆疊"],
@@ -83,7 +83,7 @@ const cases = [
     hashes: ["e4fa152261107b6b9c6f01d742b3089d472a1bd87e3ce9c6894e6e41f0944abe", "3d9ecf79c23875bfab7254385ae13dd2cc440f01bb93b0a28118c15a6d0af683"]
   },
   {
-    locale: "pl", h2Counts: [20, 16],
+    locale: "pl", h2Counts: [22, 18],
     headings: ["Nie można postawić konstrukcji: co sprawdzić dalej?", "Młotek czy materiały: kto uzupełnia brak?"],
     editorial: /redakcyjne|Redakcyjny/,
     branches: ["Teren lub nakładanie elementów", "Narzędzie, odblokowanie lub uprawnienia", "Brak zasobów", "Liczba lub układanie na sobie"],
@@ -118,10 +118,19 @@ describe.each(cases)("TDK building answer refresh: $locale", (entry) => {
       // Original titles, primary keywords, FAQs and source checkpoints stay protected.
       const data = matter(source).data;
       expect(data.updatedAt >= "2026-09-30", slug).toBe(true);
-      const protectedData: Record<string, unknown> = {...data, updatedAt: "2026-09-30"};
+      const octoberAdditions = new Set([
+        "https://www.youtube.com/watch?v=z7wMLQQtIIM",
+        "https://www.youtube.com/watch?v=j7hJXEXo5U8",
+        "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1555761804012158987",
+        "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1557732174055219311",
+        "https://www.reddit.com/r/WarDogs/comments/1wv43s9/what_am_i_supposed_to_do_solo/"
+      ]);
+      // Keep the original source checkpoint hash intact while allowing dated evidence added in October.
+      const originalSources = data.sources.filter((source: {url: string}) => !octoberAdditions.has(source.url));
+      const protectedData: Record<string, unknown> = {...data, sources: originalSources, updatedAt: "2026-09-30"};
       if (index === 1) {
         delete protectedData.description;
-        protectedData.sources = data.sources.filter((source: {url: string}) => source.url !== "https://steamcommunity.com/app/1867240/announcements/");
+        protectedData.sources = originalSources.filter((source: {url: string}) => source.url !== "https://steamcommunity.com/app/1867240/announcements/");
         expect(data.description.length).toBeGreaterThanOrEqual(140);
         expect(data.description.length).toBeLessThanOrEqual(160);
       }

@@ -17,6 +17,16 @@ const baseline: Record<Locale, readonly string[]> = {
 };
 
 describe("traffic-protected home demand", () => {
+  it("restores localized demand as compact handoffs without consuming protected cards", () => {
+    expect(traffic.getHomeDemandHandoffs("ja")).toEqual([{href: "/guides/wardogs-progression-wipes-guide", task: "progression"}]);
+    for (const locale of ["ru", "de", "zh-tw"] as const) {
+      expect(traffic.getHomeDemandHandoffs(locale)).toEqual([{href: "/gold-market", task: "money"}]);
+    }
+    for (const locale of locales) {
+      expect(traffic.getHomeDemandHandoffs(locale).length).toBeLessThanOrEqual(1);
+      expect(traffic.LOCALIZED_PRIORITY_SLUGS[locale]).toHaveLength(6);
+    }
+  });
   it.each(locales)("keeps the frozen six guide destinations for %s", async (locale) => {
     const summaries = await listGuideSummaries(locale);
     const assets = traffic.getHomeProtectedDemand(summaries, locale);

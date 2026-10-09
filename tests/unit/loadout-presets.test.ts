@@ -78,7 +78,8 @@ describe("four localized, shareable preparation lists", () => {
     expect(Object.values(t).filter((value) => typeof value === "string").every((value) => value.trim().length > 0)).toBe(true);
     const html = renderToStaticMarkup(createElement(LoadoutPresetList, {locale}));
     expect(html.match(/data-loadout-preset=/g)).toHaveLength(4);
-    expect(html.match(/href="[^"]*\/tools\/loadout-budget/g)).toHaveLength(4);
+    expect(html.match(/href="[^"]*\/tools\/loadout-budget/g)).toHaveLength(7);
+    expect(html.match(/#attachment-tests/g)).toHaveLength(3);
     expect(html).toContain("mode=items");
     expect(html).toContain("unitPrice%22%3Anull");
     expect(decodeURIComponent(html).includes("/images/catalogue/")).toBe(true);

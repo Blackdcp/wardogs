@@ -19,6 +19,7 @@ import {useToolAnalytics} from "./use-tool-analytics";
 import {isMarkedToolShare, markToolShare} from "@/features/tools/tool-analytics";
 import {LoadoutChecksSummary, LoadoutLineChecks, SavedLoadouts} from "./loadout-workbench";
 import {getWorkbenchCopy} from "@/features/tools/workbench-copy";
+import {AttachmentRecipePanel} from "./attachment-recipe-panel";
 
 const defaults: BudgetState = {cash: 10_000, loadout: 3_000, vehicle: 0, reserve: 2_000};
 const emptySearch = () => "";
@@ -116,6 +117,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
         {shownPresets.length ? <p className="text-xs leading-5 text-[#a8b4ae]">{presetCopy.budgets}</p> : null}
         <p role="status" className="text-sm text-[#e4c35f]">{presetResult?.status === "limit" || presetResult?.status === "unavailable" ? presetCopy[presetResult.status] : presetStatus?.search === search ? presetStatus.message : ""}</p>
       </section>
+      <AttachmentRecipePanel locale={copy.locale} state={state} catalogue={catalogue} onChange={commit} />
       <fieldset className="flex flex-wrap gap-2">
         {[{id: "total", label: t.totalMode}, {id: "items", label: t.itemsMode}].map(({id, label}) => <label className="flex min-h-11 cursor-pointer items-center gap-2 border border-[#46534d] px-4 text-sm text-white" key={id}>
           <input type="radio" name="budget-mode" checked={(state.mode ?? "total") === id} onChange={() => commit({...state, mode: id as "total" | "items", lines})} />{label}
@@ -129,7 +131,7 @@ export function LoadoutBudgetEditor({copy, catalogue}: {copy: ToolCopy; catalogu
         <PlanNumber label={t.legacyVehicle} value={state.vehicle} onChange={(vehicle) => commit({...state, vehicle: vehicle ?? 0})} />
       </div>
       <p className="text-xs leading-5 text-[#a8b4ae]">{t.assumptions}</p>
-      <label className="grid gap-2 text-sm text-[#cbd5cf]">{getWorkbenchCopy(copy.locale).build}<input data-clarity-mask="true" className={planInputClass} maxLength={80} value={state.buildLabel ?? ""} onChange={(event) => commit({...state, buildLabel: event.target.value})} /></label>
+      <label className="grid gap-2 text-sm text-[#cbd5cf]">{getWorkbenchCopy(copy.locale).build}<input data-clarity-mask="true" className={planInputClass} maxLength={80} value={state.buildLabel ?? ""} onChange={(event) => commit({...state, buildLabel: event.target.value, ...(state.attachmentTest ? {attachmentTest: {...state.attachmentTest, adsMilliseconds: null}} : {})})} /></label>
       {itemsMode ? <div className="space-y-5 border-y border-[#354039] py-5">
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
           <label className="grid gap-2 text-sm text-[#cbd5cf]">{t.search}<input data-clarity-mask="true" className={planInputClass} type="search" value={query} onChange={(event) => {setQuery(event.target.value); setSelected("");}} /></label>

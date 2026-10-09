@@ -12,6 +12,7 @@ import {getItemLatestVerifiedAt} from "../../src/features/items/item-freshness";
 import {itemHubPreviewSlugs} from "../../src/features/items/item-hub-data";
 import {videoArticles} from "../../src/features/videos/video-library";
 import {videoCandidates} from "../../src/features/videos/video-candidates";
+import {getRecentNews} from "../../src/features/news/recent-news";
 import {getServiceUpdates} from "../../src/features/news/service-updates";
 import {NEWS_CHECKLIST_SLUGS, NEWS_UPDATES} from "../../src/features/news/news-data";
 import {getReleaseImpacts} from "../../src/features/releases/release-impacts";
@@ -75,8 +76,8 @@ describe("sitemap", () => {
     const latestGuide = [...guideManifest.map(({slug}) => guideDate(slug)), ...videoDates].sort().at(-1)!;
     expect(dateOf("/guides")).toBe(latestGuide);
     expect(dateOf("/videos")).toBe(videoDates.sort().at(-1));
-    expect(dateOf("/news")).toBe([...NEWS_UPDATES.map(({date}) => date), ...getServiceUpdates("en").map(({date}) => date), ...NEWS_CHECKLIST_SLUGS.map(guideDate)].sort().at(-1));
-    for (const pathname of ["/tools/logistics-planner", "/tools/ammo-matcher", "/tools/progression-route"]) {
+    expect(dateOf("/news")).toBe([...NEWS_UPDATES.map(({date}) => date), ...getRecentNews("en").map(({date}) => date), ...getServiceUpdates("en").map(({date}) => date), ...NEWS_CHECKLIST_SLUGS.map(guideDate)].sort().at(-1));
+    for (const pathname of ["/tools/logistics-planner", "/tools/progression-route"]) {
       expect(dateOf(pathname)).toBe("2026-10-03");
     }
     for (const pathname of ["/guides", "/videos", "/maps", "/items", "/news"]) {
@@ -84,10 +85,10 @@ describe("sitemap", () => {
     }
   });
 
-  it("publishes the eight revised product pages with their actual October 9 revision in every locale", () => {
+  it("publishes the revised product pages with their actual October 9 revision in every locale", () => {
     const entriesByUrl = new Map(sitemap().map((entry) => [entry.url, entry]));
     for (const locale of locales) {
-      for (const pathname of ["/tools", "/tools/map", "/tools/artillery-calculator", "/tools/weapon-compare", "/tools/loadout-budget", "/gold-market", "/videos", "/items/weapons"]) {
+      for (const pathname of ["/tools", "/tools/ammo-matcher", "/tools/map", "/tools/artillery-calculator", "/tools/weapon-compare", "/tools/loadout-budget", "/gold-market", "/videos", "/items/weapons"]) {
         const url = `${origin}/${locale}${pathname}`;
         expect(new Date(entriesByUrl.get(url)!.lastModified!).toISOString(), url).toBe("2026-10-09T00:00:00.000Z");
       }

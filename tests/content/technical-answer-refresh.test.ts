@@ -32,7 +32,7 @@ describe.each(locales)("bounded technical answers: %s", (locale) => {
 
   it("distinguishes voice channels and escalation using current primary support evidence", async () => {
     const guide = await loadGuideDocument(locale, "wardogs-known-issues");
-    expect(guide?.frontmatter.updatedAt).toBe("2026-10-03");
+    expect(guide?.frontmatter.updatedAt).toBe("2026-10-09");
     for (const url of [voiceReply, microphoneHelp]) {
       expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({url, kind: "official", checkedAt}));
       expect(guide?.body).toContain(`](${url})`);

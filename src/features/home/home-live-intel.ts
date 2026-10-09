@@ -1,6 +1,8 @@
+import type {DiscoveryTask} from "@/features/discovery/discovery-types";
 import type {Locale} from "@/config/site";
 import {loadGuideDocument} from "@/content/guides";
 import {seasonOneChanges} from "@/features/catalogue/catalogue-evidence-data";
+import {getRecentNews} from "@/features/news/recent-news";
 import {NEWS_UPDATES} from "@/features/news/news-data";
 import {getServiceUpdates} from "@/features/news/service-updates";
 
@@ -15,8 +17,11 @@ export type HomeLiveIntelEntry = {
   sourceClass: "official" | "live-client" | "creator-current" | "community-report";
   /** Already-localized title from the existing service-updates evidence model. */
   sourceTitle?: string;
+  statusLabel?: string;
+  dateLabel?: string;
+  task?: DiscoveryTask;
 };
-export type HomeLiveIntelCandidate = Omit<HomeLiveIntelEntry, "current"> & {current?: boolean; sourceUrl?: string};
+export type HomeLiveIntelCandidate = Omit<HomeLiveIntelEntry, "current"> & {current?: boolean; sourceUrl?: string; editorialPriority?: number};
 
 function validDate(value: string) {
   const date = new Date(`${value}T00:00:00Z`);
@@ -29,13 +34,13 @@ export function resolveHomeLiveIntel(candidates: readonly HomeLiveIntelCandidate
     if (typeof entry.current !== "boolean" || !validDate(entry.verifiedAt) || !entry.sourceUrl) return false;
     try {return new URL(entry.sourceUrl).protocol === "https:";} catch {return false;}
   }).sort((a, b) => Number(b.current) - Number(a.current)
-    || b.verifiedAt.localeCompare(a.verifiedAt) || a.id.localeCompare(b.id))
+    || (b.editorialPriority ?? 0) - (a.editorialPriority ?? 0) || b.verifiedAt.localeCompare(a.verifiedAt) || a.id.localeCompare(b.id))
     .flatMap((entry) => {
       if (seen.has(entry.href)) return [];
       seen.add(entry.href);
       return [{id: entry.id, href: entry.href, kind: entry.kind, titleKey: entry.titleKey,
         verifiedAt: entry.verifiedAt, build: entry.build, current: entry.current as boolean,
-        sourceClass: entry.sourceClass, ...(entry.sourceTitle ? {sourceTitle: entry.sourceTitle} : {})}];
+        sourceClass: entry.sourceClass, ...(entry.task ? {task: entry.task} : {}), ...(entry.sourceTitle ? {sourceTitle: entry.sourceTitle} : {}), ...(entry.statusLabel ? {statusLabel: entry.statusLabel} : {}), ...(entry.dateLabel ? {dateLabel: entry.dateLabel} : {})}];
     }).slice(0, 3);
 }
 
@@ -50,7 +55,7 @@ export async function getHomeLiveIntelEntries(locale: Locale): Promise<HomeLiveI
       id: `news-${update.titleKey}`, href: `/guides/${update.guideSlug}`,
       kind: update.titleKey === "season02" ? "season" : update.titleKey === "launchHotfix" ? "status" : "patch",
       titleKey: `news.timeline.items.${update.titleKey}.title`,
-      verifiedAt: source?.checkedAt ?? "", sourceUrl: source?.url,
+      verifiedAt: update.date, sourceUrl: source?.url,
       build: update.titleKey === "patch012" ? "0.1.2" : update.titleKey === "season02" ? "Season 2" : "",
       current: false, sourceClass: "official"
     };
@@ -64,6 +69,15 @@ export async function getHomeLiveIntelEntries(locale: Locale): Promise<HomeLiveI
     id: `season-one-${change.id}`, href: "/guides/wardogs-patch-notes", kind: "change" as const,
     titleKey: "home.discovery.states.archive", verifiedAt: change.verifiedAt, sourceUrl: change.sourceUrl,
     build: change.effectiveBuild, current: false, sourceClass: "official" as const
+  })));
+  candidates.push(...getRecentNews(locale).map((update): HomeLiveIntelCandidate => ({
+    id: `recent-${update.titleKey}`, href: `/guides/${update.guideSlug}`, kind: update.kind,
+    titleKey: "home.discovery.states.archive", sourceTitle: update.title,
+    statusLabel: update.badge, dateLabel: update.dateLabel,
+    task: update.titleKey === "creatorGuidesOctober8" ? "fob" : update.titleKey === "contestClosedOctober9" ? "news" : update.kind === "season" ? "season2" : "patchNotes",
+    verifiedAt: update.date, sourceUrl: update.sources[0], build: "",
+    current: false, sourceClass: update.sourceClass,
+    editorialPriority: update.titleKey === "devlogPreviewOctober8" ? 30 : update.titleKey === "creatorGuidesOctober8" ? 20 : update.titleKey === "contestClosedOctober9" ? 10 : 0
   })));
   return resolveHomeLiveIntel(candidates);
 }

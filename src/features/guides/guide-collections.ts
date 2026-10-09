@@ -2,11 +2,11 @@ import type {GuideSummary} from "@/content/guides";
 import type {Locale} from "@/config/site";
 
 export const GUIDE_COLLECTIONS = [
-  {key: "start", slugs: ["wardogs-beginner-guide", "wardogs-money-guide", "wardogs-controls", "wardogs-squad-guide", "wardogs-community-servers-guide"]},
+  {key: "start", slugs: ["wardogs-beginner-guide", "wardogs-solo-guide", "wardogs-money-guide", "wardogs-controls", "wardogs-squad-guide", "wardogs-low-level-servers", "wardogs-community-servers-guide"]},
   {key: "combat", slugs: ["wardogs-best-weapons-loadouts", "wardogs-mortar-guide", "wardogs-artillery-guide", "wardogs-ammo-reload-guide", "wardogs-infantry-mode", "wardogs-best-settings"]},
   {key: "logistics", slugs: ["wardogs-map", "wardogs-fob-guide", "wardogs-towers-guide", "wardogs-cargo-guide", "wardogs-helicopter-guide", "wardogs-equipment-tools-guide"]},
-  {key: "progression", slugs: ["wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-patch-notes"]},
-  {key: "fixes", slugs: ["wardogs-crash-fix", "wardogs-known-issues", "wardogs-server-status", "wardogs-system-requirements", "wardogs-linux-proton"]},
+  {key: "progression", slugs: ["wardogs-season-2", "wardogs-progression-wipes-guide", "wardogs-what-to-buy-before-wipe", "wardogs-launch-checklist", "wardogs-patch-notes"]},
+  {key: "fixes", slugs: ["wardogs-crash-fix", "wardogs-known-issues", "wardogs-server-status", "wardogs-report-player", "wardogs-system-requirements", "wardogs-linux-proton"]},
   {key: "reference", slugs: []}
 ] as const;
 

@@ -13,7 +13,8 @@ import {
   searchSiteIndex,
   type SiteSearchEntry
 } from "../../src/features/search/site-search-index";
-import {currentVideoSources} from "../../src/features/videos/video-library";
+import {currentVideoSources, videoArticles} from "../../src/features/videos/video-library";
+import {videoCandidates} from "../../src/features/videos/video-candidates";
 
 const fixture = (overrides: Partial<SiteSearchEntry>): SiteSearchEntry => ({
   id: "guide:fixture",
@@ -48,9 +49,9 @@ describe("site search index", () => {
 
     expect(new Set(index.map((entry) => entry.type))).toEqual(new Set(["guide", "item", "video", "tool", "map"]));
     expect(counts).toEqual({
-      guides: guides.length,
-      items: indexableItems.length,
-      videos: currentVideoSources.length,
+      guides: guides.length + 2,
+      items: indexableItems.length + buildNavigation((key) => key).flatMap((group) => group.items).filter(({searchType}) => searchType === "item").length,
+      videos: new Set([...currentVideoSources, ...videoArticles, ...videoCandidates].map(({youtubeId}) => youtubeId)).size + 1,
       tools: toolHrefs.size,
       maps: mapHrefs.size
     });
@@ -71,7 +72,8 @@ describe("site search index", () => {
 
     expect(gated).toBeDefined();
     expect(index.some((entry) => entry.href === `/items/${gated!.type}/${gated!.slug}`)).toBe(false);
-    expect(index.filter((entry) => entry.type === "item").every((entry) => /^\/items\/[^/]+\/[^/]+$/.test(entry.href))).toBe(true);
+    const publicHubs = new Set(buildNavigation((key) => key).flatMap((group) => group.items).filter(({searchType}) => searchType === "item").map(({href}) => href));
+    expect(index.filter((entry) => entry.type === "item").every((entry) => publicHubs.has(entry.href) || /^\/items\/[^/]+\/[^/]+$/.test(entry.href))).toBe(true);
   });
 
   it("ranks exact aliases before prefixes and broad token matches", () => {

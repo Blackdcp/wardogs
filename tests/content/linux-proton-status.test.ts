@@ -3,7 +3,7 @@ import {loadGuideDocument} from "../../src/content/guides";
 import {guideManifest} from "../../src/content/manifest";
 import {TOP_GUIDE_SLUGS} from "../../src/features/home/home-traffic-assets";
 
-const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn"] as const;
+const locales = ["en", "de", "ru", "pt-br", "ja", "zh-cn", "zh-tw", "pl"] as const;
 const slug = "wardogs-linux-proton";
 const officialLinuxStatusUrl = "https://steamcommunity.com/app/1867240/discussions/0/588436698284962639";
 
@@ -24,7 +24,7 @@ describe("WARDOGS Linux and Proton status", () => {
       expect(guide?.frontmatter.sources).toContainEqual(expect.objectContaining({
         url: officialLinuxStatusUrl,
         kind: "official",
-        checkedAt: "2026-09-26"
+        checkedAt: "2026-10-09"
       }));
       expect(guide?.body, locale).toContain("2026-09-25");
       expect(guide?.frontmatter.faq.length, locale).toBeGreaterThanOrEqual(3);

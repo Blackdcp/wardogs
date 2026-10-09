@@ -5,7 +5,7 @@ keyword: "wardogs linux proton"
 category: "guide"
 slug: "wardogs-linux-proton"
 order: 48
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-09"
 badges:
   - label: "Linux nicht unterstützt"
     tone: "warning"
@@ -24,20 +24,35 @@ sources:
   - label: "Offizielles WARDOGS Linux-Kompatibilitätsupdate"
     url: "https://steamcommunity.com/app/1867240/discussions/0/588436698284962639"
     kind: "official"
-    checkedAt: "2026-09-26"
+    checkedAt: "2026-10-09"
   - label: "WARDOGS auf Steam"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
     checkedAt: "2026-09-05"
+  - label: "Linux-Support-Diskussion der Community; keine Supportzusage"
+    url: "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1551967453574332556"
+    kind: "community"
+    checkedAt: "2026-10-09"
 ---
 
 {/* compatibility-matrix */}
 ## Anforderungen an einen Kompatibilitätsbericht
-Für dieses Update wurden keine neuen erfolgreichen oder gescheiterten Linux-/Steam-Deck-Tests reproduziert. Die [Entwicklerposition vom 25. September](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639) liefert keine unterstützte Proton-Version oder Frist.
 
-Testdatum, Retail-Build, Betriebssystem/Distribution und Kernel, GPU/Treiber, Proton-Version und Startänderungen erfassen. Prozessstart, Menü, Serverbeitritt, vollständiges Match und Wiederverbindung getrennt bewerten. Menüzugang beweist keinen Multiplayer; ein Match keine offizielle Unterstützung.
+{/* linux-diagnostic-flow */}
 
-Fehlversuche mit denselben Feldern und exakter Meldung behalten. Keine leeren Tabellen mit angenommenem Erfolg füllen, keine Beta-Ergebnisse auf Retail übertragen. Keine Anti-Cheat-Umgehung, Dateiersetzung oder ungeprüften Befehle.
+**Am 2026-10-09 erneut geprüft:** Es gilt weiterhin die offizielle Aussage vom 2026-09-25, ohne unterstützte Proton-Version oder Termin. Die [Diskussion zu Linux Support](https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1551967453574332556) enthält Wünsche und Einzelerfahrungen, keine neue offizielle Kompatibilitätszusage. Für diesen Stand haben wir keinen aktuellen Linux- oder Steam-Deck-Erfolg beziehungsweise Fehler selbst reproduziert.
+
+| Schritt | Prüfen und festhalten | Aussagekraft |
+| --- | --- | --- |
+| Natives Linux | Prüfe, ob die offizielle Veröffentlichung tatsächlich einen nativen Client nennt. | Ein Windows-Client unter Proton bedeutet keine native Linux-Unterstützung. |
+| Proton-Start | Halte genaue Proton-Version und Startoptionen fest; trenne Prozessstart und geöffnetes Menü. Sichere bei einem Abbruch die genaue Fehlermeldung. | Das Menü belegt nur diesen Startschritt auf dieser Konfiguration. |
+| Anti-Cheat und Mehrspieler | Prüfe [Servermeldungen](/de/guides/wardogs-server-status), dann getrennt Beitritt, vollständiges Match und Wiederverbindung. Erfasse Anti-Cheat- und Verbindungsfehler separat. | Ein Fehlschlag beweist allein weder ein Proton-Problem noch Anti-Cheat als Ursache oder eine Serverstörung. Prüfungen nicht umgehen. |
+| Steam Deck | Notiere SteamOS-Version, Eingabebelegung, Auflösung und Grafikoptionen; prüfe Steuerung und anhaltende Match-Leistung separat. | Start und Controller-Nutzung belegen weder Playable/Verified noch ausreichende Leistung. |
+
+1. Sichere einen Ausgangsstand: Datum/Uhrzeit, Spielbuild, Distribution/OS und Kernel, GPU und Treiber, Proton-Version, Startoptionen, exakter Fehler und letzter erfolgreicher Schritt. Bewahre passende Logs auf; entferne Kontodaten und private Pfade vor dem Veröffentlichen.
+2. Ändere jeweils eine Einstellung und wiederhole denselben Schritt. Ein Einzelbericht über Besserung durch DLSS oder Kantenglättung ist keine allgemeine Linux-Lösung; dokumentiere Einstellungen und Ergebnis vorher/nachher.
+3. Prüfe nach einem Hotfix, dass alle Vergleiche denselben **neuen Spielbuild** verwenden. Bewahre den Fehlerbericht des alten Builds auf und wiederhole Start, Beitritt, Match und Wiederverbindung. Ein Beta-Erfolg ist kein Ergebnis der Verkaufsversion.
+4. Bei WD-L020 gehören Fehlercode und OS in den Bericht. Windows-Updateschritte unter [bekannten Problemen](/de/guides/wardogs-known-issues) sind keine Linux-Anleitung. Die Supportfrage bleibt von einer Windows-Reparatur getrennt; hier gibt es keine Umgehungsbefehle oder Ersatzdateien.
 
 ## Kompatibilitätsmatrix
 
@@ -107,7 +122,7 @@ Behandle ihn nicht als Support und umgehe keinen Anti-Cheat oder Spielschutz. Wa
 
 Prüfdaten gelten einzeln für die unten aufgeführten Quellen, nicht für den ganzen Artikel. Das Inhaltsdatum bestätigt nicht jeden Fakt. Frühere datierte Notizen behalten ihren damaligen Belegumfang und sind kein Test des heutigen Clients oder Serverstatus.
 
-Die ursprüngliche Linux-Aussage und die Ergänzung vom 2026-09-25 wurden am 2026-09-26 im [angehefteten Steam-Beitrag des Entwicklers](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639) geprüft. Die Ergänzung nennt weder einen Kompatibilitätstermin noch einen Zeitplan. Der Steam Store bleibt die Quelle für die Windows-PC-Plattform und einen möglichen künftigen Steam-Deck-Status.
+Die ursprüngliche Linux-Aussage und die Ergänzung vom 2026-09-25 wurden am 2026-10-09 im [angehefteten Steam-Beitrag des Entwicklers](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639) geprüft. Die Ergänzung nennt weder einen Kompatibilitätstermin noch einen Zeitplan. Der Steam Store bleibt die Quelle für die Windows-PC-Plattform und einen möglichen künftigen Steam-Deck-Status.
 
 ## Verwandte Guides
 

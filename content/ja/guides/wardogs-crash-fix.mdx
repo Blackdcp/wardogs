@@ -1,61 +1,100 @@
 ---
-title: "WARDOGS クラッシュ対策ガイド：起動失敗、PC再起動、カクつき"
-description: "WARDOGSが起動しない時のWD-L014・WD-L018の対応状況と、0.1.2で修正されたWindows更新KB5124010によるWD-L020を切り分けます。Steamファイル、GPU、Elytraを安全な順に確認し、認証エラー、待機列、フリーズ、PC再起動を区別して、ビルドと症状を報告する手順を説明します。"
-keyword: "wardogs crash fix"
-category: "guide"
-slug: "wardogs-crash-fix"
+title: WARDOGS クラッシュ対策ガイド：起動失敗、PC再起動、カクつき
+description: >-
+  WARDOGSが起動しない時のWD-L014・WD-L018の対応状況と、0.1.2で修正されたWindows更新KB5124010によるWD-L020を切り分けます。Steamファイル、GPU、Elytraを安全な順に確認し、認証エラー、待機列、フリーズ、PC再起動を区別して、ビルドと症状を報告する手順を説明します。
+keyword: wardogs crash fix
+category: guide
+slug: wardogs-crash-fix
 order: 25
-updatedAt: "2026-10-05"
+updatedAt: '2026-10-09'
 badges:
-  - label: "トラブル対策"
-    tone: "accent"
-  - label: "ビルド依存"
-    tone: "warning"
+  - label: トラブル対策
+    tone: accent
+  - label: ビルド依存
+    tone: warning
 faq:
-  - question: "WARDOGSのログイン待機列はクラッシュですか？"
-    answer: "いいえ。更新するキューや容量メッセージはアクセス待ちで、プロセス終了、永続フリーズ、エラー、PC再起動とは別です。"
-  - question: "初回起動はどのくらい待つべきですか？"
-    answer: "応答がありシェーダーやファイル準備中なら、一度完了させます。時間はハードウェアとビルドで異なります。"
-  - question: "最初に試すクラッシュ対策は何ですか？"
-    answer: "Windows再起動、Steam整合性確認、安定GPUドライバー、Overlay停止、定格設定、軽いプリセットを一項目ずつ試します。"
-  - question: "Windows KB5121003はWARDOGSの不具合を証明しますか？"
-    answer: "いいえ。一部ゲームとRGB関連部品の一般的問題を説明しますが、記事はWARDOGSを名指ししていません。"
-  - question: "WARDOGSが起動できないとき、最初に何を確認しますか？"
-    answer: "SteamのWARDOGS本体が更新済みか、止まる段階と正確なエラーコードを確認します。その後、Windows再起動とSteamのファイル整合性確認を一つずつ試します。待機列や認証失敗ならサービス状況も確認し、アプリ終了と区別してください。"
+  - question: WARDOGSのログイン待機列はクラッシュですか？
+    answer: いいえ。更新するキューや容量メッセージはアクセス待ちで、プロセス終了、永続フリーズ、エラー、PC再起動とは別です。
+  - question: 初回起動はどのくらい待つべきですか？
+    answer: 応答がありシェーダーやファイル準備中なら、一度完了させます。時間はハードウェアとビルドで異なります。
+  - question: 最初に試すクラッシュ対策は何ですか？
+    answer: Windows再起動、Steam整合性確認、安定GPUドライバー、Overlay停止、定格設定、軽いプリセットを一項目ずつ試します。
+  - question: Windows KB5121003はWARDOGSの不具合を証明しますか？
+    answer: いいえ。一部ゲームとRGB関連部品の一般的問題を説明しますが、記事はWARDOGSを名指ししていません。
+  - question: WARDOGSが起動できないとき、最初に何を確認しますか？
+    answer: >-
+      SteamのWARDOGS本体が更新済みか、止まる段階と正確なエラーコードを確認します。その後、Windows再起動とSteamのファイル整合性確認を一つずつ試します。待機列や認証失敗ならサービス状況も確認し、アプリ終了と区別してください。
 sources:
-  - label: "Team17：起動時のWD-L020"
-    url: "https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/"
-    kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "Microsoft：KB5124010プレビュー更新"
-    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update"
-    kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "WARDOGS Steam公式ページ"
-    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
-    kind: "official"
-    checkedAt: "2026-08-25"
-  - label: "Microsoft Windows KB5121003"
-    url: "https://support.microsoft.com/en-us/servicing/os/windows-11/2026/08/kb5121003-windows-11-24h2-25h2-security-update"
-    kind: "official"
-    checkedAt: "2026-08-25"
-  - label: "WARDOGS Closed Beta 02公式告知"
-    url: "https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807"
-    kind: "official"
-    checkedAt: "2026-09-04"
-  - label: "Closed Beta 02サーバー時間の公式訂正"
-    url: "https://x.com/BULKHEAD/status/2095447401725153576"
-    kind: "official"
-    checkedAt: "2026-09-04"
-  - label: "公式Update 0.1.2"
-    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
-    kind: "official"
-    checkedAt: "2026-10-03"
-  - label: "開発者：WD-L014・WD-L018の起動問題"
-    url: "https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/"
-    kind: "official"
-    checkedAt: "2026-10-03"
+  - label: Team17：起動時のWD-L020
+    url: 'https://steamcommunity.com/app/1867240/discussions/3/585060903246925093/'
+    kind: official
+    checkedAt: '2026-09-30'
+  - label: Microsoft：KB5124010プレビュー更新
+    url: >-
+      https://support.microsoft.com/en-us/servicing/os/windows-11/2026/09/kb5124010-windows-11-24h2-25h2-update
+    kind: official
+    checkedAt: '2026-09-30'
+  - label: WARDOGS Steam公式ページ
+    url: 'https://store.steampowered.com/app/1867240/WARDOGS/'
+    kind: official
+    checkedAt: '2026-08-25'
+  - label: Microsoft Windows KB5121003
+    url: >-
+      https://support.microsoft.com/en-us/servicing/os/windows-11/2026/08/kb5121003-windows-11-24h2-25h2-security-update
+    kind: official
+    checkedAt: '2026-08-25'
+  - label: WARDOGS Closed Beta 02公式告知
+    url: >-
+      https://steamcommunity.com/ogg/1867240/announcements/detail/671752657526850807
+    kind: official
+    checkedAt: '2026-09-04'
+  - label: Closed Beta 02サーバー時間の公式訂正
+    url: 'https://x.com/BULKHEAD/status/2095447401725153576'
+    kind: official
+    checkedAt: '2026-09-04'
+  - label: 公式Update 0.1.2
+    url: 'https://store.steampowered.com/news/app/1867240/view/712287592723252267'
+    kind: official
+    checkedAt: '2026-10-03'
+  - label: 開発者：WD-L014・WD-L018の起動問題
+    url: 'https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/'
+    kind: official
+    checkedAt: '2026-10-03'
+  - label: フリーズとクラッシュの議論
+    url: >-
+      https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 性能問題の報告
+    url: >-
+      https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 公式サポート案内
+    url: >-
+      https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846
+    kind: official
+    checkedAt: '2026-10-09'
+  - label: Team17 Support
+    url: 'https://support.team17.com/en'
+    kind: official
+    checkedAt: '2026-10-09'
 ---
+## 長いフリーズ後の終了・長時間プレイ後のクラッシュ
+
+コミュニティにはフリーズ後の終了、長いセッション後のクラッシュ、終了後もプロセスが残る報告があります。症状の記録であり、メモリリークや特定ドライバーが原因という証明ではありません。単発の長いフレーム、切断、アプリ終了、PC全体の再起動を区別します。
+
+発生までの時間、版、サーバー・地域、地点、操作、エラーを記録します。終了し報告処理も完了したら、二重起動の前にタスクマネージャーを確認します。無応答プロセスを終了する前に他の作業を保存してください。レポートやdumpは公式窓口へ非公開で送り、機器・アカウント情報を含む可能性のある原本を公開掲示板に直接貼らないでください。
+
+同じルートと近い時間で設定を一つだけ変え、元の値を残します。一人の診断で保護機能削除や全ドライバー巻き戻しは行いません。[前後比較テンプレート](/ja/guides/wardogs-best-settings)を使い、WD起動コードは個別の手順で確認します。
+
+メモリに余裕がある場合やTAA使用中でもクラッシュする報告があります。FSR無効化や96 GBのページファイルは検証済みの万能修復ではありません。再現性のある診断や公式の具体的指示がなければシステム管理を維持し、個別体験からBIOS変更をコピーしないでください。
+
+## 公式サポートの窓口を選ぶ
+
+公式サポート案内は9月10日公開、9月23日編集で、10月9日に確認しました。公式Discordの **@WARDOGS Support bot** が技術的な問題、プレイヤー通報、ゲームBANの異議申し立て手順を案内します。技術的な問題は [Team17 Support](https://support.team17.com/en) からも相談できます。通報には映像、画像、名前、試合情報を準備します。
+
+提案は開発者へのフィードバック欄（現在は feedback）へ送りますが、採用は保証されません。**DiscordのBANはDiscordモデレーターの担当で、Player Supportでは解除できません。** 永久ゲームBANのメール窓口と、コミュニティサーバー管理者による制限も別です。
 
 ## WD-L020とログイン停止を切り分ける
 [9月30日のUpdate 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267)は、Windows 11 KB5124010によるWD-L020の修正を明記しています。旧プレビュー更新のロールバックより先にSteam本体アプリを更新し、ファイルを確認してください。この原因に対する修正であり、別原因のWD-L020、他のコード、フリーズ、PC全体の再起動は個別の診断が必要です。
@@ -149,3 +188,13 @@ Update 0.1.2の確認日は **2026-10-03** です。パッチ記録はライブ�
 - [WARDOGSシステム要件](/ja/guides/wardogs-system-requirements)
 - [WARDOGS操作ガイド](/ja/guides/wardogs-controls)
 - [WARDOGS Steam](/ja/guides/wardogs-steam)
+
+
+## 情報源と確認日
+
+確認日は下記の各情報源に個別に適用され、記事全体の検証日ではありません。
+
+- [フリーズとクラッシュの議論](https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070) — 2026-10-09
+- [性能問題の報告](https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/) — 2026-10-09
+- [公式サポート案内](https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846) — 2026-10-09
+- [Team17 Support](https://support.team17.com/en) — 2026-10-09

@@ -1,4 +1,5 @@
-export type CaptionReview = "full-track-read" | "excerpts-read" | "unavailable";
+import {recentVideos} from "./recent-video-data";
+export type CaptionReview = "full-track-read" | "excerpts-read" | "unavailable" | "not-reviewed";
 export type EvidenceCaution = "wipe-estimate" | "floating-roof" | "input-overlay";
 
 export interface CandidateEvidence {
@@ -12,6 +13,7 @@ export const CANDIDATE_EVIDENCE_CHECKED_AT = "2026-09-30";
 // Caption text and sampled YouTube frames are not audio validation or client reproduction.
 // Full exported caption tracks remain outside the repository.
 export const videoCandidateEvidence: Readonly<Record<string, CandidateEvidence>> = {
+  ...Object.fromEntries(recentVideos.filter(video => !video.articleSlug).map(video => [video.id, {captionReview: "not-reviewed" as const, footage: []}])) ,
   BIvKEmXlw78: {captionReview: "full-track-read", footage: [{seconds: 83, scope: "sample"}]},
   YIJ9EE8wflk: {captionReview: "excerpts-read", footage: [{seconds: 22, scope: "intro"}]},
   LfDuaJXN_g0: {captionReview: "full-track-read", footage: [{seconds: 122, scope: "sample"}]},

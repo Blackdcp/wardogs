@@ -110,7 +110,22 @@ test("Japanese homepage preserves its frozen six guide destinations", async ({pa
   for (const slug of ["wardogs-infantry-mode", "wardogs-squad-guide", "wardogs-mortar-guide", "wardogs-towers-guide", "wardogs-best-weapons-loadouts", "wardogs-cargo-guide"]) {
     await expect(demand.locator(`a[href='/ja/guides/${slug}'][data-home-task][data-home-placement='proven-demand']`)).toHaveCount(1);
   }
+  await expect(demand.locator('[data-home-demand-handoffs] a')).toHaveAttribute("href", "/ja/guides/wardogs-progression-wipes-guide");
 });
+
+for (const locale of ["ru", "de", "zh-tw"]) {
+  test(`${locale} keeps Gold Market demand reachable without replacing the six cards`, async ({page}) => {
+    await page.setViewportSize({width: 390, height: 844});
+    await page.goto(`/${locale}`);
+    const demand = page.locator('[data-home-section="proven-demand"]');
+    await expect(demand.locator('[data-protected-demand]')).toHaveCount(6);
+    const gold = demand.locator('[data-home-demand-handoffs] a');
+    await expect(gold).toHaveAttribute("href", `/${locale}/gold-market`);
+    await expect(gold).toHaveAttribute("data-home-task", "money");
+    await expect(gold).toHaveAttribute("data-home-placement", "proven-demand");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
+  });
+}
 
 test("guide hub anchors lead to complete task collections", async ({page}) => {
   await page.goto("/en/guides");

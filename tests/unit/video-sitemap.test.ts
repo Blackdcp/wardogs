@@ -43,7 +43,7 @@ describe("video sitemap", () => {
         expect(block, location).toBeDefined();
         expect(block, location).toContain(`<video:thumbnail_loc>https://i.ytimg.com/vi/${article.youtubeId}/hqdefault.jpg</video:thumbnail_loc>`);
         expect(block, location).toContain(`<video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/${article.youtubeId}</video:player_loc>`);
-        expect(block, location).toContain(`<video:publication_date>${article.publishedDate}T00:00:00+00:00</video:publication_date>`);
+        expect(block, location).toContain(`<video:publication_date>${article.publishedAt ?? `${article.publishedDate}T00:00:00+00:00`}</video:publication_date>`);
       }
     }
   });

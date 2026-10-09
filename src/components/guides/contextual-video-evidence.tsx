@@ -3,6 +3,9 @@ import type {Locale} from "@/config/site";
 import {VideoThumbnailImage} from "@/components/videos/video-thumbnail-image";
 import {currentVideoAnchorId, type CurrentVideoSource} from "@/features/videos/video-library";
 import {getContextualVideoUi} from "@/features/videos/video-localization";
+import {recentVideoCopy} from "@/features/videos/recent-video-copy";
+import {recentVideoUi} from "@/features/videos/recent-video-data";
+import {publicRoutePath} from "@/lib/public-url";
 import {formatLocalizedDate} from "@/lib/localized-date";
 
 export function ContextualVideoEvidence({locale, sources}: {locale: Locale; sources: readonly CurrentVideoSource[]}) {
@@ -20,22 +23,22 @@ export function ContextualVideoEvidence({locale, sources}: {locale: Locale; sour
       <div className="mt-5 grid gap-4 md:grid-cols-2">
         {sources.map((source, index) => (
           <article className="min-w-0 overflow-hidden border border-[#354039] bg-[#111512]" key={source.youtubeId}>
-            <a className="group block" href={source.sourceUrl} rel="noreferrer" target="_blank" title={`${source.title} - ${source.channel}`}>
+            <a className="group block" href={source.articleSlug ? publicRoutePath(`/${locale}/videos/${source.articleSlug}`) : source.sourceUrl} rel={source.articleSlug ? undefined : "noreferrer"} target={source.articleSlug ? undefined : "_blank"} title={`${source.title} - ${source.channel}`}>
               <span className="relative block aspect-video overflow-hidden border-b border-[#2c3631] bg-[#0d100e]">
                 <VideoThumbnailImage alt={`${source.title} ${ui.thumbnail}`} eager={index === 0} youtubeId={source.youtubeId} />
                 <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 border border-[#68bd8d]/40 bg-[#111512]/90 px-2 py-1 text-[11px] font-semibold uppercase text-[#79d19c]">
                   <CheckCircle2 aria-hidden="true" className="size-3" />
-                  {ui.buildLabel}
+                  {source.articleSlug ? recentVideoUi[locale].current : ui.buildLabel}
                 </span>
               </span>
               <span className="block min-w-0 p-4" style={{overflowWrap: "anywhere"}}>
                 <span className="block text-xs font-semibold uppercase text-[#d9a93a]">{source.channel}</span>
-                <span className="mt-2 block text-base font-semibold leading-6 text-white">{source.title}</span>
+                <span className="mt-2 block text-base font-semibold leading-6 text-white">{recentVideoCopy[source.youtubeId]?.[locale].title ?? source.title}</span>
                 <span className="mt-4 grid gap-2 text-xs text-[#8b9992] sm:grid-cols-2">
                   <span className="inline-flex min-w-0 items-start gap-1.5"><CalendarDays aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{ui.published} <time dateTime={source.publishedDate}>{formatLocalizedDate(source.publishedDate, locale)}</time></span></span>
                   <span className="inline-flex min-w-0 items-start gap-1.5"><CheckCircle2 aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" /><span>{ui.reviewed} <time dateTime={source.reviewedAt}>{formatLocalizedDate(source.reviewedAt, locale)}</time></span></span>
                 </span>
-                <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">{ui.youtubeSource}<ExternalLink aria-hidden="true" className="size-4" /></span>
+                <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#79d19c]">{source.articleSlug ? recentVideoUi[locale].chapters : ui.youtubeSource}<ExternalLink aria-hidden="true" className="size-4" /></span>
               </span>
             </a>
             <a className="flex min-h-11 items-center justify-between gap-3 border-t border-[#2c3631] px-4 py-3 text-xs font-semibold uppercase text-[#b8c3bd] hover:bg-[#1b241f] hover:text-white" href={`/${locale}/videos#${currentVideoAnchorId(source.youtubeId)}`} title={ui.videoHub}>

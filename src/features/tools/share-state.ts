@@ -1,5 +1,6 @@
 import {inspectToolState, isToolShareWithinLimit, purchaseLinesSchema, readJsonParam, stampToolState, supplyPlanSchema, type PurchaseLine, type SupplyPlan} from "./workflow-state";
 import {combatScenarioSchema, type CombatScenario} from "./combat-scenario";
+import {attachmentObservationSchema, type AttachmentObservation} from "./attachment-observation";
 
 export type HardwareTier = "below" | "minimum" | "recommended" | "unknown";
 export type WindowsVersion = "windows-10" | "windows-11" | "unsupported";
@@ -21,6 +22,7 @@ export type BudgetState = {
   mode?: "total" | "items";
   lines?: PurchaseLine[];
   buildLabel?: string;
+  attachmentTest?: AttachmentObservation;
 };
 
 export type WeaponCompareState = {
@@ -147,6 +149,7 @@ export function encodeBudgetState(state: BudgetState, dataVersion?: string) {
   if (state.mode) params.set("mode", state.mode);
   if (state.lines) params.set("lines", JSON.stringify(state.lines));
   if (state.buildLabel !== undefined) params.set("build", state.buildLabel);
+  if (state.attachmentTest) params.set("attachmentTest", JSON.stringify(state.attachmentTest));
   return stampToolState(params, dataVersion);
 }
 
@@ -159,6 +162,11 @@ export function decodeBudgetState(value: string): BudgetState | null {
   const reserve = readMoneyParam(params, "reserve");
   if (cash === null || loadout === null || vehicle === null || reserve === null) return null;
   const state: BudgetState = {cash, loadout, vehicle, reserve};
+  if (params.has("attachmentTest")) {
+    const observation = readJsonParam(params, "attachmentTest", attachmentObservationSchema);
+    if (!observation) return null;
+    state.attachmentTest = observation;
+  }
   if (params.has("build")) {
     const build = params.getAll("build");
     if (build.length !== 1 || build[0].length > 80) return null;

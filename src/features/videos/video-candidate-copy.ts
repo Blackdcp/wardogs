@@ -1,3 +1,4 @@
+import {recentVideoUi} from "./recent-video-data";
 import type {Locale} from "@/config/site";
 import type {CandidateCaution} from "./video-candidates";
 import type {CaptionReview, EvidenceCaution} from "./video-candidate-evidence";
@@ -18,7 +19,7 @@ const copy: Record<Locale, Copy> = {
 type ReviewCopy = {
   summary: string;
   reviewed: string;
-  captions: Record<CaptionReview, string>;
+  captions: Record<Exclude<CaptionReview, "not-reviewed">, string>;
   footage: string;
   intro: string;
   noFootage: string;
@@ -75,5 +76,16 @@ const reviewCopy: Record<Locale, ReviewCopy> = {
 export function getVideoCandidateCopy(locale: string): Copy & ReviewCopy {
   // Follow-up evidence replaces the earlier metadata-only summary in every locale.
   const supportedLocale = locale as Locale;
-  return {...(copy[supportedLocale] ?? copy.en), ...(reviewCopy[supportedLocale] ?? reviewCopy.en)};
+  const result = {...(copy[supportedLocale] ?? copy.en), ...(reviewCopy[supportedLocale] ?? reviewCopy.en)};
+  const summaries: Record<Locale, string> = {
+    en: "Each entry has its own publication date, check date and review scope. Automatic captions are not independently checked against the audio. Caption reading and sampled frames are listed separately; neither proves current-client reproduction or an official game rule.",
+    de: "Jeder Eintrag zeigt Veröffentlichungsdatum, Prüfdatum und Prüfumfang. Untertitel und gesichtete Bilder sind getrennt angegeben; beides belegt weder die Nachstellung im aktuellen Spiel noch eine offizielle Regel.",
+    ru: "У каждой записи указаны дата публикации, дата проверки и её объём. Чтение субтитров отделено от просмотра кадров; ни то ни другое не подтверждает воспроизведение в текущей игре или официальное правило.",
+    "pt-br": "Cada vídeo tem data de publicação, conferência e escopo da revisão. Leitura das legendas e inspeção de imagens aparecem separadamente; nenhuma delas comprova reprodução no jogo atual ou uma regra oficial.",
+    ja: "各動画に公開日・確認日・確認範囲を表示しています。字幕の読解と画面の部分確認は別記しており、現在のゲームでの再現や公式ルールの証明にはなりません。",
+    "zh-cn": "每条分别标注发布日期、核验日期和审阅范围。字幕阅读与画面抽查分别列出；两者都不等于当前客户端复现或官方规则。",
+    "zh-tw": "每則分別標示發布日期、查核日期和檢視範圍。字幕閱讀與畫面抽查分開列出；兩者都不等於目前遊戲版本的重現驗證或官方規則。",
+    pl: "Każdy wpis ma własną datę publikacji, kontroli i zakres przeglądu. Czytanie napisów i oglądanie wybranych klatek są rozdzielone; nie dowodzą odtworzenia w aktualnej grze ani oficjalnej zasady."
+  };
+  return {...result, summary: summaries[supportedLocale] ?? summaries.en, title: (recentVideoUi[supportedLocale] ?? recentVideoUi.en).title};
 }

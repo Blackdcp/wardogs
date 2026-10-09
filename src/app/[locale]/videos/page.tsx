@@ -16,6 +16,7 @@ import {getTranslations} from "next-intl/server";
 import {AdsterraDisplayBanner, AdsterraSupplementalBanner} from "@/components/ads/adsterra-display-banner";
 import {AdsterraNativeBanner} from "@/components/ads/adsterra-native-banner";
 import {AdsterraSmartlink} from "@/components/ads/adsterra-smartlink";
+import {recentVideoUi} from "@/features/videos/recent-video-data";
 import {ReleaseImpactPanel} from "@/components/releases/release-impact-panel";
 
 type PageProps = {params: Promise<{locale: string}>};
@@ -56,6 +57,11 @@ export default async function VideosPage({params}: PageProps) {
     <main>
       <HubHeader eyebrow={ui.eyebrow} title={ui.hubTitle} description={ui.hubDescription(videoArticles.length)} />
       <div className="site-container"><ReleaseImpactPanel locale={locale} path="/videos" /></div>
+      <section className="site-container py-10" aria-labelledby="recent-video-title">
+        <h2 id="recent-video-title" className="display-font text-3xl text-white">{recentVideoUi[locale].title}</h2>
+        <p className="mt-3 text-xs text-[#a8b4ae]">{recentVideoUi[locale].timezone}</p>
+        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">{sortedArticles.filter(article => article.captionReview).map(article => <VideoArticleCard article={article} locale={locale} key={article.slug} />)}</div>
+      </section>
       <VideoCandidateList locale={locale} />
       <section className="border-b border-[#2c3631] bg-[#151b18]">
         <div className="site-container py-12 md:py-16">
@@ -69,7 +75,7 @@ export default async function VideosPage({params}: PageProps) {
       <section className="site-container py-12 md:py-16">
         <SectionHeading eyebrow={`${ui.betaWorkflow} / ${ui.historicalReference}`} title={ui.allVideos} />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {sortedArticles.map((article, index) => (
+          {sortedArticles.filter(article => !article.captionReview).map((article, index) => (
             <Fragment key={article.slug}>
               <VideoArticleCard article={article} locale={locale} eager={index === 0} />
               {index === 8 && sortedArticles.length >= 12 ? <div className="md:col-span-2 xl:col-span-3" data-page-ad-inventory="videos"><AdsterraSupplementalBanner label={adsT("label")} /></div> : null}

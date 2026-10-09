@@ -2,6 +2,7 @@ import type {Locale} from "@/config/site";
 import {getLocalizedCatalogueRecords} from "@/features/catalogue/catalogue-localization";
 import {getCatalogueRecords} from "@/features/catalogue/catalogue-records";
 import type {CatalogueEvidence} from "@/features/catalogue/catalogue-types";
+import {getCreatorAttachmentRecords, type AttachmentKind} from "./attachment-recipes";
 
 export type CompatibilityItem = {
   slug: string;
@@ -11,7 +12,8 @@ export type CompatibilityItem = {
 };
 
 export type AttachmentCompatibility = CompatibilityItem & {
-  kind: "magazine" | "optic";
+  kind: AttachmentKind;
+  origin?: "creator";
   historicalSpecification: string | null;
   namedWeapons: readonly string[];
   currentFit: "unknown";
@@ -72,7 +74,7 @@ export function getCompatibilityDataset(locale: Locale): CompatibilityDataset {
   const weaponIds = new Set(weapons.map(({slug}) => slug));
   return {
     weapons: weapons.map((item) => ({slug: item.slug, name: translatedWeapons.get(item.slug)?.name ?? item.name})),
-    attachments: attachments.map((item) => {
+    attachments: [...attachments.map((item): AttachmentCompatibility => {
       const translated = translatedAttachments.get(item.slug) ?? item;
       return {
         slug: item.slug,
@@ -86,6 +88,9 @@ export function getCompatibilityDataset(locale: Locale): CompatibilityDataset {
         suppliedRounds: null,
         evidence: item.evidence,
       };
-    }),
+    }), ...getCreatorAttachmentRecords(locale).map((record): AttachmentCompatibility => ({
+      slug: record.slug, name: record.name, kind: record.kind, origin: "creator", historicalSpecification: null,
+      namedWeapons: record.weapons.filter((slug) => weaponIds.has(slug)), currentFit: "unknown", purchaseUnit: "unknown", suppliedRounds: null, evidence: record.evidence
+    }))],
   };
 }

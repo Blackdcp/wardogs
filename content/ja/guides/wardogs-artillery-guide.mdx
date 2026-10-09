@@ -1,42 +1,56 @@
 ---
-title: "WARDOGS 自走砲ガイド：SPH-2の照準・乗員・リロード"
-description: "WARDOGSの自走砲SPH-2を安全に運用する日本語攻略です。Season 1のCareer 90解除と$500,000価格、運転手・砲手・警戒役の分担、安定化、測距、155mm補給、手動リロード、初弾からの着弾修正、射撃後の移動まで解説し、公式Patch 0.11の数値と古いBeta映像の値を明確に区別します。"
-keyword: "wardogs artillery guide"
-category: "guide"
-slug: "wardogs-artillery-guide"
+title: WARDOGS 自走砲ガイド：SPH-2の照準・乗員・リロード
+description: >-
+  WARDOGSの自走砲SPH-2を安全に運用する日本語攻略です。Season 1のCareer
+  90解除と$500,000価格、運転手・砲手・警戒役の分担、安定化、測距、155mm補給、手動リロード、初弾からの着弾修正、射撃後の移動まで解説し、公式Patch
+  0.11の数値と古いBeta映像の値を明確に区別します。
+keyword: wardogs artillery guide
+category: guide
+slug: wardogs-artillery-guide
 order: 34
-updatedAt: "2026-10-03"
+updatedAt: '2026-10-09'
 badges:
-  - label: "実戦ガイド"
-    tone: "accent"
-  - label: "Season 1"
-    tone: "warning"
+  - label: 実戦ガイド
+    tone: accent
+  - label: Season 1
+    tone: warning
 faq:
-  - question: "WARDOGSのSPH-2はどう照準しますか？"
-    answer: "平らな場所で停止して砲を安定化し、マップのグリッドと座標で距離を見積もり、最初の着弾を見て次弾を修正します。"
-  - question: "SPH-2は1人で操作できますか？"
-    answer: "テスト版では座席を移れますが、運転中に射撃はできません。運転手、砲手、警戒役の3人が安全です。"
-  - question: "SPH-2はどの弾薬を使いますか？"
-    answer: "クローズドベータ映像では155mm榴弾が確認されています。名称、価格、搭載量は現在のビルドで確認してください。"
-  - question: "SPH-2の価格は確定していますか？"
-    answer: "公式Patch 0.11はSeason 1のArtillery Tank解除をCareer 90、キャリア購入額を$500,000へ変更したと記載しています。戦場での再購入費や弾薬費はライブUIも確認してください。"
+  - question: WARDOGSのSPH-2はどう照準しますか？
+    answer: 平らな場所で停止して砲を安定化し、マップのグリッドと座標で距離を見積もり、最初の着弾を見て次弾を修正します。
+  - question: SPH-2は1人で操作できますか？
+    answer: テスト版では座席を移れますが、運転中に射撃はできません。運転手、砲手、警戒役の3人が安全です。
+  - question: SPH-2はどの弾薬を使いますか？
+    answer: クローズドベータ映像では155mm榴弾が確認されています。名称、価格、搭載量は現在のビルドで確認してください。
+  - question: SPH-2の価格は確定していますか？
+    answer: >-
+      公式Patch 0.11はSeason 1のArtillery Tank解除をCareer
+      90、キャリア購入額を$500,000へ変更したと記載しています。戦場での再購入費や弾薬費はライブUIも確認してください。
 sources:
-  - label: "公式Patch 0.11：Artillery Tankの解除と経済変更"
-    url: "https://store.steampowered.com/news/app/1867240/view/701027323413005176"
-    kind: "official"
-    checkedAt: "2026-09-17"
-  - label: "SteamのWARDOGS公式ページ"
-    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
-    kind: "official"
-    checkedAt: "2026-08-28"
-  - label: "WARDOGS砲兵戦車の使い方"
-    url: "https://www.youtube.com/watch?v=oP9RelmWk6A"
-    kind: "creator"
-    checkedAt: "2026-08-28"
-  - label: "WARDOGS車両解説"
-    url: "https://www.youtube.com/watch?v=ZFRrDSru7Kg"
-    kind: "creator"
-    checkedAt: "2026-08-28"
+  - label: 公式Patch 0.11：Artillery Tankの解除と経済変更
+    url: 'https://store.steampowered.com/news/app/1867240/view/701027323413005176'
+    kind: official
+    checkedAt: '2026-09-17'
+  - label: SteamのWARDOGS公式ページ
+    url: 'https://store.steampowered.com/app/1867240/WARDOGS/'
+    kind: official
+    checkedAt: '2026-08-28'
+  - label: WARDOGS砲兵戦車の使い方
+    url: 'https://www.youtube.com/watch?v=oP9RelmWk6A'
+    kind: creator
+    checkedAt: '2026-08-28'
+  - label: WARDOGS車両解説
+    url: 'https://www.youtube.com/watch?v=ZFRrDSru7Kg'
+    kind: creator
+    checkedAt: '2026-08-28'
+  - label: Airwingmarine · IR Rangefinder
+    url: 'https://www.youtube.com/watch?v=j7hJXEXo5U8'
+    kind: creator
+    checkedAt: '2026-10-09'
+  - label: コミュニティ議論：ドローンの脅威
+    url: >-
+      https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1554980728284909688
+    kind: community
+    checkedAt: '2026-10-09'
 ---
 
 ## SPH-2の解放・購入・操作を分けて確認する
@@ -109,6 +123,16 @@ Career 90と$500,000はPatch 0.11で公式確認できます。戦場内の購�
 [火砲計算機](/ja/tools/artillery-calculator)でSPH-2を選び、高弾道か低弾道を指定します。選択によって解が変わり、L81の設定を流用できません。マップ入力では戦場を確認し、砲位置と目標位置の順番を間違えないでください。
 
 別に測った距離なら、校正済みの[マップ定規](/ja/tools/map)の水平メートル値、ゲーム内方位、確認した高低差を数値入力します。武器や弾道変更後は表示距離も再確認します。推定値は乗員、弾薬、安定化の条件を代替しません。試射の着弾から修正し、味方の位置が不明なら中止します。砲や目標を動かしたら再計算してください。
+## ドローン圧力下の観測・移動・射撃中止
+
+ゲーム音声を確認し、観測担当に脅威を伝えてもらい、射撃手順の合間に周囲を見ます。警告や対策にはプレイヤー間の異論があり、必ず無音の攻撃、あるいは車庫で必ず無敵になるとは扱いません。
+
+SPH-2展開前に退路を選び、航空機、ドローン、近接歩兵の警戒を分担します。弾道に集中する砲手は全方向を見続けられません。単独では任務を短くし、交換予算を残し、持続射撃の安全を前提にしないでください。
+
+新しい目標へ観測付き修正弾を使います。移動後は砲位置と目標確認を更新し、古い計算値を流用しません。IRマーク減少は砲が見えないという意味ではありません。観測不能、退路への脅威、ドローン接近なら旧射撃手順を止め、遮蔽下の撤退を評価します。
+
+煙幕やロック遅延の提案は実装済み対策ではありません。壁や動き方でドローン無効を保証しません。使える装備で連絡し、危険が仕事に見合わなければ離脱します。[IR解析](/ja/videos/wardogs-ir-rangefinder-hotfix)、[地図](/ja/tools/map)、[計算機](/ja/tools/artillery-calculator)は実地観測を代替しません。
+
 
 ## 関連ガイド
 

@@ -1,3 +1,4 @@
+import {getRecentVideoHubCopy} from "./recent-video-hub-copy";
 import type {Locale} from "@/config/site";
 
 type VideoUi = {
@@ -205,5 +206,5 @@ const copy: Record<Locale, VideoUi> = {
 };
 
 export function getVideoUi(locale: Locale) {
-  return copy[locale];
+  return {...copy[locale], ...getRecentVideoHubCopy(locale)};
 }

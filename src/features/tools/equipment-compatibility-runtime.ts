@@ -1,6 +1,6 @@
 import type {AttachmentCompatibility} from "./equipment-compatibility";
 
-export type CompatibilitySelection = {weapon: string; kind: "all" | "magazine" | "optic"; query: string; namedOnly: boolean};
+export type CompatibilitySelection = {weapon: string; kind: "all" | "magazine" | "optic" | "grip" | "muzzle"; query: string; namedOnly: boolean};
 export const defaultCompatibilitySelection: CompatibilitySelection = {weapon: "", kind: "all", query: "", namedOnly: false};
 
 export function decodeCompatibilitySelection(search: string, weaponIds: readonly string[]) {
@@ -8,10 +8,10 @@ export function decodeCompatibilitySelection(search: string, weaponIds: readonly
   const requestedWeapon = params.get("fitWeapon") ?? "";
   const requestedKind = params.get("fitKind") ?? "all";
   return {
-    invalid: Boolean(requestedWeapon && !weaponIds.includes(requestedWeapon)) || !["all", "magazine", "optic"].includes(requestedKind),
+    invalid: Boolean(requestedWeapon && !weaponIds.includes(requestedWeapon)) || !["all", "magazine", "optic", "grip", "muzzle"].includes(requestedKind),
     selection: {
       weapon: weaponIds.includes(requestedWeapon) ? requestedWeapon : "",
-      kind: requestedKind === "magazine" || requestedKind === "optic" ? requestedKind : "all",
+      kind: ["magazine", "optic", "grip", "muzzle"].includes(requestedKind) ? requestedKind : "all",
       query: (params.get("fitQuery") ?? "").slice(0, 120),
       namedOnly: params.get("fitNamed") === "1" && weaponIds.includes(requestedWeapon),
     } as CompatibilitySelection,

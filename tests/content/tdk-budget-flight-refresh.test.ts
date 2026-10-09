@@ -24,38 +24,90 @@ const tdkBaselines: Record<Locale, readonly string[]> = {
   pl: ["91d3041d9118684be86f664f432f3e030a16a177afa700e707e1e76f01fe03da", "d790d62cdbd47219a2221166eefd04fe151b58e8edb66fae4fbdbd2a61e11298", "a1e88bbd30b928354bea1cc7782ad838a5536e2a70b20b7447e683952d56292d"]
 };
 
+// Snapshot of pre-October-9 H2 text/order: new economic advice must not erase old anchors.
+const moneyHeadingProtection: Record<Locale, {legacyHash: string; newHeadings: string[]}> = {
+  "en": {
+    "legacyHash": "ee3077748d57064f3fa73d93d369c38b491efde8c93a0c6d78ecd2289c32c263",
+    "newHeadings": [
+      "## Is your infantry or transport route actually profitable?"
+    ]
+  },
+  "ru": {
+    "legacyHash": "9f3654a0ccc4db94bf018f9faa7e209e68cd0138eae3df9c810577a92e607ee7",
+    "newHeadings": [
+      "## Приносит ли пехота или перевозка чистую прибыль?"
+    ]
+  },
+  "de": {
+    "legacyHash": "9597f9ae337172ed2a8584ad88c4d2793c2316f76329833f6491d49b7faceb9e",
+    "newHeadings": [
+      "## Ist deine Infanterie- oder Transportroute wirklich rentabel?"
+    ]
+  },
+  "pt-br": {
+    "legacyHash": "6c9e244abf26a92c6fb218d12f393a3cadf1634c99af91178cb926d62e825c22",
+    "newHeadings": [
+      "## Sua rota de infantaria ou transporte dá lucro líquido?"
+    ]
+  },
+  "ja": {
+    "legacyHash": "34ecb68f5497585abd22d16ab31679aaa9391f333c7b82954ce04444aed7ecf1",
+    "newHeadings": [
+      "## キルが増えても現金が減るときは？"
+    ]
+  },
+  "zh-cn": {
+    "legacyHash": "bca1ff373a73977964940f5b9d4676a77328b348bc496c165ff6dd8c00d56e8a",
+    "newHeadings": [
+      "## 为什么击杀多了，现金却越来越少？"
+    ]
+  },
+  "zh-tw": {
+    "legacyHash": "07ecd4fe69bdd80c210687d56e1261487e6953d9cee4a99c8c828a527ee18506",
+    "newHeadings": [
+      "## 為什麼擊殺變多，現金卻愈來愈少？"
+    ]
+  },
+  "pl": {
+    "legacyHash": "a0d25d472d925ad2c9515c8c4b51ee559f5fb08969176512dbd4a32c0eb736a9",
+    "newHeadings": [
+      "## Czy twoja rola piechura lub kierowcy rzeczywiście przynosi zysk?"
+    ]
+  }
+};
+
 const copy = {
   en: {
     headings: ["Worked cash ledger: income is not net profit", "A cheap starter kit you can afford to replace", "Diagnose a flight symptom with a repeatable record"],
-    h2Counts: [16, 17, 19], hypothetical: /Hypothetical user inputs, not official game prices/,
+    h2Counts: [16, 17, 20], hypothetical: /Hypothetical user inputs, not official game prices/,
     replacements: /first kit plus two replacements/, expensive: /one kit and no full replacement/,
     editorial: /Editorial checks, not client-tested fixes/, unknown: /remain unverified here/,
     symptoms: [/Unexpected movement on takeoff/, /No response, changing prompts or lost bindings/, /Drift or oscillation on landing/]
   },
   ru: {
     headings: ["Пример учёта: выплата не равна чистому доходу", "Дешёвый набор для новичка с запасом на замену", "Как проверить симптом при взлёте, посадке или смене устройства"],
-    h2Counts: [16, 13, 16], hypothetical: /Условные данные пользователя, не официальные цены/,
+    h2Counts: [16, 13, 17], hypothetical: /Условные данные пользователя, не официальные цены/,
     replacements: /первый комплект и две замены/, expensive: /один комплект, без полной замены/,
     editorial: /Советы редакции, не проверенные в клиенте/, unknown: /здесь не проверены/,
     symptoms: [/Неожиданное движение при взлёте/, /Нет реакции, меняются подсказки или пропадают привязки/, /Снос или раскачка при посадке/]
   },
   de: {
     headings: ["Rechenbeispiel: Einnahmen sind nicht der Nettogewinn", "Ein günstiges Einsteigerkit mit Ersatzbudget", "Flugsymptome nachvollziehbar eingrenzen"],
-    h2Counts: [18, 13, 17], hypothetical: /Angenommene Nutzereingaben, keine offiziellen Spielpreise/,
+    h2Counts: [18, 13, 18], hypothetical: /Angenommene Nutzereingaben, keine offiziellen Spielpreise/,
     replacements: /ein Erstkit und zwei Ersatzkits/, expensive: /einen Kauf und kein vollständiges Ersatzkit/,
     editorial: /Redaktionelle Prüfschritte, keine im Client getesteten Lösungen/, unknown: /hier ungeprüft/,
     symptoms: [/Unerwartete Bewegung beim Start/, /Keine Reaktion, wechselnde Symbole oder verlorene Belegung/, /Drift oder Schwingen bei der Landung/]
   },
   "pt-br": {
     headings: ["Exemplo de caixa: pagamento não é lucro líquido", "Kit barato para iniciante com dinheiro para reposição", "Como registrar e conferir um sintoma de voo"],
-    h2Counts: [18, 13, 17], hypothetical: /Entradas hipotéticas do usuário, não preços oficiais/,
+    h2Counts: [18, 13, 18], hypothetical: /Entradas hipotéticas do usuário, não preços oficiais/,
     replacements: /primeiro kit e duas reposições/, expensive: /apenas um kit, sem reposição completa/,
     editorial: /Verificações editoriais, não correções testadas no cliente/, unknown: /seguem sem verificação aqui/,
     symptoms: [/Movimento inesperado na decolagem/, /Sem resposta, ícones alternando ou comandos perdidos/, /Deriva ou oscilação no pouso/]
   },
   ja: {
     headings: ["収支の計算例：受取額と純利益は別", "初心者の安い装備は再購入まで考える", "離着陸と入力機器の症状を記録して切り分ける"],
-    h2Counts: [13, 13, 12], hypothetical: /ユーザーが仮に入力した値で、公式/,
+    h2Counts: [13, 13, 13], hypothetical: /ユーザーが仮に入力した値で、公式/,
     replacements: /最初の1組と補充2組/, expensive: /1組だけで、完全な補充はできません/,
     editorial: /編集部の確認手順で、クライアントで実測した修正方法.*ではありません/,
     unknown: /ここでは未検証/,
@@ -63,21 +115,21 @@ const copy = {
   },
   "zh-cn": {
     headings: ["可复算账例：到账收入不等于净收益", "新手便宜配装，要能买也能补", "起降与输入设备症状，怎样留下可复查记录"],
-    h2Counts: [14, 18, 14], hypothetical: /假设的用户输入，不是游戏官方价格/,
+    h2Counts: [14, 18, 15], hypothetical: /假设的用户输入，不是游戏官方价格/,
     replacements: /首套加两次补装/, expensive: /只能买一套，无法再整套补装/,
     editorial: /编辑诊断建议，不是客户端实测修复/, unknown: /仍未验证/,
     symptoms: [/起飞时出现意外运动/, /没有响应、提示跳变或绑定丢失/, /降落漂移或反复摆动/]
   },
   "zh-tw": {
     headings: ["可重算的收支例子：入帳不等於淨收益", "新手便宜配裝，要買得起也補得起", "起降與輸入裝置症狀，如何留下可複查紀錄"],
-    h2Counts: [14, 18, 14], hypothetical: /使用者假設輸入，不是遊戲官方價格/,
+    h2Counts: [14, 18, 15], hypothetical: /使用者假設輸入，不是遊戲官方價格/,
     replacements: /第一套加兩次補裝/, expensive: /只能買一套，無法再整套補裝/,
     editorial: /編輯診斷建議，不是遊戲客戶端實測修復/, unknown: /仍未驗證/,
     symptoms: [/起飛時出現非預期運動/, /沒有反應、提示切換或配置遺失/, /降落飄移或反覆擺動/]
   },
   pl: {
     headings: ["Przykład bilansu: wypłata to nie zysk netto", "Tani ekwipunek dla początkujących z budżetem na odtworzenie", "Jak udokumentować objaw podczas lotu lub zmiany urządzenia"],
-    h2Counts: [16, 17, 19], hypothetical: /Hipotetyczne dane użytkownika, nie oficjalne ceny/,
+    h2Counts: [16, 17, 20], hypothetical: /Hipotetyczne dane użytkownika, nie oficjalne ceny/,
     replacements: /pierwszy zestaw i dwa odtworzenia/, expensive: /jeden zestaw, bez pełnego odtworzenia/,
     editorial: /Wskazówki redakcyjne, nie poprawki przetestowane w kliencie/, unknown: /pozostają tu niezweryfikowane/,
     symptoms: [/Nieoczekiwany ruch przy starcie/, /Brak reakcji, zmienne ikony lub utrata przypisań/, /Znoszenie lub oscylacje przy lądowaniu/]
@@ -122,7 +174,16 @@ describe("TDK budget and flight answer refresh across eight locales", () => {
         const tdk = [frontmatter.slug, frontmatter.title, frontmatter.keyword, frontmatter.description];
         expect(createHash("sha256").update(JSON.stringify(tdk)).digest("hex")).toBe(tdkBaselines[locale][index]);
         const h2s = body.match(/^## .*$/gm) ?? [];
-        expect(h2s).toHaveLength(text.h2Counts[index]);
+        if (index === 0) {
+          const protection = moneyHeadingProtection[locale];
+          for (const heading of protection.newHeadings) expect(h2s).toContain(heading);
+          const previous = h2s.filter(heading => !protection.newHeadings.includes(heading));
+          expect(previous).toHaveLength(text.h2Counts[index]);
+          expect(createHash("sha256").update(JSON.stringify(previous)).digest("hex")).toBe(protection.legacyHash);
+          expect(h2s).toHaveLength(text.h2Counts[index] + protection.newHeadings.length);
+        } else {
+          expect(h2s).toHaveLength(text.h2Counts[index]);
+        }
         expect(new Set(h2s).size).toBe(h2s.length);
 
         const section = refreshedSection(body, text.headings[index]);

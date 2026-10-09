@@ -87,3 +87,12 @@ export function getHomeProtectedDemand(guides: readonly {slug: string}[], locale
     };
   });
 }
+
+/** Compact handoffs supplement the protected six cards; they never replace them. */
+export function getHomeDemandHandoffs(locale: Locale) {
+  if (locale === "ja") return [{href: "/guides/wardogs-progression-wipes-guide", task: "progression"}] as const;
+  if (locale === "ru" || locale === "de" || locale === "zh-tw") {
+    return [{href: "/gold-market", task: "money"}] as const;
+  }
+  return [] as const;
+}

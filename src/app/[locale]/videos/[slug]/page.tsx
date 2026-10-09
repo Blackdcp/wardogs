@@ -10,6 +10,9 @@ import {getLocalizedVideoArticle} from "@/features/videos/video-localization";
 import {buildVideoArticleJsonLd} from "@/features/videos/video-structured-data";
 import {videoThumbnailUrl} from "@/features/videos/video-thumbnail";
 import {getVideoUi} from "@/features/videos/video-ui";
+import {videoTimestamp} from "@/features/videos/video-candidate-evidence";
+import {publicRoutePath} from "@/lib/public-url";
+import {recentVideoUi} from "@/features/videos/recent-video-data";
 import {buildPageMetadataWithImage} from "@/lib/metadata";
 import {loadGuideDocument} from "@/content/guides";
 import {getTranslations} from "next-intl/server";
@@ -51,7 +54,7 @@ export default async function VideoArticlePage({params}: PageProps) {
   if (!article) notFound();
   const ui = getVideoUi(locale);
   const era = getVideoEra(article);
-  const eraLabel = era === "historical" ? ui.historicalReference : ui.betaWorkflow;
+  const eraLabel = era === "current-analysis" ? recentVideoUi[locale].current : era === "historical" ? ui.historicalReference : ui.betaWorkflow;
   const [articleT, adsT, relatedGuide] = await Promise.all([
     getTranslations({locale, namespace: "article"}),
     getTranslations({locale, namespace: "ads"}),
@@ -87,6 +90,13 @@ export default async function VideoArticlePage({params}: PageProps) {
               {articleT("byline")} <a className="font-semibold text-[#8bb59d] hover:text-white" href={`/${locale}/editorial-policy`} title={articleT("teamName")}>{articleT("teamName")}</a>
             </p>
           </div>
+          {article.captionReview && <div className="mt-4 space-y-2 text-xs leading-5 text-[#a8b4ae]" data-video-review-scope>
+            <p>{recentVideoUi[locale].published}: <time dateTime={article.publishedAt}>{article.publishedDate}</time> · {recentVideoUi[locale].checked}: {article.updatedDate}</p>
+            <p>{recentVideoUi[locale].timezone} · {recentVideoUi[locale].full}</p>
+          </div>}
+          {article.clips?.length ? <nav className="mt-5 flex flex-wrap gap-2" aria-label={recentVideoUi[locale].chapters}>
+            {article.clips.map(clip => <a key={clip.startOffset} href={publicRoutePath(`/${locale}/videos/${article.slug}?t=${clip.startOffset}`)} title={clip.name} className="rounded border border-[#465149] px-3 py-2 text-sm text-[#79d19c] hover:border-[#79d19c]">{videoTimestamp(clip.startOffset)}</a>)}
+          </nav> : null}
         </div>
       </header>
 
@@ -117,8 +127,8 @@ export default async function VideoArticlePage({params}: PageProps) {
             </section>
           ))}
           <section>
-            <h2>{ui.connectionTitle}</h2>
-            <p>{ui.connectionBody}</p>
+            <h2>{article.relatedToolPath ? recentVideoUi[locale].apply : ui.connectionTitle}</h2>
+            {article.relatedToolPath ? <p><a href={publicRoutePath(`/${locale}${article.relatedToolPath}`)} title={recentVideoUi[locale].tool}>{recentVideoUi[locale].tool}</a></p> : <p>{ui.connectionBody}</p>}
           </section>
         </div>
 

@@ -19,6 +19,10 @@ faq:
   - question: "How should I test damage after an update?"
     answer: "Control weapon, ammo, range, armor, hit location, health state, and build version; repeat each case and record uncertainty instead of relying on one clip."
 sources:
+  - label: "WARDOGS Discord — BMR discussion (player reports, not measured balance)"
+    url: "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1556187435845681152"
+    kind: "community"
+    checkedAt: "2026-10-09"
   - label: "BULKHEAD developer interview — Push to Talk, episode 28"
     url: "https://www.youtube.com/watch?v=liRK9si1Ubo"
     kind: "creator"
@@ -77,6 +81,21 @@ Compare complete kits, not armor in isolation. Add the primary, magazines, treat
 Use standard ammunition as the baseline when the build provides it, then test specialist types under the same conditions. Flesh-focused ammunition may trade performance against protection; armor-piercing ammunition may trade price, availability or another characteristic. Those relationships must be measured in the current version. Do not assume real-world cartridge behavior maps directly to the game.
 
 Keep different ammunition in clearly separated magazines where the interface allows. Swapping the wrong magazine invalidates a test and can lose a real fight. The [weapons catalogue](/en/items/weapons) lists observed calibre and fire modes, while the reload guide explains why loose ammunition and magazines are separate inventory decisions.
+
+### BMR-308, HP and AP: choose a kit you can actually use
+
+The October 4 BMR discussion asks whether a precision rifle has become the answer at every range. It identifies a real buying decision, but its clips and replies do not establish a universal one-shot rule or a confirmed Season 2 nerf. Use the [BMR-308 record](/en/items/weapons/bmr-308) to identify the weapon, then compare complete setups in [Weapon Compare](/en/tools/weapon-compare).
+
+| Your problem | First adjustment | What to check before spending more |
+| --- | --- | --- |
+| You lose a long, exposed crossing | Change the route and identify a second piece of hard cover | Can you break the shooter's line of sight without repeating the same peek? |
+| Your shots hit but the target survives | Confirm the loaded ammunition, hit area and distance | Do not compare HP into a protected torso with AP into an uncovered limb. |
+| A high-tier rifle drains your cash | Price a full replacement kit, magazines and treatment | Keep enough reserve for another useful deployment; a borrowed weapon is not a free replacement. |
+| A clip looks like an instant kill | Check health, armor, missed frames and previous damage | Record incapacitation separately from death; do not infer damage from an edited highlight. |
+
+For an affordable comparison, start with a weapon you already own. Record build, range, ammo, armor and hit zone; repeat a controlled case, then change only one condition. Test practical follow-up accuracy as well as hits to incapacitate. If your second shot misses, a theoretical fire-rate advantage is not your real result. Use the [ammo matcher](/en/tools/ammo-matcher) to check compatibility and the [loadout budget](/en/tools/loadout-budget) for the complete cost; catalogue observations with older dates still need checking against your client.
+
+The calculator's conditional shot/TTK result uses the inputs you supply. It does not measure live armor, certify a community damage claim, or include the time to spot, aim and recover from recoil. Leave unavailable values unknown instead of filling them from the discussion. Recheck after the October 15 patch before carrying a Season 1 result into Season 2.
 
 ## A repeatable TTK test
 

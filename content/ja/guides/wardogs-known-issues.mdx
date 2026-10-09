@@ -1,73 +1,121 @@
 ---
-title: "WARDOGS発売時の注意点：Beta 02問題の再確認"
-description: "WARDOGS Beta 02で報告されたサーバーブラウザー、ログイン待機列、クラッシュ、アンチチート、ボイスチャット、Supporter Pack、FPSやメモリの問題を整理します。公式回避策とハードウェア依存のコミュニティ報告を区別し、安全な切り分け手順とEarly Accessで再確認する情報を解説します。"
-keyword: "wardogs known issues"
-category: "guide"
-slug: "wardogs-known-issues"
+title: WARDOGS発売時の注意点：Beta 02問題の再確認
+description: >-
+  WARDOGS Beta 02で報告されたサーバーブラウザー、ログイン待機列、クラッシュ、アンチチート、ボイスチャット、Supporter
+  Pack、FPSやメモリの問題を整理します。公式回避策とハードウェア依存のコミュニティ報告を区別し、安全な切り分け手順とEarly
+  Accessで再確認する情報を解説します。
+keyword: wardogs known issues
+category: guide
+slug: wardogs-known-issues
 order: 47
-updatedAt: "2026-10-03"
+updatedAt: '2026-10-09'
 badges:
-  - label: "Beta 02"
-    tone: "warning"
-  - label: "ビルド依存"
-    tone: "muted"
+  - label: Beta 02
+    tone: warning
+  - label: ビルド依存
+    tone: muted
 faq:
-  - question: "Beta 02の問題はEarly Accessでも発生しますか？"
-    answer: "WARDOGSはSteam Early Accessで配信中です。日付付きのPatch 0.11告知を資料として残しており、9月14日に公開されたメンテナンス時間帯は終了しています。新しい停止情報はSteam公式フィードで確認してください。"
-  - question: "WARDOGSがクラッシュするときの安全な確認方法は？"
-    answer: "SteamとWindowsを再起動し、ファイル整合性を確認し、非公式の起動オプションを外し、GPUドライバーを更新してオーバーレイを閉じます。変更は一つずつ行い、エラーを記録します。"
-  - question: "近接ボイスチャットが使えない場合は？"
-    answer: "マイク、チャンネル、通信状態を確認してください。Team17は9月19日と23日にEarly Accessでも再接続を案内していますが、個別の確認手順であり、必ず直る方法ではありません。"
-  - question: "Supporter PackのアイテムがBeta 02にありません。購入失敗ですか？"
-    answer: "Betaでは利用できない既知の問題でした。現在はSteam DLCとして販売されているため、見えない場合はDLC権利と最新ビルドを確認します。"
+  - question: Beta 02の問題はEarly Accessでも発生しますか？
+    answer: >-
+      WARDOGSはSteam Early Accessで配信中です。日付付きのPatch
+      0.11告知を資料として残しており、9月14日に公開されたメンテナンス時間帯は終了しています。新しい停止情報はSteam公式フィードで確認してください。
+  - question: WARDOGSがクラッシュするときの安全な確認方法は？
+    answer: >-
+      SteamとWindowsを再起動し、ファイル整合性を確認し、非公式の起動オプションを外し、GPUドライバーを更新してオーバーレイを閉じます。変更は一つずつ行い、エラーを記録します。
+  - question: 近接ボイスチャットが使えない場合は？
+    answer: >-
+      マイク、チャンネル、通信状態を確認してください。Team17は9月19日と23日にEarly
+      Accessでも再接続を案内していますが、個別の確認手順であり、必ず直る方法ではありません。
+  - question: Supporter PackのアイテムがBeta 02にありません。購入失敗ですか？
+    answer: Betaでは利用できない既知の問題でした。現在はSteam DLCとして販売されているため、見えない場合はDLC権利と最新ビルドを確認します。
 sources:
-  - label: "Team17：Early Accessの音声サポート回答"
-    url: "https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/"
-    kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "Microsoft：マイクの確認"
-    url: "https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems"
-    kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "公式Pre-Load・Season 1変更履歴"
-    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
-    kind: "official"
-    checkedAt: "2026-09-26"
-  - label: "Launch Stability Hotfix #1公式告知"
-    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
-    kind: "official"
-    checkedAt: "2026-09-26"
-  - label: "Patch 0.11メンテナンス公式告知"
-    url: "https://store.steampowered.com/news/app/1867240/view/701027323413005176"
-    kind: "official"
-    checkedAt: "2026-09-26"
-  - label: "開発者によるベータ既知の問題"
-    url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
-    kind: "official"
-    checkedAt: "2026-09-04"
-  - label: "Closed Beta 02の公式Steam案内"
-    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
-    kind: "official"
-    checkedAt: "2026-09-09"
-  - label: "Beta 02を63時間プレイしたコミュニティ報告"
-    url: "https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/"
-    kind: "community"
-    checkedAt: "2026-09-09"
-  - label: "公式Update 0.1.2"
-    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
-    kind: "official"
-    checkedAt: "2026-10-03"
-  - label: "開発者：WD-L014・WD-L018の起動問題"
-    url: "https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/"
-    kind: "official"
-    checkedAt: "2026-10-03"
+  - label: Team17：Early Accessの音声サポート回答
+    url: 'https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/'
+    kind: official
+    checkedAt: '2026-09-30'
+  - label: Microsoft：マイクの確認
+    url: >-
+      https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems
+    kind: official
+    checkedAt: '2026-09-30'
+  - label: 公式Pre-Load・Season 1変更履歴
+    url: 'https://store.steampowered.com/news/app/1867240/view/701027323413004455'
+    kind: official
+    checkedAt: '2026-09-26'
+  - label: 'Launch Stability Hotfix #1公式告知'
+    url: 'https://store.steampowered.com/news/app/1867240/view/701027323413004709'
+    kind: official
+    checkedAt: '2026-09-26'
+  - label: Patch 0.11メンテナンス公式告知
+    url: 'https://store.steampowered.com/news/app/1867240/view/701027323413005176'
+    kind: official
+    checkedAt: '2026-09-26'
+  - label: 開発者によるベータ既知の問題
+    url: 'https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/'
+    kind: official
+    checkedAt: '2026-09-04'
+  - label: Closed Beta 02の公式Steam案内
+    url: 'https://store.steampowered.com/app/1867240/WARDOGS/'
+    kind: official
+    checkedAt: '2026-09-09'
+  - label: Beta 02を63時間プレイしたコミュニティ報告
+    url: >-
+      https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/
+    kind: community
+    checkedAt: '2026-09-09'
+  - label: 公式Update 0.1.2
+    url: 'https://store.steampowered.com/news/app/1867240/view/712287592723252267'
+    kind: official
+    checkedAt: '2026-10-03'
+  - label: 開発者：WD-L014・WD-L018の起動問題
+    url: 'https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/'
+    kind: official
+    checkedAt: '2026-10-03'
+  - label: フリーズとクラッシュの議論
+    url: >-
+      https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 性能問題の報告
+    url: >-
+      https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 運転席と砲手の視点
+    url: >-
+      https://discord.com/channels/1464219389913071646/1557911216490549368/1557911216490549368
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 公式サポート案内
+    url: >-
+      https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846
+    kind: official
+    checkedAt: '2026-10-09'
+  - label: Team17 Support
+    url: 'https://support.team17.com/en'
+    kind: official
+    checkedAt: '2026-10-09'
 ---
+## 症状を分けてから情報を集める
+
+| 症状 | 最初の記録 | 次の手順 |
+| --- | --- | --- |
+| 常に低FPS | 解像度、CPU/GPU負荷、設定、版 | [設定比較](/ja/guides/wardogs-best-settings) |
+| 平均FPSは高いが周期的に止まる | フレーム時間、起動後時間、RAM、場所 | 同じ道で一変数だけ変更 |
+| 車両の巻き戻りや命中遅延 | 地域、ping、運転席と砲手の差 | 画質より先にネットワーク・サーバーを確認 |
+| 固まって閉じる | 発生時間、版、エラー、非公開dump | [クラッシュ手順](/ja/guides/wardogs-crash-fix)とサポート |
+
+約32 GBのRAM使用、15–20秒間隔の停止、運転手だけの揺れという報告は個別観察で、原因確定ではありません。多数の返信も独立した被害者数ではありません。更新後は同じ手順の再現結果を追加し、旧報告の版は維持します。違反の疑いは[通報ガイド](/ja/guides/wardogs-report-player)へ分けます。
+
+## 公式サポートの窓口を選ぶ
+
+公式サポート案内は9月10日公開、9月23日編集で、10月9日に確認しました。公式Discordの **@WARDOGS Support bot** が技術的な問題、プレイヤー通報、ゲームBANの異議申し立て手順を案内します。技術的な問題は [Team17 Support](https://support.team17.com/en) からも相談できます。通報には映像、画像、名前、試合情報を準備します。
+
+提案は開発者へのフィードバック欄（現在は feedback）へ送りますが、採用は保証されません。**DiscordのBANはDiscordモデレーターの担当で、Player Supportでは解除できません。** 永久ゲームBANのメール窓口と、コミュニティサーバー管理者による制限も別です。
 
 ## Update 0.1.2：9月30日の小規模パッチ
 
 [9月30日のUpdate 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267)は、Windows 11 KB5124010によるWD-L020の修正を明記しています。旧プレビュー更新のロールバックより先にSteam本体アプリを更新し、ファイルを確認してください。この原因に対する修正であり、別原因のWD-L020、他のコード、フリーズ、PC全体の再起動は個別の診断が必要です。
-
-[Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267)のDeployは **Official**、**Community**、**Infantry Mode**、**Low-Level** を用意し、**Official**の高度なフィルターも復活しています。検索・フィルターと **Show Empty/Full** を確認し、一度更新して公式告知と照合します。**地域を一つにする**方法はBeta 02の旧対処で、個別の診断テストにとどまります。
 
 ### 起動エラーとコントローラー不具合を分ける
 
@@ -158,3 +206,14 @@ Update 0.1.2の確認日は **2026-10-03** です。パッチ記録はライブ�
 - [操作方法とボイスキー](/ja/guides/wardogs-controls)
 
 起動や動作の問題がPC側にある場合は、[PCシステムチェック](/ja/tools/system-check)で必要環境を比較してから、該当するエラーコードの手順へ戻ってください。サーバー障害の解消を判定するツールではありません。
+
+
+## 情報源と確認日
+
+確認日は下記の各情報源に個別に適用され、記事全体の検証日ではありません。
+
+- [フリーズとクラッシュの議論](https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070) — 2026-10-09
+- [性能問題の報告](https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/) — 2026-10-09
+- [運転席と砲手の視点](https://discord.com/channels/1464219389913071646/1557911216490549368/1557911216490549368) — 2026-10-09
+- [公式サポート案内](https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846) — 2026-10-09
+- [Team17 Support](https://support.team17.com/en) — 2026-10-09

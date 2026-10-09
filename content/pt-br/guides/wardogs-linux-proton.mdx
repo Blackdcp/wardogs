@@ -5,7 +5,7 @@ keyword: "wardogs linux proton"
 category: "guide"
 slug: "wardogs-linux-proton"
 order: 48
-updatedAt: "2026-09-30"
+updatedAt: "2026-10-09"
 badges:
   - label: "Linux não suportado"
     tone: "warning"
@@ -24,20 +24,35 @@ sources:
   - label: "Atualização oficial de compatibilidade Linux de WARDOGS"
     url: "https://steamcommunity.com/app/1867240/discussions/0/588436698284962639"
     kind: "official"
-    checkedAt: "2026-09-26"
+    checkedAt: "2026-10-09"
   - label: "WARDOGS na Steam"
     url: "https://store.steampowered.com/app/1867240/WARDOGS/"
     kind: "official"
     checkedAt: "2026-09-05"
+  - label: "Discussão da comunidade Linux Support; não é anúncio de suporte"
+    url: "https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1551967453574332556"
+    kind: "community"
+    checkedAt: "2026-10-09"
 ---
 
 {/* compatibility-matrix */}
 ## O que um relato de compatibilidade precisa conter
-Nenhuma nova amostra de sucesso/falha Linux ou Steam Deck foi reproduzida nesta atualização. A [posição de 25 de setembro](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639) não fornece versão Proton suportada ou prazo.
 
-Registre data, build comercial, sistema/distribuição e kernel, GPU/driver, Proton e alterações de inicialização. Separe processo iniciado, menu, entrada no servidor, partida completa e reconexão. Menu não comprova multiplayer; uma sessão não promete suporte oficial.
+{/* linux-diagnostic-flow */}
 
-Guarde falhas com os mesmos campos e erro exato. Não preencha tabela vazia com sucesso presumido nem transfira amostras Beta para retail. Não oferecemos bypass de anti-cheat, executável substituto ou comando não testado.
+**Revisado em 2026-10-09:** a posição oficial continua sendo a de 2026-09-25, sem versão de Proton suportada ou prazo. A [discussão Linux Support](https://discord.com/channels/1464219389913071646/1551954554579451924/threads/1551967453574332556) reúne pedidos e experiências individuais, não um novo anúncio oficial de compatibilidade. Não reproduzimos um caso atual de sucesso ou falha em Linux ou Steam Deck.
+
+| Etapa | O que verificar e registrar | O que o resultado demonstra |
+| --- | --- | --- |
+| Linux nativo | Verifique se o lançamento oficial realmente lista um cliente nativo. | Executar o cliente Windows via Proton não significa suporte nativo a Linux. |
+| Inicialização via Proton | Registre a versão exata do Proton e as opções de inicialização; separe abertura do processo e do menu. Guarde o erro exato se o jogo fechar. | Chegar ao menu comprova somente essa etapa nessa configuração. |
+| Anti-cheat e multiplayer | Consulte [avisos dos servidores](/pt-br/guides/wardogs-server-status), depois separe entrada, partida completa e reconexão. Registre erros de anti-cheat e conexão separadamente. | A falha sozinha não prova que a causa seja Proton, anti-cheat ou indisponibilidade do serviço. Não contorne verificações. |
+| Steam Deck | Registre SteamOS, esquema de controle, resolução e gráficos; teste comandos e desempenho sustentado na partida separadamente. | Iniciar ou usar controle não confirma Playable/Verified nem desempenho aceitável. |
+
+1. Guarde uma referência: data/hora, build do jogo, distribuição/OS e kernel, GPU e driver, versão do Proton, opções de inicialização, erro exato e última etapa concluída. Preserve os logs relevantes; remova identificadores da conta e caminhos privados antes de publicar.
+2. Altere uma configuração por vez e repita a mesma etapa. Um relato de melhora ao mudar DLSS ou antisserrilhamento não é uma correção universal para Linux; anote ajustes e resultados antes/depois.
+3. Depois de um hotfix, confira se todas as comparações usam a mesma **nova build do jogo**, preserve o registro de falha da antiga e repita início, entrada, partida e reconexão. Sucesso no Beta não vale como resultado da versão comercial.
+4. Se aparecer WD-L020, inclua o código e o OS no relato. Os passos de atualização do Windows em [problemas conhecidos](/pt-br/guides/wardogs-known-issues) não são instruções para Linux. Suporte da plataforma e reparo do Windows são questões separadas; não fornecemos comandos de bypass ou executáveis substitutos.
 
 ## Matriz de compatibilidade
 
@@ -107,7 +122,7 @@ Não trate isso como suporte oficial e não ignore anti-cheat nem altere execut�
 
 As datas se aplicam separadamente às fontes listadas abaixo, não ao artigo inteiro. A atualização do conteúdo não certifica todos os fatos. Notas antigas datadas mantêm seu escopo original de evidência, sem confirmar o cliente ou os servidores atuais.
 
-A declaração original sobre Linux e a atualização de 2026-09-25 foram conferidas em 2026-09-26 no [tópico fixado do desenvolvedor na Steam](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639). A atualização não trouxe data ou cronograma para compatibilidade. A loja Steam continua sendo a referência para Windows PC e um eventual status de Steam Deck.
+A declaração original sobre Linux e a atualização de 2026-09-25 foram conferidas em 2026-10-09 no [tópico fixado do desenvolvedor na Steam](https://steamcommunity.com/app/1867240/discussions/0/588436698284962639). A atualização não trouxe data ou cronograma para compatibilidade. A loja Steam continua sendo a referência para Windows PC e um eventual status de Steam Deck.
 
 ## Guias relacionados
 

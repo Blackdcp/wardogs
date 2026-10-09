@@ -1,73 +1,121 @@
 ---
-title: "WARDOGS 上線問題觀察：Beta 02 問題複核清單"
-description: "彙總 WARDOGS Closed Beta 02 報告過的伺服器瀏覽器空白、登入佇列、崩潰與反作弊、本地語音、Supporter Pack、FPS、記憶體和視訊記憶體波動；明確區分開發者確認的臨時處理方法與受硬體、驅動和測試版本影響的社群觀察，並給出安全排查、提交支援資訊以及在搶先體驗版本中重新驗證的步驟。"
-keyword: "wardogs known issues"
-category: "guide"
-slug: "wardogs-known-issues"
+title: WARDOGS 上線問題觀察：Beta 02 問題複核清單
+description: >-
+  彙總 WARDOGS Closed Beta 02 報告過的伺服器瀏覽器空白、登入佇列、崩潰與反作弊、本地語音、Supporter
+  Pack、FPS、記憶體和視訊記憶體波動；明確區分開發者確認的臨時處理方法與受硬體、驅動和測試版本影響的社群觀察，並給出安全排查、提交支援資訊以及在搶先體驗版本中重新驗證的步驟。
+keyword: wardogs known issues
+category: guide
+slug: wardogs-known-issues
 order: 47
-updatedAt: "2026-10-03"
+updatedAt: '2026-10-09'
 badges:
-  - label: "Beta 02"
-    tone: "warning"
-  - label: "版本敏感"
-    tone: "muted"
+  - label: Beta 02
+    tone: warning
+  - label: 版本敏感
+    tone: muted
 faq:
-  - question: "Beta 02 的問題會繼續出現在搶先體驗嗎？"
-    answer: "WARDOGS 已在 Steam 搶先體驗上線。此處保留的是帶日期的 Patch 0.11 公告記錄，已公佈的 9 月 14 日維護視窗已經過去；新的中斷資訊請檢視 Steam 官方動態。"
-  - question: "WARDOGS 崩潰時怎麼安全排查？"
-    answer: "重啟 Steam 和 Windows，驗證檔案，移除非官方啟動引數，從顯示卡廠商更新驅動，關閉疊加層，並一次只改一個專案，同時記錄準確報錯。"
-  - question: "本地語音失效怎麼辦？"
-    answer: "先檢查麥克風、頻道和通訊狀態。Team17 在 9 月 19 日及 23 日的搶先體驗支援回覆中再次建議重新連線，但這是個案排查步驟，不保證修復所有故障。"
-  - question: "Beta 02 裡沒有 Supporter Pack 道具，是購買失敗嗎？"
-    answer: "這是 Beta 期間的已知限制。Supporter Pack 現已作為 Steam DLC 銷售；當前缺失應核對 DLC 權益和最新版本。"
+  - question: Beta 02 的問題會繼續出現在搶先體驗嗎？
+    answer: >-
+      WARDOGS 已在 Steam 搶先體驗上線。此處保留的是帶日期的 Patch 0.11 公告記錄，已公佈的 9 月 14
+      日維護視窗已經過去；新的中斷資訊請檢視 Steam 官方動態。
+  - question: WARDOGS 崩潰時怎麼安全排查？
+    answer: 重啟 Steam 和 Windows，驗證檔案，移除非官方啟動引數，從顯示卡廠商更新驅動，關閉疊加層，並一次只改一個專案，同時記錄準確報錯。
+  - question: 本地語音失效怎麼辦？
+    answer: >-
+      先檢查麥克風、頻道和通訊狀態。Team17 在 9 月 19 日及 23
+      日的搶先體驗支援回覆中再次建議重新連線，但這是個案排查步驟，不保證修復所有故障。
+  - question: Beta 02 裡沒有 Supporter Pack 道具，是購買失敗嗎？
+    answer: 這是 Beta 期間的已知限制。Supporter Pack 現已作為 Steam DLC 銷售；當前缺失應核對 DLC 權益和最新版本。
 sources:
-  - label: "Team17：搶先體驗語音支援回覆"
-    url: "https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/"
-    kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "微軟：麥克風測試與權限"
-    url: "https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems"
-    kind: "official"
-    checkedAt: "2026-09-30"
-  - label: "官方預載與 Season 1 更新日誌"
-    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004455"
-    kind: "official"
-    checkedAt: "2026-09-26"
-  - label: "Launch Stability Hotfix #1 官方公告"
-    url: "https://store.steampowered.com/news/app/1867240/view/701027323413004709"
-    kind: "official"
-    checkedAt: "2026-09-26"
-  - label: "Patch 0.11 維護官方公告"
-    url: "https://store.steampowered.com/news/app/1867240/view/701027323413005176"
-    kind: "official"
-    checkedAt: "2026-09-26"
-  - label: "開發者釋出的 Beta 已知問題"
-    url: "https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/"
-    kind: "official"
-    checkedAt: "2026-09-04"
-  - label: "WARDOGS Closed Beta 02 官方 Steam 頁面"
-    url: "https://store.steampowered.com/app/1867240/WARDOGS/"
-    kind: "official"
-    checkedAt: "2026-09-09"
-  - label: "Beta 02 體驗 63 小時的社群反饋"
-    url: "https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/"
-    kind: "community"
-    checkedAt: "2026-09-09"
-  - label: "官方 Update 0.1.2 小型修補"
-    url: "https://store.steampowered.com/news/app/1867240/view/712287592723252267"
-    kind: "official"
-    checkedAt: "2026-10-03"
-  - label: "開發者 WD-L014 與 WD-L018 啟動問題公告"
-    url: "https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/"
-    kind: "official"
-    checkedAt: "2026-10-03"
+  - label: Team17：搶先體驗語音支援回覆
+    url: 'https://steamcommunity.com/app/1867240/discussions/3/571549538645744916/'
+    kind: official
+    checkedAt: '2026-09-30'
+  - label: 微軟：麥克風測試與權限
+    url: >-
+      https://support.microsoft.com/en-us/windows/hardware/drivers/fix-microphone-problems
+    kind: official
+    checkedAt: '2026-09-30'
+  - label: 官方預載與 Season 1 更新日誌
+    url: 'https://store.steampowered.com/news/app/1867240/view/701027323413004455'
+    kind: official
+    checkedAt: '2026-09-26'
+  - label: 'Launch Stability Hotfix #1 官方公告'
+    url: 'https://store.steampowered.com/news/app/1867240/view/701027323413004709'
+    kind: official
+    checkedAt: '2026-09-26'
+  - label: Patch 0.11 維護官方公告
+    url: 'https://store.steampowered.com/news/app/1867240/view/701027323413005176'
+    kind: official
+    checkedAt: '2026-09-26'
+  - label: 開發者釋出的 Beta 已知問題
+    url: 'https://steamcommunity.com/app/1867240/discussions/0/586183630899134901/'
+    kind: official
+    checkedAt: '2026-09-04'
+  - label: WARDOGS Closed Beta 02 官方 Steam 頁面
+    url: 'https://store.steampowered.com/app/1867240/WARDOGS/'
+    kind: official
+    checkedAt: '2026-09-09'
+  - label: Beta 02 體驗 63 小時的社群反饋
+    url: >-
+      https://www.reddit.com/r/WarDogs/comments/1wafok5/63hrs_in_beta_the_great_bad_and_hope_fixesqol/
+    kind: community
+    checkedAt: '2026-09-09'
+  - label: 官方 Update 0.1.2 小型修補
+    url: 'https://store.steampowered.com/news/app/1867240/view/712287592723252267'
+    kind: official
+    checkedAt: '2026-10-03'
+  - label: 開發者 WD-L014 與 WD-L018 啟動問題公告
+    url: 'https://steamcommunity.com/app/1867240/discussions/0/585061535403000092/'
+    kind: official
+    checkedAt: '2026-10-03'
+  - label: 凍結與崩潰討論
+    url: >-
+      https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 性能問題反饋
+    url: >-
+      https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 駕駛員與炮手視角
+    url: >-
+      https://discord.com/channels/1464219389913071646/1557911216490549368/1557911216490549368
+    kind: community
+    checkedAt: '2026-10-09'
+  - label: 官方支持說明
+    url: >-
+      https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846
+    kind: official
+    checkedAt: '2026-10-09'
+  - label: Team17 Support
+    url: 'https://support.team17.com/en'
+    kind: official
+    checkedAt: '2026-10-09'
 ---
+## 先分清症狀，再合併排障信息
+
+| 症狀 | 先記錄什麼 | 下一步 |
+| --- | --- | --- |
+| 同場景一直低 FPS | 分辨率、CPU/GPU 負載、設置和版本 | [設置對照](/zh-tw/guides/wardogs-best-settings) |
+| 平均 FPS 很高但週期性卡頓 | 幀時間、已運行時長、內存、地點 | 同一路線只改一個變量複測 |
+| 車輛回彈、命中延遲 | 區域、ping、駕駛員與炮手視角差異 | 先查網絡和服務器，不直接調畫質 |
+| 凍結後關閉或長局後崩潰 | 距離啟動的時間、版本、報錯、私密 dump | [崩潰流程](/zh-tw/guides/wardogs-crash-fix)與官方支持 |
+
+玩家提到接近32 GB的內存佔用、15–20秒週期性停頓，或駕駛員抖動但炮手正常，均為個別觀察，不能直接確診內存洩漏或網絡代碼故障。熱門討論的回覆量也不等於獨立受影響人數。補丁後追加相同復現是否仍失敗，舊記錄繼續保留原版本。
+
+懷疑違規行為使用[玩家舉報指南](/zh-tw/guides/wardogs-report-player)，不要混入技術排障隊列。判斷封禁前，先保存完整的限制提示。
+
+## 官方支持：按問題選擇入口
+
+官方支持說明發佈於9月10日、9月23日編輯，本頁於10月9日核查。技術問題、玩家舉報和遊戲封禁申訴指引，可通過官方 Discord 的 **@WARDOGS Support bot** 進入；技術問題也可使用 [Team17 支持](https://support.team17.com/en)。舉報請準備視頻、截圖、玩家名稱和對局信息。
+
+建議投遞到開發者反饋區（目前為 feedback），提交不代表保證採納。**Discord 封禁找 Discord 管理員，Player Support 無法解除。** 官網列出的永久賬號封禁申訴郵箱，與社區服務器管理員處理本服限制，也不是同一流程。
 
 ## Update 0.1.2：9 月 30 日小型修補
 
 [9 月 30 日 Update 0.1.2 公告](https://store.steampowered.com/news/app/1867240/view/712287592723252267)已確認修復 Windows 11 KB5124010 引起的 WD-L020。先更新 Steam 主遊戲並驗證檔案，再考慮舊預覽更新回復建議。該修復僅針對這個原因；其他 WD-L020 成因、錯誤代碼、當機和整機重啟仍需分別排查。
-
-[Update 0.1.2](https://store.steampowered.com/news/app/1867240/view/712287592723252267)的 Deploy 提供 **Official**、**Community**、**Infantry Mode** 和 **Low-Level**，且 **Official** 進階篩選已恢復。清除相關搜尋與篩選，核對 **Show Empty/Full**，重新整理一次並查看目前官方告知。**只選一個地區**是 Beta 02 的舊辦法，只能作為單獨診斷測試。
 
 ### 啟動代碼與控制器輸入故障分開處理
 
@@ -160,3 +208,14 @@ Update 0.1.2 公告核對日期為 **2026-10-03**。修補記錄不等於即時�
 - [WARDOGS 操作與語音按鍵](/zh-tw/guides/wardogs-controls)
 
 若遇到電腦端的啟動或效能問題，可用 [PC 規格檢查工具](/zh-tw/tools/system-check)比對系統需求，再回到相符的錯誤碼處理步驟。規格檢查無法判定伺服器故障是否已排除。
+
+
+## 來源與核查日期
+
+核查日期按下方每條來源分別記錄，不代表整篇攻略的驗證日期。
+
+- [凍結與崩潰討論](https://discord.com/channels/1464219389913071646/1551949180543443024/threads/1554968829862482070) — 2026-10-09
+- [性能問題反饋](https://www.reddit.com/r/WarDogs/comments/1wv9luq/does_anyone_else_have_performance_issues_with_the/) — 2026-10-09
+- [駕駛員與炮手視角](https://discord.com/channels/1464219389913071646/1557911216490549368/1557911216490549368) — 2026-10-09
+- [官方支持說明](https://discord.com/channels/1464219389913071646/1547284329854410883/1547285934578466846) — 2026-10-09
+- [Team17 Support](https://support.team17.com/en) — 2026-10-09

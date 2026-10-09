@@ -17,7 +17,7 @@ describe("video structured data", () => {
       expect(video, article.slug).toMatchObject({
         name: article.sourceLabel,
         description: article.description,
-        uploadDate: `${article.publishedDate}T00:00:00+00:00`,
+        uploadDate: article.publishedAt ?? `${article.publishedDate}T00:00:00+00:00`,
         embedUrl: `https://www.youtube-nocookie.com/embed/${article.youtubeId}`,
         thumbnailUrl: `https://i.ytimg.com/vi/${article.youtubeId}/hqdefault.jpg`
       });

@@ -1,3 +1,6 @@
+import {getRecentVideoArticles} from "./recent-video-articles";
+import {RECENT_VIDEO_CHECKED_AT, recentVideoDate, recentVideos} from "./recent-video-data";
+
 export type VideoArticle = {
   slug: string;
   title: string;
@@ -7,6 +10,10 @@ export type VideoArticle = {
   sourceUrl: string;
   publishedDate: string;
   updatedDate: string;
+  publishedAt?: string;
+  durationSeconds?: number;
+  relatedToolPath?: string;
+  captionReview?: "full-track-read";
   kind: "official" | "creator";
   priority: number;
   internalGuideSlug: string;
@@ -16,7 +23,7 @@ export type VideoArticle = {
   sections: {heading: string; body: string[]}[];
 };
 
-export type VideoEra = "beta-workflow" | "historical";
+export type VideoEra = "beta-workflow" | "historical" | "current-analysis";
 
 export type CurrentVideoTopic =
   | "beginner"
@@ -47,6 +54,7 @@ export type CurrentVideoSource = {
   buildLabel: "Season 1 current";
   reviewedAt: string;
   sourceClass: "creator-current";
+  articleSlug?: string;
 };
 
 export const CURRENT_VIDEO_SOURCES_REVIEWED_AT = "2026-09-17";
@@ -74,6 +82,13 @@ export function currentVideoAnchorId(youtubeId: string) {
 }
 
 export const currentVideoSources: readonly CurrentVideoSource[] = [
+  ...recentVideos.filter(video => video.articleSlug).map(video => ({
+    youtubeId: video.id, title: video.title, channel: video.channel,
+    publishedDate: recentVideoDate(video), durationMinutes: Math.ceil(video.durationSeconds / 60),
+    topic: video.topic, internalGuideSlug: video.guideSlug, sourceUrl: `https://www.youtube.com/watch?v=${video.id}`,
+    buildLabel: "Season 1 current" as const, reviewedAt: RECENT_VIDEO_CHECKED_AT,
+    sourceClass: "creator-current" as const, articleSlug: video.articleSlug
+  })),
   {
     youtubeId: "fUKgHeT0JGY",
     title: "The Only WARDOGS Guide You Actually Need",
@@ -416,10 +431,12 @@ const historicalVideoSlugs = new Set([
 ]);
 
 export function getVideoEra(article: Pick<VideoArticle, "slug">): VideoEra {
+  if (recentVideos.some(video => video.articleSlug === article.slug)) return "current-analysis";
   return historicalVideoSlugs.has(article.slug) ? "historical" : "beta-workflow";
 }
 
 export const videoArticles: readonly VideoArticle[] = [
+  ...getRecentVideoArticles("en"),
   {
     slug: "wardogs-10-reasons-not-to-buy",
     title: "WARDOGS 10 Reasons Not to Buy: Official Developer Breakdown",
