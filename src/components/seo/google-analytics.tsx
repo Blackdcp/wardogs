@@ -1,6 +1,7 @@
 import Script from "next/script";
 import {PRODUCTION_HOSTNAMES} from "@/lib/analytics-events";
 import {sanitizeAnalyticsUrl} from "@/lib/analytics-page-context";
+import {installAnalyticsHistoryPrivacy} from "@/lib/analytics-history";
 
 export {
   createAnalyticsEventCommand,
@@ -22,6 +23,8 @@ export function googleAnalyticsConfigScript() {
           if (document.getElementById('wardogs-google-tag')) return;
           window.dataLayer = window.dataLayer || [];
           var sanitizeUrl = (${sanitizeAnalyticsUrl.toString()});
+          var installHistoryPrivacy = (${installAnalyticsHistoryPrivacy.toString()});
+          installHistoryPrivacy(window.dataLayer, sanitizeUrl);
           var rawGtag = window.gtag || function () { window.dataLayer.push(arguments); };
           var currentRoute = sanitizeUrl(window.location.href, false);
           var referrer = sanitizeUrl(document.referrer, false);

@@ -134,6 +134,19 @@ describe("Google Analytics", () => {
     expect(last[2]).toEqual({update: true, page_location: "https://www.wardogswiki.com/en", page_referrer: "https://www.wardogswiki.com/ja/tools/ammo-matcher"});
   });
 
+  it("installs history cleaning before the tag and keeps real share URLs intact across repeated bootstraps", () => {
+    const pending = {event: "gtm.historyChange-v2", "gtm.oldUrl": "https://source.example/?secret=old", "gtm.newUrl": "https://www.wardogswiki.com/en?secret=new#label"};
+    const {sandbox, scripts, context} = analyticsSandbox("www.wardogswiki.com", [pending], "?private=share#label");
+    runInContext(googleAnalyticsConfigScript(), context);
+    runInContext("var prior = dataLayer.push; dataLayer.push = function () { return prior.apply(this, arguments); }; history.pushState({__NA:true}, '', '/ja?private=share#label'); dataLayer.push({event:'gtm.historyChange-v2', 'gtm.oldUrl':'https://www.wardogswiki.com/en?private=share#label', 'gtm.newUrl':window.location.href, 'gtm.newUrlFragment':'label'})", context);
+    runInContext(googleAnalyticsConfigScript(), context);
+    const layer = sandbox.dataLayer as unknown[];
+    expect(layer[0]).toEqual({event: "gtm.historyChange-v2", "gtm.oldUrl": "https://source.example/", "gtm.newUrl": "https://www.wardogswiki.com/en"});
+    expect(layer.at(-1)).toEqual({event: "gtm.historyChange-v2", "gtm.oldUrl": "https://www.wardogswiki.com/en", "gtm.newUrl": "https://www.wardogswiki.com/ja", "gtm.newUrlFragment": ""});
+    expect(String(sandbox.location)).toBe("https://www.wardogswiki.com/ja?private=share#label");
+    expect(scripts).toHaveLength(1);
+  });
+
   it("rejects duplicate, oversized and PII-like attribution while keeping valid campaign and click IDs", () => {
     expect(sanitizeAnalyticsUrl("https://example.test/en?utm_source=discord&utm_campaign=tools-oct-08&gclid=Ab_123-xy&fitQuery=private#label"))
       .toBe("https://example.test/en?utm_source=discord&utm_campaign=tools-oct-08&gclid=Ab_123-xy");

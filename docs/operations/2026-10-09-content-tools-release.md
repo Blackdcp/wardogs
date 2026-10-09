@@ -37,3 +37,15 @@ Desktop/mobile browser checks cover calibration agreement, low-arc correction, m
 - Final editorial review clarified the distinct Discord invite and historical Steam verification dates in English and Polish. No route, feature or layout changes followed browser acceptance.
 
 Production revision, full URL contract, IndexNow and auxiliary export results are recorded in the post-deployment receipt. Candidate acceptance alone is not proof of a completed deployment or search indexing.
+
+## Production receipt and follow-up
+
+Content and tools deployed as `6283ab1fe0ca74d65a7988a33c43c4b74fea21fe`; the public revision endpoint confirmed this commit. Production verification passed 4,201 checks: 1,336 canonical pages, 2,862 legacy routes, the known clean 404, revision and sitemap. Existing homepage/ad protection assertions passed.
+
+IndexNow accepted the 1,336 selected URLs. The initial sequential job confirmed 400; the remaining 936 were submitted through the official JSON batch endpoint, returning HTTP 200 at 2026-10-09T04:44:35Z. The original snapshot was archived only after successful receipt. Acceptance does not prove indexing.
+
+The live browser suite passed 41 of 42 tests initially. The remaining assertion incorrectly counted safe `update:true` context commands as repeated initialization. Stronger transport checks then found a separate pre-existing defect: automatic history page views could still include private query values despite sanitized config commands. A follow-up adapter sanitizes the observed Google history dataLayer URL fields before processing, while retaining automatic page views and the actual browser share URL. Exact vendor-transport verification confirmed three genuine navigations produced three page views with clean locations/referrers. This is a tested adapter for observed vendor fields, not a guarantee about all third-party events; the live regression remains necessary.
+
+The auxiliary Pages export passed the build and all nine browser tests after fixing an obsolete assertion that prohibited an existing labelled Smartlink. Its replacement checks a single configured, labelled CTA, safe new-window attributes and user-initiated opening with the destination locally intercepted. No real ad click was sent. No production CNAME was emitted; revision and search API export paths were verified.
+
+Follow-up candidate validation: all 210 unit-test files / 1,997 tests and all 479 content checks passed. The production webpack build generated 1,355 routes with TypeScript validation. ESLint and whitespace checks passed. Pages-test array accesses were made explicit for TypeScript's unchecked-index protection; exact one-slot/one-link assertions remain in place. No additional content or sitemap changes are included in this analytics/test follow-up, so the already-accepted IndexNow URL batch is not repeated.

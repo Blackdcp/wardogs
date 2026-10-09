@@ -1,7 +1,10 @@
-import {existsSync} from "node:fs";
+import {existsSync, readFileSync} from "node:fs";
 import {resolve} from "node:path";
+import {createElement} from "react";
+import {renderToStaticMarkup} from "react-dom/server";
 import {expect, test} from "@playwright/test";
 import {getIndexableItemPaths} from "../../src/features/items/item-library";
+import {ADSTERRA_SMARTLINK_URLS} from "../../src/features/ads/ad-policy";
 import {getPublicSiteBase} from "../../src/lib/public-url";
 
 process.env.NEXT_PUBLIC_SITE_URL ??= "https://www.wardogswiki.com";
@@ -34,6 +37,10 @@ function deployed(pathname: string) {
 
 function getAttribute(tag: string, name: string) {
   return tag.match(new RegExp(`\\b${name}="([^"]+)"`))?.[1];
+}
+
+function escapedText(text: string) {
+  return renderToStaticMarkup(createElement("span", null, text)).slice(6, -7);
 }
 
 async function mapWithConcurrency<T, R>(values: readonly T[], limit: number, run: (value: T) => Promise<R>) {
@@ -170,6 +177,9 @@ test("exports all 34 model articles in every locale with exact public URLs and r
   expect(modelPaths).toHaveLength(34);
 
   for (const locale of locales) {
+    const {ads} = JSON.parse(readFileSync(`messages/${locale}.json`, "utf8")) as {
+      ads: {sponsored: string; smartlinkCta: string; smartlinkDescription: string};
+    };
     for (const {type, slug} of modelPaths) {
       const pathname = `/${locale}/items/${type}/${slug}/`;
       const canonical = `${canonicalBase}${pathname}`;
@@ -194,7 +204,22 @@ test("exports all 34 model articles in every locale with exact public URLs and r
         expect(html, pathname).not.toContain(`href="/images/catalogue/${type}/${slug}.webp"`);
         expect(html, pathname).not.toContain(`src="/images/catalogue/${type}/${slug}.webp"`);
       }
-      expect(renderedHtml, pathname).not.toContain('data-ad-slot="adsterra-smartlink"');
+      const smartlinks = renderedHtml.match(/<aside\b[^>]*\bdata-ad-slot="adsterra-smartlink"[^>]*>[\s\S]*?<\/aside>/g) ?? [];
+      expect(smartlinks, pathname).toHaveLength(1);
+      const smartlink = smartlinks[0] ?? "";
+      const anchors = smartlink.match(/<a\b[^>]*>/g) ?? [];
+      expect(anchors, pathname).toHaveLength(1);
+      const anchor = anchors[0] ?? "";
+      expect(getAttribute(anchor, "data-ad-unit"), pathname).toBe(ADSTERRA_SMARTLINK_URLS[0].id);
+      expect(getAttribute(anchor, "href"), pathname).toBe(ADSTERRA_SMARTLINK_URLS[0].url);
+      expect(getAttribute(anchor, "target"), pathname).toBe("_blank");
+      expect(getAttribute(anchor, "rel")?.split(/\s+/).sort(), pathname).toEqual(["nofollow", "noopener", "noreferrer", "sponsored"]);
+      expect(smartlink, pathname).toContain(`>${escapedText(ads.sponsored)}</p>`);
+      expect(smartlink, pathname).toContain(`>${escapedText(ads.smartlinkDescription)}</p>`);
+      expect(smartlink, pathname).toContain(`${escapedText(ads.smartlinkCta)}<svg`);
+      expect(getAttribute(anchor, "title"), pathname).toBe(escapedText(ads.smartlinkDescription));
+      expect(smartlink, pathname).not.toMatch(/<script\b|\bon(?:click|load|mouseover)=/i);
+      expect(renderedHtml, pathname).not.toContain(`data-ad-unit="${ADSTERRA_SMARTLINK_URLS[1].id}"`);
       expect(renderedHtml, pathname).not.toMatch(/NEXT_HTTP_ERROR_FALLBACK|<title>404|Page not found/i);
 
       const image = await request.get(imagePath);
@@ -203,6 +228,35 @@ test("exports all 34 model articles in every locale with exact public URLs and r
       expect((await image.body()).byteLength, imagePath).toBeGreaterThan(0);
     }
   }
+});
+
+test("model Smartlink opens the configured advertiser only after its labelled CTA is clicked", async ({page, context}) => {
+  const destination = ADSTERRA_SMARTLINK_URLS[0].url;
+  let destinationRequests = 0;
+  await context.route(destination, (route) => {
+    destinationRequests += 1;
+    return route.fulfill({contentType: "text/html", body: "Local sponsored destination fixture"});
+  });
+  await page.goto(deployed("/en/items/weapons/a-91/"));
+  const slot = page.locator('[data-ad-slot="adsterra-smartlink"]');
+  const cta = slot.getByRole("link", {name: "Open sponsored link", exact: true});
+  await expect(slot).toHaveCount(1);
+  await expect(cta).toHaveAttribute("href", destination);
+  await expect(cta).toHaveAttribute("target", "_blank");
+  await page.locator("main h1").click();
+  await cta.scrollIntoViewIfNeeded();
+  expect(destinationRequests).toBe(0);
+  expect(context.pages()).toHaveLength(1);
+
+  const popupPromise = context.waitForEvent("page");
+  await cta.click();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL(destination);
+  await expect(popup.locator("body")).toHaveText("Local sponsored destination fixture");
+  expect(await popup.evaluate(() => window.opener)).toBeNull();
+  expect(destinationRequests).toBe(1);
+  await expect(page).toHaveURL(`${previewOrigin}${deployed("/en/items/weapons/a-91/")}`);
+  await popup.close();
 });
 
 test("uses exact Pages model hrefs on home, hub, cards, and catalogue tables", async ({page}) => {

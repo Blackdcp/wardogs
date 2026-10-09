@@ -5,12 +5,20 @@ const locales = ["en", "ru", "de", "pt-br", "ja", "zh-cn", "zh-tw", "pl"];
 type Diagnostics = {
   pageErrors: string[];
   assetErrors: string[];
-  collection: {event: string; pathname: string; referrer: string; sequence: string | null}[];
+  collection: {event: string; pathname: string; referrer: string; sequence: string | null; locationClean: boolean; referrerClean: boolean}[];
 };
 
 function publicPath(value: string | null) {
   if (!value) return "";
   try {return new URL(value).pathname;} catch {return "invalid";}
+}
+
+function cleanPageUrl(value: string | null, allowEmpty = false) {
+  if (!value) return allowEmpty;
+  try {
+    const url = new URL(value);
+    return ["http:", "https:"].includes(url.protocol) && !url.search && !url.hash;
+  } catch {return false;}
 }
 
 const test = base.extend<{diagnostics: Diagnostics}>({
@@ -35,7 +43,7 @@ const test = base.extend<{diagnostics: Diagnostics}>({
         for (const line of lines.length ? lines : [""]) {
           const params = new URLSearchParams(url.search);
           new URLSearchParams(line).forEach((value, key) => params.set(key, value));
-          if (params.has("en")) diagnostics.collection.push({event: params.get("en")!, pathname: publicPath(params.get("dl")), referrer: publicPath(params.get("dr")), sequence: params.get("_s")});
+          if (params.has("en")) diagnostics.collection.push({event: params.get("en")!, pathname: publicPath(params.get("dl")), referrer: publicPath(params.get("dr")), sequence: params.get("_s"), locationClean: cleanPageUrl(params.get("dl")), referrerClean: cleanPageUrl(params.get("dr"), true)});
         }
         // A local acknowledgement prevents transport retries without sending a hit.
         return route.fulfill({status: 204, headers: {"access-control-allow-origin": request.headers().origin ?? "*", "access-control-allow-credentials": "true"}});
@@ -190,21 +198,46 @@ test("mobile navigation and header search open a real guide", async ({page, diag
 });
 
 test("automatic Google page views follow real navigation without transmitting test hits @live", async ({page, diagnostics}, info) => {
-  await page.goto("/en");
-  await expect.poll(() => diagnostics.collection.filter((row) => row.event === "page_view" && row.pathname === "/en").length).toBeGreaterThan(0);
+  const views = () => diagnostics.collection.filter((row) => row.event === "page_view");
+  const viewPaths = () => views().map(({pathname}) => pathname);
+  await page.goto("/en?private=ga-test-only#not-analytics");
+  await expect.poll(viewPaths).toEqual(["/en"]);
   await page.locator('a[data-home-task="weapons"][data-home-placement="command"]').click();
   await expect(page).toHaveURL(/\/en\/items\/weapons$/);
-  await expect.poll(() => diagnostics.collection.filter((row) => row.event === "page_view" && row.pathname === "/en/items/weapons").length).toBeGreaterThan(0);
-  const beforeBack = diagnostics.collection.length;
+  await expect.poll(viewPaths).toEqual(["/en", "/en/items/weapons"]);
   await page.goBack();
-  await expect(page).toHaveURL(/\/en$/);
-  await expect.poll(() => diagnostics.collection.slice(beforeBack).filter((row) => row.event === "page_view" && row.pathname === "/en" && row.referrer === "/en/items/weapons").length).toBe(1);
+  await expect(page).toHaveURL(/\/en\?private=ga-test-only#not-analytics$/);
+  await expect.poll(viewPaths).toEqual(["/en", "/en/items/weapons", "/en"]);
+  // Observe a quiet collection window before the final exact-count check, so a
+  // delayed duplicate does not escape just because the first hit arrived first.
+  let observedCount = diagnostics.collection.length;
+  let lastChange = Date.now();
+  await expect.poll(() => {
+    if (diagnostics.collection.length !== observedCount) {
+      observedCount = diagnostics.collection.length;
+      lastChange = Date.now();
+    }
+    return Date.now() - lastChange;
+  }, {message: "GA transport settles before checking for duplicate navigation views"}).toBeGreaterThanOrEqual(1_000);
+  expect(viewPaths()).toEqual(["/en", "/en/items/weapons", "/en"]);
+  expect(views().map(({referrer}) => referrer)).toEqual(["", "/en", "/en/items/weapons"]);
   const commands = await page.evaluate(() => ((window as Window & {dataLayer?: ArrayLike<unknown>[]}).dataLayer ?? []).map((entry) => Array.from(entry)));
-  expect(commands.filter((entry) => entry[0] === "config")).toHaveLength(1);
+  const configurations = commands.filter((entry) => entry[0] === "config");
+  const options = (entry: unknown[]) => entry[2] as {update?: boolean; page_location?: string; page_referrer?: string};
+  expect(configurations.filter((entry) => options(entry).update !== true)).toHaveLength(1);
+  expect(options(configurations[0]).update).toBeUndefined();
+  expect(configurations.length).toBeGreaterThan(1);
+  for (const entry of configurations) {
+    expect(entry[1]).toBe("G-0GJ404WEYV");
+    expect(cleanPageUrl(options(entry).page_location ?? null)).toBe(true);
+    expect(cleanPageUrl(options(entry).page_referrer ?? null, true)).toBe(true);
+  }
+  expect(configurations.slice(1).every((entry) => options(entry).update === true)).toBe(true);
   expect(commands.filter((entry) => entry[0] === "event" && entry[1] === "page_view")).toHaveLength(0);
-  expect(diagnostics.collection.filter((row) => row.event === "page_view").every((row) => Boolean(row.pathname))).toBe(true);
+  expect(views().every((row) => Boolean(row.pathname))).toBe(true);
   expect(diagnostics.pageErrors).toEqual([]);
-  await info.attach("automatic-views-summary", {body: JSON.stringify({source: "live Google tag", transport: "intercepted and locally acknowledged before collection", pageViews: diagnostics.collection.filter((row) => row.event === "page_view")}, null, 2), contentType: "application/json"});
+  await info.attach("automatic-views-summary", {body: JSON.stringify({source: "live Google tag", transport: "intercepted and locally acknowledged before collection", initializationConfigurations: 1, contextUpdates: configurations.length - 1, pageViews: views()}, null, 2), contentType: "application/json"});
+  expect(views().every(({locationClean, referrerClean}) => locationClean && referrerClean)).toBe(true);
 });
 
 test("original video player resolves on the published guide @live", async ({page, diagnostics}, info) => {
